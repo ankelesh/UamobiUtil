@@ -77,6 +77,11 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 #else
     QObject::connect(settingsButton, SIGNAL(clicked()), this, SLOT(settinsPressed()));
     QObject::connect(exitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
+    QObject::connect(manualLogin, SIGNAL(loginConfirmed(QString,QString)), this, SLOT(userIdOk(QString,QString)));
+    QObject::connect(manualLogin, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+    QObject::connect(settingsScreen, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+    QObject::connect(settingsScreen, SIGNAL(languageChanged()), this, SLOT(languageChanged()));
+    QObject::connect(loginsStorageWidget, SIGNAL(profilePicked(UserProfile)), this, SLOT(userPicked(UserProfile)));
 #endif
 	scrArea->setWidget(loginsStorageWidget);
 

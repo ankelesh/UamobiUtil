@@ -26,7 +26,7 @@ SimpliestResponceParser::SimpliestResponceParser(QString& res, QString& err)
 		parseres.request_status = code.toInt();
 		if (parseres.request_status != 200)
 		{
-			auto li = doc.elementsByTagName("message");
+            QDomNodeList li = doc.elementsByTagName("message");
 			if (li.count() > 0)
 				parseres.queriesResult.push_back(
 					li.at(0).toElement().text()

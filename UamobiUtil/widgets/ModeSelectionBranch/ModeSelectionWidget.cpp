@@ -54,7 +54,10 @@ ModeSelectionWidget::ModeSelectionWidget(const GlobalAppSettings& go, QWidget* p
 	QObject::connect(placeSelection, &PlaceSelectionWidget::placeAcquired, this, &ModeSelectionWidget::placeReady);
 	QObject::connect(placeSelection, &PlaceSelectionWidget::backRequired, this, &ModeSelectionWidget::hideCurrent);
 #else
-	!!!implement!!!
+    QObject::connect(logoutButton, SIGNAL(clicked()), this, SLOT(logoutPressed()));
+    QObject::connect(modeSelection, SIGNAL(modeSelected(parsedMode)), this, SLOT(modeSelected(parsedMode)));
+    QObject::connect(placeSelection, SIGNAL(placeAcquired(parsedPlace)), this, SLOT(placeReady(parsedPlace)));
+    QObject::connect(placeSelection, SIGNAL(backRequired()), this , SLOT(hideCurrent()));
 #endif
 }
 
@@ -110,7 +113,8 @@ void ModeSelectionWidget::modeSelected(parsedMode Mode)
 	}
 	else
 	{
-		auto resp = RequestParser::interpretAsPositionalResponse(awaiter.restext, awaiter.errtext);
+        parse_uniresults_functions::PositionalResponse resp =
+                RequestParser::interpretAsPositionalResponse(awaiter.restext, awaiter.errtext);
 		if (resp.success)
 		{
 			settings = resp.values;

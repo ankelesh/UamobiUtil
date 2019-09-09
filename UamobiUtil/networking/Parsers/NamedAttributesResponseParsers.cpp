@@ -29,7 +29,7 @@ ModeSelectResponseParser::ModeSelectResponseParser(QString& res, QString& err)
 #ifdef QT_VERSION5X
 			auto li = doc.elementsByTagName("message");
 #else
-
+            QDomNodeList li = doc.elementsByTagName("message");
 #endif
 			if (li.count() > 0)
 				parseres.queriesResult.push_back(
@@ -46,7 +46,7 @@ ModeSelectResponseParser::ModeSelectResponseParser(QString& res, QString& err)
 #ifdef QT_VERSION5X
 			auto li = doc.elementsByTagName("s");
 #else
-
+            QDomNodeList li = doc.elementsByTagName("s");
 #endif
 			if (li.count() == 0)
 			{

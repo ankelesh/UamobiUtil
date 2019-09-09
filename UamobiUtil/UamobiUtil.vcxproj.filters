@@ -64,6 +64,12 @@
     <Filter Include="Header Files\Network\Parsing">
       <UniqueIdentifier>{ad05bfea-4a23-4cc0-be0f-4e0a935e4c41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\SuppliersSelectionBranch">
+      <UniqueIdentifier>{67a8043e-2662-433b-8028-11c902f61cfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SuppliersSelectionBranch">
+      <UniqueIdentifier>{7f6fba08-a8c6-464d-bd25-d4b43adce392}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -138,6 +144,12 @@
     <ClCompile Include="networking\Parsers\SimpleResponseParsers.cpp">
       <Filter>Source Files\Network\Parsing</Filter>
     </ClCompile>
+    <ClCompile Include="widgets\parents\AbstractListSelectionWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\SuppliersSelectionBranch\SuppliersSelectWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -184,6 +196,12 @@
     </QtMoc>
     <QtMoc Include="widgets\parents\AbstractVariantSelectionWidget.h">
       <Filter>Header Files\util\parents</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\parents\AbstractListSelectionWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\SuppliersSelectionBranch\SuppliersSelectWidget.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

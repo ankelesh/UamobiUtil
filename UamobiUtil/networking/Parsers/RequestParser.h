@@ -14,7 +14,7 @@
 
 namespace parse_uniresults_functions
 {
-	enum reqtypes { None, login, login_R, modes, places , positional, simpliest};
+	enum reqtypes { None, login, login_R, modes, places , positional, simpliest, suppliers};
 
 	struct UserProfilesResult
 	{
@@ -33,11 +33,13 @@ namespace parse_uniresults_functions
 	};
 	typedef QVector<parsedMode> modesResponse;
 	typedef QVector<parsedPlace> placesResponse;
-	
+	typedef QVector<parsedSupplier> supplierResponse;
+
 	UserProfilesResult parse_user_profiles(uniform_parse_result& ures);
 	modesResponse parse_modes(uniform_parse_result& ures);
 	placesResponse parse_places(uniform_parse_result& ures);
 	QHash<QString, QString> parse_positional_responses(uniform_parse_result& ures);
+	supplierResponse parse_suppliers(uniform_parse_result& ures);
 
 	bool isSimpliest(QString& res);
 	bool isUserProfiles(QString & res);
@@ -45,6 +47,7 @@ namespace parse_uniresults_functions
 	bool isPositionalResponse(QString& res);
 	bool isPlaceList(QString& res);
 	bool isModeList(QString& res);
+	bool isSuppliersList(QString& res);
 }
 
 namespace RequestParser
@@ -58,6 +61,7 @@ namespace RequestParser
 	modesResponse interpretAsModeList(QString& res, QString& errtext);
 	placesResponse interpretAsPlaceList(QString& res, QString& errtext);
 	PositionalResponse interpretAsPositionalResponse(QString& res, QString& errtext);
+	supplierResponse interpretAsSupplierList(QString& res, QString& errtext);
 };
 
 

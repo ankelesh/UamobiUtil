@@ -61,6 +61,12 @@ struct DocResultItem : public Answer
 	float num;
 };
 
+struct parsedSupplier
+{
+	QString code;
+	QString name;
+	QString orders;
+};
 struct DocType : public Answer
 {
 	DocType(const QString &code, const QString &title)

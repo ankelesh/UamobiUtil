@@ -31,6 +31,8 @@ HEADERS += ./debugtrace.h \
     ./widgets/utils/SpecializedWidgets.h \
     ./widgets/LoginBranch/LoginSelectWidget.h \
     ./widgets/LoginBranch/LoginWidget.h \
+	./widgets/ModeSelectionBranch/ModeSelectionWidget.h\
+	./widgets/ModeSelectionBranch/PlaceSelectionWidget.h\
     ./widgets/SettingsBranches/MainSettingsWidget.h \
     ./networking/RequestAwaiter.h \
     ./widgets/MainPageWidget.h \
@@ -50,6 +52,8 @@ SOURCES += ./debugtrace.cpp \
     ./UamobiUtil.cpp \
     ./widgets/LoginBranch/LoginSelectWidget.cpp \
     ./widgets/LoginBranch/LoginWidget.cpp \
+	./widgets/ModeSelectionBranch/ModeSelectionWidget.cpp\
+	./widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp\
     ./widgets/MainPageWidget.cpp \
     ./widgets/SettingsBranches/MainSettingsWidget.cpp \
     ./widgets/utils/ElementsStyles.cpp \

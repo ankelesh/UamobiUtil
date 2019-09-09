@@ -42,14 +42,15 @@ namespace parse_uniresults_functions {
 #ifdef QT_VERSION5X
 		auto start = ures.queriesResult.begin();
 #else
-
+        QList<QString>::iterator start = ures.queriesResult.begin();
 #endif
 		if (ures.one_position_entries_quantity == 1)
 		{
 			detrace_METHEXPL("modes->single")
 			while (start != ures.queriesResult.end())
 			{
-				temp.push_back(parsedMode({ *start, *start,"" }));
+                parsedMode tpm = {*start,*start, ""};
+                temp.push_back(tpm);
 				++start;
 			}
 		}
@@ -111,6 +112,24 @@ namespace parse_uniresults_functions {
 		return temp;
 	}
 
+	supplierResponse parse_suppliers(uniform_parse_result& ures)
+	{
+		supplierResponse temp;
+		parsedSupplier psup;
+		if (queryLengthOkInResult(ures))
+		{
+			temp.reserve(queryReservationSize(ures));
+			for (int i = 0; i < ures.queriesResult.count(); i += 3)
+			{
+				psup.code = ures.queriesResult[i];
+				psup.name = ures.queriesResult[i + 1];
+				psup.orders = ures.queriesResult[i + 2];
+				temp.push_back(psup);
+			}
+		}
+		return temp;
+	}
+
 	bool isSimpliest(QString& res)
 	{
 		if (res.contains("<status>"))
@@ -158,6 +177,12 @@ namespace parse_uniresults_functions {
 			return true;
 		return false;
 	}
+	bool isSuppliersList(QString& res)
+	{
+		if (res.contains("<supplier>"))
+			return true;
+		return false;
+	}
 }
 namespace RequestParser {
 	reqtypes RequestParser::deduceRequestType(QString& res)
@@ -172,7 +197,8 @@ namespace RequestParser {
 			return reqtypes::places;
 		if (isPositionalResponse(res))
 			return reqtypes::positional;
-		
+		if (isSuppliersList(res))
+			return reqtypes::suppliers;
 
 		// this must be last because it treats packet as "all ok" response string. This string contains in ANY successfull response.
 		if (isPositionalResponse(res))
@@ -196,6 +222,8 @@ namespace RequestParser {
 			return new ModeListParser(res, errtext);
 		case reqtypes::places:
 			return new PlacesListParser(res, errtext);
+		case reqtypes::suppliers:
+			return new SuppliersListParser(res, errtext);
 		default:
 			return Q_NULLPTR;
 		}
@@ -287,5 +315,13 @@ namespace RequestParser {
 			temp.success = false;
 		}
 		return temp;
+	}
+	supplierResponse interpretAsSupplierList(QString& res, QString& errtext)
+	{	SuppliersListParser parser(res, errtext);
+		if (parser.isSuccessfull())
+		{
+			return parse_suppliers(parser.read());
+		}
+		return supplierResponse();
 	}
 }

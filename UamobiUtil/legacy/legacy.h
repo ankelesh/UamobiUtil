@@ -1,7 +1,7 @@
 #pragma once
 #include "networking/things.h"
 #include <QtCore/QString>
-#include <QMap>
+#include <QHash>
 
 /*
 	This file contains any shitty solution which was derived from old project and now is required to save 

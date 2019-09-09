@@ -12,22 +12,32 @@
 <context>
     <name>LoginWidget</name>
     <message>
-        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="26"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="8"/>
+        <source>login_widget_no_password!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="17"/>
+        <source>login_widget_connection_timeout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="49"/>
         <source>login_widget_login_tip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="27"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="50"/>
         <source>login_widget_password_tip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="28"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="51"/>
         <source>login_widget_ok_button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="30"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="52"/>
         <source>login_widget_back_button</source>
         <translation type="unfinished"></translation>
     </message>
@@ -35,26 +45,26 @@
 <context>
     <name>MainPageWidget</name>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="87"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="156"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="59"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="121"/>
         <source>main_page_select_profile_tip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="88"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="157"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="60"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="122"/>
         <source>main_page_enter_profile_id_tip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="92"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="158"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="64"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="123"/>
         <source>main_page_exit_button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="93"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="159"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="65"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="124"/>
         <source>main_page_settings_button</source>
         <translation type="unfinished"></translation>
     </message>
@@ -63,118 +73,181 @@
     <name>MainSettingsWidget</name>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="27"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="107"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="127"/>
         <source>settings_workflow_tab_title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="28"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="108"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="128"/>
         <source>settings_system_tab_title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="57"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="109"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="59"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="129"/>
         <source>settings_scan_mode_info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="58"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="110"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="61"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="64"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="131"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="134"/>
         <source>settings_scmode_one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="58"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="110"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="61"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="64"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="131"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="134"/>
         <source>settings_scmode_autos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="58"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="110"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="61"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="64"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="131"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="134"/>
         <source>settings_scmode_simple</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="59"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="111"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="67"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="137"/>
         <source>settings_system_title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="60"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="112"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="68"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="138"/>
         <source>settings_system_dataupd_eng</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="61"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="113"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="69"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="139"/>
         <source>settings_system_http_mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="62"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="114"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="70"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="140"/>
         <source>settings_system_inmemory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="63"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="115"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="71"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="141"/>
         <source>settings_select_address_tip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="65"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="116"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="73"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="142"/>
         <source>settings_system_select_lang_tip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="67"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="117"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="81"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="143"/>
         <source>settings_save_button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="68"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="118"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="82"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="144"/>
         <source>settings_back_button</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ModeSelectionWidget</name>
+    <message>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="42"/>
+        <source>mode_selection_user_tip!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="43"/>
+        <source>mode_selection_modes_tip:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="44"/>
+        <source>mode_selection_logout_tip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="79"/>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="109"/>
+        <source>mode_selection_timeout!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PlaceSelectionWidget</name>
+    <message>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="42"/>
+        <source>place_selection_user_tip!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="43"/>
+        <source>place_selection_mode_tip: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="44"/>
+        <source>place_selection_place_tip: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="45"/>
+        <source>place_selection_back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="70"/>
+        <source>mode_selection_timeout!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="91"/>
+        <source>places_selection_timeout!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../networking/things.h" line="85"/>
+        <location filename="../networking/things.h" line="96"/>
         <source>Closed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networking/things.h" line="86"/>
+        <location filename="../networking/things.h" line="97"/>
         <source>Canceled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networking/things.h" line="87"/>
+        <location filename="../networking/things.h" line="98"/>
         <source>Closed, cancelled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networking/things.h" line="88"/>
+        <location filename="../networking/things.h" line="99"/>
         <source>Open.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networking/things.h" line="89"/>
+        <location filename="../networking/things.h" line="100"/>
         <source>Locked.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../networking/things.h" line="95"/>
+        <location filename="../networking/things.h" line="106"/>
         <source>Supplier: </source>
         <translation type="unfinished"></translation>
     </message>

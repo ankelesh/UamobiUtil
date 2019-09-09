@@ -51,7 +51,8 @@ PlaceSelectionWidget::PlaceSelectionWidget(const GlobalAppSettings& go, QWidget*
 	QObject::connect(placeSelection, &specwidgets::_placeSelectionWidget::placeSelected, this, &PlaceSelectionWidget::placeSelected);
 	QObject::connect(backButton, &QPushButton::clicked, this, &PlaceSelectionWidget::backRequired);
 #else
-	!!!implement!!!
+    QObject::connect(placeSelection, SIGNAL(placeSelected(parsedPlace)), this, SLOT(placeSelected(parsedPlace)));
+    QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 #endif
 
 }

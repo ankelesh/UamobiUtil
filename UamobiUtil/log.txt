@@ -174,7 +174,7 @@ in method UserListParser::dconstr state of variables code was 200
 
 ->Method called: HttpupdateEngine::sendQuery
 timer started, forming url
-in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=88&cmd=log_in&username=DepAdmS&password=1
+in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=33&cmd=log_in&username=DepAdmS&password=1
 ][Created object QNetworkRequest around HttpUpdateEngine::sendQuery
 Connected to network reply object
 
@@ -190,7 +190,7 @@ ________________________________________
 <?xml version="1.0" encoding="CP1251"?>
 <login>
  <status>200</status>
-<session>3216</session>
+<session>3228</session>
 
 </login>
 
@@ -199,7 +199,7 @@ ________________________________________
 in method HttpUpdateEngine::requestFinish state of variables res, errtext  was <?xml version="1.0" encoding="CP1251"?>
 <login>
  <status>200</status>
-<session>3216</session>
+<session>3228</session>
 
 </login>
 
@@ -210,7 +210,7 @@ ________________________________________
 <?xml version="1.0" encoding="CP1251"?>
 <login>
  <status>200</status>
-<session>3216</session>
+<session>3228</session>
 
 </login>
 not awaiting
@@ -221,7 +221,7 @@ not awaiting
 
 ->Method called: HttpupdateEngine::sendQuery
 timer started, forming url
-in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=1009&cmd=list_modes&session=3216&lang=nolang
+in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=907&cmd=list_modes&session=3228&lang=nolang
 ][Created object QNetworkRequest around HttpUpdateEngine::sendQuery
 Connected to network reply object
 
@@ -435,7 +435,7 @@ modes->multi
 
 ->Method called: HttpupdateEngine::sendQuery
 timer started, forming url
-in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=546&cmd=select_mode&session=3216&mode=receipt&submode=
+in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=539&cmd=select_mode&session=3228&mode=receipt&submode=
 ][Created object QNetworkRequest around HttpUpdateEngine::sendQuery
 Connected to network reply object
 
@@ -566,7 +566,7 @@ not awaiting
 
 ->Method called: HttpupdateEngine::sendQuery
 timer started, forming url
-in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=65&cmd=list_places&session=3216
+in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=14&cmd=list_places&session=3228
 ][Created object QNetworkRequest around HttpUpdateEngine::sendQuery
 Connected to network reply object
 
@@ -659,7 +659,7 @@ loaded
 
 ->Method called: HttpupdateEngine::sendQuery
 timer started, forming url
-in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=25&cmd=select_place&session=3216&place=4063
+in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=28&cmd=select_place&session=3228&place=4063
 ][Created object QNetworkRequest around HttpUpdateEngine::sendQuery
 Connected to network reply object
 
@@ -695,4 +695,2839 @@ ________________________________________
  <status>200</status>
 
 </place>
+not awaiting
+
+
+->Method called: goto Suppl
+
+
+->Method called: HttpUpdateEngine::recListSuppliers
+
+
+->Method called: HttpupdateEngine::sendQuery
+timer started, forming url
+in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=11&cmd=rec_list_suppliers&session=3228&text=&hasorders=false
+][Created object QNetworkRequest around HttpUpdateEngine::sendQuery
+Connected to network reply object
+
+
+->Method called: HttpUpdateEngine::onRequestFinished
+
+
+-->Slot requestFinish of object HttpUpdateEngine called
+
+][Created object QTextDecoder by his default constructor
+in method HttpUpdateEngine::requestFinish state of text variable res was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<suppliers>
+ <status>200</status>
+ <supplier>
+  <code>28999</code>
+  <name>Absolutely Safety SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4180</code>
+  <name>ACVADIC-SERVICE SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>49030</code>
+  <name>"Acvilin-Grup" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43722</code>
+  <name>"Advertino" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45215</code>
+  <name>AL BRASIL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45062</code>
+  <name>AL CHINA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45882</code>
+  <name>AL MESSICO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45028</code>
+  <name>AL NORTH AMERICA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44618</code>
+  <name>AL POLONIA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45107</code>
+  <name>AL Polska</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44707</code>
+  <name>AL REAR LAMPS ITALIA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45652</code>
+  <name>AL REAR LAMPS SPAGNA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44785</code>
+  <name>AL TOLMEZZO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29215</code>
+  <name>AL Venaria</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4643</code>
+  <name>Alaid SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6074</code>
+  <name>"Alanj Model" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43341</code>
+  <name>ALCZ</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>49051</code>
+  <name>Alivaart Com" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4834</code>
+  <name>"ARTLEXIS" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4178</code>
+  <name>ASTRA SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43458</code>
+  <name>Automotive Lighting</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47760</code>
+  <name>Autovis-Plus SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4179</code>
+  <name>Babii Nord SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29059</code>
+  <name>Bemas SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29182</code>
+  <name>Bercut Grup SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>49025</code>
+  <name>Bilas-Crom SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44882</code>
+  <name>B&amp;K</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5680</code>
+  <name>BOTTCOR13D65</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5361</code>
+  <name>CA "Victoria Asigurari"Sa</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6854</code>
+  <name>"Cebaniuc I.I."</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28972</code>
+  <name>Centru Sanatate Publica</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45258</code>
+  <name>COFEESHOP SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28968</code>
+  <name>Constructment Grup SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6132</code>
+  <name>Convenctie SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5252</code>
+  <name>Corina Zara</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5363</code>
+  <name>CSP Falesti</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4924</code>
+  <name>Daiana-Comert SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6139</code>
+  <name>"Darenergogaz-Invest" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43457</code>
+  <name>Denso</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45948</code>
+  <name>DENSO ARGENTINA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>46200</code>
+  <name>DENSO AVELLINO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45902</code>
+  <name>DENSO PLONIA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45928</code>
+  <name>DENSO POIRINO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45901</code>
+  <name>DENSO POLONIA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45914</code>
+  <name>DENSO THERMAL SYSTEMS</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45120</code>
+  <name>DENSO TURCHIA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45917</code>
+  <name>DENSO VIGO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28946</code>
+  <name>Di and Trade SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48635</code>
+  <name>Dicon SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6897</code>
+  <name>Dina-Cociug SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6035</code>
+  <name>"Ecobricheta" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29046</code>
+  <name>"Electromontaj-Nord" SA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4652</code>
+  <name>Elitservice-Auto SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28986</code>
+  <name>Eurolumina SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44944</code>
+  <name>Euroweld</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6188</code>
+  <name>Factura de Import</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5830</code>
+  <name>"Galchim &amp; CO"S.R.L</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47936</code>
+  <name>"Galeria-Jaluzi" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4573</code>
+  <name>Gelibert SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6052</code>
+  <name>"GRAFITEX-CONS" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6877</code>
+  <name>ICS BM TECHNOTRADE SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43476</code>
+  <name>ICS "Top Shop Studiomodern"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43208</code>
+  <name>I.G. "Foca C" </name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4839</code>
+  <name>II "Liusea Munteanu"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28899</code>
+  <name>I.I. "Lungu Fiodor"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6919</code>
+  <name>I.I."Lungu Fiodor"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5943</code>
+  <name>IM Gedeon Richter</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45462</code>
+  <name>IM KARCHER SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4678</code>
+  <name>IM Tirex Petrol</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4673</code>
+  <name>IM Tirex Petrol</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5296</code>
+  <name>INDSPECIAL-TRANS SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6270</code>
+  <name>"Ioalex Plus"SRL </name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5365</code>
+  <name>Ion Cecan SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6895</code>
+  <name>I.P.C.Excelent SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4657</code>
+  <name>I.S Servicii Paza</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47882</code>
+  <name>Iunie Prim SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45040</code>
+  <name>Johnson Poland</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43285</code>
+  <name>Jonson Controls</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4633</code>
+  <name>Kab-LEM</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29088</code>
+  <name>Kvazar-Micro SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43459</code>
+  <name>Lear </name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45466</code>
+  <name>LEAR CASSINO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>49047</code>
+  <name>Leroy,Merlin Italia SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5898</code>
+  <name>"Lifting-Logistic Grup"SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48246</code>
+  <name>Lukoil Moldova SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6869</code>
+  <name>Madena-Cons SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44504</code>
+  <name>MAKO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48217</code>
+  <name>Malenkaia Alexandra II</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43236</code>
+  <name>Marcos-Drum SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6367</code>
+  <name>"Mardincom-Prim" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45608</code>
+  <name>M.C.E.</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4607</code>
+  <name>Melitax Grup SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43343</code>
+  <name>"Metal SL" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5896</code>
+  <name>"Metalgros-Nord" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5181</code>
+  <name>Metro Cash Carry</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5912</code>
+  <name>Mitra-Grup S.A.</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4641</code>
+  <name>Neomatrix SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4689</code>
+  <name>NordSoft Program SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4649</code>
+  <name>Olanita-Com SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6261</code>
+  <name>"Olympus Company"SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29051</code>
+  <name>"PapaPrint Agency" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4836</code>
+  <name>ProgresGrup SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4645</code>
+  <name>Propac SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45190</code>
+  <name>Robotics Com S.R.L.</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5147</code>
+  <name>S.A. "Red-Nord"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4650</code>
+  <name>SA TECTON</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5102</code>
+  <name>SAMMY Cablaggi</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4798</code>
+  <name>S.A."Moldtelecom"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29087</code>
+  <name>SARAA Cablaggi</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29183</code>
+  <name>Saturn Grup SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6257</code>
+  <name>"Saturn Pavlov" I.I.</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>42994</code>
+  <name>SC "Agrofarmserv" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6682</code>
+  <name>SC "Agrofarmserv" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43119</code>
+  <name>SC "Cojocari - Grup" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6753</code>
+  <name>SC Dedeman SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5347</code>
+  <name>S.C. Maxicom-Proiect SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6182</code>
+  <name>S.C. PASO FUTURA TRADE SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4866</code>
+  <name>S.C. Trimobil</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5091</code>
+  <name>S.C."Servital-Auto"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6693</code>
+  <name>SC"Velias Grup"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>42797</code>
+  <name>sdfdf</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4810</code>
+  <name>Sistemcom SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4671</code>
+  <name>Sistemcom SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6028</code>
+  <name>Soling S A</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48602</code>
+  <name>SOTTOGRUPPO CAVI MASERATI DX</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6738</code>
+  <name>SRL Alexania-San</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43210</code>
+  <name>SRL "Alia Textil"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43220</code>
+  <name>SRL "Bemas "</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43249</code>
+  <name>SRL Conect - Company</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28927</code>
+  <name>SRL CONET-COMPANY</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29094</code>
+  <name>SRL Diapaserv</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5294</code>
+  <name>SRL Diapavserv</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6128</code>
+  <name>SRL "Evridica-Com"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5350</code>
+  <name>SRL Excelent</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29049</code>
+  <name>SRL "Galeria-Jaluzi"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5947</code>
+  <name>SRL "Gonvord-Auto"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>42798</code>
+  <name>SRL "Iamlinex Energ"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4832</code>
+  <name>SRL LoialConstruct</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5378</code>
+  <name>SRL "Marcus -Drum"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47841</code>
+  <name>SRL Megalux</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43490</code>
+  <name>SRL "Mobvaro-M"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6878</code>
+  <name>SRL "Mobvaro-M"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6879</code>
+  <name>SRL "Mobvaro-M"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4710</code>
+  <name>SRL Nega</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4708</code>
+  <name>SRL Nega</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4872</code>
+  <name>SRL Sidocom - Plus</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6930</code>
+  <name>SRL "Simcomtex"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47648</code>
+  <name>SRL Smart Click</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>42799</code>
+  <name>SRL "Utilajserv-Grup"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5770</code>
+  <name>S.R.L."PANELECTRO"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29024</code>
+  <name>SRL"Vialex-Prim"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6158</code>
+  <name>Stincom Service SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28961</code>
+  <name>"Stivuitor"SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48621</code>
+  <name>"Stronghold" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6029</code>
+  <name>"SUPRATEN SA"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29042</code>
+  <name>TehnoDesign&amp;Ko SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6298</code>
+  <name>Tehnorol SRL </name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47711</code>
+  <name>Teocom-Lux SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5289</code>
+  <name>Tess Prim Servia SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4601</code>
+  <name>Test</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48494</code>
+  <name>Toreko SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4942</code>
+  <name>TREZMD2X</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6828</code>
+  <name>Trimobil-Design SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5099</code>
+  <name>UNISM-SOFT SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5248</code>
+  <name>VERIX-GRUP S.R.L.</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>12090</code>
+  <name>VOLTA SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43730</code>
+  <name>"Yaki Inc" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45428</code>
+  <name>YAKI INC SRL</name>
+  <orders>0</orders>
+ </supplier>
+
+</suppliers>
+
+
+-)Method sp.obj of object sp.slot.data invocated in method RequestFinish of object HttpUpdateEngine
+in method HttpUpdateEngine::requestFinish state of variables res, errtext  was <?xml version="1.0" encoding="CP1251"?>
+<suppliers>
+ <status>200</status>
+ <supplier>
+  <code>28999</code>
+  <name>Absolutely Safety SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4180</code>
+  <name>ACVADIC-SERVICE SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>49030</code>
+  <name>"Acvilin-Grup" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43722</code>
+  <name>"Advertino" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45215</code>
+  <name>AL BRASIL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45062</code>
+  <name>AL CHINA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45882</code>
+  <name>AL MESSICO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45028</code>
+  <name>AL NORTH AMERICA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44618</code>
+  <name>AL POLONIA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45107</code>
+  <name>AL Polska</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44707</code>
+  <name>AL REAR LAMPS ITALIA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45652</code>
+  <name>AL REAR LAMPS SPAGNA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44785</code>
+  <name>AL TOLMEZZO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29215</code>
+  <name>AL Venaria</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4643</code>
+  <name>Alaid SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6074</code>
+  <name>"Alanj Model" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43341</code>
+  <name>ALCZ</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>49051</code>
+  <name>Alivaart Com" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4834</code>
+  <name>"ARTLEXIS" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4178</code>
+  <name>ASTRA SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43458</code>
+  <name>Automotive Lighting</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47760</code>
+  <name>Autovis-Plus SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4179</code>
+  <name>Babii Nord SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29059</code>
+  <name>Bemas SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29182</code>
+  <name>Bercut Grup SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>49025</code>
+  <name>Bilas-Crom SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44882</code>
+  <name>B&amp;K</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5680</code>
+  <name>BOTTCOR13D65</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5361</code>
+  <name>CA "Victoria Asigurari"Sa</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6854</code>
+  <name>"Cebaniuc I.I."</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28972</code>
+  <name>Centru Sanatate Publica</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45258</code>
+  <name>COFEESHOP SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28968</code>
+  <name>Constructment Grup SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6132</code>
+  <name>Convenctie SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5252</code>
+  <name>Corina Zara</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5363</code>
+  <name>CSP Falesti</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4924</code>
+  <name>Daiana-Comert SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6139</code>
+  <name>"Darenergogaz-Invest" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43457</code>
+  <name>Denso</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45948</code>
+  <name>DENSO ARGENTINA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>46200</code>
+  <name>DENSO AVELLINO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45902</code>
+  <name>DENSO PLONIA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45928</code>
+  <name>DENSO POIRINO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45901</code>
+  <name>DENSO POLONIA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45914</code>
+  <name>DENSO THERMAL SYSTEMS</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45120</code>
+  <name>DENSO TURCHIA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45917</code>
+  <name>DENSO VIGO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28946</code>
+  <name>Di and Trade SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48635</code>
+  <name>Dicon SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6897</code>
+  <name>Dina-Cociug SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6035</code>
+  <name>"Ecobricheta" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29046</code>
+  <name>"Electromontaj-Nord" SA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4652</code>
+  <name>Elitservice-Auto SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28986</code>
+  <name>Eurolumina SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44944</code>
+  <name>Euroweld</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6188</code>
+  <name>Factura de Import</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5830</code>
+  <name>"Galchim &amp; CO"S.R.L</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47936</code>
+  <name>"Galeria-Jaluzi" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4573</code>
+  <name>Gelibert SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6052</code>
+  <name>"GRAFITEX-CONS" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6877</code>
+  <name>ICS BM TECHNOTRADE SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43476</code>
+  <name>ICS "Top Shop Studiomodern"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43208</code>
+  <name>I.G. "Foca C" </name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4839</code>
+  <name>II "Liusea Munteanu"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28899</code>
+  <name>I.I. "Lungu Fiodor"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6919</code>
+  <name>I.I."Lungu Fiodor"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5943</code>
+  <name>IM Gedeon Richter</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45462</code>
+  <name>IM KARCHER SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4678</code>
+  <name>IM Tirex Petrol</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4673</code>
+  <name>IM Tirex Petrol</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5296</code>
+  <name>INDSPECIAL-TRANS SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6270</code>
+  <name>"Ioalex Plus"SRL </name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5365</code>
+  <name>Ion Cecan SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6895</code>
+  <name>I.P.C.Excelent SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4657</code>
+  <name>I.S Servicii Paza</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47882</code>
+  <name>Iunie Prim SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45040</code>
+  <name>Johnson Poland</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43285</code>
+  <name>Jonson Controls</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4633</code>
+  <name>Kab-LEM</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29088</code>
+  <name>Kvazar-Micro SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43459</code>
+  <name>Lear </name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45466</code>
+  <name>LEAR CASSINO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>49047</code>
+  <name>Leroy,Merlin Italia SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5898</code>
+  <name>"Lifting-Logistic Grup"SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48246</code>
+  <name>Lukoil Moldova SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6869</code>
+  <name>Madena-Cons SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44504</code>
+  <name>MAKO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48217</code>
+  <name>Malenkaia Alexandra II</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43236</code>
+  <name>Marcos-Drum SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6367</code>
+  <name>"Mardincom-Prim" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45608</code>
+  <name>M.C.E.</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4607</code>
+  <name>Melitax Grup SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43343</code>
+  <name>"Metal SL" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5896</code>
+  <name>"Metalgros-Nord" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5181</code>
+  <name>Metro Cash Carry</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5912</code>
+  <name>Mitra-Grup S.A.</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4641</code>
+  <name>Neomatrix SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4689</code>
+  <name>NordSoft Program SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4649</code>
+  <name>Olanita-Com SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6261</code>
+  <name>"Olympus Company"SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29051</code>
+  <name>"PapaPrint Agency" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4836</code>
+  <name>ProgresGrup SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4645</code>
+  <name>Propac SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45190</code>
+  <name>Robotics Com S.R.L.</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5147</code>
+  <name>S.A. "Red-Nord"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4650</code>
+  <name>SA TECTON</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5102</code>
+  <name>SAMMY Cablaggi</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4798</code>
+  <name>S.A."Moldtelecom"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29087</code>
+  <name>SARAA Cablaggi</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29183</code>
+  <name>Saturn Grup SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6257</code>
+  <name>"Saturn Pavlov" I.I.</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>42994</code>
+  <name>SC "Agrofarmserv" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6682</code>
+  <name>SC "Agrofarmserv" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43119</code>
+  <name>SC "Cojocari - Grup" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6753</code>
+  <name>SC Dedeman SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5347</code>
+  <name>S.C. Maxicom-Proiect SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6182</code>
+  <name>S.C. PASO FUTURA TRADE SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4866</code>
+  <name>S.C. Trimobil</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5091</code>
+  <name>S.C."Servital-Auto"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6693</code>
+  <name>SC"Velias Grup"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>42797</code>
+  <name>sdfdf</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4810</code>
+  <name>Sistemcom SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4671</code>
+  <name>Sistemcom SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6028</code>
+  <name>Soling S A</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48602</code>
+  <name>SOTTOGRUPPO CAVI MASERATI DX</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6738</code>
+  <name>SRL Alexania-San</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43210</code>
+  <name>SRL "Alia Textil"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43220</code>
+  <name>SRL "Bemas "</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43249</code>
+  <name>SRL Conect - Company</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28927</code>
+  <name>SRL CONET-COMPANY</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29094</code>
+  <name>SRL Diapaserv</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5294</code>
+  <name>SRL Diapavserv</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6128</code>
+  <name>SRL "Evridica-Com"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5350</code>
+  <name>SRL Excelent</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29049</code>
+  <name>SRL "Galeria-Jaluzi"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5947</code>
+  <name>SRL "Gonvord-Auto"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>42798</code>
+  <name>SRL "Iamlinex Energ"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4832</code>
+  <name>SRL LoialConstruct</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5378</code>
+  <name>SRL "Marcus -Drum"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47841</code>
+  <name>SRL Megalux</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43490</code>
+  <name>SRL "Mobvaro-M"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6878</code>
+  <name>SRL "Mobvaro-M"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6879</code>
+  <name>SRL "Mobvaro-M"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4710</code>
+  <name>SRL Nega</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4708</code>
+  <name>SRL Nega</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4872</code>
+  <name>SRL Sidocom - Plus</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6930</code>
+  <name>SRL "Simcomtex"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47648</code>
+  <name>SRL Smart Click</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>42799</code>
+  <name>SRL "Utilajserv-Grup"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5770</code>
+  <name>S.R.L."PANELECTRO"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29024</code>
+  <name>SRL"Vialex-Prim"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6158</code>
+  <name>Stincom Service SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28961</code>
+  <name>"Stivuitor"SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48621</code>
+  <name>"Stronghold" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6029</code>
+  <name>"SUPRATEN SA"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29042</code>
+  <name>TehnoDesign&amp;Ko SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6298</code>
+  <name>Tehnorol SRL </name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47711</code>
+  <name>Teocom-Lux SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5289</code>
+  <name>Tess Prim Servia SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4601</code>
+  <name>Test</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48494</code>
+  <name>Toreko SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4942</code>
+  <name>TREZMD2X</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6828</code>
+  <name>Trimobil-Design SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5099</code>
+  <name>UNISM-SOFT SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5248</code>
+  <name>VERIX-GRUP S.R.L.</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>12090</code>
+  <name>VOLTA SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43730</code>
+  <name>"Yaki Inc" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45428</code>
+  <name>YAKI INC SRL</name>
+  <orders>0</orders>
+ </supplier>
+
+</suppliers>
+
+
+->Method called: RequestAwaiter::requestIncoming
+in method RequestAwaiter::requestincoming state of text variable a was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<suppliers>
+ <status>200</status>
+ <supplier>
+  <code>28999</code>
+  <name>Absolutely Safety SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4180</code>
+  <name>ACVADIC-SERVICE SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>49030</code>
+  <name>"Acvilin-Grup" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43722</code>
+  <name>"Advertino" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45215</code>
+  <name>AL BRASIL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45062</code>
+  <name>AL CHINA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45882</code>
+  <name>AL MESSICO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45028</code>
+  <name>AL NORTH AMERICA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44618</code>
+  <name>AL POLONIA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45107</code>
+  <name>AL Polska</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44707</code>
+  <name>AL REAR LAMPS ITALIA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45652</code>
+  <name>AL REAR LAMPS SPAGNA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44785</code>
+  <name>AL TOLMEZZO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29215</code>
+  <name>AL Venaria</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4643</code>
+  <name>Alaid SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6074</code>
+  <name>"Alanj Model" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43341</code>
+  <name>ALCZ</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>49051</code>
+  <name>Alivaart Com" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4834</code>
+  <name>"ARTLEXIS" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4178</code>
+  <name>ASTRA SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43458</code>
+  <name>Automotive Lighting</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47760</code>
+  <name>Autovis-Plus SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4179</code>
+  <name>Babii Nord SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29059</code>
+  <name>Bemas SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29182</code>
+  <name>Bercut Grup SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>49025</code>
+  <name>Bilas-Crom SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44882</code>
+  <name>B&amp;K</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5680</code>
+  <name>BOTTCOR13D65</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5361</code>
+  <name>CA "Victoria Asigurari"Sa</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6854</code>
+  <name>"Cebaniuc I.I."</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28972</code>
+  <name>Centru Sanatate Publica</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45258</code>
+  <name>COFEESHOP SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28968</code>
+  <name>Constructment Grup SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6132</code>
+  <name>Convenctie SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5252</code>
+  <name>Corina Zara</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5363</code>
+  <name>CSP Falesti</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4924</code>
+  <name>Daiana-Comert SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6139</code>
+  <name>"Darenergogaz-Invest" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43457</code>
+  <name>Denso</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45948</code>
+  <name>DENSO ARGENTINA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>46200</code>
+  <name>DENSO AVELLINO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45902</code>
+  <name>DENSO PLONIA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45928</code>
+  <name>DENSO POIRINO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45901</code>
+  <name>DENSO POLONIA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45914</code>
+  <name>DENSO THERMAL SYSTEMS</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45120</code>
+  <name>DENSO TURCHIA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45917</code>
+  <name>DENSO VIGO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28946</code>
+  <name>Di and Trade SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48635</code>
+  <name>Dicon SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6897</code>
+  <name>Dina-Cociug SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6035</code>
+  <name>"Ecobricheta" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29046</code>
+  <name>"Electromontaj-Nord" SA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4652</code>
+  <name>Elitservice-Auto SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28986</code>
+  <name>Eurolumina SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44944</code>
+  <name>Euroweld</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6188</code>
+  <name>Factura de Import</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5830</code>
+  <name>"Galchim &amp; CO"S.R.L</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47936</code>
+  <name>"Galeria-Jaluzi" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4573</code>
+  <name>Gelibert SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6052</code>
+  <name>"GRAFITEX-CONS" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6877</code>
+  <name>ICS BM TECHNOTRADE SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43476</code>
+  <name>ICS "Top Shop Studiomodern"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43208</code>
+  <name>I.G. "Foca C" </name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4839</code>
+  <name>II "Liusea Munteanu"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28899</code>
+  <name>I.I. "Lungu Fiodor"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6919</code>
+  <name>I.I."Lungu Fiodor"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5943</code>
+  <name>IM Gedeon Richter</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45462</code>
+  <name>IM KARCHER SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4678</code>
+  <name>IM Tirex Petrol</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4673</code>
+  <name>IM Tirex Petrol</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5296</code>
+  <name>INDSPECIAL-TRANS SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6270</code>
+  <name>"Ioalex Plus"SRL </name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5365</code>
+  <name>Ion Cecan SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6895</code>
+  <name>I.P.C.Excelent SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4657</code>
+  <name>I.S Servicii Paza</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47882</code>
+  <name>Iunie Prim SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45040</code>
+  <name>Johnson Poland</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43285</code>
+  <name>Jonson Controls</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4633</code>
+  <name>Kab-LEM</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29088</code>
+  <name>Kvazar-Micro SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43459</code>
+  <name>Lear </name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45466</code>
+  <name>LEAR CASSINO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>49047</code>
+  <name>Leroy,Merlin Italia SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5898</code>
+  <name>"Lifting-Logistic Grup"SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48246</code>
+  <name>Lukoil Moldova SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6869</code>
+  <name>Madena-Cons SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>44504</code>
+  <name>MAKO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48217</code>
+  <name>Malenkaia Alexandra II</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43236</code>
+  <name>Marcos-Drum SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6367</code>
+  <name>"Mardincom-Prim" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45608</code>
+  <name>M.C.E.</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4607</code>
+  <name>Melitax Grup SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43343</code>
+  <name>"Metal SL" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5896</code>
+  <name>"Metalgros-Nord" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5181</code>
+  <name>Metro Cash Carry</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5912</code>
+  <name>Mitra-Grup S.A.</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4641</code>
+  <name>Neomatrix SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4689</code>
+  <name>NordSoft Program SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4649</code>
+  <name>Olanita-Com SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6261</code>
+  <name>"Olympus Company"SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29051</code>
+  <name>"PapaPrint Agency" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4836</code>
+  <name>ProgresGrup SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4645</code>
+  <name>Propac SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45190</code>
+  <name>Robotics Com S.R.L.</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5147</code>
+  <name>S.A. "Red-Nord"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4650</code>
+  <name>SA TECTON</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5102</code>
+  <name>SAMMY Cablaggi</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4798</code>
+  <name>S.A."Moldtelecom"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29087</code>
+  <name>SARAA Cablaggi</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29183</code>
+  <name>Saturn Grup SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6257</code>
+  <name>"Saturn Pavlov" I.I.</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>42994</code>
+  <name>SC "Agrofarmserv" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6682</code>
+  <name>SC "Agrofarmserv" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43119</code>
+  <name>SC "Cojocari - Grup" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6753</code>
+  <name>SC Dedeman SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5347</code>
+  <name>S.C. Maxicom-Proiect SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6182</code>
+  <name>S.C. PASO FUTURA TRADE SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4866</code>
+  <name>S.C. Trimobil</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5091</code>
+  <name>S.C."Servital-Auto"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6693</code>
+  <name>SC"Velias Grup"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>42797</code>
+  <name>sdfdf</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4810</code>
+  <name>Sistemcom SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4671</code>
+  <name>Sistemcom SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6028</code>
+  <name>Soling S A</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48602</code>
+  <name>SOTTOGRUPPO CAVI MASERATI DX</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6738</code>
+  <name>SRL Alexania-San</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43210</code>
+  <name>SRL "Alia Textil"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43220</code>
+  <name>SRL "Bemas "</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43249</code>
+  <name>SRL Conect - Company</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28927</code>
+  <name>SRL CONET-COMPANY</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29094</code>
+  <name>SRL Diapaserv</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5294</code>
+  <name>SRL Diapavserv</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6128</code>
+  <name>SRL "Evridica-Com"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5350</code>
+  <name>SRL Excelent</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29049</code>
+  <name>SRL "Galeria-Jaluzi"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5947</code>
+  <name>SRL "Gonvord-Auto"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>42798</code>
+  <name>SRL "Iamlinex Energ"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4832</code>
+  <name>SRL LoialConstruct</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5378</code>
+  <name>SRL "Marcus -Drum"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47841</code>
+  <name>SRL Megalux</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43490</code>
+  <name>SRL "Mobvaro-M"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6878</code>
+  <name>SRL "Mobvaro-M"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6879</code>
+  <name>SRL "Mobvaro-M"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4710</code>
+  <name>SRL Nega</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4708</code>
+  <name>SRL Nega</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4872</code>
+  <name>SRL Sidocom - Plus</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6930</code>
+  <name>SRL "Simcomtex"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47648</code>
+  <name>SRL Smart Click</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>42799</code>
+  <name>SRL "Utilajserv-Grup"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5770</code>
+  <name>S.R.L."PANELECTRO"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29024</code>
+  <name>SRL"Vialex-Prim"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6158</code>
+  <name>Stincom Service SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28961</code>
+  <name>"Stivuitor"SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48621</code>
+  <name>"Stronghold" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6029</code>
+  <name>"SUPRATEN SA"</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29042</code>
+  <name>TehnoDesign&amp;Ko SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6298</code>
+  <name>Tehnorol SRL </name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>47711</code>
+  <name>Teocom-Lux SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5289</code>
+  <name>Tess Prim Servia SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4601</code>
+  <name>Test</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48494</code>
+  <name>Toreko SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>4942</code>
+  <name>TREZMD2X</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6828</code>
+  <name>Trimobil-Design SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5099</code>
+  <name>UNISM-SOFT SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5248</code>
+  <name>VERIX-GRUP S.R.L.</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>12090</code>
+  <name>VOLTA SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43730</code>
+  <name>"Yaki Inc" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45428</code>
+  <name>YAKI INC SRL</name>
+  <orders>0</orders>
+ </supplier>
+
+</suppliers>
+not awaiting
+
+
+->Method called: HttpUpdateEngine::recListSuppliers
+
+
+->Method called: HttpupdateEngine::sendQuery
+timer started, forming url
+in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=42&cmd=rec_list_suppliers&session=3228&text=CA&hasorders=false
+][Created object QNetworkRequest around HttpUpdateEngine::sendQuery
+Connected to network reply object
+
+
+->Method called: HttpUpdateEngine::onRequestFinished
+
+
+-->Slot requestFinish of object HttpUpdateEngine called
+
+][Created object QTextDecoder by his default constructor
+in method HttpUpdateEngine::requestFinish state of text variable res was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<suppliers>
+ <status>200</status>
+ <supplier>
+  <code>45028</code>
+  <name>AL NORTH AMERICA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5361</code>
+  <name>CA "Victoria Asigurari"Sa</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28972</code>
+  <name>Centru Sanatate Publica</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43208</code>
+  <name>I.G. "Foca C" </name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5365</code>
+  <name>Ion Cecan SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45466</code>
+  <name>LEAR CASSINO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5181</code>
+  <name>Metro Cash Carry</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5102</code>
+  <name>SAMMY Cablaggi</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29087</code>
+  <name>SARAA Cablaggi</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43119</code>
+  <name>SC "Cojocari - Grup" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48602</code>
+  <name>SOTTOGRUPPO CAVI MASERATI DX</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6128</code>
+  <name>SRL "Evridica-Com"</name>
+  <orders>0</orders>
+ </supplier>
+
+</suppliers>
+
+
+-)Method sp.obj of object sp.slot.data invocated in method RequestFinish of object HttpUpdateEngine
+in method HttpUpdateEngine::requestFinish state of variables res, errtext  was <?xml version="1.0" encoding="CP1251"?>
+<suppliers>
+ <status>200</status>
+ <supplier>
+  <code>45028</code>
+  <name>AL NORTH AMERICA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5361</code>
+  <name>CA "Victoria Asigurari"Sa</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28972</code>
+  <name>Centru Sanatate Publica</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43208</code>
+  <name>I.G. "Foca C" </name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5365</code>
+  <name>Ion Cecan SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45466</code>
+  <name>LEAR CASSINO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5181</code>
+  <name>Metro Cash Carry</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5102</code>
+  <name>SAMMY Cablaggi</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29087</code>
+  <name>SARAA Cablaggi</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43119</code>
+  <name>SC "Cojocari - Grup" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48602</code>
+  <name>SOTTOGRUPPO CAVI MASERATI DX</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6128</code>
+  <name>SRL "Evridica-Com"</name>
+  <orders>0</orders>
+ </supplier>
+
+</suppliers>
+
+
+->Method called: RequestAwaiter::requestIncoming
+in method RequestAwaiter::requestincoming state of text variable a was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<suppliers>
+ <status>200</status>
+ <supplier>
+  <code>45028</code>
+  <name>AL NORTH AMERICA</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5361</code>
+  <name>CA "Victoria Asigurari"Sa</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>28972</code>
+  <name>Centru Sanatate Publica</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43208</code>
+  <name>I.G. "Foca C" </name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5365</code>
+  <name>Ion Cecan SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>45466</code>
+  <name>LEAR CASSINO</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5181</code>
+  <name>Metro Cash Carry</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>5102</code>
+  <name>SAMMY Cablaggi</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>29087</code>
+  <name>SARAA Cablaggi</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>43119</code>
+  <name>SC "Cojocari - Grup" SRL</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>48602</code>
+  <name>SOTTOGRUPPO CAVI MASERATI DX</name>
+  <orders>0</orders>
+ </supplier>
+ <supplier>
+  <code>6128</code>
+  <name>SRL "Evridica-Com"</name>
+  <orders>0</orders>
+ </supplier>
+
+</suppliers>
+not awaiting
+
+
+->Method called: HttpUpdateEngine::recListSuppliers
+
+
+->Method called: HttpupdateEngine::sendQuery
+timer started, forming url
+in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=52&cmd=rec_list_suppliers&session=3228&text=CA&hasorders=true
+][Created object QNetworkRequest around HttpUpdateEngine::sendQuery
+Connected to network reply object
+
+
+->Method called: HttpUpdateEngine::onRequestFinished
+
+
+-->Slot requestFinish of object HttpUpdateEngine called
+
+][Created object QTextDecoder by his default constructor
+in method HttpUpdateEngine::requestFinish state of text variable res was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<suppliers>
+ <status>200</status>
+
+</suppliers>
+
+
+-)Method sp.obj of object sp.slot.data invocated in method RequestFinish of object HttpUpdateEngine
+in method HttpUpdateEngine::requestFinish state of variables res, errtext  was <?xml version="1.0" encoding="CP1251"?>
+<suppliers>
+ <status>200</status>
+
+</suppliers>
+
+
+->Method called: RequestAwaiter::requestIncoming
+in method RequestAwaiter::requestincoming state of text variable a was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<suppliers>
+ <status>200</status>
+
+</suppliers>
 not awaiting

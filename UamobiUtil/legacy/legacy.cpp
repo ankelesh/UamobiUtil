@@ -5,6 +5,8 @@ namespace legacy {
 	{
 		QString modename;
 		QString submodename;
+		modecut(QString mn, QString smn) : modename(mn), submodename(smn) {}
+		modecut() {}
 	};
 
 	QHash<QChar, QHash<QString, modecut> > _initlm()
@@ -13,67 +15,67 @@ namespace legacy {
 		QHash<QChar, QHash<QString, modecut> > temp;
 		QHash<QString, modecut> t;
 		// map uses alphabetic sorting to enhance speed. May be too complicated.
-		t["adjustment"] = modecut{ "inventory", "adjustment" };
+		t["adjustment"] = modecut("inventory", "adjustment");
 		temp['a'] = t;
 		t.clear();
-		t["batchprinting"] = modecut{ "inventory", "batchprinting" };
+		t["batchprinting"] = modecut("inventory", "batchprinting");
 		temp['b'] = t;
 		t.clear();
-		t["confirm"] = modecut{ "inventory", "confirm" };
+		t["confirm"] = modecut("inventory", "confirm");
 		temp['c'] = t;
 		t.clear();
-		t["decomplectation"] = modecut{ "inventory", "decomplectation" };
+		t["decomplectation"] = modecut("inventory", "decomplectation");
 		temp['d'] = t;
 		t.clear();
-		t["emitting"] = modecut{ "receipt", "emitting" };
+		t["emitting"] = modecut("receipt", "emitting");
 		temp['e'] = t;
 		t.clear();
-		t["finishedproductreceipt"] = modecut{ "receipt", "finishedproductreceipt" };
-		t["finishedproductreturn"] = modecut{ "receipt", "finishedproductreturn" };
+		t["finishedproductreceipt"] = modecut("receipt", "finishedproductreceipt");
+		t["finishedproductreturn"] = modecut("receipt", "finishedproductreturn");
 		temp['f'] = t;
 		t.clear();
-		t["goodandproductmove"] = modecut{ "inventory", "goodandproductmove" };
+		t["goodandproductmove"] = modecut("inventory", "goodandproductmove");
 		temp['g'] = t;
 		t.clear();
-		t["inventory"] = modecut{ "inventory" };
-		t["initialdownload"] = modecut{ "inventory", "initialdownload" };
-		t["instrumentdelivery"] = modecut{ "receipt", "instrumentdelivery" };
-		t["instrumentredelivery"] = modecut{ "receipt", "instrumentredelivery" };
-		t["instrumentdelivery"] = modecut{ "receipt", "instrumentdelivery" };
-		t["instrumentredelivery"] = modecut{ "receipt", "instrumentredelivery" };
-		t["inventoryoc"] = modecut{ "inventory", "inventoryoc" };
-		t["import"] = modecut{ "inventory", "import" };
-		t["instrumentdelivery"] = modecut{ "receipt", "instrumentdelivery" };
-		t["instrumentredelivery"] = modecut{ "receipt", "instrumentredelivery" };
+		t["inventory"] = modecut("inventory", "");
+		t["initialdownload"] = modecut("inventory", "initialdownload");
+		t["instrumentdelivery"] = modecut("receipt", "instrumentdelivery");
+		t["instrumentredelivery"] = modecut("receipt", "instrumentredelivery");
+		t["instrumentdelivery"] = modecut("receipt", "instrumentdelivery");
+		t["instrumentredelivery"] = modecut("receipt", "instrumentredelivery");
+		t["inventoryoc"] = modecut("inventory", "inventoryoc");
+		t["import"] = modecut("inventory", "import");
+		t["instrumentdelivery"] = modecut("receipt", "instrumentdelivery");
+		t["instrumentredelivery"] = modecut("receipt", "instrumentredelivery");
 		temp['i'] = t;
 		t.clear();
-		t["locationinfo"] = modecut{ "printing", "locationinfo" };
+		t["locationinfo"] = modecut("printing", "locationinfo");
 		temp['l'] = t;
 		t.clear();
-		t["movingload"] = modecut{ "inventory", "movingload" };
-		t["movingunload"] = modecut{ "inventory", "movingunload" };
-		t["materialshipment"] = modecut{ "receipt", "materialshipment" };
-		t["movingtorepacking"] = modecut{ "receipt", "movingtorepacking" };
+		t["movingload"] = modecut("inventory", "movingload");
+		t["movingunload"] = modecut("inventory", "movingunload");
+		t["materialshipment"] = modecut("receipt", "materialshipment");
+		t["movingtorepacking"] = modecut("receipt", "movingtorepacking");
 		temp['m'] = t;
 		t.clear();
-		t["printing"] = modecut{ "printing" };
-		t["productionwriteoff"] = modecut{ "inventory", "productionwriteoff" };
+		t["printing"] = modecut("printing", "");
+		t["productionwriteoff"] = modecut("inventory", "productionwriteoff");
 		temp['p'] = t;
 		t.clear();
-		t["receipt"] = modecut{ "receipt" };
-		t["releasebuyer"] = modecut{ "receipt", "releasebuyer" };
-		t["redelivery"] = modecut{ "inventory", "redelivery" };
-		t["returning"] = modecut{ "receipt", "returning" };
-		t["returningtosupplier"] = modecut{ "receipt", "returningtosupplier" };
-		t["receiptworder"] = modecut{ "receipt", "receiptworder" };
-		t["receiptwoorder"] = modecut{ "receipt", "receiptwoorder" };
+		t["receipt"] = modecut("receipt", "");
+		t["releasebuyer"] = modecut("receipt", "releasebuyer");
+		t["redelivery"] = modecut("inventory", "redelivery");
+		t["returning"] = modecut("receipt", "returning");
+		t["returningtosupplier"] = modecut("receipt", "returningtosupplier");
+		t["receiptworder"] = modecut("receipt", "receiptworder");
+		t["receiptwoorder"] = modecut("receipt", "receiptwoorder");
 		temp['r'] = t;
 		t.clear();
-		t["sales"] = modecut{ "inventory", "sales" };
-		t["scaningact"] = modecut{ "inventory", "scaningact" };
+		t["sales"] = modecut("inventory", "sales");
+		t["scaningact"] = modecut("inventory", "scaningact");
 		temp['s'] = t;
 		t.clear();
-		t["tmcinfobylocation"] = modecut{ "printing", "tmcinfobylocation" };
+		t["tmcinfobylocation"] = modecut("printing", "tmcinfobylocation");
 		temp['t'] = t;
 		t.clear();
 		return temp;
@@ -84,6 +86,7 @@ namespace legacy {
 	parsedMode parseLegacyMode(QString& name, QString& mode)
 	{
 		modecut m = legacymodes.value(mode.at(0)).value(mode);
-		return parsedMode({ name, m.modename, m.submodename });
+		parsedMode tmp = { name, m.modename, m.submodename };
+		return tmp;
 	}
 }

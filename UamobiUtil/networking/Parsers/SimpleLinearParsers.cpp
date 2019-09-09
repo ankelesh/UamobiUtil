@@ -82,3 +82,40 @@ PlacesListParser::PlacesListParser(QString& res, QString& err)
 	parseres.one_position_entries_quantity = 2;
 	success = true;
 }
+
+bool SuppliersListParser::couldRead()
+{
+	return success;
+}
+
+bool SuppliersListParser::noRequestErrors()
+{
+	return parseres.request_status == 200;
+}
+
+QString SuppliersListParser::parseErrorText()
+{
+	return errtext;
+}
+
+SuppliersListParser::SuppliersListParser(QString& res, QString& errtext)
+	: abs_parsed_request(res, errtext)
+{
+	QDomDocument doc;
+	doc.setContent(result);
+	QString code = doc.elementsByTagName("status").at(0).toElement().text();
+	parseres.request_status = code.toInt();
+	//detrace_METHDATAS("UserListParser::dconstr", "code", << code)
+	if (parseres.request_status != 200)
+		return;
+	QDomNodeList dmndl = doc.elementsByTagName("supplier");
+	for (int i = 0; i < dmndl.count(); ++i)
+	{
+		parseres.queriesResult << dmndl.at(i).childNodes().at(0).toElement().text();
+		parseres.queriesResult << dmndl.at(i).childNodes().at(1).toElement().text();
+		parseres.queriesResult << dmndl.at(i).childNodes().at(2).toElement().text();
+	}
+	parseres.type = linear_result;
+	parseres.one_position_entries_quantity = 2;
+	success = true;
+}
