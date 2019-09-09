@@ -1,0 +1,698 @@
+
+][Created object DataUpdateEngine by his default constructor
+
+][Created object HttpUpdateEngine by his default constructor
+
+][Created object LoginWidget by his default constructor
+size: 30
+
+
+->Method called: HttpUpdateEngine::userUpdateList
+
+
+->Method called: HttpupdateEngine::sendQuery
+timer started, forming url
+in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=0&cmd=list_users
+][Created object QNetworkRequest around HttpUpdateEngine::sendQuery
+Connected to network reply object
+
+
+->Method called: HttpUpdateEngine::initConnection
+
+
+->Method called: HttpupdateEngine::sendQuery
+timer started, forming url
+in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=0&cmd=ping
+][Created object QNetworkRequest around HttpUpdateEngine::sendQuery
+Connected to network reply object
+
+
+->Method called: HttpUpdateEngine::onReplyError
+
+
+-->Slot requestFinish of object HttpUpdateEngine called
+
+][Created object QTextDecoder by his default constructor
+in method HttpUpdateEngine::requestFinish state of text variable res was: 
+________________________________________
+
+
+
+->Method called: HttpUpdateEngine::onRequestFinished
+
+
+-->Slot requestFinish of object HttpUpdateEngine called
+
+][Created object QTextDecoder by his default constructor
+in method HttpUpdateEngine::requestFinish state of text variable res was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<users>
+ <status>200</status>
+ <user>
+  <login>vgangan</login>
+  <name>vgangan</name>
+  <br/>
+ </user>
+ <user>
+  <login>VN</login>
+  <name>1001_VN</name>
+  <br/>
+ </user>
+ <user>
+  <login>Adm</login>
+  <name>101_Adm</name>
+  <br/>
+ </user>
+ <user>
+  <login>DepAdmS</login>
+  <name>900 - DepAdmS</name>
+  <br/>
+ </user>
+ <user>
+  <login>rmagdil</login>
+  <name>905 - RMagdil</name>
+  <br/>
+ </user>
+ <user>
+  <login>dspataru</login>
+  <name>906 - DSpataru</name>
+  <br/>
+ </user>
+ <servicename>Romina</servicename>
+</users>
+
+
+-)Method sp.obj of object sp.slot.data invocated in method RequestFinish of object HttpUpdateEngine
+in method HttpUpdateEngine::requestFinish state of variables res, errtext  was <?xml version="1.0" encoding="CP1251"?>
+<users>
+ <status>200</status>
+ <user>
+  <login>vgangan</login>
+  <name>vgangan</name>
+  <br/>
+ </user>
+ <user>
+  <login>VN</login>
+  <name>1001_VN</name>
+  <br/>
+ </user>
+ <user>
+  <login>Adm</login>
+  <name>101_Adm</name>
+  <br/>
+ </user>
+ <user>
+  <login>DepAdmS</login>
+  <name>900 - DepAdmS</name>
+  <br/>
+ </user>
+ <user>
+  <login>rmagdil</login>
+  <name>905 - RMagdil</name>
+  <br/>
+ </user>
+ <user>
+  <login>dspataru</login>
+  <name>906 - DSpataru</name>
+  <br/>
+ </user>
+ <servicename>Romina</servicename>
+</users>
+
+
+->Method called: RequestAwaiter::requestIncoming
+in method RequestAwaiter::requestincoming state of text variable a was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<users>
+ <status>200</status>
+ <user>
+  <login>vgangan</login>
+  <name>vgangan</name>
+  <br/>
+ </user>
+ <user>
+  <login>VN</login>
+  <name>1001_VN</name>
+  <br/>
+ </user>
+ <user>
+  <login>Adm</login>
+  <name>101_Adm</name>
+  <br/>
+ </user>
+ <user>
+  <login>DepAdmS</login>
+  <name>900 - DepAdmS</name>
+  <br/>
+ </user>
+ <user>
+  <login>rmagdil</login>
+  <name>905 - RMagdil</name>
+  <br/>
+ </user>
+ <user>
+  <login>dspataru</login>
+  <name>906 - DSpataru</name>
+  <br/>
+ </user>
+ <servicename>Romina</servicename>
+</users>
+not awaiting
+in method UserListParser::dconstr state of variables code was 200
+>>cycling: profile obtained: vganganvgangan
+>>cycling: profile obtained: VN1001_VN
+>>cycling: profile obtained: Adm101_Adm
+>>cycling: profile obtained: DepAdmS900 - DepAdmS
+>>cycling: profile obtained: rmagdil905 - RMagdil
+>>cycling: profile obtained: dspataru906 - DSpataru
+
+
+->Method called: HttpUpdateEngine::userLogin
+
+
+->Method called: HttpupdateEngine::sendQuery
+timer started, forming url
+in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=88&cmd=log_in&username=DepAdmS&password=1
+][Created object QNetworkRequest around HttpUpdateEngine::sendQuery
+Connected to network reply object
+
+
+->Method called: HttpUpdateEngine::onRequestFinished
+
+
+-->Slot requestFinish of object HttpUpdateEngine called
+
+][Created object QTextDecoder by his default constructor
+in method HttpUpdateEngine::requestFinish state of text variable res was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<login>
+ <status>200</status>
+<session>3216</session>
+
+</login>
+
+
+-)Method sp.obj of object sp.slot.data invocated in method RequestFinish of object HttpUpdateEngine
+in method HttpUpdateEngine::requestFinish state of variables res, errtext  was <?xml version="1.0" encoding="CP1251"?>
+<login>
+ <status>200</status>
+<session>3216</session>
+
+</login>
+
+
+->Method called: RequestAwaiter::requestIncoming
+in method RequestAwaiter::requestincoming state of text variable a was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<login>
+ <status>200</status>
+<session>3216</session>
+
+</login>
+not awaiting
+
+
+->Method called: HttpUpdateEngine::modeList
+
+
+->Method called: HttpupdateEngine::sendQuery
+timer started, forming url
+in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=1009&cmd=list_modes&session=3216&lang=nolang
+][Created object QNetworkRequest around HttpUpdateEngine::sendQuery
+Connected to network reply object
+
+
+->Method called: HttpUpdateEngine::onRequestFinished
+
+
+-->Slot requestFinish of object HttpUpdateEngine called
+
+][Created object QTextDecoder by his default constructor
+in method HttpUpdateEngine::requestFinish state of text variable res was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<modes>
+ <status>200</status>
+
+	<mode>
+		<modeName>receipt</modeName>
+		<captionMode>Receipt</captionMode>
+	</mode>
+	<mode>
+		<modeName>movingunload</modeName>
+		<captionMode>Moving Unload( Put into cell )</captionMode>
+	</mode>
+	<mode>
+		<modeName>movingload</modeName>
+		<captionMode>Moving Load( Take from cell )</captionMode>
+	</mode>
+	<mode>
+		<modeName>emitting</modeName>
+		<captionMode>Emitting</captionMode>
+	</mode>
+	<mode>
+		<modeName>finishedproductreceipt</modeName>
+		<captionMode>Finished Product Receipt</captionMode>
+	</mode>
+	<mode>
+		<modeName>releasebuyer</modeName>
+		<captionMode>Release buyer</captionMode>
+	</mode>
+	<mode>
+		<modeName>finishedproductreturn</modeName>
+		<captionMode>Finished Product Return</captionMode>
+	</mode>
+	<mode>
+		<modeName>locationinfo</modeName>
+		<captionMode>Location Info</captionMode>
+	</mode>
+	<mode>
+		<modeName>tmcinfobylocation</modeName>
+		<captionMode>Tmc Info By Location</captionMode>
+	</mode>
+	<mode>
+		<modeName>initialdownload</modeName>
+		<captionMode>Initial Download( Inventory by location )</captionMode>
+	</mode>
+	<mode>
+		<modeName>materialshipment</modeName>
+		<captionMode>Material Shipment</captionMode>
+	</mode>
+	<mode>
+		<modeName>adjustment</modeName>
+		<captionMode>Adjustment</captionMode>
+	</mode>
+	<mode>
+		<modeName>inventory</modeName>
+		<captionMode>Inventory in production</captionMode>
+	</mode>
+</modes>
+
+
+-)Method sp.obj of object sp.slot.data invocated in method RequestFinish of object HttpUpdateEngine
+in method HttpUpdateEngine::requestFinish state of variables res, errtext  was <?xml version="1.0" encoding="CP1251"?>
+<modes>
+ <status>200</status>
+
+	<mode>
+		<modeName>receipt</modeName>
+		<captionMode>Receipt</captionMode>
+	</mode>
+	<mode>
+		<modeName>movingunload</modeName>
+		<captionMode>Moving Unload( Put into cell )</captionMode>
+	</mode>
+	<mode>
+		<modeName>movingload</modeName>
+		<captionMode>Moving Load( Take from cell )</captionMode>
+	</mode>
+	<mode>
+		<modeName>emitting</modeName>
+		<captionMode>Emitting</captionMode>
+	</mode>
+	<mode>
+		<modeName>finishedproductreceipt</modeName>
+		<captionMode>Finished Product Receipt</captionMode>
+	</mode>
+	<mode>
+		<modeName>releasebuyer</modeName>
+		<captionMode>Release buyer</captionMode>
+	</mode>
+	<mode>
+		<modeName>finishedproductreturn</modeName>
+		<captionMode>Finished Product Return</captionMode>
+	</mode>
+	<mode>
+		<modeName>locationinfo</modeName>
+		<captionMode>Location Info</captionMode>
+	</mode>
+	<mode>
+		<modeName>tmcinfobylocation</modeName>
+		<captionMode>Tmc Info By Location</captionMode>
+	</mode>
+	<mode>
+		<modeName>initialdownload</modeName>
+		<captionMode>Initial Download( Inventory by location )</captionMode>
+	</mode>
+	<mode>
+		<modeName>materialshipment</modeName>
+		<captionMode>Material Shipment</captionMode>
+	</mode>
+	<mode>
+		<modeName>adjustment</modeName>
+		<captionMode>Adjustment</captionMode>
+	</mode>
+	<mode>
+		<modeName>inventory</modeName>
+		<captionMode>Inventory in production</captionMode>
+	</mode>
+</modes>
+
+
+->Method called: RequestAwaiter::requestIncoming
+in method RequestAwaiter::requestincoming state of text variable a was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<modes>
+ <status>200</status>
+
+	<mode>
+		<modeName>receipt</modeName>
+		<captionMode>Receipt</captionMode>
+	</mode>
+	<mode>
+		<modeName>movingunload</modeName>
+		<captionMode>Moving Unload( Put into cell )</captionMode>
+	</mode>
+	<mode>
+		<modeName>movingload</modeName>
+		<captionMode>Moving Load( Take from cell )</captionMode>
+	</mode>
+	<mode>
+		<modeName>emitting</modeName>
+		<captionMode>Emitting</captionMode>
+	</mode>
+	<mode>
+		<modeName>finishedproductreceipt</modeName>
+		<captionMode>Finished Product Receipt</captionMode>
+	</mode>
+	<mode>
+		<modeName>releasebuyer</modeName>
+		<captionMode>Release buyer</captionMode>
+	</mode>
+	<mode>
+		<modeName>finishedproductreturn</modeName>
+		<captionMode>Finished Product Return</captionMode>
+	</mode>
+	<mode>
+		<modeName>locationinfo</modeName>
+		<captionMode>Location Info</captionMode>
+	</mode>
+	<mode>
+		<modeName>tmcinfobylocation</modeName>
+		<captionMode>Tmc Info By Location</captionMode>
+	</mode>
+	<mode>
+		<modeName>initialdownload</modeName>
+		<captionMode>Initial Download( Inventory by location )</captionMode>
+	</mode>
+	<mode>
+		<modeName>materialshipment</modeName>
+		<captionMode>Material Shipment</captionMode>
+	</mode>
+	<mode>
+		<modeName>adjustment</modeName>
+		<captionMode>Adjustment</captionMode>
+	</mode>
+	<mode>
+		<modeName>inventory</modeName>
+		<captionMode>Inventory in production</captionMode>
+	</mode>
+</modes>
+not awaiting
+modes->multi
+>>cycling: inserted: receipt
+>>cycling: inserted: movingunload
+>>cycling: inserted: movingload
+>>cycling: inserted: emitting
+>>cycling: inserted: finishedproductreceipt
+>>cycling: inserted: releasebuyer
+>>cycling: inserted: finishedproductreturn
+>>cycling: inserted: locationinfo
+>>cycling: inserted: tmcinfobylocation
+>>cycling: inserted: initialdownload
+>>cycling: inserted: materialshipment
+>>cycling: inserted: adjustment
+>>cycling: inserted: inventory
+
+
+->Method called: HttpUpdateEngine::modeSelect
+
+
+->Method called: HttpupdateEngine::sendQuery
+timer started, forming url
+in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=546&cmd=select_mode&session=3216&mode=receipt&submode=
+][Created object QNetworkRequest around HttpUpdateEngine::sendQuery
+Connected to network reply object
+
+
+->Method called: HttpUpdateEngine::onRequestFinished
+
+
+-->Slot requestFinish of object HttpUpdateEngine called
+
+][Created object QTextDecoder by his default constructor
+in method HttpUpdateEngine::requestFinish state of text variable res was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<mode>
+ <status>200</status>
+<settings>
+  <s>
+    <name>skiplistplaces</name>
+    <value>false</value>
+  </s>
+  <s>
+    <name>skiplistsuppliers</name>
+    <value>false</value>
+  </s>
+  <s>
+    <name>allowbindingtobasedocbybarcode</name>
+    <value>false</value>
+  </s>
+  <s>
+    <name>enabledcontrols</name>
+    <value>1,2,3,8,9</value>  </s>
+  <s>
+    <name>autosubmit</name>
+    <value>false</value>
+  </s>
+  <s>
+    <name>autosave</name>
+    <value>false</value>
+  </s>
+  <s>
+    <name>activatebtnphoto</name>
+    <value>true</value>
+  </s>
+</settings>
+
+</mode>
+
+
+-)Method sp.obj of object sp.slot.data invocated in method RequestFinish of object HttpUpdateEngine
+in method HttpUpdateEngine::requestFinish state of variables res, errtext  was <?xml version="1.0" encoding="CP1251"?>
+<mode>
+ <status>200</status>
+<settings>
+  <s>
+    <name>skiplistplaces</name>
+    <value>false</value>
+  </s>
+  <s>
+    <name>skiplistsuppliers</name>
+    <value>false</value>
+  </s>
+  <s>
+    <name>allowbindingtobasedocbybarcode</name>
+    <value>false</value>
+  </s>
+  <s>
+    <name>enabledcontrols</name>
+    <value>1,2,3,8,9</value>  </s>
+  <s>
+    <name>autosubmit</name>
+    <value>false</value>
+  </s>
+  <s>
+    <name>autosave</name>
+    <value>false</value>
+  </s>
+  <s>
+    <name>activatebtnphoto</name>
+    <value>true</value>
+  </s>
+</settings>
+
+</mode>
+
+
+->Method called: RequestAwaiter::requestIncoming
+in method RequestAwaiter::requestincoming state of text variable a was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<mode>
+ <status>200</status>
+<settings>
+  <s>
+    <name>skiplistplaces</name>
+    <value>false</value>
+  </s>
+  <s>
+    <name>skiplistsuppliers</name>
+    <value>false</value>
+  </s>
+  <s>
+    <name>allowbindingtobasedocbybarcode</name>
+    <value>false</value>
+  </s>
+  <s>
+    <name>enabledcontrols</name>
+    <value>1,2,3,8,9</value>  </s>
+  <s>
+    <name>autosubmit</name>
+    <value>false</value>
+  </s>
+  <s>
+    <name>autosave</name>
+    <value>false</value>
+  </s>
+  <s>
+    <name>activatebtnphoto</name>
+    <value>true</value>
+  </s>
+</settings>
+
+</mode>
+not awaiting
+
+
+->Method called: HttpUpdateEngine::placeList
+
+
+->Method called: HttpupdateEngine::sendQuery
+timer started, forming url
+in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=65&cmd=list_places&session=3216
+][Created object QNetworkRequest around HttpUpdateEngine::sendQuery
+Connected to network reply object
+
+
+->Method called: HttpUpdateEngine::onRequestFinished
+
+
+-->Slot requestFinish of object HttpUpdateEngine called
+
+][Created object QTextDecoder by his default constructor
+in method HttpUpdateEngine::requestFinish state of text variable res was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<places>
+ <status>200</status>
+ <place>
+  <code>916</code>
+  <name>DEPOZIT Produs Finit</name>
+ </place>
+ <place>
+  <code>4063</code>
+  <name>PRODUCERE</name>
+ </place>
+ <place>
+  <code>4973</code>
+  <name>DEPOZIT Punti Presa</name>
+ </place>
+ <place>
+  <code>45244</code>
+  <name>DEPOZIT Camera SEGREGARE</name>
+ </place>
+
+</places>
+
+
+-)Method sp.obj of object sp.slot.data invocated in method RequestFinish of object HttpUpdateEngine
+in method HttpUpdateEngine::requestFinish state of variables res, errtext  was <?xml version="1.0" encoding="CP1251"?>
+<places>
+ <status>200</status>
+ <place>
+  <code>916</code>
+  <name>DEPOZIT Produs Finit</name>
+ </place>
+ <place>
+  <code>4063</code>
+  <name>PRODUCERE</name>
+ </place>
+ <place>
+  <code>4973</code>
+  <name>DEPOZIT Punti Presa</name>
+ </place>
+ <place>
+  <code>45244</code>
+  <name>DEPOZIT Camera SEGREGARE</name>
+ </place>
+
+</places>
+
+
+->Method called: RequestAwaiter::requestIncoming
+in method RequestAwaiter::requestincoming state of text variable a was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<places>
+ <status>200</status>
+ <place>
+  <code>916</code>
+  <name>DEPOZIT Produs Finit</name>
+ </place>
+ <place>
+  <code>4063</code>
+  <name>PRODUCERE</name>
+ </place>
+ <place>
+  <code>4973</code>
+  <name>DEPOZIT Punti Presa</name>
+ </place>
+ <place>
+  <code>45244</code>
+  <name>DEPOZIT Camera SEGREGARE</name>
+ </place>
+
+</places>
+not awaiting
+loaded
+
+
+->Method called: HttpUpdateEngine::placeSelect
+
+
+->Method called: HttpupdateEngine::sendQuery
+timer started, forming url
+in method sendQuery state of variables url was una.md:3323/um/sammy_clouddev.php?delay=25&cmd=select_place&session=3216&place=4063
+][Created object QNetworkRequest around HttpUpdateEngine::sendQuery
+Connected to network reply object
+
+
+->Method called: HttpUpdateEngine::onRequestFinished
+
+
+-->Slot requestFinish of object HttpUpdateEngine called
+
+][Created object QTextDecoder by his default constructor
+in method HttpUpdateEngine::requestFinish state of text variable res was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<place>
+ <status>200</status>
+
+</place>
+
+
+-)Method sp.obj of object sp.slot.data invocated in method RequestFinish of object HttpUpdateEngine
+in method HttpUpdateEngine::requestFinish state of variables res, errtext  was <?xml version="1.0" encoding="CP1251"?>
+<place>
+ <status>200</status>
+
+</place>
+
+
+->Method called: RequestAwaiter::requestIncoming
+in method RequestAwaiter::requestincoming state of text variable a was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<place>
+ <status>200</status>
+
+</place>
+not awaiting
