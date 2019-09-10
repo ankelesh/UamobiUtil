@@ -8,8 +8,12 @@
 
 #include "photo/datarequest.h"
 #include "global.h"
+#include "NetCallArgs.h"
 
 class QNetworkReply;
+
+
+
 
 class DataUpdateEngine : public QObject
 {
@@ -52,8 +56,9 @@ public:
       , QObject * receiver
       , const char * slot
     ) = 0;
-    virtual void placeList
+    virtual NetCallArgs * placeList
     (
+		NetCallArgs * nargs,
         QObject * receiver
       , const char * slot
     ) = 0;
@@ -266,10 +271,19 @@ public:
             QObject * receiver,
             const char * slot
             ) =0;
+	virtual NetCallArgs* getWarehousesList(
+		NetCallArgs* nca = Q_NULLPTR,
+		QObject* receiver = Q_NULLPTR,
+		const char* slot = Q_NULLPTR
+	) = 0;
+
     // photo-specific
     virtual void makeRequest( DataRequest * dr ) = 0;
     static DataUpdateEngine * getMain( QObject * parent = 0);
     static DataUpdateEngine * byName( QString name, QObject * parent = 0 );
+
+signals:
+	void responseArrived(QString res, QString err);
 };
 
 #endif // UPDATEDATAENGINE_H

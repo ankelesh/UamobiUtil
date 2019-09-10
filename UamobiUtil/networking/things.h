@@ -67,6 +67,12 @@ struct parsedSupplier
 	QString name;
 	QString orders;
 };
+struct parsedOrder
+{
+	QString code;
+	QString title;
+	QString text;
+};
 struct DocType : public Answer
 {
 	DocType(const QString &code, const QString &title)

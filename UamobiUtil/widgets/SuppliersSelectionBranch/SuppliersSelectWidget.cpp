@@ -24,15 +24,18 @@ void specwidgets::_SupplierSelectionWidget::itemSelectedFromList(QListWidgetItem
 SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* parent)
 	: inframedWidget(parent), globalSettings(go), allsuppliers(),
 	mainLayout(new QVBoxLayout(this)),
-	innerWidget(new QWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
+	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
 	headerLayout(new QHBoxLayout(innerWidget)), footerLayout(new QHBoxLayout(innerWidget)),
 	userHelp(new QLabel(innerWidget)), userinputField(new QLineEdit(innerWidget)),
 	searchButton(new QPushButton(innerWidget)), ordfilterButton(new QPushButton(innerWidget)),
 	supplierSelection(new specwidgets::_SupplierSelectionWidget(allsuppliers, innerWidget)),
-	backButton(new QPushButton(innerWidget))
+	backButton(new QPushButton(innerWidget)), orderSelectBranch(new OrderSelectionWidget(go, confirmedSupplier, this)),
+	current(innerWidget)
 {
 	this->setLayout(mainLayout);
 	mainLayout->addWidget(innerWidget);
+	mainLayout->addWidget(orderSelectBranch);
+
 	innerWidget->setLayout(innerLayout);
 	innerLayout->addWidget(userHelp);
 	innerLayout->addLayout(headerLayout);
@@ -46,11 +49,13 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 
 	userHelp->setText(tr("suppliers_selection_widget_user_tip"));
 	searchButton->setText(tr("suppliers_selection_search!"));
-	ordfilterButton->setText(tr("W\O"));
+	ordfilterButton->setText(tr("W\\O"));
 	backButton->setText(tr("suppliers_selection_back"));
 
 	ordfilterButton->setCheckable(true);
 	ordfilterButton->setChecked(false);
+
+	orderSelectBranch->hide();
 
 	loadSuppliers();
 
@@ -59,6 +64,7 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 	QObject::connect(ordfilterButton, &QPushButton::toggled, this, &SuppliersSelectWidget::ordFilterSwitched);
 	QObject::connect(backButton, &QPushButton::clicked, this, &SuppliersSelectWidget::backRequired);
 	QObject::connect(supplierSelection, &specwidgets::_SupplierSelectionWidget::supplierPicked, this, &SuppliersSelectWidget::supplierPicked);
+	QObject::connect(orderSelectBranch, &OrderSelectionWidget::backRequired, this, &SuppliersSelectWidget::hideCurrent);
 #else
 	!!!implement!!!
 #endif
@@ -81,8 +87,14 @@ void SuppliersSelectWidget::ordFilterSwitched(bool state)
 	}
 }
 
-void SuppliersSelectWidget::supplierPicked(parsedSupplier)
+void SuppliersSelectWidget::supplierPicked(parsedSupplier supp)
 {
+	userHelp->setText("11111111");
+	confirmedSupplier = supp;
+	innerWidget->hide();
+	current = orderSelectBranch;
+	current->show();
+	orderSelectBranch->loadOrders();
 }
 
 void SuppliersSelectWidget::loadSuppliers()
@@ -102,5 +114,14 @@ void SuppliersSelectWidget::loadSuppliers()
 	{
 		allsuppliers = RequestParser::interpretAsSupplierList(awaiter.restext, awaiter.errtext);
 		supplierSelection->reload();
+	}
+}
+void SuppliersSelectWidget::hideCurrent()
+{
+	if (current != innerWidget)
+	{
+		current->hide();
+		current = innerWidget;
+		current->show();
 	}
 }

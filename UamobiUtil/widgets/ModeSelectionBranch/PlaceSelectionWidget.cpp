@@ -21,8 +21,9 @@ void specwidgets::_placeSelectionWidget::indexSelected(int Index)
 	emit placeSelected(places.at(Index));
 }
 
-PlaceSelectionWidget::PlaceSelectionWidget(const GlobalAppSettings& go, QWidget* parent)
-	: inframedWidget(parent), globalSettings(go), allplaces(),
+PlaceSelectionWidget::PlaceSelectionWidget(const GlobalAppSettings& go, QWidget* parent,
+	PLACE_LIST_NETW_FUNCTION lplaces)
+	: inframedWidget(parent), globalSettings(go), listPlaces(lplaces), allplaces(),
 	mainLayout(new QVBoxLayout(this)), buttonLayout(new QHBoxLayout(this)),
 	scrArea(new QScrollArea(this)), userTip(new QLabel(this)),
 	modeTip(new QLabel(this)), placesTip(new QLabel(this)),
@@ -80,7 +81,11 @@ void PlaceSelectionWidget::placeSelected(parsedPlace pl)
 void PlaceSelectionWidget::loadPlaces()
 {
 	RequestAwaiter awaiter;
-	globalSettings.networkingEngine->placeList(&awaiter, RECEIVER_SLOT_NAME);
+	auto httpointer = (globalSettings.networkingEngine);
+	(*httpointer.*listPlaces)(Q_NULLPTR, &awaiter, RECEIVER_SLOT_NAME);
+	
+	//httpointer->placeList(Q_NULLPTR, &awaiter, RECEIVER_SLOT_NAME);
+	//globalSettings.networkingEngine->placeList(Q_NULLPTR, &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 	while (awaiter.isAwaiting())
 	{

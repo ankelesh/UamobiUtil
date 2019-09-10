@@ -90,8 +90,18 @@ void UamobiUtil::hideCurrent()
 {
 	if (current != &mainPage)
 	{
-		(*current)->hide();
-		mainLayout->removeWidget(*current);
-		delete (*current);
+		if (current == &modeSelectionBranch)
+		{
+
+			(*current)->hide();
+			mainLayout->removeWidget(*current);
+			delete (*current);
+			current = &mainPage;
+			(*current)->show();
+		}
+		else
+		{
+			gotoModeSelection();
+		}
 	}
 }

@@ -27,8 +27,13 @@
 /*
 	This widget is used to select place. Generally it's behaviour is similar with ModeSelectionWidget, but this widget
 	is top one of its branch.
+	update:
+	fixed minor bugs, added chaining to ordersSelect (! possible this is renundant, think about adding another subclass particulary for 
+	branch node version
 */
 
+
+typedef NetCallArgs* (DataUpdateEngine::* PLACE_LIST_NETW_FUNCTION)(NetCallArgs*, QObject*, const char*);
 
 using parse_uniresults_functions::placesResponse;
 namespace specwidgets
@@ -58,6 +63,8 @@ class PlaceSelectionWidget : public inframedWidget // This widget is top of Mode
 protected:
 	// uses GAS
 	const GlobalAppSettings& globalSettings;
+	// pointer to function used for fetching place list
+	PLACE_LIST_NETW_FUNCTION listPlaces;
 	// place list
 	placesResponse allplaces;
 	// widgets
@@ -71,7 +78,9 @@ protected:
 	QPushButton* backButton;
 
 public:
-	PlaceSelectionWidget(const GlobalAppSettings& go, QWidget* parent = Q_NULLPTR);
+	PlaceSelectionWidget(const GlobalAppSettings& go, QWidget* parent = Q_NULLPTR,
+		PLACE_LIST_NETW_FUNCTION meth = &DataUpdateEngine::placeList
+		);
 private slots:
 	void placeSelected(parsedPlace);	//	sends place_select request, then emits parsedPlace
 public slots:

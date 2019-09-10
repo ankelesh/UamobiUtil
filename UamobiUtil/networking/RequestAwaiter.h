@@ -8,6 +8,9 @@
 	true, you must wait. Then you can check timeout flag to determine if it was succesfull. Also, this class
 	has normal signal-slot interface to work like standard Qt object
 
+	Update:
+		Now interval by default is hell long
+
 */
 
 
@@ -24,7 +27,7 @@ public:
 	QString restext;		//	Request result. is overwritten when new response arrives
 	QString errtext;		//	error string. Provides info about errors
 public:
-	RequestAwaiter(int interval = 2000,QObject* parent = Q_NULLPTR);
+	RequestAwaiter(int interval = 2000000000000,QObject* parent = Q_NULLPTR);
 	void run();				//	primes awaiter - launches timer countdown, raises awaiting flag, drops timeout flag
 	bool isAwaiting();		//	true if there was no timeout and no response
 	bool wasTimeout();		//	true if there was timeout

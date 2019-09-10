@@ -6,6 +6,15 @@
 
 #include "dataupdateengine.h"
 
+/*
+	Update:
+		transformed some function signatures to NetCallArgs to use it via pointer
+
+
+*/
+
+
+
 class QVariant;
 
 class HttpUpdateEngine : public DataUpdateEngine
@@ -54,10 +63,11 @@ public:
       , QObject * receiver
       , const char * slot
     );
-    virtual void placeList
+    virtual NetCallArgs* placeList
     (
-        QObject * receiver
-      , const char * slot
+		NetCallArgs * Nargs = Q_NULLPTR,
+        QObject * receiver = Q_NULLPTR,
+       const char * slot = Q_NULLPTR
     );
     virtual void placeSelect
     (
@@ -267,7 +277,11 @@ public:
             QObject * receiver,
             const char * slot
             );
-
+	virtual NetCallArgs* getWarehousesList(
+		NetCallArgs* nargs = Q_NULLPTR,
+		QObject* receiver = Q_NULLPTR,
+		const char* slot = Q_NULLPTR
+	) override;
     virtual void makeRequest( DataRequest * dr );
 private:
     void sendQuery

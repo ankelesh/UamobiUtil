@@ -50,7 +50,7 @@ struct GlobalAppSettings
 		QSettings settings("settings.ini", QSettings::IniFormat);
 		HttpUrl = settings.value("http_host", "").toString();
 		language = settings.value("app_lang", "").toString();
-		timeoutInt = settings.value("timeout", 2000).toInt();
+		timeoutInt = settings.value("timeout", 200000000).toInt();
 		setDefaultsToEmpty();
 		setTranslator();
 	}

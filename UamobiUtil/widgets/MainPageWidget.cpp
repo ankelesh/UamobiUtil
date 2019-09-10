@@ -63,7 +63,8 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 
 	exitButton->setText(tr("main_page_exit_button"));
 	settingsButton->setText(tr("main_page_settings_button"));
-	
+
+
 	loadUsers();
 
 #ifdef QT_VERSION5X

@@ -18,5 +18,6 @@ AbstractListSelectionWidget::AbstractListSelectionWidget(QWidget* parent)
 	: QListWidget(parent)
 {
 	this->setSelectionMode(QAbstractItemView::SingleSelection);
+	QObject::connect(this, &QListWidget::itemClicked, this, &AbstractListSelectionWidget::itemSelectedFromList);
 }
 

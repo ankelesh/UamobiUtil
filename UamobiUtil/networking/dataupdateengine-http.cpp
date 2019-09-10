@@ -149,7 +149,7 @@ void HttpUpdateEngine::modeSelect(
     );
 }
 
-void HttpUpdateEngine::placeList( QObject* receiver, const char* slot )
+NetCallArgs* HttpUpdateEngine::placeList(NetCallArgs * nargs, QObject* receiver, const char* slot )
 {
     detrace_METHCALL("HttpUpdateEngine::placeList")
     sendQuery(
@@ -157,6 +157,7 @@ void HttpUpdateEngine::placeList( QObject* receiver, const char* slot )
       , receiver
       , slot
     );
+	return nargs;
 }
 
 void HttpUpdateEngine::placeSelect( const QString& place, QObject* receiver, const char* slot )
@@ -644,9 +645,9 @@ void HttpUpdateEngine::requestFinish( QNetworkReply * reply )
         //if( sp.)
         // убрана проверка для запуска parsDocExitErrors ( Мунтяну В. );
         //if (sp.id == m_nextQueryId) {
-		detrace_METHINVOK("sp.obj", "sp.slot.data", "RequestFinish", "HttpUpdateEngine")
-			detrace_METHDATAS("HttpUpdateEngine::requestFinish", "res, errtext ", << res << errText)
-			emit answerReceived(res);
+		//detrace_METHINVOK("sp.obj", "sp.slot.data", "RequestFinish", "HttpUpdateEngine")
+			//detrace_METHDATAS("HttpUpdateEngine::requestFinish", "res, errtext ", << res << errText)
+			emit responseArrived(res, errText);
         QMetaObject::invokeMethod( sp.obj, sp.slot.data(), Q_ARG( QString, res ), Q_ARG( QString, errText ) );
         //}
     }
@@ -717,6 +718,17 @@ void HttpUpdateEngine::docGetMultipleVersions(const QString &barcode, QObject *r
     sendQuery("doc_get_mult_version&session=" + m_sessionId + "&barcode=" + barcode,
               receiver,
               slot);
+}
+
+NetCallArgs* HttpUpdateEngine::getWarehousesList(NetCallArgs* nargs, QObject* receiver, const char* slot)
+{
+	detrace_METHCALL("HttpUpdateEngine::getWarehousesList")
+		sendQuery(
+			"list_places&session=" + m_sessionId
+			, receiver
+			, slot
+		);
+	return nargs;
 }
 
 QString HttpUpdateEngine::props2str(DataRequest *dr)

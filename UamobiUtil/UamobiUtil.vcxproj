@@ -114,10 +114,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="debugtrace.cpp" />
+    <ClCompile Include="legacy\helpers\abstractinputhelper.cpp" />
+    <ClCompile Include="legacy\helpers\datalogic_dlscanner.cpp" />
+    <ClCompile Include="legacy\helpers\emulatedkbdinputhelper.cpp" />
+    <ClCompile Include="legacy\helpers\helpermanager.cpp" />
+    <ClCompile Include="legacy\helpers\unitech_usi_dll.cpp" />
     <ClCompile Include="legacy\legacy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="networking\dataupdateengine-http.cpp" />
     <ClCompile Include="networking\dataupdateengine.cpp" />
+    <ClCompile Include="networking\NetCallArgs.cpp" />
     <ClCompile Include="networking\Parsers\abs_parsed_request.cpp" />
     <ClCompile Include="networking\Parsers\DynamicLinearParsers.cpp" />
     <ClCompile Include="networking\Parsers\NamedAttributesResponseParsers.cpp" />
@@ -134,8 +140,11 @@
     <ClCompile Include="widgets\ModeSelectionBranch\ModeSelectionWidget.cpp" />
     <ClCompile Include="widgets\ModeSelectionBranch\PlaceSelectionWidget.cpp" />
     <ClCompile Include="widgets\parents\AbstractListSelectionWidget.cpp" />
+    <ClCompile Include="widgets\parents\abstractNodeInterface.cpp" />
     <ClCompile Include="widgets\parents\AbstractVariantSelectionWidget.cpp" />
+    <ClCompile Include="widgets\ReceiptNoneBranch\ReceiptRootWidget.cpp" />
     <ClCompile Include="widgets\SettingsBranches\MainSettingsWidget.cpp" />
+    <ClCompile Include="widgets\SuppliersSelectionBranch\OrderSelectionWidget.cpp" />
     <ClCompile Include="widgets\SuppliersSelectionBranch\SuppliersSelectWidget.cpp" />
     <ClCompile Include="widgets\utils\ElementsStyles.cpp" />
     <ClCompile Include="widgets\utils\SpecializedWidgets.cpp" />
@@ -160,6 +169,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debugtrace.h" />
+    <QtMoc Include="legacy\helpers\abstractinputhelper.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+    </QtMoc>
+    <ClInclude Include="legacy\helpers\datalogic_dlscanner.h" />
+    <QtMoc Include="legacy\helpers\emulatedkbdinputhelper.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+    </QtMoc>
+    <QtMoc Include="legacy\helpers\helpermanager.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+    </QtMoc>
+    <ClInclude Include="legacy\helpers\unitech_usi_dll.h" />
     <ClInclude Include="legacy\legacy.h" />
     <ClInclude Include="networking\global.h" />
     <QtMoc Include="widgets\utils\SpecializedWidgets.h">
@@ -182,6 +205,7 @@
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
     </QtMoc>
+    <ClInclude Include="networking\NetCallArgs.h" />
     <ClInclude Include="networking\Parsers\abs_parsed_request.h" />
     <ClInclude Include="networking\Parsers\DynamicLinearParsers.h" />
     <ClInclude Include="networking\Parsers\NamedAttributesResponseParsers.h" />
@@ -208,6 +232,15 @@
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
     </QtMoc>
+    <QtMoc Include="widgets\SuppliersSelectionBranch\OrderSelectionWidget.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+    </QtMoc>
+    <ClInclude Include="widgets\parents\abstractNodeInterface.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+    </ClInclude>
+    <ClInclude Include="widgets\ReceiptNoneBranch\ReceiptRootWidget.h" />
     <ClInclude Include="widgets\utils\GlobalAppSettings.h" />
     <QtMoc Include="widgets\MainPageWidget.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>

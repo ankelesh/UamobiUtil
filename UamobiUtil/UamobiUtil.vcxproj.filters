@@ -70,6 +70,12 @@
     <Filter Include="Source Files\SuppliersSelectionBranch">
       <UniqueIdentifier>{7f6fba08-a8c6-464d-bd25-d4b43adce392}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\legacy">
+      <UniqueIdentifier>{d9c8208d-80f4-487a-b4ec-973af6ba712d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\legacy">
+      <UniqueIdentifier>{67053f6a-8a38-4c60-91b6-3119e94feb0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -111,9 +117,6 @@
     <ClCompile Include="networking\xml_funcs.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
-    <ClCompile Include="legacy\legacy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\ModeSelectionBranch\ModeSelectionWidget.cpp">
       <Filter>Source Files\ModeSelectionBranch</Filter>
     </ClCompile>
@@ -144,11 +147,41 @@
     <ClCompile Include="networking\Parsers\SimpleResponseParsers.cpp">
       <Filter>Source Files\Network\Parsing</Filter>
     </ClCompile>
+    <ClCompile Include="legacy\helpers\abstractinputhelper.cpp">
+      <Filter>Source Files\legacy</Filter>
+    </ClCompile>
+    <ClCompile Include="legacy\helpers\datalogic_dlscanner.cpp">
+      <Filter>Source Files\legacy</Filter>
+    </ClCompile>
+    <ClCompile Include="legacy\helpers\emulatedkbdinputhelper.cpp">
+      <Filter>Source Files\legacy</Filter>
+    </ClCompile>
+    <ClCompile Include="legacy\helpers\helpermanager.cpp">
+      <Filter>Source Files\legacy</Filter>
+    </ClCompile>
+    <ClCompile Include="legacy\helpers\unitech_usi_dll.cpp">
+      <Filter>Source Files\legacy</Filter>
+    </ClCompile>
+    <ClCompile Include="legacy\legacy.cpp">
+      <Filter>Source Files\legacy</Filter>
+    </ClCompile>
     <ClCompile Include="widgets\parents\AbstractListSelectionWidget.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\util\parents</Filter>
     </ClCompile>
     <ClCompile Include="widgets\SuppliersSelectionBranch\SuppliersSelectWidget.cpp">
+      <Filter>Source Files\SuppliersSelectionBranch</Filter>
+    </ClCompile>
+    <ClCompile Include="networking\NetCallArgs.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\parents\abstractNodeInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ReceiptNoneBranch\ReceiptRootWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\SuppliersSelectionBranch\OrderSelectionWidget.cpp">
+      <Filter>Source Files\SuppliersSelectionBranch</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,11 +230,23 @@
     <QtMoc Include="widgets\parents\AbstractVariantSelectionWidget.h">
       <Filter>Header Files\util\parents</Filter>
     </QtMoc>
-    <QtMoc Include="widgets\parents\AbstractListSelectionWidget.h">
-      <Filter>Header Files</Filter>
+    <QtMoc Include="legacy\helpers\helpermanager.h">
+      <Filter>Header Files\legacy</Filter>
+    </QtMoc>
+    <QtMoc Include="legacy\helpers\emulatedkbdinputhelper.h">
+      <Filter>Header Files\legacy</Filter>
+    </QtMoc>
+    <QtMoc Include="legacy\helpers\abstractinputhelper.h">
+      <Filter>Header Files\legacy</Filter>
     </QtMoc>
     <QtMoc Include="widgets\SuppliersSelectionBranch\SuppliersSelectWidget.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\SuppliersSelectionBranch</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\parents\AbstractListSelectionWidget.h">
+      <Filter>Header Files\util\parents</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\SuppliersSelectionBranch\OrderSelectionWidget.h">
+      <Filter>Header Files\SuppliersSelectionBranch</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -228,9 +273,6 @@
     <ClInclude Include="debugtrace.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
-    <ClInclude Include="legacy\legacy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="networking\Parsers\abs_parsed_request.h">
       <Filter>Header Files\Network\Parsing</Filter>
     </ClInclude>
@@ -248,6 +290,24 @@
     </ClInclude>
     <ClInclude Include="networking\Parsers\SimpleResponseParsers.h">
       <Filter>Header Files\Network\Parsing</Filter>
+    </ClInclude>
+    <ClInclude Include="legacy\legacy.h">
+      <Filter>Header Files\legacy</Filter>
+    </ClInclude>
+    <ClInclude Include="legacy\helpers\datalogic_dlscanner.h">
+      <Filter>Header Files\legacy</Filter>
+    </ClInclude>
+    <ClInclude Include="legacy\helpers\unitech_usi_dll.h">
+      <Filter>Header Files\legacy</Filter>
+    </ClInclude>
+    <ClInclude Include="networking\NetCallArgs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\parents\abstractNodeInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\ReceiptNoneBranch\ReceiptRootWidget.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

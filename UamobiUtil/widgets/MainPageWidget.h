@@ -21,6 +21,7 @@
 #include "widgets/LoginBranch/LoginWidget.h"
 #include "widgets/LoginBranch/LoginSelectWidget.h"
 #include "widgets/SettingsBranches/MainSettingsWidget.h"
+#include "widgets/parents/abstractNodeInterface.h"
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
 
@@ -31,6 +32,8 @@ const float VERSION = 0.1;
 	server returns any user profiles. In worst case, this widget automatically shows manual login widget.
 	Also this widget contains Settings widget, which is affecting GlobalAppSettings.
 
+	Update:
+		now more intellegent hiding - > returns to modeselect if user already logged in
 */
 
 

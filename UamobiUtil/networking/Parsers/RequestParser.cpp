@@ -130,6 +130,24 @@ namespace parse_uniresults_functions {
 		return temp;
 	}
 
+	ordersResponse parse_orders_list(uniform_parse_result& ures)
+	{
+		ordersResponse temp;
+		parsedOrder pord;
+		if (queryLengthOkInResult(ures))
+		{
+			temp.reserve(queryReservationSize(ures));
+			for (int i = 0; i < ures.queriesResult.count(); i += 3)
+			{
+				pord.code = ures.queriesResult[i];
+				pord.title = ures.queriesResult[i+1];
+				pord.text = ures.queriesResult[i+2];
+				temp.push_back(pord);
+			}
+		}
+		return temp;
+	}
+
 	bool isSimpliest(QString& res)
 	{
 		if (res.contains("<status>"))
@@ -183,6 +201,12 @@ namespace parse_uniresults_functions {
 			return true;
 		return false;
 	}
+	bool isOrdersList(QString& res)
+	{
+		if (res.contains("<order>"))
+			return true;
+		return false;
+	}
 }
 namespace RequestParser {
 	reqtypes RequestParser::deduceRequestType(QString& res)
@@ -199,7 +223,8 @@ namespace RequestParser {
 			return reqtypes::positional;
 		if (isSuppliersList(res))
 			return reqtypes::suppliers;
-
+		if (isOrdersList(res))
+			return reqtypes::orders;
 		// this must be last because it treats packet as "all ok" response string. This string contains in ANY successfull response.
 		if (isPositionalResponse(res))
 			return reqtypes::simpliest;
@@ -323,5 +348,14 @@ namespace RequestParser {
 			return parse_suppliers(parser.read());
 		}
 		return supplierResponse();
+	}
+	ordersResponse interpretAsOrdersList(QString& res, QString& errtext)
+	{
+		OrdersListParser parser(res, errtext);
+		if (parser.isSuccessfull())
+		{
+				return parse_orders_list(parser.read());
+		}
+		return ordersResponse();
 	}
 }
