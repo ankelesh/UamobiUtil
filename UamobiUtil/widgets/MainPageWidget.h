@@ -37,7 +37,7 @@ const float VERSION = 0.1;
 */
 
 
-class MainPageWidget : public inframedWidget
+class MainPageWidget : public inframedWidget, abstractNode
 {
 	Q_OBJECT
 private:
@@ -65,7 +65,6 @@ private:
 	LoginWidget*  manualLogin;
 	MainSettingsWidget * settingsScreen;
 
-	inframedWidget * current;
 
 
 	

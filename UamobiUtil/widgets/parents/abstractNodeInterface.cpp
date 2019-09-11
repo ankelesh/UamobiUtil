@@ -1,16 +1,18 @@
 #include "abstractNodeInterface.h"
 
-void abstractNode::hideCurrent(inframedWidget* replacement)
+bool abstractNode::_hideCurrent(inframedWidget* replacement)
 {
 	if (current != untouchable)
 	{
 		current->hide();
 		current = replacement;
 		replacement->show();
+		return true;
 	}
+	return false;
 }
 
-void abstractNode::hideAny(inframedWidget* replacement)
+void abstractNode::_hideAny(inframedWidget* replacement)
 {
 	current->hide();
 	replacement->show();

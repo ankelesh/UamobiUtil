@@ -37,7 +37,7 @@ namespace parse_uniresults_functions
 		QVector<UserProfile> profiles;
 		bool manually;
 	};
-	struct TypicalResponce
+	struct TypicalResponse
 	{
 		QString errors;
 		bool resp;
@@ -58,7 +58,9 @@ namespace parse_uniresults_functions
 	QHash<QString, QString> parse_positional_responses(uniform_parse_result& ures);
 	supplierResponse parse_suppliers(uniform_parse_result& ures);
 	ordersResponse parse_orders_list(uniform_parse_result& ures);
+	TypicalResponse parse_richtext(uniform_parse_result& ures);
 
+	// deprecated, should make better
 	bool isSimpliest(QString& res);
 	bool isUserProfiles(QString& res);
 	bool isLoginResponse(QString& res);
@@ -67,6 +69,7 @@ namespace parse_uniresults_functions
 	bool isModeList(QString& res);
 	bool isSuppliersList(QString& res);
 	bool isOrdersList(QString& res);
+	
 }
 
 namespace RequestParser
@@ -75,13 +78,27 @@ namespace RequestParser
 	reqtypes deduceRequestType(QString & res);
 	abs_parsed_request* makeParser(QString& res, QString& errtext, reqtypes type = None);
 	UserProfilesResult interpretAsLogin(QString& res, QString& errtext);
-	TypicalResponce interpretAsLoginResponse(QString& res, QString& errtext);
-	TypicalResponce interpretAsSimpliestResponse(QString& res, QString& errtext);
+	TypicalResponse interpretAsLoginResponse(QString& res, QString& errtext);
+	TypicalResponse interpretAsSimpliestResponse(QString& res, QString& errtext);
 	modesResponse interpretAsModeList(QString& res, QString& errtext);
 	placesResponse interpretAsPlaceList(QString& res, QString& errtext);
 	PositionalResponse interpretAsPositionalResponse(QString& res, QString& errtext);
 	supplierResponse interpretAsSupplierList(QString& res, QString& errtext);
 	ordersResponse interpretAsOrdersList(QString& res, QString& errtext);
+	TypicalResponse interpretAsRichtextResponse(QString& res, QString& errtext);
 };
+namespace interpretsPointers
+{
+	using parse_uniresults_functions::placesResponse;
+	using parse_uniresults_functions::supplierResponse;
+	using parse_uniresults_functions::ordersResponse;
+	using parse_uniresults_functions::PositionalResponse;
+	using parse_uniresults_functions::TypicalResponse;
 
+	typedef placesResponse(*interpretAsPlaceLike)(QString&, QString&);
+	typedef supplierResponse(*interpretAsSupplierLike)(QString&, QString&);
+	typedef ordersResponse(*interpretAsOrdersLike)(QString&, QString&);
+	typedef PositionalResponse(*interpretAsPositionalLike)(QString&, QString&);
+	typedef TypicalResponse(*interpretAsTypicalLike)(QString&, QString&);
+}
 

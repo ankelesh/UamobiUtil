@@ -16,7 +16,7 @@
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/ModeSelectionBranch/ModeSelectionWidget.h"
-#include "widgets/SuppliersSelectionBranch/SuppliersSelectWidget.h"
+#include "widgets/ReceiptNoneBranch/ReceiptRootWidget.h"
 /*
 	This is main widget of the project. It is based on QWidget and has no gui representation. Main goal
 	of this widget - is providing root functionality in widget tree. It is responsible for dynamical allocation of widgets,
@@ -40,7 +40,7 @@ private:
 
 	QPointer<inframedWidget> mainPage;			//	Login page. Remember - user must be logged in to perform complex ops.
 	QPointer<inframedWidget> modeSelectionBranch;	//	Mode selection. Usually this branch must be shown after logging in
-	QPointer<inframedWidget> suppliersSelectionBranch; // suppliers selection.
+	QPointer<inframedWidget> receiptBranch; // receipt branch selection.
 
 	QPointer<inframedWidget>* current;		//	This pointer is holding currently shown widget or branch
 
@@ -51,7 +51,7 @@ public:
 
 private slots:
 	void gotoModeSelection();			//	Switch to modeSelectionBranch
-	void gotoSupplierSelection();
+	void gotoReceiptBranch(QHash<QString, QString>);
 
 	void interpretMode(QHash<QString, QString>);	//	interprets mode settings obtained through "select mode". NOT IMPLEMENTED
 public slots:

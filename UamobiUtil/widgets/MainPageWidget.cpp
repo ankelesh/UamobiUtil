@@ -4,14 +4,12 @@
 
 void MainPageWidget::show_login_widget(QString & log)
 {
-	current->hide();
-	current = manualLogin;
 	manualLogin->set_login(log);
-	current->show();
+	_hideAny(manualLogin);
 }
 
 MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
-	: inframedWidget(parent), globalSettings(go), mainLayout(new QVBoxLayout(this)),
+	: inframedWidget(parent), abstractNode(), globalSettings(go), mainLayout(new QVBoxLayout(this)),
 	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
 	topPanelLayout(new QHBoxLayout(innerWidget)), bottomPanelLayout(new QHBoxLayout(innerWidget)),
 	versionLabel(new QLabel(innerWidget)), hostLabel(new QLabel(innerWidget)),
@@ -19,8 +17,10 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	userHelpLabel(new QLabel(innerWidget)), loginsStorageWidget(new LoginSelectWidget(profiles, scrArea)), userIdInfo(new QLabel(innerWidget)),
 	exitButton(new QPushButton(innerWidget)), settingsButton(new QPushButton(innerWidget)),
 	userid(new QLineEdit(innerWidget)), manualLogin(new LoginWidget(go, this)), 
-	settingsScreen(new MainSettingsWidget(go, this)),  current(innerWidget)
+	settingsScreen(new MainSettingsWidget(go, this))
 {
+	current = innerWidget;
+	untouchable = innerWidget;
 	this->setLayout(mainLayout);
 	mainLayout->addWidget(innerWidget);
 	mainLayout->addWidget(settingsScreen);
@@ -90,9 +90,7 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 
 void MainPageWidget::settinsPressed()
 {
-	current->hide();
-	current = settingsScreen;
-	current->show();
+	_hideAny(settingsScreen);
 }
 
 
@@ -110,15 +108,9 @@ void MainPageWidget::userPicked(UserProfile up)
 
 void MainPageWidget::hideCurrent()
 {
-	if (current == innerWidget)
+	if (!_hideCurrent(innerWidget))
 	{
 		emit backRequired();
-	}
-	else
-	{
-		current->hide();
-		innerWidget->show();
-		current = innerWidget;
 	}
 }
 

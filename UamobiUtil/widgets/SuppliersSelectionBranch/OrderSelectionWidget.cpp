@@ -69,11 +69,20 @@ void OrderSelectionWidget::orderSelected(parsedOrder po)
 	}
 	else
 	{
-		if (RequestParser::interpretAsSimpliestResponse(awaiter.restext, awaiter.errtext).resp)
+
+		parse_uniresults_functions::TypicalResponse resp =
+			RequestParser::interpretAsRichtextResponse(awaiter.restext, awaiter.errtext);
+		if (resp.resp)
 		{
-			emit orderConfirmed(po);
+			detrace_METHEXPL("succesfully read")
+			emit orderConfirmed(po, resp.errors);
 		}
 	}
+}
+
+void OrderSelectionWidget::setTimeoutMessage()
+{
+	userInfo->setText(tr("order_selection_timeout"));
 }
 
 void OrderSelectionWidget::loadOrders()

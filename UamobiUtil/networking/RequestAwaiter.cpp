@@ -46,7 +46,7 @@ void RequestAwaiter::requestIncoming(QString a, QString b)
 	if (a.isEmpty() && b.isEmpty())
 		return;*/
 	detrace_METHCALL("RequestAwaiter::requestIncoming")
-	detrace_METHTEXTS("RequestAwaiter::requestincoming", "a", a)
+	detrace_METHTEXTS("RequestAwaiter::requestincoming", "a, b", a << "|" << b)
 	restext = a; errtext = b;
 	detrace_METHEXPL("not awaiting")
 	awaiting = false;

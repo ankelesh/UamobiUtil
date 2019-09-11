@@ -18,9 +18,12 @@ QString UserListParser::parseErrorText()
 UserListParser::UserListParser(QString& res, QString& err)
 	: abs_parsed_request(res, err)
 {
+	detrace_METHTEXTS("UserListParser", "res", res)
 	QDomDocument doc;
 	doc.setContent(result);
+	detrace_METHEXPL("errors: " << doc.toString())
 	QString code = doc.elementsByTagName("status").at(0).toElement().text();
+
 	parseres.request_status = code.toInt();
 	detrace_METHDATAS("UserListParser::dconstr", "code", <<code)
 	if (parseres.request_status != 200)
@@ -35,6 +38,7 @@ UserListParser::UserListParser(QString& res, QString& err)
 		parseres.alternative_result = 0;
 	}
 	QDomNodeList dmndl = doc.elementsByTagName("user");
+	detrace_METHEXPL("dmndl len: " << dmndl.count())
 	for (int i = 0; i < dmndl.count(); ++i)
 	{
 		parseres.queriesResult << (dmndl.at(i).childNodes().at(1).toElement().text());

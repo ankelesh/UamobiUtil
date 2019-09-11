@@ -5,12 +5,12 @@
 DataUpdateEngine::DataUpdateEngine(QObject *parent) :
 	QObject(parent)
 {
-    detrace_DCONSTR("DataUpdateEngine")
+    //detrace_DCONSTR("DataUpdateEngine")
 }
 
 DataUpdateEngine* DataUpdateEngine::byName(QString name, QObject *parent)
 {
-    detrace_METHCALL("DataUpdateEngine::byName")
+   // detrace_METHCALL("DataUpdateEngine::byName")
 	name = name.toLower();
 #ifdef FTR_DATA_INMEMORY
 	if (name == "mem")
@@ -22,7 +22,7 @@ DataUpdateEngine* DataUpdateEngine::byName(QString name, QObject *parent)
 
 DataUpdateEngine *DataUpdateEngine::getMain(QObject *parent)
 {
-    detrace_METHCALL("DataUpdateEngine::getMain")
+    //detrace_METHCALL("DataUpdateEngine::getMain")
 	//return byName(settings()->value("dataeng", "http").toString(), parent);
 	return  byName("dataeng",parent);
 }

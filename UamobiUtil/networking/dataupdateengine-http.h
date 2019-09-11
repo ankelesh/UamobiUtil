@@ -63,10 +63,9 @@ public:
       , QObject * receiver
       , const char * slot
     );
-    virtual NetCallArgs* placeList
+    virtual void placeList
     (
-		NetCallArgs * Nargs = Q_NULLPTR,
-        QObject * receiver = Q_NULLPTR,
+	   QObject * receiver = Q_NULLPTR,
        const char * slot = Q_NULLPTR
     );
     virtual void placeSelect
@@ -219,14 +218,7 @@ public:
       , QObject * receiver
       , const char * slot
     );
-
-    virtual void recListSuppliers
-    (
-        const QString & text
-      , bool hasOrders
-      , QObject * receiver
-      , const char * slot
-    );
+		virtual void recListSuppliers(const QString & text, bool hasOrd, QObject*, const char*) override;
     virtual void recListOrders
     (
         const QString & supplier
@@ -277,8 +269,9 @@ public:
             QObject * receiver,
             const char * slot
             );
-	virtual NetCallArgs* getWarehousesList(
-		NetCallArgs* nargs = Q_NULLPTR,
+	virtual void getWarehousesList(
+		const QString & text,
+		bool hasOrd,
 		QObject* receiver = Q_NULLPTR,
 		const char* slot = Q_NULLPTR
 	) override;

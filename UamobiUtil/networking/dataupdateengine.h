@@ -56,9 +56,8 @@ public:
       , QObject * receiver
       , const char * slot
     ) = 0;
-    virtual NetCallArgs * placeList
+    virtual void placeList
     (
-		NetCallArgs * nargs,
         QObject * receiver
       , const char * slot
     ) = 0;
@@ -217,7 +216,7 @@ public:
     virtual void recListSuppliers
     (
         const QString & text
-      , bool hasOrdersOnly
+      , const bool hasOrdersOnly
       , QObject * receiver
       , const char * slot
     ) = 0;
@@ -271,8 +270,9 @@ public:
             QObject * receiver,
             const char * slot
             ) =0;
-	virtual NetCallArgs* getWarehousesList(
-		NetCallArgs* nca = Q_NULLPTR,
+	virtual void getWarehousesList(
+		const QString & text,
+		const bool hasOrd,
 		QObject* receiver = Q_NULLPTR,
 		const char* slot = Q_NULLPTR
 	) = 0;
@@ -285,5 +285,16 @@ public:
 signals:
 	void responseArrived(QString res, QString err);
 };
+
+
+// Methpointers typedefs
+
+//    -- ListSuppliers-like method pointer
+typedef void (DataUpdateEngine::* SuppliersLikeMP)(const QString &, const bool, QObject*, const char*);
+
+//	  -- Any method without args pointer
+typedef void (DataUpdateEngine::* NoArgsRequestMP)(QObject*, const char*);
+
+
 
 #endif // UPDATEDATAENGINE_H

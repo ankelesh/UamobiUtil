@@ -29,10 +29,10 @@ void UamobiUtil::gotoModeSelection()
 		mainLayout->removeWidget(*current);
 		delete (*current);
 	}
-    ModeSelectionWidget* mb = new ModeSelectionWidget(globalSettings, this);
+    ModeSelectionWidget* mb = new ModeBranchRootWidget(globalSettings, this);
 #ifdef QT_VERSION5X
     QObject::connect(mb, &ModeSelectionWidget::backRequired, this, &UamobiUtil::hideCurrent);
-	QObject::connect(mb, &ModeSelectionWidget::placeAndModeAcquired, this, &UamobiUtil::gotoSupplierSelection);
+	QObject::connect(mb, &ModeSelectionWidget::modeAcquired, this, &UamobiUtil::gotoReceiptBranch);
 #else
     QObject::connect(mb, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
 	throw;
@@ -43,23 +43,23 @@ void UamobiUtil::gotoModeSelection()
 	(*current)->show();
 }
 
-void UamobiUtil::gotoSupplierSelection()
+void UamobiUtil::gotoReceiptBranch(QHash<QString,QString> opts)
 {
-	detrace_METHCALL("goto Suppl")
+	detrace_METHCALL("goto Receipt")
 	(*current)->hide();
 	if (*current != mainPage)
 	{
 		mainLayout->removeWidget(*current);
 		(*current)->deleteLater();
 	}
-	SuppliersSelectWidget* SS = new SuppliersSelectWidget(globalSettings, this);
+	ReceiptRootWidget* RR = new ReceiptRootWidget(globalSettings,opts, this);
 #ifdef QT_VERSION5X
-	QObject::connect(SS, &SuppliersSelectWidget::backRequired, this, &UamobiUtil::hideCurrent);
+	QObject::connect(RR, &ReceiptRootWidget::backRequired, this, &UamobiUtil::hideCurrent);
 #else
 	QObject::connect(SS, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
 #endif
-	suppliersSelectionBranch = SS;
-	current = &suppliersSelectionBranch;
+	receiptBranch = RR;
+	current = &receiptBranch;
 	mainLayout->addWidget(*current);
 	(*current)->show();
 }

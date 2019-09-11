@@ -18,6 +18,7 @@
 #include "widgets/parents/inframedWidget.h"
 #include "widgets/parents/AbstractVariantSelectionWidget.h"
 #include "widgets/ModeSelectionBranch/PlaceSelectionWidget.h"
+#include "widgets/parents/abstractNodeInterface.h"
 // networking imports
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
@@ -73,23 +74,31 @@ protected:
 	specwidgets::_modeSelectionWidget* modeSelection;
 	QPushButton* logoutButton;
 
-	// nest widget in branch
-	PlaceSelectionWidget* placeSelection;
-
-	inframedWidget* current;
-
 	// this list is used to store data obtained after select_mode web request. it will be usefull later
 	QHash<QString, QString> settings;
 public:
 	ModeSelectionWidget(const GlobalAppSettings& go, QWidget* parent = Q_NULLPTR);
 	virtual bool back() override;	//	has top widget
-private slots:
+protected slots:
 	void logoutPressed();		//	this slot sends log_out and only then calls backRequired
-	void modeSelected(parsedMode);	//	these slots react to changes
-	void placeReady(parsedPlace);
-	void hideCurrent();			
+	virtual void modeSelected(parsedMode);	//	these slots react to changes
+	virtual void hideCurrent();
 public slots:
 	void loadModes();				//	loads modes list from web
 signals:
-	void placeAndModeAcquired(QHash<QString, QString>);		//	is emitted when this branch is done
+	void modeAcquired(QHash<QString, QString>);		//	is emitted when this branch is done
+};
+class ModeBranchRootWidget : public ModeSelectionWidget, abstractNode
+{
+	Q_OBJECT
+protected:
+	// child nodes
+	PlaceSelectionWidget* placeSelection;
+public:
+	ModeBranchRootWidget(const GlobalAppSettings& go, QWidget* parent = Q_NULLPTR);
+protected slots:
+	virtual void modeSelected(parsedMode) override;
+	void placeAcquired(parsedPlace);
+	virtual void hideCurrent() override;
+
 };

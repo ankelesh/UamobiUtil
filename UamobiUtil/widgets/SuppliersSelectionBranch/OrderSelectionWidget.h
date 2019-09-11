@@ -61,7 +61,7 @@ protected:
 	const parsedSupplier& supplierInWork;
 
 	ordersResponse allOrders;
-
+	
 
 	QVBoxLayout* mainLayout;
 	QWidget* innerWidget;
@@ -79,7 +79,8 @@ private slots:
 	void orderSelected(parsedOrder);
 public slots:
 	void loadOrders();
+	void setTimeoutMessage();
 signals:
-	void orderConfirmed(parsedOrder);
+	void orderConfirmed(parsedOrder, QString);
 
 };

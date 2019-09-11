@@ -14,6 +14,7 @@ throw;
 #include "widgets/parents/inframedWidget.h"
 #include "widgets/parents/AbstractListSelectionWidget.h"
 #include "OrderSelectionWidget.h"
+#include "widgets/parents/abstractNodeInterface.h"
 // networking imports
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
@@ -62,6 +63,11 @@ protected:
 	GlobalAppSettings& globalSettings;
 	QVector<parsedSupplier> allsuppliers;
 
+	// pointers
+	interpretsPointers::interpretAsSupplierLike interpreter;
+	SuppliersLikeMP listSuppliers;
+
+
 	parsedSupplier confirmedSupplier;
 
 	QVBoxLayout* mainLayout;
@@ -76,19 +82,35 @@ protected:
 	specwidgets::_SupplierSelectionWidget* supplierSelection;
 	QPushButton* backButton;
 
-	OrderSelectionWidget * orderSelectBranch;
-
-	inframedWidget* current;
-
 public:
-	SuppliersSelectWidget(GlobalAppSettings& go, QWidget* parent);
+	SuppliersSelectWidget(GlobalAppSettings& go, QWidget* parent, 
+		SuppliersLikeMP meth = &DataUpdateEngine::recListSuppliers,
+		interpretsPointers::interpretAsSupplierLike inter = &RequestParser::interpretAsSupplierList);
 
-private slots:
+protected slots:
 	void searchPrimed();
 	void ordFilterSwitched(bool);
-	void supplierPicked(parsedSupplier);
+	virtual void supplierPicked(parsedSupplier);
 public slots:
-	void hideCurrent();
-
 	void loadSuppliers();
+signals:
+	void supplierAcquired(parsedSupplier);
+};
+
+class SuppliersSelectionBranch : public SuppliersSelectWidget, abstractNode
+{
+	Q_OBJECT
+protected:
+	
+	OrderSelectionWidget* orderSelection;
+
+public:
+	SuppliersSelectionBranch(GlobalAppSettings& go, QWidget* parent,
+		SuppliersLikeMP meth = &DataUpdateEngine::recListSuppliers,
+		interpretsPointers::interpretAsSupplierLike inter = &RequestParser::interpretAsSupplierList);
+
+protected slots:
+	virtual void hideCurrent();
+	virtual void supplierPicked(parsedSupplier) override;
+	virtual void orderAcquired(parsedOrder);
 };

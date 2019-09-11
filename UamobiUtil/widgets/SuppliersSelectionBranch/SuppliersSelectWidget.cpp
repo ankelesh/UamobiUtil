@@ -21,20 +21,20 @@ void specwidgets::_SupplierSelectionWidget::itemSelectedFromList(QListWidgetItem
 	emit supplierPicked(suppliers.at(currentRow()));
 }
 
-SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* parent)
+SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* parent, 
+	SuppliersLikeMP meth, interpretsPointers::interpretAsSupplierLike inter)
 	: inframedWidget(parent), globalSettings(go), allsuppliers(),
+	listSuppliers(meth), interpreter(inter),
 	mainLayout(new QVBoxLayout(this)),
 	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
 	headerLayout(new QHBoxLayout(innerWidget)), footerLayout(new QHBoxLayout(innerWidget)),
 	userHelp(new QLabel(innerWidget)), userinputField(new QLineEdit(innerWidget)),
 	searchButton(new QPushButton(innerWidget)), ordfilterButton(new QPushButton(innerWidget)),
 	supplierSelection(new specwidgets::_SupplierSelectionWidget(allsuppliers, innerWidget)),
-	backButton(new QPushButton(innerWidget)), orderSelectBranch(new OrderSelectionWidget(go, confirmedSupplier, this)),
-	current(innerWidget)
+	backButton(new QPushButton(innerWidget))
 {
 	this->setLayout(mainLayout);
 	mainLayout->addWidget(innerWidget);
-	mainLayout->addWidget(orderSelectBranch);
 
 	innerWidget->setLayout(innerLayout);
 	innerLayout->addWidget(userHelp);
@@ -53,9 +53,8 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 	backButton->setText(tr("suppliers_selection_back"));
 
 	ordfilterButton->setCheckable(true);
-	ordfilterButton->setChecked(false);
+	ordfilterButton->setChecked(true);
 
-	orderSelectBranch->hide();
 
 	loadSuppliers();
 
@@ -64,7 +63,6 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 	QObject::connect(ordfilterButton, &QPushButton::toggled, this, &SuppliersSelectWidget::ordFilterSwitched);
 	QObject::connect(backButton, &QPushButton::clicked, this, &SuppliersSelectWidget::backRequired);
 	QObject::connect(supplierSelection, &specwidgets::_SupplierSelectionWidget::supplierPicked, this, &SuppliersSelectWidget::supplierPicked);
-	QObject::connect(orderSelectBranch, &OrderSelectionWidget::backRequired, this, &SuppliersSelectWidget::hideCurrent);
 #else
 	!!!implement!!!
 #endif
@@ -89,18 +87,14 @@ void SuppliersSelectWidget::ordFilterSwitched(bool state)
 
 void SuppliersSelectWidget::supplierPicked(parsedSupplier supp)
 {
-	userHelp->setText("11111111");
 	confirmedSupplier = supp;
-	innerWidget->hide();
-	current = orderSelectBranch;
-	current->show();
-	orderSelectBranch->loadOrders();
+	emit supplierAcquired(supp);
 }
 
 void SuppliersSelectWidget::loadSuppliers()
 {
 	RequestAwaiter awaiter;
-	globalSettings.networkingEngine->recListSuppliers(userinputField->text(), ordfilterButton->isChecked(), &awaiter, RECEIVER_SLOT_NAME);
+	(*globalSettings.networkingEngine.*listSuppliers)(userinputField->text(), ordfilterButton->isChecked(), &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 	while (awaiter.isAwaiting())
 	{
@@ -112,16 +106,48 @@ void SuppliersSelectWidget::loadSuppliers()
 	}
 	else
 	{
-		allsuppliers = RequestParser::interpretAsSupplierList(awaiter.restext, awaiter.errtext);
+		allsuppliers = interpreter(awaiter.restext, awaiter.errtext);
 		supplierSelection->reload();
 	}
 }
-void SuppliersSelectWidget::hideCurrent()
+
+SuppliersSelectionBranch::SuppliersSelectionBranch(GlobalAppSettings& go, QWidget* parent, SuppliersLikeMP meth,
+	interpretsPointers::interpretAsSupplierLike inter)
+	: SuppliersSelectWidget(go, parent, meth, inter), abstractNode(), 
+	orderSelection(new OrderSelectionWidget(go, confirmedSupplier, this))
 {
-	if (current != innerWidget)
+	mainLayout->addWidget(orderSelection);
+	orderSelection->hide();
+	
+	current = innerWidget;
+	untouchable = innerWidget;
+
+	QObject::connect(orderSelection, &OrderSelectionWidget::orderConfirmed, this, &SuppliersSelectionBranch::orderAcquired);
+	QObject::connect(orderSelection, &OrderSelectionWidget::backRequired, this, &SuppliersSelectionBranch::hideCurrent);
+
+
+}
+
+void SuppliersSelectionBranch::hideCurrent()
+{
+	if (current == innerWidget)
 	{
-		current->hide();
-		current = innerWidget;
-		current->show();
+		emit backRequired();
 	}
+	else
+	{
+		_hideCurrent(innerWidget);
+	}
+}
+
+void SuppliersSelectionBranch::supplierPicked(parsedSupplier ps)
+{
+	SuppliersSelectWidget::supplierPicked(ps);
+	_hideAny(orderSelection);
+	orderSelection->loadOrders();
+}
+
+void SuppliersSelectionBranch::orderAcquired(parsedOrder po)
+{
+	
 }

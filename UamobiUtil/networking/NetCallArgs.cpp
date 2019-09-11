@@ -47,6 +47,7 @@ NetCallArgs::NetCallArgs(QStringList* sp, QList<int>* ip, QList<double>* dbp , Q
 	}
 }
 
+
 NetCallArgs::NetCallArgs(double f, double s)
 {
 	doubleArgs << f;
@@ -54,4 +55,21 @@ NetCallArgs::NetCallArgs(double f, double s)
 	{
 		doubleArgs << s;
 	}
+}
+
+bool checkNetCallArgsQuantity(NetCallArgs* nca, int sargs, int iargs, int dargs, int bargs, int daargs)
+{
+	if (nca == Q_NULLPTR)
+		return false;
+	if (nca->stringArgs.count() != sargs)
+		return false;
+	if (nca->intArgs.count() != iargs)
+		return false;
+	if (nca->doubleArgs.count() != dargs)
+		return false;
+	if (nca->boolArgs.count() != bargs)
+		return false;
+	if (nca->dateArgs.count() != daargs)
+		return false;
+	return true;
 }

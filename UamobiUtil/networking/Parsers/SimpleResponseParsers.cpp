@@ -46,3 +46,48 @@ SimpliestResponceParser::SimpliestResponceParser(QString& res, QString& err)
 		success = false;
 	}
 }
+
+bool RichtextResponseParser::couldRead()
+{
+	return success;
+}
+
+bool RichtextResponseParser::noRequestErrors()
+{
+	return parseres.request_status == 200;
+}
+
+QString RichtextResponseParser::parseErrorText()
+{
+	return errtext;
+}
+
+RichtextResponseParser::RichtextResponseParser(QString& res, QString& err)
+	:abs_parsed_request(res, err)
+{
+	QDomDocument doc;
+	doc.setContent(result);
+	try
+	{
+		QString code = doc.elementsByTagName("status").at(0).toElement().text();
+		parseres.request_status = code.toInt();
+		if (parseres.request_status != 200)
+		{
+			success = false;
+			return;
+		}
+		QDomNodeList list = doc.elementsByTagName("richdata");
+		if ( list.count() > 0)
+		{
+			parseres.queriesResult.push_back(list.at(0).toElement().text());
+			parseres.one_position_entries_quantity = 1;
+			success = true;
+			return;
+		}
+		success = false;
+	}
+	catch (...)
+	{
+		success = false;
+	}
+}

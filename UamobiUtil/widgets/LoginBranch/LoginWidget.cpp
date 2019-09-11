@@ -2,7 +2,7 @@
 
 void LoginWidget::login_confirmed()
 {
-	using parse_uniresults_functions::TypicalResponce;
+	using parse_uniresults_functions::TypicalResponse;
 	if (loginField->text().isEmpty() || passwordField->text().isEmpty())
 	{
 		info->setText(tr("login_widget_no_password!"));
@@ -17,7 +17,7 @@ void LoginWidget::login_confirmed()
 		info->setText(tr("login_widget_connection_timeout"));
 		return;
 	}
-	TypicalResponce resp =  RequestParser::interpretAsLoginResponse(awaiter.restext, awaiter.errtext);
+	TypicalResponse resp =  RequestParser::interpretAsLoginResponse(awaiter.restext, awaiter.errtext);
 	if (resp.resp == true)
 	{
 		emit loginConfirmed(loginField->text(), passwordField->text());

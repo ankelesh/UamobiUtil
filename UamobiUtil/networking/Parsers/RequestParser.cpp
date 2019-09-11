@@ -148,6 +148,23 @@ namespace parse_uniresults_functions {
 		return temp;
 	}
 
+	TypicalResponse parse_richtext(uniform_parse_result& ures)
+	{
+		TypicalResponse temp;
+		if (ures.queriesResult.count() == 1)
+		{
+		//	detrace_METHEXPL("richtext parsed")
+			temp.errors = ures.queriesResult.at(0);
+			temp.resp = true;
+		}
+		else
+		{
+			//detrace_METHEXPL("richtext not parsed: q" << ures.one_position_entries_quantity )
+			temp.resp = false;
+		}
+		return temp;
+	}
+
 	bool isSimpliest(QString& res)
 	{
 		if (res.contains("<status>"))
@@ -271,9 +288,9 @@ namespace RequestParser {
 		}
 	}
 
-	TypicalResponce RequestParser::interpretAsLoginResponse(QString& res, QString& errtext)
+	TypicalResponse RequestParser::interpretAsLoginResponse(QString& res, QString& errtext)
 	{
-		TypicalResponce resp;
+		TypicalResponse resp;
 		LoginResponseParser parser(res, errtext);
 		if (parser.isSuccessfull())
 		{
@@ -287,9 +304,9 @@ namespace RequestParser {
 		return resp;
 	}
 
-	TypicalResponce interpretAsSimpliestResponse(QString& res, QString& errtext)
+	TypicalResponse interpretAsSimpliestResponse(QString& res, QString& errtext)
 	{
-		TypicalResponce resp;
+		TypicalResponse resp;
 		SimpliestResponceParser parser(res, errtext);
 		if (parser.isSuccessfull())
 		{
@@ -357,5 +374,15 @@ namespace RequestParser {
 				return parse_orders_list(parser.read());
 		}
 		return ordersResponse();
+	}
+	TypicalResponse interpretAsRichtextResponse(QString& res, QString& errtext)
+	{
+		TypicalResponse resp;
+		RichtextResponseParser parser(res, errtext);
+		if (parser.isSuccessfull())
+		{
+			return parse_richtext(parser.read());
+		}
+		return TypicalResponse();
 	}
 }

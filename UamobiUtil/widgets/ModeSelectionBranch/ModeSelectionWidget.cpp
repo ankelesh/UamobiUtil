@@ -25,11 +25,10 @@ ModeSelectionWidget::ModeSelectionWidget(const GlobalAppSettings& go, QWidget* p
 	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
 	buttonLayout(new QHBoxLayout(innerWidget)), scrArea(new QScrollArea(innerWidget)), userTip(new QLabel(innerWidget)),
 	modesTip(new QLabel(innerWidget)), modeSelection(new specwidgets::_modeSelectionWidget(allmodes, scrArea)),
-	logoutButton(new QPushButton(innerWidget)), placeSelection(new PlaceSelectionWidget(go,this)), current (innerWidget)
+	logoutButton(new QPushButton(innerWidget))
 {
 	this->setLayout(mainLayout);
 	mainLayout->addWidget(innerWidget);
-	mainLayout->addWidget(placeSelection);
 	innerWidget->setLayout(innerLayout);
 	innerLayout->addWidget(userTip);
 	innerLayout->addWidget(modesTip);
@@ -38,7 +37,6 @@ ModeSelectionWidget::ModeSelectionWidget(const GlobalAppSettings& go, QWidget* p
 	innerLayout->addLayout(buttonLayout);
 	buttonLayout->addWidget(logoutButton);
 	buttonLayout->addStretch();
-	placeSelection->hide();
 	userTip->setText(tr("mode_selection_user_tip!"));
 	modesTip->setText(tr("mode_selection_modes_tip:"));
 	logoutButton->setText(tr("mode_selection_logout_tip"));
@@ -51,13 +49,9 @@ ModeSelectionWidget::ModeSelectionWidget(const GlobalAppSettings& go, QWidget* p
 #ifdef QT_VERSION5X
 	QObject::connect(logoutButton, &QPushButton::clicked, this, &ModeSelectionWidget::logoutPressed);
 	QObject::connect(modeSelection, &specwidgets::_modeSelectionWidget::modeSelected, this, &ModeSelectionWidget::modeSelected);
-	QObject::connect(placeSelection, &PlaceSelectionWidget::placeAcquired, this, &ModeSelectionWidget::placeReady);
-	QObject::connect(placeSelection, &PlaceSelectionWidget::backRequired, this, &ModeSelectionWidget::hideCurrent);
 #else
     QObject::connect(logoutButton, SIGNAL(clicked()), this, SLOT(logoutPressed()));
     QObject::connect(modeSelection, SIGNAL(modeSelected(parsedMode)), this, SLOT(modeSelected(parsedMode)));
-    QObject::connect(placeSelection, SIGNAL(placeAcquired(parsedPlace)), this, SLOT(placeReady(parsedPlace)));
-    QObject::connect(placeSelection, SIGNAL(backRequired()), this , SLOT(hideCurrent()));
 #endif
 }
 
@@ -90,10 +84,6 @@ void ModeSelectionWidget::loadModes()
 
 void ModeSelectionWidget::logoutPressed()
 {
-	if (current->back())
-	{
-		return;
-	}
 	globalSettings.networkingEngine->userLogOut(Q_NULLPTR, "");
 	emit backRequired();
 }
@@ -118,23 +108,50 @@ void ModeSelectionWidget::modeSelected(parsedMode Mode)
 		if (resp.success)
 		{
 			settings = resp.values;
-			innerWidget->hide();
-			placeSelection->show();
-			placeSelection->loadPlaces();
-			current = placeSelection;
 		}
 	}
 }
 
-void ModeSelectionWidget::placeReady(parsedPlace pl)
-{
-	emit placeAndModeAcquired(settings);
-}
-
 void ModeSelectionWidget::hideCurrent()
 {
-	current->hide();
-	innerWidget->show();
-	current = innerWidget;
+	emit backRequired();
 }
 
+ModeBranchRootWidget::ModeBranchRootWidget(const GlobalAppSettings& go, QWidget* parent)
+	: ModeSelectionWidget(go, parent), abstractNode(), placeSelection(new PlaceSelectionWidget(go, this))
+{
+	mainLayout->addWidget(placeSelection);
+	placeSelection->hide();
+	current = innerWidget;
+	untouchable = innerWidget;
+
+	QObject::connect(placeSelection, &PlaceSelectionWidget::placeAcquired, this, &ModeBranchRootWidget::placeAcquired);
+	QObject::connect(placeSelection, &PlaceSelectionWidget::backRequired, this, &ModeBranchRootWidget::hideCurrent);
+}
+
+void ModeBranchRootWidget::modeSelected(parsedMode pm)
+{
+	ModeSelectionWidget::modeSelected(pm);
+	_hideAny(placeSelection);
+	placeSelection->loadPlaces();
+}
+
+void ModeBranchRootWidget::placeAcquired(parsedPlace pm)
+{
+	emit modeAcquired(settings);
+}
+
+void ModeBranchRootWidget::hideCurrent()
+{
+	if (!current->back())
+	{
+		if (current == innerWidget)
+		{
+			emit backRequired();
+		}
+		else
+		{
+			_hideCurrent(innerWidget);
+		}
+	}
+}

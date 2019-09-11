@@ -22,8 +22,8 @@ void specwidgets::_placeSelectionWidget::indexSelected(int Index)
 }
 
 PlaceSelectionWidget::PlaceSelectionWidget(const GlobalAppSettings& go, QWidget* parent,
-	PLACE_LIST_NETW_FUNCTION lplaces)
-	: inframedWidget(parent), globalSettings(go), listPlaces(lplaces), allplaces(),
+	NoArgsRequestMP lplaces, interpretsPointers::interpretAsPlaceLike inter)
+	: inframedWidget(parent), globalSettings(go), listPlaces(lplaces), interpreter(inter), allplaces(),
 	mainLayout(new QVBoxLayout(this)), buttonLayout(new QHBoxLayout(this)),
 	scrArea(new QScrollArea(this)), userTip(new QLabel(this)),
 	modeTip(new QLabel(this)), placesTip(new QLabel(this)),
@@ -82,7 +82,7 @@ void PlaceSelectionWidget::loadPlaces()
 {
 	RequestAwaiter awaiter;
 	auto httpointer = (globalSettings.networkingEngine);
-	(*httpointer.*listPlaces)(Q_NULLPTR, &awaiter, RECEIVER_SLOT_NAME);
+	(*httpointer.*listPlaces)(&awaiter, RECEIVER_SLOT_NAME);
 	
 	//httpointer->placeList(Q_NULLPTR, &awaiter, RECEIVER_SLOT_NAME);
 	//globalSettings.networkingEngine->placeList(Q_NULLPTR, &awaiter, RECEIVER_SLOT_NAME);
@@ -99,7 +99,7 @@ void PlaceSelectionWidget::loadPlaces()
 	else
 	{
 		detrace_METHEXPL("loaded")
-		allplaces = RequestParser::interpretAsPlaceList(awaiter.restext, awaiter.errtext);
+		allplaces = interpreter(awaiter.restext, awaiter.errtext);
 		placeSelection->reload();
 	}
 }

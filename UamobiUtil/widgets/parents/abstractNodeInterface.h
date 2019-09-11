@@ -22,11 +22,11 @@ protected:
 	inframedWidget* current;
 	inframedWidget* untouchable;
 
-	abstractNode() {};
+	abstractNode() : current(Q_NULLPTR), untouchable(Q_NULLPTR){};
 	abstractNode(inframedWidget* c, inframedWidget* u) : current(c), untouchable(u) {};
 public slots:
-	virtual void hideCurrent(inframedWidget* replacement);
-	virtual void hideAny(inframedWidget* replacement);
+	virtual bool _hideCurrent(inframedWidget* replacement);
+	virtual void _hideAny(inframedWidget* replacement);
 
 };
 

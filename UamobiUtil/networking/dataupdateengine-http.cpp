@@ -149,7 +149,7 @@ void HttpUpdateEngine::modeSelect(
     );
 }
 
-NetCallArgs* HttpUpdateEngine::placeList(NetCallArgs * nargs, QObject* receiver, const char* slot )
+void HttpUpdateEngine::placeList(QObject* receiver, const char* slot )
 {
     detrace_METHCALL("HttpUpdateEngine::placeList")
     sendQuery(
@@ -157,7 +157,6 @@ NetCallArgs* HttpUpdateEngine::placeList(NetCallArgs * nargs, QObject* receiver,
       , receiver
       , slot
     );
-	return nargs;
 }
 
 void HttpUpdateEngine::placeSelect( const QString& place, QObject* receiver, const char* slot )
@@ -449,7 +448,7 @@ void HttpUpdateEngine::invSubmitExpDates
 void HttpUpdateEngine::recListSuppliers
 (
     const QString & text
-  , bool hasOrders
+  , const bool hasOrders
   , QObject * receiver
   , const char * slot
 ) {
@@ -720,7 +719,7 @@ void HttpUpdateEngine::docGetMultipleVersions(const QString &barcode, QObject *r
               slot);
 }
 
-NetCallArgs* HttpUpdateEngine::getWarehousesList(NetCallArgs* nargs, QObject* receiver, const char* slot)
+void HttpUpdateEngine::getWarehousesList(const QString & text, const bool hasOrd, QObject* receiver, const char* slot)
 {
 	detrace_METHCALL("HttpUpdateEngine::getWarehousesList")
 		sendQuery(
@@ -728,7 +727,6 @@ NetCallArgs* HttpUpdateEngine::getWarehousesList(NetCallArgs* nargs, QObject* re
 			, receiver
 			, slot
 		);
-	return nargs;
 }
 
 QString HttpUpdateEngine::props2str(DataRequest *dr)

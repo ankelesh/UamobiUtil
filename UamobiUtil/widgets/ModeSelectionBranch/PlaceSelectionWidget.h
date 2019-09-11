@@ -33,7 +33,6 @@
 */
 
 
-typedef NetCallArgs* (DataUpdateEngine::* PLACE_LIST_NETW_FUNCTION)(NetCallArgs*, QObject*, const char*);
 
 using parse_uniresults_functions::placesResponse;
 namespace specwidgets
@@ -64,7 +63,8 @@ protected:
 	// uses GAS
 	const GlobalAppSettings& globalSettings;
 	// pointer to function used for fetching place list
-	PLACE_LIST_NETW_FUNCTION listPlaces;
+	NoArgsRequestMP listPlaces;
+	interpretsPointers::interpretAsPlaceLike interpreter;
 	// place list
 	placesResponse allplaces;
 	// widgets
@@ -79,7 +79,8 @@ protected:
 
 public:
 	PlaceSelectionWidget(const GlobalAppSettings& go, QWidget* parent = Q_NULLPTR,
-		PLACE_LIST_NETW_FUNCTION meth = &DataUpdateEngine::placeList
+		NoArgsRequestMP meth = &DataUpdateEngine::placeList,
+		interpretsPointers::interpretAsPlaceLike inter = &RequestParser::interpretAsPlaceList
 		);
 private slots:
 	void placeSelected(parsedPlace);	//	sends place_select request, then emits parsedPlace
