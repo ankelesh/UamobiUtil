@@ -85,7 +85,7 @@ struct DocType : public Answer
 	QString title;
 };
 
-struct Document : public Answer
+struct Document
 {
 	Document()
 		: closed(false), cancelled(false), locked(false)

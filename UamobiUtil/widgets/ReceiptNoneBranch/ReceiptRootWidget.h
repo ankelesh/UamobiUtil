@@ -2,7 +2,7 @@
 
 #include "widgets/SuppliersSelectionBranch/SuppliersSelectWidget.h"
 #include "widgets/ReceiptSpecialWidgets/ReceiptParametersWidget.h"
-
+#include "widgets/ReceiptSpecialWidgets/ReceiptScaningWidget.h"
 
 
 
@@ -24,6 +24,7 @@ protected:
 
 	SuppliersSelectWidget* suppliersSelect;
 	OrderSelectionWidget* orderSelect;
+	ReceiptScaningWidget* scaning;
 
 	QHash<QString, QString> options;
 
@@ -37,6 +38,8 @@ private slots:;
 	void supplierAcquired(parsedSupplier);
 	void orderAcquired(parsedOrder, QString);
 	void hideCurrent();
+	void backTo();
+	void continueToScaning();
 };
 
 

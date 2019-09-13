@@ -1,5 +1,9 @@
 #pragma once
-#include <qwidget.h>
+#ifdef QT_VERSION5X
+#include <QtWidgets/QWidget>
+#else
+#include <QtGui/QWidget>
+#endif
 #include <QtGui/QKeyEvent>
 #include <debugtrace.h>
 /*

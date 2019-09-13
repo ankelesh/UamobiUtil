@@ -165,6 +165,40 @@ namespace parse_uniresults_functions {
 		return temp;
 	}
 
+	Document parse_document_response(uniform_parse_result& ures)
+	{
+		Document temp;
+		if (queryLengthOkInResult(ures))
+		{
+			QHash<QString, QString> temphash;
+			for (int i = 0; i < ures.queriesResult.count(); i+=2)
+			{
+				temphash[ures.queriesResult.at(i)] = ures.queriesResult.at(i + 1);
+			}
+			temp.docId = temphash["code"];
+			temp.comment = temphash["comment"];
+			temp.dateStr = temphash["date"];
+			temp.parentNr = temphash["parentnr"];
+			temp.supplier = temphash["supplier"];
+			temp.cancelled = (temphash["canceled"] == "true");
+			temp.closed = (temphash["closed"] == "true");
+			temp.locked = (temphash["locked"] == "true");
+			return temp;
+		}
+		return Document();
+	}
+
+	PairedResponse parse_item_info(uniform_parse_result& ures)
+	{
+		PairedResponse temp;
+		if (ures.queriesResult.count() == 2 && ures.alternative_result == 1)
+		{
+			temp.primaryResult = ures.queriesResult.at(0);
+			temp.secondaryResult = ures.queriesResult.at(1);
+		}
+		return temp;
+	}
+
 	bool isSimpliest(QString& res)
 	{
 		if (res.contains("<status>"))
@@ -384,5 +418,23 @@ namespace RequestParser {
 			return parse_richtext(parser.read());
 		}
 		return TypicalResponse();
+	}
+	Document interpretAsDocumentResponse(QString& res, QString& errtext)
+	{
+		DocumentCreationResponseParser parser(res, errtext);
+		if (parser.isSuccessfull())
+		{
+			return parse_document_response(parser.read());
+		}
+		return Document();
+	}
+	PairedResponse interpretAsItemInfo(QString& res, QString& errtext)
+	{
+		ItemInfoResponseParser parser(res, errtext);
+		if (parser.isSuccessfull())
+		{
+			return parse_item_info(parser.read());
+		}
+		return PairedResponse();
 	}
 }

@@ -47,6 +47,11 @@ namespace parse_uniresults_functions
 		QHash<QString, QString> values;
 		bool success;
 	};
+	struct PairedResponse
+	{
+		QString primaryResult;
+		QString secondaryResult;
+	};
 	typedef QVector<parsedMode> modesResponse;
 	typedef QVector<parsedPlace> placesResponse;
 	typedef QVector<parsedSupplier> supplierResponse;
@@ -59,6 +64,8 @@ namespace parse_uniresults_functions
 	supplierResponse parse_suppliers(uniform_parse_result& ures);
 	ordersResponse parse_orders_list(uniform_parse_result& ures);
 	TypicalResponse parse_richtext(uniform_parse_result& ures);
+	Document parse_document_response(uniform_parse_result& ures);
+	PairedResponse parse_item_info(uniform_parse_result& ures);
 
 	// deprecated, should make better
 	bool isSimpliest(QString& res);
@@ -86,6 +93,8 @@ namespace RequestParser
 	supplierResponse interpretAsSupplierList(QString& res, QString& errtext);
 	ordersResponse interpretAsOrdersList(QString& res, QString& errtext);
 	TypicalResponse interpretAsRichtextResponse(QString& res, QString& errtext);
+	Document interpretAsDocumentResponse(QString& res, QString& errtext);
+	PairedResponse interpretAsItemInfo(QString& res, QString& errtext);
 };
 namespace interpretsPointers
 {

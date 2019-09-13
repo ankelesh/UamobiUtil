@@ -207,6 +207,18 @@ void StaticTestingDataEngine::docSearchItems(const QString& text, const int page
 
 void StaticTestingDataEngine::itemGetInfo(const QString& code, QObject* receiver, const char* slot)
 {
+	pushQuery("<?xml version=\"1.0\" encoding=\"CP1251\"?>"
+		"<item>"
+		"<status>200</status>"
+		"<nn>DAA22583254</nn>"
+		"<richdata>"
+		"<![CDATA["
+		"<div style=\"background: #b0f0ff\"><center>Накладная</center></div>"
+		"<div style=\"text-align: left\">Была выбрана накладная с номером \"DAA22583254\".<br>Нажмите <b>Scan</b> для сканирования.</div>"
+		"]]>"
+		"</richdata>"
+		"</item>"
+		, "", receiver, slot);
 }
 
 void StaticTestingDataEngine::docGetResults(const QString& docId, QObject* receiver, const char* slot)
@@ -391,6 +403,21 @@ void StaticTestingDataEngine::recGetOrderInfo(const QString& ordercode, const QS
 
 void StaticTestingDataEngine::recNew(const QDate& date, const QString& parent, const QString& comment, QObject* receiver, const char* slot)
 {
+	pushQuery("<newdoc>"
+		"<status>200</status>"
+		"<doc>"
+		"<code>228237</code>"
+		"<parentnr>248987</parentnr>"
+		"<supplier>Saraa  Cablaggi SRL export </supplier>"
+		"<date>12.09.2019</date>"
+		"<comment></comment>"
+		"<closed>false</closed>"
+		"<canceled>false</canceled>"
+		"<locked>false</locked>"
+		"<scanmode>simple</scanmode>"
+		"</doc>"
+		"</newdoc>"
+		, "", receiver, slot);
 }
 
 void StaticTestingDataEngine::recSubmit(const QString& code, const QString& num, QObject* receiver, const char* slot)
@@ -399,6 +426,7 @@ void StaticTestingDataEngine::recSubmit(const QString& code, const QString& num,
 
 void StaticTestingDataEngine::recSubmitExpDates(const QString& code, const QString& expDatesString, QObject* receiver, const char* slot)
 {
+	
 }
 
 void StaticTestingDataEngine::recTestingInfo(QObject* receiver, const char* slot)
@@ -411,6 +439,44 @@ void StaticTestingDataEngine::docGetMultipleVersions(const QString& barcode, QOb
 
 void StaticTestingDataEngine::getWarehousesList(const QString& text, const bool hasOrd, QObject* receiver, const char* slot)
 {
+	pushQuery("<?xml version=\"1.0\" encoding=\"CP1251\"?>"
+		"<places>"
+		"<status>200</status>"
+		"<place>"
+		"<code>2</code>"
+		"<name>Распределительный центр 1</name>"
+		"</place>"
+		"<place>"
+		"<code>102</code>"
+		"<name>Распределительный центр 2</name>"
+		"</place>"
+		"<place>"
+		"<code>66280</code>"
+		"<name>Распределительный центр 3</name>"
+		"</place>"
+		"<place>"
+		"<code>73197</code>"
+		"<name>Распределительный центр 4</name>"
+		"</place>"
+		"<place>"
+		"<code>124554</code>"
+		"<name>Sectia Lactate</name>"
+		"</place>"
+		"<place>"
+		"<code>124555</code>"
+		"<name>Sectia Legume/Fructe</name>"
+		"</place>"
+		"<place>"
+		"<code>124556</code>"
+		"<name>Sectia Uscate</name>"
+		"</place>"
+		"<announcement>"
+		"<define>places = warehouses</define>"
+		"</announcement>"
+		"</places>"
+		, "", receiver, slot);
+
+
 }
 
 void StaticTestingDataEngine::makeRequest(DataRequest* dr)

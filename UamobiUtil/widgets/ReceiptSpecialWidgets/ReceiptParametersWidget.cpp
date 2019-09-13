@@ -10,7 +10,7 @@ ReceiptParametersWidget::ReceiptParametersWidget(GlobalAppSettings& go, QWidget*
 	selectOrderLayout(new QHBoxLayout(innerFrame)), selectOrderButton(new QPushButton(innerFrame)),
 	mainTextView(new QTextEdit(innerFrame)), inspectLayout(new QHBoxLayout(innerFrame)),
 	inspectButton(new QPushButton(innerFrame)), continueLayout(new QHBoxLayout(innerFrame)),
-	continueButton(new QPushButton(innerFrame))
+	continueButton(new QPushButton(innerFrame)), backButton(new QPushButton(innerFrame))
 {
 	this->setLayout(new QVBoxLayout(this));
 	mainLayout->addWidget(innerWidget);
@@ -31,9 +31,9 @@ ReceiptParametersWidget::ReceiptParametersWidget(GlobalAppSettings& go, QWidget*
 	inspectLayout->addStretch();
 	inspectLayout->addWidget(inspectButton);
 	frameLayout->addLayout(continueLayout);
+	continueLayout->addWidget(backButton);
 	continueLayout->addStretch();
 	continueLayout->addWidget(continueButton);
-
 	userInfo->setText(tr("receipt_parameters_announce"));
 	stateInfo->setText(tr("receipt_parameters_status"));
 	closedButton->setText(tr("receipt_parameters_closed_button"));
@@ -41,6 +41,7 @@ ReceiptParametersWidget::ReceiptParametersWidget(GlobalAppSettings& go, QWidget*
 	selectOrderButton->setText(tr("receipt_parameters_select_order"));
 	inspectButton->setText(tr("receipt_parameters_inspect"));
 	continueButton->setText(tr("receipt_parameters_continue"));
+	backButton->setText(tr("receipt_parameters_back"));
 
 	userInfo->setAlignment(Qt::AlignCenter);
 	userInfo->setFont(QFont("Times new Roman", 1, 20, false));
@@ -58,6 +59,7 @@ ReceiptParametersWidget::ReceiptParametersWidget(GlobalAppSettings& go, QWidget*
 	QObject::connect(cancelledButton, &QPushButton::clicked, this, &ReceiptParametersWidget::cancelledClicked);
 	QObject::connect(inspectButton, &QPushButton::clicked, this, &ReceiptParametersWidget::inspectClicked);
 	QObject::connect(continueButton, &QPushButton::clicked, this, &ReceiptParametersWidget::continueClicked);
+	QObject::connect(backButton, &QPushButton::clicked, this, &ReceiptParametersWidget::backRequired);
 
 #else
 	throw;

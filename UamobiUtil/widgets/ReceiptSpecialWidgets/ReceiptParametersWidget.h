@@ -46,7 +46,7 @@ protected:
 	QPushButton* inspectButton;
 	QHBoxLayout* continueLayout;
 	QPushButton* continueButton;
-
+	QPushButton* backButton;
 
 public:
 	ReceiptParametersWidget(GlobalAppSettings& go, QWidget* parent);

@@ -14,16 +14,19 @@ ReceiptRootWidget::ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QStri
 	: inframedWidget(parent), abstractNode(), globalSettings(go),
 	confirmedSupplier(), confirmedOrder(), mainLayout(new QVBoxLayout(this)),
 	innerWidget(new ReceiptParametersWidget( go, parent)), 
-	suppliersSelect(new SuppliersSelectWidget(go, this)),
+	suppliersSelect(new SuppliersSelectWidget(go, this, &DataUpdateEngine::getWarehousesList)),
 	orderSelect(new OrderSelectionWidget(go, confirmedSupplier, this)),
+	scaning(new ReceiptScaningWidget(go, this)),
 	options(settings)
 {
 	this->setLayout(mainLayout);
 	mainLayout->addWidget(innerWidget);
 	mainLayout->addWidget(suppliersSelect);
 	mainLayout->addWidget(orderSelect);
+	mainLayout->addWidget(scaning);
 	suppliersSelect->hide();
 	orderSelect->hide();
+	scaning->hide();
 
 	current = innerWidget;
 	untouchable = innerWidget;
@@ -32,7 +35,9 @@ ReceiptRootWidget::ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QStri
 
 	QObject::connect(suppliersSelect, &SuppliersSelectWidget::supplierAcquired, this, &ReceiptRootWidget::supplierAcquired);
 	QObject::connect(orderSelect, &OrderSelectionWidget::orderConfirmed, this, &ReceiptRootWidget::orderAcquired);
-
+	QObject::connect(innerWidget, &ReceiptParametersWidget::backRequired, this, &ReceiptRootWidget::backTo);
+	QObject::connect(innerWidget, &ReceiptParametersWidget::dataConfirmed, this, &ReceiptRootWidget::continueToScaning);
+	QObject::connect(scaning, &ReceiptScaningWidget::backRequired, this, &ReceiptRootWidget::hideCurrent);
 }
 
 void ReceiptRootWidget::supplierAcquired(parsedSupplier supp)
@@ -52,4 +57,16 @@ void ReceiptRootWidget::orderAcquired(parsedOrder po, QString  richtext)
 
 void ReceiptRootWidget::hideCurrent()
 {
+	_hideCurrent(innerWidget);
+}
+
+void ReceiptRootWidget::backTo()
+{
+	_hideAny(orderSelect);
+}
+
+void ReceiptRootWidget::continueToScaning()
+{
+	scaning->setDocument(confirmedOrder);
+	_hideAny(scaning);
 }

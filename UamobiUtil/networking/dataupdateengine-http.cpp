@@ -723,7 +723,7 @@ void HttpUpdateEngine::getWarehousesList(const QString & text, const bool hasOrd
 {
 	detrace_METHCALL("HttpUpdateEngine::getWarehousesList")
 		sendQuery(
-			"list_places&session=" + m_sessionId
+			"get_warehouses&session=" + m_sessionId
 			, receiver
 			, slot
 		);

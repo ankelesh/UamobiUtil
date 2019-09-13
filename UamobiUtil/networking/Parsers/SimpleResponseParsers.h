@@ -26,5 +26,10 @@ protected:
 public:
 	RichtextResponseParser(QString& res, QString& err);
 };
+class ItemInfoResponseParser : public RichtextResponseParser
+{
+public:
+	ItemInfoResponseParser(QString& res, QString& err);
 
+};
 typedef SimpliestResponceParser LoginResponseParser;		//	This typedef exists because LoginResponseParser was implemented before SRP

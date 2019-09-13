@@ -91,3 +91,20 @@ RichtextResponseParser::RichtextResponseParser(QString& res, QString& err)
 		success = false;
 	}
 }
+
+ItemInfoResponseParser::ItemInfoResponseParser(QString& res, QString& err)
+	: RichtextResponseParser(res, err)
+{
+	QDomDocument temp;
+	temp.setContent(res);
+	QDomNodeList li = temp.elementsByTagName("nn");
+	if (li.count() > 0)
+	{
+		parseres.alternative_result = 1;
+		parseres.queriesResult << li.at(0).toElement().text();
+	}
+	else
+	{
+		success = false;
+	}
+}

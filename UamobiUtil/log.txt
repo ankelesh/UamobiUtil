@@ -142,23 +142,40 @@ not awaiting
 ->Method called: RequestAwaiter::requestIncoming
 in method RequestAwaiter::requestincoming state of text variable a, b was: 
 ________________________________________
-<?xml version="1.0" encoding="CP1251"?> <suppliers>  <status>200</status>  <supplier>   <code>29087</code>   <name>Saraa  Cablaggi SRL export </name>   <orders>8</orders>  </supplier> </suppliers>|
+<?xml version="1.0" encoding="CP1251"?><places><status>200</status><place><code>2</code><name>????????????????? ????? 1</name></place><place><code>102</code><name>????????????????? ????? 2</name></place><place><code>66280</code><name>????????????????? ????? 3</name></place><place><code>73197</code><name>????????????????? ????? 4</name></place><place><code>124554</code><name>Sectia Lactate</name></place><place><code>124555</code><name>Sectia Legume/Fructe</name></place><place><code>124556</code><name>Sectia Uscate</name></place><announcement><define>places = warehouses</define></announcement></places>|
 not awaiting
 
 
 ->Method called: RequestAwaiter::requestIncoming
 in method RequestAwaiter::requestincoming state of text variable a, b was: 
 ________________________________________
-<?xml version="1.0" encoding="CP1251"?> <orders>  <status>200</status>  <order>   <code>247895</code>   <title>Nr. cererii: 247895, FPR133/09.09.2019</title>   <text>Data livr.: 09.09.2019  </text>  </order>  <order>   <code>247411</code>   <title>Nr. cererii: 247411, FPR132/06.09.2019</title>   <text>Data livr.: 06.09.2019  </text>  </order>  <order>   <code>246927</code>   <title>Nr. cererii: 246927, FPR131/05.09.2019</title>   <text>Data livr.: 05.09.2019  </text>  </order>  <order>   <code>246915</code>   <title>Nr. cererii: 246915, FPR130/05.09.2019</title>   <text>Data livr.: 05.09.2019  </text>  </order>  <order>   <code>245544</code>   <title>Nr. cererii: 245544, FPR129/02.09.2019</title>   <text>Data livr.: 02.09.2019  </text>  </order>  <order>   <code>245024</code>   <title>Nr. cererii: 245024, FPR128/30.08.2019</title>   <text>Data livr.: 30.08.2019  </text>  </order>  <order>   <code>244529</code>   <title>Nr. cererii: 244529, FPR127/29.08.2019</title>   <text>Data livr.: 29.08.2019  </text>  </order>  <order>   <code>243651</code>   <title>Nr. cererii: 243651, FPR126/26.08.2019</title>   <text>Data livr.: 26.08.2019  </text>  </order> <supplier>Saraa  Cablaggi SRL export </supplier> </orders>|
+<?xml version="1.0" encoding="CP1251"?><places><status>200</status><place><code>2</code><name>????????????????? ????? 1</name></place><place><code>102</code><name>????????????????? ????? 2</name></place><place><code>66280</code><name>????????????????? ????? 3</name></place><place><code>73197</code><name>????????????????? ????? 4</name></place><place><code>124554</code><name>Sectia Lactate</name></place><place><code>124555</code><name>Sectia Legume/Fructe</name></place><place><code>124556</code><name>Sectia Uscate</name></place><announcement><define>places = warehouses</define></announcement></places>|
 not awaiting
 
 
 ->Method called: RequestAwaiter::requestIncoming
 in method RequestAwaiter::requestincoming state of text variable a, b was: 
 ________________________________________
-<?xml version="1.0" encoding="CP1251"?><order><status>200</status><richdata><![CDATA[<div><b>Furnizor:</b> Saraa  Cablaggi SRL export </div><div><b>Doc. nr.:</b> 247895</div>]]></richdata></order>|
+<?xml version="1.0" encoding="CP1251"?><places><status>200</status><place><code>2</code><name>????????????????? ????? 1</name></place><place><code>102</code><name>????????????????? ????? 2</name></place><place><code>66280</code><name>????????????????? ????? 3</name></place><place><code>73197</code><name>????????????????? ????? 4</name></place><place><code>124554</code><name>Sectia Lactate</name></place><place><code>124555</code><name>Sectia Legume/Fructe</name></place><place><code>124556</code><name>Sectia Uscate</name></place><announcement><define>places = warehouses</define></announcement></places>|
 not awaiting
-succesfully read
 
 
--->Slot orderAcquired of object ReceiptRootWidget called
+->Method called: RequestAwaiter::requestIncoming
+in method RequestAwaiter::requestincoming state of text variable a, b was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?><places><status>200</status><place><code>2</code><name>????????????????? ????? 1</name></place><place><code>102</code><name>????????????????? ????? 2</name></place><place><code>66280</code><name>????????????????? ????? 3</name></place><place><code>73197</code><name>????????????????? ????? 4</name></place><place><code>124554</code><name>Sectia Lactate</name></place><place><code>124555</code><name>Sectia Legume/Fructe</name></place><place><code>124556</code><name>Sectia Uscate</name></place><announcement><define>places = warehouses</define></announcement></places>|
+not awaiting
+
+
+->Method called: RequestAwaiter::requestIncoming
+in method RequestAwaiter::requestincoming state of text variable a, b was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?><places><status>200</status><place><code>2</code><name>????????????????? ????? 1</name></place><place><code>102</code><name>????????????????? ????? 2</name></place><place><code>66280</code><name>????????????????? ????? 3</name></place><place><code>73197</code><name>????????????????? ????? 4</name></place><place><code>124554</code><name>Sectia Lactate</name></place><place><code>124555</code><name>Sectia Legume/Fructe</name></place><place><code>124556</code><name>Sectia Uscate</name></place><announcement><define>places = warehouses</define></announcement></places>|
+not awaiting
+
+
+->Method called: RequestAwaiter::requestIncoming
+in method RequestAwaiter::requestincoming state of text variable a, b was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?><places><status>200</status><place><code>2</code><name>????????????????? ????? 1</name></place><place><code>102</code><name>????????????????? ????? 2</name></place><place><code>66280</code><name>????????????????? ????? 3</name></place><place><code>73197</code><name>????????????????? ????? 4</name></place><place><code>124554</code><name>Sectia Lactate</name></place><place><code>124555</code><name>Sectia Legume/Fructe</name></place><place><code>124556</code><name>Sectia Uscate</name></place><announcement><define>places = warehouses</define></announcement></places>|
+not awaiting

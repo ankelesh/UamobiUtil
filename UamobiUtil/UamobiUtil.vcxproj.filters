@@ -76,6 +76,12 @@
     <Filter Include="Source Files\legacy">
       <UniqueIdentifier>{67053f6a-8a38-4c60-91b6-3119e94feb0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ReceiptLinked">
+      <UniqueIdentifier>{2d050467-8f6e-4fbb-b760-bc6d6ff55506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ReceiptLinked">
+      <UniqueIdentifier>{5525d878-148e-4988-a2b2-8e5efe290446}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -171,22 +177,28 @@
     <ClCompile Include="widgets\SuppliersSelectionBranch\SuppliersSelectWidget.cpp">
       <Filter>Source Files\SuppliersSelectionBranch</Filter>
     </ClCompile>
-    <ClCompile Include="networking\NetCallArgs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\parents\abstractNodeInterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ReceiptNoneBranch\ReceiptRootWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\SuppliersSelectionBranch\OrderSelectionWidget.cpp">
       <Filter>Source Files\SuppliersSelectionBranch</Filter>
     </ClCompile>
-    <ClCompile Include="networking\StaticTestingDataEngine.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="widgets\parents\abstractNodeInterface.cpp">
+      <Filter>Source Files\util\parents</Filter>
     </ClCompile>
     <ClCompile Include="widgets\ReceiptSpecialWidgets\ReceiptParametersWidget.cpp">
+      <Filter>Source Files\ReceiptLinked</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ReceiptNoneBranch\ReceiptRootWidget.cpp">
+      <Filter>Source Files\ReceiptLinked</Filter>
+    </ClCompile>
+    <ClCompile Include="networking\StaticTestingDataEngine.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="networking\NetCallArgs.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\parents\AbstractScaningWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ReceiptSpecialWidgets\ReceiptScaningWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -255,10 +267,10 @@
       <Filter>Header Files\SuppliersSelectionBranch</Filter>
     </QtMoc>
     <QtMoc Include="widgets\ReceiptSpecialWidgets\ReceiptParametersWidget.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ReceiptLinked</Filter>
     </QtMoc>
     <QtMoc Include="widgets\ReceiptNoneBranch\ReceiptRootWidget.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ReceiptLinked</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -313,13 +325,22 @@
       <Filter>Header Files\legacy</Filter>
     </ClInclude>
     <ClInclude Include="networking\NetCallArgs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="widgets\parents\abstractNodeInterface.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Network</Filter>
     </ClInclude>
     <ClInclude Include="networking\StaticTestingDataEngine.h">
+      <Filter>Header Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\parents\abstractNodeInterface.h">
+      <Filter>Header Files\util\parents</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\parents\AbstractScaningWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="widgets\ReceiptSpecialWidgets\ReceiptScaningWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>
