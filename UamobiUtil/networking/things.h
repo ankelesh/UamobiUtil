@@ -5,18 +5,61 @@
 #include <QDate>
 #include <QObject>
 
+
+
+
+/*
+		This file contains definitions for structures used in the application. It is kinda too functional
+		approach, but this legacy thing is needed. Later these structures will be morphed into classes, except legacy ones.
+
+*/
+
+struct parsedMode
+	// Mode, which was parsed from netquery
+{
+	QString name;	//	name
+	QString mode;	//	mode - larger part
+	QString submode;	//	submode - sometimes is 0
+	parsedMode(QString Name = "", QString Mode = "", QString Submode = "");
+};
+
+struct parsedPlace
+	// Place parsed from netquery
+{
+	QString code;	//	code, used in queries
+	QString name;	//	name which is shown to user
+	parsedPlace(QString Code = "" , QString Name = "");
+};
+
+struct parsedSupplier
+	// Supplier parsed from netquery
+{
+	QString code;	//	code, used in queries
+	QString name;	//	name which is shown to user
+	QString orders;	//	orders, which are used for various actions
+	parsedSupplier(QString Code = "", QString Name = "", QString Orders = "");
+};
+struct parsedOrder
+	// order parsed from netquery
+{
+	QString code;	//	code, used in queries
+	QString title;	//	title, used as title
+	QString text;	//	richtext, used to create label view
+	parsedOrder(QString Code = "", QString Title = "", QString Text = "");
+};
+
+//			HERE START LEGACY STRUCTURES. DO NOT TOUCH THEM - INSTEAD CREATE NEW, BETTER ONES		//	
 struct Answer
 {
 	enum Statuses {
-		Ok        = 200,
+		Ok = 200,
 		Frobidden = 403,
-		NotFound  = 404,
+		NotFound = 404,
 		InternalError = 500
 	};
 
 	Statuses status;
 };
-
 struct UserProfile : public Answer
 {
 	QString login;
@@ -30,67 +73,36 @@ struct UserProfile : public Answer
 		place.clear();
 	}
 };
-
 struct Mode : public Answer
 {
-    QString name;  // служебное наименование, используется внутри проекта;
-    QString caption;  // пользовательское наименование, установка из конфигуратора - св-во CaptionMode;
+	QString name;  // служебное наименование, используется внутри проекта;
+	QString caption;  // пользовательское наименование, установка из конфигуратора - св-во CaptionMode;
 };
-
-struct parsedMode
-{
-	QString name;
-	QString mode;
-	QString submode;
-};
-
 struct Place : public Answer
 {
 	QString code;
 	QString name;
-};
-struct parsedPlace
-{
-	QString code;
-	QString name;	
-};
+}; 
 struct DocResultItem : public Answer
 {
 	QString code;
 	QString title;
 	float num;
 };
-
-struct parsedSupplier
-{
-	QString code;
-	QString name;
-	QString orders;
-};
-struct parsedOrder
-{
-	QString code;
-	QString title;
-	QString text;
-};
 struct DocType : public Answer
 {
-	DocType(const QString &code, const QString &title)
+	DocType(const QString& code, const QString& title)
 	{
-		this->code  = code;
+		this->code = code;
 		this->title = title;
 	}
 
 	QString code;
 	QString title;
 };
-
 struct Document
 {
-	Document()
-		: closed(false), cancelled(false), locked(false)
-	{
-	}
+	Document();
 
 	QString docId;
 	QString parentNr;
@@ -103,51 +115,13 @@ struct Document
 	bool cancelled;
 	bool locked;
 
-	QString toString(bool sshort = false)
-	{
-		const QString closed         = QObject::tr("Closed.");
-		const QString cancelled      = QObject::tr("Canceled.");
-		const QString closedCanceled = QObject::tr("Closed, cancelled.");
-		const QString open           = QObject::tr("Open.");
-		const QString locked         = QObject::tr("Locked.");
+	QString toString(bool sshort = false);
 
-		QString l1, l2, l3;
-		l1 = this->parentNr + " > " + this->docId + " — " + this->dateStr;
+	QString title();
 
-		if (!supplier.isEmpty())
-			l3 = QObject::tr("Supplier: ")+this->supplier;
+	QString toStringShort();
 
-		if (this->closed && !this->cancelled)
-			l2 = closed;
-		else if (!this->closed && this->cancelled)
-			l2 = cancelled;
-		else if (this->closed && this->cancelled)
-			l2 = closedCanceled;
-		else
-			l2 = open;
-		if (this->locked)
-			l2 += " " + locked;
-		return (!sshort ? l1 + "\n" : QString()) + l2 + (l3.isEmpty() ? "" : "\n"+l3);
-	}
-
-	QString title()
-	{
-		return this->parentNr + " > " + this->docId + " — " + this->dateStr;
-	}
-
-	QString toStringShort()
-	{
-		return toString(true);
-	}
-
-	QDate date()
-	{
-		QStringList l = this->dateStr.split(".");
-		QDate d;
-		if (l.length() == 3)
-			d = QDate(l.at(0).toInt(), l.at(1).toInt(), l.at(2).toInt());
-		return d;
-	}
+	QDate date();
 };
 
 

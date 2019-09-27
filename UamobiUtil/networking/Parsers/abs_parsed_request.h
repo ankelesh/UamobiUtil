@@ -1,6 +1,4 @@
 #pragma once
-#include <QtCore/QString>
-#include <QtCore/QDataStream>
 #include <QtCore/QStringList>
 
 
@@ -28,6 +26,7 @@ struct uniform_parse_result  // This is highly abstract result of parsing. You c
 	int one_position_entries_quantity;	//	maximum of values per one entry. Always use this value as MINIMUM border. Example: if in one notation <mode> holds 1 value and 
 	// in other - 2, you must always count 2 to get next <mode> entry
 	int alternative_result;		//	alternative result is kind of non-error result making change target widget. Like <manually> in login.
+	uniform_parse_result(request_parse_type = linear_result);
 };
 
 bool queryLengthOkInResult(uniform_parse_result& ures);

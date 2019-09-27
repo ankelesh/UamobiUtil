@@ -1,15 +1,9 @@
 #pragma once
-#include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QHash>
-#include <QtXml/QDomDocument>
 #include "networking/things.h"
-#include "networking/Parsers/SimpleLinearParsers.h"
-#include "networking/Parsers/SimpleResponseParsers.h"
-#include "networking/Parsers/DynamicLinearParsers.h"
-#include "networking/Parsers/NamedAttributesResponseParsers.h"
-#include "legacy/legacy.h"
-#include "debugtrace.h"
+#include "abs_parsed_request.h"
+
 
 /*
 		This file contains parsers that are concentrated on already parsed results, which are stored in 

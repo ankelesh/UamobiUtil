@@ -1,4 +1,14 @@
 #include "RequestParser.h"
+#include "networking/Parsers/SimpleLinearParsers.h"
+#include "networking/Parsers/SimpleResponseParsers.h"
+#include "networking/Parsers/DynamicLinearParsers.h"
+#include "networking/Parsers/NamedAttributesResponseParsers.h"
+#include "legacy/legacy.h"
+#include <QtXml/QDomDocument>
+
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
 
 namespace parse_uniresults_functions {
 	UserProfilesResult parse_uniresults_functions::parse_user_profiles(uniform_parse_result& ures)
@@ -6,7 +16,11 @@ namespace parse_uniresults_functions {
 		UserProfilesResult temp;
 		if (ures.alternative_result == 1)
 		{
+
+#ifdef DEBUG
 			detrace_METHEXPL("manually found")
+#endif
+
 				temp.manually = true;
 			return temp;
 		}
@@ -21,7 +35,11 @@ namespace parse_uniresults_functions {
 					up.name = ures.queriesResult.at(i * ures.one_position_entries_quantity);
 					up.login = ures.queriesResult.at(i * ures.one_position_entries_quantity + 1);
 					temp.profiles.push_back(up);
+
+#ifdef DEBUG
 					detrace_CYCLEEXPL("profile obtained: " << up.login << up.name)
+#endif
+
 				}
 				return temp;
 			}
@@ -46,7 +64,10 @@ namespace parse_uniresults_functions {
 #endif
 		if (ures.one_position_entries_quantity == 1)
 		{
+
+#ifdef DEBUG
 			detrace_METHEXPL("modes->single")
+#endif
 			while (start != ures.queriesResult.end())
 			{
                 parsedMode tpm = {*start,*start, ""};
@@ -56,7 +77,10 @@ namespace parse_uniresults_functions {
 		}
 		else
 		{
+
+#ifdef DEBUG
 			detrace_METHEXPL("modes->multi")
+#endif
 			while (start != ures.queriesResult.end())
 			{
 				parsedMode m;
@@ -64,7 +88,10 @@ namespace parse_uniresults_functions {
 				++start;
 				m.name = *start;
 				++start;
+
+#ifdef DEBUG
 				detrace_CYCLEEXPL("inserted: " << m.mode)
+#endif
 				temp.push_back(legacy::parseLegacyMode(m.name, m.mode));
 			}
 		}

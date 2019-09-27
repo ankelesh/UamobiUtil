@@ -25,7 +25,6 @@
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
 
-const float VERSION = 0.1;
 
 /*
 	This widget is shown on application launch. It's main functional is to allow user profile selection if

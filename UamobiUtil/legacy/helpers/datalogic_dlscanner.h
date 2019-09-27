@@ -1,6 +1,8 @@
 #ifndef DATALOGIC_DLSCANNER_H
 #define DATALOGIC_DLSCANNER_H
 
+
+//LEGACY
 #include "abstractinputhelper.h"
 
 class DLScannerInputHelper : public AbstractInputHelper

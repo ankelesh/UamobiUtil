@@ -14,7 +14,7 @@ ReceiptRootWidget::ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QStri
 	: inframedWidget(parent), abstractNode(), globalSettings(go),
 	confirmedSupplier(), confirmedOrder(), mainLayout(new QVBoxLayout(this)),
 	innerWidget(new ReceiptParametersWidget( go, parent)), 
-	suppliersSelect(new SuppliersSelectWidget(go, this, &DataUpdateEngine::getWarehousesList)),
+	suppliersSelect(new SuppliersSelectWidget(go, this)),
 	orderSelect(new OrderSelectionWidget(go, confirmedSupplier, this)),
 	scaning(new ReceiptScaningWidget(go, this)),
 	options(settings)

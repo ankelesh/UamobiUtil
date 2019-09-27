@@ -1,6 +1,8 @@
 #ifndef EMULATEDKBDINPUTHELPER_H
 #define EMULATEDKBDINPUTHELPER_H
 
+
+//LEGACY
 #include "abstractinputhelper.h"
 
 class EmulatedKbdInputHelper : public AbstractInputHelper

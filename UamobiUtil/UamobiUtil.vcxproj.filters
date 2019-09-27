@@ -201,6 +201,12 @@
     <ClCompile Include="widgets\ReceiptSpecialWidgets\ReceiptScaningWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="networking\things.cpp">
+      <Filter>Source Files\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\utils\GlobalAppSettings.cpp">
+      <Filter>Source Files\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">

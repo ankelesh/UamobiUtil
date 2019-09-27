@@ -1,6 +1,8 @@
 #ifndef INPUTMETHOD_H
 #define INPUTMETHOD_H
 
+
+//LEGACY
 #include <QWidget>
 
 class AbstractInputHelper : public QObject

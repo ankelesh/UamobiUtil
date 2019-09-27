@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+
+//LEGACY
 class HelperManager : public QObject
 {
 	Q_OBJECT

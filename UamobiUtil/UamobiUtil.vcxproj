@@ -133,6 +133,7 @@
     <ClCompile Include="networking\photo\datarequest.cpp" />
     <ClCompile Include="networking\RequestAwaiter.cpp" />
     <ClCompile Include="networking\StaticTestingDataEngine.cpp" />
+    <ClCompile Include="networking\things.cpp" />
     <ClCompile Include="networking\xml_funcs.cpp" />
     <ClCompile Include="UamobiUtil.cpp" />
     <ClCompile Include="widgets\LoginBranch\LoginSelectWidget.cpp" />
@@ -151,6 +152,7 @@
     <ClCompile Include="widgets\SuppliersSelectionBranch\OrderSelectionWidget.cpp" />
     <ClCompile Include="widgets\SuppliersSelectionBranch\SuppliersSelectWidget.cpp" />
     <ClCompile Include="widgets\utils\ElementsStyles.cpp" />
+    <ClCompile Include="widgets\utils\GlobalAppSettings.cpp" />
     <ClCompile Include="widgets\utils\SpecializedWidgets.cpp" />
   </ItemGroup>
   <ItemGroup>

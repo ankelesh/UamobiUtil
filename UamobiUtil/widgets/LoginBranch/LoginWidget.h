@@ -28,7 +28,7 @@
 	This widget is the simpliest one-screen form for logging in. It sends to server obtained result
 	and if it was right - loginConfirmed is emitted.
 		set_login is used to setup loginField before widget is shown
-
+		loginConfirmed is emitted after logging in confirmed
 */
 
 

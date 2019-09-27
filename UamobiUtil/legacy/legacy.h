@@ -13,5 +13,4 @@
 */
 namespace legacy {
 	parsedMode parseLegacyMode(QString& name, QString& mode); // Determines mode\submode from single string
-
 }

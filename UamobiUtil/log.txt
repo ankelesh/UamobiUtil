@@ -89,10 +89,6 @@ errors: <?xml version='1.0' encoding='CP1251'?>
 
 in method UserListParser::dconstr state of variables code was 200
 dmndl len: 4
->>cycling: profile obtained: Adm101_Adm
->>cycling: profile obtained: TSD1522_Oper1
->>cycling: profile obtained: DepAdm900 - DepAdm
->>cycling: profile obtained: VGrosu901 - VGrosu
 
 
 ->Method called: RequestAwaiter::requestIncoming
@@ -107,11 +103,6 @@ in method RequestAwaiter::requestincoming state of text variable a, b was:
 ________________________________________
 <?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status> 	<mode> 		<modeName>receipt</modeName> 		<captionMode>Receipt</captionMode> 	</mode> 	<mode> 		<modeName>movingunload</modeName> 		<captionMode>Moving Unload( Put into cell )</captionMode> 	</mode> 	<mode> 		<modeName>movingload</modeName> 		<captionMode>Moving Load( Take from cell )</captionMode> 	</mode> 	<mode> 		<modeName>emitting</modeName> 		<captionMode>Emitting</captionMode> 	</mode> </modes>|
 not awaiting
-modes->multi
->>cycling: inserted: receipt
->>cycling: inserted: movingunload
->>cycling: inserted: movingload
->>cycling: inserted: emitting
 
 
 ->Method called: RequestAwaiter::requestIncoming
@@ -142,40 +133,5 @@ not awaiting
 ->Method called: RequestAwaiter::requestIncoming
 in method RequestAwaiter::requestincoming state of text variable a, b was: 
 ________________________________________
-<?xml version="1.0" encoding="CP1251"?><places><status>200</status><place><code>2</code><name>????????????????? ????? 1</name></place><place><code>102</code><name>????????????????? ????? 2</name></place><place><code>66280</code><name>????????????????? ????? 3</name></place><place><code>73197</code><name>????????????????? ????? 4</name></place><place><code>124554</code><name>Sectia Lactate</name></place><place><code>124555</code><name>Sectia Legume/Fructe</name></place><place><code>124556</code><name>Sectia Uscate</name></place><announcement><define>places = warehouses</define></announcement></places>|
-not awaiting
-
-
-->Method called: RequestAwaiter::requestIncoming
-in method RequestAwaiter::requestincoming state of text variable a, b was: 
-________________________________________
-<?xml version="1.0" encoding="CP1251"?><places><status>200</status><place><code>2</code><name>????????????????? ????? 1</name></place><place><code>102</code><name>????????????????? ????? 2</name></place><place><code>66280</code><name>????????????????? ????? 3</name></place><place><code>73197</code><name>????????????????? ????? 4</name></place><place><code>124554</code><name>Sectia Lactate</name></place><place><code>124555</code><name>Sectia Legume/Fructe</name></place><place><code>124556</code><name>Sectia Uscate</name></place><announcement><define>places = warehouses</define></announcement></places>|
-not awaiting
-
-
-->Method called: RequestAwaiter::requestIncoming
-in method RequestAwaiter::requestincoming state of text variable a, b was: 
-________________________________________
-<?xml version="1.0" encoding="CP1251"?><places><status>200</status><place><code>2</code><name>????????????????? ????? 1</name></place><place><code>102</code><name>????????????????? ????? 2</name></place><place><code>66280</code><name>????????????????? ????? 3</name></place><place><code>73197</code><name>????????????????? ????? 4</name></place><place><code>124554</code><name>Sectia Lactate</name></place><place><code>124555</code><name>Sectia Legume/Fructe</name></place><place><code>124556</code><name>Sectia Uscate</name></place><announcement><define>places = warehouses</define></announcement></places>|
-not awaiting
-
-
-->Method called: RequestAwaiter::requestIncoming
-in method RequestAwaiter::requestincoming state of text variable a, b was: 
-________________________________________
-<?xml version="1.0" encoding="CP1251"?><places><status>200</status><place><code>2</code><name>????????????????? ????? 1</name></place><place><code>102</code><name>????????????????? ????? 2</name></place><place><code>66280</code><name>????????????????? ????? 3</name></place><place><code>73197</code><name>????????????????? ????? 4</name></place><place><code>124554</code><name>Sectia Lactate</name></place><place><code>124555</code><name>Sectia Legume/Fructe</name></place><place><code>124556</code><name>Sectia Uscate</name></place><announcement><define>places = warehouses</define></announcement></places>|
-not awaiting
-
-
-->Method called: RequestAwaiter::requestIncoming
-in method RequestAwaiter::requestincoming state of text variable a, b was: 
-________________________________________
-<?xml version="1.0" encoding="CP1251"?><places><status>200</status><place><code>2</code><name>????????????????? ????? 1</name></place><place><code>102</code><name>????????????????? ????? 2</name></place><place><code>66280</code><name>????????????????? ????? 3</name></place><place><code>73197</code><name>????????????????? ????? 4</name></place><place><code>124554</code><name>Sectia Lactate</name></place><place><code>124555</code><name>Sectia Legume/Fructe</name></place><place><code>124556</code><name>Sectia Uscate</name></place><announcement><define>places = warehouses</define></announcement></places>|
-not awaiting
-
-
-->Method called: RequestAwaiter::requestIncoming
-in method RequestAwaiter::requestincoming state of text variable a, b was: 
-________________________________________
-<?xml version="1.0" encoding="CP1251"?><places><status>200</status><place><code>2</code><name>????????????????? ????? 1</name></place><place><code>102</code><name>????????????????? ????? 2</name></place><place><code>66280</code><name>????????????????? ????? 3</name></place><place><code>73197</code><name>????????????????? ????? 4</name></place><place><code>124554</code><name>Sectia Lactate</name></place><place><code>124555</code><name>Sectia Legume/Fructe</name></place><place><code>124556</code><name>Sectia Uscate</name></place><announcement><define>places = warehouses</define></announcement></places>|
+<?xml version="1.0" encoding="CP1251"?> <suppliers>  <status>200</status>  <supplier>   <code>29087</code>   <name>Saraa  Cablaggi SRL export </name>   <orders>8</orders>  </supplier> </suppliers>|
 not awaiting
