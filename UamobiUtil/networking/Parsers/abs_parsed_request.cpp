@@ -30,7 +30,6 @@ uniform_parse_result abs_parsed_request::read()
 bool queryLengthOkInResult(uniform_parse_result& ures)
 {
 	if (ures.queriesResult.count() == 0) {
-		
 		return false;
 	}
 	return (ures.queriesResult.count() % ures.one_position_entries_quantity) == 0;
@@ -41,6 +40,19 @@ int queryReservationSize(uniform_parse_result& ures)
 	if (ures.queriesResult.count() == 0)
 		return 1;
 	return ures.queriesResult.count() / ures.one_position_entries_quantity;
+}
+
+QString showHeap(uniform_parse_result& ures)
+{
+	QString temp("heap snapshot with tech values:");
+	temp += QString::number(ures.one_position_entries_quantity) + " opeq, " + QString::number(ures.alternative_result) + " ares,";
+	temp += QString::number(ures.request_status) + " status\r\n";
+	for (int i = 0; i < ures.queriesResult.count(); ++i)
+	{
+		temp += "\r\n|" + ures.queriesResult.at(i) + "|<" + QString::number(i) + ">";
+	}
+
+	return temp;
 }
 
 uniform_parse_result::uniform_parse_result(request_parse_type t)

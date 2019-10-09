@@ -70,3 +70,29 @@ parsedOrder::parsedOrder(QString Code, QString Title, QString Text)
 	: code(Code), title(Title), text(Text)
 {
 }
+
+parsedItemSimplified::parsedItemSimplified(QString Barcode, QString Title)
+	: barcode(Barcode), title(Title)
+{
+}
+
+QString parsedItemSimplified::description() const
+{
+	return title + " " + barcode;
+}
+
+parsedItem::parsedItem(QString Code, QString Title, QString Cmid, QString Qty, QString Box, QString Highlight)
+	: title(Title), code(Code), cmid(Cmid), box(Box), qty(0), highlight(false)
+{
+	bool ok;
+	qty = Qty.toInt(&ok);
+	if (!ok)
+		qty = 0;
+	if (Highlight.contains("high"))
+		highlight = true;
+}
+
+QString parsedItem::description() const
+{
+	return title + "|bc: " + code +" | "+ cmid + "|bx: " +  box + " qty: " + QString::number(qty) + " highlight: " + ((highlight)? "true" : "false");
+}

@@ -1,5 +1,7 @@
 #include "NamedAttributesResponseParsers.h"
 
+#include "debugtrace.h"
+
 bool ModeSelectResponseParser::couldRead()
 {
 	return success;
@@ -29,7 +31,7 @@ ModeSelectResponseParser::ModeSelectResponseParser(QString& res, QString& err)
 #ifdef QT_VERSION5X
 			auto li = doc.elementsByTagName("message");
 #else
-            QDomNodeList li = doc.elementsByTagName("message");
+			QDomNodeList li = doc.elementsByTagName("message");
 #endif
 			if (li.count() > 0)
 				parseres.queriesResult.push_back(
@@ -43,11 +45,7 @@ ModeSelectResponseParser::ModeSelectResponseParser(QString& res, QString& err)
 		}
 		else
 		{
-#ifdef QT_VERSION5X
-			auto li = doc.elementsByTagName("s");
-#else
-            QDomNodeList li = doc.elementsByTagName("s");
-#endif
+			QDomNodeList li = doc.elementsByTagName("s");
 			if (li.count() == 0)
 			{
 				success = false;
@@ -67,9 +65,6 @@ ModeSelectResponseParser::ModeSelectResponseParser(QString& res, QString& err)
 	{
 		success = false;
 	}
-
-
-
 }
 
 bool DocumentCreationResponseParser::couldRead()
@@ -132,5 +127,62 @@ DocumentCreationResponseParser::DocumentCreationResponseParser(QString& res, QSt
 	{
 		success = false;
 	}
+}
 
+bool ItemInfoResponseParser::couldRead()
+{
+	return success;
+}
+
+bool ItemInfoResponseParser::noRequestErrors()
+{
+	return parseres.request_status == 200;
+}
+
+QString ItemInfoResponseParser::parseErrorText()
+{
+	return errtext;
+}
+
+ItemInfoResponseParser::ItemInfoResponseParser(QString& res, QString& err)
+	: abs_parsed_request(res,err)
+{
+	QDomDocument doc;
+	doc.setContent(res);
+	QString code = doc.elementsByTagName("status").at(0).toElement().text();
+	parseres.request_status = code.toInt();
+	if (parseres.request_status != 200)
+	{
+		success = false;
+		return;
+	}
+	QDomNodeList dmndl = doc.elementsByTagName("nn");
+	if (dmndl.count() > 0)
+	{
+		parseres.queriesResult << "nn" << dmndl.at(0).toElement().text();
+	}
+	dmndl = doc.elementsByTagName("control");
+	QDomNode cntrl;
+	for (int i = 0; i < dmndl.count(); ++i)
+	{
+		cntrl = dmndl.at(i);
+		detrace_METHEXPL("got control");
+		QDomNodeList insides = cntrl.childNodes();
+		for (int j = 0; j < insides.count(); ++j)
+		{
+			detrace_METHEXPL("getting inside: " << insides.at(j).toElement().text());
+			parseres.queriesResult << insides.at(j).toElement().text();
+		}
+	}
+	dmndl = doc.elementsByTagName("richdata");
+	if (dmndl.count() > 0)
+	{
+		parseres.queriesResult << "richdata" << dmndl.at(0).toElement().text();
+	}
+	else
+	{
+		parseres.queriesResult << "richdata" << "";
+	}
+	success = true;
+	parseres.one_position_entries_quantity = 2;
 }

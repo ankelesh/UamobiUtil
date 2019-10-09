@@ -28,7 +28,7 @@ namespace filters
 			// Captures key press events
 			if (ev->type() == QEvent::KeyRelease)
 			{
-                QKeyEvent* keyptr = static_cast<QKeyEvent * >(ev);
+				QKeyEvent* keyptr = static_cast<QKeyEvent*>(ev);
 				// Sorts: now only return, back and numbers must be intercepted
 				if (keyptr->key() == Qt::Key_Return || keyptr->key() == 0)
 				{
@@ -69,7 +69,7 @@ namespace filters
 			// Captures key press events
 			if (ev->type() == QEvent::KeyRelease)
 			{
-                QKeyEvent * keyptr = static_cast<QKeyEvent*>(ev);
+				QKeyEvent* keyptr = static_cast<QKeyEvent*>(ev);
 				// Sorts: now only return, back and numbers must be intercepted
 				if (keyptr->key() == Qt::Key_Back || keyptr->key() == Qt::Key_Escape)
 				{

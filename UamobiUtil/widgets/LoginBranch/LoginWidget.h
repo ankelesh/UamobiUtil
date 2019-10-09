@@ -29,8 +29,9 @@
 	and if it was right - loginConfirmed is emitted.
 		set_login is used to setup loginField before widget is shown
 		loginConfirmed is emitted after logging in confirmed
-*/
 
+		__ASSOCIATED_DATABASE_FUNCTION__  :  P'LoginResponse'  log_in(login, password)
+*/
 
 class LoginWidget : public inframedWidget
 {
@@ -44,8 +45,8 @@ private:
 	QLineEdit* passwordField;
 	QPushButton* backButton;
 	QPushButton* okButton;
-	
-	GlobalAppSettings & globalSettings;
+
+	GlobalAppSettings& globalSettings;
 public:
 	LoginWidget(GlobalAppSettings& go, QWidget* parent);
 private slots:

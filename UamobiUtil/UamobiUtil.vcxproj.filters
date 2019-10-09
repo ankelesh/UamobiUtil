@@ -207,6 +207,15 @@
     <ClCompile Include="widgets\utils\GlobalAppSettings.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\DocResultsWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\ItemSearchWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ElementWidgets\BigButtonsSpinbox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -278,6 +287,15 @@
     <QtMoc Include="widgets\ReceiptNoneBranch\ReceiptRootWidget.h">
       <Filter>Header Files\ReceiptLinked</Filter>
     </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\ItemSearchWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\DocResultsWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ElementWidgets\BigButtonsSpinbox.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="UamobiUtil.qrc">
@@ -304,9 +322,6 @@
       <Filter>Header Files\util</Filter>
     </ClInclude>
     <ClInclude Include="networking\Parsers\abs_parsed_request.h">
-      <Filter>Header Files\Network\Parsing</Filter>
-    </ClInclude>
-    <ClInclude Include="networking\Parsers\DynamicLinearParsers.h">
       <Filter>Header Files\Network\Parsing</Filter>
     </ClInclude>
     <ClInclude Include="networking\Parsers\NamedAttributesResponseParsers.h">
@@ -344,6 +359,9 @@
     </ClInclude>
     <ClInclude Include="widgets\ReceiptSpecialWidgets\ReceiptScaningWidget.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="networking\Parsers\DynamicLinearParsers.h">
+      <Filter>Header Files\Network\Parsing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

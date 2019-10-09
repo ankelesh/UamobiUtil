@@ -16,12 +16,11 @@ namespace parse_uniresults_functions {
 		UserProfilesResult temp;
 		if (ures.alternative_result == 1)
 		{
-
 #ifdef DEBUG
-			detrace_METHEXPL("manually found")
+			//detrace_METHEXPL("manually found");
 #endif
 
-				temp.manually = true;
+			temp.manually = true;
 			return temp;
 		}
 		else if (ures.one_position_entries_quantity == 2 && ures.queriesResult.count() > 0)
@@ -35,11 +34,9 @@ namespace parse_uniresults_functions {
 					up.name = ures.queriesResult.at(i * ures.one_position_entries_quantity);
 					up.login = ures.queriesResult.at(i * ures.one_position_entries_quantity + 1);
 					temp.profiles.push_back(up);
-
 #ifdef DEBUG
-					detrace_CYCLEEXPL("profile obtained: " << up.login << up.name)
+					//detrace_CYCLEEXPL("profile obtained: " << up.login << up.name);
 #endif
-
 				}
 				return temp;
 			}
@@ -49,37 +46,33 @@ namespace parse_uniresults_functions {
 
 	modesResponse parse_uniresults_functions::parse_modes(uniform_parse_result& ures)
 	{
+		detrace_METHEXPL(showHeap(ures));
 		if (!queryLengthOkInResult(ures))
 		{
-			
 			return modesResponse();
 		}
 		modesResponse temp;
 		parsedMode pmode;
-
-#ifdef QT_VERSION5X
-		auto start = ures.queriesResult.begin();
-#else
-        QList<QString>::iterator start = ures.queriesResult.begin();
-#endif
+		QList<QString>::iterator start = ures.queriesResult.begin();
 		if (ures.one_position_entries_quantity == 1)
 		{
-
 #ifdef DEBUG
-			detrace_METHEXPL("modes->single")
+			//detrace_METHEXPL("modes->single");
 #endif
 			while (start != ures.queriesResult.end())
 			{
-                parsedMode tpm = {*start,*start, ""};
-                temp.push_back(tpm);
+				parsedMode tpm;
+				tpm.name = *start;
+				tpm.mode = *start;
+				tpm.submode = "";
+				temp.push_back(tpm);
 				++start;
 			}
 		}
 		else
 		{
-
 #ifdef DEBUG
-			detrace_METHEXPL("modes->multi")
+			//detrace_METHEXPL("modes->multi");
 #endif
 			while (start != ures.queriesResult.end())
 			{
@@ -88,9 +81,10 @@ namespace parse_uniresults_functions {
 				++start;
 				m.name = *start;
 				++start;
-
+				if (m.name.isEmpty())
+					m.name = m.mode;
 #ifdef DEBUG
-				detrace_CYCLEEXPL("inserted: " << m.mode)
+				//detrace_CYCLEEXPL("inserted: " << m.mode);
 #endif
 				temp.push_back(legacy::parseLegacyMode(m.name, m.mode));
 			}
@@ -106,12 +100,8 @@ namespace parse_uniresults_functions {
 		}
 		placesResponse temp;
 		temp.reserve(queryReservationSize(ures));
-		parsedPlace pplace; 
-#ifdef QT_VERSION5X
-			auto start = ures.queriesResult.begin();
-#else
+		parsedPlace pplace;
 		QList<QString>::iterator start = ures.queriesResult.begin();
-#endif
 		while (start != ures.queriesResult.end())
 		{
 			pplace.code = *start;
@@ -167,8 +157,8 @@ namespace parse_uniresults_functions {
 			for (int i = 0; i < ures.queriesResult.count(); i += 3)
 			{
 				pord.code = ures.queriesResult[i];
-				pord.title = ures.queriesResult[i+1];
-				pord.text = ures.queriesResult[i+2];
+				pord.title = ures.queriesResult[i + 1];
+				pord.text = ures.queriesResult[i + 2];
 				temp.push_back(pord);
 			}
 		}
@@ -180,13 +170,17 @@ namespace parse_uniresults_functions {
 		TypicalResponse temp;
 		if (ures.queriesResult.count() == 1)
 		{
-		//	detrace_METHEXPL("richtext parsed")
+#ifdef DEBUG
+			//	detrace_METHEXPL("richtext parsed");
+#endif
 			temp.errors = ures.queriesResult.at(0);
 			temp.resp = true;
 		}
 		else
 		{
-			//detrace_METHEXPL("richtext not parsed: q" << ures.one_position_entries_quantity )
+#ifdef DEBUG
+			//detrace_METHEXPL("richtext not parsed: q" << ures.one_position_entries_quantity );
+#endif
 			temp.resp = false;
 		}
 		return temp;
@@ -198,7 +192,7 @@ namespace parse_uniresults_functions {
 		if (queryLengthOkInResult(ures))
 		{
 			QHash<QString, QString> temphash;
-			for (int i = 0; i < ures.queriesResult.count(); i+=2)
+			for (int i = 0; i < ures.queriesResult.count(); i += 2)
 			{
 				temphash[ures.queriesResult.at(i)] = ures.queriesResult.at(i + 1);
 			}
@@ -214,14 +208,65 @@ namespace parse_uniresults_functions {
 		}
 		return Document();
 	}
-
-	PairedResponse parse_item_info(uniform_parse_result& ures)
+#define DEBUG
+	PositionalResponse parse_item_info(uniform_parse_result& ures)
 	{
-		PairedResponse temp;
-		if (ures.queriesResult.count() == 2 && ures.alternative_result == 1)
+		PositionalResponse temp;
+#ifdef DEBUG
+		detrace_METHEXPL(showHeap(ures));
+#endif
+		temp.success = ures.request_status == 200;
+		if (((ures.queriesResult.count()%2) == 0))
 		{
-			temp.primaryResult = ures.queriesResult.at(0);
-			temp.secondaryResult = ures.queriesResult.at(1);
+			for (int i = 0; i < ures.queriesResult.count(); ++i)
+			{
+				temp.values.insert(ures.queriesResult.at(i), ures.queriesResult.at(i + 1));
+				++i;
+			}
+		}
+		return temp;
+	}
+
+	searchResponse parse_search_response(uniform_parse_result& ures)
+	{
+		searchResponse temp;
+		if (ures.one_position_entries_quantity == 2 && ures.alternative_result == 3)
+		{
+			temp.from = ures.queriesResult.at(0);
+			temp.to = ures.queriesResult.at(1);
+			temp.last = ((ures.queriesResult.at(2) == "true") ? true : false);
+			temp.values.reserve((ures.queriesResult.count() - 3)/2);
+			for (int i = ures.alternative_result; i < ures.queriesResult.count(); i += ures.one_position_entries_quantity)
+			{
+				temp.values.push_back(parsedItemSimplified
+				(   ures.queriesResult.at(i),
+					ures.queriesResult.at(i+1)
+				));
+			}
+		}
+		return temp;
+	}
+
+	doclistResponse parse_document_listed(uniform_parse_result& ures)
+	{
+		doclistResponse temp;
+		if (ures.one_position_entries_quantity == 6 && ures.alternative_result == 3)
+		{
+			temp.from = ures.queriesResult.at(0);
+			temp.to = ures.queriesResult.at(1);
+			temp.last = ((ures.queriesResult.at(2) == "true") ? true : false);
+			temp.values.reserve((ures.queriesResult.count() - 3) / 6);
+			for (int i = ures.alternative_result; i < ures.queriesResult.count(); i += ures.one_position_entries_quantity)
+			{
+				temp.values.push_back(parsedItem(
+					ures.queriesResult.at(i),
+					ures.queriesResult.at(i+1),
+					ures.queriesResult.at(i+2),
+					ures.queriesResult.at(i+3),
+					ures.queriesResult.at(i+4),
+					ures.queriesResult.at(i+5)
+				));
+			}
 		}
 		return temp;
 	}
@@ -337,13 +382,17 @@ namespace RequestParser {
 		UserListParser parser(res, errtext);
 		if (parser.isSuccessfull())
 		{
-			//detrace_METHEXPL("Parsing succesfull")
-				return parse_user_profiles(parser.read());
+#ifdef DEBUG
+			//detrace_METHEXPL("Parsing succesfull");
+#endif
+			return parse_user_profiles(parser.read());
 		}
 		else
 		{
-			//detrace_METHEXPL("parsing failed")
-				UserProfilesResult temp;
+#ifdef DEBUG
+			//detrace_METHEXPL("parsing failed");
+#endif
+			UserProfilesResult temp;
 			temp.manually = true;
 			return temp;
 		}
@@ -372,7 +421,6 @@ namespace RequestParser {
 		if (parser.isSuccessfull())
 		{
 			resp.resp = true;
-		
 		}
 		else
 		{
@@ -420,7 +468,8 @@ namespace RequestParser {
 		return temp;
 	}
 	supplierResponse interpretAsSupplierList(QString& res, QString& errtext)
-	{	SuppliersListParser parser(res, errtext);
+	{
+		SuppliersListParser parser(res, errtext);
 		if (parser.isSuccessfull())
 		{
 			return parse_suppliers(parser.read());
@@ -432,7 +481,7 @@ namespace RequestParser {
 		OrdersListParser parser(res, errtext);
 		if (parser.isSuccessfull())
 		{
-				return parse_orders_list(parser.read());
+			return parse_orders_list(parser.read());
 		}
 		return ordersResponse();
 	}
@@ -455,13 +504,31 @@ namespace RequestParser {
 		}
 		return Document();
 	}
-	PairedResponse interpretAsItemInfo(QString& res, QString& errtext)
+	PositionalResponse interpretAsItemInfo(QString& res, QString& errtext)
 	{
 		ItemInfoResponseParser parser(res, errtext);
 		if (parser.isSuccessfull())
 		{
 			return parse_item_info(parser.read());
 		}
-		return PairedResponse();
+		return PositionalResponse();
+	}
+	searchResponse interpretAsSearchResponse(QString& res, QString& errtext)
+	{
+		ItemSimplifiedParser parser(res, errtext);
+		if (parser.isSuccessfull())
+		{
+			return parse_search_response(parser.read());
+		}
+		return searchResponse();
+	}
+	doclistResponse interpretAsListedDocument(QString& res, QString& errtext)
+	{
+		ExpandedItemListParser parser(res, errtext);
+		if (parser.isSuccessfull())
+		{
+			return parse_document_listed(parser.read());
+		}
+		return doclistResponse();
 	}
 }

@@ -5,9 +5,6 @@
 #include <QDate>
 #include <QObject>
 
-
-
-
 /*
 		This file contains definitions for structures used in the application. It is kinda too functional
 		approach, but this legacy thing is needed. Later these structures will be morphed into classes, except legacy ones.
@@ -28,7 +25,7 @@ struct parsedPlace
 {
 	QString code;	//	code, used in queries
 	QString name;	//	name which is shown to user
-	parsedPlace(QString Code = "" , QString Name = "");
+	parsedPlace(QString Code = "", QString Name = "");
 };
 
 struct parsedSupplier
@@ -47,8 +44,26 @@ struct parsedOrder
 	QString text;	//	richtext, used to create label view
 	parsedOrder(QString Code = "", QString Title = "", QString Text = "");
 };
+struct parsedItem
+{
+	QString title;
+	QString code;
+	QString cmid;
+	QString box;
+	int qty;
+	bool highlight;
+	parsedItem(QString title = "", QString code = "", QString cmid = "", QString box = "", QString qty = "", QString highlight = "");
+	QString description() const;
+};
+struct parsedItemSimplified
+{
+	QString barcode;
+	QString title;
+	parsedItemSimplified(QString Barcode = "", QString title = "");
+	QString description() const;
+};
 
-//			HERE START LEGACY STRUCTURES. DO NOT TOUCH THEM - INSTEAD CREATE NEW, BETTER ONES		//	
+//			HERE START LEGACY STRUCTURES. DO NOT TOUCH THEM - INSTEAD CREATE NEW, BETTER ONES		//
 struct Answer
 {
 	enum Statuses {
@@ -82,7 +97,7 @@ struct Place : public Answer
 {
 	QString code;
 	QString name;
-}; 
+};
 struct DocResultItem : public Answer
 {
 	QString code;
@@ -109,7 +124,7 @@ struct Document
 	QString dateStr;
 	QString comment;
 	QString supplier;
-//	Q_DECL_DEPRECATED int scanMode;
+	//	Q_DECL_DEPRECATED int scanMode;
 	bool inspect;
 	bool closed;
 	bool cancelled;
@@ -123,8 +138,5 @@ struct Document
 
 	QDate date();
 };
-
-
-
 
 #endif // USER_H

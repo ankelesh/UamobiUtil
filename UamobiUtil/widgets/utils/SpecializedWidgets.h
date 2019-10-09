@@ -5,13 +5,12 @@
 #else
 //Qt 4  only imports
 #include <QtGui/QPushButton>
-#endif 
+#endif
 
 /*
-	This file contains QtWidgets with minor changes required to succesfully use them. 
+	This file contains QtWidgets with minor changes required to succesfully use them.
 	Widget MUST be here if it adds only 1-2 signals or additional slot.
 */
-
 
 namespace specwidgets
 	// This namespace must contain transformed base widgets with minor changes and specializations of abstract widgets
@@ -23,13 +22,11 @@ namespace specwidgets
 	private:
 		int index;  // int value which will be emitted after click
 	public:
-		indexedButton(int Index = 0, QWidget * parent = Q_NULLPTR);
+		indexedButton(int Index = 0, QWidget* parent = Q_NULLPTR);
 		void setIndex(int Index = 0);		//	setter
-    private slots:
+	private slots:
 		void clickCapt();					//	this slot is connected to own "clicked"
 	signals:
 		void indexClicked(int);				//	is emitted on-click
 	};
-
-
 }

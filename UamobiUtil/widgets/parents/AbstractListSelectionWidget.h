@@ -4,16 +4,15 @@
 #include <QtWidgets/QListWidget>
 #else
  // Qt 4 only imports
-throw;
+#include <QtGui/QListWidget>
 #endif
 
 /*
 	This widget has similar interface with AbstractVariantSelection, but is based on QListWidget instead of QPushButtons spam.
-	You must inherit this and implement adapter virtual methods to prepare this to work. 
+	You must inherit this and implement adapter virtual methods to prepare this to work.
 
 	TODO:
 		it'll be cool to add custom delegates here
-
 
 */
 class AbstractListSelectionWidget : public QListWidget

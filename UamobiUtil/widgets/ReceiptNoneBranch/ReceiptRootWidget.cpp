@@ -13,7 +13,7 @@ void ReceiptRootWidget::processOptions()
 ReceiptRootWidget::ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QString> settings, QWidget* parent)
 	: inframedWidget(parent), abstractNode(), globalSettings(go),
 	confirmedSupplier(), confirmedOrder(), mainLayout(new QVBoxLayout(this)),
-	innerWidget(new ReceiptParametersWidget( go, parent)), 
+	innerWidget(new ReceiptParametersWidget(go, parent)),
 	suppliersSelect(new SuppliersSelectWidget(go, this)),
 	orderSelect(new OrderSelectionWidget(go, confirmedSupplier, this)),
 	scaning(new ReceiptScaningWidget(go, this)),
@@ -32,12 +32,19 @@ ReceiptRootWidget::ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QStri
 	untouchable = innerWidget;
 
 	processOptions();
-
+#ifdef QT_VERSION5X
 	QObject::connect(suppliersSelect, &SuppliersSelectWidget::supplierAcquired, this, &ReceiptRootWidget::supplierAcquired);
 	QObject::connect(orderSelect, &OrderSelectionWidget::orderConfirmed, this, &ReceiptRootWidget::orderAcquired);
 	QObject::connect(innerWidget, &ReceiptParametersWidget::backRequired, this, &ReceiptRootWidget::backTo);
 	QObject::connect(innerWidget, &ReceiptParametersWidget::dataConfirmed, this, &ReceiptRootWidget::continueToScaning);
 	QObject::connect(scaning, &ReceiptScaningWidget::backRequired, this, &ReceiptRootWidget::hideCurrent);
+#else
+	QObject::connect(suppliersSelect, SIGNAL(supplierAcquired(parsedSupplier)), this, SLOT(supplierAcquired(parsedSupplier)));
+	QObject::connect(orderSelect, SIGNAL(orderConfirmed(parsedOrder, QString)), this, SLOT(orderAcquired(parsedOrder, QString)));
+	QObject::connect(innerWidget, SIGNAL(backRequired()), this, SLOT(backTo()));
+	QObject::connect(innerWidget, SIGNAL(dataConfirmed()), this, SLOT(continueToScaning()));
+	QObject::connect(scaning, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+#endif
 }
 
 void ReceiptRootWidget::supplierAcquired(parsedSupplier supp)
@@ -49,7 +56,9 @@ void ReceiptRootWidget::supplierAcquired(parsedSupplier supp)
 
 void ReceiptRootWidget::orderAcquired(parsedOrder po, QString  richtext)
 {
-	detrace_SLOTCALL("orderAcquired", "ReceiptRootWidget")
+#ifdef DEBUG
+	//detrace_SLOTCALL("orderAcquired", "ReceiptRootWidget");
+#endif
 	innerWidget->setMainView(richtext);
 	confirmedOrder = po;
 	_hideCurrent(innerWidget);

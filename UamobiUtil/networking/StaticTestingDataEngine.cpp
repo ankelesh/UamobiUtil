@@ -1,11 +1,12 @@
 #include "StaticTestingDataEngine.h"
-
+#include "debugtrace.h"
 void StaticTestingDataEngine::pushQuery(const QString& res, const QString& err, QObject* receiver, const char* slot)
 {
 	pendingResponse.first = res;
 	pendingResponse.second = err;
 	receiverCoords.first = receiver;
 	receiverCoords.second = slot;
+	qDebug() << timer->interval();
 	timer->start();
 }
 
@@ -14,7 +15,12 @@ StaticTestingDataEngine::StaticTestingDataEngine(int delay)
 {
 	timer->setSingleShot(true);
 	timer->setInterval(delay);
+
+#ifdef QT_VERSION5X
 	QObject::connect(timer, &QTimer::timeout, this, &StaticTestingDataEngine::delayOut);
+#else
+	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(delayOut()));
+#endif
 }
 
 void StaticTestingDataEngine::cancelPending()
@@ -378,7 +384,7 @@ void StaticTestingDataEngine::recListOrders(const QString& supplier, QObject* re
 			"  <status>200</status>"
 
 			" <supplier>HUARAA ZIGA export </supplier>"
-			" </orders>", "", receiver,slot);
+			" </orders>", "", receiver, slot);
 	}
 }
 
@@ -426,7 +432,6 @@ void StaticTestingDataEngine::recSubmit(const QString& code, const QString& num,
 
 void StaticTestingDataEngine::recSubmitExpDates(const QString& code, const QString& expDatesString, QObject* receiver, const char* slot)
 {
-	
 }
 
 void StaticTestingDataEngine::recTestingInfo(QObject* receiver, const char* slot)
@@ -475,8 +480,6 @@ void StaticTestingDataEngine::getWarehousesList(const QString& text, const bool 
 		"</announcement>"
 		"</places>"
 		, "", receiver, slot);
-
-
 }
 
 void StaticTestingDataEngine::makeRequest(DataRequest* dr)

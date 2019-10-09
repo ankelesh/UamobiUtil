@@ -1,10 +1,8 @@
 #include "UamobiUtil.h"
 
-
-
-UamobiUtil::UamobiUtil(GlobalAppSettings & go, QWidget* parent)
+UamobiUtil::UamobiUtil(GlobalAppSettings& go, QWidget* parent)
 	: QWidget(parent), globalSettings(go), mainLayout(new QVBoxLayout(this)),
-	mainPage(QPointer<inframedWidget>(new MainPageWidget(globalSettings,this))),
+	mainPage(QPointer<inframedWidget>(new MainPageWidget(globalSettings, this))),
 	modeSelectionBranch(),
 	current(&mainPage)
 {
@@ -16,8 +14,8 @@ UamobiUtil::UamobiUtil(GlobalAppSettings & go, QWidget* parent)
 	QObject::connect(mlp, &MainPageWidget::loggedIn, this, &UamobiUtil::gotoModeSelection);
 
 #else
-    MainPageWidget * mlp = qobject_cast<MainPageWidget*> (mainPage);
-    QObject::connect(mlp, SIGNAL(loggedIn()), this, SLOT(gotoModeSelection()));
+	MainPageWidget* mlp = qobject_cast<MainPageWidget*> (mainPage);
+	QObject::connect(mlp, SIGNAL(loggedIn()), this, SLOT(gotoModeSelection()));
 #endif
 }
 
@@ -29,13 +27,13 @@ void UamobiUtil::gotoModeSelection()
 		mainLayout->removeWidget(*current);
 		delete (*current);
 	}
-    ModeSelectionWidget* mb = new ModeBranchRootWidget(globalSettings, this);
+	ModeSelectionWidget* mb = new ModeBranchRootWidget(globalSettings, this);
 #ifdef QT_VERSION5X
-    QObject::connect(mb, &ModeSelectionWidget::backRequired, this, &UamobiUtil::hideCurrent);
+	QObject::connect(mb, &ModeSelectionWidget::backRequired, this, &UamobiUtil::hideCurrent);
 	QObject::connect(mb, &ModeSelectionWidget::modeAcquired, this, &UamobiUtil::gotoReceiptBranch);
 #else
-    QObject::connect(mb, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
-	throw;
+	QObject::connect(mb, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+	QObject::connect(mb, SIGNAL(modeAcquired(QHash<QString, QString>)), this, SLOT(gotoReceiptBranch(QHash<QString, QString>)));
 #endif
 	modeSelectionBranch = mb;
 	current = &modeSelectionBranch;
@@ -43,20 +41,22 @@ void UamobiUtil::gotoModeSelection()
 	(*current)->show();
 }
 
-void UamobiUtil::gotoReceiptBranch(QHash<QString,QString> opts)
+void UamobiUtil::gotoReceiptBranch(QHash<QString, QString> opts)
 {
-	detrace_METHCALL("goto Receipt")
+#ifdef DEBUG
+	//detrace_METHCALL("goto Receipt");
+#endif
 	(*current)->hide();
 	if (*current != mainPage)
 	{
 		mainLayout->removeWidget(*current);
 		(*current)->deleteLater();
 	}
-	ReceiptRootWidget* RR = new ReceiptRootWidget(globalSettings,opts, this);
+	ReceiptRootWidget* RR = new ReceiptRootWidget(globalSettings, opts, this);
 #ifdef QT_VERSION5X
 	QObject::connect(RR, &ReceiptRootWidget::backRequired, this, &UamobiUtil::hideCurrent);
 #else
-	QObject::connect(SS, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+	QObject::connect(RR, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
 #endif
 	receiptBranch = RR;
 	current = &receiptBranch;
@@ -80,7 +80,7 @@ void UamobiUtil::gotoBranch(branches branch)
 	case modeselect:
 		gotoModeSelection();
 		break;
-	
+
 	default:
 		break;
 	}
@@ -92,7 +92,6 @@ void UamobiUtil::hideCurrent()
 	{
 		if (current == &modeSelectionBranch)
 		{
-
 			(*current)->hide();
 			mainLayout->removeWidget(*current);
 			delete (*current);

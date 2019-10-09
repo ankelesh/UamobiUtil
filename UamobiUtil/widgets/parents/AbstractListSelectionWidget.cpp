@@ -1,6 +1,5 @@
 #include "AbstractListSelectionWidget.h"
 
-
 void  AbstractListSelectionWidget::init()
 {
 	for (int i = 0; i < countElems(); ++i)
@@ -18,6 +17,9 @@ AbstractListSelectionWidget::AbstractListSelectionWidget(QWidget* parent)
 	: QListWidget(parent)
 {
 	this->setSelectionMode(QAbstractItemView::SingleSelection);
+#ifdef QT_VERSION5X
 	QObject::connect(this, &QListWidget::itemClicked, this, &AbstractListSelectionWidget::itemSelectedFromList);
+#else
+	QObject::connect(this, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(itemSelectedFromList(QListWidgetItem*)));
+#endif
 }
-

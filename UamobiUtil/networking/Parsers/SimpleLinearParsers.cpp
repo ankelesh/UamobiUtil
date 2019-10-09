@@ -18,19 +18,26 @@ QString UserListParser::parseErrorText()
 UserListParser::UserListParser(QString& res, QString& err)
 	: abs_parsed_request(res, err)
 {
-	detrace_METHTEXTS("UserListParser", "res", res)
+#ifdef DEBUG
+	//detrace_METHTEXTS("UserListParser", "res", res);
+#endif
 	QDomDocument doc;
 	doc.setContent(result);
-	detrace_METHEXPL("errors: " << doc.toString())
+#ifdef DEBUG
+	//detrace_METHEXPL("errors: " << doc.toString());
+#endif
 	QString code = doc.elementsByTagName("status").at(0).toElement().text();
-
 	parseres.request_status = code.toInt();
-	detrace_METHDATAS("UserListParser::dconstr", "code", <<code)
+#ifdef DEBUG
+	//detrace_METHDATAS("UserListParser::dconstr", "code", <<code);
+#endif
 	if (parseres.request_status != 200)
 		return;
 	if (doc.elementsByTagName("manually").count() > 0)
 	{
-		detrace_METHEXPL("manually found in the request!")
+#ifdef DEBUG
+		//detrace_METHEXPL("manually found in the request!");
+#endif
 		parseres.alternative_result = 1;
 	}
 	else
@@ -38,14 +45,15 @@ UserListParser::UserListParser(QString& res, QString& err)
 		parseres.alternative_result = 0;
 	}
 	QDomNodeList dmndl = doc.elementsByTagName("user");
-	detrace_METHEXPL("dmndl len: " << dmndl.count())
+#ifdef DEBUG
+	//detrace_METHEXPL("dmndl len: " << dmndl.count());
+#endif
 	for (int i = 0; i < dmndl.count(); ++i)
 	{
 		parseres.queriesResult << (dmndl.at(i).childNodes().at(1).toElement().text());
 		parseres.queriesResult << (dmndl.at(i).childNodes().at(0).toElement().text());
 	}
-	
-	
+
 	parseres.one_position_entries_quantity = 2;
 	parseres.type = linear_result;
 	success = true;
@@ -73,14 +81,16 @@ PlacesListParser::PlacesListParser(QString& res, QString& err)
 	doc.setContent(result);
 	QString code = doc.elementsByTagName("status").at(0).toElement().text();
 	parseres.request_status = code.toInt();
-	//detrace_METHDATAS("UserListParser::dconstr", "code", << code)
+#ifdef DEBUG
+	//detrace_METHDATAS("UserListParser::dconstr", "code", << code);
+#endif
 	if (parseres.request_status != 200)
 		return;
 	QDomNodeList dmndl = doc.elementsByTagName("place");
 	for (int i = 0; i < dmndl.count(); ++i)
 	{
-		parseres.queriesResult <<  dmndl.at(i).childNodes().at(0).toElement().text();
-		parseres.queriesResult <<  dmndl.at(i).childNodes().at(1).toElement().text();
+		parseres.queriesResult << dmndl.at(i).childNodes().at(0).toElement().text();
+		parseres.queriesResult << dmndl.at(i).childNodes().at(1).toElement().text();
 	}
 	parseres.type = linear_result;
 	parseres.one_position_entries_quantity = 2;
@@ -109,7 +119,9 @@ SuppliersListParser::SuppliersListParser(QString& res, QString& errtext)
 	doc.setContent(result);
 	QString code = doc.elementsByTagName("status").at(0).toElement().text();
 	parseres.request_status = code.toInt();
-	//detrace_METHDATAS("UserListParser::dconstr", "code", << code)
+#ifdef DEBUG
+	//detrace_METHDATAS("UserListParser::dconstr", "code", << code);
+#endif
 	if (parseres.request_status != 200)
 		return;
 	QDomNodeList dmndl = doc.elementsByTagName("supplier");
@@ -146,7 +158,9 @@ OrdersListParser::OrdersListParser(QString& res, QString& errtext)
 	doc.setContent(result);
 	QString code = doc.elementsByTagName("status").at(0).toElement().text();
 	parseres.request_status = code.toInt();
-	//detrace_METHDATAS("UserListParser::dconstr", "code", << code)
+#ifdef DEBUG
+	//detrace_METHDATAS("UserListParser::dconstr", "code", << code);
+#endif
 	if (parseres.request_status != 200)
 		return;
 	QDomNodeList dmndl = doc.elementsByTagName("order");
@@ -158,5 +172,53 @@ OrdersListParser::OrdersListParser(QString& res, QString& errtext)
 	}
 	parseres.type = linear_result;
 	parseres.one_position_entries_quantity = 3;
+	success = true;
+}
+
+bool ItemSimplifiedParser::couldRead()
+{
+	return success;
+}
+
+bool ItemSimplifiedParser::noRequestErrors()
+{
+	return parseres.request_status == 200;
+}
+
+QString ItemSimplifiedParser::parseErrorText()
+{
+	return errtext;
+}
+
+ItemSimplifiedParser::ItemSimplifiedParser(QString& res, QString& errtext)
+	: abs_parsed_request(res, errtext)
+{
+	QDomDocument doc;
+	doc.setContent(result);
+	QString code = doc.elementsByTagName("status").at(0).toElement().text();
+	parseres.request_status = code.toInt();
+#ifdef DEBUG
+	//detrace_METHDATAS("UserListParser::dconstr", "code", << code);
+#endif
+	if (parseres.request_status != 200)
+		return;
+	QDomNodeList pageinfo = doc.elementsByTagName("page");
+	if (pageinfo.isEmpty())
+	{
+		success = false;
+		return;
+	}
+	parseres.queriesResult << pageinfo.at(0).namedItem("from").toElement().text();
+	parseres.queriesResult << pageinfo.at(0).namedItem("to").toElement().text();
+	parseres.queriesResult << pageinfo.at(0).namedItem("last").toElement().text();
+	parseres.alternative_result = 3;
+	QDomNodeList dmndl = doc.elementsByTagName("result");
+	int len = dmndl.count();
+	for (int i = 0; i < len; ++i)
+	{
+		parseres.queriesResult << dmndl.at(i).namedItem("code").toElement().text();
+		parseres.queriesResult << dmndl.at(i).namedItem("title").toElement().text();
+	}
+	parseres.one_position_entries_quantity = 2;
 	success = true;
 }

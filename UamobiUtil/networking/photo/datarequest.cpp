@@ -4,10 +4,12 @@
 
 int DataRequest::activeRequestsCount = 0;
 
-DataRequest::DataRequest(Request rt, QObject *parent) :
+DataRequest::DataRequest(Request rt, QObject* parent) :
 	QObject(parent), m_requestType(rt)
 {
-    detrace_DCONSTR("dataRequest")
+#ifdef DEBUG
+	//detrace_DCONSTR("dataRequest");
+#endif
 }
 
 DataRequest::Request DataRequest::type()
@@ -25,7 +27,7 @@ QString DataRequest::errorMessage()
 	return m_errMsg;
 }
 
-void DataRequest::setErrorMessage(const QString &str)
+void DataRequest::setErrorMessage(const QString& str)
 {
 	m_errMsg = str;
 }
@@ -35,31 +37,31 @@ QVariant DataRequest::data()
 	return m_resultData;
 }
 
-void DataRequest::setData(QVariant &data)
+void DataRequest::setData(QVariant& data)
 {
 	m_resultData = data;
 }
 
 void DataRequest::call(DataUpdateEngine* e)
 {
-    if(!e)
-        return;
+	if (!e)
+		return;
 	e->makeRequest(this);
-	activeRequestsCount++;	
+	activeRequestsCount++;
 }
 
 void DataRequest::setDone()
 {
-	activeRequestsCount--;	
+	activeRequestsCount--;
 	emit done(this);
 }
 
-void DataRequest::setRequestParam(const char *name, const QVariant &value)
+void DataRequest::setRequestParam(const char* name, const QVariant& value)
 {
 	setProperty(name, value);
 }
 
-QVariant DataRequest::requestParam(const char *name) const
+QVariant DataRequest::requestParam(const char* name) const
 {
 	return property(name);
 }

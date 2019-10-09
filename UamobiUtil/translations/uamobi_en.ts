@@ -46,25 +46,25 @@
     <name>MainPageWidget</name>
     <message>
         <location filename="../widgets/MainPageWidget.cpp" line="59"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="119"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="121"/>
         <source>main_page_select_profile_tip</source>
         <translation>Please select your profile</translation>
     </message>
     <message>
         <location filename="../widgets/MainPageWidget.cpp" line="60"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="120"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="122"/>
         <source>main_page_enter_profile_id_tip</source>
         <translation>Enter id</translation>
     </message>
     <message>
         <location filename="../widgets/MainPageWidget.cpp" line="64"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="121"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="123"/>
         <source>main_page_exit_button</source>
         <translation>[0] Quit</translation>
     </message>
     <message>
         <location filename="../widgets/MainPageWidget.cpp" line="65"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="122"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="124"/>
         <source>main_page_settings_button</source>
         <translation>Settings</translation>
     </message>
@@ -165,23 +165,23 @@
 <context>
     <name>ModeSelectionWidget</name>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="40"/>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="42"/>
         <source>mode_selection_user_tip!</source>
         <translation>Please select mode!</translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="41"/>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="43"/>
         <source>mode_selection_modes_tip:</source>
         <translation>Select modes:</translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="42"/>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="44"/>
         <source>mode_selection_logout_tip</source>
         <translation>Log out</translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="76"/>
-        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="102"/>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="79"/>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="109"/>
         <source>mode_selection_timeout!</source>
         <translation>Connection timeout!</translation>
     </message>
@@ -189,32 +189,32 @@
 <context>
     <name>PlaceSelectionWidget</name>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="43"/>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="42"/>
         <source>place_selection_user_tip!</source>
         <translation>Please select place!</translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="44"/>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="43"/>
         <source>place_selection_mode_tip: </source>
         <translation>Select place: </translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="45"/>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="44"/>
         <source>place_selection_place_tip: </source>
         <translation>Available places: </translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="46"/>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="45"/>
         <source>place_selection_back</source>
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="72"/>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="70"/>
         <source>mode_selection_timeout!</source>
         <translation>Connection timeout!</translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="97"/>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="91"/>
         <source>places_selection_timeout!</source>
         <translation>Connection timeout!</translation>
     </message>
@@ -222,32 +222,32 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../networking/things.h" line="108"/>
+        <location filename="../networking/things.h" line="96"/>
         <source>Closed.</source>
         <translation>Closed.</translation>
     </message>
     <message>
-        <location filename="../networking/things.h" line="109"/>
+        <location filename="../networking/things.h" line="97"/>
         <source>Canceled.</source>
         <translation>Cancelled.</translation>
     </message>
     <message>
-        <location filename="../networking/things.h" line="110"/>
+        <location filename="../networking/things.h" line="98"/>
         <source>Closed, cancelled.</source>
         <translation>Closed, cancelled.</translation>
     </message>
     <message>
-        <location filename="../networking/things.h" line="111"/>
+        <location filename="../networking/things.h" line="99"/>
         <source>Open.</source>
         <translation>Open.</translation>
     </message>
     <message>
-        <location filename="../networking/things.h" line="112"/>
+        <location filename="../networking/things.h" line="100"/>
         <source>Locked.</source>
         <translation>Locked.</translation>
     </message>
     <message>
-        <location filename="../networking/things.h" line="118"/>
+        <location filename="../networking/things.h" line="106"/>
         <source>Supplier: </source>
         <translation>Supplier: </translation>
     </message>

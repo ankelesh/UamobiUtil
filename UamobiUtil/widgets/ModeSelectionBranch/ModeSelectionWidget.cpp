@@ -50,8 +50,8 @@ ModeSelectionWidget::ModeSelectionWidget(const GlobalAppSettings& go, QWidget* p
 	QObject::connect(logoutButton, &QPushButton::clicked, this, &ModeSelectionWidget::logoutPressed);
 	QObject::connect(modeSelection, &specwidgets::_modeSelectionWidget::modeSelected, this, &ModeSelectionWidget::modeSelected);
 #else
-    QObject::connect(logoutButton, SIGNAL(clicked()), this, SLOT(logoutPressed()));
-    QObject::connect(modeSelection, SIGNAL(modeSelected(parsedMode)), this, SLOT(modeSelected(parsedMode)));
+	QObject::connect(logoutButton, SIGNAL(clicked()), this, SLOT(logoutPressed()));
+	QObject::connect(modeSelection, SIGNAL(modeSelected(parsedMode)), this, SLOT(modeSelected(parsedMode)));
 #endif
 }
 
@@ -103,8 +103,8 @@ void ModeSelectionWidget::modeSelected(parsedMode Mode)
 	}
 	else
 	{
-        parse_uniresults_functions::PositionalResponse resp =
-                RequestParser::interpretAsPositionalResponse(awaiter.restext, awaiter.errtext);
+		parse_uniresults_functions::PositionalResponse resp =
+			RequestParser::interpretAsPositionalResponse(awaiter.restext, awaiter.errtext);
 		if (resp.success)
 		{
 			settings = resp.values;
@@ -124,9 +124,13 @@ ModeBranchRootWidget::ModeBranchRootWidget(const GlobalAppSettings& go, QWidget*
 	placeSelection->hide();
 	current = innerWidget;
 	untouchable = innerWidget;
-
+#ifdef QT_VERSION5X
 	QObject::connect(placeSelection, &PlaceSelectionWidget::placeAcquired, this, &ModeBranchRootWidget::placeAcquired);
 	QObject::connect(placeSelection, &PlaceSelectionWidget::backRequired, this, &ModeBranchRootWidget::hideCurrent);
+#else
+	QObject::connect(placeSelection, SIGNAL(placeAcquired(parsedPlace)), this, SLOT(placeAcquired(parsedPlace)));
+	QObject::connect(placeSelection, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+#endif
 }
 
 void ModeBranchRootWidget::modeSelected(parsedMode pm)

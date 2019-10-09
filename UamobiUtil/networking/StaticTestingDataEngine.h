@@ -3,7 +3,6 @@
 #include "networking/dataupdateengine.h"
 #include <QtCore/QTimer>
 
-
 class StaticTestingDataEngine : public DataUpdateEngine
 {
 private:
@@ -97,5 +96,4 @@ public:
 	virtual void makeRequest(DataRequest* dr) override;
 public slots:
 	void delayOut();
-
 };

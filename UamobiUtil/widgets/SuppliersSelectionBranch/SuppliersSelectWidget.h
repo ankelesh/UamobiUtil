@@ -8,7 +8,12 @@
 #include <QtWidgets/QLabel>
 #else
  // Qt 4 only imports
-throw;
+#include <QtGui/QWidget>
+#include <QtGui/QPushButton>
+#include <QtGui/QLineEdit>
+#include <QtGui/QBoxLayout>
+#include <QtGui/QLabel>
+
 #endif
 // widgets imports
 #include "widgets/parents/inframedWidget.h"
@@ -25,15 +30,15 @@ throw;
 
 /*
 	This widget is suited for selecting a supplier. It is designed and as root element, and as top widget.
-	
-	Update: 
+
+	Update:
 		Added branching to OrderSelection - possible renundancy
 	TODO:
 		More abstraction possible.
 
-
+	__ASSOCIATED_DATABASE_FUNCTION__  :   P'suppliersResponse' list_suppliers(part_of_name, withorders)
+	__OPTIONAL_REPLACEMENT_DBFUNCTION__ : P'suppliersResponse' list_warehouses(part_of_name, withorders)
 */
-
 
 namespace specwidgets
 {
@@ -46,15 +51,13 @@ namespace specwidgets
 		virtual QString elemToString(int) override;
 		virtual int countElems() override;
 	public:
-		_SupplierSelectionWidget(QVector<parsedSupplier> & supplist, QWidget* parent = Q_NULLPTR);
+		_SupplierSelectionWidget(QVector<parsedSupplier>& supplist, QWidget* parent = Q_NULLPTR);
 	protected slots:
 		virtual void itemSelectedFromList(QListWidgetItem*) override;
 	signals:
 		void supplierPicked(parsedSupplier);
 	};
 }
-
-
 
 class SuppliersSelectWidget : public inframedWidget
 {
@@ -67,11 +70,10 @@ protected:
 	interpretsPointers::interpretAsSupplierLike interpreter;
 	SuppliersLikeMP listSuppliers;
 
-
 	parsedSupplier confirmedSupplier;
 
 	QVBoxLayout* mainLayout;
-	inframedWidget * innerWidget;
+	inframedWidget* innerWidget;
 	QVBoxLayout* innerLayout;
 	QHBoxLayout* headerLayout;
 	QHBoxLayout* footerLayout;
@@ -83,7 +85,7 @@ protected:
 	QPushButton* backButton;
 
 public:
-	SuppliersSelectWidget(GlobalAppSettings& go, QWidget* parent, 
+	SuppliersSelectWidget(GlobalAppSettings& go, QWidget* parent,
 		SuppliersLikeMP meth = &DataUpdateEngine::recListSuppliers,
 		interpretsPointers::interpretAsSupplierLike inter = &RequestParser::interpretAsSupplierList);
 
@@ -101,7 +103,7 @@ class SuppliersSelectionBranch : public SuppliersSelectWidget, abstractNode
 {
 	Q_OBJECT
 protected:
-	
+
 	OrderSelectionWidget* orderSelection;
 
 public:

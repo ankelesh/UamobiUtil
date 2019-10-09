@@ -7,11 +7,11 @@ int specwidgets::_OrderListSelectionWidget::countElems()
 
 QString specwidgets::_OrderListSelectionWidget::elemToString(int i)
 {
-	return allorders.at(i).title + "|" + allorders.at(i).code+ "|" + allorders.at(i).text;
+	return allorders.at(i).title + "|" + allorders.at(i).code + "|" + allorders.at(i).text;
 }
 
 specwidgets::_OrderListSelectionWidget::_OrderListSelectionWidget(ordersResponse& ords, QWidget* parent)
-	: AbstractListSelectionWidget(parent), allorders (ords)
+	: AbstractListSelectionWidget(parent), allorders(ords)
 {
 	init();
 }
@@ -21,7 +21,7 @@ void specwidgets::_OrderListSelectionWidget::itemSelectedFromList(QListWidgetIte
 	emit orderPicked(allorders.at(currentRow()));
 }
 
-OrderSelectionWidget::OrderSelectionWidget(GlobalAppSettings& go, const parsedSupplier & suppl, QWidget* parent)
+OrderSelectionWidget::OrderSelectionWidget(GlobalAppSettings& go, const parsedSupplier& suppl, QWidget* parent)
 	: inframedWidget(parent), globalSettings(go), allOrders(), supplierInWork(suppl),
 	mainLayout(new QVBoxLayout(this)), innerWidget(new QWidget(this)),
 	innerLayout(new QVBoxLayout(innerWidget)), userInfo(new QLabel(innerWidget)),
@@ -49,9 +49,10 @@ OrderSelectionWidget::OrderSelectionWidget(GlobalAppSettings& go, const parsedSu
 	QObject::connect(orderSelection, &specwidgets::_OrderListSelectionWidget::orderPicked, this, &OrderSelectionWidget::orderSelected);
 
 #else
-	throw;
+	QObject::connect(backButton, SIGNAL(clicked), this, SIGNAL(backRequired()));
+	QObject::connect(pickButton, SIGNAL(clicked()), this, SLOT(pickClicked()));
+	QObject::connect(orderSelection, SIGNAL(orderPicked(parsedOrder)), this, SLOT(orderSelected(parsedOrder)));
 #endif
-
 }
 
 void OrderSelectionWidget::orderSelected(parsedOrder po)
@@ -69,12 +70,13 @@ void OrderSelectionWidget::orderSelected(parsedOrder po)
 	}
 	else
 	{
-
 		parse_uniresults_functions::TypicalResponse resp =
 			RequestParser::interpretAsRichtextResponse(awaiter.restext, awaiter.errtext);
 		if (resp.resp)
 		{
-			detrace_METHEXPL("succesfully read")
+#ifdef DEBUG
+			//detrace_METHEXPL("succesfully read");
+#endif
 			emit orderConfirmed(po, resp.errors);
 		}
 	}
@@ -106,5 +108,4 @@ void OrderSelectionWidget::loadOrders()
 }
 void OrderSelectionWidget::pickClicked()
 {
-
 }

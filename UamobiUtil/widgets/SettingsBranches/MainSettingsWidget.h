@@ -27,8 +27,8 @@
 #include "widgets/utils/ElementsStyles.h"
 
 /*
-	This widgets is used to alter GlobalAppSettings object. Generally it allows to change 
-	scanning mode, adress, type of storage and language. 
+	This widgets is used to alter GlobalAppSettings object. Generally it allows to change
+	scanning mode, adress, type of storage and language.
 
 */
 
@@ -57,7 +57,7 @@ private:
 	QWidget* sysContents;
 	QVBoxLayout* sysContLayout;
 	QLabel* topExplLabel;
-	
+
 	// group of dataengine changes
 	QGroupBox* dataengGroup;
 	QVBoxLayout* dataengLayout;
@@ -85,9 +85,9 @@ public:
 	MainSettingsWidget(GlobalAppSettings& go, QWidget* parent = Q_NULLPTR);
 
 private slots:;
-	void saveClicked();			//	saves data to GlobalAppSettings widget
-	void langSelected(const QString &);	//	alters GAS, then retranslates this widget
-	void langChanged();				//	retranslates this widget
+			 void saveClicked();			//	saves data to GlobalAppSettings widget
+			 void langSelected(const QString&);	//	alters GAS, then retranslates this widget
+			 void langChanged();				//	retranslates this widget
 signals:
 	void languageChanged();			//	is emitted when language is changed
 };

@@ -6,7 +6,7 @@ specwidgets::indexedButton::indexedButton(int Index, QWidget* parent) : QPushBut
 #ifdef QT_VERSION5X
 	if (!QObject::connect(this, &QPushButton::clicked, this, &indexedButton::clickCapt)) throw  std::exception("no connection in indexed button");
 #else
-    if (!QObject::connect(this, SIGNAL(clicked()), this, SLOT(clickCapt()))) throw  std::exception("no connection in indexed button");
+	if (!QObject::connect(this, SIGNAL(clicked()), this, SLOT(clickCapt()))) throw  std::exception("no connection in indexed button");
 #endif
 }
 void specwidgets::indexedButton::setIndex(int Index)

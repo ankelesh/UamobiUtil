@@ -3,10 +3,10 @@
 #include <QtCore/QHash>
 #include "networking/things.h"
 #include "abs_parsed_request.h"
-
+#include <QtCore/QVector>
 
 /*
-		This file contains parsers that are concentrated on already parsed results, which are stored in 
+		This file contains parsers that are concentrated on already parsed results, which are stored in
 		uniform container. main idea of this uniform container is to allow user to define which parser will be used for primary
 		parsing and how to parse results, i.e. there is no hard binding to representation, raw results can be processed
 		without these functions. Main goal of these functions is to transform result into particular form.
@@ -17,8 +17,6 @@
 		You manually create parser and then use it's result when you don't want to waste time on deducing
 		You check packet with simpliestresponse parser to be sure this IS a right packet and then use it's
 		string representation to parse it on your own.
-
-
 
 */
 
@@ -46,10 +44,20 @@ namespace parse_uniresults_functions
 		QString primaryResult;
 		QString secondaryResult;
 	};
+	template <class C>
+	struct PagedResponse
+	{
+		QString from;
+		QString to;
+		bool last;
+		QVector<C> values;
+	};
 	typedef QVector<parsedMode> modesResponse;
 	typedef QVector<parsedPlace> placesResponse;
 	typedef QVector<parsedSupplier> supplierResponse;
 	typedef QVector<parsedOrder> ordersResponse;
+	typedef PagedResponse<parsedItemSimplified> searchResponse;
+	typedef PagedResponse<parsedItem> doclistResponse;
 
 	UserProfilesResult parse_user_profiles(uniform_parse_result& ures);
 	modesResponse parse_modes(uniform_parse_result& ures);
@@ -59,7 +67,10 @@ namespace parse_uniresults_functions
 	ordersResponse parse_orders_list(uniform_parse_result& ures);
 	TypicalResponse parse_richtext(uniform_parse_result& ures);
 	Document parse_document_response(uniform_parse_result& ures);
-	PairedResponse parse_item_info(uniform_parse_result& ures);
+	PositionalResponse parse_item_info(uniform_parse_result& ures);
+	searchResponse parse_search_response(uniform_parse_result & ures);
+	doclistResponse parse_document_listed(uniform_parse_result& ures);
+
 
 	// deprecated, should make better
 	bool isSimpliest(QString& res);
@@ -70,13 +81,12 @@ namespace parse_uniresults_functions
 	bool isModeList(QString& res);
 	bool isSuppliersList(QString& res);
 	bool isOrdersList(QString& res);
-	
 }
 
 namespace RequestParser
 {
 	using namespace parse_uniresults_functions;
-	reqtypes deduceRequestType(QString & res);
+	reqtypes deduceRequestType(QString& res);
 	abs_parsed_request* makeParser(QString& res, QString& errtext, reqtypes type = None);
 	UserProfilesResult interpretAsLogin(QString& res, QString& errtext);
 	TypicalResponse interpretAsLoginResponse(QString& res, QString& errtext);
@@ -88,7 +98,10 @@ namespace RequestParser
 	ordersResponse interpretAsOrdersList(QString& res, QString& errtext);
 	TypicalResponse interpretAsRichtextResponse(QString& res, QString& errtext);
 	Document interpretAsDocumentResponse(QString& res, QString& errtext);
-	PairedResponse interpretAsItemInfo(QString& res, QString& errtext);
+	PositionalResponse interpretAsItemInfo(QString& res, QString& errtext);
+	searchResponse interpretAsSearchResponse(QString& res, QString& errtext);
+	doclistResponse interpretAsListedDocument(QString& res, QString& errtext);
+
 };
 namespace interpretsPointers
 {
@@ -104,4 +117,3 @@ namespace interpretsPointers
 	typedef PositionalResponse(*interpretAsPositionalLike)(QString&, QString&);
 	typedef TypicalResponse(*interpretAsTypicalLike)(QString&, QString&);
 }
-

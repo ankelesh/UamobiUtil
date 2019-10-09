@@ -6,7 +6,7 @@ ReceiptParametersWidget::ReceiptParametersWidget(GlobalAppSettings& go, QWidget*
 	innerLayout(new QVBoxLayout(innerWidget)), userInfo(new QLabel(innerWidget)),
 	innerFrame(new QFrame(innerWidget)), frameLayout(new QVBoxLayout(innerFrame)),
 	stateInfo(new QLabel(innerFrame)), closedButton(new QPushButton(innerFrame)),
-	cancelledButton(new QPushButton(innerFrame)),dateField(new QDateEdit(innerFrame)),
+	cancelledButton(new QPushButton(innerFrame)), dateField(new QDateEdit(innerFrame)),
 	selectOrderLayout(new QHBoxLayout(innerFrame)), selectOrderButton(new QPushButton(innerFrame)),
 	mainTextView(new QTextEdit(innerFrame)), inspectLayout(new QHBoxLayout(innerFrame)),
 	inspectButton(new QPushButton(innerFrame)), continueLayout(new QHBoxLayout(innerFrame)),
@@ -62,23 +62,24 @@ ReceiptParametersWidget::ReceiptParametersWidget(GlobalAppSettings& go, QWidget*
 	QObject::connect(backButton, &QPushButton::clicked, this, &ReceiptParametersWidget::backRequired);
 
 #else
-	throw;
+	QObject::connect(closedButton, SIGNAL(clicked()), this, SLOT(closedClicked()));
+	QObject::connect(cancelledButton, SIGNAL(clicked()), this, SLOT(cancelledClicked()));
+	QObject::connect(inspectButton, SIGNAL(clicked()), this, SLOT(inspectClicked()));
+	QObject::connect(continueButton, SIGNAL(clicked()), this, SLOT(continueClicked()));
+	QObject::connect(backButton, SIGNAL(clicked), this, SIGNAL(backRequired()));
 #endif
 }
 
 void ReceiptParametersWidget::closedClicked()
 {
-
 }
 
 void ReceiptParametersWidget::cancelledClicked()
 {
-
 }
 
 void ReceiptParametersWidget::inspectClicked()
 {
-
 }
 
 void ReceiptParametersWidget::continueClicked()
@@ -91,4 +92,3 @@ void ReceiptParametersWidget::setMainView(const QString& rtxt)
 	mainTextView->setAcceptRichText(true);
 	mainTextView->insertHtml(rtxt);
 }
-

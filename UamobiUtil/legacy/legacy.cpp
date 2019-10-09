@@ -86,7 +86,10 @@ namespace legacy {
 	parsedMode parseLegacyMode(QString& name, QString& mode)
 	{
 		modecut m = legacymodes.value(mode.at(0)).value(mode);
-		parsedMode tmp = { name, m.modename, m.submodename };
+		parsedMode tmp;
+		tmp.name = name;
+		tmp.mode = m.modename;
+		tmp.submode = m.submodename;
 		return tmp;
 	}
 }

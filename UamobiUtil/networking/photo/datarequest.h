@@ -28,20 +28,20 @@ public:
 		TransportTicket
 	};
 
-	void setRequestParam(const char *name, const QVariant &value);
-	QVariant requestParam(const char *name) const;
+	void setRequestParam(const char* name, const QVariant& value);
+	QVariant requestParam(const char* name) const;
 
-	explicit DataRequest(Request rt, QObject *parent = 0);
+	explicit DataRequest(Request rt, QObject* parent = 0);
 
 	Request type();
 	bool hasErrors();
 	QString errorMessage();
-	void setErrorMessage(const QString &str);
+	void setErrorMessage(const QString& str);
 	QVariant data();
-	void setData(QVariant &data);
+	void setData(QVariant& data);
 
 public slots:
-    void call(DataUpdateEngine* e);
+	void call(DataUpdateEngine* e);
 	void setDone();
 
 signals:

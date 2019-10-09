@@ -1,8 +1,7 @@
 #include "LoginSelectWidget.h"
 
-
 LoginSelectWidget::LoginSelectWidget(QVector<UserProfile>& Profiles, QWidget* parent)
-	:AbstractVariantSelectionWidget(parent),profiles(Profiles)
+	:AbstractVariantSelectionWidget(parent), profiles(Profiles)
 {
 	init();
 }

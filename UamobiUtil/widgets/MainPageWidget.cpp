@@ -1,8 +1,6 @@
 #include "MainPageWidget.h"
 
-
-
-void MainPageWidget::show_login_widget(QString & log)
+void MainPageWidget::show_login_widget(QString& log)
 {
 	manualLogin->set_login(log);
 	_hideAny(manualLogin);
@@ -16,7 +14,7 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	scrArea(new QScrollArea(innerWidget)),
 	userHelpLabel(new QLabel(innerWidget)), loginsStorageWidget(new LoginSelectWidget(profiles, scrArea)), userIdInfo(new QLabel(innerWidget)),
 	exitButton(new QPushButton(innerWidget)), settingsButton(new QPushButton(innerWidget)),
-	userid(new QLineEdit(innerWidget)), manualLogin(new LoginWidget(go, this)), 
+	userid(new QLineEdit(innerWidget)), manualLogin(new LoginWidget(go, this)),
 	settingsScreen(new MainSettingsWidget(go, this))
 {
 	current = innerWidget;
@@ -27,17 +25,16 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	mainLayout->addWidget(manualLogin);
 	manualLogin->hide();
 	settingsScreen->hide();
-	mainLayout->setMargin(0); 
+	mainLayout->setMargin(0);
 	mainLayout->setSpacing(0);		//	spacing removed to avoid space loss
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 
 	innerLayout->setSpacing(0);
 	innerLayout->setContentsMargins(0, 0, 0, 0);
-	
+
 	innerWidget->setLayout(innerLayout);
 	innerLayout->addLayout(topPanelLayout);
 	innerLayout->addWidget(userHelpLabel);
-
 
 	scrArea->setWidgetResizable(true);
 	innerLayout->addWidget(scrArea);
@@ -52,7 +49,7 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	bottomPanelLayout->addWidget(exitButton);
 	bottomPanelLayout->addWidget(userid);
 	bottomPanelLayout->addWidget(settingsButton);
-	
+
 	versionLabel->setText(QString::number(VERSION));
 	hostLabel->setText(globalSettings.HttpUrl.section("/", 2, 2));
 
@@ -63,7 +60,6 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 
 	exitButton->setText(tr("main_page_exit_button"));
 	settingsButton->setText(tr("main_page_settings_button"));
-
 
 	loadUsers();
 
@@ -76,16 +72,15 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	QObject::connect(settingsScreen, &MainSettingsWidget::languageChanged, this, &MainPageWidget::languageChanged);
 	QObject::connect(loginsStorageWidget, &LoginSelectWidget::profilePicked, this, &MainPageWidget::userPicked);
 #else
-    QObject::connect(settingsButton, SIGNAL(clicked()), this, SLOT(settinsPressed()));
-    QObject::connect(exitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
-    QObject::connect(manualLogin, SIGNAL(loginConfirmed(QString,QString)), this, SLOT(userIdOk(QString,QString)));
-    QObject::connect(manualLogin, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
-    QObject::connect(settingsScreen, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
-    QObject::connect(settingsScreen, SIGNAL(languageChanged()), this, SLOT(languageChanged()));
-    QObject::connect(loginsStorageWidget, SIGNAL(profilePicked(UserProfile)), this, SLOT(userPicked(UserProfile)));
+	QObject::connect(settingsButton, SIGNAL(clicked()), this, SLOT(settinsPressed()));
+	QObject::connect(exitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
+	QObject::connect(manualLogin, SIGNAL(loginConfirmed(QString, QString)), this, SLOT(userIdOk(QString, QString)));
+	QObject::connect(manualLogin, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+	QObject::connect(settingsScreen, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+	QObject::connect(settingsScreen, SIGNAL(languageChanged()), this, SLOT(languageChanged()));
+	QObject::connect(loginsStorageWidget, SIGNAL(profilePicked(UserProfile)), this, SLOT(userPicked(UserProfile)));
 #endif
 	scrArea->setWidget(loginsStorageWidget);
-
 }
 
 void MainPageWidget::settinsPressed()
@@ -93,13 +88,11 @@ void MainPageWidget::settinsPressed()
 	_hideAny(settingsScreen);
 }
 
-
-void MainPageWidget::userIdOk(const QString log,const  QString pass)
+void MainPageWidget::userIdOk(const QString log, const  QString pass)
 {
 	hideCurrent();
 	emit loggedIn();
 }
-
 
 void MainPageWidget::userPicked(UserProfile up)
 {
@@ -133,16 +126,20 @@ void MainPageWidget::loadUsers()
 	}
 	if (awaiter.wasTimeout())
 	{
-		detrace_METHEXPL("Timeout found")
-			show_login_widget(QString(""));
+#ifdef DEBUG
+		detrace_METHEXPL("Timeout found");
+#endif
+		show_login_widget(QString(""));
 	}
 	else
 	{
 		parse_uniresults_functions::UserProfilesResult temp = RequestParser::interpretAsLogin(awaiter.restext, awaiter.errtext);
 		if (temp.manually)
 		{
-			detrace_METHEXPL("manually parsed from request")
-				show_login_widget(QString(""));
+#ifdef DEBUG
+			detrace_METHEXPL("manually parsed from request");
+#endif
+			show_login_widget(QString(""));
 		}
 		else
 		{

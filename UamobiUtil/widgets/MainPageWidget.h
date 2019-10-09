@@ -25,16 +25,18 @@
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
 
-
 /*
 	This widget is shown on application launch. It's main functional is to allow user profile selection if
 	server returns any user profiles. In worst case, this widget automatically shows manual login widget.
 	Also this widget contains Settings widget, which is affecting GlobalAppSettings.
 
+	__ASSOCIATED_DATABASE_FUNCTION__   : P'UserProfilesResult' list_users(void)
+
 	Update:
 		now more intellegent hiding - > returns to modeselect if user already logged in
-*/
 
+
+*/
 
 class MainPageWidget : public inframedWidget, abstractNode
 {
@@ -43,7 +45,7 @@ private:
 	// Uses global settings
 	GlobalAppSettings& globalSettings;
 	QVector<UserProfile> profiles;
-	
+
 	// has own view while is root
 	QVBoxLayout* mainLayout;
 	QPointer<inframedWidget> innerWidget;
@@ -61,16 +63,13 @@ private:
 	QLineEdit* userid;
 
 	// Child widgets
-	LoginWidget*  manualLogin;
-	MainSettingsWidget * settingsScreen;
+	LoginWidget* manualLogin;
+	MainSettingsWidget* settingsScreen;
 
-
-
-	
-	void show_login_widget(QString & log); // Utility: hides inner, shows login widget, sets it up.
+	void show_login_widget(QString& log); // Utility: hides inner, shows login widget, sets it up.
 
 public:
-	MainPageWidget( GlobalAppSettings & go, QWidget* parent);
+	MainPageWidget(GlobalAppSettings& go, QWidget* parent);
 
 private slots:
 	void settinsPressed();					//	activated on button press

@@ -1,6 +1,5 @@
 #include "PlaceSelectionWidget.h"
 
-
 QString specwidgets::_placeSelectionWidget::elemAsString(int index)
 {
 	return places.at(index).name;
@@ -45,17 +44,15 @@ PlaceSelectionWidget::PlaceSelectionWidget(const GlobalAppSettings& go, QWidget*
 	placesTip->setText(tr("place_selection_place_tip: "));
 	backButton->setText(tr("place_selection_back"));
 
-
 	scrArea->setWidget(placeSelection);
 
 #ifdef QT_VERSION5X
 	QObject::connect(placeSelection, &specwidgets::_placeSelectionWidget::placeSelected, this, &PlaceSelectionWidget::placeSelected);
 	QObject::connect(backButton, &QPushButton::clicked, this, &PlaceSelectionWidget::backRequired);
 #else
-    QObject::connect(placeSelection, SIGNAL(placeSelected(parsedPlace)), this, SLOT(placeSelected(parsedPlace)));
-    QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
+	QObject::connect(placeSelection, SIGNAL(placeSelected(parsedPlace)), this, SLOT(placeSelected(parsedPlace)));
+	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 #endif
-
 }
 
 void PlaceSelectionWidget::placeSelected(parsedPlace pl)
@@ -81,9 +78,9 @@ void PlaceSelectionWidget::placeSelected(parsedPlace pl)
 void PlaceSelectionWidget::loadPlaces()
 {
 	RequestAwaiter awaiter;
-	auto httpointer = (globalSettings.networkingEngine);
+	DataUpdateEngine* httpointer = (globalSettings.networkingEngine);
 	(*httpointer.*listPlaces)(&awaiter, RECEIVER_SLOT_NAME);
-	
+
 	//httpointer->placeList(Q_NULLPTR, &awaiter, RECEIVER_SLOT_NAME);
 	//globalSettings.networkingEngine->placeList(Q_NULLPTR, &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
@@ -93,14 +90,17 @@ void PlaceSelectionWidget::loadPlaces()
 	}
 	if (awaiter.wasTimeout())
 	{
-		detrace_METHEXPL("timeout")
+#ifdef DEBUG
+		detrace_METHEXPL("timeout");
+#endif
 		userTip->setText(tr("places_selection_timeout!"));
 	}
 	else
 	{
-		detrace_METHEXPL("loaded")
+#ifdef DEBUG
+		detrace_METHEXPL("loaded");
+#endif
 		allplaces = interpreter(awaiter.restext, awaiter.errtext);
 		placeSelection->reload();
 	}
 }
-

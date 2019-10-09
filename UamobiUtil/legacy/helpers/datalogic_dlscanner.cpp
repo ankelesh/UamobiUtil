@@ -15,17 +15,17 @@
 class DLScannerHelper : private QWidget
 {
 public:
-	static DLScannerHelper *instance();
-	void setReceiver(DLScannerInputHelper *rec);
+	static DLScannerHelper* instance();
+	void setReceiver(DLScannerInputHelper* rec);
 	void enable();
 	void disable();
 
 protected:
-	bool winEvent(MSG *message, long *result);
+	bool winEvent(MSG* message, long* result);
 
 private:
 	DLScanner m_scanner;
-	DLScannerInputHelper *m_receiver;
+	DLScannerInputHelper* m_receiver;
 	const unsigned long WM_DLScannerMessage;
 
 	DLScannerHelper();
@@ -38,7 +38,7 @@ DLScannerHelper* DLScannerHelper::instance()
 	return &i;
 }
 
-void DLScannerHelper::setReceiver(DLScannerInputHelper *rec)
+void DLScannerHelper::setReceiver(DLScannerInputHelper* rec)
 {
 	m_receiver = rec;
 }
@@ -53,13 +53,13 @@ void DLScannerHelper::disable()
 	m_scanner.scanDisable();
 }
 
-bool DLScannerHelper::winEvent(MSG *message, long *result)
+bool DLScannerHelper::winEvent(MSG* message, long* result)
 {
 	if (message->message == WM_DLScannerMessage) {
 		*result = 0;
 		const int len = m_scanner.getLabelTextLength();
-		wchar_t *label   = new wchar_t[len+1];
-		memset(label, 0, (len+1)*sizeof(wchar_t));
+		wchar_t* label = new wchar_t[len + 1];
+		memset(label, 0, (len + 1) * sizeof(wchar_t));
 		m_scanner.getLabelText(label, len);
 		if (m_receiver)
 			m_receiver->emitNewCode(QString::fromUtf16(label, len));
@@ -70,7 +70,7 @@ bool DLScannerHelper::winEvent(MSG *message, long *result)
 }
 
 DLScannerHelper::DLScannerHelper() :
-	WM_DLScannerMessage(WM_USER+42)
+	WM_DLScannerMessage(WM_USER + 42)
 {
 	m_scanner.registerLabelMessage(this->window()->winId(), WM_DLScannerMessage);
 }
@@ -80,8 +80,7 @@ DLScannerHelper::~DLScannerHelper()
 	m_scanner.deregisterLabelMessage();
 }
 
-
-DLScannerInputHelper::DLScannerInputHelper(QObject *parent) :
+DLScannerInputHelper::DLScannerInputHelper(QObject* parent) :
 	AbstractInputHelper(parent)
 {
 	DLScannerHelper::instance()->setReceiver(this);
@@ -93,13 +92,13 @@ DLScannerInputHelper::~DLScannerInputHelper()
 	DLScannerHelper::instance()->setReceiver(0);
 }
 
-void DLScannerInputHelper::emitNewCode(const QString &c)
+void DLScannerInputHelper::emitNewCode(const QString& c)
 {
 	QString code = c.trimmed();
 	if (code.startsWith('$'))
-		code = code.right(code.length()-1);
+		code = code.right(code.length() - 1);
 	if (code.endsWith('$'))
-		code = code.left(code.length()-1);
+		code = code.left(code.length() - 1);
 	emit newCode(code);
 }
 

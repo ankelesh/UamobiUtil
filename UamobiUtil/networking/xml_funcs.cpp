@@ -11,10 +11,9 @@
 
 namespace XmlFns
 {
-
 	static QDomDocument doc;
 
-	QList<UserProfile> profilesList(const QString &xml)
+	QList<UserProfile> profilesList(const QString& xml)
 	{
 		QList<UserProfile> list;
 
@@ -30,14 +29,14 @@ namespace XmlFns
 			QDomElement el = data.childNodes().at(i).toElement();
 			UserProfile u;
 			u.login = el.elementsByTagName("login").at(0).toElement().text();
-			u.name  = el.elementsByTagName("name") .at(0).toElement().text();
+			u.name = el.elementsByTagName("name").at(0).toElement().text();
 			if (!u.login.isEmpty() && !u.name.isEmpty())
 				list << u;
 		}
 		return list;
 	}
 
-	QList<Place> placesList(const QString &xml)
+	QList<Place> placesList(const QString& xml)
 	{
 		QList<Place> list;
 
@@ -56,35 +55,35 @@ namespace XmlFns
 		return list;
 	}
 
-    QList<Mode> modesList( const QString &xml )
-    {
-        int line, col;
-        QString err;
-        QList<Mode> list;
-        // если зафиксирована ошибка, то выйти;
-        if( !doc.setContent( xml, &err, &line, &col ) ) {
-            //qDebug() << err << line << col << "\n" << xml;
-            return list;
-        }
-        //--
-        QDomNode data = doc.elementsByTagName( "modes" ).at( 0 );
-        int size = data.childNodes().size();
-        for( int i = 0; i < size; i++ ) {
-            Mode m;
-            QDomElement el = data.childNodes().at( i ).toElement();
-            //--
-            m.name = el.elementsByTagName( "modeName" ).at( 0 ).toElement().text();
-            m.caption = el.elementsByTagName( "captionMode" ) .at( 0 ).toElement().text();
-            //--
-            if( !m.name.isEmpty() ) {
-                list << m;
-            }
-        }
-        //--
-        return list;
-    }
+	QList<Mode> modesList(const QString& xml)
+	{
+		int line, col;
+		QString err;
+		QList<Mode> list;
+		// если зафиксирована ошибка, то выйти;
+		if (!doc.setContent(xml, &err, &line, &col)) {
+			//qDebug() << err << line << col << "\n" << xml;
+			return list;
+		}
+		//--
+		QDomNode data = doc.elementsByTagName("modes").at(0);
+		int size = data.childNodes().size();
+		for (int i = 0; i < size; i++) {
+			Mode m;
+			QDomElement el = data.childNodes().at(i).toElement();
+			//--
+			m.name = el.elementsByTagName("modeName").at(0).toElement().text();
+			m.caption = el.elementsByTagName("captionMode").at(0).toElement().text();
+			//--
+			if (!m.name.isEmpty()) {
+				list << m;
+			}
+		}
+		//--
+		return list;
+	}
 
-    /*QSet<QString> modesList(const QString &xml)
+	/*QSet<QString> modesList(const QString &xml)
 	{
 		QSet<QString> set;
 
@@ -97,9 +96,9 @@ namespace XmlFns
 			set.insert(el.toElement().text());
 		}
 		return set;
-    }*/
+	}*/
 
-	QString codeInfoHtml(const QString &xml, const QString &ifNotFound, bool *correct, CodeInfoSpecs *specs)
+	QString codeInfoHtml(const QString& xml, const QString& ifNotFound, bool* correct, CodeInfoSpecs* specs)
 	{
 		bool ok = false;
 		QString err;
@@ -109,11 +108,11 @@ namespace XmlFns
 			if (correct)
 				*correct = false;
 #ifdef GUI_APP
-			return "<center><b>"+QObject::tr("Reading code info failed.")+"</b></center>"
-					"<hr>"
-					"<div style=\"text-align:left\">Server sent: <br />"
-                    + Qt::mightBeRichText(xml)+
-					"</div>";
+			return "<center><b>" + QObject::tr("Reading code info failed.") + "</b></center>"
+				"<hr>"
+				"<div style=\"text-align:left\">Server sent: <br />"
+				+ Qt::mightBeRichText(xml) +
+				"</div>";
 #else
 			return "<center><b>" + QObject::tr("Reading code info failed.") + "</b></center>"
 				"<hr>"
@@ -129,14 +128,15 @@ namespace XmlFns
 				if (correct)
 					*correct = ok;
 				return QObject::tr("<center><b>Data error.</b></center>");
-			} else {
+			}
+			else {
 				ok = true;
 				if (correct)
 					*correct = ok;
 				return QObject::tr("<center><b>Data for %1 not found.</b></center>"
-										 "<div style=\"text-align: center\">"
-										 "Data for code '%1' not found, but information about item can be added to resolve this problem later."
-										 "</div>").arg(ifNotFound);
+					"<div style=\"text-align: center\">"
+					"Data for code '%1' not found, but information about item can be added to resolve this problem later."
+					"</div>").arg(ifNotFound);
 			}
 		}
 		ok = true;
@@ -146,14 +146,13 @@ namespace XmlFns
 				*specs |= MustEnterSeries;
 			if (n.elementsByTagName("countable").at(0).toElement().text() == "false")
 				*specs |= NotCountable;
-
 		}
 		if (correct)
 			*correct = ok;
 		return doc.elementsByTagName("richdata").at(0).toElement().text();
 	}
 
-	QString richdataHtml(const QString &xml, bool *ok)
+	QString richdataHtml(const QString& xml, bool* ok)
 	{
 		QString err;
 		int col, line;
@@ -168,10 +167,9 @@ namespace XmlFns
 			*ok = doc.elementsByTagName("status").at(0).toElement().text() == "200";
 
 		return doc.elementsByTagName("richdata").at(0).toElement().text();
-
 	}
 
-	QList<Document> documentsLists(const QString &xml, bool *ok)
+	QList<Document> documentsLists(const QString& xml, bool* ok)
 	{
 		QList<Document> list;
 
@@ -192,13 +190,13 @@ namespace XmlFns
 				continue;
 
 			Document doc;
-			doc.locked    = el.elementsByTagName("locked")  .at(0).toElement().text() == "true";
-			doc.closed    = el.elementsByTagName("closed")  .at(0).toElement().text() == "true";
+			doc.locked = el.elementsByTagName("locked").at(0).toElement().text() == "true";
+			doc.closed = el.elementsByTagName("closed").at(0).toElement().text() == "true";
 			doc.cancelled = el.elementsByTagName("canceled").at(0).toElement().text() == "true";
-			doc.docId     = el.elementsByTagName("code")    .at(0).toElement().text();
-			doc.parentNr  = el.elementsByTagName("parentnr").at(0).toElement().text();
-			doc.dateStr   = el.elementsByTagName("date")    .at(0).toElement().text();
-			doc.supplier  = el.elementsByTagName("supplier").at(0).toElement().text();
+			doc.docId = el.elementsByTagName("code").at(0).toElement().text();
+			doc.parentNr = el.elementsByTagName("parentnr").at(0).toElement().text();
+			doc.dateStr = el.elementsByTagName("date").at(0).toElement().text();
+			doc.supplier = el.elementsByTagName("supplier").at(0).toElement().text();
 			list << doc;
 		}
 		if (ok)
@@ -206,7 +204,7 @@ namespace XmlFns
 		return list;
 	}
 
-	QList<DocResultItem> searchResult(const QString &xml, int *cntFrom, int *cntTo, bool *isLastPage)
+	QList<DocResultItem> searchResult(const QString& xml, int* cntFrom, int* cntTo, bool* isLastPage)
 	{
 		QList<DocResultItem> list;
 
@@ -221,7 +219,7 @@ namespace XmlFns
 		if (cntFrom && cntTo) {
 			QDomElement page = data.toElement().elementsByTagName("page").at(0).toElement();
 			*cntFrom = page.elementsByTagName("from").at(0).toElement().text().toInt();
-			*cntTo   = page.elementsByTagName("to")  .at(0).toElement().text().toInt();
+			*cntTo = page.elementsByTagName("to").at(0).toElement().text().toInt();
 			if (isLastPage)
 				*isLastPage = page.elementsByTagName("last").at(0).toElement().text() == "true";
 		}
@@ -230,15 +228,15 @@ namespace XmlFns
 		for (int i = 0; i < size; i++) {
 			QDomElement el = results.at(i).toElement();
 			DocResultItem res;
-			res.code    = el.elementsByTagName("code") .at(0).toElement().text();
-			res.title   = el.elementsByTagName("title").at(0).toElement().text();
-			res.num     = el.elementsByTagName("num")  .at(0).toElement().text().toFloat();
+			res.code = el.elementsByTagName("code").at(0).toElement().text();
+			res.title = el.elementsByTagName("title").at(0).toElement().text();
+			res.num = el.elementsByTagName("num").at(0).toElement().text().toFloat();
 			list << res;
 		}
 		return list;
 	}
 
-	QList<DocType> invTypesList(const QString &xml)
+	QList<DocType> invTypesList(const QString& xml)
 	{
 		QList<DocType> list;
 
@@ -251,14 +249,14 @@ namespace XmlFns
 			if (el.tagName() != "type")
 				continue;
 			list << DocType(
-						  el.elementsByTagName("code") .at(0).toElement().text(),
-						  el.elementsByTagName("title").at(0).toElement().text()
-						  );
+				el.elementsByTagName("code").at(0).toElement().text(),
+				el.elementsByTagName("title").at(0).toElement().text()
+			);
 		}
 		return list;
 	}
 
-	Document documentInfo(const QString &xml, bool *allok, QString &errMsg)
+	Document documentInfo(const QString& xml, bool* allok, QString& errMsg)
 	{
 		Document i;
 
@@ -269,22 +267,22 @@ namespace XmlFns
 				*allok = false;
 			//qDebug() << Q_FUNC_INFO << xml << err << line << col;
 			return i;
-        }
+		}
 
 		QDomElement el = doc.documentElement();
 		if (allok) {
-			*allok = el.elementsByTagName("status") .at(0).toElement().text() == "200";
+			*allok = el.elementsByTagName("status").at(0).toElement().text() == "200";
 			errMsg = el.elementsByTagName("message").at(0).toElement().text();
-        }
-		i.locked    = el.attribute("locked")   == "true";
+		}
+		i.locked = el.attribute("locked") == "true";
 		i.cancelled = el.attribute("canceled") == "true";
-		i.closed    = el.attribute("closed")   == "true";
-		i.inspect   = el.attribute("inspect")  == "true";
-		i.dateStr   = el.elementsByTagName("date")    .at(0).toElement().text();
-		i.comment   = el.elementsByTagName("comment") .at(0).toElement().text();
-		i.docId     = el.elementsByTagName("code")    .at(0).toElement().text();
-		i.parentNr  = el.elementsByTagName("parentnr").at(0).toElement().text();
-		i.supplier  = el.elementsByTagName("supplier").at(0).toElement().text();
+		i.closed = el.attribute("closed") == "true";
+		i.inspect = el.attribute("inspect") == "true";
+		i.dateStr = el.elementsByTagName("date").at(0).toElement().text();
+		i.comment = el.elementsByTagName("comment").at(0).toElement().text();
+		i.docId = el.elementsByTagName("code").at(0).toElement().text();
+		i.parentNr = el.elementsByTagName("parentnr").at(0).toElement().text();
+		i.supplier = el.elementsByTagName("supplier").at(0).toElement().text();
 		/*QString mode = el.elementsByTagName("scanmode").at(0).toElement().text();
 		if (mode == "continuous")
 			i.scanMode = AbstractScanWidget::SM_Continous;
@@ -299,11 +297,11 @@ namespace XmlFns
 		return i;
 	}
 
-	bool logIn(const QString &xml, QString &errMsg, QString &sessid)
+	bool logIn(const QString& xml, QString& errMsg, QString& sessid)
 	{
 		QString err;
 		if (!doc.setContent(xml, &err)) {
-			errMsg = QObject::tr("Unknown internal error.")+"\n"+err;
+			errMsg = QObject::tr("Unknown internal error.") + "\n" + err;
 			return false;
 		}
 		QDomElement el = doc.elementsByTagName("login").at(0).toElement();
@@ -312,46 +310,46 @@ namespace XmlFns
 		return el.elementsByTagName("status").at(0).toElement().text() == "200";
 	}
 
-	QString printLabel(const QString &xml, bool *ok)
+	QString printLabel(const QString& xml, bool* ok)
 	{
 		if (!doc.setContent(xml))
 			return QString();
 
 		QDomElement el = doc.documentElement();
-		QString code   = el.elementsByTagName("code").at(0).toElement().text();
+		QString code = el.elementsByTagName("code").at(0).toElement().text();
 		if (ok)
 			*ok = (el.elementsByTagName("status").at(0).toElement().text() == "200")
-					&& !code.isEmpty();
+			&& !code.isEmpty();
 		return code;
 	}
 
 	GenericList
-	genericList(QDomDocument &doc,
-					const QString &listRootTagName,
-					const QString &listItemTagName,
-					const QString &tag1,
-					const QString &tag2,
-					const QString &tag3,
-					const QString &tag4,
-					const QString &tag5,
-					const QString &tag6,
-					const QString &tag7,
-					const QString &tag8,
-					const QString &tag9)
+		genericList(QDomDocument& doc,
+			const QString& listRootTagName,
+			const QString& listItemTagName,
+			const QString& tag1,
+			const QString& tag2,
+			const QString& tag3,
+			const QString& tag4,
+			const QString& tag5,
+			const QString& tag6,
+			const QString& tag7,
+			const QString& tag8,
+			const QString& tag9)
 	{
 		GenericList result;
 		QList<QString> tagsList;
 		tagsList << tag1 << tag2 << tag3 << tag4 << tag5 << tag6 << tag7 << tag8 << tag9;
-		for (int i = tagsList.size()-1; i>-1; i--)
+		for (int i = tagsList.size() - 1; i > -1; i--)
 			if (tagsList.at(i).isEmpty())
 				tagsList.removeAt(i);
 
 		QDomElement listroot;
 		if (listRootTagName.isEmpty())
-			listroot	= doc.documentElement();
+			listroot = doc.documentElement();
 		else
 			listroot = doc.documentElement().elementsByTagName(listRootTagName).at(0).toElement();
-		QDomNode n        = listroot.firstChild();
+		QDomNode n = listroot.firstChild();
 		while (!n.isNull()) {
 			if (n.nodeName() != listItemTagName) {
 				n = n.nextSibling();
@@ -360,8 +358,8 @@ namespace XmlFns
 			HashGL hash;
 			QDomElement el = n.toElement();
 			if (tagsList.size())
-				foreach (QString tag, tagsList)
-					hash.insert(tag, el.elementsByTagName(tag).at(0).toElement().text());
+				foreach(QString tag, tagsList)
+				hash.insert(tag, el.elementsByTagName(tag).at(0).toElement().text());
 			else
 				hash.insert("value", el.text());
 			n = n.nextSibling();
@@ -371,17 +369,17 @@ namespace XmlFns
 	}
 
 	GenericList
-	genericList(const QString &xml, const QString &listItemTagName,
-					bool *ok,
-					const QString &tag1,
-					const QString &tag2,
-					const QString &tag3,
-					const QString &tag4,
-					const QString &tag5,
-					const QString &tag6,
-					const QString &tag7,
-					const QString &tag8,
-					const QString &tag9)
+		genericList(const QString& xml, const QString& listItemTagName,
+			bool* ok,
+			const QString& tag1,
+			const QString& tag2,
+			const QString& tag3,
+			const QString& tag4,
+			const QString& tag5,
+			const QString& tag6,
+			const QString& tag7,
+			const QString& tag8,
+			const QString& tag9)
 	{
 		QString err;
 		int line, col;
@@ -393,55 +391,57 @@ namespace XmlFns
 		}
 		if (ok)
 			*ok = true;
-        return genericList(doc, QString(), listItemTagName, tag1, tag2, tag3, tag4, tag5, tag6, tag7, tag8, tag9);
-    }
+		return genericList(doc, QString(), listItemTagName, tag1, tag2, tag3, tag4, tag5, tag6, tag7, tag8, tag9);
+	}
 
-    bool parsErrors(const QString &xml,QString &errMsg)
-    {
-        QString err;
-        if (!doc.setContent(xml, &err)) {
-            errMsg = QObject::tr("Unknown internal error.")+"\n"+err;
-            return false;
-        }
-        QDomElement el = doc.elementsByTagName("status").at(0).toElement();
-        if(el.text().compare("404") == 0)
-        {
-            QDomElement el = doc.elementsByTagName("message").at(0).toElement();
-                errMsg = el.text();
-            return true;
-        }
-        else return false;
-    }
-    QString getValByTagName(const QString &xml,QString tagNme)
-    {
-        if (!doc.setContent(xml))
-            return QString();
-        return doc.elementsByTagName(tagNme).at(0).toElement().text();
-    }
-    QList<QPair<QString,QString>> getMultipleCodes(const QString & xml)
-    {
-                                  detrace_METHCALL("getMultipleCodes")
-         QList<QPair<QString, QString> > li;
-         QPair<QString, QString> entry;
-         QDomDocument doc;
-
-         doc.setContent(xml);
-         if (doc.elementsByTagName("state").at(0).toElement().text() == "S"){
-            QDomNodeList dmndl = doc.elementsByTagName("oneentry");
-            for (int i = 0; i < dmndl.count(); ++i)
-            {
-                entry.first = dmndl.at(i).childNodes().at(0).toElement().text();
-                entry.second = dmndl.at(i).childNodes().at(1).toElement().text();
-                detrace_METHEXPL("entry node value: " << dmndl.at(i).toElement().text())
-                li.push_back(entry);
-            }
-         }
-         else
-        {
-           entry.first = doc.elementsByTagName("bcoderesult").at(0).toElement().text();
-           li.push_back(entry);
-        }
-         return li;
-
-    }
+	bool parsErrors(const QString& xml, QString& errMsg)
+	{
+		QString err;
+		if (!doc.setContent(xml, &err)) {
+			errMsg = QObject::tr("Unknown internal error.") + "\n" + err;
+			return false;
+		}
+		QDomElement el = doc.elementsByTagName("status").at(0).toElement();
+		if (el.text().compare("404") == 0)
+		{
+			QDomElement el = doc.elementsByTagName("message").at(0).toElement();
+			errMsg = el.text();
+			return true;
+		}
+		else return false;
+	}
+	QString getValByTagName(const QString& xml, QString tagNme)
+	{
+		if (!doc.setContent(xml))
+			return QString();
+		return doc.elementsByTagName(tagNme).at(0).toElement().text();
+	}
+	QList<QPair<QString, QString>> getMultipleCodes(const QString& xml)
+	{
+#ifdef DEBUG
+		// detrace_METHCALL("getMultipleCodes");
+#endif
+		QList<QPair<QString, QString> > li;
+		QPair<QString, QString> entry;
+		QDomDocument doc;
+		doc.setContent(xml);
+		if (doc.elementsByTagName("state").at(0).toElement().text() == "S") {
+			QDomNodeList dmndl = doc.elementsByTagName("oneentry");
+			for (int i = 0; i < dmndl.count(); ++i)
+			{
+				entry.first = dmndl.at(i).childNodes().at(0).toElement().text();
+				entry.second = dmndl.at(i).childNodes().at(1).toElement().text();
+#ifdef DEBUG
+				//detrace_METHEXPL("entry node value: " << dmndl.at(i).toElement().text());
+#endif
+				li.push_back(entry);
+			}
+		}
+		else
+		{
+			entry.first = doc.elementsByTagName("bcoderesult").at(0).toElement().text();
+			li.push_back(entry);
+		}
+		return li;
+	}
 }

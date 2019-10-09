@@ -1,6 +1,18 @@
 #include "DynamicLinearParsers.h"
 
 
+static QVector<QString> _initOpts()
+{
+    QVector<QString> temp;
+    temp.push_back("cmid");
+    temp.push_back("qty");
+    temp.push_back("box");
+    temp.push_back("highlight");
+    return temp;
+}
+
+static const QVector<QString> itemOptionals(_initOpts());
+static const int IOLEN = 4;
 
 bool ModeListParser::couldRead()
 {
@@ -16,19 +28,24 @@ QString ModeListParser::parseErrorText()
 {
 	return errtext;
 }
-
 void ModeListParser::parse_old_api(QDomDocument& ddoc)
 {
-	//detrace_METHCALL("parse_old_api")
+#ifdef DEBUG
+	//detrace_METHCALL("parse_old_api");
+#endif
 	QDomNodeList dmndl = ddoc.elementsByTagName("modes").at(0).childNodes();
 	parseres.queriesResult.reserve(dmndl.count() * 2);
 	for (int i = 0; i < dmndl.count(); ++i)
 	{
 		if (dmndl.at(i).nodeName().simplified() == "mode") {
 			parseres.queriesResult << dmndl.at(i).childNodes().at(0).toElement().text();
-			//detrace_METHDATAS("parse_old_api", " readed ", << parseres.queriesResult.last())
+#ifdef DEBUG
+			//detrace_METHDATAS("parse_old_api", " readed ", << parseres.queriesResult.last());
+#endif
 			parseres.queriesResult << dmndl.at(i).childNodes().at(1).toElement().text();
-			//detrace_METHDATAS("parse_old_api", " readed ", << parseres.queriesResult.last())
+#ifdef DEBUG
+			//detrace_METHDATAS("parse_old_api", " readed ", << parseres.queriesResult.last());
+#endif
 		}
 	}
 	parseres.one_position_entries_quantity = 2;
@@ -39,7 +56,7 @@ void ModeListParser::parse_old_api(QDomDocument& ddoc)
 void ModeListParser::parse_new_api(QDomDocument& ddoc)
 {
 	QDomNodeList dmndl = ddoc.elementsByTagName("modes").at(0).childNodes();
-	parseres.queriesResult.reserve(dmndl.count() * 2);
+	parseres.queriesResult.reserve(dmndl.count());
 	for (int i = 0; i < dmndl.count(); ++i)
 	{
 		if (dmndl.at(i).nodeName().simplified() == "mode") {
@@ -58,9 +75,11 @@ ModeListParser::ModeListParser(QString& res, QString& err)
 	doc.setContent(result);
 	QString code = doc.elementsByTagName("status").at(0).toElement().text();
 	parseres.request_status = code.toInt();
-	//detrace_METHDATAS("UserListParser::dconstr", "code", << code)
-		if (parseres.request_status != 200)
-			return;
+#ifdef DEBUG
+	//detrace_METHDATAS("UserListParser::dconstr", "code", << code);
+#endif
+	if (parseres.request_status != 200)
+		return;
 	if (doc.elementsByTagName("captionMode").count() > 0)
 	{
 		parse_old_api(doc);
@@ -68,6 +87,98 @@ ModeListParser::ModeListParser(QString& res, QString& err)
 	else
 	{
 		parse_new_api(doc);
+	}
+	success = true;
+}
+
+bool ExpandedItemListParser::couldRead()
+{
+	return success;
+}
+
+bool ExpandedItemListParser::noRequestErrors()
+{
+	return parseres.request_status == 200;
+}
+
+QString ExpandedItemListParser::parseErrorText()
+{
+	return errtext;
+}
+
+void ExpandedItemListParser::parse_item_core(const QDomNode ddoc)
+{
+	QString bc;
+	if (ddoc.namedItem("code").isNull())
+	{
+		if (ddoc.namedItem("barcode").isNull())
+		{
+			parseres.one_position_entries_quantity = 0;
+			return;
+		}
+		else
+		{
+			bc = ddoc.namedItem("barcode").toElement().text();
+		}
+	}
+	else
+	{
+		bc = ddoc.namedItem("code").toElement().text();
+	}
+	parseres.queriesResult << bc;
+	parseres.queriesResult << ddoc.namedItem("title").toElement().text();
+}
+
+void ExpandedItemListParser::parse_item_optionals(const QDomNode ddoc)
+{
+	for (int i = 0; i < IOLEN; ++i)
+	{
+		if (ddoc.namedItem(itemOptionals[i]).isNull())
+		{
+			parseres.queriesResult << "";
+		}
+		else
+		{
+			parseres.queriesResult << ddoc.namedItem(itemOptionals[i]).toElement().text();
+		}
+	}
+}
+
+ExpandedItemListParser::ExpandedItemListParser(QString& res, QString& err)
+	: abs_parsed_request(res, err)
+{
+	QDomDocument doc;
+	doc.setContent(result);
+	QString code = doc.elementsByTagName("status").at(0).toElement().text();
+	parseres.request_status = code.toInt();
+#ifdef DEBUG
+	//detrace_METHDATAS("UserListParser::dconstr", "code", << code);
+#endif
+	if (parseres.request_status != 200)
+		return;
+	QDomNodeList pageinfo = doc.elementsByTagName("page");
+	if (pageinfo.isEmpty())
+	{
+		success = false;
+		return;
+	}
+	parseres.queriesResult << pageinfo.at(0).namedItem("from").toElement().text();
+	parseres.queriesResult << pageinfo.at(0).namedItem("to").toElement().text();
+	parseres.queriesResult << pageinfo.at(0).namedItem("last").toElement().text();
+	parseres.alternative_result = 3;
+	QDomNodeList dmndl = doc.elementsByTagName("result");
+	int len = dmndl.count();
+	for (int i = 0; i < len; ++i)
+	{
+		QDomNode temp = dmndl.at(i);
+		parseres.one_position_entries_quantity = 2 + IOLEN;
+		parse_item_core(temp);
+		parse_item_optionals(temp);
+		if (parseres.one_position_entries_quantity == 0)
+		{
+			success = false;
+			return;
+		}
 	}
 	success = true;
 }

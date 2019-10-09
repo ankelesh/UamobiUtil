@@ -2,15 +2,19 @@
 #include "dataupdateengine-http.h"
 #include "debugtrace.h"
 
-DataUpdateEngine::DataUpdateEngine(QObject *parent) :
+DataUpdateEngine::DataUpdateEngine(QObject* parent) :
 	QObject(parent)
 {
-    //detrace_DCONSTR("DataUpdateEngine")
+#ifdef DEBUG
+	//detrace_DCONSTR("DataUpdateEngine");
+#endif
 }
 
-DataUpdateEngine* DataUpdateEngine::byName(QString name, QObject *parent)
+DataUpdateEngine* DataUpdateEngine::byName(QString name, QObject* parent)
 {
-   // detrace_METHCALL("DataUpdateEngine::byName")
+#ifdef DEBUG
+	// detrace_METHCALL("DataUpdateEngine::byName");
+#endif
 	name = name.toLower();
 #ifdef FTR_DATA_INMEMORY
 	if (name == "mem")
@@ -20,10 +24,11 @@ DataUpdateEngine* DataUpdateEngine::byName(QString name, QObject *parent)
 		return new HttpUpdateEngine(QString(""), parent);
 }
 
-DataUpdateEngine *DataUpdateEngine::getMain(QObject *parent)
+DataUpdateEngine* DataUpdateEngine::getMain(QObject* parent)
 {
-    //detrace_METHCALL("DataUpdateEngine::getMain")
+#ifdef DEBUG
+	//detrace_METHCALL("DataUpdateEngine::getMain");
+#endif
 	//return byName(settings()->value("dataeng", "http").toString(), parent);
-	return  byName("dataeng",parent);
+	return  byName("dataeng", parent);
 }
-

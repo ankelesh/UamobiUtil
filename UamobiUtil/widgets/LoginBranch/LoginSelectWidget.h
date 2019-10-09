@@ -35,5 +35,4 @@ private slots:
 	virtual void indexSelected(int Index);
 signals:
 	void profilePicked(UserProfile);
-
 };

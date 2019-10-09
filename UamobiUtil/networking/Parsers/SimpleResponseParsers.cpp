@@ -16,7 +16,7 @@ QString SimpliestResponceParser::parseErrorText()
 }
 
 SimpliestResponceParser::SimpliestResponceParser(QString& res, QString& err)
-	:	abs_parsed_request(res, err)
+	: abs_parsed_request(res, err)
 {
 	QDomDocument doc;
 	doc.setContent(result);
@@ -26,7 +26,7 @@ SimpliestResponceParser::SimpliestResponceParser(QString& res, QString& err)
 		parseres.request_status = code.toInt();
 		if (parseres.request_status != 200)
 		{
-            QDomNodeList li = doc.elementsByTagName("message");
+			QDomNodeList li = doc.elementsByTagName("message");
 			if (li.count() > 0)
 				parseres.queriesResult.push_back(
 					li.at(0).toElement().text()
@@ -77,7 +77,7 @@ RichtextResponseParser::RichtextResponseParser(QString& res, QString& err)
 			return;
 		}
 		QDomNodeList list = doc.elementsByTagName("richdata");
-		if ( list.count() > 0)
+		if (list.count() > 0)
 		{
 			parseres.queriesResult.push_back(list.at(0).toElement().text());
 			parseres.one_position_entries_quantity = 1;
@@ -87,23 +87,6 @@ RichtextResponseParser::RichtextResponseParser(QString& res, QString& err)
 		success = false;
 	}
 	catch (...)
-	{
-		success = false;
-	}
-}
-
-ItemInfoResponseParser::ItemInfoResponseParser(QString& res, QString& err)
-	: RichtextResponseParser(res, err)
-{
-	QDomDocument temp;
-	temp.setContent(res);
-	QDomNodeList li = temp.elementsByTagName("nn");
-	if (li.count() > 0)
-	{
-		parseres.alternative_result = 1;
-		parseres.queriesResult << li.at(0).toElement().text();
-	}
-	else
 	{
 		success = false;
 	}

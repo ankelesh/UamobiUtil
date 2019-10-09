@@ -13,7 +13,6 @@
 #include <QtGui/QLabel>
 #endif
 
-
 // widgets imports
 #include "widgets/parents/inframedWidget.h"
 #include "widgets/parents/AbstractVariantSelectionWidget.h"
@@ -25,11 +24,13 @@
 // utils imports
 #include "widgets/utils/GlobalAppSettings.h"
 
-
 /*
-	This file contains ModeSelectionWidget - which is root of ModeSelection branch. It loads 
+	This file contains ModeSelectionWidget - which is root of ModeSelection branch. It loads
 	Modes list from web, then allows user to choose one. PlaceSelection is part of this branch, because it must be chosed before
 	other operations will continue.
+	
+	__ASSOCIATED_DATABASE_FUNCTION__  :  P'modesResponse' list_modes()
+	__ASSOCIATED_DATABASE_FUNCTION__  :  P'PositionalResponse' select_mode (mode, submode)
 
 */
 
@@ -51,7 +52,6 @@ namespace specwidgets {
 		virtual void indexSelected(int Index);
 	signals:
 		void modeSelected(parsedMode);
-
 	};
 }
 
@@ -60,7 +60,7 @@ class ModeSelectionWidget : public inframedWidget	//	root of modeSelection branc
 	Q_OBJECT
 protected:
 	// uses GAS
-	const GlobalAppSettings & globalSettings;
+	const GlobalAppSettings& globalSettings;
 	// modes list
 	modesResponse allmodes;
 
@@ -100,5 +100,4 @@ protected slots:
 	virtual void modeSelected(parsedMode) override;
 	void placeAcquired(parsedPlace);
 	virtual void hideCurrent() override;
-
 };

@@ -4,10 +4,9 @@
 #include "debugtrace.h"
 
 /*
-	This file contains all requests that does not have any named components and can be represented as long list of 
+	This file contains all requests that does not have any named components and can be represented as long list of
 	same size sections. Section size is stored in one_position_entries_quantity. These parsers are using full list without
 	empty spaces and one_position_entries_quantity is stable - one parser class provides same value in any modification
-
 
 */
 class UserListParser : public abs_parsed_request // parses lists of users
@@ -24,7 +23,7 @@ public:
 class PlacesListParser : public abs_parsed_request // parses lists of places
 {
 protected:
-	 // Inherited via abs_parsed_request
+	// Inherited via abs_parsed_request
 	virtual bool couldRead() override;
 	virtual bool noRequestErrors() override;
 	virtual QString parseErrorText() override;
@@ -47,7 +46,6 @@ class OrdersListParser : public abs_parsed_request
 {
 protected:
 
-
 	// Inherited via abs_parsed_request
 	virtual bool couldRead() override;
 
@@ -55,5 +53,20 @@ protected:
 
 	virtual QString parseErrorText() override;
 public:
-	OrdersListParser(QString & res, QString & errtext);
+	OrdersListParser(QString& res, QString& errtext);
+};
+class ItemSimplifiedParser : public abs_parsed_request
+{
+protected:
+
+
+	// Inherited via abs_parsed_request
+	virtual bool couldRead() override;
+
+	virtual bool noRequestErrors() override;
+
+	virtual QString parseErrorText() override;
+
+public:
+	ItemSimplifiedParser(QString& res, QString& errtext);
 };

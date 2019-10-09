@@ -21,7 +21,7 @@ void specwidgets::_SupplierSelectionWidget::itemSelectedFromList(QListWidgetItem
 	emit supplierPicked(suppliers.at(currentRow()));
 }
 
-SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* parent, 
+SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* parent,
 	SuppliersLikeMP meth, interpretsPointers::interpretAsSupplierLike inter)
 	: inframedWidget(parent), globalSettings(go), allsuppliers(),
 	listSuppliers(meth), interpreter(inter),
@@ -55,7 +55,6 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 	ordfilterButton->setCheckable(true);
 	ordfilterButton->setChecked(true);
 
-
 	loadSuppliers();
 
 #ifdef QT_VERSION5X
@@ -64,7 +63,10 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 	QObject::connect(backButton, &QPushButton::clicked, this, &SuppliersSelectWidget::backRequired);
 	QObject::connect(supplierSelection, &specwidgets::_SupplierSelectionWidget::supplierPicked, this, &SuppliersSelectWidget::supplierPicked);
 #else
-	!!!implement!!!
+	QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(searchPrimed()));
+	QObject::connect(ordfilterButton, SIGNAL(toggled(bool)), this, SLOT(ordFilterSwitched(bool)));
+	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
+	QObject::connect(supplierSelection, SIGNAL(supplierPicked(parsedSupplier)), this, SLOT(supplierPicked(parsedSupplier)));
 #endif
 }
 
@@ -113,19 +115,21 @@ void SuppliersSelectWidget::loadSuppliers()
 
 SuppliersSelectionBranch::SuppliersSelectionBranch(GlobalAppSettings& go, QWidget* parent, SuppliersLikeMP meth,
 	interpretsPointers::interpretAsSupplierLike inter)
-	: SuppliersSelectWidget(go, parent, meth, inter), abstractNode(), 
+	: SuppliersSelectWidget(go, parent, meth, inter), abstractNode(),
 	orderSelection(new OrderSelectionWidget(go, confirmedSupplier, this))
 {
 	mainLayout->addWidget(orderSelection);
 	orderSelection->hide();
-	
+
 	current = innerWidget;
 	untouchable = innerWidget;
-
+#ifdef QT_VERSION5X
 	QObject::connect(orderSelection, &OrderSelectionWidget::orderConfirmed, this, &SuppliersSelectionBranch::orderAcquired);
 	QObject::connect(orderSelection, &OrderSelectionWidget::backRequired, this, &SuppliersSelectionBranch::hideCurrent);
-
-
+#else
+	QObject::connect(orderSelection, SIGNAL(orderConfirmed(parsedOrder, QString)), this, SLOT(orderAcquired(parsedOrder)));
+	QObject::connect(orderSelection, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+#endif
 }
 
 void SuppliersSelectionBranch::hideCurrent()
@@ -142,6 +146,9 @@ void SuppliersSelectionBranch::hideCurrent()
 
 void SuppliersSelectionBranch::supplierPicked(parsedSupplier ps)
 {
+#ifdef DEBUG
+	//detrace_METHCALL("supplier picked");
+#endif
 	SuppliersSelectWidget::supplierPicked(ps);
 	_hideAny(orderSelection);
 	orderSelection->loadOrders();
@@ -149,5 +156,4 @@ void SuppliersSelectionBranch::supplierPicked(parsedSupplier ps)
 
 void SuppliersSelectionBranch::orderAcquired(parsedOrder po)
 {
-	
 }

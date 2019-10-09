@@ -14,14 +14,13 @@
 #include "widgets/utils/SpecializedWidgets.h"
 
 /*
-	This widget provides an abstract selection widget based on virtuals method which will provide required info for 
+	This widget provides an abstract selection widget based on virtuals method which will provide required info for
 	construction buttons:
 		String representation of elements
 		Number of elements
 		Item selected emitting
 
 */
-
 
 class AbstractVariantSelectionWidget : public inframedWidget
 {
@@ -38,4 +37,4 @@ public:
 	void reload();									//	deletes all buttons, then shows them again
 protected slots:
 	virtual void indexSelected(int Index) = 0;		//	must emit any kind of itemSelected()
-}; 
+};

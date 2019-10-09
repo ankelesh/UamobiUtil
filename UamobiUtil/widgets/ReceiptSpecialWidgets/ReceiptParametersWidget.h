@@ -11,7 +11,14 @@
 
 #else
  // Qt 4 only imports
-throw;
+
+#include <QtGui/qpushbutton.h>
+#include <QtGui/QBoxLayout>
+#include <QtGui/QDateEdit>
+#include <QtGui/QTextEdit>
+#include <QtGui/QLabel>
+#include <QtGui/QFrame>
+
 #endif
 
 // widgets imports
@@ -21,7 +28,6 @@ throw;
 //networking imports
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
-
 
 class ReceiptParametersWidget : public inframedWidget
 {
@@ -36,7 +42,7 @@ protected:
 	QFrame* innerFrame;
 	QVBoxLayout* frameLayout;
 	QLabel* stateInfo;
-	QPushButton * closedButton;
+	QPushButton* closedButton;
 	QPushButton* cancelledButton;
 	QDateEdit* dateField;
 	QHBoxLayout* selectOrderLayout;
@@ -58,7 +64,7 @@ protected slots:
 	void continueClicked();
 
 public slots:
-	void setMainView(const QString &);
+	void setMainView(const QString&);
 signals:
 	void dataConfirmed();
 };

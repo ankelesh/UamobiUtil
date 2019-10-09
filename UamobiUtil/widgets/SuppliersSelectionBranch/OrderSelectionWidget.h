@@ -7,9 +7,11 @@
 
 #else
  // Qt 4 only imports
-throw;
-#endif
+#include <QtGui/qpushbutton.h>
+#include <QtGui/QLabel>
+#include <QtGui/QBoxLayout>
 
+#endif
 
 #include "widgets/parents/inframedWidget.h"
 #include "widgets/parents/AbstractListSelectionWidget.h"
@@ -25,11 +27,10 @@ throw;
 	Generally this widget is simplified version of SupplierSelect - no search.
 
 
+	__ASSOCIATED_DATABASE_FUNCTION__   :  P'ordersResponse' list_orders(supplier_code)
+	__ASSOCIATED_DATABASE_FUNCTION__   :  P'TypicalResponse' rec_get_order_info(order_code ,supplier_code)
 
 */
-
-
-
 
 using parse_uniresults_functions::ordersResponse;
 namespace specwidgets
@@ -52,7 +53,6 @@ namespace specwidgets
 	};
 }
 
-
 class OrderSelectionWidget : public inframedWidget
 {
 	Q_OBJECT
@@ -61,7 +61,6 @@ protected:
 	const parsedSupplier& supplierInWork;
 
 	ordersResponse allOrders;
-	
 
 	QVBoxLayout* mainLayout;
 	QWidget* innerWidget;
@@ -73,7 +72,7 @@ protected:
 	QPushButton* pickButton;
 
 public:
-	OrderSelectionWidget(GlobalAppSettings& go, const parsedSupplier & suppl, QWidget* = Q_NULLPTR);
+	OrderSelectionWidget(GlobalAppSettings& go, const parsedSupplier& suppl, QWidget* = Q_NULLPTR);
 private slots:
 	void pickClicked();
 	void orderSelected(parsedOrder);
@@ -82,5 +81,4 @@ public slots:
 	void setTimeoutMessage();
 signals:
 	void orderConfirmed(parsedOrder, QString);
-
 };

@@ -23,7 +23,7 @@ NetCallArgs::NetCallArgs()
 {
 }
 
-NetCallArgs::NetCallArgs(QStringList* sp, QList<int>* ip, QList<double>* dbp , QList<bool>* bp, QList<QDate>* dp)
+NetCallArgs::NetCallArgs(QStringList* sp, QList<int>* ip, QList<double>* dbp, QList<bool>* bp, QList<QDate>* dp)
 {
 	if (sp != Q_NULLPTR)
 	{
@@ -46,7 +46,6 @@ NetCallArgs::NetCallArgs(QStringList* sp, QList<int>* ip, QList<double>* dbp , Q
 		dateArgs << *dp;
 	}
 }
-
 
 NetCallArgs::NetCallArgs(double f, double s)
 {
