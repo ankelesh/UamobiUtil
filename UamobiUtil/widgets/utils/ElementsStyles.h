@@ -52,6 +52,8 @@ inline static QSize calculateAdaptiveSize(double Hpercent, double Wpercent)
 	);
 }
 
+extern QString countAdaptiveFont(double perc);
+
 extern const QString OK_BUTTONS_STYLESHEET;
 // All buttons which are made for confirmation (commit button is separated from simple confirm)
 
@@ -75,6 +77,8 @@ extern const QString UP_SPINBOX_STYLESHEET;
 
 extern const QString DOWN_SPINBOX_STYLESHEET;
 // down buttons of BigButtonsSpinbox
+
+
 
 extern const QString LARGE_BUTTON_STYLESHEET;
 extern const QString BETTER_CALENDAR_STYLESHEET;

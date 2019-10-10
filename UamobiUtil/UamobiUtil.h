@@ -42,6 +42,9 @@ private:
 
 	QPointer<inframedWidget>* current;		//	This pointer is holding currently shown widget or branch
 
+
+	void gotoReceiptBranch(QHash<QString, QString>, parsedMode);
+
 public:
 	enum branches { login, modeselect };
 
@@ -49,9 +52,8 @@ public:
 
 private slots:
 	void gotoModeSelection();			//	Switch to modeSelectionBranch
-	void gotoReceiptBranch(QHash<QString, QString>);
 
-	void interpretMode(QHash<QString, QString>);	//	interprets mode settings obtained through "select mode". NOT IMPLEMENTED
+	void interpretMode(QHash<QString, QString>, parsedMode mode);	//	interprets mode settings obtained through "select mode". NOT IMPLEMENTED
 public slots:
 	void hideCurrent();					//	hides current branch if it is not main page
 	void gotoBranch(branches branch);	//	opens branch by it's enum type. Does not supports branches with any initialization.

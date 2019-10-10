@@ -7,19 +7,35 @@ QHash<QString, QString> _initRecDefs()
 
 void ReceiptRootWidget::processOptions()
 {
+	if (modeItself.submode == "warehouses")
+	{
+		suppliersSelect = new SuppliersSelectWidget(globalSettings, this, &DataUpdateEngine::getWarehousesList);
+	}
+	else
+	{
+		suppliersSelect = new SuppliersSelectWidget(globalSettings, this);
+	}
+	orderSelect = new OrderSelectionWidget(globalSettings, confirmedSupplier, this);
+
+	
+}
+
+void ReceiptRootWidget::openCorrespondingSubbranch()
+{
 	_hideAny(suppliersSelect);
 }
 
-ReceiptRootWidget::ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QString> settings, QWidget* parent)
+ReceiptRootWidget::ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QString> settings, QString submode, QWidget* parent)
 	: inframedWidget(parent), abstractNode(), globalSettings(go),
 	confirmedSupplier(), confirmedOrder(), mainLayout(new QVBoxLayout(this)),
 	innerWidget(new ReceiptParametersWidget(go, parent)),
-	suppliersSelect(new SuppliersSelectWidget(go, this)),
-	orderSelect(new OrderSelectionWidget(go, confirmedSupplier, this)),
+	suppliersSelect(),
+	orderSelect(),
 	scaning(new ReceiptScaningWidget(go, this)),
-	options(settings)
+	options(settings), modeItself("receipt","receipt", submode)
 {
 	this->setLayout(mainLayout);
+	processOptions();
 	mainLayout->addWidget(innerWidget);
 	mainLayout->addWidget(suppliersSelect);
 	mainLayout->addWidget(orderSelect);
@@ -30,8 +46,7 @@ ReceiptRootWidget::ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QStri
 
 	current = innerWidget;
 	untouchable = innerWidget;
-
-	processOptions();
+	openCorrespondingSubbranch();
 #ifdef QT_VERSION5X
 	QObject::connect(suppliersSelect, &SuppliersSelectWidget::supplierAcquired, this, &ReceiptRootWidget::supplierAcquired);
 	QObject::connect(orderSelect, &OrderSelectionWidget::orderConfirmed, this, &ReceiptRootWidget::orderAcquired);

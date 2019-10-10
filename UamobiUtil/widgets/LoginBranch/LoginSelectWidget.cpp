@@ -1,4 +1,5 @@
 #include "LoginSelectWidget.h"
+#include "widgets/utils/ElementsStyles.h"
 
 LoginSelectWidget::LoginSelectWidget(QVector<UserProfile>& Profiles, QWidget* parent)
 	:AbstractVariantSelectionWidget(parent), profiles(Profiles)

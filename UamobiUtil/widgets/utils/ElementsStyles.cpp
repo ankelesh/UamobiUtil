@@ -131,3 +131,8 @@ const QString BETTER_CALENDAR_STYLESHEET = "QCalendarWidget QToolButton{\
 			color: rgb(64, 64, 64);			\
 		}";
 const QString ERROR_TEXT_STYLESHEET = "QLabel {color: red;}";
+
+QString countAdaptiveFont(double perc)
+{
+	return " font-size: " + QString::number((int)(GEOMETRY_SOURCE->availableGeometry().height() * perc)) + "px;";
+}

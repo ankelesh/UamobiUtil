@@ -25,11 +25,14 @@ protected:
 	ReceiptScaningWidget* scaning;
 
 	QHash<QString, QString> options;
+	parsedMode modeItself;
 
 	void processOptions();
+	void openCorrespondingSubbranch();
 
 public:
 	ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QString> settings = RECEIPT_NONE_SETTINGS_DEFAULTS,
+		QString submode = "",
 		QWidget* parent = Q_NULLPTR);
 
 private slots:

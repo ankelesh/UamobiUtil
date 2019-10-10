@@ -4,59 +4,93 @@
 
 TEMPLATE = app
 TARGET = UamobiUtil
-DESTDIR = ../Win32/Debug
 QT += core xml network gui widgets
-CONFIG += debug
-DEFINES += _UNICODE _ENABLE_EXTENDED_ALIGNED_STORAGE WIN64 QT_DLL QT_NETWORK_LIB QT_WIDGETS_LIB QT_XML_LIB QT_VERSION5X
-INCLUDEPATH += ./GeneratedFiles \
-    . \
-    ./GeneratedFiles/$(ConfigurationName)
-DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
-OBJECTS_DIR += debug
-UI_DIR += ./GeneratedFiles
-RCC_DIR += ./GeneratedFiles
-HEADERS += ./debugtrace.h \
-    ./networking/global.h \
-    ./networking/Parsers/abs_parsed_request.h \
-    ./networking/Parsers/RequestParser.h \
-    ./networking/Parsers/SimpleLinearParsers.h \
-    ./widgets/utils/GlobalAppSettings.h \
-    ./widgets/utils/ElementsStyles.h \
-    ./networking/things.h \
-    ./networking/xml_funcs.h \
-    ./UamobiUtil.h \
+CONFIG += release
+
+
+HEADERS += ./UamobiUtil.h \
     ./networking/dataupdateengine.h \
     ./networking/dataupdateengine-http.h \
-    ./widgets/utils/SpecializedWidgets.h \
-    ./widgets/LoginBranch/LoginSelectWidget.h \
-    ./widgets/LoginBranch/LoginWidget.h \
-	./widgets/ModeSelectionBranch/ModeSelectionWidget.h\
-	./widgets/ModeSelectionBranch/PlaceSelectionWidget.h\
-    ./widgets/SettingsBranches/MainSettingsWidget.h \
-    ./networking/RequestAwaiter.h \
-    ./widgets/MainPageWidget.h \
-    ./widgets/utils/EventsAndFilters.h \
+    ./networking/global.h \
+    ./networking/things.h \
+    ./networking/xml_funcs.h \
+    ./networking/photo/datarequest.h \
     ./widgets/parents/inframedWidget.h \
-    ./networking/photo/datarequest.h
-SOURCES += ./debugtrace.cpp \
-    ./main.cpp \
-    ./networking/dataupdateengine-http.cpp \
+    ./widgets/utils/ElementsStyles.h \
+    ./widgets/utils/EventsAndFilters.h \
+    ./widgets/MainPageWidget.h \
+    ./debugtrace.h \
+    widgets/LoginBranch/LoginSelectWidget.h \
+    widgets/LoginBranch/LoginWidget.h \
+    widgets/SettingsBranches/MainSettingsWidget.h \
+    widgets/utils/SpecializedWidgets.h \
+    networking/RequestAwaiter.h \
+    networking/Parsers/abs_parsed_request.h \
+    networking/Parsers/RequestParser.h \
+    networking/Parsers/SimpleLinearParsers.h \
+    legacy/legacy.h \
+    networking/Parsers/DynamicLinearParsers.h \
+    networking/Parsers/NamedAttributesResponseParsers.h \
+    networking/Parsers/SimpleResponseParsers.h \
+    widgets/ModeSelectionBranch/ModeSelectionWidget.h \
+    widgets/ModeSelectionBranch/PlaceSelectionWidget.h \
+    widgets/parents/AbstractVariantSelectionWidget.h \
+    widgets/ReceiptNoneBranch/ReceiptRootWidget.h \
+    widgets/ReceiptSpecialWidgets/ReceiptParametersWidget.h \
+    widgets/ReceiptSpecialWidgets/ReceiptScaningWidget.h \
+    widgets/SuppliersSelectionBranch/OrderSelectionWidget.h \
+    widgets/SuppliersSelectionBranch/SuppliersSelectWidget.h \
+    widgets/parents/AbstractListSelectionWidget.h \
+    widgets/parents/abstractNodeInterface.h \
+    widgets/parents/AbstractScaningWidget.h \
+    networking/NetCallArgs.h \
+    networking/StaticTestingDataEngine.h \
+    widgets/utils/GlobalAppSettings.h \
+    widgets/ElementWidgets/BigButtonsSpinbox.h \
+    widgets/MultibranchWidgets/DocResultsWidget.h \
+    widgets/MultibranchWidgets/ItemSearchWidget.h
+SOURCES += ./main.cpp \
     ./networking/dataupdateengine.cpp \
-    ./networking/Parsers/abs_parsed_request.cpp \
-    ./networking/Parsers/RequestParser.cpp \
-    ./networking/Parsers/SimpleLinearParsers.cpp \
-    ./networking/photo/datarequest.cpp \
-    ./networking/RequestAwaiter.cpp \
-    ./networking/xml_funcs.cpp \
     ./UamobiUtil.cpp \
-    ./widgets/LoginBranch/LoginSelectWidget.cpp \
-    ./widgets/LoginBranch/LoginWidget.cpp \
-	./widgets/ModeSelectionBranch/ModeSelectionWidget.cpp\
-	./widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp\
-    ./widgets/MainPageWidget.cpp \
-    ./widgets/SettingsBranches/MainSettingsWidget.cpp \
+    ./networking/dataupdateengine-http.cpp \
+    ./networking/xml_funcs.cpp \
+    ./networking/photo/datarequest.cpp \
     ./widgets/utils/ElementsStyles.cpp \
-    ./widgets/utils/SpecializedWidgets.cpp
+    ./widgets/MainPageWidget.cpp \
+    ./debugtrace.cpp \
+    widgets/LoginBranch/LoginSelectWidget.cpp \
+    widgets/LoginBranch/LoginWidget.cpp \
+    widgets/SettingsBranches/MainSettingsWidget.cpp \
+    widgets/utils/SpecializedWidgets.cpp \
+    networking/RequestAwaiter.cpp \
+    networking/Parsers/abs_parsed_request.cpp \
+    networking/Parsers/RequestParser.cpp \
+    networking/Parsers/SimpleLinearParsers.cpp \
+    legacy/legacy.cpp \
+    networking/Parsers/SimpleResponseParsers.cpp \
+    networking/Parsers/DynamicLinearParsers.cpp \
+    networking/Parsers/NamedAttributesResponseParsers.cpp \
+    widgets/ModeSelectionBranch/ModeSelectionWidget.cpp \
+    widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp \
+    widgets/parents/AbstractVariantSelectionWidget.cpp \
+    widgets/ReceiptNoneBranch/ReceiptRootWidget.cpp \
+    widgets/ReceiptSpecialWidgets/ReceiptParametersWidget.cpp \
+    widgets/ReceiptSpecialWidgets/ReceiptScaningWidget.cpp \
+    widgets/SuppliersSelectionBranch/OrderSelectionWidget.cpp \
+    widgets/SuppliersSelectionBranch/SuppliersSelectWidget.cpp \
+    widgets/parents/AbstractListSelectionWidget.cpp \
+    widgets/parents/abstractNodeInterface.cpp \
+    widgets/parents/AbstractScaningWidget.cpp \
+    networking/NetCallArgs.cpp \
+    networking/StaticTestingDataEngine.cpp \
+    networking/things.cpp \
+    widgets/utils/GlobalAppSettings.cpp \
+    widgets/ElementWidgets/BigButtonsSpinbox.cpp \
+    widgets/MultibranchWidgets/DocResultsWidget.cpp \
+    widgets/MultibranchWidgets/ItemSearchWidget.cpp
+	
+TRANSLATIONS += translations/uamobi_ru.ts\
+				translations/uamobi_ro.ts\
+				translations/uamobi_en.ts
 RESOURCES += UamobiUtil.qrc
-TRANSLATIONS += translations/uamobi_en.ts translations/uamobi_ro.ts translations/uamobi_ru.ts
+

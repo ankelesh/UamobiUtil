@@ -76,6 +76,7 @@ protected:
 
 	// this list is used to store data obtained after select_mode web request. it will be usefull later
 	QHash<QString, QString> settings;
+	parsedMode selected;
 public:
 	ModeSelectionWidget(const GlobalAppSettings& go, QWidget* parent = Q_NULLPTR);
 	virtual bool back() override;	//	has top widget
@@ -86,7 +87,7 @@ protected slots:
 public slots:
 	void loadModes();				//	loads modes list from web
 signals:
-	void modeAcquired(QHash<QString, QString>);		//	is emitted when this branch is done
+	void modeAcquired(QHash<QString, QString>, parsedMode pm);		//	is emitted when this branch is done
 };
 class ModeBranchRootWidget : public ModeSelectionWidget, abstractNode
 {

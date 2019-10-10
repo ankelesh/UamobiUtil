@@ -216,6 +216,9 @@
     <ClCompile Include="widgets\ElementWidgets\BigButtonsSpinbox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="widgets\ElementWidgets\MegaIconButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -296,6 +299,15 @@
     <QtMoc Include="widgets\ElementWidgets\BigButtonsSpinbox.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="widgets\parents\AbstractScaningWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ReceiptSpecialWidgets\ReceiptScaningWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ElementWidgets\MegaIconButton.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="UamobiUtil.qrc">
@@ -353,12 +365,6 @@
     </ClInclude>
     <ClInclude Include="widgets\parents\abstractNodeInterface.h">
       <Filter>Header Files\util\parents</Filter>
-    </ClInclude>
-    <ClInclude Include="widgets\parents\AbstractScaningWidget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="widgets\ReceiptSpecialWidgets\ReceiptScaningWidget.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="networking\Parsers\DynamicLinearParsers.h">
       <Filter>Header Files\Network\Parsing</Filter>

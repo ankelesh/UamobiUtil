@@ -1,5 +1,5 @@
 #include "AbstractVariantSelectionWidget.h"
-
+#include "widgets/utils/ElementsStyles.h"
 AbstractVariantSelectionWidget::AbstractVariantSelectionWidget(QWidget* parent, bool test)
 	: inframedWidget(parent), mainLayout(new QVBoxLayout(this))
 {
@@ -32,6 +32,9 @@ void AbstractVariantSelectionWidget::init()
 		userButtons.push_back(new specwidgets::indexedButton(i, this));
 		userButtons.last()->setText(elemAsString(i));
 		mainLayout->addWidget(userButtons.last());
+
+		userButtons.last()->setStyleSheet(countAdaptiveFont(0.04));
+		userButtons.last()->setMinimumSize(calculateAdaptiveSize(0.2));
 #ifdef QT_VERSION5X
 		QObject::connect(userButtons.last(), &specwidgets::indexedButton::indexClicked, this, &AbstractVariantSelectionWidget::indexSelected);
 #else

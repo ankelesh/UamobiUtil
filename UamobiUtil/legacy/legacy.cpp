@@ -69,6 +69,7 @@ namespace legacy {
 		t["returningtosupplier"] = modecut("receipt", "returningtosupplier");
 		t["receiptworder"] = modecut("receipt", "receiptworder");
 		t["receiptwoorder"] = modecut("receipt", "receiptwoorder");
+		t["receiptfromwarehouses"] = modecut("receipt", "warehouses");
 		temp['r'] = t;
 		t.clear();
 		t["sales"] = modecut("inventory", "sales");

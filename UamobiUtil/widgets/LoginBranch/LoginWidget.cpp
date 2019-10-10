@@ -1,14 +1,19 @@
 #include "LoginWidget.h"
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
+#include "widgets/utils/ElementsStyles.h"
 
 void LoginWidget::login_confirmed()
 {
 	using parse_uniresults_functions::TypicalResponse;
+
+	if (awaiter.isAwaiting()) return;
 	if (loginField->text().isEmpty() || passwordField->text().isEmpty())
 	{
 		info->setText(tr("login_widget_no_password!"));
 		return;
 	}
-	RequestAwaiter awaiter;
 	globalSettings.networkingEngine->userLogIn(loginField->text(), passwordField->text(), &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 	while (awaiter.isAwaiting()) { qApp->processEvents(); }
@@ -29,20 +34,23 @@ void LoginWidget::login_confirmed()
 }
 
 LoginWidget::LoginWidget(GlobalAppSettings& go, QWidget* parent)
-	: inframedWidget(parent), mainLayout(new QGridLayout(this)), loginInfo(new QLabel(this)),
+	: inframedWidget(parent), mainLayout(new QVBoxLayout(this)), loginInfo(new QLabel(this)),
 	passwordInfo(new QLabel(this)), info(new QLabel(this)), loginField(new QLineEdit(this)),
-	passwordField(new QLineEdit(this)), backButton(new QPushButton(this)),
-	okButton(new QPushButton(this)), globalSettings(go)
+	passwordField(new QLineEdit(this)), buttonPanel(new QHBoxLayout(this)), backButton(new MegaIconButton(this)),
+	okButton(new MegaIconButton(this)), globalSettings(go)
 {
 	this->setLayout(mainLayout);
-	mainLayout->addWidget(loginInfo, 1, 0);
-	mainLayout->addWidget(loginField, 1, 1, 1, -1);
-	mainLayout->addWidget(info, 0, 0, 1, -1);
+	mainLayout->setSpacing(0);
+	mainLayout->setContentsMargins(0, 0, 0, 0);
+	mainLayout->addWidget(loginInfo);
+	mainLayout->addWidget(loginField);
+	mainLayout->addWidget(info);
 
-	mainLayout->addWidget(passwordInfo, 2, 0);
-	mainLayout->addWidget(passwordField, 2, 1, 1, -1);
-	mainLayout->addWidget(okButton, 5, 3);
-	mainLayout->addWidget(backButton, 5, 0);
+	mainLayout->addWidget(passwordInfo);
+	mainLayout->addWidget(passwordField);
+	mainLayout->addLayout(buttonPanel);
+	buttonPanel->addWidget(okButton);
+	buttonPanel->addWidget(backButton);
 
 #ifdef DEBUG
 	detrace_DCONSTR("LoginWidget");
@@ -50,6 +58,8 @@ LoginWidget::LoginWidget(GlobalAppSettings& go, QWidget* parent)
 #endif
 	this->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
 	loginInfo->setText(tr("login_widget_login_tip"));
+	loginInfo->setStyleSheet(countAdaptiveFont(0.05));
+	passwordInfo->setStyleSheet(countAdaptiveFont(0.05));
 	passwordInfo->setText(tr("login_widget_password_tip"));
 	okButton->setText(tr("login_widget_ok_button"));
 	backButton->setText(tr("login_widget_back_button"));
@@ -57,7 +67,12 @@ LoginWidget::LoginWidget(GlobalAppSettings& go, QWidget* parent)
 	info->setAlignment(Qt::AlignCenter);
 	info->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum));
 	passwordField->setEchoMode(QLineEdit::Password);
-
+	loginField->setStyleSheet(countAdaptiveFont(0.04));
+	passwordField->setStyleSheet(countAdaptiveFont(0.04));
+	okButton->setIcon(QIcon(":/res/submit.png"));
+	backButton->setIcon(QIcon(":/res/back.png"));
+	okButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
+	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 #ifdef QT_VERSION5X
 	QObject::connect(okButton, &QPushButton::clicked, this, &LoginWidget::login_confirmed);
 	QObject::connect(backButton, &QPushButton::clicked, this, &LoginWidget::backRequired);

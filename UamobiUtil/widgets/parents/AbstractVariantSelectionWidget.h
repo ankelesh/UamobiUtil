@@ -25,7 +25,7 @@
 class AbstractVariantSelectionWidget : public inframedWidget
 {
 	Q_OBJECT
-private:
+protected:
 	QVBoxLayout* mainLayout;			//	layout where buttons will be placed
 	QVector<specwidgets::indexedButton* > userButtons;	//	list with buttons
 protected:

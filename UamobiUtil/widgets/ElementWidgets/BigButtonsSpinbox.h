@@ -1,5 +1,5 @@
 #pragma once
-#ifdef Qt_VERSION5X
+#ifdef QT_VERSION5X
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/qpushbutton.h>

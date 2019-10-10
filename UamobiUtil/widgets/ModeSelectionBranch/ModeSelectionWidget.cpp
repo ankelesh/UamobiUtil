@@ -108,6 +108,7 @@ void ModeSelectionWidget::modeSelected(parsedMode Mode)
 		if (resp.success)
 		{
 			settings = resp.values;
+			selected = Mode;
 		}
 	}
 }
@@ -142,7 +143,7 @@ void ModeBranchRootWidget::modeSelected(parsedMode pm)
 
 void ModeBranchRootWidget::placeAcquired(parsedPlace pm)
 {
-	emit modeAcquired(settings);
+	emit modeAcquired(settings, selected);
 }
 
 void ModeBranchRootWidget::hideCurrent()

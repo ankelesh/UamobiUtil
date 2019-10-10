@@ -41,7 +41,7 @@ void UamobiUtil::gotoModeSelection()
 	(*current)->show();
 }
 
-void UamobiUtil::gotoReceiptBranch(QHash<QString, QString> opts)
+void UamobiUtil::gotoReceiptBranch(QHash<QString, QString> opts, parsedMode mode)
 {
 #ifdef DEBUG
 	//detrace_METHCALL("goto Receipt");
@@ -52,7 +52,7 @@ void UamobiUtil::gotoReceiptBranch(QHash<QString, QString> opts)
 		mainLayout->removeWidget(*current);
 		(*current)->deleteLater();
 	}
-	ReceiptRootWidget* RR = new ReceiptRootWidget(globalSettings, opts, this);
+	ReceiptRootWidget* RR = new ReceiptRootWidget(globalSettings, opts, mode.submode, this);
 #ifdef QT_VERSION5X
 	QObject::connect(RR, &ReceiptRootWidget::backRequired, this, &UamobiUtil::hideCurrent);
 #else
@@ -64,8 +64,12 @@ void UamobiUtil::gotoReceiptBranch(QHash<QString, QString> opts)
 	(*current)->show();
 }
 
-void UamobiUtil::interpretMode(QHash<QString, QString>)
+void UamobiUtil::interpretMode(QHash<QString, QString> sets, parsedMode mode)
 {
+	if (mode.mode == "receipt")
+	{
+		gotoReceiptBranch(sets, mode);
+	}
 }
 
 void UamobiUtil::gotoBranch(branches branch)

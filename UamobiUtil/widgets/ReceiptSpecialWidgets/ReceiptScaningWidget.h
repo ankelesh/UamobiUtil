@@ -7,6 +7,7 @@
 
 class ReceiptScaningWidget : public AbstractScaningWidget, abstractNode
 {
+	Q_OBJECT
 protected:
 	
 	DocResultsWidget* resultScreen;

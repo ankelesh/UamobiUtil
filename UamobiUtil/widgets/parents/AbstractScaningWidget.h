@@ -23,6 +23,7 @@
 
 class AbstractScaningWidget : public inframedWidget
 {
+	Q_OBJECT
 protected:
 	GlobalAppSettings& globalSettings;
 

@@ -13,15 +13,15 @@ void GlobalAppSettings::setTranslator()
 {
 	if (this->language == "Russian")
 	{
-		this->translator.load("uamobi_ru.qm", "./translations/");
+		this->translator.load(":/translations/uamobi_ru.qm");
 	}
 	else if (this->language == "Romanian")
 	{
-		this->translator.load("/translations/uamobi_ro.qm", ".");
+		this->translator.load(":/translations/uamobi_ro.qm");
 	}
 	else
 	{
-		this->translator.load("uamobi_en.qm", "./translations/");
+		this->translator.load(":/translations/uamobi_en.qm");
 	}
 	qApp->installTranslator(&translator);
 }
