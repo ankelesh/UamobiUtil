@@ -19,9 +19,10 @@ class abstractNode
 protected:
 	inframedWidget* current;
 	inframedWidget* untouchable;
+	inframedWidget* main;
 
-	abstractNode() : current(Q_NULLPTR), untouchable(Q_NULLPTR) {};
-	abstractNode(inframedWidget* c, inframedWidget* u) : current(c), untouchable(u) {};
+	abstractNode() : current(Q_NULLPTR), untouchable(Q_NULLPTR), main(Q_NULLPTR) {};
+	abstractNode(inframedWidget* c, inframedWidget* u, inframedWidget* m) : current(c), untouchable(u), main(m) {};
 public slots:
 	virtual bool _hideCurrent(inframedWidget* replacement);
 	virtual void _hideAny(inframedWidget* replacement);

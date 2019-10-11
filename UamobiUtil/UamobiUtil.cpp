@@ -7,8 +7,9 @@ UamobiUtil::UamobiUtil(GlobalAppSettings& go, QWidget* parent)
 	current(&mainPage)
 {
 	this->setLayout(mainLayout);
-	this->setBaseSize(calculateAdaptiveSize(1));
+	this->setBaseSize(calculateAdaptiveSize(0.8));
 	mainLayout->addWidget(mainPage);
+	mainPage->setFocus();
 #ifdef QT_VERSION5X
 	auto mlp = qobject_cast<MainPageWidget*>(mainPage);
 	QObject::connect(mlp, &MainPageWidget::loggedIn, this, &UamobiUtil::gotoModeSelection);

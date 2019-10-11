@@ -49,6 +49,7 @@ ReceiptRootWidget::ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QStri
 	openCorrespondingSubbranch();
 #ifdef QT_VERSION5X
 	QObject::connect(suppliersSelect, &SuppliersSelectWidget::supplierAcquired, this, &ReceiptRootWidget::supplierAcquired);
+	QObject::connect(suppliersSelect, &SuppliersSelectWidget::backRequired, this, &ReceiptRootWidget::backTo);
 	QObject::connect(orderSelect, &OrderSelectionWidget::orderConfirmed, this, &ReceiptRootWidget::orderAcquired);
 	QObject::connect(innerWidget, &ReceiptParametersWidget::backRequired, this, &ReceiptRootWidget::backTo);
 	QObject::connect(innerWidget, &ReceiptParametersWidget::dataConfirmed, this, &ReceiptRootWidget::continueToScaning);
@@ -86,6 +87,11 @@ void ReceiptRootWidget::hideCurrent()
 
 void ReceiptRootWidget::backTo()
 {
+	if (current == suppliersSelect)
+	{
+		emit backRequired();
+		return;
+	}
 	_hideAny(orderSelect);
 }
 

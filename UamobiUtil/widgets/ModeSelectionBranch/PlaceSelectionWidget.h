@@ -4,10 +4,8 @@
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QScrollArea>
-#include <QtWidgets/QPushButton>
 #else
 // Qt 4 widgets
-#include <QtGui/QPushButton>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QScrollArea>
 #include <QtGui/QLabel>
@@ -18,6 +16,7 @@
 // widgets imports
 #include "widgets/parents/inframedWidget.h"
 #include "widgets/parents/AbstractVariantSelectionWidget.h"
+#include "widgets/ElementWidgets/MegaIconButton.h"
 // networking imports
 #include "networking/Parsers/RequestParser.h"
 #include "networking/RequestAwaiter.h"
@@ -76,13 +75,17 @@ protected:
 	QLabel* modeTip;
 	QLabel* placesTip;
 	specwidgets::_placeSelectionWidget* placeSelection;
-	QPushButton* backButton;
+	MegaIconButton* backButton;
 
+	RequestAwaiter awaiter;
 public:
 	PlaceSelectionWidget(const GlobalAppSettings& go, QWidget* parent = Q_NULLPTR,
 		NoArgsRequestMP meth = &DataUpdateEngine::placeList,
 		interpretsPointers::interpretAsPlaceLike inter = &RequestParser::interpretAsPlaceList
 	);
+	virtual void show() override;
+	virtual bool isExpectingControl(int);
+
 private slots:
 	void placeSelected(parsedPlace);	//	sends place_select request, then emits parsedPlace
 public slots:

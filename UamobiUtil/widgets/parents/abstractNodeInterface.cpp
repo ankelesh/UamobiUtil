@@ -6,6 +6,14 @@ bool abstractNode::_hideCurrent(inframedWidget* replacement)
 	{
 		current->hide();
 		current = replacement;
+		if (replacement == untouchable)
+		{
+			main->setFocus();
+		}
+		else
+		{
+			replacement->setFocus();
+		}
 		replacement->show();
 		return true;
 	}
@@ -15,8 +23,16 @@ bool abstractNode::_hideCurrent(inframedWidget* replacement)
 void abstractNode::_hideAny(inframedWidget* replacement)
 {
 	current->hide();
-	replacement->show();
 	current = replacement;
+	if (replacement == untouchable)
+	{
+		main->setFocus();
+	}
+	else
+	{
+		replacement->setFocus();
+	}
+	replacement->show();
 }
 
 void abstractDynamicNode::hideAndDeleteCurrent(QPointer<inframedWidget>* replacement)

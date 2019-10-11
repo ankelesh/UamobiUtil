@@ -138,8 +138,11 @@ void ReceiptScaningWidget::backNeeded()
 
 void ReceiptScaningWidget::useControls()
 {
+
+#ifdef DEBUG
 	detrace_METHCALL("useControls");
 	detrace_METHEXPL("is containing qty: " << itemSuppliedValues.contains("qty"));
+#endif
 	if (itemSuppliedValues.contains("qty"))
 	{
 		quantitySpin->show();

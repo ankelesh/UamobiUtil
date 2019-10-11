@@ -1,4 +1,5 @@
 #include "SuppliersSelectWidget.h"
+#include "widgets/utils/ElementsStyles.h"
 
 QString specwidgets::_SupplierSelectionWidget::elemToString(int i)
 {
@@ -29,9 +30,10 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
 	headerLayout(new QHBoxLayout(innerWidget)), footerLayout(new QHBoxLayout(innerWidget)),
 	userHelp(new QLabel(innerWidget)), userinputField(new QLineEdit(innerWidget)),
-	searchButton(new QPushButton(innerWidget)), ordfilterButton(new QPushButton(innerWidget)),
+	searchButton(new MegaIconButton(innerWidget)), ordfilterButton(new MegaIconButton(innerWidget)),
 	supplierSelection(new specwidgets::_SupplierSelectionWidget(allsuppliers, innerWidget)),
-	backButton(new QPushButton(innerWidget))
+	backButton(new MegaIconButton(innerWidget)), withOrd(":/res/with.png"), withoutOrd(":/res/without.png"),
+	awaiter(go.timeoutInt, this)
 {
 	this->setLayout(mainLayout);
 	mainLayout->addWidget(innerWidget);
@@ -45,15 +47,32 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 	headerLayout->addWidget(searchButton);
 	headerLayout->addWidget(ordfilterButton);
 	footerLayout->addWidget(backButton);
-	footerLayout->addStretch();
+	//footerLayout->addStretch();
 
 	userHelp->setText(tr("suppliers_selection_widget_user_tip"));
-	searchButton->setText(tr("suppliers_selection_search!"));
-	ordfilterButton->setText(tr("W\\O"));
-	backButton->setText(tr("suppliers_selection_back"));
+	userHelp->setStyleSheet(countAdaptiveFont(0.03));
+	userHelp->setAlignment(Qt::AlignCenter);
 
+	searchButton->setIcon(QIcon(":/res/search.png"));
+	searchButton->setText(tr("suppliers_selection_search!"));
+	searchButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
+	searchButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
+	ordfilterButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
+
+	userinputField->setStyleSheet(countAdaptiveFont(0.04));
+	userinputField->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum));
+
+	supplierSelection->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
+
+	backButton->setText(tr("suppliers_selection_back"));
+	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
+
+	ordfilterButton->setText(tr("W\\O"));
 	ordfilterButton->setCheckable(true);
 	ordfilterButton->setChecked(true);
+	ordFilterSwitched(true);
+
 
 	loadSuppliers();
 
@@ -62,6 +81,7 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 	QObject::connect(ordfilterButton, &QPushButton::toggled, this, &SuppliersSelectWidget::ordFilterSwitched);
 	QObject::connect(backButton, &QPushButton::clicked, this, &SuppliersSelectWidget::backRequired);
 	QObject::connect(supplierSelection, &specwidgets::_SupplierSelectionWidget::supplierPicked, this, &SuppliersSelectWidget::supplierPicked);
+	QObject::connect(userinputField, &QLineEdit::editingFinished, this, &SuppliersSelectWidget::searchPrimed);
 #else
 	QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(searchPrimed()));
 	QObject::connect(ordfilterButton, SIGNAL(toggled(bool)), this, SLOT(ordFilterSwitched(bool)));
@@ -70,8 +90,39 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 #endif
 }
 
+void SuppliersSelectWidget::show()
+{
+	setFocus();
+	inframedWidget::show();
+}
+
+bool SuppliersSelectWidget::isExpectingControl(int val)
+{
+	if (val >= -1 && val < allsuppliers.count() - 1)
+	{
+		if (val == -1)
+		{
+			if (allsuppliers.count() > 10)
+				val = 9;
+			else
+			{
+				emit backRequired();
+				return false;
+			}
+		}
+		supplierPicked(	allsuppliers.at(val));
+		return true;
+
+	}
+
+	return false;
+}
+
+
 void SuppliersSelectWidget::searchPrimed()
 {
+	if (awaiter.isAwaiting())
+		return;
 	loadSuppliers();
 }
 
@@ -79,23 +130,28 @@ void SuppliersSelectWidget::ordFilterSwitched(bool state)
 {
 	if (ordfilterButton->isChecked())
 	{
+		ordfilterButton->setIcon(withOrd);
 		ordfilterButton->setStyleSheet(CHECKED_BUTTONS_STYLESHEET);
 	}
 	else
 	{
-		ordfilterButton->setStyleSheet("");
+		ordfilterButton->setIcon(withoutOrd);
+		ordfilterButton->setStyleSheet(UNCHECKED_BUTTONS_STYLESHEET);
 	}
 }
 
 void SuppliersSelectWidget::supplierPicked(parsedSupplier supp)
 {
+	if (awaiter.isAwaiting())
+		return;
 	confirmedSupplier = supp;
 	emit supplierAcquired(supp);
 }
 
 void SuppliersSelectWidget::loadSuppliers()
 {
-	RequestAwaiter awaiter;
+	if (awaiter.isAwaiting())
+		return;
 	(*globalSettings.networkingEngine.*listSuppliers)(userinputField->text(), ordfilterButton->isChecked(), &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 	while (awaiter.isAwaiting())
@@ -123,6 +179,7 @@ SuppliersSelectionBranch::SuppliersSelectionBranch(GlobalAppSettings& go, QWidge
 
 	current = innerWidget;
 	untouchable = innerWidget;
+	main = this;
 #ifdef QT_VERSION5X
 	QObject::connect(orderSelection, &OrderSelectionWidget::orderConfirmed, this, &SuppliersSelectionBranch::orderAcquired);
 	QObject::connect(orderSelection, &OrderSelectionWidget::backRequired, this, &SuppliersSelectionBranch::hideCurrent);

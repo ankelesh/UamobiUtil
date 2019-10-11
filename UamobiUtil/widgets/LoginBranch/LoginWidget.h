@@ -49,6 +49,8 @@ private:
 
 public:
 	LoginWidget(GlobalAppSettings& go, QWidget* parent);
+
+	virtual void show() override;
 private slots:
 	void login_confirmed();
 public slots:

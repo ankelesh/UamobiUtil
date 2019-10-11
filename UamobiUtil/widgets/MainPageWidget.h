@@ -4,13 +4,11 @@
 #ifdef QT_VERSION5X
 #include <QtWidgets/QLabel>
 #include <QtWidgets/qboxlayout.h>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QLineEdit>
 // include here legacy-versions of top ones
 #else
 #include <QtGui/QLabel>
 #include <QtGui/QBoxLayout>
-#include <QtGui/QPushButton>
 #include <QtGui/QLineEdit>
 #endif
 // include here version-independents
@@ -22,6 +20,7 @@
 #include "widgets/LoginBranch/LoginSelectWidget.h"
 #include "widgets/SettingsBranches/MainSettingsWidget.h"
 #include "widgets/parents/abstractNodeInterface.h"
+#include "widgets/ElementWidgets/MegaIconButton.h"
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
 
@@ -58,18 +57,21 @@ private:
 	QLabel* userHelpLabel;
 	LoginSelectWidget* loginsStorageWidget;
 	QLabel* userIdInfo;
-	QPushButton* exitButton;
-	QPushButton* settingsButton;
+	MegaIconButton* exitButton;
+	MegaIconButton* settingsButton;
 	QLineEdit* userid;
 
 	// Child widgets
 	LoginWidget* manualLogin;
 	MainSettingsWidget* settingsScreen;
 
+	RequestAwaiter awaiter;
+
 	void show_login_widget(QString& log); // Utility: hides inner, shows login widget, sets it up.
 
 public:
 	MainPageWidget(GlobalAppSettings& go, QWidget* parent);
+	virtual bool isExpectingControl(int) override;
 
 private slots:
 	void settinsPressed();					//	activated on button press
@@ -77,6 +79,7 @@ private slots:
 	void userPicked(UserProfile);					//	activated when item was selected on LoginSelectWidget
 	void hideCurrent();							//	hides current
 	void languageChanged();						//	activated when language changed - retranslates text
+	void userIdSearch();
 public slots:
 	void loadUsers();							//	sends request to server, fills LoginSelectWidget
 signals:

@@ -2,14 +2,12 @@
 // Qt 5 only imports
 #ifdef QT_VERSION5X
 #include <QtWidgets/QWidget>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QLabel>
 #else
  // Qt 4 only imports
 #include <QtGui/QWidget>
-#include <QtGui/QPushButton>
 #include <QtGui/QLineEdit>
 #include <QtGui/QBoxLayout>
 #include <QtGui/QLabel>
@@ -20,6 +18,7 @@
 #include "widgets/parents/AbstractListSelectionWidget.h"
 #include "OrderSelectionWidget.h"
 #include "widgets/parents/abstractNodeInterface.h"
+#include "widgets/ElementWidgets/MegaIconButton.h"
 // networking imports
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
@@ -79,16 +78,22 @@ protected:
 	QHBoxLayout* footerLayout;
 	QLabel* userHelp;
 	QLineEdit* userinputField;
-	QPushButton* searchButton;
-	QPushButton* ordfilterButton;
+	MegaIconButton* searchButton;
+	MegaIconButton* ordfilterButton;
 	specwidgets::_SupplierSelectionWidget* supplierSelection;
-	QPushButton* backButton;
+	MegaIconButton* backButton;
+
+	QIcon withOrd;
+	QIcon withoutOrd;
+	RequestAwaiter awaiter;
 
 public:
 	SuppliersSelectWidget(GlobalAppSettings& go, QWidget* parent,
 		SuppliersLikeMP meth = &DataUpdateEngine::recListSuppliers,
 		interpretsPointers::interpretAsSupplierLike inter = &RequestParser::interpretAsSupplierList);
 
+	virtual void show() override;
+	virtual bool isExpectingControl(int) override;
 protected slots:
 	void searchPrimed();
 	void ordFilterSwitched(bool);

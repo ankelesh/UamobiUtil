@@ -35,6 +35,7 @@ protected:
 public:
 	AbstractVariantSelectionWidget(QWidget* parent = Q_NULLPTR, bool test = false);	//	"test" value adds empty button with "TEST'
 	void reload();									//	deletes all buttons, then shows them again
+	virtual bool isExpectingControl(int) override;
 protected slots:
 	virtual void indexSelected(int Index) = 0;		//	must emit any kind of itemSelected()
 };

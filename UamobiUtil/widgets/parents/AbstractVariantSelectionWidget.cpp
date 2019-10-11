@@ -1,5 +1,11 @@
 #include "AbstractVariantSelectionWidget.h"
 #include "widgets/utils/ElementsStyles.h"
+#define DEBUG
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif // DEBUG
+
+
 AbstractVariantSelectionWidget::AbstractVariantSelectionWidget(QWidget* parent, bool test)
 	: inframedWidget(parent), mainLayout(new QVBoxLayout(this))
 {
@@ -23,9 +29,23 @@ void AbstractVariantSelectionWidget::reload()
 	userButtons.clear();
 	init();
 }
+bool AbstractVariantSelectionWidget::isExpectingControl(int val)
+{
+#ifdef DEBUG
+	detrace_METHEXPL("got control avsw");
+#endif
+	if (val > 0 && val < countElems())
+	{
+		indexSelected(val);
+		return true;
+	}
+	return false;
+}
+
 
 void AbstractVariantSelectionWidget::init()
 {
+	
 	int elems = countElems();
 	for (int i = 0; i < elems; ++i)
 	{

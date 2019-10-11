@@ -1,5 +1,13 @@
 #include "PlaceSelectionWidget.h"
+#include "widgets/utils/ElementsStyles.h"
+// Qt 5 only imports
+#ifdef QT_VERSION5X
+#include <QtWidgets/QScroller>
 
+#else
+ // Qt 4 only imports
+!!!implement!!!
+#endif
 QString specwidgets::_placeSelectionWidget::elemAsString(int index)
 {
 	return places.at(index).name;
@@ -27,7 +35,7 @@ PlaceSelectionWidget::PlaceSelectionWidget(const GlobalAppSettings& go, QWidget*
 	scrArea(new QScrollArea(this)), userTip(new QLabel(this)),
 	modeTip(new QLabel(this)), placesTip(new QLabel(this)),
 	placeSelection(new specwidgets::_placeSelectionWidget(allplaces, scrArea)),
-	backButton(new QPushButton(this))
+	backButton(new MegaIconButton(this)), awaiter(go.timeoutInt, this)
 {
 	this->setLayout(mainLayout);
 	mainLayout->addWidget(userTip);
@@ -37,14 +45,32 @@ PlaceSelectionWidget::PlaceSelectionWidget(const GlobalAppSettings& go, QWidget*
 	mainLayout->addWidget(scrArea);
 	mainLayout->addLayout(buttonLayout);
 	buttonLayout->addWidget(backButton);
-	buttonLayout->addStretch();
+	//buttonLayout->addStretch();
 
 	userTip->setText(tr("place_selection_user_tip!"));
+	userTip->setStyleSheet(countAdaptiveFont(0.03));
+	userTip->setAlignment(Qt::AlignCenter);
+
 	modeTip->setText(tr("place_selection_mode_tip: "));
+	modeTip->setStyleSheet(countAdaptiveFont(0.03));
+	modeTip->setAlignment(Qt::AlignCenter);
+	
 	placesTip->setText(tr("place_selection_place_tip: "));
+	placesTip->setStyleSheet(countAdaptiveFont(0.03));
+	placesTip->setAlignment(Qt::AlignCenter);
+
 	backButton->setText(tr("place_selection_back"));
+	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
+
 
 	scrArea->setWidget(placeSelection);
+#ifdef QT_VERSION5X
+	QScroller::grabGesture(scrArea, QScroller::LeftMouseButtonGesture);
+#else
+
+#endif
+
 
 #ifdef QT_VERSION5X
 	QObject::connect(placeSelection, &specwidgets::_placeSelectionWidget::placeSelected, this, &PlaceSelectionWidget::placeSelected);
@@ -55,9 +81,39 @@ PlaceSelectionWidget::PlaceSelectionWidget(const GlobalAppSettings& go, QWidget*
 #endif
 }
 
+void PlaceSelectionWidget::show()
+{
+	this->setFocus();
+	inframedWidget::show();
+}
+
+bool PlaceSelectionWidget::isExpectingControl(int val)
+{
+	if (val >= -1 && val < allplaces.count() - 1)
+	{
+		if (val == -1)
+		{
+			if (allplaces.count() > 10)
+				val = 9;
+			else
+			{
+				emit backRequired();
+				return false;
+			}
+		}
+		placeSelected(allplaces.at(val));
+		return true;
+
+	}
+
+
+	return false;
+}
+
 void PlaceSelectionWidget::placeSelected(parsedPlace pl)
 {
-	RequestAwaiter awaiter(globalSettings.timeoutInt, this);
+	if (awaiter.isAwaiting())
+		return;
 	globalSettings.networkingEngine->placeSelect(pl.code, &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 	while (awaiter.isAwaiting())
@@ -77,7 +133,8 @@ void PlaceSelectionWidget::placeSelected(parsedPlace pl)
 
 void PlaceSelectionWidget::loadPlaces()
 {
-	RequestAwaiter awaiter;
+	if (awaiter.isAwaiting())
+		return;
 	DataUpdateEngine* httpointer = (globalSettings.networkingEngine);
 	(*httpointer.*listPlaces)(&awaiter, RECEIVER_SLOT_NAME);
 

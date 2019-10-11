@@ -42,12 +42,14 @@ LoginWidget::LoginWidget(GlobalAppSettings& go, QWidget* parent)
 	this->setLayout(mainLayout);
 	mainLayout->setSpacing(0);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
+	mainLayout->addStretch();
 	mainLayout->addWidget(loginInfo);
 	mainLayout->addWidget(loginField);
 	mainLayout->addWidget(info);
-
+	
 	mainLayout->addWidget(passwordInfo);
 	mainLayout->addWidget(passwordField);
+	mainLayout->addStretch();
 	mainLayout->addLayout(buttonPanel);
 	buttonPanel->addWidget(okButton);
 	buttonPanel->addWidget(backButton);
@@ -84,6 +86,19 @@ LoginWidget::LoginWidget(GlobalAppSettings& go, QWidget* parent)
 	QObject::connect(loginField, SIGNAL(returnPressed()), passwordField, SLOT(setFocus()));
 	QObject::connect(passwordField, SIGNAL(returnPressed()), this, SLOT(login_confirmed()));
 #endif
+}
+
+void LoginWidget::show()
+{
+	inframedWidget::show();
+	if (loginField->text().isEmpty())
+	{
+		loginField->setFocus();
+	}
+	else
+	{
+		passwordField->setFocus();
+	}
 }
 
 void LoginWidget::set_login(const QString str)

@@ -5,7 +5,6 @@
 #include <QtGui/QWidget>
 #endif
 #include <QtGui/QKeyEvent>
-#include <debugtrace.h>
 /*
 		This widget is parent for everything what is going to use one-frame interface.
 		Usage:
@@ -44,39 +43,16 @@ class inframedWidget : public QWidget
 {
 	Q_OBJECT
 protected:
-	void keyReleaseEvent(QKeyEvent* kev)		//	This event captures back and control keys
-	{
-		//detrace_METHCALL("inframed::keyReleaseEvent with " << (int)kev->key())
-		bool ok;
-		int control = kev->text().toInt(&ok);
-		if (ok) {
-			isExpectingControl(control - 1);
-		}
-		else if (kev->key() == Qt::Key::Key_Back || kev->key() == Qt::Key::Key_Escape)
-		{
-			if (!back())
-			{
-				emit backRequired();
-			}
-		}
-	}
+	virtual void keyReleaseEvent(QKeyEvent* kev) override;		//	This event captures back and control keys
+	bool processControl(int c);
 public:
 	inframedWidget(QWidget* parent) : QWidget(parent) {}
-	virtual bool back() {
-		return false;
-	}
-	virtual bool giveSettings() {
-		return false;
-	}
+	virtual bool back();
+	virtual bool giveSettings();
 	virtual void handleBarcode(QString) {}
-	virtual bool isExpectingControl(int)	//	Enhanced: now false is returned if value was not used
-	{
-		return false;
-	}
-	virtual void show()
-	{
-		QWidget::show();
-	}
+	virtual bool isExpectingControl(int);	//	Enhanced: now false is returned if value was not used
+	
+	virtual void show();
 signals:
 	void backRequired();
 };

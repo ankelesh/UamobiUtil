@@ -30,7 +30,7 @@ const QString CHANGE_BUTTONS_STYLESHEET("QPushButton {\
 		;}");
 
 const QString CHECKED_BUTTONS_STYLESHEET("QPushButton:checked {\
-			background-color: #bdbfa3;		\
+			background-color: #797d42;		\
 			border: 2px solid black;		\
 		}");
 
@@ -132,7 +132,26 @@ const QString BETTER_CALENDAR_STYLESHEET = "QCalendarWidget QToolButton{\
 		}";
 const QString ERROR_TEXT_STYLESHEET = "QLabel {color: red;}";
 
+const QString CANCEL_BUTTONS_STYLESHEET() {
+	return "QPushButton{"
+		"background-color: #f5a37f; " + countAdaptiveFont(0.03) +
+		"border: 1px solid gray;}";
+};
+
+const QString SETTINGS_BUTTONS_STYLESHEET() {
+	return "QPushButton {"
+		"background-color: #9893c9; " + countAdaptiveFont(0.03) +
+		"border: 1px solid gray;}";
+};
+const QString UNCHECKED_BUTTONS_STYLESHEET = "QPushButton{"
+"background-color: #e9edb4; "
+"border: 1px solid gray;}";
+
 QString countAdaptiveFont(double perc)
 {
+#ifdef Q_OS_WIN
+	return " font-size: " + QString::number((int)(GEOMETRY_SOURCE->availableGeometry().height() / 2 * perc)) + "px;";
+#else
 	return " font-size: " + QString::number((int)(GEOMETRY_SOURCE->availableGeometry().height() * perc)) + "px;";
+#endif
 }

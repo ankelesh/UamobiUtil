@@ -90,5 +90,8 @@
         <file>translations/uamobi_en.qm</file>
         <file>translations/uamobi_ro.qm</file>
         <file>translations/uamobi_ru.qm</file>
+        <file>res/search.png</file>
+        <file>res/with.png</file>
+        <file>res/without.png</file>
     </qresource>
 </RCC>

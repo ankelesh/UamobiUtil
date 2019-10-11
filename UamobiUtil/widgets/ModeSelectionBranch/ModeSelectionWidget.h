@@ -1,13 +1,11 @@
 #pragma once
 // Qt 5 only imports
 #ifdef QT_VERSION5X
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QLabel>
 #else
 // Qt 4 only imports
-#include <QtGui/QPushButton>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QScrollArea>
 #include <QtGui/QLabel>
@@ -18,6 +16,7 @@
 #include "widgets/parents/AbstractVariantSelectionWidget.h"
 #include "widgets/ModeSelectionBranch/PlaceSelectionWidget.h"
 #include "widgets/parents/abstractNodeInterface.h"
+#include "widgets/ElementWidgets/MegaIconButton.h"
 // networking imports
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
@@ -72,14 +71,17 @@ protected:
 	QLabel* userTip;
 	QLabel* modesTip;
 	specwidgets::_modeSelectionWidget* modeSelection;
-	QPushButton* logoutButton;
+	MegaIconButton* logoutButton;
 
 	// this list is used to store data obtained after select_mode web request. it will be usefull later
 	QHash<QString, QString> settings;
 	parsedMode selected;
+	RequestAwaiter awaiter;
 public:
 	ModeSelectionWidget(const GlobalAppSettings& go, QWidget* parent = Q_NULLPTR);
 	virtual bool back() override;	//	has top widget
+	virtual bool isExpectingControl(int) override;
+	virtual void show() override;
 protected slots:
 	void logoutPressed();		//	this slot sends log_out and only then calls backRequired
 	virtual void modeSelected(parsedMode);	//	these slots react to changes
