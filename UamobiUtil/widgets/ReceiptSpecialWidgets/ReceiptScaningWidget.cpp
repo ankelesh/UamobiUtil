@@ -1,8 +1,10 @@
 #include "ReceiptScaningWidget.h"
+#include "debugtrace.h"
+#include <QApplication>
 
 ReceiptScaningWidget::ReceiptScaningWidget(GlobalAppSettings& go, QWidget* parent)
-	: AbstractScaningWidget(go, parent),abstractNode(), resultScreen(new DocResultsWidget(go,this)),
-	searchScreen(new ItemSearchWidget(go,this))
+	: AbstractScaningWidget(go, parent),abstractNode(), captureInterface(), resultScreen(new DocResultsWidget(go,this)),
+	searchScreen(new ItemSearchWidget(go,this)), capturer(new NormalCapturer(this, this))
 {
 	mainLayout->addWidget(searchScreen);
 	mainLayout->addWidget(resultScreen);
@@ -10,7 +12,11 @@ ReceiptScaningWidget::ReceiptScaningWidget(GlobalAppSettings& go, QWidget* paren
 	resultScreen->hide();
 	current = innerWidget;
 	untouchable = innerWidget;
-
+	main = this;
+	submitButton->setDisabled(true);
+    mainTextView->installEventFilter(capturer->keyfilter);
+    innerWidget->installEventFilter(capturer->keyfilter);
+    barcodeField->installEventFilter(new filters::LineEditHelper(this));
 #ifdef QT_VERSION5X
 	QObject::connect(resultScreen, &DocResultsWidget::backRequired, this, &ReceiptScaningWidget::hideCurrent);
 	QObject::connect(searchScreen, &ItemSearchWidget::backRequired, this, &ReceiptScaningWidget::hideCurrent);
@@ -27,31 +33,19 @@ ReceiptScaningWidget::ReceiptScaningWidget(GlobalAppSettings& go, QWidget* paren
 
 void ReceiptScaningWidget::submitPressed()
 {
-	if (!qtyRequired)
+	if (!qtyRequired || awaiter.isAwaiting())
 	{
 		return;
 	}
-	if (quantitySpin->value() == 0)
-	{
+	if (!controlsList.contains("qty"))
+	{ 
 		return;
 	}
-	RequestAwaiter awaiter;
-	globalSettings.networkingEngine->recSubmit(barcodeField->text(), QString::number(quantitySpin->value()), &awaiter, RECEIVER_SLOT_NAME);
+	if (!controlsList.value("qty")->canGiveValue())
+		return;
+	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ReceiptScaningWidget::item_confirmed_response);
+	globalSettings.networkingEngine->recSubmit(barcodeField->text(), controlsList.value("qty")->getValue(), &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
-	while (awaiter.isAwaiting())
-	{
-		qApp->processEvents();
-	}
-	if (awaiter.wasTimeout())
-	{
-		mainTextView->setText(tr("scaning_widget_timeout"));
-	}
-	else
-	{
-		itemSuppliedValues = RequestParser::interpretAsItemInfo(awaiter.restext, awaiter.errtext).values;
-		mainTextView->setText(itemSuppliedValues.value("richdata"));
-		useControls();
-	}
 }
 
 void ReceiptScaningWidget::processNumber(QString num)
@@ -61,51 +55,31 @@ void ReceiptScaningWidget::processNumber(QString num)
 
 void ReceiptScaningWidget::processBarcode(QString bc)
 {
+    //detrace_METHEXPL("processing barcode as " << bc << " while replacing " << barcodeField->text());
+    barcodeField->clear();
 	barcodeField->setText(bc);
 	barcodeConfirmed();
 }
 
 void ReceiptScaningWidget::barcodeConfirmed()
 {
-	RequestAwaiter awaiter;
+	if (awaiter.isAwaiting())
+		return;
+    this->setFocus();
+    //detrace_METHEXPL("got text " << barcodeField->text() << " while preparing data");
+	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ReceiptScaningWidget::item_scaned_response);
 	globalSettings.networkingEngine->itemGetInfo(barcodeField->text(), &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 	stateInfo->setText(tr("receipt_scaning_quering"));
-	while (awaiter.isAwaiting())
-	{
-		qApp->processEvents();
-	}
-	if (awaiter.wasTimeout())
-	{
-		mainTextView->setText("receipt_scaning_timeout");
-	}
-	else
-	{
-		parse_uniresults_functions::PositionalResponse resp = RequestParser::interpretAsItemInfo(awaiter.restext, awaiter.errtext);
-		mainTextView->setText(resp.values.value("richdata"));
-		itemSuppliedValues = resp.values;
-		useControls();
-	}
 }
 
 void ReceiptScaningWidget::setDocument(parsedOrder po)
 {
-	RequestAwaiter awaiter;
+	if (awaiter.isAwaiting())
+		return;
+	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ReceiptScaningWidget::document_confirmed_response);
 	globalSettings.networkingEngine->recNew(QDate::currentDate(), po.code, "", &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
-	while (awaiter.isAwaiting())
-	{
-		qApp->processEvents();
-	}
-	if (awaiter.wasTimeout())
-	{
-		emit backRequired();
-	}
-	else
-	{
-		document = RequestParser::interpretAsDocumentResponse(awaiter.restext, awaiter.errtext);
-		userInfo->setText(tr("receipt_scaning_mode_name") + "(" + document.docId + ")\n" + document.supplier);
-	}
 	//globalSettings.networkingEngine->docLock(document.docId, &awaiter, RECEIVER_SLOT_NAME);
 }
 
@@ -126,6 +100,56 @@ void ReceiptScaningWidget::saveSuccesfull()
 	emit backRequired();
 }
 
+bool ReceiptScaningWidget::isManualInFocus()
+{
+	return barcodeField->hasFocus();
+}
+
+bool ReceiptScaningWidget::handleScannedBarcode()
+{
+	if (!barcodeBuffer.isEmpty()) {
+		processBarcode(barcodeBuffer);
+
+		return true;
+	}
+	return false;
+}
+
+bool ReceiptScaningWidget::handleNumberInbuffer()
+{
+	if (qtyRequired)
+	{
+		if (controlsList.contains("qty"))
+		{
+			controlsList.value("qty")->setValue(numberBuffer);
+			return true;
+		}
+	}
+	return false;
+}
+
+void ReceiptScaningWidget::processBackPress()
+{
+    emit backRequired();
+}
+
+void ReceiptScaningWidget::removeManualFocus()
+{
+    this->setFocus();
+}
+
+void ReceiptScaningWidget::setControlFocus(int val)
+{
+	if (qtyRequired)
+	{
+		if (controlsList.contains("qty"))
+		{
+			controlsList.value("qty")->setFocus();
+		}
+	}
+}
+
+
 void ReceiptScaningWidget::searchRequired()
 {
 	_hideAny(searchScreen);
@@ -145,12 +169,55 @@ void ReceiptScaningWidget::useControls()
 #endif
 	if (itemSuppliedValues.contains("qty"))
 	{
-		quantitySpin->show();
+		if (!controlsList.contains("qty")) {
+			controlsList.insert("qty", new QuantityControl(innerWidget));
+			innerLayout->insertWidget(innerLayout->count() - 1, controlsList.value("qty"));
+		}
+		controlsList.value("qty")->setAwaiting();
 		qtyRequired = true;
+		submitButton->setDisabled(false);
 	}
 	else
 	{
-		quantitySpin->hide();
+		if (controlsList.contains("qty"))
+		{
+			controlsList.value("qty")->reset();
+			controlsList.value("qty")->hide();
+		}
 		qtyRequired = false;
+		submitButton->setDisabled(true);
 	}
+}
+
+void ReceiptScaningWidget::item_scaned_response()
+{
+	stateInfo->setText(tr("Success!"));
+	parse_uniresults_functions::PositionalResponse resp = RequestParser::interpretAsItemInfo(awaiter.restext, awaiter.errtext);
+	mainTextView->setText(resp.values.value("richdata"));
+	itemSuppliedValues = resp.values;
+	useControls();
+	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(item_scaned_response()));
+}
+
+void ReceiptScaningWidget::item_confirmed_response()
+{
+	itemSuppliedValues = RequestParser::interpretAsItemInfo(awaiter.restext, awaiter.errtext).values;
+	mainTextView->setText(itemSuppliedValues.value("richdata"));
+	useControls();
+	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(item_confirmed_response));
+}
+
+void ReceiptScaningWidget::document_confirmed_response()
+{
+	document = RequestParser::interpretAsDocumentResponse(awaiter.restext, awaiter.errtext);
+	userInfo->setText(tr("receipt_scaning_mode_name") + "(" + document.docId + ")\n" + document.supplier);
+	awaiter.disconnect(SIGNAL(requestReceived), this, SLOT(document_confirmed_response()));
+}
+
+void ReceiptScaningWidget::was_timeout()
+{
+	AbstractScaningWidget::was_timeout();
+	awaiter.disconnect(SIGNAL(requestReceived), this, SLOT(document_confirmed_response()));
+	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(item_confirmed_response));
+	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(item_scaned_response()));
 }

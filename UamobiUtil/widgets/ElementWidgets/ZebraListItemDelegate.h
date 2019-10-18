@@ -1,5 +1,9 @@
 #pragma once
+#ifdef QT_VERSION5X
 #include <QtWidgets/QStyledItemDelegate>
+#else
+#include <QtGui/QStyledItemDelegate>
+#endif
 #include <QtGui/QPainter>
 
 /*

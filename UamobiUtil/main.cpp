@@ -29,10 +29,10 @@ int main(int argc, char* argv[])
 #ifdef TESTING
 	global.networkingEngine = new StaticTestingDataEngine(100);	//	It is way better to use for testing a static engine with custom delay
 #else
-	global.HttpUrl = "una.md:3323/um/bonus2.php";			//	actual db
+    global.HttpUrl = "http://una.md:3323/um/bonus2.php";			//	actual db
 	global.networkingEngine = new HttpUpdateEngine(global.HttpUrl, &a);
 #endif
-	global.timeoutInt = 2000000;					//	while not actual version - timeout is maximized to avoid testing delays
+    global.timeoutInt = 3000;					//	while not actual version - timeout is maximized to avoid testing delays
 	global.setTranslator();
 	UamobiUtil w(global);
 	w.showMaximized();

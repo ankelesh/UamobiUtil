@@ -37,8 +37,11 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 {
 	this->setLayout(mainLayout);
 	mainLayout->addWidget(innerWidget);
-
+	mainLayout->setContentsMargins(0, 0, 0, 0);
+	mainLayout->setSpacing(0);
 	innerWidget->setLayout(innerLayout);
+	innerLayout->setContentsMargins(0,0,0,0);
+	innerLayout->setSpacing(0);
 	innerLayout->addWidget(userHelp);
 	innerLayout->addLayout(headerLayout);
 	innerLayout->addWidget(supplierSelection);
@@ -82,11 +85,13 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 	QObject::connect(backButton, &QPushButton::clicked, this, &SuppliersSelectWidget::backRequired);
 	QObject::connect(supplierSelection, &specwidgets::_SupplierSelectionWidget::supplierPicked, this, &SuppliersSelectWidget::supplierPicked);
 	QObject::connect(userinputField, &QLineEdit::editingFinished, this, &SuppliersSelectWidget::searchPrimed);
+	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &SuppliersSelectWidget::was_timeout);
 #else
 	QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(searchPrimed()));
 	QObject::connect(ordfilterButton, SIGNAL(toggled(bool)), this, SLOT(ordFilterSwitched(bool)));
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 	QObject::connect(supplierSelection, SIGNAL(supplierPicked(parsedSupplier)), this, SLOT(supplierPicked(parsedSupplier)));
+    QObject::connect(userinputField, SIGNAL(editingFinished()), this, SLOT(searchPrimed()));
 #endif
 }
 
@@ -98,6 +103,8 @@ void SuppliersSelectWidget::show()
 
 bool SuppliersSelectWidget::isExpectingControl(int val)
 {
+	if (awaiter.isAwaiting())
+		return false;
 	if (val >= -1 && val < allsuppliers.count() - 1)
 	{
 		if (val == -1)
@@ -148,25 +155,26 @@ void SuppliersSelectWidget::supplierPicked(parsedSupplier supp)
 	emit supplierAcquired(supp);
 }
 
+void SuppliersSelectWidget::parse_response()
+{
+	allsuppliers = interpreter(awaiter.restext, awaiter.errtext);
+	supplierSelection->reload();
+	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(parse_response()));
+}
+
+void SuppliersSelectWidget::was_timeout()
+{
+	userHelp->setText(tr("suppliers_select_widget_timeout!") + QString::number(globalSettings.timeoutInt));
+	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(parse_response()));
+}
+
 void SuppliersSelectWidget::loadSuppliers()
 {
 	if (awaiter.isAwaiting())
 		return;
+	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &SuppliersSelectWidget::parse_response);
 	(*globalSettings.networkingEngine.*listSuppliers)(userinputField->text(), ordfilterButton->isChecked(), &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
-	while (awaiter.isAwaiting())
-	{
-		qApp->processEvents();
-	}
-	if (awaiter.wasTimeout())
-	{
-		userHelp->setText(tr("suppliers_select_widget_timeout!"));
-	}
-	else
-	{
-		allsuppliers = interpreter(awaiter.restext, awaiter.errtext);
-		supplierSelection->reload();
-	}
 }
 
 SuppliersSelectionBranch::SuppliersSelectionBranch(GlobalAppSettings& go, QWidget* parent, SuppliersLikeMP meth,

@@ -1,8 +1,6 @@
 #pragma once
 #include <QtCore/QObject>
 #include <QtCore/QEvent>
-#include <QtGui/QKeyEvent>
-
 /*
 	This file contains everything related to handling events. Mostly KeyEvents
 		NoKeyEvents:
@@ -23,65 +21,35 @@ namespace filters
 	{
 		Q_OBJECT
 	protected:
-		bool eventFilter(QObject* object, QEvent* ev)
-		{
-			// Captures key press events
-			if (ev->type() == QEvent::KeyRelease)
-			{
-				QKeyEvent* keyptr = static_cast<QKeyEvent*>(ev);
-				// Sorts: now only return, back and numbers must be intercepted
-				if (keyptr->key() == Qt::Key_Return || keyptr->key() == 0)
-				{
-					emit returnObtained();
-				}
-				else if (keyptr->key() == Qt::Key_Back || keyptr->key() == Qt::Key_Escape)
-				{
-					emit backRequired();
-				}
-				else
-				{
-					bool ok;
-					keyptr->text().toInt(&ok);
-					if (ok)
-					{
-						emit numberObtained(keyptr->text());
-					}
-				}
-				return true;
-			}
-			return QObject::eventFilter(object, ev);
-		}
+
+		bool eventFilter(QObject* object, QEvent* ev);
+
 	public:
 		NoKeyEvents(QObject* ob) : QObject(ob) {};
 	signals:
 		void numberObtained(QString);	//	holds number ready to be appended
-		void returnObtained();			//	return was pressed, or an unknown button corresponding
-		// to pda scan button
+		void returnObtained();			//	return was pressed
 		void backRequired();	//	back or escape was pressed
+		void unknownObtained(); //  unknown key code was captured. Usually they belong to device-specific buttons
+		void eraseRequired();	//  backspace was pressed
 	};
 
 	class CaptureBackFilter : public QObject
 	{
 		Q_OBJECT
 	protected:
-		bool eventFilter(QObject* object, QEvent* ev)
-		{
-			// Captures key press events
-			if (ev->type() == QEvent::KeyRelease)
-			{
-				QKeyEvent* keyptr = static_cast<QKeyEvent*>(ev);
-				// Sorts: now only return, back and numbers must be intercepted
-				if (keyptr->key() == Qt::Key_Back || keyptr->key() == Qt::Key_Escape)
-				{
-					emit backRequired();
-					return true;
-				}
-			}
-			return QObject::eventFilter(object, ev);
-		}
+		bool eventFilter(QObject* object, QEvent* ev);
 	public:
 		CaptureBackFilter(QObject* ob) : QObject(ob) {};
 	signals:
 		void backRequired();
 	};
+    class LineEditHelper : public QObject
+    {
+        Q_OBJECT
+    protected:
+        bool eventFilter(QObject *watched, QEvent *event) override;
+    public:
+        LineEditHelper(QObject* ob) : QObject(ob){};
+    };
 }

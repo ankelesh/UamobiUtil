@@ -78,6 +78,8 @@ protected:
 	MegaIconButton* backButton;
 
 	RequestAwaiter awaiter;
+
+	parsedPlace pl;
 public:
 	PlaceSelectionWidget(const GlobalAppSettings& go, QWidget* parent = Q_NULLPTR,
 		NoArgsRequestMP meth = &DataUpdateEngine::placeList,
@@ -88,6 +90,9 @@ public:
 
 private slots:
 	void placeSelected(parsedPlace);	//	sends place_select request, then emits parsedPlace
+	void parse_loaded_places();
+	void place_select_response();
+	void was_timeout();
 public slots:
 	void loadPlaces();					//	loads place list from web
 signals:

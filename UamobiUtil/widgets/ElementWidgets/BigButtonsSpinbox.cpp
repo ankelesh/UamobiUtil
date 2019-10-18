@@ -53,6 +53,7 @@ BigButtonsSpinbox::BigButtonsSpinbox(spintype type, QWidget* parent, double adap
 	case intspin:
 		isp = qobject_cast<QSpinBox*>(coreSpinbox);
         if (isp != Q_NULLPTR) {
+			isp->setSpecialValueText("");
 #ifdef QT_VERSION5X
             QObject::connect(isp, QOverload<int>::of(&QSpinBox::valueChanged), this, &BigButtonsSpinbox::intValueChanged);
 #else

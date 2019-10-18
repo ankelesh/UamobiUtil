@@ -10,6 +10,8 @@
 #endif
 #include <QtGui/QScreen>
 #include <QString>
+
+#undef Q_OS_WIN
 /*
 	This file contains constants which are defining buttons stylesheets as a C-strings. all
 	new styles must be added ONLY here to allow quick change if necessary.
@@ -75,6 +77,7 @@ inline static QSize calculateAdaptiveSize(double Hpercent, double Wpercent)
 }
 
 extern QString countAdaptiveFont(double perc);
+extern QFont makeFont(double perc);
 
 extern const QString OK_BUTTONS_STYLESHEET;
 // All buttons which are made for confirmation (commit button is separated from simple confirm)
@@ -102,6 +105,8 @@ extern const QString DOWN_SPINBOX_STYLESHEET;
 
 extern const QString CANCEL_BUTTONS_STYLESHEET();
 extern const QString SETTINGS_BUTTONS_STYLESHEET();
+
+extern const QString NAVIGATE_BUTTONS_STYLESHEET;
 
 extern const QString LARGE_BUTTON_STYLESHEET;
 extern const QString BETTER_CALENDAR_STYLESHEET;

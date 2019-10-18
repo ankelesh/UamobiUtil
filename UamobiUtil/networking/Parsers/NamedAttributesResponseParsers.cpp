@@ -21,9 +21,7 @@ ModeSelectResponseParser::ModeSelectResponseParser(QString& res, QString& err)
 	: abs_parsed_request(res, err)
 {
 	QDomDocument doc;
-	doc.setContent(result);
-	try
-	{
+    doc.setContent(result);
 		QString code = doc.elementsByTagName("status").at(0).toElement().text();
 		parseres.request_status = code.toInt();
 		if (parseres.request_status != 200)
@@ -46,11 +44,6 @@ ModeSelectResponseParser::ModeSelectResponseParser(QString& res, QString& err)
 		else
 		{
 			QDomNodeList li = doc.elementsByTagName("s");
-			if (li.count() == 0)
-			{
-				success = false;
-				return;
-			}
 			for (int i = 0; i < li.count(); ++i)
 			{
 				parseres.queriesResult << li.at(0).toElement().text();
@@ -59,12 +52,8 @@ ModeSelectResponseParser::ModeSelectResponseParser(QString& res, QString& err)
 			parseres.one_position_entries_quantity = 2;
 			parseres.type = request_parse_type::positional_result;
 		}
-		success = true;
-	}
-	catch (...)
-	{
-		success = false;
-	}
+        success = true;
+
 }
 
 bool DocumentCreationResponseParser::couldRead()

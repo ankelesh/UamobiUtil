@@ -20,13 +20,13 @@ class RequestAwaiter : public QObject	//	This class is awaiting sent request
 	Q_OBJECT
 private:
 	QTimer* timer;
-	bool awaiting;
-	bool wastimeout;
+    volatile bool awaiting;
+    volatile bool wastimeout;
 public:
 	QString restext;		//	Request result. is overwritten when new response arrives
 	QString errtext;		//	error string. Provides info about errors
 public:
-	RequestAwaiter(int interval = 20000000, QObject* parent = Q_NULLPTR);
+    RequestAwaiter(int interval = 1000, QObject* parent = Q_NULLPTR);
 	void run();				//	primes awaiter - launches timer countdown, raises awaiting flag, drops timeout flag
 	bool isAwaiting();		//	true if there was no timeout and no response
 	bool wasTimeout();		//	true if there was timeout
@@ -35,5 +35,6 @@ private slots:
 	void requestIncoming(QString, QString);	//	receives data strings
 signals:
 	void requestSuccess(QString, QString);	//	emitted when response arrived
+	void requestReceived();
 	void requestTimeout();					//	emitted when timeout appeared
 };

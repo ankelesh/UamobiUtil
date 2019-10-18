@@ -29,14 +29,11 @@
         <file>res/icn-cloud-blocked-512.png</file>
         <file>res/images.png</file>
         <file>res/info.png</file>
-        <file>res/init.sql</file>
         <file>res/inventory.png</file>
         <file>res/invz.png</file>
         <file>res/key.png</file>
         <file>res/logs.png</file>
-        <file>res/main.qml</file>
         <file>res/minus.png</file>
-        <file>res/modselectwidget.ui</file>
         <file>res/netDownload.png</file>
         <file>res/netUpload.png</file>
         <file>res/new.png</file>
@@ -93,5 +90,7 @@
         <file>res/search.png</file>
         <file>res/with.png</file>
         <file>res/without.png</file>
+        <file>res/nextpage.png</file>
+        <file>res/prevpage.png</file>
     </qresource>
 </RCC>

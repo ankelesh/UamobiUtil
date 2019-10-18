@@ -2,7 +2,6 @@
 // qt 5 only imports
 #ifdef QT_VERSION5X
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QComboBox>
@@ -12,7 +11,6 @@
 #else
 // Qt 4 only imports
 #include <QtGui/QLabel>
-#include <QtGui/QPushButton>
 #include <QtGui/QCheckBox>
 #include <QtGui/QBoxLayout>
 #include <QtGui/QComboBox>
@@ -24,8 +22,7 @@
 // widgets imports
 #include "widgets/parents/inframedWidget.h"
 #include "widgets/utils/GlobalAppSettings.h"
-#include "widgets/utils/ElementsStyles.h"
-
+#include "widgets/ElementWidgets/MegaIconButton.h"
 /*
 	This widgets is used to alter GlobalAppSettings object. Generally it allows to change
 	scanning mode, adress, type of storage and language.
@@ -78,13 +75,14 @@ private:
 	QComboBox* langField;
 
 	// buttons in widget footer
-	QPushButton* saveButton;
-	QPushButton* backButton;
+	QHBoxLayout* footerLayout;
+	MegaIconButton* saveButton;
+	MegaIconButton* backButton;
 
 public:
 	MainSettingsWidget(GlobalAppSettings& go, QWidget* parent = Q_NULLPTR);
 
-private slots:;
+private slots:
 			 void saveClicked();			//	saves data to GlobalAppSettings widget
 			 void langSelected(const QString&);	//	alters GAS, then retranslates this widget
 			 void langChanged();				//	retranslates this widget

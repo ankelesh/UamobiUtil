@@ -2,13 +2,11 @@
 
 // Qt 5 only imports
 #ifdef QT_VERSION5X
-#include <QtWidgets/qpushbutton.h>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QLabel>
 #else
  // Qt 4 only imports
-#include <QtGui/qpushbutton.h>
 #include <QtGui/QBoxLayout>
 #include <QtGui/QLineEdit>
 #include <QtGui/QLabel>
@@ -18,6 +16,7 @@
 #include "networking/Parsers/RequestParser.h"
 #include "widgets/parents/inframedWidget.h"
 #include "widgets/utils/GlobalAppSettings.h"
+#include "widgets/ElementWidgets/MegaIconButton.h"
 
 namespace specwidgets
 {
@@ -50,18 +49,18 @@ protected:
 	QVBoxLayout* mainLayout;
 	QHBoxLayout* searchPanel;
 	QLineEdit* searchInput;
-	QPushButton* searchButton;
+	MegaIconButton* searchButton;
 	QHBoxLayout* listHeaderLayout;
-	QPushButton* previousButton;
-	QPushButton* nextButton;
+	MegaIconButton* previousButton;
+	MegaIconButton* nextButton;
 	QLabel* indexationInfo;
 	specwidgets::_ItemSelectionList* itemList;
 	QHBoxLayout* footerLayout;
-	QPushButton* backButton;
+	MegaIconButton* backButton;
 
 	int currentpage;
 	QString toSearch;
-
+	RequestAwaiter awaiter;
 public:
 	ItemSearchWidget(GlobalAppSettings & go, QWidget* parent);
 	void refresh();
@@ -71,7 +70,8 @@ public slots:
 	void clear();
 	void nextPage();
 	void previousPage();
-
+	void search_response();
+	void was_timeout();
 signals:
 	void itemSelected(parsedItemSimplified);
 };

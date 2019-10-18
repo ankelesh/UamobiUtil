@@ -9,6 +9,7 @@
 #include <QDebug>
 #include <iostream>
 #include <QVector>
+#include <QFile>
 /*
 	This is debugging and tracing module. You can use it for dynamic testing
 	with varying verbosity of this tool. Use macroses starting with detrace_
@@ -30,6 +31,9 @@
 #define FOUTPATH "/storage/emulated/0/log.txt"
 #endif
 #ifdef Q_OS_WIN32
+#define FOUTPATH "log.txt"
+#endif
+#ifdef Q_OS_WINCE
 #define FOUTPATH "log.txt"
 #endif
 

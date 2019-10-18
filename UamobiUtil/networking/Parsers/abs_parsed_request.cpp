@@ -22,14 +22,14 @@ QString abs_parsed_request::getErrors()
 		return QString("Other error");
 }
 
-uniform_parse_result abs_parsed_request::read()
+uniform_parse_result& abs_parsed_request::read()
 {
 	return parseres;
 }
 
 bool queryLengthOkInResult(uniform_parse_result& ures)
 {
-	if (ures.queriesResult.count() == 0) {
+	if (ures.queriesResult.count() == 0 || ures.one_position_entries_quantity == 0) {
 		return false;
 	}
 	return (ures.queriesResult.count() % ures.one_position_entries_quantity) == 0;

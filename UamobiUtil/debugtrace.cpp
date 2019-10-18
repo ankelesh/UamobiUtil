@@ -38,8 +38,12 @@ void debugtrace::printToConsole(const QString& str)
 {
 	if (isValid())
 	{
-		std::cout << str.toStdString();
-		std::cout.flush();
+#ifdef Q_OS_WINCE
+        std::cout << str.toAscii().constData();
+#else
+        std::cout << str.toStdString();
+#endif
+        std::cout.flush();
 	}
 }
 void debugtrace::printToSome(const QString& str)
@@ -57,7 +61,11 @@ void debugtrace::printToConsBuff(const QString& str)
 {
 	if (isValid())
 	{
-		buffer << str.toStdString();
+#ifdef Q_OS_WINCE
+        buffer << str.toAscii().constData();
+#else
+        buffer << str.toStdString();
+#endif
 	}
 }
 
@@ -108,6 +116,8 @@ debugtrace::debugtrace(DebugPriority priority, OutputMode mode,
 	omode_united(), blackaswhite(blackAswhite), nospaces(nosp)
 {
 	outfile.open(QIODevice::WriteOnly | QIODevice::Text);
+    if (!outfile.isOpen())
+        throw std::exception("file not open!");
 	fout.setDevice(&outfile);
 	changeOutputMode(omode, onlyOutputTo, oolen);
 }
@@ -253,4 +263,4 @@ static OutputMode onlyOutputTo[] = { file, qDeb };
 static int ootolen = 2;
 static DebugPriority blacklist[] = { methodDataSnapshot }; // this blacklist removes type of messages
 static int blackllen = 1;
-debugtrace detrace(all, file, onlyOutputTo, ootolen, blacklist, blackllen, true, true);
+debugtrace detrace(all, toall, onlyOutputTo, ootolen, blacklist, blackllen, true, true);

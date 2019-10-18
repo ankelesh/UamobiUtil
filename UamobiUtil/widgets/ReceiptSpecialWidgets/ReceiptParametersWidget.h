@@ -2,7 +2,6 @@
 // Qt 5 only imports
 #ifdef QT_VERSION5X
 
-#include <QtWidgets/qpushbutton.h>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QDateEdit>
 #include <QtWidgets/QTextEdit>
@@ -12,7 +11,6 @@
 #else
  // Qt 4 only imports
 
-#include <QtGui/qpushbutton.h>
 #include <QtGui/QBoxLayout>
 #include <QtGui/QDateEdit>
 #include <QtGui/QTextEdit>
@@ -25,6 +23,7 @@
 #include "widgets/parents/inframedWidget.h"
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/parents/abstractNodeInterface.h"
+#include "widgets/ElementWidgets/MegaIconButton.h"
 //networking imports
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
@@ -42,17 +41,17 @@ protected:
 	QFrame* innerFrame;
 	QVBoxLayout* frameLayout;
 	QLabel* stateInfo;
-	QPushButton* closedButton;
-	QPushButton* cancelledButton;
+	MegaIconButton* closedButton;
+	MegaIconButton* cancelledButton;
 	QDateEdit* dateField;
 	QHBoxLayout* selectOrderLayout;
-	QPushButton* selectOrderButton;
+	MegaIconButton* selectOrderButton;
 	QTextEdit* mainTextView;
 	QHBoxLayout* inspectLayout;
-	QPushButton* inspectButton;
+	MegaIconButton* inspectButton;
 	QHBoxLayout* continueLayout;
-	QPushButton* continueButton;
-	QPushButton* backButton;
+	MegaIconButton* continueButton;
+	MegaIconButton* backButton;
 
 public:
 	ReceiptParametersWidget(GlobalAppSettings& go, QWidget* parent);
@@ -62,9 +61,11 @@ protected slots:
 	void cancelledClicked();
 	void inspectClicked();
 	void continueClicked();
+	void backToSupplier();
 
 public slots:
 	void setMainView(const QString&);
 signals:
 	void dataConfirmed();
+	void backTo(int step);
 };

@@ -6,7 +6,10 @@
 
 #else
  // Qt 4 only imports
-!!!implement!!!
+#include "legacy/qtCompatibility/scrollgrabber.h"
+#endif
+#ifdef DEBUG
+#include "debugtrace.h"
 #endif
 QString specwidgets::_placeSelectionWidget::elemAsString(int index)
 {
@@ -64,17 +67,14 @@ PlaceSelectionWidget::PlaceSelectionWidget(const GlobalAppSettings& go, QWidget*
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
 
-	scrArea->setWidget(placeSelection);
-#ifdef QT_VERSION5X
+    scrArea->setWidget(placeSelection);
 	QScroller::grabGesture(scrArea, QScroller::LeftMouseButtonGesture);
-#else
-
-#endif
 
 
 #ifdef QT_VERSION5X
 	QObject::connect(placeSelection, &specwidgets::_placeSelectionWidget::placeSelected, this, &PlaceSelectionWidget::placeSelected);
 	QObject::connect(backButton, &QPushButton::clicked, this, &PlaceSelectionWidget::backRequired);
+	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &PlaceSelectionWidget::was_timeout);
 #else
 	QObject::connect(placeSelection, SIGNAL(placeSelected(parsedPlace)), this, SLOT(placeSelected(parsedPlace)));
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
@@ -114,50 +114,41 @@ void PlaceSelectionWidget::placeSelected(parsedPlace pl)
 {
 	if (awaiter.isAwaiting())
 		return;
+	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &PlaceSelectionWidget::place_select_response);
 	globalSettings.networkingEngine->placeSelect(pl.code, &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
-	while (awaiter.isAwaiting())
-	{
-		qApp->processEvents();
-	}
-	if (awaiter.wasTimeout())
-	{
-		userTip->setText(tr("mode_selection_timeout!"));
-	}
-	else
-	{
-		if (RequestParser::interpretAsSimpliestResponse(awaiter.restext, awaiter.errtext).resp)
-			emit placeAcquired(pl);
-	}
+}
+
+void PlaceSelectionWidget::parse_loaded_places()
+{
+#ifdef DEBUG
+	detrace_METHEXPL("loaded");
+#endif
+	allplaces = interpreter(awaiter.restext, awaiter.errtext);
+	placeSelection->reload();
+	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(parse_loaded_places()));
+}
+
+
+void PlaceSelectionWidget::place_select_response()
+{
+	if (RequestParser::interpretAsSimpliestResponse(awaiter.restext, awaiter.errtext).resp)
+		emit placeAcquired(pl);
+	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(place_select_response()));
+}
+
+void PlaceSelectionWidget::was_timeout()
+{
+	userTip->setText(tr("mode_selection_timeout!") + QString::number(globalSettings.timeoutInt));
+	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(place_select_response()));
+	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(parse_loaded_places()));
 }
 
 void PlaceSelectionWidget::loadPlaces()
 {
 	if (awaiter.isAwaiting())
 		return;
+	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &PlaceSelectionWidget::parse_loaded_places);
 	DataUpdateEngine* httpointer = (globalSettings.networkingEngine);
 	(*httpointer.*listPlaces)(&awaiter, RECEIVER_SLOT_NAME);
-
-	//httpointer->placeList(Q_NULLPTR, &awaiter, RECEIVER_SLOT_NAME);
-	//globalSettings.networkingEngine->placeList(Q_NULLPTR, &awaiter, RECEIVER_SLOT_NAME);
-	awaiter.run();
-	while (awaiter.isAwaiting())
-	{
-		qApp->processEvents();
-	}
-	if (awaiter.wasTimeout())
-	{
-#ifdef DEBUG
-		detrace_METHEXPL("timeout");
-#endif
-		userTip->setText(tr("places_selection_timeout!"));
-	}
-	else
-	{
-#ifdef DEBUG
-		detrace_METHEXPL("loaded");
-#endif
-		allplaces = interpreter(awaiter.restext, awaiter.errtext);
-		placeSelection->reload();
-	}
 }

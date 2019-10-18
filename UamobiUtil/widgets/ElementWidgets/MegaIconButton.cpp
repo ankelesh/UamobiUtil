@@ -4,7 +4,7 @@
 #ifdef QT_VERSION5X
 #include <QtWidgets/qstyle.h>
 #else
-throw;
+#include <QtGui/QStyle>
 #endif
 #include <qstyleoption.h>
 #include <qstylepainter.h>

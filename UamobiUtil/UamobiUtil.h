@@ -50,6 +50,8 @@ public:
 
 	UamobiUtil(GlobalAppSettings& go, QWidget* parent = 0);	//	Constructor is similar to most other constructors
 
+	void recreateMainPage();
+
 private slots:
 	void gotoModeSelection();			//	Switch to modeSelectionBranch
 

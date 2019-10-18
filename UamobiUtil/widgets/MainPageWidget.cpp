@@ -1,7 +1,11 @@
 #include "MainPageWidget.h"
+#ifdef QT_VERSION5X
 #include <QtWidgets/QScroller>
+#else
+#include "legacy/qtCompatibility/scrollgrabber.h"
+#endif
+#include "widgets/utils/ElementsStyles.h"
 
-#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -20,9 +24,9 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	versionLabel(new QLabel(innerWidget)), hostLabel(new QLabel(innerWidget)),
 	scrArea(new QScrollArea(innerWidget)),
 	userHelpLabel(new QLabel(innerWidget)), loginsStorageWidget(new LoginSelectWidget(profiles, scrArea)), userIdInfo(new QLabel(innerWidget)),
-	exitButton(new MegaIconButton(innerWidget)), settingsButton(new MegaIconButton(innerWidget)),
+    exitButton(new MegaIconButton(innerWidget)), settingsButton(new MegaIconButton(innerWidget)), refreshButton(new MegaIconButton(innerWidget)),
 	userid(new QLineEdit(innerWidget)), manualLogin(new LoginWidget(go, this)),
-	settingsScreen(new MainSettingsWidget(go, this)), awaiter(globalSettings.timeoutInt)
+    settingsScreen(new MainSettingsWidget(go, this)), awaiter(go.timeoutInt, this)
 {
 	current = innerWidget;
 	untouchable = innerWidget;
@@ -56,6 +60,7 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	topPanelLayout->addWidget(hostLabel);
 	bottomPanelLayout->addWidget(exitButton);
 	bottomPanelLayout->addWidget(settingsButton);
+    bottomPanelLayout->addWidget(refreshButton);
 
 	versionLabel->setText(QString::number(VERSION) + " " + SUFFIX);
 	versionLabel->setStyleSheet(countAdaptiveFont(0.03));
@@ -75,7 +80,9 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	settingsButton->setText(tr("main_page_settings_button"));
 	settingsButton->setIcon(QIcon(":/res/settings.png"));
 	settingsButton->setStyleSheet(SETTINGS_BUTTONS_STYLESHEET());
-
+    refreshButton->setIcon(QIcon(":/res/refresh.png"));
+    refreshButton->setText(tr("refresh"));
+    refreshButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 	QScroller::grabGesture(scrArea, QScroller::ScrollerGestureType::LeftMouseButtonGesture);
 
 	userid->setStyleSheet(countAdaptiveFont(0.04));
@@ -93,6 +100,9 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	QObject::connect(userid, &QLineEdit::returnPressed, this, &MainPageWidget::userIdSearch);
 	QObject::connect(this, &MainPageWidget::backRequired, qApp, &QApplication::quit);
 	QObject::connect(loginsStorageWidget, &LoginSelectWidget::backRequired, qApp, &QApplication::quit);
+	QObject::connect(refreshButton, &MegaIconButton::clicked, this, &MainPageWidget::loadUsers);
+	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &MainPageWidget::wasTimeout);
+	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &MainPageWidget::parseUsers);
 #else
 	QObject::connect(settingsButton, SIGNAL(clicked()), this, SLOT(settinsPressed()));
 	QObject::connect(exitButton, SIGNAL(clicked()), qApp, SLOT(quit()));
@@ -101,7 +111,10 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	QObject::connect(settingsScreen, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
 	QObject::connect(settingsScreen, SIGNAL(languageChanged()), this, SLOT(languageChanged()));
 	QObject::connect(loginsStorageWidget, SIGNAL(profilePicked(UserProfile)), this, SLOT(userPicked(UserProfile)));
-	throw;
+    QObject::connect(userid, SIGNAL(returnPressed()), this, SLOT(userIdSearch()));
+    QObject::connect(this, SIGNAL(backRequired()), qApp, SLOT(quit()));
+    QObject::connect(loginsStorageWidget, SIGNAL(backRequired()), qApp, SLOT(quit()));
+    QObject::connect(refreshButton, SIGNAL(clicked()), this, SLOT(loadUsers()));
 #endif
 	scrArea->setWidget(loginsStorageWidget);
 }
@@ -120,7 +133,7 @@ bool MainPageWidget::isExpectingControl(int val)
 		}
 		else
 		{
-			if (val < profiles.length()-1)
+            if (val < profiles.count() -1)
 			{
 				userPicked(profiles.at(val));
 				return true;
@@ -178,7 +191,32 @@ void MainPageWidget::userIdSearch()
 			return;
 		}
 		++start;
-	}
+    }
+}
+
+void MainPageWidget::parseUsers()
+{
+    parse_uniresults_functions::UserProfilesResult temp = RequestParser::interpretAsLogin(awaiter.restext, awaiter.errtext);
+    if (temp.manually)
+    {
+#ifdef DEBUG
+        detrace_METHEXPL("manually parsed from request");
+#endif
+        QString temp;
+        show_login_widget(temp);
+    }
+    else
+    {
+        profiles = temp.profiles;
+        loginsStorageWidget->reload();
+    }
+    awaiter.disconnect(SIGNAL(requestReceived()), this ,SLOT(parseUsers()));
+}
+
+void MainPageWidget::wasTimeout()
+{
+	userHelpLabel->setText(tr("timeout_with_delay:") + QString::number(globalSettings.timeoutInt));
+	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(parseUsers()));
 }
 
 void MainPageWidget::loadUsers()
@@ -186,32 +224,5 @@ void MainPageWidget::loadUsers()
 	if (awaiter.isAwaiting())
 		return;
 	globalSettings.networkingEngine->userUpdateList(&awaiter, RECEIVER_SLOT_NAME);
-	awaiter.run();
-	while (awaiter.isAwaiting())
-	{
-		qApp->processEvents();
-	}
-	if (awaiter.wasTimeout())
-	{
-#ifdef DEBUG
-		detrace_METHEXPL("Timeout found");
-#endif
-		show_login_widget(QString(""));
-	}
-	else
-	{
-		parse_uniresults_functions::UserProfilesResult temp = RequestParser::interpretAsLogin(awaiter.restext, awaiter.errtext);
-		if (temp.manually)
-		{
-#ifdef DEBUG
-			detrace_METHEXPL("manually parsed from request");
-#endif
-			show_login_widget(QString(""));
-		}
-		else
-		{
-			profiles = temp.profiles;
-			loginsStorageWidget->reload();
-		}
-	}
+    awaiter.run();
 }

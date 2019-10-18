@@ -3,7 +3,7 @@
 #include "networking/dataupdateengine-http.h"
 #include <QtCore/QTranslator>
 
-const float VERSION = 0.0004;
+const float VERSION = 0.001;
 const char SUFFIX[] = "alpha";
 
 struct GlobalAppSettings

@@ -14,10 +14,13 @@ const QString BACK_BUTTONS_STYLESHEET("QPushButton { \
 			border: 1px solid gray;			\
 		 }");
 
-const QString COMMIT_BUTTONS_STYLESHEET("QPushButton { \
-			background-color: #a0e899;		\
-			border: 1px solid gray;			\
-		}");
+const QString COMMIT_BUTTONS_STYLESHEET("QPushButton{ "
+			"background-color: #a0e899;"
+			"border: 1px solid gray;"
+		"} "
+			"QPushButton:disabled {"
+			"background-color:#4a7039;"
+	"}");
 
 const QString DELETE_BUTTONS_STYLESHEET("QPushButton { \
 			background-color: #d16860;		\
@@ -38,14 +41,14 @@ const QString UP_SPINBOX_STYLESHEET("QPushButton {	\
 			border: 1px solid #e3dac3;		\
 			border-top-left-radius: 50px;	\
 			border-bottom-left-radius: 50px;\
-			background-color: #b3a98f;		\
+			background-color: #8ef55f;		\
 		}");
 
 const QString DOWN_SPINBOX_STYLESHEET("QPushButton {\
 			border: 1px solid #e3dac3;		\
 			border-top-right-radius: 50px;	\
 			border-bottom-right-radius: 50px;\
-			background-color: #b3a98f;		\
+			background-color: #f05d5d;		\
 		}");
 
 const QString LARGE_BUTTON_STYLESHEET("QDateEdit{	\
@@ -147,11 +150,22 @@ const QString UNCHECKED_BUTTONS_STYLESHEET = "QPushButton{"
 "background-color: #e9edb4; "
 "border: 1px solid gray;}";
 
+const QString NAVIGATE_BUTTONS_STYLESHEET = "QPushButton{ "
+			"background-color: #c6abf5;"
+			"border: 1px solid gray;"
+		"}"
+	"QPushButton:disabled {"
+			"background-color:#7e7785;"
+	"}";
+
+
+
 QString countAdaptiveFont(double perc)
 {
-#ifdef Q_OS_WIN
-	return " font-size: " + QString::number((int)(GEOMETRY_SOURCE->availableGeometry().height() / 2 * perc)) + "px;";
-#else
 	return " font-size: " + QString::number((int)(GEOMETRY_SOURCE->availableGeometry().height() * perc)) + "px;";
-#endif
+}
+
+QFont makeFont(double perc)
+{
+	return QFont("Arial", GEOMETRY_SOURCE->availableGeometry().height() * perc);
 }

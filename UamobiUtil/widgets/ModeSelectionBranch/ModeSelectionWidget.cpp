@@ -1,10 +1,14 @@
 #include "ModeSelectionWidget.h"
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
+
 // Qt 5 only imports
 #ifdef QT_VERSION5X
 #include <QtWidgets/QScroller>
 #else
  // Qt 4 only imports
-!!!implement!!!
+#include "legacy/qtCompatibility/scrollgrabber.h"
 #endif
 #include "widgets/utils/ElementsStyles.h"
 
@@ -68,17 +72,18 @@ ModeSelectionWidget::ModeSelectionWidget(const GlobalAppSettings& go, QWidget* p
 	modeSelection->reload();
 
 	scrArea->setWidget(modeSelection);
-#ifdef QT_VERSION5X
-	QScroller::grabGesture(scrArea, QScroller::LeftMouseButtonGesture);
-#endif
+    QScroller::grabGesture(scrArea, QScroller::LeftMouseButtonGesture);
+
 
 #ifdef QT_VERSION5X
 	QObject::connect(logoutButton, &QPushButton::clicked, this, &ModeSelectionWidget::logoutPressed);
 	QObject::connect(modeSelection, &specwidgets::_modeSelectionWidget::modeSelected, this, &ModeSelectionWidget::modeSelected);
 	QObject::connect(modeSelection, &specwidgets::_modeSelectionWidget::backRequired, this, &ModeSelectionWidget::backRequired);
+	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &ModeSelectionWidget::was_timeout);
 #else
 	QObject::connect(logoutButton, SIGNAL(clicked()), this, SLOT(logoutPressed()));
 	QObject::connect(modeSelection, SIGNAL(modeSelected(parsedMode)), this, SLOT(modeSelected(parsedMode)));
+    QObject::connect(modeSelection, SIGNAL(backRequired()), this,SIGNAL(backRequired()));
 #endif
 }
 
@@ -118,23 +123,9 @@ void ModeSelectionWidget::loadModes()
 {
 	if (awaiter.isAwaiting())
 		return;
-	using parse_uniresults_functions::modesResponse;
-	using RequestParser::interpretAsModeList;
+	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ModeSelectionWidget::parse_modes);
 	globalSettings.networkingEngine->modeList(&awaiter, RECEIVER_SLOT_NAME, "nolang");
 	awaiter.run();
-	while (awaiter.isAwaiting())
-	{
-		qApp->processEvents();
-	}
-	if (awaiter.wasTimeout())
-	{
-		userTip->setText(tr("mode_selection_timeout!"));
-	}
-	else
-	{
-		allmodes = interpretAsModeList(awaiter.restext, awaiter.errtext);
-		modeSelection->reload();
-	}
 }
 
 void ModeSelectionWidget::logoutPressed()
@@ -147,31 +138,53 @@ void ModeSelectionWidget::modeSelected(parsedMode Mode)
 { 
 	if (awaiter.isAwaiting())
 		return;
+	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ModeSelectionWidget::mode_select_response);
 	globalSettings.networkingEngine->modeSelect(Mode.mode, Mode.submode, &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
-	while (awaiter.isAwaiting())
-	{
-		qApp->processEvents();
-	}
-	if (awaiter.wasTimeout())
-	{
-		userTip->setText(tr("mode_selection_timeout!"));
-	}
-	else
-	{
-		parse_uniresults_functions::PositionalResponse resp =
-			RequestParser::interpretAsPositionalResponse(awaiter.restext, awaiter.errtext);
-		if (resp.success)
-		{
-			settings = resp.values;
-			selected = Mode;
-		}
-	}
+	selected = Mode;
 }
 
 void ModeSelectionWidget::hideCurrent()
 {
 	emit backRequired();
+}
+
+void ModeSelectionWidget::parse_modes()
+{
+	using RequestParser::interpretAsModeList;
+	allmodes = interpretAsModeList(awaiter.restext, awaiter.errtext);
+	modeSelection->reload();
+	awaiter.disconnect(SIGNAL(requestReceived), this, SLOT(parse_modes()));
+}
+
+void ModeSelectionWidget::mode_select_response()
+{
+	parse_uniresults_functions::PositionalResponse resp =
+		RequestParser::interpretAsPositionalResponse(awaiter.restext, awaiter.errtext);
+#ifdef DEBUG
+	detrace_METHEXPL("request was " << resp.success);
+#endif
+
+	if (resp.success)
+	{
+		settings = resp.values;
+#ifdef DEBUG
+		detrace_METHEXPL("mode approved: " << Mode.debugSnapshot());
+#endif
+	}
+	else
+	{
+		selected.mode = "None";
+	}
+	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(mode_select_response()));
+}
+
+void ModeSelectionWidget::was_timeout()
+{
+
+	userTip->setText(tr("mode_selection_timeout!") + QString::number(globalSettings.timeoutInt));
+	awaiter.disconnect(SIGNAL(requestReceived), this, SLOT(parse_modes()));
+	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(mode_select_response()));
 }
 
 ModeBranchRootWidget::ModeBranchRootWidget(const GlobalAppSettings& go, QWidget* parent)
@@ -191,15 +204,12 @@ ModeBranchRootWidget::ModeBranchRootWidget(const GlobalAppSettings& go, QWidget*
 #endif
 }
 
-void ModeBranchRootWidget::modeSelected(parsedMode pm)
-{
-	ModeSelectionWidget::modeSelected(pm);
-	_hideAny(placeSelection);
-	placeSelection->loadPlaces();
-}
 
 void ModeBranchRootWidget::placeAcquired(parsedPlace pm)
 {
+#ifdef DEBUG
+	detrace_METHEXPL("emitting mode " << selected.debugSnapshot());
+#endif
 	emit modeAcquired(settings, selected);
 }
 
@@ -215,5 +225,19 @@ void ModeBranchRootWidget::hideCurrent()
 		{
 			_hideCurrent(innerWidget);
 		}
+	}
+}
+
+void ModeBranchRootWidget::mode_select_response()
+{
+	ModeSelectionWidget::mode_select_response();
+	if (selected.mode == "None")
+	{
+		return;
+	}
+	else
+	{
+		_hideAny(placeSelection);
+		placeSelection->loadPlaces();
 	}
 }

@@ -3,13 +3,11 @@
 // Qt 5 only imports
 #ifdef QT_VERSION5X
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QListWidget>
 #else
  // Qt 4 only imports
 #include <QtGui/QLabel>
-#include <QtGui/QPushButton>
 #include <QtGui/QBoxLayout>
 #include <QtGui/QListWidget>
 #endif
@@ -17,6 +15,7 @@
 #include "networking/Parsers/RequestParser.h"
 #include "widgets/parents/inframedWidget.h"
 #include "widgets/utils/GlobalAppSettings.h"
+#include "widgets/ElementWidgets/MegaIconButton.h"
 
 /*
 	This widget provides realization of list containing all items included in current document.
@@ -34,17 +33,17 @@ protected:
 	QVBoxLayout* mainLayout;
 	QLabel* userInfo;
 	QHBoxLayout* listHeaderLayout;
-	QPushButton* previousButton;
+	MegaIconButton* previousButton;
 	QLabel* indexationInfo;
-	QPushButton* nextButton;
+	MegaIconButton* nextButton;
 	QListWidget* itemInfoStorage;
 	QHBoxLayout* footerLayout;
-	QPushButton* backButton;
-	QPushButton* saveButton;
+	MegaIconButton* backButton;
+	MegaIconButton* saveButton;
 
 	parse_uniresults_functions::doclistResponse items;
 	int pagenumber;
-
+	RequestAwaiter awaiter;
 public:
 	DocResultsWidget(GlobalAppSettings & go, QWidget* parent);
 	void loadItems();
@@ -55,6 +54,9 @@ protected slots:
 	void previousPage();
 	void nextPage();
 	void saveDocument();
+	void items_response();
+	void save_response();
+	void was_timeout();
 
 signals:
 	void documentSaved();

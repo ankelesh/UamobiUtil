@@ -1,4 +1,5 @@
 #include "MainSettingsWidget.h"
+#include "widgets/utils/ElementsStyles.h"
 
 MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	:inframedWidget(parent), globalSettings(go),
@@ -18,14 +19,17 @@ MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	connectionInfo(new QLabel(connectionGroup)), addressField(new QComboBox(connectionGroup)),
 	langGroup(new QGroupBox(sysContents)), langLayout(new QVBoxLayout(langGroup)),
 	langInfo(new QLabel(langGroup)), langField(new QComboBox(langGroup)),
-	saveButton(new QPushButton(this)), backButton(new QPushButton(this))
+	footerLayout(new QHBoxLayout(this)),
+	saveButton(new MegaIconButton(this)), backButton(new MegaIconButton(this))
 {
 	this->setLayout(mainLayout);
+    this->setMaximumSize(calculateAdaptiveSize(0.95));
 	mainLayout->addWidget(innerWidget);
-	mainLayout->addWidget(saveButton);
-	mainLayout->addWidget(backButton);
-	innerWidget->addTab(wrkflTab, tr("settings_workflow_tab_title"));
+	mainLayout->addLayout(footerLayout);
+	footerLayout->addWidget(saveButton);
+	footerLayout->addWidget(backButton);
 	innerWidget->addTab(sysTab, tr("settings_system_tab_title"));
+	innerWidget->addTab(wrkflTab, tr("settings_workflow_tab_title"));
 	mainLayout->setSpacing(0);		//	spacing removed to avoid space loss
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 
@@ -56,7 +60,18 @@ MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	langLayout->addWidget(langInfo);
 	langLayout->addWidget(langField);
 
+	wrkflTab->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
+	sysTab->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
+	wrkflContents->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
+	sysContents->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
+	wrkflScrollArea->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
+	sysScrollArea->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
+
+	QFont scf = makeFont(0.04);
+
 	scanModeInfo->setText(tr("settings_scan_mode_info"));
+	scanModeInfo->setAlignment(Qt::AlignCenter);
+	scanModeInfo->setFont(scf);
 #ifdef QT_VERSION5X
 	scanModeSelector->addItems(QStringList({ tr("settings_scmode_one"), tr("settings_scmode_autos"), tr("settings_scmode_simple") }));
 #else
@@ -64,13 +79,35 @@ MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	temp << tr("settings_scmode_one") << tr("settings_scmode_autos") << tr("settings_scmode_simple");
 	scanModeSelector->addItems(temp);
 #endif
+	scanModeSelector->setFont(scf);
+	scanModeSelector->setMinimumHeight(calculateAdaptiveButtonHeight());
+
 	topExplLabel->setText(tr("settings_system_title"));
+	topExplLabel->setAlignment(Qt::AlignCenter);
+	topExplLabel->setFont(scf);
+
 	dataengInfo->setText(tr("settings_system_dataupd_eng"));
+	dataengInfo->setAlignment(Qt::AlignCenter);
+	dataengInfo->setFont(scf);
+
 	httpCheckBox->setText(tr("settings_system_http_mode"));
+	httpCheckBox->setFont(scf);
+	httpCheckBox->setMinimumHeight(calculateAdaptiveButtonHeight());
+	
 	memcheckbox->setText(tr("settings_system_inmemory"));
+	memcheckbox->setFont(scf);
+	memcheckbox->setMinimumHeight(calculateAdaptiveButtonHeight());
+
 	connectionInfo->setText(tr("settings_select_address_tip"));
+	connectionInfo->setAlignment(Qt::AlignCenter);
+	connectionInfo->setFont(scf);
+
 	addressField->addItem(go.HttpUrl);
+	addressField->setFont(scf);
+
 	langInfo->setText(tr("settings_system_select_lang_tip"));
+	langInfo->setAlignment(Qt::AlignCenter);
+	langInfo->setFont(scf);
 #ifdef QT_VERSION5X
 	langField->addItems(QStringList({ "Russian", "Romanian", "English" }));
 #else
@@ -79,11 +116,17 @@ MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	langField->addItems(temp);
 #endif
 	saveButton->setText(tr("settings_save_button"));
+	saveButton->setIcon(QIcon(":/res/with.png"));
+	saveButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
+
 	backButton->setText(tr("settings_back_button"));
+	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
 	addressField->setEditable(true);
 	addressField->setInsertPolicy(QComboBox::InsertAtTop);
 	langField->setEditable(false);
+	langField->setFont(scf);
 	langField->setInsertPolicy(QComboBox::NoInsert);
 #ifdef QT_VERSION5X
 	langField->setCurrentText(go.language);
@@ -92,13 +135,14 @@ MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 #endif
 	scanModeSelector->setEditable(false);
 	scanModeSelector->setInsertPolicy(QComboBox::NoInsert);
+	scanModeSelector->setFont(scf);
 
 	sysScrollArea->setWidget(sysContents);
 	wrkflScrollArea->setWidget(wrkflContents);
 
 #ifdef QT_VERSION5X
-	QObject::connect(saveButton, &QPushButton::clicked, this, &MainSettingsWidget::saveClicked);
-	QObject::connect(backButton, &QPushButton::clicked, this, &MainSettingsWidget::backRequired);
+	QObject::connect(saveButton, &MegaIconButton::clicked, this, &MainSettingsWidget::saveClicked);
+	QObject::connect(backButton, &MegaIconButton::clicked, this, &MainSettingsWidget::backRequired);
 	QObject::connect(langField, QOverload<const QString&>::of(&QComboBox::activated), this, &MainSettingsWidget::langSelected);
 #else
 	QObject::connect(saveButton, SIGNAL(clicked()), this, SLOT(saveClicked()));

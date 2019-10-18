@@ -98,6 +98,8 @@ protected slots:
 	void searchPrimed();
 	void ordFilterSwitched(bool);
 	virtual void supplierPicked(parsedSupplier);
+	void parse_response();
+	void was_timeout();
 public slots:
 	void loadSuppliers();
 signals:

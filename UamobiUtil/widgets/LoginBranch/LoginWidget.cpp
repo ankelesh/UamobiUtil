@@ -16,12 +16,16 @@ void LoginWidget::login_confirmed()
 	}
 	globalSettings.networkingEngine->userLogIn(loginField->text(), passwordField->text(), &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
-	while (awaiter.isAwaiting()) { qApp->processEvents(); }
-	if (awaiter.wasTimeout())
-	{
-		info->setText(tr("login_widget_connection_timeout"));
-		return;
-	}
+}
+
+void LoginWidget::was_timeout()
+{
+	info->setText(tr("login_widget_connection_timeout:") + QString::number(globalSettings.timeoutInt));
+}
+
+void LoginWidget::checkResponse()
+{
+	using namespace parse_uniresults_functions;
 	TypicalResponse resp = RequestParser::interpretAsLoginResponse(awaiter.restext, awaiter.errtext);
 	if (resp.resp == true)
 	{
@@ -80,6 +84,8 @@ LoginWidget::LoginWidget(GlobalAppSettings& go, QWidget* parent)
 	QObject::connect(backButton, &QPushButton::clicked, this, &LoginWidget::backRequired);
 	QObject::connect(loginField, &QLineEdit::returnPressed, passwordField, QOverload<>::of(&QLineEdit::setFocus));
 	QObject::connect(passwordField, &QLineEdit::returnPressed, this, &LoginWidget::login_confirmed);
+	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &LoginWidget::checkResponse);
+	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &LoginWidget::was_timeout);
 #else
 	QObject::connect(okButton, SIGNAL(clicked()), this, SLOT(login_confirmed()));
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));

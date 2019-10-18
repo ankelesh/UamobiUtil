@@ -1,20 +1,24 @@
 #include "ReceiptParametersWidget.h"
-
+#include "widgets/utils/ElementsStyles.h"
 ReceiptParametersWidget::ReceiptParametersWidget(GlobalAppSettings& go, QWidget* parent)
 	: inframedWidget(parent), globalSettings(go),
 	mainLayout(new QVBoxLayout(this)), innerWidget(new inframedWidget(this)),
 	innerLayout(new QVBoxLayout(innerWidget)), userInfo(new QLabel(innerWidget)),
 	innerFrame(new QFrame(innerWidget)), frameLayout(new QVBoxLayout(innerFrame)),
-	stateInfo(new QLabel(innerFrame)), closedButton(new QPushButton(innerFrame)),
-	cancelledButton(new QPushButton(innerFrame)), dateField(new QDateEdit(innerFrame)),
-	selectOrderLayout(new QHBoxLayout(innerFrame)), selectOrderButton(new QPushButton(innerFrame)),
+	stateInfo(new QLabel(innerFrame)), closedButton(new MegaIconButton(innerFrame)),
+	cancelledButton(new MegaIconButton(innerFrame)), dateField(new QDateEdit(innerFrame)),
+	selectOrderLayout(new QHBoxLayout(innerFrame)), selectOrderButton(new MegaIconButton(innerFrame)),
 	mainTextView(new QTextEdit(innerFrame)), inspectLayout(new QHBoxLayout(innerFrame)),
-	inspectButton(new QPushButton(innerFrame)), continueLayout(new QHBoxLayout(innerFrame)),
-	continueButton(new QPushButton(innerFrame)), backButton(new QPushButton(innerFrame))
+	inspectButton(new MegaIconButton(innerFrame)), continueLayout(new QHBoxLayout(innerFrame)),
+	continueButton(new MegaIconButton(innerFrame)), backButton(new MegaIconButton(innerFrame))
 {
 	this->setLayout(new QVBoxLayout(this));
 	mainLayout->addWidget(innerWidget);
 	innerWidget->setLayout(innerLayout);
+	mainLayout->setContentsMargins(0, 0, 0, 0);
+	mainLayout->setSpacing(0);
+	innerLayout->setContentsMargins(0, 0, 0, 0);
+	innerLayout->setSpacing(0);
 	innerLayout->addWidget(userInfo);
 	innerLayout->addWidget(innerFrame);
 	innerFrame->setLayout(frameLayout);
@@ -23,16 +27,13 @@ ReceiptParametersWidget::ReceiptParametersWidget(GlobalAppSettings& go, QWidget*
 	frameLayout->addWidget(cancelledButton);
 	frameLayout->addWidget(dateField);
 	frameLayout->addLayout(selectOrderLayout);
-	selectOrderLayout->addStretch();
 	selectOrderLayout->addWidget(selectOrderButton);
-	selectOrderLayout->addStretch();
 	frameLayout->addWidget(mainTextView);
 	frameLayout->addLayout(inspectLayout);
 	inspectLayout->addStretch();
 	inspectLayout->addWidget(inspectButton);
 	frameLayout->addLayout(continueLayout);
 	continueLayout->addWidget(backButton);
-	continueLayout->addStretch();
 	continueLayout->addWidget(continueButton);
 	userInfo->setText(tr("receipt_parameters_announce"));
 	stateInfo->setText(tr("receipt_parameters_status"));
@@ -44,8 +45,17 @@ ReceiptParametersWidget::ReceiptParametersWidget(GlobalAppSettings& go, QWidget*
 	backButton->setText(tr("receipt_parameters_back"));
 
 	userInfo->setAlignment(Qt::AlignCenter);
-	userInfo->setFont(QFont("Times new Roman", 1, 20, false));
+	userInfo->setFont(makeFont(0.04));
+	stateInfo->setFont(makeFont(0.04));
+	mainTextView->setFont(makeFont(0.04));
+	mainTextView->setReadOnly(true);
 
+	continueButton->setIcon(QIcon(":/res/forward.png"));
+	backButton->setIcon(QIcon(":/res/back.png"));
+	selectOrderButton->setIcon(QIcon(":/res/upload.png"));
+	continueButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
+	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
+	selectOrderButton->setStyleSheet(SETTINGS_BUTTONS_STYLESHEET());
 	// hidings dependent
 
 	stateInfo->hide();
@@ -55,18 +65,19 @@ ReceiptParametersWidget::ReceiptParametersWidget(GlobalAppSettings& go, QWidget*
 	inspectButton->hide();
 
 #ifdef QT_VERSION5X
-	QObject::connect(closedButton, &QPushButton::clicked, this, &ReceiptParametersWidget::closedClicked);
-	QObject::connect(cancelledButton, &QPushButton::clicked, this, &ReceiptParametersWidget::cancelledClicked);
-	QObject::connect(inspectButton, &QPushButton::clicked, this, &ReceiptParametersWidget::inspectClicked);
-	QObject::connect(continueButton, &QPushButton::clicked, this, &ReceiptParametersWidget::continueClicked);
-	QObject::connect(backButton, &QPushButton::clicked, this, &ReceiptParametersWidget::backRequired);
-
+	QObject::connect(closedButton, &MegaIconButton::clicked, this, &ReceiptParametersWidget::closedClicked);
+	QObject::connect(cancelledButton, &MegaIconButton::clicked, this, &ReceiptParametersWidget::cancelledClicked);
+	QObject::connect(inspectButton, &MegaIconButton::clicked, this, &ReceiptParametersWidget::inspectClicked);
+	QObject::connect(continueButton, &MegaIconButton::clicked, this, &ReceiptParametersWidget::continueClicked);
+	QObject::connect(backButton, &MegaIconButton::clicked, this, &ReceiptParametersWidget::backRequired);
+	QObject::connect(selectOrderButton, &MegaIconButton::clicked, this, &ReceiptParametersWidget::backToSupplier);
 #else
 	QObject::connect(closedButton, SIGNAL(clicked()), this, SLOT(closedClicked()));
 	QObject::connect(cancelledButton, SIGNAL(clicked()), this, SLOT(cancelledClicked()));
 	QObject::connect(inspectButton, SIGNAL(clicked()), this, SLOT(inspectClicked()));
 	QObject::connect(continueButton, SIGNAL(clicked()), this, SLOT(continueClicked()));
 	QObject::connect(backButton, SIGNAL(clicked), this, SIGNAL(backRequired()));
+    QObject::connect(selectOrderButton, SIGNAL(clicked()), this, SLOT(backToSupplier()));
 #endif
 }
 
@@ -85,6 +96,11 @@ void ReceiptParametersWidget::inspectClicked()
 void ReceiptParametersWidget::continueClicked()
 {
 	emit dataConfirmed();
+}
+
+void ReceiptParametersWidget::backToSupplier()
+{
+	emit backTo(0);
 }
 
 void ReceiptParametersWidget::setMainView(const QString& rtxt)

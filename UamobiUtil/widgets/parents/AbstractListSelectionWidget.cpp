@@ -3,6 +3,7 @@
 #ifdef QT_VERSION5X
 #include <QtWidgets/qscroller.h>
 #else
+#include "legacy/qtCompatibility/scrollgrabber.h"
 #endif
 
 void  AbstractListSelectionWidget::init()
@@ -22,11 +23,8 @@ AbstractListSelectionWidget::AbstractListSelectionWidget(QWidget* parent)
 	: QListWidget(parent)
 {
 	this->setSelectionMode(QAbstractItemView::SingleSelection);
-#ifdef QT_VERSION5X
 	QScroller::grabGesture(this, QScroller::LeftMouseButtonGesture);
-#else
-
-#endif
+	this->setWordWrap(true);
 #ifdef QT_VERSION5X
 	QObject::connect(this, &QListWidget::itemClicked, this, &AbstractListSelectionWidget::itemSelectedFromList);
 #else

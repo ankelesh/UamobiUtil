@@ -1,13 +1,11 @@
 #pragma once
 // Qt 5 only imports
 #ifdef QT_VERSION5X
-#include <QtWidgets/qpushbutton.h>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QBoxLayout>
 
 #else
  // Qt 4 only imports
-#include <QtGui/qpushbutton.h>
 #include <QtGui/QLabel>
 #include <QtGui/QBoxLayout>
 
@@ -15,6 +13,7 @@
 
 #include "widgets/parents/inframedWidget.h"
 #include "widgets/parents/AbstractListSelectionWidget.h"
+#include "widgets/ElementWidgets/MegaIconButton.h"
 #include "widgets/utils/GlobalAppSettings.h"
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
@@ -68,14 +67,22 @@ protected:
 	QLabel* userInfo;
 	specwidgets::_OrderListSelectionWidget* orderSelection;
 	QHBoxLayout* buttonLayout;
-	QPushButton* backButton;
-	QPushButton* pickButton;
+	MegaIconButton* backButton;
+	MegaIconButton* pickButton;
 
+	RequestAwaiter awaiter;
+
+	parsedOrder po;
 public:
 	OrderSelectionWidget(GlobalAppSettings& go, const parsedSupplier& suppl, QWidget* = Q_NULLPTR);
+
+	bool isExpectingControl(int) override;
 private slots:
 	void pickClicked();
 	void orderSelected(parsedOrder);
+	void parse_order_response();
+	void parse_select_response();
+	void was_timeout();
 public slots:
 	void loadOrders();
 	void setTimeoutMessage();

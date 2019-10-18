@@ -1,4 +1,8 @@
 #include "UamobiUtil.h"
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
+
 
 UamobiUtil::UamobiUtil(GlobalAppSettings& go, QWidget* parent)
 	: QWidget(parent), globalSettings(go), mainLayout(new QVBoxLayout(this)),
@@ -8,6 +12,11 @@ UamobiUtil::UamobiUtil(GlobalAppSettings& go, QWidget* parent)
 {
 	this->setLayout(mainLayout);
 	this->setBaseSize(calculateAdaptiveSize(0.8));
+	this->setMaximumSize(calculateAdaptiveSize(1));
+	this->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum));
+	//mainLayout->setSizeConstraint(QBoxLayout::SizeConstraint::SetMaximumSize);
+	mainLayout->setContentsMargins(0, 0, 0, 0);
+	mainLayout->setSpacing(0);
 	mainLayout->addWidget(mainPage);
 	mainPage->setFocus();
 #ifdef QT_VERSION5X
@@ -20,6 +29,7 @@ UamobiUtil::UamobiUtil(GlobalAppSettings& go, QWidget* parent)
 #endif
 }
 
+
 void UamobiUtil::gotoModeSelection()
 {
 	(*current)->hide();
@@ -31,10 +41,10 @@ void UamobiUtil::gotoModeSelection()
 	ModeSelectionWidget* mb = new ModeBranchRootWidget(globalSettings, this);
 #ifdef QT_VERSION5X
 	QObject::connect(mb, &ModeSelectionWidget::backRequired, this, &UamobiUtil::hideCurrent);
-	QObject::connect(mb, &ModeSelectionWidget::modeAcquired, this, &UamobiUtil::gotoReceiptBranch);
+	QObject::connect(mb, &ModeSelectionWidget::modeAcquired, this, &UamobiUtil::interpretMode);
 #else
 	QObject::connect(mb, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
-	QObject::connect(mb, SIGNAL(modeAcquired(QHash<QString, QString>)), this, SLOT(gotoReceiptBranch(QHash<QString, QString>)));
+    QObject::connect(mb, SIGNAL(modeAcquired(QHash<QString, QString>, parsedMode)), this, SLOT(interpretMode(QHash<QString,QString>,parsedMode)));
 #endif
 	modeSelectionBranch = mb;
 	current = &modeSelectionBranch;
@@ -45,7 +55,7 @@ void UamobiUtil::gotoModeSelection()
 void UamobiUtil::gotoReceiptBranch(QHash<QString, QString> opts, parsedMode mode)
 {
 #ifdef DEBUG
-	//detrace_METHCALL("goto Receipt");
+	detrace_METHCALL("goto Receipt");
 #endif
 	(*current)->hide();
 	if (*current != mainPage)
@@ -67,6 +77,11 @@ void UamobiUtil::gotoReceiptBranch(QHash<QString, QString> opts, parsedMode mode
 
 void UamobiUtil::interpretMode(QHash<QString, QString> sets, parsedMode mode)
 {
+
+#ifdef DEBUG
+	detrace_METHEXPL("mode: " << mode.mode << " while submode " << mode.submode << " and name " << mode.name);
+#endif
+
 	if (mode.mode == "receipt")
 	{
 		gotoReceiptBranch(sets, mode);
@@ -99,9 +114,10 @@ void UamobiUtil::hideCurrent()
 		{
 			(*current)->hide();
 			mainLayout->removeWidget(*current);
-			delete (*current);
+			(*current)->deleteLater();
 			current = &mainPage;
 			(*current)->show();
+			(*current)->setFocus();
 		}
 		else
 		{

@@ -18,8 +18,10 @@
 
 #include "widgets/parents/inframedWidget.h"
 #include "networking/Parsers/RequestParser.h"
+#include "networking/RequestAwaiter.h"
 #include "widgets/utils/EventsAndFilters.h"
-#include "widgets/ElementWidgets/BigButtonsSpinbox.h"
+#include"widgets/ControlsMiniwidgets/QuantityControl.h"
+#include "widgets/ElementWidgets/MegaIconButton.h"
 
 class AbstractScaningWidget : public inframedWidget
 {
@@ -36,15 +38,17 @@ protected:
 	QLabel* stateInfo;
 	QLineEdit* barcodeField;
 	QTextEdit* mainTextView;
-	BigButtonsSpinbox* quantitySpin;
 	QHBoxLayout* buttonPanel;
-	QPushButton* backButton;
-	QPushButton* submitButton;
-	QPushButton* searchButton;
+	MegaIconButton* backButton;
+	MegaIconButton* submitButton;
+	MegaIconButton* searchButton;
 
-	filters::NoKeyEvents* keyFilter;
 
 	QHash<QString, QString> itemSuppliedValues;
+	QHash<QString, abs_control*> controlsList;
+
+	RequestAwaiter awaiter;
+    void keyReleaseEvent(QKeyEvent *kev) override;
 public:
 	AbstractScaningWidget(GlobalAppSettings& go, QWidget* parent);
 
@@ -56,7 +60,8 @@ protected slots:
 	virtual void searchRequired() = 0;
 	virtual void backNeeded() = 0;
 	virtual void useControls() = 0;
-
+	virtual void was_timeout();
 public slots:
 	virtual void setDocument(parsedOrder) = 0;
+
 };

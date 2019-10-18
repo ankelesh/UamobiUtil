@@ -7,9 +7,13 @@
 QHash<QString, QString> _initRecDefs();
 const QHash<QString, QString> RECEIPT_NONE_SETTINGS_DEFAULTS(_initRecDefs());
 
+
 class ReceiptRootWidget : public inframedWidget, abstractNode
 {
 	Q_OBJECT
+
+public:
+	enum steps { toSupplier, toOrders, toScaning };
 protected:
 	GlobalAppSettings& globalSettings;
 
@@ -40,5 +44,6 @@ private slots:
 	void orderAcquired(parsedOrder, QString);
 	void hideCurrent();
 	void backTo();
+	void backToStep(int step);
 	void continueToScaning();
 };

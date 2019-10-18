@@ -11,20 +11,22 @@ RequestAwaiter::RequestAwaiter(int interval, QObject* parent)
 	: QObject(parent), timer(new QTimer(this)), awaiting(false)
 {
 #ifdef DEBUG
-	//detrace_METHEXPL("interval was:" << interval );
+    detrace_METHEXPL("interval was:" << interval );
 #endif
 	timer->setInterval(interval);
 	timer->setSingleShot(true);
 #ifdef QT_VERSION5X
 	QObject::connect(timer, &QTimer::timeout, this, &RequestAwaiter::timeout);
 #else
-	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
+    detrace_CONNECTSTAT("timer",  QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeout())));
 #endif
 }
 
 void RequestAwaiter::run()
 {
+    detrace_METHCALL("run");
 	timer->start();
+    detrace_METHEXPL("timer started, buffers wiped");
 	awaiting = true;
 	wastimeout = false;
 	restext = QString();
@@ -44,7 +46,7 @@ bool RequestAwaiter::wasTimeout()
 void RequestAwaiter::timeout()
 {
 #ifdef DEBUG
-	//detrace_METHCALL("timeout");
+    detrace_METHCALL("RequestAwaiter::timeout");
 #endif
 	awaiting = false;
 	wastimeout = true;
@@ -56,15 +58,15 @@ void RequestAwaiter::requestIncoming(QString a, QString b)
 	if (a.isEmpty() && b.isEmpty())
 		return;*/
 #ifdef DEBUG
-		//detrace_METHCALL("RequestAwaiter::requestIncoming");
+    detrace_METHCALL("RequestAwaiter::requestIncoming");
 	detrace_METHTEXTS("RequestAwaiter::requestincoming", "a, b", a << "|" << b);
 #endif
 	restext = a; errtext = b;
-#ifdef DEBUG
-	//detrace_METHEXPL("not awaiting");
-#endif
+
 	awaiting = false;
 	timer->stop();
+    detrace_METHEXPL(timer->isActive());
 	wastimeout = false;
 	emit requestSuccess(a, b);
+	emit requestReceived();
 }

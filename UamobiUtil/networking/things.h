@@ -18,6 +18,7 @@ struct parsedMode
 	QString mode;	//	mode - larger part
 	QString submode;	//	submode - sometimes is 0
 	parsedMode(QString Name = "", QString Mode = "", QString Submode = "");
+	QString debugSnapshot();
 };
 
 struct parsedPlace

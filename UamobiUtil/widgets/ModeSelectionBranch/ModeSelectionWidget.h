@@ -84,8 +84,11 @@ public:
 	virtual void show() override;
 protected slots:
 	void logoutPressed();		//	this slot sends log_out and only then calls backRequired
-	virtual void modeSelected(parsedMode);	//	these slots react to changes
+	void modeSelected(parsedMode);	//	these slots react to changes
 	virtual void hideCurrent();
+	void parse_modes();
+	virtual void mode_select_response();
+	void was_timeout();
 public slots:
 	void loadModes();				//	loads modes list from web
 signals:
@@ -100,7 +103,7 @@ protected:
 public:
 	ModeBranchRootWidget(const GlobalAppSettings& go, QWidget* parent = Q_NULLPTR);
 protected slots:
-	virtual void modeSelected(parsedMode) override;
 	void placeAcquired(parsedPlace);
 	virtual void hideCurrent() override;
+	virtual void mode_select_response() override;
 };

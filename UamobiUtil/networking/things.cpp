@@ -56,6 +56,11 @@ parsedMode::parsedMode(QString n, QString m, QString s)
 {
 }
 
+QString parsedMode::debugSnapshot()
+{
+	return "mode " + name + " modeV: " + mode + " submode " + submode;
+}
+
 parsedPlace::parsedPlace(QString Code, QString Name)
 	: code(Code), name(Name)
 {

@@ -59,6 +59,7 @@ private:
 	QLabel* userIdInfo;
 	MegaIconButton* exitButton;
 	MegaIconButton* settingsButton;
+    MegaIconButton* refreshButton;
 	QLineEdit* userid;
 
 	// Child widgets
@@ -80,6 +81,8 @@ private slots:
 	void hideCurrent();							//	hides current
 	void languageChanged();						//	activated when language changed - retranslates text
 	void userIdSearch();
+    void parseUsers();
+	void wasTimeout();
 public slots:
 	void loadUsers();							//	sends request to server, fills LoginSelectWidget
 signals:

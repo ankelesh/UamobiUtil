@@ -53,6 +53,8 @@ public:
 	virtual void show() override;
 private slots:
 	void login_confirmed();
+	void was_timeout();
+	void checkResponse();
 public slots:
 	void set_login(const QString);
 signals:

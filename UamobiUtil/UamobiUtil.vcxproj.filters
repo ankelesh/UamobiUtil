@@ -82,6 +82,30 @@
     <Filter Include="Header Files\ReceiptLinked">
       <UniqueIdentifier>{5525d878-148e-4988-a2b2-8e5efe290446}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ElementWidgets">
+      <UniqueIdentifier>{d8b99fa7-72ef-4ff3-a958-a18ed8258393}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ElementWidgets\ControlsWidgets">
+      <UniqueIdentifier>{a3b60990-a679-483c-85af-d9282ce09968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ScaningRelated">
+      <UniqueIdentifier>{d57287c2-f07a-4353-b4c8-0790bc340398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MultibranchWidgets">
+      <UniqueIdentifier>{d0b40a64-936f-4df2-b9aa-a2915c284cc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ElementWidgets">
+      <UniqueIdentifier>{2180dc08-a853-4d69-ae93-4780bde4d196}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ElementWidgets\ControlsWidgets">
+      <UniqueIdentifier>{9f7387f6-3540-4598-87b6-168a44ecc978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ScaningRelated">
+      <UniqueIdentifier>{ec1d64bc-e4fc-49c9-887f-247360f8a760}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MultibranchWidgets">
+      <UniqueIdentifier>{f06bc4bd-8b0c-431f-98b0-34a63eb64aa7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -195,32 +219,44 @@
     <ClCompile Include="networking\NetCallArgs.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\parents\AbstractScaningWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ReceiptSpecialWidgets\ReceiptScaningWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="networking\things.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
     <ClCompile Include="widgets\utils\GlobalAppSettings.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\DocResultsWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\ItemSearchWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\ElementWidgets\BigButtonsSpinbox.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ElementWidgets</Filter>
     </ClCompile>
     <ClCompile Include="widgets\ElementWidgets\MegaIconButton.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ElementWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ControlsMiniwidgets\abs_control.cpp">
+      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ControlsMiniwidgets\QuantityControl.cpp">
+      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\parents\AbstractScaningWidget.cpp">
+      <Filter>Source Files\ScaningRelated</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ReceiptSpecialWidgets\ReceiptScaningWidget.cpp">
+      <Filter>Source Files\ScaningRelated</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\ItemSearchWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\DocResultsWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets</Filter>
     </ClCompile>
     <ClCompile Include="widgets\parents\inframedWidget.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\util\parents</Filter>
+    </ClCompile>
+    <ClCompile Include="ScaningCore\NormalCapturer.cpp">
+      <Filter>Source Files\ScaningRelated</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\utils\EventsAndFilters.cpp">
+      <Filter>Source Files\util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -293,23 +329,26 @@
     <QtMoc Include="widgets\ReceiptNoneBranch\ReceiptRootWidget.h">
       <Filter>Header Files\ReceiptLinked</Filter>
     </QtMoc>
-    <QtMoc Include="widgets\MultibranchWidgets\ItemSearchWidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\MultibranchWidgets\DocResultsWidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="widgets\ElementWidgets\BigButtonsSpinbox.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\parents\AbstractScaningWidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\ReceiptSpecialWidgets\ReceiptScaningWidget.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ElementWidgets</Filter>
     </QtMoc>
     <QtMoc Include="widgets\ElementWidgets\MegaIconButton.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ElementWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ControlsMiniwidgets\abs_control.h">
+      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\parents\AbstractScaningWidget.h">
+      <Filter>Header Files\ScaningRelated</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ReceiptSpecialWidgets\ReceiptScaningWidget.h">
+      <Filter>Header Files\ScaningRelated</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\DocResultsWidget.h">
+      <Filter>Header Files\MultibranchWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\ItemSearchWidget.h">
+      <Filter>Header Files\MultibranchWidgets</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -371,6 +410,12 @@
     </ClInclude>
     <ClInclude Include="networking\Parsers\DynamicLinearParsers.h">
       <Filter>Header Files\Network\Parsing</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\ControlsMiniwidgets\QuantityControl.h">
+      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="ScaningCore\NormalCapturer.h">
+      <Filter>Header Files\ScaningRelated</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

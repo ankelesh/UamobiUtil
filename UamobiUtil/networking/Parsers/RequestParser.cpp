@@ -46,7 +46,9 @@ namespace parse_uniresults_functions {
 
 	modesResponse parse_uniresults_functions::parse_modes(uniform_parse_result& ures)
 	{
-		detrace_METHEXPL(showHeap(ures));
+#ifdef DEBUG
+		//detrace_METHEXPL(showHeap(ures));
+#endif
 		if (!queryLengthOkInResult(ures))
 		{
 			return modesResponse();
@@ -456,6 +458,7 @@ namespace RequestParser {
 	{
 		PositionalResponse temp;
 		ModeSelectResponseParser parser(res, errtext);
+		detrace_METHEXPL(showHeap(parser.read()));
 		if (parser.isSuccessfull())
 		{
 			temp.success = true;
