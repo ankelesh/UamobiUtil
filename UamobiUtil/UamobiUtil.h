@@ -3,10 +3,12 @@
 #ifdef QT_VERSION5X
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QBoxLayout>
+#include <QtWidgets/QMainWindow>
 // Qt 4 only headers
 #else
 #include <QtGui/QWidget>
 #include <QtGui/QBoxLayout>
+#include <QtGui/QMainWindow>
 #endif
 // Qt headers
 #include <QtCore/QPointer>
@@ -17,6 +19,7 @@
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/ModeSelectionBranch/ModeSelectionWidget.h"
 #include "widgets/ReceiptNoneBranch/ReceiptRootWidget.h"
+#include "widgets/ElementWidgets/ProcessingOverlay.h"
 /*
 	This is main widget of the project. It is based on QWidget and has no gui representation. Main goal
 	of this widget - is providing root functionality in widget tree. It is responsible for dynamical allocation of widgets,
@@ -42,9 +45,9 @@ private:
 
 	QPointer<inframedWidget>* current;		//	This pointer is holding currently shown widget or branch
 
-
+	ProcessingOverlay* overlay;
 	void gotoReceiptBranch(QHash<QString, QString>, parsedMode);
-
+	void resizeEvent(QResizeEvent* rev) override;
 public:
 	enum branches { login, modeselect };
 
@@ -54,11 +57,23 @@ public:
 
 private slots:
 	void gotoModeSelection();			//	Switch to modeSelectionBranch
-
 	void interpretMode(QHash<QString, QString>, parsedMode mode);	//	interprets mode settings obtained through "select mode". NOT IMPLEMENTED
 public slots:
 	void hideCurrent();					//	hides current branch if it is not main page
 	void gotoBranch(branches branch);	//	opens branch by it's enum type. Does not supports branches with any initialization.
 signals:
 	void requestSettings();				//	Deprecated, but may be usefull if app will be reassembled
+};
+
+
+class FramelessUamobiUtil : public QMainWindow
+{
+	Q_OBJECT
+private:
+	UamobiUtil* w;
+
+public:
+	FramelessUamobiUtil(GlobalAppSettings & go);
+
+
 };

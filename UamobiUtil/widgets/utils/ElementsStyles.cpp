@@ -1,4 +1,7 @@
 #include "ElementsStyles.h"
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
 
 /*
 	This file contains stylesheet definitions
@@ -135,17 +138,15 @@ const QString BETTER_CALENDAR_STYLESHEET = "QCalendarWidget QToolButton{\
 		}";
 const QString ERROR_TEXT_STYLESHEET = "QLabel {color: red;}";
 
-const QString CANCEL_BUTTONS_STYLESHEET() {
-	return "QPushButton{"
-		"background-color: #f5a37f; " + countAdaptiveFont(0.03) +
+const QString CANCEL_BUTTONS_STYLESHEET = "QPushButton{"
+        "background-color: #f5a37f; "
 		"border: 1px solid gray;}";
-};
+;
 
-const QString SETTINGS_BUTTONS_STYLESHEET() {
-	return "QPushButton {"
-		"background-color: #9893c9; " + countAdaptiveFont(0.03) +
+const QString SETTINGS_BUTTONS_STYLESHEET = "QPushButton {"
+		"background-color: #9893c9; " 
 		"border: 1px solid gray;}";
-};
+
 const QString UNCHECKED_BUTTONS_STYLESHEET = "QPushButton{"
 "background-color: #e9edb4; "
 "border: 1px solid gray;}";
@@ -159,8 +160,26 @@ const QString NAVIGATE_BUTTONS_STYLESHEET = "QPushButton{ "
 	"}";
 
 
+static QSize currsize;
+const QSize & getCurrentSize()
+{
 
-QString countAdaptiveFont(double perc)
+#ifdef DEBUG
+	detrace_METHCALL("getCurrentSize, " << currsize.height() << currsize.width());
+#endif
+
+	return currsize;
+}
+
+ void setCurrentSize(const QSize & sz)
+{
+#ifdef DEBUG
+	 detrace_METHCALL("setCurrentSize, " << sz.height() << sz.width());
+#endif
+	currsize = sz;
+}
+
+ QString countAdaptiveFont(double perc)
 {
 	return " font-size: " + QString::number((int)(GEOMETRY_SOURCE->availableGeometry().height() * perc)) + "px;";
 }
@@ -169,3 +188,7 @@ QFont makeFont(double perc)
 {
 	return QFont("Arial", GEOMETRY_SOURCE->availableGeometry().height() * perc);
 }
+
+const QString ZEBRAEVEN_BUTTONS_STYLESHEET(
+        "QPushButton {background-color: #f8fced; border: 1px solid gray;}");
+const QString ZEBRAODD_BUTTONS_STYLESHEET("QPushButton {background-color: #878a7f; border: 1px solid gray;}");

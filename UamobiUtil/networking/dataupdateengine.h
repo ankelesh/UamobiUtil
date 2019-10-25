@@ -19,6 +19,7 @@ public:
 	explicit DataUpdateEngine(QObject* parent = 0);
 	~DataUpdateEngine() {}
 	//--
+	virtual void setUrl(QString) = 0;
 	virtual void cancelPending() = 0;
 	// meta
 	virtual void userUpdateList

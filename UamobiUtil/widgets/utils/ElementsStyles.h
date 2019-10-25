@@ -11,7 +11,6 @@
 #include <QtGui/QScreen>
 #include <QString>
 
-#undef Q_OS_WIN
 /*
 	This file contains constants which are defining buttons stylesheets as a C-strings. all
 	new styles must be added ONLY here to allow quick change if necessary.
@@ -29,52 +28,32 @@
 inline static int calculateAdaptiveButtonHeight(double percent = 0.125)
 //Calculates height for buttons, by default is giving 12.5% of screen height
 {
-#ifdef Q_OS_WIN
-	return GEOMETRY_SOURCE->availableGeometry().height() * percent / 2;
-#else
-	return GEOMETRY_SOURCE->availableGeometry().height() * percent;
-#endif
+    return GEOMETRY_SOURCE->availableGeometry().height() * percent;
 }
 
 inline static int calculateAdaptiveWidth(double percent = 0.5)
 //Calculates width, by default is giving 50% of screen width
 {
-#ifdef Q_OS_WIN
-	return GEOMETRY_SOURCE->availableGeometry().width() * percent / 4;
-#else
-	return GEOMETRY_SOURCE->availableGeometry().width() * percent;
-#endif
+    return GEOMETRY_SOURCE->availableGeometry().width() * percent;
 }
 inline static QSize calculateAdaptiveSize(double percent = 0.3)
 //Calculates square size, by default is giving 30% of screen dimensions
 {
-#ifdef Q_OS_WIN
-	return QSize(
-		GEOMETRY_SOURCE->availableGeometry().width() * percent/4,
-		GEOMETRY_SOURCE->availableGeometry().height() * percent/2
-	);
-#else
 	return QSize(
 		GEOMETRY_SOURCE->availableGeometry().width() * percent,
 		GEOMETRY_SOURCE->availableGeometry().height() * percent
-	);
-#endif
+    );
 }
 inline static QSize calculateAdaptiveSize(double Hpercent, double Wpercent)
 //Calculates more adaptive size, allowing to scale both dimensions. No defaults.
 {
-#ifdef Q_OS_WIN
-	return QSize(
-		GEOMETRY_SOURCE->availableGeometry().width() * Wpercent / 4,
-		GEOMETRY_SOURCE->availableGeometry().height() * Hpercent / 2
-	);
-#else
 	return QSize(
 		GEOMETRY_SOURCE->availableGeometry().width() * Wpercent,
 		GEOMETRY_SOURCE->availableGeometry().height() * Hpercent
-	);
-#endif
+    );
 }
+const QSize & getCurrentSize();
+void setCurrentSize(const QSize&);
 
 extern QString countAdaptiveFont(double perc);
 extern QFont makeFont(double perc);
@@ -103,8 +82,8 @@ extern const QString UP_SPINBOX_STYLESHEET;
 extern const QString DOWN_SPINBOX_STYLESHEET;
 // down buttons of BigButtonsSpinbox
 
-extern const QString CANCEL_BUTTONS_STYLESHEET();
-extern const QString SETTINGS_BUTTONS_STYLESHEET();
+extern const QString CANCEL_BUTTONS_STYLESHEET;
+extern const QString SETTINGS_BUTTONS_STYLESHEET;
 
 extern const QString NAVIGATE_BUTTONS_STYLESHEET;
 
@@ -112,3 +91,5 @@ extern const QString LARGE_BUTTON_STYLESHEET;
 extern const QString BETTER_CALENDAR_STYLESHEET;
 extern const QString ERROR_TEXT_STYLESHEET;
 extern const QString UNCHECKED_BUTTONS_STYLESHEET;
+extern const QString ZEBRAEVEN_BUTTONS_STYLESHEET;
+extern const QString ZEBRAODD_BUTTONS_STYLESHEET;

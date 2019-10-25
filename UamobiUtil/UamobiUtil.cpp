@@ -1,4 +1,6 @@
 #include "UamobiUtil.h"
+
+#include <QtGui/qevent.h>
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -6,14 +8,20 @@
 
 UamobiUtil::UamobiUtil(GlobalAppSettings& go, QWidget* parent)
 	: QWidget(parent), globalSettings(go), mainLayout(new QVBoxLayout(this)),
-	mainPage(QPointer<inframedWidget>(new MainPageWidget(globalSettings, this))),
+	mainPage(),
 	modeSelectionBranch(),
-	current(&mainPage)
+	current(&mainPage), overlay(new ProcessingOverlay(go.timeoutInt, this))
 {
+	bindProcessingOverlay(overlay);
+	overlay->hide();
+	mainPage = QPointer<inframedWidget>(new MainPageWidget(globalSettings, this));
 	this->setLayout(mainLayout);
-	this->setBaseSize(calculateAdaptiveSize(0.8));
+#ifdef Q_OS_WINCE
+    this->setBaseSize(calculateAdaptiveSize(0.8));
 	this->setMaximumSize(calculateAdaptiveSize(1));
-	this->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum));
+    this->setMaximumHeight(0.9);
+    this->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum));
+#endif
 	//mainLayout->setSizeConstraint(QBoxLayout::SizeConstraint::SetMaximumSize);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 	mainLayout->setSpacing(0);
@@ -21,10 +29,12 @@ UamobiUtil::UamobiUtil(GlobalAppSettings& go, QWidget* parent)
 	mainPage->setFocus();
 #ifdef QT_VERSION5X
 	auto mlp = qobject_cast<MainPageWidget*>(mainPage);
-	QObject::connect(mlp, &MainPageWidget::loggedIn, this, &UamobiUtil::gotoModeSelection);
 
+    QTimer::singleShot(500, mlp, SLOT(loadUsers()));
+	QObject::connect(mlp, &MainPageWidget::loggedIn, this, &UamobiUtil::gotoModeSelection);
 #else
 	MainPageWidget* mlp = qobject_cast<MainPageWidget*> (mainPage);
+    QTimer::singleShot(500, mlp, SLOT(loadUsers()));
 	QObject::connect(mlp, SIGNAL(loggedIn()), this, SLOT(gotoModeSelection()));
 #endif
 }
@@ -73,6 +83,12 @@ void UamobiUtil::gotoReceiptBranch(QHash<QString, QString> opts, parsedMode mode
 	current = &receiptBranch;
 	mainLayout->addWidget(*current);
 	(*current)->show();
+}
+
+void UamobiUtil::resizeEvent(QResizeEvent* rev)
+{
+	overlay->resize(rev->size());
+	QWidget::resizeEvent(rev);
 }
 
 void UamobiUtil::interpretMode(QHash<QString, QString> sets, parsedMode mode)
@@ -125,3 +141,4 @@ void UamobiUtil::hideCurrent()
 		}
 	}
 }
+

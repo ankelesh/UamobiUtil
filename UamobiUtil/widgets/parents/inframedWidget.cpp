@@ -1,40 +1,34 @@
 #include "inframedWidget.h"
-#define DEBUG
+//#define DEBUG
 #ifdef DEBUG
 #include <debugtrace.h>
 #endif
-bool inframedWidget::isExpectingControl(int)
+
+using namespace filters;
+bool inframedWidget::isExpectingControl(int val)
 {
+
 #ifdef DEBUG
-	detrace_METHEXPL("in inframed::isExp");
+	detrace_METHCALL(":isExpectingControl(" << val<< " wadress: " << (long long int) this);
 #endif
+
 	return false;
-
 }
-void inframedWidget::keyReleaseEvent(QKeyEvent* kev)
+inframedWidget::inframedWidget(QWidget* parent)
+	: QWidget(parent), keyfilter(new filters::GeneralPurposeFilter(filters::GeneralPurposeFilter::infPack, this))
 {
-#ifdef DEBUG
-	detrace_METHCALL("inframed::keyReleaseEvent with " << (int)kev->key());
+	
+	QObject::installEventFilter(keyfilter);
+#ifdef QT_VERSION5X
+	QObject::connect(keyfilter, &GeneralPurposeFilter::backPressed, this, &inframedWidget::backReaction);
+	QObject::connect(keyfilter, &GeneralPurposeFilter::returnPressed, this, &inframedWidget::returnReaction);
+	QObject::connect(keyfilter, &GeneralPurposeFilter::numberPressed, this, &inframedWidget::controlReaction);
+#else
+    QObject::connect(keyfilter, SIGNAL(backPressed()), this, SLOT(backReaction()));
+    QObject::connect(keyfilter, SIGNAL(returnPressed()),this, SLOT(returnReaction()));
+    QObject::connect(keyfilter, SIGNAL(numberPressed(int)), this, SLOT(controlReaction(int)));
 #endif
-	bool ok;
-	int control = kev->text().toInt(&ok);
-	if (ok) {
-		processControl(control - 1);
-	}
-	else if (kev->key() == Qt::Key::Key_Back || kev->key() == Qt::Key::Key_Escape)
-	{
-		if (!back())
-		{
-			emit backRequired();
-		}
-	}
 }
-
-bool inframedWidget::processControl(int c)
-{
-	return isExpectingControl(c);
-}
-
 bool inframedWidget::back()
 {
 	return false;
@@ -48,4 +42,30 @@ bool inframedWidget::giveSettings()
 void inframedWidget::show()
 {
 	QWidget::show();
+}
+
+void inframedWidget::installEventFilter(QObject* obj)
+{
+	if (obj != keyfilter)
+	{
+		removeEventFilter(keyfilter);
+		keyfilter->deleteLater();
+		QWidget::installEventFilter(obj);
+		return;
+	}
+}
+
+
+void inframedWidget::returnReaction()
+{
+}
+
+void inframedWidget::backReaction()
+{
+	emit backRequired();
+}
+
+void inframedWidget::controlReaction(int val)
+{
+	isExpectingControl(val-1);
 }

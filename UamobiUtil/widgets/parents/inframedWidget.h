@@ -5,6 +5,7 @@
 #include <QtGui/QWidget>
 #endif
 #include <QtGui/QKeyEvent>
+#include "widgets/utils/EventsAndFilters.h"
 /*
 		This widget is parent for everything what is going to use one-frame interface.
 		Usage:
@@ -43,16 +44,22 @@ class inframedWidget : public QWidget
 {
 	Q_OBJECT
 protected:
-	virtual void keyReleaseEvent(QKeyEvent* kev) override;		//	This event captures back and control keys
-	bool processControl(int c);
+	filters::GeneralPurposeFilter * keyfilter;
+
+
 public:
-	inframedWidget(QWidget* parent) : QWidget(parent) {}
+	inframedWidget(QWidget* parent);
 	virtual bool back();
 	virtual bool giveSettings();
 	virtual void handleBarcode(QString) {}
 	virtual bool isExpectingControl(int);	//	Enhanced: now false is returned if value was not used
-	
+	filters::GeneralPurposeFilter* getFilter() {return keyfilter; };
 	virtual void show();
+	void installEventFilter(QObject*);
+protected slots:
+	virtual void returnReaction();
+	virtual void backReaction();
+	virtual void controlReaction(int);
 signals:
 	void backRequired();
 };

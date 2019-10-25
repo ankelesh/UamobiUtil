@@ -1,5 +1,5 @@
 #include "legacy.h"
-
+#include <QtCore/QVector>
 namespace legacy {
 	struct modecut		//	nameless mode
 	{
@@ -69,7 +69,7 @@ namespace legacy {
 		t["returningtosupplier"] = modecut("receipt", "returningtosupplier");
 		t["receiptworder"] = modecut("receipt", "receiptworder");
 		t["receiptwoorder"] = modecut("receipt", "receiptwoorder");
-        t["receiptfromwarehouses"] = modecut("receipt", "receiptfromwarehouse");
+		t["receiptfromwarehouses"] = modecut("receipt", "ReceiptFromWarehouse");
 		temp['r'] = t;
 		t.clear();
 		t["sales"] = modecut("inventory", "sales");
@@ -92,5 +92,26 @@ namespace legacy {
 		tmp.mode = m.modename;
 		tmp.submode = m.submodename;
 		return tmp;
+	}
+	void filterNonCompatibleModes(QVector < parsedMode>& vect)
+	{
+		QVector<parsedMode> tvect;
+		tvect.reserve(2);
+		QVector<parsedMode>::iterator start = vect.begin();
+		while (start != vect.end())
+		{
+			if (start->mode == "receipt")
+			{
+				if (start->submode.isEmpty()) {
+					tvect << *start;
+				}
+				else if (start->submode == "ReceiptFromWarehouse")
+				{
+					tvect << *start;
+				}
+			}
+			++start;
+		}
+		vect = tvect;
 	}
 }

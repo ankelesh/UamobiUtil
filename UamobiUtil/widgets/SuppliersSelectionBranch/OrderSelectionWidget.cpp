@@ -1,5 +1,10 @@
 #include "OrderSelectionWidget.h"
 #include "widgets/utils/ElementsStyles.h"
+#include "widgets/ElementWidgets/ProcessingOverlay.h"
+//#define DEBUG
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
 
 int specwidgets::_OrderListSelectionWidget::countElems()
 {
@@ -52,15 +57,19 @@ OrderSelectionWidget::OrderSelectionWidget(GlobalAppSettings& go, const parsedSu
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
 	this->setFont(makeFont(0.04));
+	orderSelection->installEventFilter(keyfilter);
+	innerWidget->installEventFilter(keyfilter);
+
 #ifdef QT_VERSION5X
 	QObject::connect(backButton, &QPushButton::clicked, this, &OrderSelectionWidget::backRequired);
 	QObject::connect(pickButton, &QPushButton::clicked, this, &OrderSelectionWidget::pickClicked);
 	QObject::connect(orderSelection, &specwidgets::_OrderListSelectionWidget::orderPicked, this, &OrderSelectionWidget::orderSelected);
-	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &OrderSelectionWidget::was_timeout);
+	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &OrderSelectionWidget::was_timeout);
 #else
-	QObject::connect(backButton, SIGNAL(clicked), this, SIGNAL(backRequired()));
+    QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 	QObject::connect(pickButton, SIGNAL(clicked()), this, SLOT(pickClicked()));
 	QObject::connect(orderSelection, SIGNAL(orderPicked(parsedOrder)), this, SLOT(orderSelected(parsedOrder)));
+    QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
 }
 
@@ -68,7 +77,10 @@ bool OrderSelectionWidget::isExpectingControl(int val)
 {
 	if (awaiter.isAwaiting())
 		return false;
-	if (val >= -1 && val < allOrders.count() - 1)
+#ifdef DEBUG
+	detrace_METHCALL("isExpectingControl(" << val);
+#endif
+	if (val >= -1 && val <= allOrders.count() - 1)
 	{
 		if (val == -1)
 		{
@@ -88,12 +100,21 @@ bool OrderSelectionWidget::isExpectingControl(int val)
 
 void OrderSelectionWidget::orderSelected(parsedOrder Po)
 {
+
+#ifdef DEBUG
+	detrace_METHCALL("orderSelected(" << Po.text );
+#endif
 	if (awaiter.isAwaiting())
 		return;
+	showProcessingOverlay();
+#ifdef QT_VERSION5X
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &OrderSelectionWidget::parse_select_response);
-	globalSettings.networkingEngine->recGetOrderInfo(po.code, supplierInWork.code, &awaiter, RECEIVER_SLOT_NAME);
-	awaiter.run();
+#else
+QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_select_response()));
+#endif
 	po = Po;
+    globalSettings.networkingEngine->recGetOrderInfo(po.code, supplierInWork.code, &awaiter, RECEIVER_SLOT_NAME);
+	awaiter.run();
 }
 
 
@@ -109,13 +130,19 @@ void OrderSelectionWidget::parse_order_response()
 	{
 		orderSelection->setCurrentRow(0);
 	}
-	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(parse_order_response()));
+	QObject::disconnect(&awaiter,SIGNAL(requestReceived()), 0,0);
+	hideProcessingOverlay();
 }
 
 void OrderSelectionWidget::parse_select_response()
 {
+	if (awaiter.wasTimeout())
+		return;
 	parse_uniresults_functions::TypicalResponse resp =
 		RequestParser::interpretAsRichtextResponse(awaiter.restext, awaiter.errtext);
+#ifdef DEBUG
+	detrace_METHEXPL("resp status: " << resp.resp);
+#endif
 	if (!awaiter.errtext.isEmpty())
 	{
 		userInfo->setText(awaiter.errtext);
@@ -123,18 +150,22 @@ void OrderSelectionWidget::parse_select_response()
 	if (resp.resp)
 	{
 #ifdef DEBUG
-		//detrace_METHEXPL("succesfully read");
+		detrace_METHEXPL("text transmitted to parms: " << resp.errors << "| while original package packet was " << awaiter.restext);
 #endif
 		emit orderConfirmed(po, resp.errors);
 	}
-	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(parse_select_response()));
+	QObject::disconnect(&awaiter,SIGNAL(requestReceived()),0,0);
+	hideProcessingOverlay();
 }
 
 void OrderSelectionWidget::was_timeout()
 {
+#ifdef DEBUG
+	detrace_METHCALL("WasTimeout");
+#endif
 	setTimeoutMessage();
-	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(parse_order_response()));
-	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(parse_select_response()));
+	QObject::disconnect(&awaiter,SIGNAL(requestReceived()),0,0);
+	hideProcessingOverlay();
 }
 
 void OrderSelectionWidget::setTimeoutMessage()
@@ -146,8 +177,13 @@ void OrderSelectionWidget::loadOrders()
 {
 	if (awaiter.isAwaiting())
 		return;
+	showProcessingOverlay();
+#ifdef QT_VERSION5X
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &OrderSelectionWidget::parse_order_response);
-	globalSettings.networkingEngine->recListOrders(supplierInWork.code, &awaiter, RECEIVER_SLOT_NAME);
+#else
+    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_order_response()));
+#endif
+    globalSettings.networkingEngine->recListOrders(supplierInWork.code, &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 }
 void OrderSelectionWidget::pickClicked()

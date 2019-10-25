@@ -263,4 +263,4 @@ static OutputMode onlyOutputTo[] = { file, qDeb };
 static int ootolen = 2;
 static DebugPriority blacklist[] = { methodDataSnapshot }; // this blacklist removes type of messages
 static int blackllen = 1;
-debugtrace detrace(all, toall, onlyOutputTo, ootolen, blacklist, blackllen, true, true);
+debugtrace detrace(all, toall, onlyOutputTo, ootolen, blacklist, blackllen, true, false);

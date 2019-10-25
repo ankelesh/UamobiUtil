@@ -1,25 +1,27 @@
 #include "ZebraListItemDelegate.h"
-
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
 ZebraItemDelegate::ZebraItemDelegate(QObject* parent)
-	: QStyledItemDelegate(parent)
+	: QItemDelegate(parent)
 {
 }
 
 void ZebraItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
 	QRect rct = option.rect;
-	if (index.row() % 2 == 1)
+#ifdef DEBUG
+	detrace_CYCLEEXPL("drawing item on index " << index.row() << " wa " << index.row() % 2);
+#endif
+
+	if (index.row() % 2)
 	{
 		painter->setBrush(QBrush(Qt::lightGray, Qt::SolidPattern));
 	}
 	else
 	{
-		painter->setBrush(option.palette.background());
-	}
-	if (index.data(Qt::DisplayRole).toString().startsWith("----"))
-	{
-		painter->setBrush(QBrush(Qt::darkBlue, Qt::SolidPattern));
+		painter->setBrush(QBrush(Qt::white));
 	}
 	painter->drawRect(rct);
-	QStyledItemDelegate::paint(painter, option, index);
+	QItemDelegate::paint(painter, option, index);
 }

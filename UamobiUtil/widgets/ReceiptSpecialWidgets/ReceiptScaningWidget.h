@@ -54,4 +54,6 @@ public slots:
     virtual void removeManualFocus() override;
 
 	virtual void setControlFocus(int) override;
+
+	virtual int flushControl(int) override;
 };

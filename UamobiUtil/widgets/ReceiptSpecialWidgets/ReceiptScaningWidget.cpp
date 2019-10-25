@@ -1,6 +1,12 @@
 #include "ReceiptScaningWidget.h"
 #include "debugtrace.h"
 #include <QApplication>
+#ifdef QT_VERSION5X
+#include <QtWidgets/QScroller>
+#else
+#include "legacy/qtCompatibility/scrollgrabber.h"
+#endif
+#include "widgets/ElementWidgets/ProcessingOverlay.h"
 
 ReceiptScaningWidget::ReceiptScaningWidget(GlobalAppSettings& go, QWidget* parent)
 	: AbstractScaningWidget(go, parent),abstractNode(), captureInterface(), resultScreen(new DocResultsWidget(go,this)),
@@ -15,6 +21,7 @@ ReceiptScaningWidget::ReceiptScaningWidget(GlobalAppSettings& go, QWidget* paren
 	main = this;
 	submitButton->setDisabled(true);
     mainTextView->installEventFilter(capturer->keyfilter);
+	QScroller::grabGesture(mainTextView, QScroller::LeftMouseButtonGesture);
     innerWidget->installEventFilter(capturer->keyfilter);
     barcodeField->installEventFilter(new filters::LineEditHelper(this));
 #ifdef QT_VERSION5X
@@ -42,9 +49,14 @@ void ReceiptScaningWidget::submitPressed()
 		return;
 	}
 	if (!controlsList.value("qty")->canGiveValue())
-		return;
+        return;
+	showProcessingOverlay();
+#ifdef QT_VERSION5X
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ReceiptScaningWidget::item_confirmed_response);
-	globalSettings.networkingEngine->recSubmit(barcodeField->text(), controlsList.value("qty")->getValue(), &awaiter, RECEIVER_SLOT_NAME);
+#else
+    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(item_confirmed_response()));
+#endif
+    globalSettings.networkingEngine->recSubmit(barcodeField->text(), controlsList.value("qty")->getValue(), &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 }
 
@@ -65,10 +77,18 @@ void ReceiptScaningWidget::barcodeConfirmed()
 {
 	if (awaiter.isAwaiting())
 		return;
+	showProcessingOverlay();
     this->setFocus();
-    //detrace_METHEXPL("got text " << barcodeField->text() << " while preparing data");
-	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ReceiptScaningWidget::item_scaned_response);
-	globalSettings.networkingEngine->itemGetInfo(barcodeField->text(), &awaiter, RECEIVER_SLOT_NAME);
+
+#ifdef DEBUG
+	detrace_METHEXPL("got text " << barcodeField->text() << " while preparing data");
+#endif
+#ifdef QT_VERSION5X
+    QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ReceiptScaningWidget::item_scaned_response);
+#else
+    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(item_scaned_response()));
+#endif
+    globalSettings.networkingEngine->itemGetInfo(barcodeField->text(), &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 	stateInfo->setText(tr("receipt_scaning_quering"));
 }
@@ -77,10 +97,15 @@ void ReceiptScaningWidget::setDocument(parsedOrder po)
 {
 	if (awaiter.isAwaiting())
 		return;
+	showProcessingOverlay();
+#ifdef QT_VERSION5X
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ReceiptScaningWidget::document_confirmed_response);
-	globalSettings.networkingEngine->recNew(QDate::currentDate(), po.code, "", &awaiter, RECEIVER_SLOT_NAME);
+#else
+    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(document_confirmed_response()));
+#endif
+    globalSettings.networkingEngine->recNew(QDate::currentDate(), po.code, "", &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
-	//globalSettings.networkingEngine->docLock(document.docId, &awaiter, RECEIVER_SLOT_NAME);
+	
 }
 
 void ReceiptScaningWidget::hideCurrent()
@@ -117,6 +142,11 @@ bool ReceiptScaningWidget::handleScannedBarcode()
 
 bool ReceiptScaningWidget::handleNumberInbuffer()
 {
+
+#ifdef DEBUG
+	//detrace_METHCALL("handleNumberInBuffer");
+#endif
+
 	if (qtyRequired)
 	{
 		if (controlsList.contains("qty"))
@@ -124,6 +154,7 @@ bool ReceiptScaningWidget::handleNumberInbuffer()
 			controlsList.value("qty")->setValue(numberBuffer);
 			return true;
 		}
+		//detrace_METHEXPL("There was no qty controller");
 	}
 	return false;
 }
@@ -149,6 +180,12 @@ void ReceiptScaningWidget::setControlFocus(int val)
 	}
 }
 
+int ReceiptScaningWidget::flushControl(int)
+{
+	submitPressed();
+	return 1;
+}
+
 
 void ReceiptScaningWidget::searchRequired()
 {
@@ -162,7 +199,7 @@ void ReceiptScaningWidget::backNeeded()
 
 void ReceiptScaningWidget::useControls()
 {
-
+	numberBuffer.clear();
 #ifdef DEBUG
 	detrace_METHCALL("useControls");
 	detrace_METHEXPL("is containing qty: " << itemSuppliedValues.contains("qty"));
@@ -174,8 +211,10 @@ void ReceiptScaningWidget::useControls()
 			innerLayout->insertWidget(innerLayout->count() - 1, controlsList.value("qty"));
 		}
 		controlsList.value("qty")->setAwaiting();
+		capturer->setControlNumber(1);
 		qtyRequired = true;
 		submitButton->setDisabled(false);
+		this->setFocus();
 	}
 	else
 	{
@@ -184,9 +223,10 @@ void ReceiptScaningWidget::useControls()
 			controlsList.value("qty")->reset();
 			controlsList.value("qty")->hide();
 		}
+        setFocus();
 		qtyRequired = false;
 		submitButton->setDisabled(true);
-	}
+    }
 }
 
 void ReceiptScaningWidget::item_scaned_response()
@@ -196,7 +236,8 @@ void ReceiptScaningWidget::item_scaned_response()
 	mainTextView->setText(resp.values.value("richdata"));
 	itemSuppliedValues = resp.values;
 	useControls();
-	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(item_scaned_response()));
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+	hideProcessingOverlay();
 }
 
 void ReceiptScaningWidget::item_confirmed_response()
@@ -204,20 +245,21 @@ void ReceiptScaningWidget::item_confirmed_response()
 	itemSuppliedValues = RequestParser::interpretAsItemInfo(awaiter.restext, awaiter.errtext).values;
 	mainTextView->setText(itemSuppliedValues.value("richdata"));
 	useControls();
-	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(item_confirmed_response));
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+	hideProcessingOverlay();
 }
 
 void ReceiptScaningWidget::document_confirmed_response()
 {
 	document = RequestParser::interpretAsDocumentResponse(awaiter.restext, awaiter.errtext);
 	userInfo->setText(tr("receipt_scaning_mode_name") + "(" + document.docId + ")\n" + document.supplier);
-	awaiter.disconnect(SIGNAL(requestReceived), this, SLOT(document_confirmed_response()));
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+	hideProcessingOverlay();
 }
 
 void ReceiptScaningWidget::was_timeout()
 {
 	AbstractScaningWidget::was_timeout();
-	awaiter.disconnect(SIGNAL(requestReceived), this, SLOT(document_confirmed_response()));
-	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(item_confirmed_response));
-	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(item_scaned_response()));
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+	hideProcessingOverlay();
 }

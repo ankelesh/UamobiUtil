@@ -34,11 +34,13 @@ protected:
 	QVBoxLayout* mainLayout;
 	inframedWidget* innerWidget;
 	QVBoxLayout* innerLayout;
+	QHBoxLayout* topPanelLayout;
 	QLabel* userInfo;
 	QLabel* stateInfo;
 	QLineEdit* barcodeField;
 	QTextEdit* mainTextView;
 	QHBoxLayout* buttonPanel;
+	MegaIconButton* quitButton;
 	MegaIconButton* backButton;
 	MegaIconButton* submitButton;
 	MegaIconButton* searchButton;

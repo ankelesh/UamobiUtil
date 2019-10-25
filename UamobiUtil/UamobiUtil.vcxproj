@@ -120,6 +120,7 @@
     <ClCompile Include="legacy\helpers\helpermanager.cpp" />
     <ClCompile Include="legacy\helpers\unitech_usi_dll.cpp" />
     <ClCompile Include="legacy\legacy.cpp" />
+    <ClCompile Include="legacy\qtCompatibility\scrollgrabber.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="networking\dataupdateengine-http.cpp" />
     <ClCompile Include="networking\dataupdateengine.cpp" />
@@ -141,6 +142,8 @@
     <ClCompile Include="widgets\ControlsMiniwidgets\QuantityControl.cpp" />
     <ClCompile Include="widgets\ElementWidgets\BigButtonsSpinbox.cpp" />
     <ClCompile Include="widgets\ElementWidgets\MegaIconButton.cpp" />
+    <ClCompile Include="widgets\ElementWidgets\ProcessingOverlay.cpp" />
+    <ClCompile Include="widgets\ElementWidgets\ZebraListItemDelegate.cpp" />
     <ClCompile Include="widgets\LoginBranch\LoginSelectWidget.cpp" />
     <ClCompile Include="widgets\LoginBranch\LoginWidget.cpp" />
     <ClCompile Include="widgets\MainPageWidget.cpp" />
@@ -199,6 +202,10 @@
     </QtMoc>
     <ClInclude Include="legacy\helpers\unitech_usi_dll.h" />
     <ClInclude Include="legacy\legacy.h" />
+    <QtMoc Include="legacy\qtCompatibility\scrollgrabber.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+    </QtMoc>
     <ClInclude Include="networking\global.h" />
     <QtMoc Include="widgets\utils\SpecializedWidgets.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
@@ -272,8 +279,16 @@
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
     </QtMoc>
-    <ClInclude Include="ScaningCore\NormalCapturer.h" />
+    <QtMoc Include="ScaningCore\NormalCapturer.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+    </QtMoc>
     <ClInclude Include="widgets\ControlsMiniwidgets\QuantityControl.h" />
+    <QtMoc Include="widgets\ElementWidgets\ProcessingOverlay.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+    </QtMoc>
+    <ClInclude Include="widgets\ElementWidgets\ZebraListItemDelegate.h" />
     <ClInclude Include="widgets\parents\abstractNodeInterface.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
@@ -317,6 +332,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="uamobiutil.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

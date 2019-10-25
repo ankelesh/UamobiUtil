@@ -23,7 +23,7 @@
 #include "widgets/ElementWidgets/MegaIconButton.h"
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
-
+#include "widgets/ElementWidgets/ProcessingOverlay.h"
 /*
 	This widget is shown on application launch. It's main functional is to allow user profile selection if
 	server returns any user profiles. In worst case, this widget automatically shows manual login widget.
@@ -61,7 +61,6 @@ private:
 	MegaIconButton* settingsButton;
     MegaIconButton* refreshButton;
 	QLineEdit* userid;
-
 	// Child widgets
 	LoginWidget* manualLogin;
 	MainSettingsWidget* settingsScreen;
@@ -69,7 +68,7 @@ private:
 	RequestAwaiter awaiter;
 
 	void show_login_widget(QString& log); // Utility: hides inner, shows login widget, sets it up.
-
+	void resizeEvent(QResizeEvent* rev) override;
 public:
 	MainPageWidget(GlobalAppSettings& go, QWidget* parent);
 	virtual bool isExpectingControl(int) override;
@@ -83,6 +82,7 @@ private slots:
 	void userIdSearch();
     void parseUsers();
 	void wasTimeout();
+	void settingsSaved();
 public slots:
 	void loadUsers();							//	sends request to server, fills LoginSelectWidget
 signals:

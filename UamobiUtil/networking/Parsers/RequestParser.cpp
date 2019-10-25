@@ -5,7 +5,7 @@
 #include "networking/Parsers/NamedAttributesResponseParsers.h"
 #include "legacy/legacy.h"
 #include <QtXml/QDomDocument>
-
+//#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -173,7 +173,7 @@ namespace parse_uniresults_functions {
 		if (ures.queriesResult.count() == 1)
 		{
 #ifdef DEBUG
-			//	detrace_METHEXPL("richtext parsed");
+				detrace_METHEXPL("richtext parsed" << showHeap(ures));
 #endif
 			temp.errors = ures.queriesResult.at(0);
 			temp.resp = true;
@@ -181,7 +181,7 @@ namespace parse_uniresults_functions {
 		else
 		{
 #ifdef DEBUG
-			//detrace_METHEXPL("richtext not parsed: q" << ures.one_position_entries_quantity );
+			detrace_METHEXPL("richtext not parsed: q" << ures.one_position_entries_quantity );
 #endif
 			temp.resp = false;
 		}

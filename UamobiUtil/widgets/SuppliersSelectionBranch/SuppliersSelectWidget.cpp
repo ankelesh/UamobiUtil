@@ -1,5 +1,9 @@
 #include "SuppliersSelectWidget.h"
 #include "widgets/utils/ElementsStyles.h"
+#include "widgets/ElementWidgets/ProcessingOverlay.h"
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
 
 QString specwidgets::_SupplierSelectionWidget::elemToString(int i)
 {
@@ -51,9 +55,9 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 	headerLayout->addWidget(ordfilterButton);
 	footerLayout->addWidget(backButton);
 	//footerLayout->addStretch();
-
+	QFont scf = makeFont(0.04);
 	userHelp->setText(tr("suppliers_selection_widget_user_tip"));
-	userHelp->setStyleSheet(countAdaptiveFont(0.03));
+	userHelp->setFont(scf);
 	userHelp->setAlignment(Qt::AlignCenter);
 
 	searchButton->setIcon(QIcon(":/res/search.png"));
@@ -62,10 +66,13 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 	searchButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
 	ordfilterButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
 
-	userinputField->setStyleSheet(countAdaptiveFont(0.04));
-	userinputField->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum));
-
-	supplierSelection->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
+	userinputField->setFont(scf);
+	userinputField->setMaximumWidth(calculateAdaptiveWidth(0.6));
+    userinputField->setMinimumWidth(calculateAdaptiveWidth(0.4));
+    userinputField->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
+    userinputField->setMaximumHeight(calculateAdaptiveButtonHeight());
+    supplierSelection->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding));
+    supplierSelection->setMaximumWidth(calculateAdaptiveWidth(1));
 
 	backButton->setText(tr("suppliers_selection_back"));
 	backButton->setIcon(QIcon(":/res/back.png"));
@@ -75,10 +82,9 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 	ordfilterButton->setCheckable(true);
 	ordfilterButton->setChecked(true);
 	ordFilterSwitched(true);
-
-
 	loadSuppliers();
-
+	supplierSelection->installEventFilter(keyfilter);
+	innerWidget->installEventFilter(keyfilter);
 #ifdef QT_VERSION5X
 	QObject::connect(searchButton, &QPushButton::clicked, this, &SuppliersSelectWidget::searchPrimed);
 	QObject::connect(ordfilterButton, &QPushButton::toggled, this, &SuppliersSelectWidget::ordFilterSwitched);
@@ -92,20 +98,22 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 	QObject::connect(supplierSelection, SIGNAL(supplierPicked(parsedSupplier)), this, SLOT(supplierPicked(parsedSupplier)));
     QObject::connect(userinputField, SIGNAL(editingFinished()), this, SLOT(searchPrimed()));
+    QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
 }
 
 void SuppliersSelectWidget::show()
 {
-	setFocus();
 	inframedWidget::show();
+	setFocus();
 }
 
 bool SuppliersSelectWidget::isExpectingControl(int val)
 {
+
 	if (awaiter.isAwaiting())
 		return false;
-	if (val >= -1 && val < allsuppliers.count() - 1)
+	if (val >= -1 && val <= allsuppliers.count() - 1)
 	{
 		if (val == -1)
 		{
@@ -152,28 +160,44 @@ void SuppliersSelectWidget::supplierPicked(parsedSupplier supp)
 	if (awaiter.isAwaiting())
 		return;
 	confirmedSupplier = supp;
+	hideProcessingOverlay();
 	emit supplierAcquired(supp);
 }
 
 void SuppliersSelectWidget::parse_response()
 {
+#ifdef DEBUG
+	detrace_METHCALL("parse_response");
+#endif
 	allsuppliers = interpreter(awaiter.restext, awaiter.errtext);
 	supplierSelection->reload();
-	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(parse_response()));
+	QObject::disconnect(&awaiter,SIGNAL(requestReceived()), 0,0);
+	hideProcessingOverlay();
 }
 
 void SuppliersSelectWidget::was_timeout()
 {
+
+#ifdef DEBUG
+	detrace_METHCALL("WasTimeout");
+#endif
+
 	userHelp->setText(tr("suppliers_select_widget_timeout!") + QString::number(globalSettings.timeoutInt));
-	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(parse_response()));
+	QObject::disconnect(&awaiter,SIGNAL(requestReceived()),0,0);
+	hideProcessingOverlay();
 }
 
 void SuppliersSelectWidget::loadSuppliers()
 {
 	if (awaiter.isAwaiting())
 		return;
-	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &SuppliersSelectWidget::parse_response);
-	(*globalSettings.networkingEngine.*listSuppliers)(userinputField->text(), ordfilterButton->isChecked(), &awaiter, RECEIVER_SLOT_NAME);
+	showProcessingOverlay();
+#ifdef QT_VERSION5X
+    QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &SuppliersSelectWidget::parse_response);
+#else
+    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_response()));
+#endif
+    (*globalSettings.networkingEngine.*listSuppliers)(userinputField->text(), ordfilterButton->isChecked(), &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 }
 
@@ -196,6 +220,14 @@ SuppliersSelectionBranch::SuppliersSelectionBranch(GlobalAppSettings& go, QWidge
 	QObject::connect(orderSelection, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
 #endif
 }
+
+void SuppliersSelectionBranch::show()
+{
+	inframedWidget::show();
+	supplierSelection->setFocus();
+
+}
+
 
 void SuppliersSelectionBranch::hideCurrent()
 {

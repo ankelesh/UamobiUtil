@@ -13,12 +13,11 @@
 #include <QTextDecoder>
 #include <QPointer>
 #include <QDebug>
-
 #include "global.h"
 #include "xml_funcs.h"
 #include "dataupdateengine-http.h"
 #include "debugtrace.h"
-
+//#define DEBUG
 struct SlotPointer
 {
 	SlotPointer(QObject* o, const QByteArray& slot)
@@ -653,7 +652,7 @@ void HttpUpdateEngine::sendQuery
 	QString currurl = url
 		+ "?delay=" + QString("%1").arg(delay) + "&cmd=" + urlpath;
 #ifdef DEBUG
-	//detrace_METHDATAS("sendQuery", "url", <<currurl);
+	detrace_METHDATAS("sendQuery", "url", <<currurl);
 	//detrace_OCREATED("QNetworkRequest", "HttpUpdateEngine::sendQuery");
 #endif
 	QNetworkRequest r;
@@ -679,7 +678,7 @@ void HttpUpdateEngine::sendQuery
 void HttpUpdateEngine::requestFinish(QNetworkReply* reply)
 {
 #ifdef DEBUG
-    detrace_SLOTCALL("requestFinish", "HttpUpdateEngine");
+    //detrace_SLOTCALL("requestFinish", "HttpUpdateEngine");
 #endif
 	if (delayTimer) {
 		delay = delayTimer->elapsed();
@@ -691,7 +690,7 @@ void HttpUpdateEngine::requestFinish(QNetworkReply* reply)
 	if (!reply->error())
 		res = td.toUnicode(reply->readAll());
 #ifdef DEBUG
-    detrace_METHTEXTS("HttpUpdateEngine::requestFinish", "res", res);
+   // detrace_METHTEXTS("HttpUpdateEngine::requestFinish", "res", res);
 #endif
 	/*qDebug() << "REPLY'S RESULT: " << "\n"
 		<< reply->request().url().toString() << "\n" << res;*/
@@ -783,10 +782,7 @@ void HttpUpdateEngine::makeRequest(DataRequest* dr)
 		+ props2str(dr);
 #ifdef DEBUG
 	//detrace_METHDATAS("HttpUpdateEngine::makeRequest", "url", << url);
-#endif
-	//qDebug() << "QUERY" << url;
-#ifdef DEBUG
-//detrace_OCREATED("QNetworkRequest", "HttpUpdateEngine::makeRequest");
+	//detrace_OCREATED("QNetworkRequest", "HttpUpdateEngine::makeRequest");
 #endif
 	QNetworkRequest req;
 	req.setUrl(QUrl::fromUserInput(url));

@@ -1,8 +1,9 @@
 #pragma once
 #ifdef QT_VERSION5X
-#include <QtWidgets/QStyledItemDelegate>
+
+#include <QtWidgets/QItemDelegate>
 #else
-#include <QtGui/QStyledItemDelegate>
+#include <QtGui/ItemDelegate>
 #endif
 #include <QtGui/QPainter>
 
@@ -15,7 +16,7 @@
 
 */
 
-class ZebraItemDelegate : public QStyledItemDelegate
+class ZebraItemDelegate : public QItemDelegate
 {
 public:
 	ZebraItemDelegate(QObject* parent);

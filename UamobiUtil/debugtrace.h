@@ -10,6 +10,7 @@
 #include <iostream>
 #include <QVector>
 #include <QFile>
+#include <iomanip>
 /*
 	This is debugging and tracing module. You can use it for dynamic testing
 	with varying verbosity of this tool. Use macroses starting with detrace_

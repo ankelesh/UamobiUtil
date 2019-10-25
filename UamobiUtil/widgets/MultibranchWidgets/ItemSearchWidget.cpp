@@ -1,5 +1,6 @@
 #include "ItemSearchWidget.h"
 #include "widgets/utils/ElementsStyles.h"
+#include "widgets/ElementWidgets/ProcessingOverlay.h"
 int specwidgets::_ItemSelectionList::countElems()
 {
 	return allitems.count();
@@ -55,6 +56,8 @@ ItemSearchWidget::ItemSearchWidget(GlobalAppSettings & go, QWidget* parent)
 	indexationInfo->setFont(scf);
 	indexationInfo->setAlignment(Qt::AlignCenter);
 	
+
+
 	backButton->setText(tr("item_search_back"));
 	backButton->setIcon(QIcon(":/res/back.png"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
@@ -68,6 +71,10 @@ ItemSearchWidget::ItemSearchWidget(GlobalAppSettings & go, QWidget* parent)
 	previousButton->setDisabled(true);
 	
 	searchInput->setFont(scf);
+    searchInput->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    searchInput->setMinimumWidth(calculateAdaptiveWidth(0.6));
+    searchInput->setMaximumWidth(calculateAdaptiveWidth(0.8));
+    searchInput->setMaximumHeight(calculateAdaptiveButtonHeight());
 	
 	
 	itemList->setFont(scf);
@@ -87,6 +94,7 @@ ItemSearchWidget::ItemSearchWidget(GlobalAppSettings & go, QWidget* parent)
     QObject::connect(itemList, SIGNAL(itemPicked(parsedItemSimplified)), this, SIGNAL(itemSelected(parsedItemSimplified)));
     QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
     QObject::connect(searchInput, SIGNAL(editingFinished()), this, SLOT(doSearch()));
+    QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
 
 
@@ -113,11 +121,16 @@ void ItemSearchWidget::loadResults()
 	{
 		return;
 	}
+#ifdef QT_VERSION5X
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ItemSearchWidget::search_response);
-	globalSettings.networkingEngine->docSearchItems(toSearch, currentpage, &awaiter, RECEIVER_SLOT_NAME);
+#else
+    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(search_response()));
+#endif
+    globalSettings.networkingEngine->docSearchItems(toSearch, currentpage, &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 	nextButton->setDisabled(allitems.last);
 	previousButton->setDisabled(currentpage == 0);
+	showProcessingOverlay();
 }
 
 void ItemSearchWidget::clear()
@@ -152,12 +165,14 @@ void ItemSearchWidget::search_response()
 {
 	allitems = RequestParser::interpretAsSearchResponse(awaiter.restext, awaiter.errtext);
 	refresh();
-	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(search_response()));
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+	hideProcessingOverlay();
 }
 
 void ItemSearchWidget::was_timeout()
 {
 	itemList->clear();
 	itemList->addItem(tr("item_search_timeout: ") + QString::number(globalSettings.timeoutInt));
-	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(search_response()));
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+	hideProcessingOverlay();
 }

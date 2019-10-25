@@ -2,7 +2,7 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
-
+#include "legacy/legacy.h"
 // Qt 5 only imports
 #ifdef QT_VERSION5X
 #include <QtWidgets/QScroller>
@@ -11,7 +11,7 @@
 #include "legacy/qtCompatibility/scrollgrabber.h"
 #endif
 #include "widgets/utils/ElementsStyles.h"
-
+#include "widgets/ElementWidgets/ProcessingOverlay.h"
 
 QString specwidgets::_modeSelectionWidget::elemAsString(int index)
 {
@@ -55,14 +55,14 @@ ModeSelectionWidget::ModeSelectionWidget(const GlobalAppSettings& go, QWidget* p
 	buttonLayout->addWidget(logoutButton);
 	//buttonLayout->addStretch();
 
-
+	QFont scf = makeFont(0.04);
 	userTip->setText(tr("mode_selection_user_tip!"));
 	userTip->setAlignment(Qt::AlignCenter);
-	userTip->setStyleSheet(countAdaptiveFont(0.03));
+	userTip->setFont(scf);
 	
 	modesTip->setText(tr("mode_selection_modes_tip:"));
 	modesTip->setAlignment(Qt::AlignCenter);
-	modesTip->setStyleSheet(countAdaptiveFont(0.03));
+	modesTip->setFont(scf);
 
 	logoutButton->setIcon(QIcon(":/res/back.png"));
 	logoutButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
@@ -70,7 +70,7 @@ ModeSelectionWidget::ModeSelectionWidget(const GlobalAppSettings& go, QWidget* p
 
 	loadModes();
 	modeSelection->reload();
-
+	innerWidget->installEventFilter(keyfilter);
 	scrArea->setWidget(modeSelection);
     QScroller::grabGesture(scrArea, QScroller::LeftMouseButtonGesture);
 
@@ -84,6 +84,7 @@ ModeSelectionWidget::ModeSelectionWidget(const GlobalAppSettings& go, QWidget* p
 	QObject::connect(logoutButton, SIGNAL(clicked()), this, SLOT(logoutPressed()));
 	QObject::connect(modeSelection, SIGNAL(modeSelected(parsedMode)), this, SLOT(modeSelected(parsedMode)));
     QObject::connect(modeSelection, SIGNAL(backRequired()), this,SIGNAL(backRequired()));
+    QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
 }
 
@@ -96,7 +97,7 @@ bool ModeSelectionWidget::isExpectingControl(int val)
 {
 	if (awaiter.isAwaiting())
 		return false;
-	if (val >= -1 && val < allmodes.count()-1)
+	if (val >= -1 && val <= allmodes.count()-1)
 	{
 		if (val == -1)
 		{
@@ -116,6 +117,7 @@ bool ModeSelectionWidget::isExpectingControl(int val)
 void ModeSelectionWidget::show()
 {
 	this->setFocus();
+	loadModes();
 	inframedWidget::show();
 }
 
@@ -123,8 +125,13 @@ void ModeSelectionWidget::loadModes()
 {
 	if (awaiter.isAwaiting())
 		return;
-	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ModeSelectionWidget::parse_modes);
-	globalSettings.networkingEngine->modeList(&awaiter, RECEIVER_SLOT_NAME, "nolang");
+	showProcessingOverlay();
+#ifdef QT_VERSION5X
+    QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ModeSelectionWidget::parse_modes);
+#else
+    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_modes()));
+#endif
+    globalSettings.networkingEngine->modeList(&awaiter, RECEIVER_SLOT_NAME, "nolang");
 	awaiter.run();
 }
 
@@ -138,14 +145,21 @@ void ModeSelectionWidget::modeSelected(parsedMode Mode)
 { 
 	if (awaiter.isAwaiting())
 		return;
-	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ModeSelectionWidget::mode_select_response);
-	globalSettings.networkingEngine->modeSelect(Mode.mode, Mode.submode, &awaiter, RECEIVER_SLOT_NAME);
+	showProcessingOverlay();
+#ifdef QT_VERSION5X
+    QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ModeSelectionWidget::mode_select_response);
+#else
+    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(mode_select_response()));
+#endif
+    globalSettings.networkingEngine->modeSelect(Mode.mode, Mode.submode, &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 	selected = Mode;
 }
 
 void ModeSelectionWidget::hideCurrent()
 {
+	if (awaiter.isAwaiting())
+		return;
 	emit backRequired();
 }
 
@@ -153,8 +167,10 @@ void ModeSelectionWidget::parse_modes()
 {
 	using RequestParser::interpretAsModeList;
 	allmodes = interpretAsModeList(awaiter.restext, awaiter.errtext);
+	legacy::filterNonCompatibleModes(allmodes);
 	modeSelection->reload();
-	awaiter.disconnect(SIGNAL(requestReceived), this, SLOT(parse_modes()));
+	QObject::disconnect(&awaiter,SIGNAL(requestReceived()), 0,0);
+	hideProcessingOverlay();
 }
 
 void ModeSelectionWidget::mode_select_response()
@@ -164,27 +180,26 @@ void ModeSelectionWidget::mode_select_response()
 #ifdef DEBUG
 	detrace_METHEXPL("request was " << resp.success);
 #endif
-
 	if (resp.success)
 	{
 		settings = resp.values;
 #ifdef DEBUG
-		detrace_METHEXPL("mode approved: " << Mode.debugSnapshot());
+		detrace_METHEXPL("mode approved: " << selected.debugSnapshot());
 #endif
 	}
 	else
 	{
 		selected.mode = "None";
 	}
-	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(mode_select_response()));
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()),0,0);
+	hideProcessingOverlay();
 }
 
 void ModeSelectionWidget::was_timeout()
 {
-
 	userTip->setText(tr("mode_selection_timeout!") + QString::number(globalSettings.timeoutInt));
-	awaiter.disconnect(SIGNAL(requestReceived), this, SLOT(parse_modes()));
-	awaiter.disconnect(SIGNAL(requestReceived()), this, SLOT(mode_select_response()));
+	QObject::disconnect(&awaiter,SIGNAL(requestReceived), 0,0);
+	hideProcessingOverlay();
 }
 
 ModeBranchRootWidget::ModeBranchRootWidget(const GlobalAppSettings& go, QWidget* parent)
@@ -219,10 +234,11 @@ void ModeBranchRootWidget::hideCurrent()
 	{
 		if (current == innerWidget)
 		{
-			emit backRequired();
+			logoutPressed();
 		}
 		else
 		{
+			loadModes();
 			_hideCurrent(innerWidget);
 		}
 	}

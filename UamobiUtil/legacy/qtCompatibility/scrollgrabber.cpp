@@ -25,10 +25,10 @@ bool ScrollKeyFilter::eventFilter(QObject * o, QEvent * ev)
         {
             if (mep->button() == Qt::LeftButton)
             {
-                if ( mep->y() - lastCoord >20 || mep->y() - lastCoord < -20)
+                if ( mep->y() - lastCoord >15 || mep->y() - lastCoord < -15)
                 {
                     int val =  mep->y() - lastCoord;
-                    emit scrollDistanceObtained(-val);
+                    emit scrollDistanceObtained(-(val * 2));
                     return true;
                 }
                 else
@@ -62,6 +62,5 @@ void QScroller::grabGesture(QAbstractScrollArea *from, QScroller::ScrollerGestur
 
 void QScroller::processScrollDistance(int dist)
 {
-    qDebug() << "setting value " << dist;
     grabbed->verticalScrollBar()->setValue(grabbed->verticalScrollBar()->value() + dist);
 }

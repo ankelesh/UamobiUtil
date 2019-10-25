@@ -62,7 +62,7 @@ protected slots:
 	void inspectClicked();
 	void continueClicked();
 	void backToSupplier();
-
+	virtual void returnReaction() override;
 public slots:
 	void setMainView(const QString&);
 signals:

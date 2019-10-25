@@ -22,7 +22,7 @@ private:
 public:
 	HttpUpdateEngine(QString& Url, QObject* parent);
 
-	void setUrl(QString url);
+	virtual void setUrl(QString url)override;
 	QString getUrl();
 	bool sessionReady();
 	Q_SLOT void initConnection();

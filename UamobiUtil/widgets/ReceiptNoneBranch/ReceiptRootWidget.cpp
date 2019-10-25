@@ -52,8 +52,9 @@ ReceiptRootWidget::ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QStri
 
 	current = innerWidget;
 	untouchable = innerWidget;
-	main = this;
+    main = innerWidget;
 	openCorrespondingSubbranch();
+	removeEventFilter(keyfilter);
 #ifdef QT_VERSION5X
 	QObject::connect(suppliersSelect, &SuppliersSelectWidget::supplierAcquired, this, &ReceiptRootWidget::supplierAcquired);
 	QObject::connect(suppliersSelect, &SuppliersSelectWidget::backRequired, this, &ReceiptRootWidget::backTo);
@@ -71,7 +72,7 @@ ReceiptRootWidget::ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QStri
 	QObject::connect(innerWidget, SIGNAL(backRequired()), this, SLOT(backTo()));
 	QObject::connect(innerWidget, SIGNAL(dataConfirmed()), this, SLOT(continueToScaning()));
     QObject::connect(innerWidget, SIGNAL(backTo(int)), this, SLOT(backToStep(int)));
-	QObject::connect(scaning, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+    QObject::connect(scaning, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
 #endif
 }
 
@@ -90,11 +91,13 @@ void ReceiptRootWidget::orderAcquired(parsedOrder po, QString  richtext)
 	innerWidget->setMainView(richtext);
 	confirmedOrder = po;
 	_hideCurrent(innerWidget);
+	innerWidget->setFocus();
 }
 
 void ReceiptRootWidget::hideCurrent()
 {
 	_hideCurrent(innerWidget);
+	innerWidget->setFocus();
 }
 
 void ReceiptRootWidget::backTo()

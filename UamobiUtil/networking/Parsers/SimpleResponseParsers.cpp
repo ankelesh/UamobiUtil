@@ -1,5 +1,8 @@
 #include "SimpleResponseParsers.h"
-
+//#define DEBUG
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
 bool SimpliestResponceParser::couldRead()
 {
 	return success;
@@ -65,6 +68,7 @@ QString RichtextResponseParser::parseErrorText()
 RichtextResponseParser::RichtextResponseParser(QString& res, QString& err)
 	:abs_parsed_request(res, err)
 {
+	detrace_DCONSTR("RichTextRespParser with" << res);
 	QDomDocument doc;
 	doc.setContent(result);
 	try
@@ -72,7 +76,8 @@ RichtextResponseParser::RichtextResponseParser(QString& res, QString& err)
 		QString code = doc.elementsByTagName("status").at(0).toElement().text();
 		parseres.request_status = code.toInt();
 		if (parseres.request_status != 200)
-		{
+		{	
+			detrace_METHEXPL("status was " << parseres.request_status);
 			success = false;
 			return;
 		}

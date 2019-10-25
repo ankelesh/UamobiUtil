@@ -32,6 +32,7 @@ void GlobalAppSettings::dump()
 	setting.setValue("app_lang", language);
 	setting.setValue("http_host", HttpUrl);
 	setting.setValue("timeout", timeoutInt);
+	setting.setValue("alt_hosts", AlternativeAdresses);
 }
 
 GlobalAppSettings::GlobalAppSettings()
@@ -40,6 +41,12 @@ GlobalAppSettings::GlobalAppSettings()
 	HttpUrl = settings.value("http_host", "").toString();
 	language = settings.value("app_lang", "").toString();
 	timeoutInt = settings.value("timeout", 200000000).toInt();
+	AlternativeAdresses = settings.value("alt_hosts").toStringList();
 	setDefaultsToEmpty();
 	setTranslator();
+}
+
+GlobalAppSettings::~GlobalAppSettings()
+{
+	dump();
 }

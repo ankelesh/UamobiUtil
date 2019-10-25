@@ -1,6 +1,4 @@
 #include "RequestAwaiter.h"
-
-#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -8,25 +6,34 @@
 const char* RECEIVER_SLOT_NAME = "requestIncoming";
 
 RequestAwaiter::RequestAwaiter(int interval, QObject* parent)
-	: QObject(parent), timer(new QTimer(this)), awaiting(false)
+	: QObject(parent), timer(new QTimer(this)), awaiting(false), timeoutinterval(interval)
 {
 #ifdef DEBUG
     detrace_METHEXPL("interval was:" << interval );
 #endif
 	timer->setInterval(interval);
 	timer->setSingleShot(true);
+
+#ifdef DEBUG
+	detrace_METHEXPL("Timer in inner measures: " << timer->intervalAsDuration().count());
+#endif
+
 #ifdef QT_VERSION5X
 	QObject::connect(timer, &QTimer::timeout, this, &RequestAwaiter::timeout);
 #else
-    detrace_CONNECTSTAT("timer",  QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeout())));
+   QObject::connect(timer, SIGNAL(timeout()), this, SLOT(timeout()));
 #endif
 }
 
 void RequestAwaiter::run()
 {
-    detrace_METHCALL("run");
+	timer->setInterval(timeoutinterval);
 	timer->start();
-    detrace_METHEXPL("timer started, buffers wiped");
+
+#ifdef DEBUG
+	detrace_METHEXPL("now with interval " << timer->interval() << " remaining is " << timer->remainingTime());
+#endif
+
 	awaiting = true;
 	wastimeout = false;
 	restext = QString();
@@ -43,10 +50,16 @@ bool RequestAwaiter::wasTimeout()
 	return wastimeout;
 }
 
+int RequestAwaiter::getInterval()
+{
+	return timeoutinterval;
+}
+
 void RequestAwaiter::timeout()
 {
 #ifdef DEBUG
     detrace_METHCALL("RequestAwaiter::timeout");
+	detrace_METHEXPL(timer->remainingTime() << " msecs remaining");
 #endif
 	awaiting = false;
 	wastimeout = true;
@@ -59,13 +72,13 @@ void RequestAwaiter::requestIncoming(QString a, QString b)
 		return;*/
 #ifdef DEBUG
     detrace_METHCALL("RequestAwaiter::requestIncoming");
+	detrace_METHEXPL(timer->remainingTime() << " msecs remaining");
 	detrace_METHTEXTS("RequestAwaiter::requestincoming", "a, b", a << "|" << b);
 #endif
 	restext = a; errtext = b;
 
 	awaiting = false;
-	timer->stop();
-    detrace_METHEXPL(timer->isActive());
+    timer->stop();
 	wastimeout = false;
 	emit requestSuccess(a, b);
 	emit requestReceived();

@@ -3,7 +3,7 @@
 #include "debugtrace.h"
 #endif
 #include "widgets/utils/ElementsStyles.h"
-
+#include "widgets/ElementWidgets/ProcessingOverlay.h"
 void LoginWidget::login_confirmed()
 {
 	using parse_uniresults_functions::TypicalResponse;
@@ -14,18 +14,22 @@ void LoginWidget::login_confirmed()
 		info->setText(tr("login_widget_no_password!"));
 		return;
 	}
+	showProcessingOverlay();
 	globalSettings.networkingEngine->userLogIn(loginField->text(), passwordField->text(), &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 }
 
 void LoginWidget::was_timeout()
 {
+	hideProcessingOverlay();
 	info->setText(tr("login_widget_connection_timeout:") + QString::number(globalSettings.timeoutInt));
 }
 
 void LoginWidget::checkResponse()
 {
 	using namespace parse_uniresults_functions;
+	if (awaiter.wasTimeout())
+		return;
 	TypicalResponse resp = RequestParser::interpretAsLoginResponse(awaiter.restext, awaiter.errtext);
 	if (resp.resp == true)
 	{
@@ -35,13 +39,14 @@ void LoginWidget::checkResponse()
 	{
 		info->setText(resp.errors);
 	}
+	hideProcessingOverlay();
 }
 
 LoginWidget::LoginWidget(GlobalAppSettings& go, QWidget* parent)
 	: inframedWidget(parent), mainLayout(new QVBoxLayout(this)), loginInfo(new QLabel(this)),
 	passwordInfo(new QLabel(this)), info(new QLabel(this)), loginField(new QLineEdit(this)),
 	passwordField(new QLineEdit(this)), buttonPanel(new QHBoxLayout(this)), backButton(new MegaIconButton(this)),
-	okButton(new MegaIconButton(this)), globalSettings(go)
+	okButton(new MegaIconButton(this)), globalSettings(go), awaiter(go.timeoutInt, this)
 {
 	this->setLayout(mainLayout);
 	mainLayout->setSpacing(0);
@@ -64,8 +69,10 @@ LoginWidget::LoginWidget(GlobalAppSettings& go, QWidget* parent)
 #endif
 	this->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
 	loginInfo->setText(tr("login_widget_login_tip"));
-	loginInfo->setStyleSheet(countAdaptiveFont(0.05));
-	passwordInfo->setStyleSheet(countAdaptiveFont(0.05));
+
+	QFont scf = makeFont(0.04);
+	loginInfo->setFont(scf);
+	passwordInfo->setFont(scf);
 	passwordInfo->setText(tr("login_widget_password_tip"));
 	okButton->setText(tr("login_widget_ok_button"));
 	backButton->setText(tr("login_widget_back_button"));
@@ -73,8 +80,8 @@ LoginWidget::LoginWidget(GlobalAppSettings& go, QWidget* parent)
 	info->setAlignment(Qt::AlignCenter);
 	info->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum));
 	passwordField->setEchoMode(QLineEdit::Password);
-	loginField->setStyleSheet(countAdaptiveFont(0.04));
-	passwordField->setStyleSheet(countAdaptiveFont(0.04));
+	loginField->setFont(scf);
+	passwordField->setFont(scf);
 	okButton->setIcon(QIcon(":/res/submit.png"));
 	backButton->setIcon(QIcon(":/res/back.png"));
 	okButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
@@ -91,6 +98,8 @@ LoginWidget::LoginWidget(GlobalAppSettings& go, QWidget* parent)
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 	QObject::connect(loginField, SIGNAL(returnPressed()), passwordField, SLOT(setFocus()));
 	QObject::connect(passwordField, SIGNAL(returnPressed()), this, SLOT(login_confirmed()));
+    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(checkResponse()));
+    QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
 }
 

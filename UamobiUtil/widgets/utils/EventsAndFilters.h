@@ -1,6 +1,7 @@
 #pragma once
 #include <QtCore/QObject>
 #include <QtCore/QEvent>
+#include <QtGui/QKeyEvent>
 /*
 	This file contains everything related to handling events. Mostly KeyEvents
 		NoKeyEvents:
@@ -52,4 +53,40 @@ namespace filters
     public:
         LineEditHelper(QObject* ob) : QObject(ob){};
     };
+	class GeneralPurposeFilter : public QObject
+	{
+		Q_OBJECT
+	public:
+		enum captureTypes{Number,Return, Back, Scan, Symbol, All, infPack};
+	protected:
+		
+		captureTypes mytypes[5];
+		int typeLen;
+		typedef	bool(GeneralPurposeFilter::* CaptureFunction)(QKeyEvent*);
+		CaptureFunction captureFunction;
+
+		CaptureFunction someCaptureFunctions[5];
+
+		CaptureFunction makeCaptureFunction(captureTypes type);
+
+		bool eventFilter(QObject* ob, QEvent* ev) override;
+		bool captReturn(QKeyEvent*);
+		bool captNumber(QKeyEvent*);
+		bool captSymbol(QKeyEvent*);
+		bool captBack(QKeyEvent*);
+		bool captAll(QKeyEvent*);
+		bool captSome(QKeyEvent*);
+		bool captScan(QKeyEvent*);
+		bool captInf(QKeyEvent*);
+
+	public:
+		GeneralPurposeFilter(captureTypes type = All, QObject* parent = Q_NULLPTR);
+		GeneralPurposeFilter(captureTypes type1, captureTypes type2, QObject* parent = Q_NULLPTR, captureTypes type3 = All, captureTypes type4 = All, captureTypes type5 = All);
+	signals:
+		void returnPressed();
+		void backPressed();
+		void scanPressed();
+		void numberPressed(int);
+		void symbolPressed(QString);
+	};
 }

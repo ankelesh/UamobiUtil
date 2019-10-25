@@ -4,10 +4,16 @@
 
 TEMPLATE = app
 TARGET = UamobiUtil
-QT += core xml network gui widgets
+QT += core xml network gui
 CONFIG += release
-
-
+INCLUDEPATH += C:/Qt/4.8.3-CE6-static/include
+DEFINES += "Q_NULLPTR=0"
+wince* {
+        DEFINES += FTR_COM
+        QMAKE_CXX += -Ox -GL
+        QMAKE_LFLAGS += /LTCG
+}
+win32: RC_ICONS = uamobiU.ico
 HEADERS += ./UamobiUtil.h \
     ./networking/dataupdateengine.h \
     ./networking/dataupdateengine-http.h \
@@ -46,9 +52,15 @@ HEADERS += ./UamobiUtil.h \
     networking/NetCallArgs.h \
     networking/StaticTestingDataEngine.h \
     widgets/utils/GlobalAppSettings.h \
-    widgets/ElementWidgets/BigButtonsSpinbox.h \
     widgets/MultibranchWidgets/DocResultsWidget.h \
-    widgets/MultibranchWidgets/ItemSearchWidget.h
+    widgets/MultibranchWidgets/ItemSearchWidget.h \
+    ScaningCore/NormalCapturer.h \
+    widgets/ElementWidgets/BigButtonsSpinbox.h \
+    widgets/ElementWidgets/MegaIconButton.h \
+    widgets/ElementWidgets/ZebraListItemDelegate.h \
+    legacy/qtCompatibility/scrollgrabber.h \
+    widgets/ControlsMiniwidgets/abs_control.h \
+    widgets/ControlsMiniwidgets/QuantityControl.h
 SOURCES += ./main.cpp \
     ./networking/dataupdateengine.cpp \
     ./UamobiUtil.cpp \
@@ -85,12 +97,16 @@ SOURCES += ./main.cpp \
     networking/StaticTestingDataEngine.cpp \
     networking/things.cpp \
     widgets/utils/GlobalAppSettings.cpp \
-    widgets/ElementWidgets/BigButtonsSpinbox.cpp \
     widgets/MultibranchWidgets/DocResultsWidget.cpp \
-    widgets/MultibranchWidgets/ItemSearchWidget.cpp
-	
-TRANSLATIONS += translations/uamobi_ru.ts\
-				translations/uamobi_ro.ts\
-				translations/uamobi_en.ts
+    widgets/MultibranchWidgets/ItemSearchWidget.cpp \
+    ScaningCore/NormalCapturer.cpp \
+    widgets/ElementWidgets/BigButtonsSpinbox.cpp \
+    widgets/ElementWidgets/MegaIconButton.cpp \
+    widgets/ElementWidgets/ZebraListItemDelegate.cpp \
+    widgets/utils/EventsAndFilters.cpp \
+    widgets/parents/inframedWidget.cpp \
+    legacy/qtCompatibility/scrollgrabber.cpp \
+    widgets/ControlsMiniwidgets/abs_control.cpp \
+    widgets/ControlsMiniwidgets/QuantityControl.cpp
 RESOURCES += UamobiUtil.qrc
-
+TRANSLATIONS += translations/uamobi_ru.ts translations/uamobi_ro.ts translations/uamobi_en.ts

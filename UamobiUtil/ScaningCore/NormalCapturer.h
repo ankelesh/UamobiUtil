@@ -14,6 +14,7 @@ public:
 	virtual bool isManualInFocus() = 0;
 	virtual bool handleScannedBarcode() = 0;
 	virtual bool handleNumberInbuffer() = 0;
+	virtual int flushControl(int) = 0;
 	virtual void processBackPress() = 0;
     virtual void removeManualFocus() = 0;
 	virtual void setControlFocus(int) = 0;
@@ -22,6 +23,7 @@ public:
 
 class NormalCapturer : public QObject
 {
+    Q_OBJECT
 private:
 	// control vars
 	captureInterface* widgetToApply;
@@ -37,13 +39,16 @@ protected:
 public:
     filters::NoKeyEvents* keyfilter;
 	explicit NormalCapturer(captureInterface* inter, QObject * whereApply);
-	void skipControls();
+	void skipControls(int q);
     void clearCaptureEngine();
 	void setPhase(int);
+	void setControlNumber(int);
+    QString stateOfEngine();
 protected slots:
 	void pressScan();
 	void pressReturn();
 	void handleElement(QString);
     void handleBack();
+	void handleErase();
 	
 };

@@ -252,11 +252,20 @@
     <ClCompile Include="widgets\parents\inframedWidget.cpp">
       <Filter>Source Files\util\parents</Filter>
     </ClCompile>
-    <ClCompile Include="ScaningCore\NormalCapturer.cpp">
-      <Filter>Source Files\ScaningRelated</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\utils\EventsAndFilters.cpp">
       <Filter>Source Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="legacy\qtCompatibility\scrollgrabber.cpp">
+      <Filter>Source Files\legacy</Filter>
+    </ClCompile>
+    <ClCompile Include="ScaningCore\NormalCapturer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ElementWidgets\ProcessingOverlay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ElementWidgets\ZebraListItemDelegate.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -350,6 +359,15 @@
     <QtMoc Include="widgets\MultibranchWidgets\ItemSearchWidget.h">
       <Filter>Header Files\MultibranchWidgets</Filter>
     </QtMoc>
+    <QtMoc Include="legacy\qtCompatibility\scrollgrabber.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ScaningCore\NormalCapturer.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ElementWidgets\ProcessingOverlay.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="UamobiUtil.qrc">
@@ -414,11 +432,14 @@
     <ClInclude Include="widgets\ControlsMiniwidgets\QuantityControl.h">
       <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="ScaningCore\NormalCapturer.h">
-      <Filter>Header Files\ScaningRelated</Filter>
+    <ClInclude Include="widgets\ElementWidgets\ZebraListItemDelegate.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="uamobiutil.rc" />
   </ItemGroup>
 </Project>

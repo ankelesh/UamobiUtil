@@ -1,1 +1,216 @@
-interval was:1000interval was:3000  ->Method called: runtimer started, buffers wiped  ->Method called: RequestAwaiter::requestIncomingin method RequestAwaiter::requestincoming state of text variable a, b was: ________________________________________<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status>  <user>   <login>Amatveev</login>   <name>Administrator Matveev Aliona</name>   <br/>  </user>  <user>   <login>aivancioglo</login>   <name>aivancioglo</name>   <br/>  </user>  <user>   <login>amono</login>   <name>Amono 777</name>   <br/>  </user>  <user>   <login>TSD_UNO</login>   <name>1330 Receptioner U3</name>   <br/>  </user>  <user>   <login>1620</login>   <name>1620 TSD_RUSSO</name>   <br/>  </user>  <user>   <login>TSD_MOSCOVEI</login>   <name>2010 TSD_MOSCOVEI</name>   <br/>  </user>  <user>   <login>TSD_Balti</login>   <name>221 TSD Balti</name>   <br/>  </user>  <user>   <login>TSD_Sarmigetusa</login>   <name>252 9010 TSD_Sarmizegetusa</name>   <br/>  </user>  <user>   <login>TSD_COMRAT</login>   <name>256 TSD_Comrat</name>   <br/>  </user>  <user>   <login>TSD_777</login>   <name>271 TSD_777</name>   <br/>  </user>  <user>   <login>TSD_M11</login>   <name>273 TSD_M11</name>   <br/>  </user>  <user>   <login>TSD_M12</login>   <name>273 TSD_M12</name>   <br/>  </user>  <user>   <login>operator5</login>   <name>5010 TSD Avocado Dacia</name>   <br/>  </user>  <servicename>BONUS MARKET</servicename></users>|false  ->Method called: inframed::keyReleaseEvent with 50  ->Method called: inframed::keyReleaseEvent with 65  ->Method called: inframed::keyReleaseEvent with 73  ->Method called: inframed::keyReleaseEvent with 49in inframed::isExp  ->Method called: inframed::keyReleaseEvent with 50in inframed::isExp  ->Method called: inframed::keyReleaseEvent with 51in inframed::isExp  ->Method called: runtimer started, buffers wiped  ->Method called: inframed::keyReleaseEvent with 16777220  ->Method called: RequestAwaiter::timeout  ->Method called: RequestAwaiter::requestIncomingin method RequestAwaiter::requestincoming state of text variable a, b was: ________________________________________<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>3417</session> </login>|falseinterval was:3000  ->Method called: runtimer started, buffers wipedinterval was:3000  ->Method called: RequestAwaiter::requestIncomingin method RequestAwaiter::requestincoming state of text variable a, b was: ________________________________________<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  	<mode> 		<modeName>inventory</modeName> 		<captionMode></captionMode> 	</mode> 	<mode> 		<modeName>printing</modeName> 		<captionMode></captionMode> 	</mode> 	<mode> 		<modeName>receipt</modeName> 		<captionMode></captionMode> 	</mode> 	<mode> 		<modeName>batchprinting</modeName> 		<captionMode></captionMode> 	</mode> 	<mode> 		<modeName>goodandproductmove</modeName> 		<captionMode></captionMode> 	</mode> 	<mode> 		<modeName>redelivery</modeName> 		<captionMode>Redelivery</captionMode> 	</mode></modes>|false  ->Method called: inframed::keyReleaseEvent with 16777216  ->Method called: inframed::keyReleaseEvent with 65  ->Method called: inframed::keyReleaseEvent with 73  ->Method called: inframed::keyReleaseEvent with 49in inframed::isExp  ->Method called: inframed::keyReleaseEvent with 50in inframed::isExp  ->Method called: inframed::keyReleaseEvent with 51in inframed::isExp  ->Method called: runtimer started, buffers wiped  ->Method called: inframed::keyReleaseEvent with 16777220  ->Method called: RequestAwaiter::timeout  ->Method called: RequestAwaiter::requestIncomingin method RequestAwaiter::requestincoming state of text variable a, b was: ________________________________________<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>3418</session> </login>|falseinterval was:3000  ->Method called: runtimer started, buffers wipedinterval was:3000  ->Method called: RequestAwaiter::requestIncomingin method RequestAwaiter::requestincoming state of text variable a, b was: ________________________________________<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  	<mode> 		<modeName>inventory</modeName> 		<captionMode></captionMode> 	</mode> 	<mode> 		<modeName>printing</modeName> 		<captionMode></captionMode> 	</mode> 	<mode> 		<modeName>receipt</modeName> 		<captionMode></captionMode> 	</mode> 	<mode> 		<modeName>batchprinting</modeName> 		<captionMode></captionMode> 	</mode> 	<mode> 		<modeName>goodandproductmove</modeName> 		<captionMode></captionMode> 	</mode> 	<mode> 		<modeName>redelivery</modeName> 		<captionMode>Redelivery</captionMode> 	</mode></modes>|false
+heap snapshot with tech values:2 opeq, 0 ares,200 status
+
+>>cycling: adding elem Simbacom-Lux SRLby index0
+>>cycling: adding elem Tarol-DD SRLby index1
+>>cycling: adding elem Nr. cererii: 526544|526544|Data livr.: 12.11.2018 - 12.11.2108  by index0
+>>cycling: adding elem Fara cerere|-79580|Receptie fara cerere  by index1
+
+][Created object RichTextRespParser with<?xml version="1.0" encoding="CP1251"?>
+<order>
+ <status>200</status>
+<richdata>
+<![CDATA[
+ <div><b>Furnizor:</b> Simbacom-Lux SRL</div>
+ <div><b>Doc. nr.:</b> 526544</div>
+<hr><div>Arahide in coaja 190g Banzai - 8</div>
+<div>Arahide prajite cu coaja si sare 70g Banzai - 24</div>
+<div>Arahide prajite 35g Banzai - 10</div>
+<div>Arahide prajite 70g Banzai - 36</div>
+<div>Fistic prajit 60g Banzai - 24</div>
+<div>Mix Duo Crunch arahide/porumb 60g Banzai - 24</div>
+<div>Pesmeti bacon 110g Leo Dor - 30</div>
+<div>Miez de floarea soarelui 30g Banzai - 20</div>
+<div>Miez de floarea soarelui 55g Banzai - 48</div>
+<div>Seminte de dovleac 40g Banzai - 12</div>
+]]>
+</richdata>
+</order> by his default constructor
+
+
+->Method called: NormalCapturer::pressScan
+
+
+->Method called: NormalCapturer::clearCaptureEngine
+
+
+->Method called: NormalCapturer::pressScan
+A
+toBarcode
+A
+toBarcode
+
+toBarcode
+1
+toBarcode
+2
+toBarcode
+3
+toBarcode
+4
+toBarcode
+5
+toBarcode
+5
+toBarcode
+
+
+->Method called: NormalCapturer::pressReturn
+return captured in capturer while buffer was AA123455
+before calling handler from capturer: AA123455
+
+
+-)Method handleScannedBarcode of object WidgetToApply invocated in method  press return of object capturer
+
+
+-)Method setControlFocus of object WidgetToApply invocated in method  press return of object capturer
+toNum
+heap snapshot with tech values:2 opeq, 0 ares,200 status
+
+|nn|<0>
+|AA123455|<1>
+|richdata|<2>
+|
+<div style="background: #b0f0ff"><center>Factura</center></div>
+<div style="text-align: left">A fost selectata factura "AA123455".<br>Apasati <b>Scan</b> pentru scanarea.</div>
+ |<3>
+>>cycling: adding elem Abecedar. ed.biblionby index0
+>>cycling: adding elem Abecedar. ed.biblionby index1
+>>cycling: adding elem Abecedar. ed.biblionby index2
+>>cycling: adding elem Abecedarul piticilor. ed. biblionby index3
+>>cycling: adding elem Absobant de umeditate Farcent p-ru  prevenirea mucegaiului in incaperi cu umedit.inalta 210gby index4
+>>cycling: adding elem Absorb igien. Libresse Good Night clip 10bucby index5
+>>cycling: adding elem Absorb igien. Libresse Inv Good Night clip 10bucby index6
+>>cycling: adding elem Absorb igien. Libresse Invisibile Normal Clip Duo 20bucby index7
+>>cycling: adding elem Absorb igien. Libresse Invisibile Super Clip Duo 18bucby index8
+>>cycling: adding elem Absorb igien. Libresse Normal Clip Natural Duo 20*12by index9
+>>cycling: adding elem ***Absorb igien. Naturella Ultra Single Calendula 10bucby index10
+>>cycling: adding elem Absorb zilnice Libresse Natural Everyday 20bucby index11
+>>cycling: adding elem Absorb zilnice Libresse SW So Slim Deo 32bucby index12
+>>cycling: adding elem Absorbant igienic p-ru pisici Tom №2 mediu (1,5-2,5mm)by index13
+>>cycling: adding elem Absorbant igienic p-ru pisici Tom №4 mascat (2,5-6mm) miros lavandaby index14
+>>cycling: adding elem Absorbant igienic p-ru pisici Tom №5 mediu (1,5-2,5mm) miros lavandaby index15
+>>cycling: adding elem Absorbant igienic p-ru pisici Tom №6 marunt (0,3-1,5mm) miros lavandaby index16
+>>cycling: adding elem Absorbant p-ru pisici Cat Litter Gel Odor 3.8Lby index17
+>>cycling: adding elem Absorbant p-ru pisici Nutritcat 6kg granule mari lavandaby index18
+>>cycling: adding elem Absorbant p-ru pisici Nutritcat 6kg granule medii lavandaby index19
+>>cycling: adding elem Absorbant p-ru pisici Nutritcat 6kg granule mici lavandaby index20
+>>cycling: adding elem Absorbant Sano de mirosuri frigider 20gby index21
+>>cycling: adding elem Absorbant umiditate Ceresit Aero 360 450g aparatby index22
+>>cycling: adding elem Absorbant zilnice Discreet deo Ocean Breez (60) (6463)by index23
+>>cycling: adding elem Absorbant zilnice Discreet deo Ocean Breez (60) (6463)by index24
+>>cycling: adding elem Abecedar. ed.biblionby index0
+>>cycling: adding elem Abecedar. ed.biblionby index1
+>>cycling: adding elem Abecedar. ed.biblionby index2
+>>cycling: adding elem Abecedarul piticilor. ed. biblionby index3
+>>cycling: adding elem Absobant de umeditate Farcent p-ru  prevenirea mucegaiului in incaperi cu umedit.inalta 210gby index4
+>>cycling: adding elem Absorb igien. Libresse Good Night clip 10bucby index5
+>>cycling: adding elem Absorb igien. Libresse Inv Good Night clip 10bucby index6
+>>cycling: adding elem Absorb igien. Libresse Invisibile Normal Clip Duo 20bucby index7
+>>cycling: adding elem Absorb igien. Libresse Invisibile Super Clip Duo 18bucby index8
+>>cycling: adding elem Absorb igien. Libresse Normal Clip Natural Duo 20*12by index9
+>>cycling: adding elem ***Absorb igien. Naturella Ultra Single Calendula 10bucby index10
+>>cycling: adding elem Absorb zilnice Libresse Natural Everyday 20bucby index11
+>>cycling: adding elem Absorb zilnice Libresse SW So Slim Deo 32bucby index12
+>>cycling: adding elem Absorbant igienic p-ru pisici Tom №2 mediu (1,5-2,5mm)by index13
+>>cycling: adding elem Absorbant igienic p-ru pisici Tom №4 mascat (2,5-6mm) miros lavandaby index14
+>>cycling: adding elem Absorbant igienic p-ru pisici Tom №5 mediu (1,5-2,5mm) miros lavandaby index15
+>>cycling: adding elem Absorbant igienic p-ru pisici Tom №6 marunt (0,3-1,5mm) miros lavandaby index16
+>>cycling: adding elem Absorbant p-ru pisici Cat Litter Gel Odor 3.8Lby index17
+>>cycling: adding elem Absorbant p-ru pisici Nutritcat 6kg granule mari lavandaby index18
+>>cycling: adding elem Absorbant p-ru pisici Nutritcat 6kg granule medii lavandaby index19
+>>cycling: adding elem Absorbant p-ru pisici Nutritcat 6kg granule mici lavandaby index20
+>>cycling: adding elem Absorbant Sano de mirosuri frigider 20gby index21
+>>cycling: adding elem Absorbant umiditate Ceresit Aero 360 450g aparatby index22
+>>cycling: adding elem Absorbant zilnice Discreet deo Ocean Breez (60) (6463)by index23
+>>cycling: adding elem Absorbant zilnice Discreet deo Ocean Breez (60) (6463)by index24
+got control
+getting inside: qty
+getting inside: 
+heap snapshot with tech values:2 opeq, 0 ares,200 status
+
+|nn|<0>
+|AA123455|<1>
+|qty|<2>
+||<3>
+|richdata|<4>
+|
+<div style="background: #d0f0c0"><center>Marfa</center></div>
+  <div style="text-decoration: underline">
+   <b>Barcod:</b>
+   <span>4710731050101</span>
+  </div>
+  <div>
+   <b>Denumirea:</b>
+   <span><b>Absobant de umeditate Farcent p-ru  prevenirea mucegaiului in incaperi cu umedit.inalta 210g</b></span>
+  </div>
+  <br />
+  <div>
+   <b>Pret fara TVA:</b>
+   <span><b>16.5</b></span>
+  </div>
+  <br>
+  <div>
+   <b>Cod:</b>
+   <span>5850</span>
+  </div>
+  <div>
+   <b>Cant.:</b>
+   <span><b style="color: #800">Nui in cerere</b>.</span>
+  </div>
+ |<5>
+toNum
+toNum
+toNum
+toNum
+toNum
+toNum
+toNum
+toNum
+toNum
+toNum
+toNum
+toNum
+
+
+->Method called: NormalCapturer::pressReturn
+return captured in capturer while buffer was 
+
+
+->Method called: NormalCapturer::pressScan
+
+
+->Method called: NormalCapturer::clearCaptureEngine
+heap snapshot with tech values:2 opeq, 0 ares,200 status
+
+|nn|<0>
+|AA123455|<1>
+|richdata|<2>
+|
+<div style="background: #d0f0c0"><center>Marfa</center></div>
+  <div style="text-decoration: underline">
+   <b>Barcod:</b>
+   <span>4710731050101</span>
+  </div>
+  <div>
+   <b>Denumirea:</b>
+   <span><b>Absobant de umeditate Farcent p-ru  prevenirea mucegaiului in incaperi cu umedit.inalta 210g</b></span>
+  </div>
+  <br />
+  <div>
+   <b>Pret fara TVA:</b>
+   <span><b>16.5</b></span>
+  </div>
+  <br>
+  <div>
+   <b>Cod:</b>
+   <span>5850</span>
+  </div>
+  <div>
+   <b>Cant.:</b>
+   <span><b style="color: #800">Nui in cerere</b>.</span>
+  </div>
+  <div style="text-decoration: underline">
+   <b>Acc.:</b>
+   <span>445</span>
+  </div>
+ |<3>

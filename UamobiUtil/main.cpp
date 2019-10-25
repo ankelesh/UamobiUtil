@@ -5,6 +5,9 @@
 #include <QtGui/QApplication>
 #endif
 #include "networking/StaticTestingDataEngine.h"
+#ifdef Q_OS_WINCE
+#include <QtCore/QTimer>
+#endif
 
 //#define TESTING
 
@@ -28,13 +31,24 @@ int main(int argc, char* argv[])
 	GlobalAppSettings global;	//	global settings object
 #ifdef TESTING
 	global.networkingEngine = new StaticTestingDataEngine(100);	//	It is way better to use for testing a static engine with custom delay
-#else
-    global.HttpUrl = "http://una.md:3323/um/bonus2.php";			//	actual db
+#else		//	actual db
 	global.networkingEngine = new HttpUpdateEngine(global.HttpUrl, &a);
 #endif
-    global.timeoutInt = 3000;					//	while not actual version - timeout is maximized to avoid testing delays
-	global.setTranslator();
-	UamobiUtil w(global);
-	w.showMaximized();
-	return a.exec();
+    global.timeoutInt = 10000;					//	while not actual version - timeout is maximized to avoid testing delays
+    global.setTranslator();
+#ifdef Q_OS_WINCE
+    setCurrentSize(calculateAdaptiveSize(1,0.9));
+    UamobiUtil w(global);
+    w.move( 0, 0 );
+    w.showMaximized();
+    w.raise();
+    w.setFixedHeight(calculateAdaptiveButtonHeight(0.9));
+    w.setFixedWidth(calculateAdaptiveWidth(1));
+    QTimer::singleShot( 0, &w, SLOT( showMaximized() ) );
+#else
+    setCurrentSize(calculateAdaptiveSize(1));
+    UamobiUtil w(global);
+    w.show();
+#endif
+    return a.exec();
 }

@@ -76,7 +76,7 @@ protected:
 public:
 	OrderSelectionWidget(GlobalAppSettings& go, const parsedSupplier& suppl, QWidget* = Q_NULLPTR);
 
-	bool isExpectingControl(int) override;
+	virtual bool isExpectingControl(int) override;
 private slots:
 	void pickClicked();
 	void orderSelected(parsedOrder);

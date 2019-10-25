@@ -41,36 +41,22 @@ private:
 	// workflow tab with contents
 	QWidget* wrkflTab;
 	QVBoxLayout* wrkflinnLayout;
-	QScrollArea* wrkflScrollArea;
-	QWidget* wrkflContents;
-	QVBoxLayout* wrkflContLayout;
+
+
 	QComboBox* scanModeSelector;
 	QLabel* scanModeInfo;
 
 	// systab without contents
 	QWidget* sysTab;
 	QVBoxLayout* sysinnLayout;
-	QScrollArea* sysScrollArea;
-	QWidget* sysContents;
-	QVBoxLayout* sysContLayout;
 	QLabel* topExplLabel;
 
-	// group of dataengine changes
-	QGroupBox* dataengGroup;
-	QVBoxLayout* dataengLayout;
-	QLabel* dataengInfo;
-	QCheckBox* httpCheckBox;
-	QCheckBox* memcheckbox;
 
 	// group of connection changes
-	QGroupBox* connectionGroup;
-	QVBoxLayout* connectionLayout;
 	QLabel* connectionInfo;
 	QComboBox* addressField;
 
 	// group of language changes
-	QGroupBox* langGroup;
-	QVBoxLayout* langLayout;
 	QLabel* langInfo;
 	QComboBox* langField;
 
@@ -81,11 +67,13 @@ private:
 
 public:
 	MainSettingsWidget(GlobalAppSettings& go, QWidget* parent = Q_NULLPTR);
-
+	virtual void show() override;
 private slots:
 			 void saveClicked();			//	saves data to GlobalAppSettings widget
 			 void langSelected(const QString&);	//	alters GAS, then retranslates this widget
 			 void langChanged();				//	retranslates this widget
+			 void AddressSelected(const QString& activated);
 signals:
 	void languageChanged();			//	is emitted when language is changed
+	void saveConfirmed();
 };

@@ -22,6 +22,7 @@ private:
 	QTimer* timer;
     volatile bool awaiting;
     volatile bool wastimeout;
+	int timeoutinterval;
 public:
 	QString restext;		//	Request result. is overwritten when new response arrives
 	QString errtext;		//	error string. Provides info about errors
@@ -30,6 +31,7 @@ public:
 	void run();				//	primes awaiter - launches timer countdown, raises awaiting flag, drops timeout flag
 	bool isAwaiting();		//	true if there was no timeout and no response
 	bool wasTimeout();		//	true if there was timeout
+	int getInterval();
 private slots:
 	void timeout();			//	sets wastimeout flag, stops awaiting
 	void requestIncoming(QString, QString);	//	receives data strings

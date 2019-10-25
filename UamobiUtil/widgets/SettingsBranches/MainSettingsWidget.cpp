@@ -1,71 +1,34 @@
 #include "MainSettingsWidget.h"
 #include "widgets/utils/ElementsStyles.h"
-
 MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	:inframedWidget(parent), globalSettings(go),
-	mainLayout(new QVBoxLayout(this)), innerWidget(new QTabWidget(this)),
-	wrkflTab(new QWidget(innerWidget)), wrkflinnLayout(new QVBoxLayout(wrkflTab)),
-	wrkflScrollArea(new QScrollArea(innerWidget)),
-	wrkflContents(new QWidget(wrkflScrollArea)), wrkflContLayout(new QVBoxLayout(wrkflContents)),
-	scanModeSelector(new QComboBox(wrkflContents)),
-	scanModeInfo(new QLabel(wrkflContents)),
-	sysTab(new QWidget(innerWidget)), sysinnLayout(new QVBoxLayout(sysTab)),
-	sysScrollArea(new QScrollArea(sysTab)), sysContents(new QWidget(sysScrollArea)),
-	sysContLayout(new QVBoxLayout(sysContents)), topExplLabel(new QLabel(sysContents)),
-	dataengGroup(new QGroupBox(sysContents)), dataengLayout(new QVBoxLayout(dataengGroup)),
-	dataengInfo(new QLabel(dataengGroup)),
-	httpCheckBox(new QCheckBox(dataengGroup)), memcheckbox(new QCheckBox(dataengGroup)),
-	connectionGroup(new QGroupBox(sysContents)), connectionLayout(new QVBoxLayout(connectionGroup)),
-	connectionInfo(new QLabel(connectionGroup)), addressField(new QComboBox(connectionGroup)),
-	langGroup(new QGroupBox(sysContents)), langLayout(new QVBoxLayout(langGroup)),
-	langInfo(new QLabel(langGroup)), langField(new QComboBox(langGroup)),
+    mainLayout(new QVBoxLayout(this)),
+    scanModeSelector(new QComboBox(this)),
+    scanModeInfo(new QLabel(this)),
+    topExplLabel(new QLabel(this)),
+    connectionInfo(new QLabel(this)), addressField(new QComboBox(this)),
+    langInfo(new QLabel(this)), langField(new QComboBox(this)),
 	footerLayout(new QHBoxLayout(this)),
 	saveButton(new MegaIconButton(this)), backButton(new MegaIconButton(this))
 {
-	this->setLayout(mainLayout);
-    this->setMaximumSize(calculateAdaptiveSize(0.95));
-	mainLayout->addWidget(innerWidget);
-	mainLayout->addLayout(footerLayout);
-	footerLayout->addWidget(saveButton);
-	footerLayout->addWidget(backButton);
-	innerWidget->addTab(sysTab, tr("settings_system_tab_title"));
-	innerWidget->addTab(wrkflTab, tr("settings_workflow_tab_title"));
+    this->setLayout(mainLayout);
+#ifdef Q_OS_WINCE
+    this->setFixedSize(calculateAdaptiveSize(1));
+    this->setFixedHeight(calculateAdaptiveButtonHeight(0.9));
+#endif
 	mainLayout->setSpacing(0);		//	spacing removed to avoid space loss
-	mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
 
-	wrkflTab->setLayout(wrkflinnLayout);
-	wrkflinnLayout->addWidget(wrkflScrollArea);
-	wrkflContents->setLayout(wrkflContLayout);
-	wrkflContLayout->addWidget(scanModeInfo);
-	wrkflContLayout->addWidget(scanModeSelector);
+    mainLayout->addWidget(scanModeInfo);
+    mainLayout->addWidget(scanModeSelector);
+    mainLayout->addWidget(topExplLabel);
+    mainLayout->setSpacing(0);
+    mainLayout->setContentsMargins(0,0,0,0);
 
-	sysTab->setLayout(sysinnLayout);
-	sysinnLayout->addWidget(sysScrollArea);
-	sysContents->setLayout(sysContLayout);
-	sysContLayout->addWidget(topExplLabel);
-	sysContLayout->addWidget(dataengGroup);
-	sysContLayout->addWidget(connectionGroup);
-	sysContLayout->addWidget(langGroup);
-
-	dataengGroup->setLayout(dataengLayout);
-	dataengLayout->addWidget(dataengInfo);
-	dataengLayout->addWidget(httpCheckBox);
-	dataengLayout->addWidget(memcheckbox);
-
-	connectionGroup->setLayout(connectionLayout);
-	connectionLayout->addWidget(connectionInfo);
-	connectionLayout->addWidget(addressField);
-
-	langGroup->setLayout(langLayout);
-	langLayout->addWidget(langInfo);
-	langLayout->addWidget(langField);
-
-	wrkflTab->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
-	sysTab->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
-	wrkflContents->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
-	sysContents->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
-	wrkflScrollArea->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
-	sysScrollArea->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
+    mainLayout->addWidget(connectionInfo);
+    mainLayout->addWidget(addressField);
+    mainLayout->addWidget(langInfo);
+    mainLayout->addWidget(langField);
 
 	QFont scf = makeFont(0.04);
 
@@ -86,23 +49,13 @@ MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	topExplLabel->setAlignment(Qt::AlignCenter);
 	topExplLabel->setFont(scf);
 
-	dataengInfo->setText(tr("settings_system_dataupd_eng"));
-	dataengInfo->setAlignment(Qt::AlignCenter);
-	dataengInfo->setFont(scf);
-
-	httpCheckBox->setText(tr("settings_system_http_mode"));
-	httpCheckBox->setFont(scf);
-	httpCheckBox->setMinimumHeight(calculateAdaptiveButtonHeight());
-	
-	memcheckbox->setText(tr("settings_system_inmemory"));
-	memcheckbox->setFont(scf);
-	memcheckbox->setMinimumHeight(calculateAdaptiveButtonHeight());
-
 	connectionInfo->setText(tr("settings_select_address_tip"));
 	connectionInfo->setAlignment(Qt::AlignCenter);
 	connectionInfo->setFont(scf);
 
 	addressField->addItem(go.HttpUrl);
+    addressField->addItems(go.AlternativeAdresses);
+    addressField->setCurrentIndex(0);
 	addressField->setFont(scf);
 
 	langInfo->setText(tr("settings_system_select_lang_tip"));
@@ -114,6 +67,12 @@ MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	temp.clear();
 	temp << "Russian" << "Romanian" << "English";
 	langField->addItems(temp);
+    if (globalSettings.language == "Russian")
+        langField->setCurrentIndex(0);
+    else if (globalSettings.language == "Romanian")
+        langField->setCurrentIndex(1);
+    else
+        langField->setCurrentIndex(2);
 #endif
 	saveButton->setText(tr("settings_save_button"));
 	saveButton->setIcon(QIcon(":/res/with.png"));
@@ -136,24 +95,40 @@ MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	scanModeSelector->setEditable(false);
 	scanModeSelector->setInsertPolicy(QComboBox::NoInsert);
 	scanModeSelector->setFont(scf);
-
-	sysScrollArea->setWidget(sysContents);
-	wrkflScrollArea->setWidget(wrkflContents);
+    mainLayout->addLayout(footerLayout);
+    footerLayout->addWidget(saveButton);
+    footerLayout->addWidget(backButton);
 
 #ifdef QT_VERSION5X
 	QObject::connect(saveButton, &MegaIconButton::clicked, this, &MainSettingsWidget::saveClicked);
 	QObject::connect(backButton, &MegaIconButton::clicked, this, &MainSettingsWidget::backRequired);
 	QObject::connect(langField, QOverload<const QString&>::of(&QComboBox::activated), this, &MainSettingsWidget::langSelected);
+	QObject::connect(addressField, QOverload<const QString&>::of(&QComboBox::activated), this, &MainSettingsWidget::AddressSelected);
 #else
 	QObject::connect(saveButton, SIGNAL(clicked()), this, SLOT(saveClicked()));
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 	QObject::connect(langField, SIGNAL(activated(QString)), this, SLOT(langSelected(QString)));
+    QObject::connect(addressField, SIGNAL(activated(QString)), this, SLOT(AddressSelected(QString)));
 #endif
+}
+
+void MainSettingsWidget::show()
+{
+
+    inframedWidget::show();
 }
 
 void MainSettingsWidget::saveClicked()
 {
 	globalSettings.HttpUrl = (addressField->currentText().isEmpty()) ? globalSettings.HttpUrl : addressField->currentText();
+	if (!globalSettings.AlternativeAdresses.contains(globalSettings.HttpUrl))
+	{
+		globalSettings.AlternativeAdresses.push_back(globalSettings.HttpUrl);
+		addressField->addItem(globalSettings.HttpUrl);
+		globalSettings.dump();
+	}
+	globalSettings.networkingEngine->setUrl(globalSettings.HttpUrl);
+	emit saveConfirmed();
 	emit backRequired();
 }
 
@@ -178,11 +153,14 @@ void MainSettingsWidget::langChanged()
 	scanModeSelector->addItems(temp);
 #endif
 	topExplLabel->setText(tr("settings_system_title"));
-	dataengInfo->setText(tr("settings_system_dataupd_eng"));
-	httpCheckBox->setText(tr("settings_system_http_mode"));
-	memcheckbox->setText(tr("settings_system_inmemory"));
 	connectionInfo->setText(tr("settings_select_address_tip"));
 	langInfo->setText(tr("settings_system_select_lang_tip"));
 	saveButton->setText(tr("settings_save_button"));
 	backButton->setText(tr("settings_back_button"));
+}
+
+
+void MainSettingsWidget::AddressSelected(const QString& activated)
+{
+	globalSettings.HttpUrl = activated;
 }

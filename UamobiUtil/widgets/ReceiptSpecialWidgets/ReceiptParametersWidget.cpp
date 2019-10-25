@@ -1,5 +1,10 @@
 #include "ReceiptParametersWidget.h"
 #include "widgets/utils/ElementsStyles.h"
+#ifdef QT_VERSION5X
+#include <QtWidgets/qscroller.h>
+#else
+#include "legacy/qtCompatibility/scrollgrabber.h"
+#endif
 ReceiptParametersWidget::ReceiptParametersWidget(GlobalAppSettings& go, QWidget* parent)
 	: inframedWidget(parent), globalSettings(go),
 	mainLayout(new QVBoxLayout(this)), innerWidget(new inframedWidget(this)),
@@ -19,6 +24,12 @@ ReceiptParametersWidget::ReceiptParametersWidget(GlobalAppSettings& go, QWidget*
 	mainLayout->setSpacing(0);
 	innerLayout->setContentsMargins(0, 0, 0, 0);
 	innerLayout->setSpacing(0);
+	frameLayout->setContentsMargins(0, 0, 0, 0);
+	frameLayout->setSpacing(0);
+	selectOrderLayout->setContentsMargins(0, 0, 0, 0);
+	selectOrderLayout->setSpacing(0);
+	continueLayout->setContentsMargins(0, 0, 0, 0);
+	continueLayout->setSpacing(0);
 	innerLayout->addWidget(userInfo);
 	innerLayout->addWidget(innerFrame);
 	innerFrame->setLayout(frameLayout);
@@ -49,15 +60,17 @@ ReceiptParametersWidget::ReceiptParametersWidget(GlobalAppSettings& go, QWidget*
 	stateInfo->setFont(makeFont(0.04));
 	mainTextView->setFont(makeFont(0.04));
 	mainTextView->setReadOnly(true);
+	QScroller::grabGesture(mainTextView, QScroller::LeftMouseButtonGesture);
 
 	continueButton->setIcon(QIcon(":/res/forward.png"));
 	backButton->setIcon(QIcon(":/res/back.png"));
 	selectOrderButton->setIcon(QIcon(":/res/upload.png"));
 	continueButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
-	selectOrderButton->setStyleSheet(SETTINGS_BUTTONS_STYLESHEET());
+	selectOrderButton->setStyleSheet(SETTINGS_BUTTONS_STYLESHEET);
 	// hidings dependent
-
+	mainTextView->installEventFilter(keyfilter);
+	innerWidget->installEventFilter(keyfilter);
 	stateInfo->hide();
 	closedButton->hide();
 	cancelledButton->hide();
@@ -76,7 +89,7 @@ ReceiptParametersWidget::ReceiptParametersWidget(GlobalAppSettings& go, QWidget*
 	QObject::connect(cancelledButton, SIGNAL(clicked()), this, SLOT(cancelledClicked()));
 	QObject::connect(inspectButton, SIGNAL(clicked()), this, SLOT(inspectClicked()));
 	QObject::connect(continueButton, SIGNAL(clicked()), this, SLOT(continueClicked()));
-	QObject::connect(backButton, SIGNAL(clicked), this, SIGNAL(backRequired()));
+    QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
     QObject::connect(selectOrderButton, SIGNAL(clicked()), this, SLOT(backToSupplier()));
 #endif
 }
@@ -101,6 +114,11 @@ void ReceiptParametersWidget::continueClicked()
 void ReceiptParametersWidget::backToSupplier()
 {
 	emit backTo(0);
+}
+
+void ReceiptParametersWidget::returnReaction()
+{
+	continueClicked();
 }
 
 void ReceiptParametersWidget::setMainView(const QString& rtxt)
