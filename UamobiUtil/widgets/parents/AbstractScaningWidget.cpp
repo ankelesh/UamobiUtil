@@ -14,7 +14,8 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
 	stateInfo(new QLabel(innerWidget)), barcodeField(new QLineEdit(innerWidget)),
 	mainTextView(new QTextEdit(innerWidget)),
 	buttonPanel(new QHBoxLayout(innerWidget)),
- quitButton(new MegaIconButton(innerWidget)),	backButton(new MegaIconButton(innerWidget)),
+ quitButton(new MegaIconButton(innerWidget)), switchFocus(new MegaIconButton(innerWidget)),
+	backButton(new MegaIconButton(innerWidget)),
 	submitButton(new MegaIconButton(innerWidget)), searchButton(new MegaIconButton(innerWidget)),
  itemSuppliedValues(), 
 	controlsList(), awaiter(go.timeoutInt, this)
@@ -25,6 +26,7 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
 	innerLayout->addLayout(topPanelLayout);
 	topPanelLayout->addWidget(quitButton);
 	topPanelLayout->addWidget(userInfo);
+	topPanelLayout->addWidget(switchFocus);
 	innerLayout->addWidget(stateInfo);
 	innerLayout->addWidget(barcodeField);
 	innerLayout->addWidget(mainTextView);
@@ -36,6 +38,8 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
 	mainLayout->setSpacing(0);
 	innerLayout->setContentsMargins(0, 0, 0, 0);
 	innerLayout->setSpacing(0);
+	topPanelLayout->setContentsMargins(0, 0, 0, 0);
+	topPanelLayout->setSpacing(0);
 
 	QFont scaledFont = makeFont(0.04);
 
@@ -71,6 +75,10 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
 	quitButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
 	quitButton->setMaximumWidth(calculateAdaptiveWidth(0.2));
 
+	switchFocus->setText(tr("focus"));
+	switchFocus->setIcon(QIcon(":/res/toinput.png"));
+	switchFocus->setStyleSheet(SETTINGS_BUTTONS_STYLESHEET);
+	switchFocus->setMaximumWidth(calculateAdaptiveWidth(0.2));
 	barcodeField->setFocus();
 
 #ifdef QT_VERSION5X
@@ -81,6 +89,7 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
 	QObject::connect(searchButton, &QPushButton::clicked, this, &AbstractScaningWidget::searchRequired);
     QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &AbstractScaningWidget::was_timeout);
 	QObject::connect(quitButton, &MegaIconButton::clicked, this, &AbstractScaningWidget::backRequired);
+	QObject::connect(switchFocus, &MegaIconButton::clicked, this, &AbstractScaningWidget::switchedFocus);
 #else
     QObject::connect(backButton, SIGNAL(clicked()), this, SLOT(backNeeded()));
     QObject::connect(submitButton, SIGNAL(clicked()), this, SLOT(submitPressed()));

@@ -52,6 +52,7 @@ public:
 	void setTime(const QTime& tm);	//	sets current value
 	QTime time();			//	returns current value
 	void setDisplayFormat(const QString& tf);//	sets format
+	bool hasFocus() const;
 
 private slots:
 	void intValueChanged(int);				//	These slots are wrapping slots of inner spinbox
@@ -63,8 +64,9 @@ public slots:
 	void setFocus();			//	Sets focus to spinbox
 
 signals:
-	void valueChanged(int);			//	emitted only when SpinBox is wrapped
+	void ivalueChanged(int);			//	emitted only when SpinBox is wrapped
 	void timeChanged(const QTime& t);	//	emitted only when TimeEdit is wrapped
+	void valueChanged(QString);
 	void returnPressed();				//	return was pressed
 	void backRequired();				//	back was pressed
 };

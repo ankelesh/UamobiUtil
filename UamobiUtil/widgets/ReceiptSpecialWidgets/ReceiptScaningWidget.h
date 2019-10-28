@@ -16,6 +16,7 @@ protected:
 	NormalCapturer* capturer;
 
 	bool qtyRequired;
+	bool manSelected;
 public:
 	ReceiptScaningWidget(GlobalAppSettings& go, QWidget* parent);
 
@@ -56,4 +57,11 @@ public slots:
 	virtual void setControlFocus(int) override;
 
 	virtual int flushControl(int) override;
+
+	// Inherited via AbstractScaningWidget
+	virtual void switchedFocus() override;
+
+	// Inherited via AbstractScaningWidget
+	virtual void syncControlAndBuffer(QString v) override;
+	virtual bool isControlFocused()override;
 };

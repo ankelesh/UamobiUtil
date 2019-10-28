@@ -25,41 +25,59 @@ heap snapshot with tech values:2 opeq, 0 ares,200 status
 ]]>
 </richdata>
 </order> by his default constructor
+got text 777777 while preparing data
+
+
+->Method called: NormalCapturer::pressReturn
+return captured in capturer while buffer was 
+heap snapshot with tech values:2 opeq, 0 ares,200 status
+
+|nn|<0>
+||<1>
+|richdata|<2>
+|
+  <center><b>Scanati codul cererii pentru legarea marfei.</center></b>
+ |<3>
+
+
+->Method called: useControls
+is containing qty: false
 
 
 ->Method called: NormalCapturer::pressScan
+
+
+->Method called: removeManualFocus
 
 
 ->Method called: NormalCapturer::clearCaptureEngine
-
-
-->Method called: NormalCapturer::pressScan
 A
 toBarcode
 A
 toBarcode
 
 toBarcode
-1
+9
 toBarcode
-2
+8
 toBarcode
-3
+7
+toBarcode
+6
+toBarcode
+5
 toBarcode
 4
-toBarcode
-5
-toBarcode
-5
 toBarcode
 
 
 ->Method called: NormalCapturer::pressReturn
-return captured in capturer while buffer was AA123455
-before calling handler from capturer: AA123455
+return captured in capturer while buffer was AA987654
+before calling handler from capturer: AA987654
 
 
 -)Method handleScannedBarcode of object WidgetToApply invocated in method  press return of object capturer
+got text AA987654 while preparing data
 
 
 -)Method setControlFocus of object WidgetToApply invocated in method  press return of object capturer
@@ -67,69 +85,71 @@ toNum
 heap snapshot with tech values:2 opeq, 0 ares,200 status
 
 |nn|<0>
-|AA123455|<1>
+|AA987654|<1>
 |richdata|<2>
 |
 <div style="background: #b0f0ff"><center>Factura</center></div>
-<div style="text-align: left">A fost selectata factura "AA123455".<br>Apasati <b>Scan</b> pentru scanarea.</div>
+<div style="text-align: left">A fost selectata factura "AA987654".<br>Apasati <b>Scan</b> pentru scanarea.</div>
  |<3>
->>cycling: adding elem Abecedar. ed.biblionby index0
->>cycling: adding elem Abecedar. ed.biblionby index1
->>cycling: adding elem Abecedar. ed.biblionby index2
->>cycling: adding elem Abecedarul piticilor. ed. biblionby index3
->>cycling: adding elem Absobant de umeditate Farcent p-ru  prevenirea mucegaiului in incaperi cu umedit.inalta 210gby index4
->>cycling: adding elem Absorb igien. Libresse Good Night clip 10bucby index5
->>cycling: adding elem Absorb igien. Libresse Inv Good Night clip 10bucby index6
->>cycling: adding elem Absorb igien. Libresse Invisibile Normal Clip Duo 20bucby index7
->>cycling: adding elem Absorb igien. Libresse Invisibile Super Clip Duo 18bucby index8
->>cycling: adding elem Absorb igien. Libresse Normal Clip Natural Duo 20*12by index9
->>cycling: adding elem ***Absorb igien. Naturella Ultra Single Calendula 10bucby index10
->>cycling: adding elem Absorb zilnice Libresse Natural Everyday 20bucby index11
->>cycling: adding elem Absorb zilnice Libresse SW So Slim Deo 32bucby index12
->>cycling: adding elem Absorbant igienic p-ru pisici Tom ¹2 mediu (1,5-2,5mm)by index13
->>cycling: adding elem Absorbant igienic p-ru pisici Tom ¹4 mascat (2,5-6mm) miros lavandaby index14
->>cycling: adding elem Absorbant igienic p-ru pisici Tom ¹5 mediu (1,5-2,5mm) miros lavandaby index15
->>cycling: adding elem Absorbant igienic p-ru pisici Tom ¹6 marunt (0,3-1,5mm) miros lavandaby index16
->>cycling: adding elem Absorbant p-ru pisici Cat Litter Gel Odor 3.8Lby index17
->>cycling: adding elem Absorbant p-ru pisici Nutritcat 6kg granule mari lavandaby index18
->>cycling: adding elem Absorbant p-ru pisici Nutritcat 6kg granule medii lavandaby index19
->>cycling: adding elem Absorbant p-ru pisici Nutritcat 6kg granule mici lavandaby index20
->>cycling: adding elem Absorbant Sano de mirosuri frigider 20gby index21
->>cycling: adding elem Absorbant umiditate Ceresit Aero 360 450g aparatby index22
->>cycling: adding elem Absorbant zilnice Discreet deo Ocean Breez (60) (6463)by index23
->>cycling: adding elem Absorbant zilnice Discreet deo Ocean Breez (60) (6463)by index24
->>cycling: adding elem Abecedar. ed.biblionby index0
->>cycling: adding elem Abecedar. ed.biblionby index1
->>cycling: adding elem Abecedar. ed.biblionby index2
->>cycling: adding elem Abecedarul piticilor. ed. biblionby index3
->>cycling: adding elem Absobant de umeditate Farcent p-ru  prevenirea mucegaiului in incaperi cu umedit.inalta 210gby index4
->>cycling: adding elem Absorb igien. Libresse Good Night clip 10bucby index5
->>cycling: adding elem Absorb igien. Libresse Inv Good Night clip 10bucby index6
->>cycling: adding elem Absorb igien. Libresse Invisibile Normal Clip Duo 20bucby index7
->>cycling: adding elem Absorb igien. Libresse Invisibile Super Clip Duo 18bucby index8
->>cycling: adding elem Absorb igien. Libresse Normal Clip Natural Duo 20*12by index9
->>cycling: adding elem ***Absorb igien. Naturella Ultra Single Calendula 10bucby index10
->>cycling: adding elem Absorb zilnice Libresse Natural Everyday 20bucby index11
->>cycling: adding elem Absorb zilnice Libresse SW So Slim Deo 32bucby index12
->>cycling: adding elem Absorbant igienic p-ru pisici Tom ¹2 mediu (1,5-2,5mm)by index13
->>cycling: adding elem Absorbant igienic p-ru pisici Tom ¹4 mascat (2,5-6mm) miros lavandaby index14
->>cycling: adding elem Absorbant igienic p-ru pisici Tom ¹5 mediu (1,5-2,5mm) miros lavandaby index15
->>cycling: adding elem Absorbant igienic p-ru pisici Tom ¹6 marunt (0,3-1,5mm) miros lavandaby index16
->>cycling: adding elem Absorbant p-ru pisici Cat Litter Gel Odor 3.8Lby index17
->>cycling: adding elem Absorbant p-ru pisici Nutritcat 6kg granule mari lavandaby index18
->>cycling: adding elem Absorbant p-ru pisici Nutritcat 6kg granule medii lavandaby index19
->>cycling: adding elem Absorbant p-ru pisici Nutritcat 6kg granule mici lavandaby index20
->>cycling: adding elem Absorbant Sano de mirosuri frigider 20gby index21
->>cycling: adding elem Absorbant umiditate Ceresit Aero 360 450g aparatby index22
->>cycling: adding elem Absorbant zilnice Discreet deo Ocean Breez (60) (6463)by index23
->>cycling: adding elem Absorbant zilnice Discreet deo Ocean Breez (60) (6463)by index24
+
+
+->Method called: useControls
+is containing qty: false
+toNum
+
+
+->Method called: NormalCapturer::pressScan
+
+
+->Method called: NormalCapturer::clearCaptureEngine
+
+toBarcode
+9
+toBarcode
+7
+toBarcode
+8
+toBarcode
+9
+toBarcode
+9
+toBarcode
+7
+toBarcode
+5
+toBarcode
+1
+toBarcode
+3
+toBarcode
+8
+toBarcode
+9
+toBarcode
+8
+toBarcode
+7
+toBarcode
+
+
+->Method called: NormalCapturer::pressReturn
+return captured in capturer while buffer was 9789975138987
+before calling handler from capturer: 9789975138987
+
+
+-)Method handleScannedBarcode of object WidgetToApply invocated in method  press return of object capturer
+got text 9789975138987 while preparing data
+
+
+-)Method setControlFocus of object WidgetToApply invocated in method  press return of object capturer
+toNum
 got control
 getting inside: qty
 getting inside: 
 heap snapshot with tech values:2 opeq, 0 ares,200 status
 
 |nn|<0>
-|AA123455|<1>
+|AA987654|<1>
 |qty|<2>
 ||<3>
 |richdata|<4>
@@ -137,73 +157,21 @@ heap snapshot with tech values:2 opeq, 0 ares,200 status
 <div style="background: #d0f0c0"><center>Marfa</center></div>
   <div style="text-decoration: underline">
    <b>Barcod:</b>
-   <span>4710731050101</span>
+   <span>9789975138987</span>
   </div>
   <div>
    <b>Denumirea:</b>
-   <span><b>Absobant de umeditate Farcent p-ru  prevenirea mucegaiului in incaperi cu umedit.inalta 210g</b></span>
+   <span><b>Abecedar. ed.biblion</b></span>
   </div>
   <br />
   <div>
    <b>Pret fara TVA:</b>
-   <span><b>16.5</b></span>
+   <span><b>65</b></span>
   </div>
   <br>
   <div>
    <b>Cod:</b>
-   <span>5850</span>
-  </div>
-  <div>
-   <b>Cant.:</b>
-   <span><b style="color: #800">Nui in cerere</b>.</span>
-  </div>
- |<5>
-toNum
-toNum
-toNum
-toNum
-toNum
-toNum
-toNum
-toNum
-toNum
-toNum
-toNum
-toNum
-
-
-->Method called: NormalCapturer::pressReturn
-return captured in capturer while buffer was 
-
-
-->Method called: NormalCapturer::pressScan
-
-
-->Method called: NormalCapturer::clearCaptureEngine
-heap snapshot with tech values:2 opeq, 0 ares,200 status
-
-|nn|<0>
-|AA123455|<1>
-|richdata|<2>
-|
-<div style="background: #d0f0c0"><center>Marfa</center></div>
-  <div style="text-decoration: underline">
-   <b>Barcod:</b>
-   <span>4710731050101</span>
-  </div>
-  <div>
-   <b>Denumirea:</b>
-   <span><b>Absobant de umeditate Farcent p-ru  prevenirea mucegaiului in incaperi cu umedit.inalta 210g</b></span>
-  </div>
-  <br />
-  <div>
-   <b>Pret fara TVA:</b>
-   <span><b>16.5</b></span>
-  </div>
-  <br>
-  <div>
-   <b>Cod:</b>
-   <span>5850</span>
+   <span>19791</span>
   </div>
   <div>
    <b>Cant.:</b>
@@ -211,6 +179,10 @@ heap snapshot with tech values:2 opeq, 0 ares,200 status
   </div>
   <div style="text-decoration: underline">
    <b>Acc.:</b>
-   <span>445</span>
+   <span>91</span>
   </div>
- |<3>
+ |<5>
+
+
+->Method called: useControls
+is containing qty: true

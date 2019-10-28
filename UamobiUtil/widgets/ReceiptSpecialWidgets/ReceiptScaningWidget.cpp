@@ -7,10 +7,11 @@
 #include "legacy/qtCompatibility/scrollgrabber.h"
 #endif
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
-
+#define DEBUG
 ReceiptScaningWidget::ReceiptScaningWidget(GlobalAppSettings& go, QWidget* parent)
 	: AbstractScaningWidget(go, parent),abstractNode(), captureInterface(), resultScreen(new DocResultsWidget(go,this)),
-	searchScreen(new ItemSearchWidget(go,this)), capturer(new NormalCapturer(this, this))
+	searchScreen(new ItemSearchWidget(go,this)), capturer(new NormalCapturer(this, this)),
+	qtyRequired(false), manSelected(false)
 {
 	mainLayout->addWidget(searchScreen);
 	mainLayout->addWidget(resultScreen);
@@ -142,11 +143,6 @@ bool ReceiptScaningWidget::handleScannedBarcode()
 
 bool ReceiptScaningWidget::handleNumberInbuffer()
 {
-
-#ifdef DEBUG
-	//detrace_METHCALL("handleNumberInBuffer");
-#endif
-
 	if (qtyRequired)
 	{
 		if (controlsList.contains("qty"))
@@ -167,6 +163,7 @@ void ReceiptScaningWidget::processBackPress()
 void ReceiptScaningWidget::removeManualFocus()
 {
     this->setFocus();
+	manSelected = false;
 }
 
 void ReceiptScaningWidget::setControlFocus(int val)
@@ -176,6 +173,7 @@ void ReceiptScaningWidget::setControlFocus(int val)
 		if (controlsList.contains("qty"))
 		{
 			controlsList.value("qty")->setFocus();
+			manSelected = false;
 		}
 	}
 }
@@ -184,6 +182,43 @@ int ReceiptScaningWidget::flushControl(int)
 {
 	submitPressed();
 	return 1;
+}
+
+void ReceiptScaningWidget::switchedFocus()
+{
+	if (qtyRequired)
+	{
+		if (controlsList.contains("qty"))
+		{
+			controlsList.value("qty")->setFocus();
+		}
+	}
+	else
+	{
+		if (manSelected)
+		{
+			this->setFocus();
+		}
+		else
+		{
+			barcodeField->setFocus();
+		}
+		manSelected = !manSelected;
+	}
+}
+
+void ReceiptScaningWidget::syncControlAndBuffer(QString v)
+{
+	numberBuffer = v;
+}
+
+bool ReceiptScaningWidget::isControlFocused()
+{
+	if (controlsList.contains("qty"))
+	{
+		return controlsList.value("qty")->hasFocus();
+	}
+	return false;
 }
 
 
@@ -209,6 +244,8 @@ void ReceiptScaningWidget::useControls()
 		if (!controlsList.contains("qty")) {
 			controlsList.insert("qty", new QuantityControl(innerWidget));
 			innerLayout->insertWidget(innerLayout->count() - 1, controlsList.value("qty"));
+			controlsList.value("qty")->installEventFilter(keyfilter);
+			QObject::connect(controlsList.value("qty"), &abs_control::valueChanged, this, &ReceiptScaningWidget::syncControlAndBuffer);
 		}
 		controlsList.value("qty")->setAwaiting();
 		capturer->setControlNumber(1);

@@ -62,7 +62,7 @@ ProcessingOverlay::ProcessingOverlay(int interval, QWidget* parent)
 
 
 	this->setFixedSize(QSize(parentG.width() * 0.4, parentG.height() * 0.4));
-	QSize partial = QSize(parentG.width() * 0.3, parentG.height() * 0.4);
+	QSize partial = QSize(parentG.width() * 0.3, parentG.height() * 0.3);
 #endif
 	this->move(partial.width(), partial.height());
 	centralPoint = QPoint(this->width() / 2, this->height() / 2);
@@ -110,7 +110,7 @@ void ProcessingOverlay::show()
 void ProcessingOverlay::resize(const QSize& parentG)
 {
 	this->setFixedSize(QSize(parentG.width() * 0.4, parentG.height() * 0.4));
-	QSize partial = QSize(parentG.width() * 0.3, parentG.height() * 0.4);
+	QSize partial = QSize(parentG.width() * 0.3, parentG.height() * 0.3);
 	this->move(partial.width(), partial.height());
 	centralPoint = QPoint(this->width() / 2, this->height() / 2); 
 #ifdef Q_OS_WINCE

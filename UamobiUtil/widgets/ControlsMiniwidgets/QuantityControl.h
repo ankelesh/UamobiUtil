@@ -13,7 +13,7 @@ protected:
 	virtual bool parseAndSetValue(QString) override;
 	virtual void clear() override;
 	virtual bool valueAvailable() const override;
-
+	virtual bool hasFocus() const override;
 public:
 	explicit QuantityControl(QWidget * parent);
 

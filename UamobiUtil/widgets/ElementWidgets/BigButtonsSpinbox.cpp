@@ -159,9 +159,15 @@ void BigButtonsSpinbox::setDisplayFormat(const QString& tf)
 	}
 }
 
+bool BigButtonsSpinbox::hasFocus() const
+{
+	return coreSpinbox->hasFocus();
+}
+
 void BigButtonsSpinbox::timeValueChanged(const QTime& t)
 {
 	emit timeChanged(t);
+	emit valueChanged(coreSpinbox->text());
 }
 
 void BigButtonsSpinbox::editingDone()
@@ -181,5 +187,6 @@ void BigButtonsSpinbox::setFocus()
 
 void BigButtonsSpinbox::intValueChanged(int t)
 {
-	emit valueChanged(t);
+	emit ivalueChanged(t);
+	emit valueChanged(coreSpinbox->text());
 }

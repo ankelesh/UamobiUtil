@@ -18,6 +18,7 @@ public:
 	virtual void processBackPress() = 0;
     virtual void removeManualFocus() = 0;
 	virtual void setControlFocus(int) = 0;
+	virtual bool isControlFocused()=0;
 };
 
 

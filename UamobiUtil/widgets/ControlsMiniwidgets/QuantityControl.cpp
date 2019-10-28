@@ -27,6 +27,11 @@ bool QuantityControl::valueAvailable() const
 	return innerSpinBox->value() > 0;
 }
 
+bool QuantityControl::hasFocus() const
+{
+	return innerSpinBox->hasFocus();
+}
+
 QuantityControl::QuantityControl(QWidget* parent)
 	: abs_control(Quantity, parent),
 	innerSpinBox(new BigButtonsSpinbox(BigButtonsSpinbox::intspin, this))
@@ -36,4 +41,5 @@ QuantityControl::QuantityControl(QWidget* parent)
 	innerSpinBox->setMaximum(99999);
 	innerSpinBox->setValue(0);
 	hide();
+	QObject::connect(innerSpinBox, &BigButtonsSpinbox::valueChanged, this, &QuantityControl::valueChanged);
 }

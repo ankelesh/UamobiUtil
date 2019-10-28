@@ -33,5 +33,8 @@ public:
 	bool isAwaitingValue();
 	void setAwaiting();
 	void reset();
+	virtual bool hasFocus() const = 0;
+signals:
+	void valueChanged(QString);
 
 };

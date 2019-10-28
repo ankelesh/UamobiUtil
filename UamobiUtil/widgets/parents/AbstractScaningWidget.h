@@ -41,6 +41,7 @@ protected:
 	QTextEdit* mainTextView;
 	QHBoxLayout* buttonPanel;
 	MegaIconButton* quitButton;
+	MegaIconButton* switchFocus;
 	MegaIconButton* backButton;
 	MegaIconButton* submitButton;
 	MegaIconButton* searchButton;
@@ -63,6 +64,8 @@ protected slots:
 	virtual void backNeeded() = 0;
 	virtual void useControls() = 0;
 	virtual void was_timeout();
+	virtual void switchedFocus()=0;
+	virtual void syncControlAndBuffer(QString v) = 0;
 public slots:
 	virtual void setDocument(parsedOrder) = 0;
 

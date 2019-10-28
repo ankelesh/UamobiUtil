@@ -267,6 +267,9 @@
     <ClCompile Include="widgets\ElementWidgets\ZebraListItemDelegate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="widgets\ControlsMiniwidgets\ControlManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -367,6 +370,9 @@
     </QtMoc>
     <QtMoc Include="widgets\ElementWidgets\ProcessingOverlay.h">
       <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ControlsMiniwidgets\ControlManager.h">
+      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
