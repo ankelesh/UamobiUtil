@@ -1,11 +1,6 @@
 #include "AbstractScaningWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
-void AbstractScaningWidget::keyReleaseEvent(QKeyEvent *kev)
-{
-    QWidget::keyReleaseEvent(kev);
-}
-
 AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* parent)
 	: inframedWidget(parent), globalSettings(go),
 	mainLayout(new QVBoxLayout(this)), innerWidget(new inframedWidget(this)),

@@ -1,9 +1,9 @@
 #ifndef USER_H
 #define USER_H
 
-#include <QStringList>
-#include <QDate>
-#include <QObject>
+#include <QtCore/QStringList>
+#include <QtCore/QDate>
+#include <QtCore/QObject>
 
 /*
 		This file contains definitions for structures used in the application. It is kinda too functional
@@ -64,6 +64,23 @@ struct parsedItemSimplified
 	QString description() const;
 };
 
+struct parsedDocument
+{
+	QString code;
+	QString title;
+	QString text;
+	QString doctype;
+	parsedDocument(QString code = "", QString title = "", QString text = "", QString doctype = "");
+	QString description() const;
+};
+struct parsedDocType
+{
+	QString id;
+	QString name;
+	bool notFiltered;
+	parsedDocType(QString id = "", QString name = "", QString isF = "");
+	QString description() const;
+};
 //			HERE START LEGACY STRUCTURES. DO NOT TOUCH THEM - INSTEAD CREATE NEW, BETTER ONES		//
 struct Answer
 {

@@ -20,6 +20,9 @@
 		Number of elements
 		Item selected emitting
 
+	Update:
+		colorization added. 
+
 */
 
 class AbstractVariantSelectionWidget : public inframedWidget
@@ -31,7 +34,7 @@ protected:
 protected:
 	virtual QString elemAsString(int index) = 0;	//	must return string which will be displayed on button
 	virtual int countElems() = 0;					//	must return size of structure, where indexing works
-	void init();									//	abstract initialization of button list
+	virtual void init();									//	abstract initialization of button list
 public:
 	AbstractVariantSelectionWidget(QWidget* parent = Q_NULLPTR, bool test = false);	//	"test" value adds empty button with "TEST'
 	void reload();									//	deletes all buttons, then shows them again

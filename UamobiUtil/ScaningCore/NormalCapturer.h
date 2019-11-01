@@ -4,9 +4,16 @@
 #include <QTime>
 
 
+/*
+	This file contains interface that must be inherited for all objects that require capturer and simple capturer that 
+	tries to be reusable.
 
+
+*/
 
 class captureInterface
+// this interface provides two buffers for storing temp values and 
+// a lot of pure virtual functions that are required for handling values retrived by capturer
 {
 public:
 	QString barcodeBuffer;
@@ -23,33 +30,34 @@ public:
 
 
 class NormalCapturer : public QObject
+// This class is working as keyfilter, but also it processes all key presses and releases in it
 {
     Q_OBJECT
 private:
 	// control vars
-	captureInterface* widgetToApply;
-	bool isScaning;
-	bool isAwaitingControlValue;
+	captureInterface* widgetToApply;	//	pointer to widget which is recepient of barcodes
+	bool isScaning;			//	flag defining that this capturer is awaiting scaning values
+	bool isAwaitingControlValue;	//	flag defining that this capturer is awaiting values for control
 protected:
-	QTime lastKeyReleaseTimepoint;
-	int controlIndex;
-	int controlNumber;
+	QTime lastKeyReleaseTimepoint;	//	timepoint used for defining where to put obtained keys
+	int controlIndex;				//	index of current control
+	int controlNumber;				//	number of total controls
 
 	
 
 public:
-    filters::NoKeyEvents* keyfilter;
+    filters::NoKeyEvents* keyfilter; // filter which is allocated on all widgets that can be in focus
 	explicit NormalCapturer(captureInterface* inter, QObject * whereApply);
-	void skipControls(int q);
-    void clearCaptureEngine();
-	void setPhase(int);
-	void setControlNumber(int);
-    QString stateOfEngine();
+	void skipControls(int q);	//	moves index to q
+    void clearCaptureEngine();	//	clears engine by resetting it to scaning phase 
+	void setPhase(int);			//	sets phase where -1 is scaning and any + value is new index
+	void setControlNumber(int);	//	sets total number of controls
+    QString stateOfEngine();	//	debugging method which returns description of all variables
 protected slots:
-	void pressScan();
-	void pressReturn();
-	void handleElement(QString);
-    void handleBack();
-	void handleErase();
+	void pressScan();			//	triggered on buttons that can be SCAN
+	void pressReturn();			//	triggered on return
+	void handleElement(QString);	//	triggered on any non-control elem
+    void handleBack();			//	triggered on esc\back buttons
+	void handleErase();			//	triggered on backspace
 	
 };

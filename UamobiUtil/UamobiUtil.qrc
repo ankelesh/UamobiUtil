@@ -92,5 +92,6 @@
         <file>res/without.png</file>
         <file>res/nextpage.png</file>
         <file>res/prevpage.png</file>
+        <file>res/filter.png</file>
     </qresource>
 </RCC>

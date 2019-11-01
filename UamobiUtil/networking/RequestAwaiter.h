@@ -8,8 +8,7 @@
 	true, you must wait. Then you can check timeout flag to determine if it was succesfull. Also, this class
 	has normal signal-slot interface to work like standard Qt object
 
-	Update:
-		Now interval by default is hell long
+	Update: new signal added - is emitted when request is received, but without arguments
 
 */
 
@@ -31,12 +30,12 @@ public:
 	void run();				//	primes awaiter - launches timer countdown, raises awaiting flag, drops timeout flag
 	bool isAwaiting();		//	true if there was no timeout and no response
 	bool wasTimeout();		//	true if there was timeout
-	int getInterval();
+	int getInterval();		//	returns interval
 private slots:
 	void timeout();			//	sets wastimeout flag, stops awaiting
 	void requestIncoming(QString, QString);	//	receives data strings
 signals:
-	void requestSuccess(QString, QString);	//	emitted when response arrived
-	void requestReceived();
+	void requestSuccess(QString, QString);	//	emitted when response arrived with results
+	void requestReceived();					//	emitted when response arrived
 	void requestTimeout();					//	emitted when timeout appeared
 };

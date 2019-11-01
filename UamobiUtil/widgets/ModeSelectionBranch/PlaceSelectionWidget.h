@@ -90,7 +90,7 @@ public:
 
 private slots:
 	void placeSelected(parsedPlace);	//	sends place_select request, then emits parsedPlace
-	void parse_loaded_places();
+	void parse_loaded_places();			//	netresponses
 	void place_select_response();
 	void was_timeout();
 public slots:

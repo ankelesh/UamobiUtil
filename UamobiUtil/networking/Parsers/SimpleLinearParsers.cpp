@@ -222,3 +222,79 @@ ItemSimplifiedParser::ItemSimplifiedParser(QString& res, QString& errtext)
 	parseres.one_position_entries_quantity = 2;
 	success = true;
 }
+
+bool DocumentParser::couldRead()
+{
+	return success;
+}
+
+bool DocumentParser::noRequestErrors()
+{
+	return parseres.request_status == 200;
+}
+
+QString DocumentParser::parseErrorText()
+{
+	return errtext;
+}
+
+DocumentParser::DocumentParser(QString& res, QString& err)
+	: abs_parsed_request(res, err)
+{
+	QDomDocument doc;
+	doc.setContent(result);
+	QString code = doc.elementsByTagName("status").at(0).toElement().text();
+	parseres.request_status = code.toInt();
+#ifdef DEBUG
+	//detrace_METHDATAS("UserListParser::dconstr", "code", << code);
+#endif
+	QDomNodeList dmndl = doc.elementsByTagName("parentdoc");
+	int len = dmndl.count();
+	for (int i = 0; i < len; ++i)
+	{
+		parseres.queriesResult << dmndl.at(i).namedItem("cod").toElement().text();
+		parseres.queriesResult << dmndl.at(i).namedItem("title").toElement().text();
+		parseres.queriesResult << dmndl.at(i).namedItem("text").toElement().text();
+		parseres.queriesResult << dmndl.at(i).namedItem("doctype").toElement().text();
+	}
+	parseres.one_position_entries_quantity = 4;
+	success = true;
+
+}
+
+bool DocTypeFiltersParser::couldRead()
+{
+	return success;
+}
+
+bool DocTypeFiltersParser::noRequestErrors()
+{
+	return parseres.request_status == 200;
+}
+
+QString DocTypeFiltersParser::parseErrorText()
+{
+	return errtext;
+}
+
+DocTypeFiltersParser::DocTypeFiltersParser(QString& res, QString& err)
+	: abs_parsed_request(res, err)
+{
+	QDomDocument doc;
+	doc.setContent(result);
+	QString code = doc.elementsByTagName("status").at(0).toElement().text();
+	parseres.request_status = code.toInt();
+#ifdef DEBUG
+	//detrace_METHDATAS("UserListParser::dconstr", "code", << code);
+#endif
+	QDomNodeList dmndl = doc.elementsByTagName("type");
+	int len = dmndl.count();
+	for (int i = 0; i < len; ++i)
+	{
+		parseres.queriesResult << dmndl.at(i).namedItem("id").toElement().text();
+		parseres.queriesResult << dmndl.at(i).namedItem("name").toElement().text();
+		parseres.queriesResult << dmndl.at(i).namedItem("filtered-out").toElement().text();
+	}
+	parseres.one_position_entries_quantity = 3;
+	success = true;
+}

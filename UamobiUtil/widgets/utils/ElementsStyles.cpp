@@ -192,3 +192,13 @@ QFont makeFont(double perc)
 const QString ZEBRAEVEN_BUTTONS_STYLESHEET(
         "QPushButton {background-color: #f8fced; border: 1px solid gray;}");
 const QString ZEBRAODD_BUTTONS_STYLESHEET("QPushButton {background-color: #878a7f; border: 1px solid gray;}");
+const QString CHECKBOX_BUTTON_STYLESHEET(
+	"QPushButton{ "
+	"background-color: #f5a4bc;"
+	"border: 1px solid gray;"
+	"}"
+	"QPushButton:checked {"
+	"background-color:#d2e092;"
+	"border: 1px solid black;"
+	"}"
+);

@@ -2,6 +2,11 @@
 #include "widgets/ElementWidgets/BigButtonsSpinbox.h"
 #include "widgets/ControlsMiniwidgets/abs_control.h"
 
+/*
+	This widget provides intSpinbox wrapped in abs_control interface
+	
+
+*/
 
 class QuantityControl : public abs_control
 {

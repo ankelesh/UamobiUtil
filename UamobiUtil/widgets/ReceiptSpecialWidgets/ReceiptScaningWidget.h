@@ -28,6 +28,20 @@ protected:
 	virtual void searchRequired() override;
 	virtual void backNeeded() override;
 	virtual void useControls() override;
+	virtual bool isManualInFocus() override;
+
+	virtual bool handleScannedBarcode() override;
+
+	virtual bool handleNumberInbuffer() override;
+
+	virtual void processBackPress() override;
+
+	virtual void removeManualFocus() override;
+
+	virtual void setControlFocus(int) override;
+
+	virtual int flushControl(int) override;
+	virtual bool isControlFocused()override;
 
 protected slots:
 	void item_scaned_response();
@@ -39,29 +53,15 @@ public slots:
 	virtual void hideCurrent();
 	virtual void itemObtained(parsedItemSimplified);
 	virtual void saveSuccesfull();
+	virtual void switchedFocus() override;
+	virtual void syncControlAndBuffer(QString v) override;
 
 
 
 
 	// Inherited via captureInterface
-	virtual bool isManualInFocus() override;
-
-	virtual bool handleScannedBarcode() override;
-
-	virtual bool handleNumberInbuffer() override;
-
-	virtual void processBackPress() override;
-
-    virtual void removeManualFocus() override;
-
-	virtual void setControlFocus(int) override;
-
-	virtual int flushControl(int) override;
 
 	// Inherited via AbstractScaningWidget
-	virtual void switchedFocus() override;
 
 	// Inherited via AbstractScaningWidget
-	virtual void syncControlAndBuffer(QString v) override;
-	virtual bool isControlFocused()override;
 };

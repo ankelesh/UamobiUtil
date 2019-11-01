@@ -27,6 +27,9 @@
 	This widgets is used to alter GlobalAppSettings object. Generally it allows to change
 	scanning mode, adress, type of storage and language.
 
+	// update:
+	now this widget is reworked to match classic mobile architecture
+
 */
 
 class MainSettingsWidget : public inframedWidget

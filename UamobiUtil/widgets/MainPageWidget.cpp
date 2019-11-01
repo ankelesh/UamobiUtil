@@ -9,6 +9,31 @@
 #include "debugtrace.h"
 #endif
 
+namespace specwidgets
+{
+	LoginSelectWidget::LoginSelectWidget(QVector<UserProfile>& Profiles, QWidget* parent)
+		:AbstractVariantSelectionWidget(parent), profiles(Profiles)
+	{
+		init();
+	}
+
+	QString LoginSelectWidget::elemAsString(int index)
+	{
+		return profiles.at(index).name;
+	}
+
+	int LoginSelectWidget::countElems()
+	{
+		return profiles.count();
+	}
+
+	void LoginSelectWidget::indexSelected(int Index)
+	{
+		emit profilePicked(profiles.at(Index));
+	}
+}
+
+
 
 void MainPageWidget::show_login_widget(QString& log)
 {
@@ -27,7 +52,7 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	topPanelLayout(new QHBoxLayout(innerWidget)), bottomPanelLayout(new QHBoxLayout(innerWidget)),
 	versionLabel(new QLabel(innerWidget)), hostLabel(new QLabel(innerWidget)),
 	scrArea(new QScrollArea(innerWidget)),
-	userHelpLabel(new QLabel(innerWidget)), loginsStorageWidget(new LoginSelectWidget(profiles, scrArea)), userIdInfo(new QLabel(innerWidget)),
+	userHelpLabel(new QLabel(innerWidget)), loginsStorageWidget(new specwidgets::LoginSelectWidget(profiles, scrArea)), userIdInfo(new QLabel(innerWidget)),
     exitButton(new MegaIconButton(innerWidget)), settingsButton(new MegaIconButton(innerWidget)), refreshButton(new MegaIconButton(innerWidget)),
 	userid(new QLineEdit(innerWidget)),  manualLogin(new LoginWidget(go, this)),
     settingsScreen(new MainSettingsWidget(go, this)), awaiter(go.timeoutInt, this)
@@ -104,10 +129,10 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	QObject::connect(settingsScreen, &MainSettingsWidget::backRequired, this, &MainPageWidget::hideCurrent);
 	QObject::connect(settingsScreen, &MainSettingsWidget::languageChanged, this, &MainPageWidget::languageChanged);
 	QObject::connect(settingsScreen, &MainSettingsWidget::saveConfirmed, this, &MainPageWidget::settingsSaved);
-	QObject::connect(loginsStorageWidget, &LoginSelectWidget::profilePicked, this, &MainPageWidget::userPicked);
+	QObject::connect(loginsStorageWidget, &specwidgets::LoginSelectWidget::profilePicked, this, &MainPageWidget::userPicked);
 	QObject::connect(userid, &QLineEdit::returnPressed, this, &MainPageWidget::userIdSearch);
 	QObject::connect(this, &MainPageWidget::backRequired, qApp, &QApplication::quit);
-	QObject::connect(loginsStorageWidget, &LoginSelectWidget::backRequired, qApp, &QApplication::quit);
+	QObject::connect(loginsStorageWidget, &specwidgets::LoginSelectWidget::backRequired, qApp, &QApplication::quit);
 	QObject::connect(refreshButton, &MegaIconButton::clicked, this, &MainPageWidget::loadUsers);
 	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &MainPageWidget::wasTimeout);
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &MainPageWidget::parseUsers);

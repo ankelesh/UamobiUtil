@@ -1,10 +1,10 @@
 #ifndef UPDATEDATAENGINE_H
 #define UPDATEDATAENGINE_H
 
-#include <QObject>
-#include <QNetworkAccessManager>
-#include <QTcpSocket>
-#include <QStringList>
+#include <QtCore/QObject>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QTcpSocket>
+#include <QtCore/QStringList>
 
 #include "photo/datarequest.h"
 #include "global.h"

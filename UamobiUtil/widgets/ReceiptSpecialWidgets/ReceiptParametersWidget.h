@@ -28,6 +28,16 @@
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
 
+
+/*
+	This widget is used for showing receipt parameters. It has a lot of rarely used buttons which are hidden. 
+	This widget is info-only, and is used mostly to check data and go to next or previous step.
+
+
+*/
+
+
+
 class ReceiptParametersWidget : public inframedWidget
 {
 	Q_OBJECT
@@ -57,15 +67,15 @@ public:
 	ReceiptParametersWidget(GlobalAppSettings& go, QWidget* parent);
 
 protected slots:
-	void closedClicked();
+	void closedClicked();		//	button reactions
 	void cancelledClicked();
 	void inspectClicked();
 	void continueClicked();
 	void backToSupplier();
-	virtual void returnReaction() override;
+	virtual void returnReaction() override;		//	responds to return press
 public slots:
-	void setMainView(const QString&);
+	void setMainView(const QString&);		//	uses provided string for mainView content
 signals:
-	void dataConfirmed();
-	void backTo(int step);
+	void dataConfirmed();					//	is emitted when user confirmed that this receipt is required
+	void backTo(int step);					//	is emitted when user requires non-previous step
 };

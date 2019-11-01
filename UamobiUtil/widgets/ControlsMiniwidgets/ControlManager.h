@@ -3,6 +3,13 @@
 #include <QHash>
 #include "abs_control.h"
 
+/*
+	TODO:
+		this
+
+*/
+
+
 class ControlManager : public QObject
 {
 	Q_OBJECT

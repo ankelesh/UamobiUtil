@@ -86,7 +86,7 @@ protected slots:
 	void logoutPressed();		//	this slot sends log_out and only then calls backRequired
 	void modeSelected(parsedMode);	//	these slots react to changes
 	virtual void hideCurrent();
-	void parse_modes();
+	void parse_modes();				//	network reactions
 	virtual void mode_select_response();
 	void was_timeout();
 public slots:

@@ -132,9 +132,6 @@
     <ClCompile Include="widgets\LoginBranch\LoginWidget.cpp">
       <Filter>Source Files\LoginBranch</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\LoginBranch\LoginSelectWidget.cpp">
-      <Filter>Source Files\LoginBranch</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\MainPageWidget.cpp">
       <Filter>Source Files\LoginBranch</Filter>
     </ClCompile>
@@ -176,21 +173,6 @@
     </ClCompile>
     <ClCompile Include="networking\Parsers\SimpleResponseParsers.cpp">
       <Filter>Source Files\Network\Parsing</Filter>
-    </ClCompile>
-    <ClCompile Include="legacy\helpers\abstractinputhelper.cpp">
-      <Filter>Source Files\legacy</Filter>
-    </ClCompile>
-    <ClCompile Include="legacy\helpers\datalogic_dlscanner.cpp">
-      <Filter>Source Files\legacy</Filter>
-    </ClCompile>
-    <ClCompile Include="legacy\helpers\emulatedkbdinputhelper.cpp">
-      <Filter>Source Files\legacy</Filter>
-    </ClCompile>
-    <ClCompile Include="legacy\helpers\helpermanager.cpp">
-      <Filter>Source Files\legacy</Filter>
-    </ClCompile>
-    <ClCompile Include="legacy\helpers\unitech_usi_dll.cpp">
-      <Filter>Source Files\legacy</Filter>
     </ClCompile>
     <ClCompile Include="legacy\legacy.cpp">
       <Filter>Source Files\legacy</Filter>
@@ -270,6 +252,24 @@
     <ClCompile Include="widgets\ControlsMiniwidgets\ControlManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="widgets\InventoryBranch\InventoryRootWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\InventorySpecialWidgets\InventoryScaningWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\InventoryBranch\InventoryParamsWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\InventorySpecialWidgets\ParentDocumentWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\parents\AbstractCheckboxSelection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\FilterSelectWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -299,9 +299,6 @@
     <QtMoc Include="widgets\utils\EventsAndFilters.h">
       <Filter>Header Files\util</Filter>
     </QtMoc>
-    <QtMoc Include="widgets\LoginBranch\LoginSelectWidget.h">
-      <Filter>Header Files\LoginBranch</Filter>
-    </QtMoc>
     <QtMoc Include="widgets\ModeSelectionBranch\ModeSelectionWidget.h">
       <Filter>Header Files\ModeSelectionBranch</Filter>
     </QtMoc>
@@ -316,15 +313,6 @@
     </QtMoc>
     <QtMoc Include="widgets\parents\AbstractVariantSelectionWidget.h">
       <Filter>Header Files\util\parents</Filter>
-    </QtMoc>
-    <QtMoc Include="legacy\helpers\helpermanager.h">
-      <Filter>Header Files\legacy</Filter>
-    </QtMoc>
-    <QtMoc Include="legacy\helpers\emulatedkbdinputhelper.h">
-      <Filter>Header Files\legacy</Filter>
-    </QtMoc>
-    <QtMoc Include="legacy\helpers\abstractinputhelper.h">
-      <Filter>Header Files\legacy</Filter>
     </QtMoc>
     <QtMoc Include="widgets\SuppliersSelectionBranch\SuppliersSelectWidget.h">
       <Filter>Header Files\SuppliersSelectionBranch</Filter>
@@ -374,6 +362,24 @@
     <QtMoc Include="widgets\ControlsMiniwidgets\ControlManager.h">
       <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </QtMoc>
+    <QtMoc Include="widgets\InventoryBranch\InventoryRootWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\InventorySpecialWidgets\InventoryScaningWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\InventoryBranch\InventoryParamsWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\InventorySpecialWidgets\ParentDocumentWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\parents\AbstractCheckboxSelection.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\FilterSelectWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="UamobiUtil.qrc">
@@ -415,12 +421,6 @@
       <Filter>Header Files\Network\Parsing</Filter>
     </ClInclude>
     <ClInclude Include="legacy\legacy.h">
-      <Filter>Header Files\legacy</Filter>
-    </ClInclude>
-    <ClInclude Include="legacy\helpers\datalogic_dlscanner.h">
-      <Filter>Header Files\legacy</Filter>
-    </ClInclude>
-    <ClInclude Include="legacy\helpers\unitech_usi_dll.h">
       <Filter>Header Files\legacy</Filter>
     </ClInclude>
     <ClInclude Include="networking\NetCallArgs.h">

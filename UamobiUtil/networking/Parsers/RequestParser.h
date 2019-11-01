@@ -58,6 +58,8 @@ namespace parse_uniresults_functions
 	typedef QVector<parsedOrder> ordersResponse;
 	typedef PagedResponse<parsedItemSimplified> searchResponse;
 	typedef PagedResponse<parsedItem> doclistResponse;
+	typedef QVector<parsedDocument> documentsResponse;
+	typedef QVector<parsedDocType> docFilterResponse;
 
 	UserProfilesResult parse_user_profiles(uniform_parse_result& ures);
 	modesResponse parse_modes(uniform_parse_result& ures);
@@ -70,7 +72,8 @@ namespace parse_uniresults_functions
 	PositionalResponse parse_item_info(uniform_parse_result& ures);
 	searchResponse parse_search_response(uniform_parse_result & ures);
 	doclistResponse parse_document_listed(uniform_parse_result& ures);
-
+	documentsResponse parse_documents(uniform_parse_result& ures);
+	docFilterResponse parse_filter_list(uniform_parse_result& ures);
 
 	// deprecated, should make better
 	bool isSimpliest(QString& res);
@@ -101,7 +104,8 @@ namespace RequestParser
 	PositionalResponse interpretAsItemInfo(QString& res, QString& errtext);
 	searchResponse interpretAsSearchResponse(QString& res, QString& errtext);
 	doclistResponse interpretAsListedDocument(QString& res, QString& errtext);
-
+	documentsResponse interpretAsDocumentsList(QString& res, QString& errtext);
+	docFilterResponse interpretAsDocFilterList(QString& res, QString& errtext);
 };
 namespace interpretsPointers
 {

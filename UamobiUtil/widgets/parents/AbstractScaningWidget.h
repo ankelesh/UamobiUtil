@@ -51,7 +51,7 @@ protected:
 	QHash<QString, abs_control*> controlsList;
 
 	RequestAwaiter awaiter;
-    void keyReleaseEvent(QKeyEvent *kev) override;
+	virtual void useControls() = 0;
 public:
 	AbstractScaningWidget(GlobalAppSettings& go, QWidget* parent);
 
@@ -62,11 +62,11 @@ protected slots:
 	virtual void processNumber(QString) = 0;
 	virtual void searchRequired() = 0;
 	virtual void backNeeded() = 0;
-	virtual void useControls() = 0;
 	virtual void was_timeout();
 	virtual void switchedFocus()=0;
 	virtual void syncControlAndBuffer(QString v) = 0;
 public slots:
 	virtual void setDocument(parsedOrder) = 0;
-
+signals:
+	void saveSuccess();
 };

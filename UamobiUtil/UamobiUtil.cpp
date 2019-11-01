@@ -1,5 +1,5 @@
 #include "UamobiUtil.h"
-
+#include "widgets/InventoryBranch/InventoryRootWidget.h"
 #include <QtGui/qevent.h>
 #ifdef DEBUG
 #include "debugtrace.h"
@@ -85,6 +85,26 @@ void UamobiUtil::gotoReceiptBranch(QHash<QString, QString> opts, parsedMode mode
 	(*current)->show();
 }
 
+void UamobiUtil::gotoInventoryBranch(QHash<QString, QString> opts, parsedMode mode)
+{
+	(*current)->hide();
+	if (*current != mainPage)
+	{
+		mainLayout->removeWidget(*current);
+		(*current)->deleteLater();
+	}
+	InventoryRootWidget* IR = new InventoryRootWidget(globalSettings, opts, mode.submode, this);
+#ifdef QT_VERSION5X
+	QObject::connect(IR, &InventoryRootWidget::backRequired, this, &UamobiUtil::hideCurrent);
+#else
+	QObject::connect(IR, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+#endif
+	inventoryBranch = IR;
+	current = &inventoryBranch;
+	mainLayout->addWidget(*current);
+	(*current)->show();
+}
+
 void UamobiUtil::resizeEvent(QResizeEvent* rev)
 {
 	overlay->resize(rev->size());
@@ -101,6 +121,10 @@ void UamobiUtil::interpretMode(QHash<QString, QString> sets, parsedMode mode)
 	if (mode.mode == "receipt")
 	{
 		gotoReceiptBranch(sets, mode);
+	}
+	else if (mode.mode == "inventory")
+	{
+		gotoInventoryBranch(sets, mode);
 	}
 }
 

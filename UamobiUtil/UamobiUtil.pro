@@ -26,9 +26,22 @@ HEADERS += ./UamobiUtil.h \
     ./widgets/utils/EventsAndFilters.h \
     ./widgets/MainPageWidget.h \
     ./debugtrace.h \
+    legacy/helpers/abstractinputhelper.h \
+    legacy/helpers/datalogic_dlscanner.h \
+    legacy/helpers/emulatedkbdinputhelper.h \
+    legacy/helpers/helpermanager.h \
+    legacy/helpers/unitech_usi_dll.h \
+    widgets/ControlsMiniwidgets/ControlManager.h \
+    widgets/ElementWidgets/ProcessingOverlay.h \
+    widgets/InventoryBranch/InventoryParamsWidget.h \
+    widgets/InventoryBranch/InventoryRootWidget.h \
+    widgets/InventorySpecialWidgets/InventoryScaningWidget.h \
+    widgets/InventorySpecialWidgets/ParentDocumentWidget.h \
     widgets/LoginBranch/LoginSelectWidget.h \
     widgets/LoginBranch/LoginWidget.h \
+    widgets/MultibranchWidgets/FilterSelectWidget.h \
     widgets/SettingsBranches/MainSettingsWidget.h \
+    widgets/parents/AbstractCheckboxSelection.h \
     widgets/utils/SpecializedWidgets.h \
     networking/RequestAwaiter.h \
     networking/Parsers/abs_parsed_request.h \
@@ -70,9 +83,22 @@ SOURCES += ./main.cpp \
     ./widgets/utils/ElementsStyles.cpp \
     ./widgets/MainPageWidget.cpp \
     ./debugtrace.cpp \
+    legacy/helpers/abstractinputhelper.cpp \
+    legacy/helpers/datalogic_dlscanner.cpp \
+    legacy/helpers/emulatedkbdinputhelper.cpp \
+    legacy/helpers/helpermanager.cpp \
+    legacy/helpers/unitech_usi_dll.cpp \
+    widgets/ControlsMiniwidgets/ControlManager.cpp \
+    widgets/ElementWidgets/ProcessingOverlay.cpp \
+    widgets/InventoryBranch/InventoryParamsWidget.cpp \
+    widgets/InventoryBranch/InventoryRootWidget.cpp \
+    widgets/InventorySpecialWidgets/InventoryScaningWidget.cpp \
+    widgets/InventorySpecialWidgets/ParentDocumentWidget.cpp \
     widgets/LoginBranch/LoginSelectWidget.cpp \
     widgets/LoginBranch/LoginWidget.cpp \
+    widgets/MultibranchWidgets/FilterSelectWidget.cpp \
     widgets/SettingsBranches/MainSettingsWidget.cpp \
+    widgets/parents/AbstractCheckboxSelection.cpp \
     widgets/utils/SpecializedWidgets.cpp \
     networking/RequestAwaiter.cpp \
     networking/Parsers/abs_parsed_request.cpp \

@@ -1,8 +1,8 @@
 #include "RequestAwaiter.h"
+#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
-
 const char* RECEIVER_SLOT_NAME = "requestIncoming";
 
 RequestAwaiter::RequestAwaiter(int interval, QObject* parent)

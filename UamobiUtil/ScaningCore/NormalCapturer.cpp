@@ -80,7 +80,7 @@ void NormalCapturer::pressScan()
 
 		widgetToApply->removeManualFocus();
 	}
-		if (!widgetToApply->barcodeBuffer.isEmpty())
+	if (!widgetToApply->barcodeBuffer.isEmpty())
 	{
 
 #ifdef DEBUG
@@ -88,6 +88,11 @@ void NormalCapturer::pressScan()
 #endif
 
 		widgetToApply->handleScannedBarcode();
+	}
+	if (!widgetToApply->numberBuffer.isEmpty() && controlIndex == controlNumber-1)
+	{
+		widgetToApply->handleNumberInbuffer();
+		widgetToApply->flushControl(controlIndex);
 	}
 	clearCaptureEngine();
 }
@@ -155,7 +160,7 @@ void NormalCapturer::handleElement(QString elem)
 		detrace_METHEXPL( elem);
 #endif
 		
-		if (lastKeyReleaseTimepoint.msecsTo(QTime::currentTime()) < 30)
+		if (lastKeyReleaseTimepoint.msecsTo(QTime::currentTime()) < 80)
 		{
 			widgetToApply->barcodeBuffer += elem;
 			lastKeyReleaseTimepoint = QTime::currentTime();
@@ -181,7 +186,7 @@ void NormalCapturer::handleElement(QString elem)
 	}
 	else if (isAwaitingControlValue)
 	{
-		if (lastKeyReleaseTimepoint.msecsTo(QTime::currentTime()) > 30)
+		if (lastKeyReleaseTimepoint.msecsTo(QTime::currentTime()) > 80)
 		{
 
 #ifdef DEBUG

@@ -24,9 +24,22 @@ namespace specwidgets
 	public:
 		indexedButton(int Index = 0, QWidget* parent = Q_NULLPTR);
 		void setIndex(int Index = 0);		//	setter
-	private slots:
-		void clickCapt();					//	this slot is connected to own "clicked"
+	protected slots:
+		virtual void clickCapt();					//	this slot is connected to own "clicked"
 	signals:
 		void indexClicked(int);				//	is emitted on-click
+	};
+	class toggledIndexedButton : public indexedButton
+	{
+		Q_OBJECT
+	protected:
+		QIcon& stateNon;
+		QIcon& stateToggled;
+		QIcon* curricon;
+		void paintEvent(QPaintEvent*) override;
+		virtual void clickCapt() override;
+	public:
+		toggledIndexedButton(QIcon & non, QIcon & is, int Index = 0, QWidget* parent = Q_NULLPTR);
+	
 	};
 }

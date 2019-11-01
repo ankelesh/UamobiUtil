@@ -37,6 +37,9 @@
 			which implements default for all inheritors behaviour - back or escape must
 			call back or emit a backRequired, numbers must be passed into expectingControls.
 			It is virtual, so it's okey to override it.
+		Major update:
+			now this widget carries its own keyfilter which is reacting on keypresses. Reactions can be overrided:
+			check Reaction functions
 
 */
 

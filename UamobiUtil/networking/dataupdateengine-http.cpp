@@ -1,23 +1,23 @@
-#include <QDate>
-#include <QDateTime>
-#include <QTime>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
+#include <QtCore/QDate>
+#include <QtCore/QDateTime>
+#include <QtCore/QTime>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QNetworkReply>
 #ifdef GUI_APP
 #include <QMessageBox>
 #endif
-#include <QTimer>
-#include <QDataStream>
-#include <QFile>
-#include <QTextDecoder>
-#include <QPointer>
-#include <QDebug>
+#include <QtCore/QTimer>
+#include <QtCore/QDataStream>
+#include <QtCore/QFile>
+#include <QtCore/QTextDecoder>
+#include <QtCore/QPointer>
+#include <QtCore/QDebug>
 #include "global.h"
 #include "xml_funcs.h"
 #include "dataupdateengine-http.h"
 #include "debugtrace.h"
-//#define DEBUG
+#define DEBUG
 struct SlotPointer
 {
 	SlotPointer(QObject* o, const QByteArray& slot)

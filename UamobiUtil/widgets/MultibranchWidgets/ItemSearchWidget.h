@@ -18,9 +18,20 @@
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
 
+/*
+	This widget is concentrated on forming list widget around response. 
+	It provides input line for user and trigger-button. On selection is emitted signal
+	containing parsedItem.
+
+	__ASSOCIATED_DATABASE_FUNCTION__  :  P'searchResponse' doc_search_items()
+
+*/
+
+
 namespace specwidgets
 {
 	class _ItemSelectionList : public AbstractListSelectionWidget
+		// specialization for items
 	{
 		Q_OBJECT
 	protected:
@@ -65,13 +76,13 @@ public:
 	ItemSearchWidget(GlobalAppSettings & go, QWidget* parent);
 	void refresh();
 public slots:
-	void doSearch();
-	void loadResults();
-	void clear();
-	void nextPage();
-	void previousPage();
-	void search_response();
+	void doSearch();		//	triggerSlot
+	void loadResults();		//	inner slot for direct calling
+	void clear();			//	clears field and list
+	void nextPage();		//	sends request for next page
+	void previousPage();	//	sends request for prev page
+	void search_response();	//	netresponse functions
 	void was_timeout();
 signals:
-	void itemSelected(parsedItemSimplified);
+	void itemSelected(parsedItemSimplified);	//	is emitted when item picked
 };

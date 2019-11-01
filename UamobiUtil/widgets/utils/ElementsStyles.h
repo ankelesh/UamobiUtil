@@ -83,13 +83,29 @@ extern const QString DOWN_SPINBOX_STYLESHEET;
 // down buttons of BigButtonsSpinbox
 
 extern const QString CANCEL_BUTTONS_STYLESHEET;
+// buttons that are quitting from complex branches must use this style
+
 extern const QString SETTINGS_BUTTONS_STYLESHEET;
+// buttons which are opening settings
 
 extern const QString NAVIGATE_BUTTONS_STYLESHEET;
+// Nav buttons differ with their enhanced disabled style
 
 extern const QString LARGE_BUTTON_STYLESHEET;
+// deprecated
+
 extern const QString BETTER_CALENDAR_STYLESHEET;
+// large calendar
 extern const QString ERROR_TEXT_STYLESHEET;
+// red text for emergency messages
 extern const QString UNCHECKED_BUTTONS_STYLESHEET;
+// stylesheet for toggled buttons
+
+// This pair of stylesheets is used in zebra-styled items
+
 extern const QString ZEBRAEVEN_BUTTONS_STYLESHEET;
+// stylesheet for even buttons
 extern const QString ZEBRAODD_BUTTONS_STYLESHEET;
+// stylesheet for odd buttons
+
+extern const QString CHECKBOX_BUTTON_STYLESHEET;

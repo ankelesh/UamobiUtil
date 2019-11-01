@@ -14,6 +14,9 @@
 		CaptureBackFilter:
 			This filter is lighter version of NoKeyEvents. Only reacts to back key.
 
+		GeneralPurposeFilter:
+			This filter is multi-option filter which can be adjusted for filtering a specified group of events.
+			it uses pointers for enhancing filtering, so it is faster than simple if ladder.
 */
 
 namespace filters
@@ -67,26 +70,32 @@ namespace filters
 
 		CaptureFunction someCaptureFunctions[5];
 
+		// util fuction that turns int into pointer to capture function
 		CaptureFunction makeCaptureFunction(captureTypes type);
 
-		bool eventFilter(QObject* ob, QEvent* ev) override;
+		bool eventFilter(QObject* ob, QEvent* ev) override;	
+
+		//	These functions are used for capturing and are called during eventFiltering
+		//	These one are element captures that search for only one type 
 		bool captReturn(QKeyEvent*);
 		bool captNumber(QKeyEvent*);
 		bool captSymbol(QKeyEvent*);
 		bool captBack(QKeyEvent*);
-		bool captAll(QKeyEvent*);
+		// These are complex capturing fuctions that call element captures
 		bool captSome(QKeyEvent*);
 		bool captScan(QKeyEvent*);
 		bool captInf(QKeyEvent*);
+		//This is aggregate-capturing function that is implemented without element-calls to enhance performance
+		bool captAll(QKeyEvent*);
 
 	public:
 		GeneralPurposeFilter(captureTypes type = All, QObject* parent = Q_NULLPTR);
 		GeneralPurposeFilter(captureTypes type1, captureTypes type2, QObject* parent = Q_NULLPTR, captureTypes type3 = All, captureTypes type4 = All, captureTypes type5 = All);
 	signals:
-		void returnPressed();
-		void backPressed();
-		void scanPressed();
-		void numberPressed(int);
-		void symbolPressed(QString);
+		void returnPressed();	//	reflects return press
+		void backPressed();		//	reflects back press
+		void scanPressed();		//	reflects scan press
+		void numberPressed(int);	//	reflects pressed number buttons
+		void symbolPressed(QString);	//	reflects any pressed text
 	};
 }

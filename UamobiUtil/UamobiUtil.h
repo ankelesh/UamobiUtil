@@ -42,11 +42,12 @@ private:
 	QPointer<inframedWidget> mainPage;			//	Login page. Remember - user must be logged in to perform complex ops.
 	QPointer<inframedWidget> modeSelectionBranch;	//	Mode selection. Usually this branch must be shown after logging in
 	QPointer<inframedWidget> receiptBranch; // receipt branch selection.
-
+	QPointer<inframedWidget> inventoryBranch;
 	QPointer<inframedWidget>* current;		//	This pointer is holding currently shown widget or branch
 
 	ProcessingOverlay* overlay;
 	void gotoReceiptBranch(QHash<QString, QString>, parsedMode);
+	void gotoInventoryBranch(QHash<QString, QString>, parsedMode);
 	void resizeEvent(QResizeEvent* rev) override;
 public:
 	enum branches { login, modeselect };

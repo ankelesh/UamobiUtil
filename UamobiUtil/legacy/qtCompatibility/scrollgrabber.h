@@ -1,9 +1,19 @@
 #ifndef SCROLLGRABBER_H
 #define SCROLLGRABBER_H
 
-#include <QObject>
-#include <QAbstractScrollArea>
+#include <QtCore/QObject>
+#ifdef QT_VERSION5X
+#include <QtWidgets/QAbstractScrollArea>
+#else
+#include <QtGui/QAbstractScrollArea>
+#endif
 
+/*
+	This file is used to close absense of normal QScroller in older qt4. It consists of press filter and 
+	proxy qobject that stores pointer to scroll area. Generally it catches long gestures of mouse and moves scrollbar
+
+
+*/
 
 class ScrollKeyFilter : public QObject
 {

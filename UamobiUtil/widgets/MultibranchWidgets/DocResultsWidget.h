@@ -54,7 +54,7 @@ protected slots:
 	void previousPage();
 	void nextPage();
 	void saveDocument();
-	void items_response();
+	void items_response();			//	netresponse
 	void save_response();
 	void was_timeout();
 

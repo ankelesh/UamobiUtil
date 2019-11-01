@@ -210,7 +210,6 @@ namespace parse_uniresults_functions {
 		}
 		return Document();
 	}
-#define DEBUG
 	PositionalResponse parse_item_info(uniform_parse_result& ures)
 	{
 		PositionalResponse temp;
@@ -268,6 +267,43 @@ namespace parse_uniresults_functions {
 					ures.queriesResult.at(i+4),
 					ures.queriesResult.at(i+5)
 				));
+			}
+		}
+		return temp;
+	}
+
+#define DEBUG
+	documentsResponse  parse_documents(uniform_parse_result& ures)
+	{
+		documentsResponse temp;
+#ifdef DEBUG
+		detrace_METHEXPL(showHeap(ures));
+#endif
+		if (queryLengthOkInResult(ures))
+		{
+			temp.reserve(queryReservationSize(ures));
+			QList<QString>::iterator start = ures.queriesResult.begin();
+			while (start != ures.queriesResult.end())
+			{
+				temp.push_back(parsedDocument(*start, *(start + 1), *(start + 2), *(start + 3)));
+				start += 4;
+			}
+			return temp;
+		}
+		return temp;
+	}
+
+	docFilterResponse parse_filter_list(uniform_parse_result& ures)
+	{
+		docFilterResponse temp;
+		if (queryLengthOkInResult(ures))
+		{
+			temp.reserve(queryReservationSize(ures));
+			QList<QString>::iterator start = ures.queriesResult.begin();
+			while (start != ures.queriesResult.end())
+			{
+				temp.push_back(parsedDocType(*start, *(start + 1), *(start + 2)));
+				start += ures.one_position_entries_quantity;
 			}
 		}
 		return temp;
@@ -533,5 +569,23 @@ namespace RequestParser {
 			return parse_document_listed(parser.read());
 		}
 		return doclistResponse();
+	}
+	documentsResponse interpretAsDocumentsList(QString& res, QString& errtext)
+	{
+		DocumentParser parser(res, errtext);
+		if (parser.isSuccessfull())
+		{
+			return parse_documents(parser.read());
+		}
+		return documentsResponse();
+	}
+	docFilterResponse interpretAsDocFilterList(QString& res, QString& errtext)
+	{
+		DocTypeFiltersParser parser(res, errtext);
+		if (parser.isSuccessfull())
+		{
+			return parse_filter_list(parser.read());
+		}
+		return docFilterResponse();
 	}
 }

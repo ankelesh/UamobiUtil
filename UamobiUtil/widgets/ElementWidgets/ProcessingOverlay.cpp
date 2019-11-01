@@ -8,16 +8,18 @@
 #endif
 
 
-const double pi = 3.14159265358979323846;
+const double pi = 3.14159265358979323846;		//	not precise pi. More precision is not required
 
 QPoint	find_corner(const QPoint& center, const int& size,
 	const int& corner_num)
+	//	finds corner of pointy hexagon
 {
 	float adeg =  60 * corner_num - 30;
 	float arad =  pi / 180 * adeg;
 	return QPoint(center.x() + size * cos(arad), center.y() + size * sin(arad));
 }
 QPolygon makeHexagon(const QPoint& center, const int& size)
+// makes polygon ready to be drawn
 {
 	QVector<QPoint> points;
 	points.reserve(6);
@@ -136,6 +138,7 @@ void ProcessingOverlay::step()
 		hide();
 	}
 }
+// this pointer is used for outer calls to main overlay
 static ProcessingOverlay* ov;
 
 void showProcessingOverlay()

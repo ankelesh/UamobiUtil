@@ -69,7 +69,7 @@ namespace legacy {
 		t["returningtosupplier"] = modecut("receipt", "returningtosupplier");
 		t["receiptworder"] = modecut("receipt", "receiptworder");
 		t["receiptwoorder"] = modecut("receipt", "receiptwoorder");
-		t["receiptfromwarehouses"] = modecut("receipt", "ReceiptFromWarehouse");
+		t["receiptfromwarehouses"] = modecut("receipt", "receiptfromwarehouses");
 		temp['r'] = t;
 		t.clear();
 		t["sales"] = modecut("inventory", "sales");
@@ -105,10 +105,15 @@ namespace legacy {
 				if (start->submode.isEmpty()) {
 					tvect << *start;
 				}
-				else if (start->submode == "ReceiptFromWarehouse")
+				else if (start->submode.contains("warehouse"))
 				{
 					tvect << *start;
 				}
+			}
+			else if (start->mode == "inventory")
+			{
+				if (start->submode.isEmpty())
+					tvect << *start;
 			}
 			++start;
 		}
