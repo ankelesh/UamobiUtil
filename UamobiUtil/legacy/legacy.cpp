@@ -58,6 +58,9 @@ namespace legacy {
 		t["movingtorepacking"] = modecut("receipt", "movingtorepacking");
 		temp['m'] = t;
 		t.clear();
+		t["ordersandsldcorrection"] = modecut("receipt", "ordersandsldcorrection");
+		temp['o'] = t;
+		t.clear();
 		t["printing"] = modecut("printing", "");
 		t["productionwriteoff"] = modecut("inventory", "productionwriteoff");
 		temp['p'] = t;
@@ -106,6 +109,10 @@ namespace legacy {
 					tvect << *start;
 				}
 				else if (start->submode.contains("warehouse"))
+				{
+					tvect << *start;
+				}
+				else if (start->submode.contains("andsld"))
 				{
 					tvect << *start;
 				}

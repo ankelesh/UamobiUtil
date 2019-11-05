@@ -1,7 +1,7 @@
 #include "OrderSelectionWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
-//#define DEBUG
+#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -78,7 +78,7 @@ bool OrderSelectionWidget::isExpectingControl(int val)
 	if (awaiter.isAwaiting())
 		return false;
 #ifdef DEBUG
-	detrace_METHCALL("isExpectingControl(" << val);
+	//detrace_METHCALL("isExpectingControl(" << val);
 #endif
 	if (val >= -1 && val <= allOrders.count() - 1)
 	{
@@ -102,7 +102,7 @@ void OrderSelectionWidget::orderSelected(parsedOrder Po)
 {
 
 #ifdef DEBUG
-	detrace_METHCALL("orderSelected(" << Po.text );
+	//detrace_METHCALL("orderSelected(" << Po.text );
 #endif
 	if (awaiter.isAwaiting())
 		return;
@@ -121,6 +121,15 @@ QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_select_re
 void OrderSelectionWidget::parse_order_response()
 {
 	allOrders = RequestParser::interpretAsOrdersList(awaiter.restext, awaiter.errtext);
+#ifdef DEBUG
+	parse_uniresults_functions::ordersResponse temp;
+	for (int i = 0; i < allOrders.count(); ++i)
+	{
+		if (allOrders.at(i).code == "18833981")
+			temp.push_back( allOrders.at(i));
+	}
+	allOrders = temp;
+#endif
 	orderSelection->reload();
 	if (!awaiter.errtext.isEmpty())
 	{
@@ -141,7 +150,7 @@ void OrderSelectionWidget::parse_select_response()
 	parse_uniresults_functions::TypicalResponse resp =
 		RequestParser::interpretAsRichtextResponse(awaiter.restext, awaiter.errtext);
 #ifdef DEBUG
-	detrace_METHEXPL("resp status: " << resp.resp);
+	//detrace_METHEXPL("resp status: " << resp.resp);
 #endif
 	if (!awaiter.errtext.isEmpty())
 	{
@@ -150,7 +159,7 @@ void OrderSelectionWidget::parse_select_response()
 	if (resp.resp)
 	{
 #ifdef DEBUG
-		detrace_METHEXPL("text transmitted to parms: " << resp.errors << "| while original package packet was " << awaiter.restext);
+//		detrace_METHEXPL("text transmitted to parms: " << resp.errors << "| while original package packet was " << awaiter.restext);
 #endif
 		emit orderConfirmed(po, resp.errors);
 	}
@@ -161,7 +170,7 @@ void OrderSelectionWidget::parse_select_response()
 void OrderSelectionWidget::was_timeout()
 {
 #ifdef DEBUG
-	detrace_METHCALL("WasTimeout");
+//	detrace_METHCALL("WasTimeout");
 #endif
 	setTimeoutMessage();
 	QObject::disconnect(&awaiter,SIGNAL(requestReceived()),0,0);

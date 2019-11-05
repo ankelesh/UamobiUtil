@@ -2,7 +2,6 @@
 #include "widgets/parents/inframedWidget.h"
 #include "widgets/parents/abstractNodeInterface.h"
 #include "widgets/utils/GlobalAppSettings.h"
-#include <QtWidgets/QBoxLayout>
 #include "networking/things.h"
 #include "widgets/InventoryBranch/InventoryParamsWidget.h"
 #include "widgets/InventorySpecialWidgets/InventoryScaningWidget.h"

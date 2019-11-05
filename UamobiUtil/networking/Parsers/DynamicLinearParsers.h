@@ -33,3 +33,14 @@ protected:
 public:
 	ExpandedItemListParser(QString& res, QString& err);
 };
+
+class ItemInfoResponseParser : public abs_parsed_request
+{
+protected:
+	// Inherited via abs_parsed_request
+	virtual bool couldRead() override;
+	virtual bool noRequestErrors() override;
+	virtual QString parseErrorText() override;
+public:
+	ItemInfoResponseParser(QString& res, QString& err);
+};

@@ -22,6 +22,7 @@
 #include "widgets/utils/EventsAndFilters.h"
 #include"widgets/ControlsMiniwidgets/QuantityControl.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
+#include "ScaningCore/NormalCapturer.h"
 
 class AbstractScaningWidget : public inframedWidget
 {
@@ -36,7 +37,6 @@ protected:
 	QVBoxLayout* innerLayout;
 	QHBoxLayout* topPanelLayout;
 	QLabel* userInfo;
-	QLabel* stateInfo;
 	QLineEdit* barcodeField;
 	QTextEdit* mainTextView;
 	QHBoxLayout* buttonPanel;
@@ -48,10 +48,15 @@ protected:
 
 
 	QHash<QString, QString> itemSuppliedValues;
-	QHash<QString, abs_control*> controlsList;
+	
+	abs_control* first_control;
+	abs_control* second_control;
+	
+
+	int controlsAvailable;
 
 	RequestAwaiter awaiter;
-	virtual void useControls() = 0;
+	virtual void useControls(QVector<QPair<QString, QString> >&) = 0;
 public:
 	AbstractScaningWidget(GlobalAppSettings& go, QWidget* parent);
 
@@ -69,4 +74,6 @@ public slots:
 	virtual void setDocument(parsedOrder) = 0;
 signals:
 	void saveSuccess();
+
 };
+QVector<QPair<QString, QString> > make_control_list(QHash<QString, QString>&);

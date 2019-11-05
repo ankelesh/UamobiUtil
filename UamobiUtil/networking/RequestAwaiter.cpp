@@ -9,15 +9,16 @@ RequestAwaiter::RequestAwaiter(int interval, QObject* parent)
 	: QObject(parent), timer(new QTimer(this)), awaiting(false), timeoutinterval(interval)
 {
 #ifdef DEBUG
-    detrace_METHEXPL("interval was:" << interval );
+    //detrace_METHEXPL("interval was:" << interval );
 #endif
 	timer->setInterval(interval);
 	timer->setSingleShot(true);
 
 #ifdef DEBUG
-	detrace_METHEXPL("Timer in inner measures: " << timer->intervalAsDuration().count());
+#ifdef QT_VERSION5X
+	//detrace_METHEXPL("Timer in inner measures: " << timer->intervalAsDuration().count());
 #endif
-
+#endif
 #ifdef QT_VERSION5X
 	QObject::connect(timer, &QTimer::timeout, this, &RequestAwaiter::timeout);
 #else
@@ -31,7 +32,7 @@ void RequestAwaiter::run()
 	timer->start();
 
 #ifdef DEBUG
-	detrace_METHEXPL("now with interval " << timer->interval() << " remaining is " << timer->remainingTime());
+	//detrace_METHEXPL("now with interval " << timer->interval() << " remaining is " << timer->remainingTime());
 #endif
 
 	awaiting = true;
@@ -58,8 +59,8 @@ int RequestAwaiter::getInterval()
 void RequestAwaiter::timeout()
 {
 #ifdef DEBUG
-    detrace_METHCALL("RequestAwaiter::timeout");
-	detrace_METHEXPL(timer->remainingTime() << " msecs remaining");
+   // detrace_METHCALL("RequestAwaiter::timeout");
+	//detrace_METHEXPL(timer->remainingTime() << " msecs remaining");
 #endif
 	awaiting = false;
 	wastimeout = true;
@@ -71,8 +72,8 @@ void RequestAwaiter::requestIncoming(QString a, QString b)
 	if (a.isEmpty() && b.isEmpty())
 		return;*/
 #ifdef DEBUG
-    detrace_METHCALL("RequestAwaiter::requestIncoming");
-	detrace_METHEXPL(timer->remainingTime() << " msecs remaining");
+    //detrace_METHCALL("RequestAwaiter::requestIncoming");
+	//detrace_METHEXPL(timer->remainingTime() << " msecs remaining");
 	detrace_METHTEXTS("RequestAwaiter::requestincoming", "a, b", a << "|" << b);
 #endif
 	restext = a; errtext = b;

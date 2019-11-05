@@ -79,7 +79,11 @@ FilterSelectWidget::FilterSelectWidget(GlobalAppSettings& go, QWidget* parent)
 	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &FilterSelectWidget::was_timeout);
 	
 #else
-	!!!implement!!!
+    QObject::connect(allonButton, SIGNAL(clicked()), this, SLOT(checkAll()));
+    QObject::connect(alloffButton, SIGNAL(clicked()), this, SLOT(uncheckAll()));
+    QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
+    QObject::connect(okButton, SIGNAL(clicked()),this, SLOT(okPressed()));
+    QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
 		scrArea->setWidget(typesel);
 }
@@ -92,7 +96,7 @@ void FilterSelectWidget::loadFilters()
 #ifdef QT_VERSION5X
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &FilterSelectWidget::parse_doctype_list_response);
 #else
-	!!!implement!!!
+    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_doctype_list_response()));
 #endif
 	globalSettings.networkingEngine->docGetAllowedTypes(&awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
@@ -124,7 +128,7 @@ void FilterSelectWidget::okPressed()
 #ifdef QT_VERSION5X
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &FilterSelectWidget::parse_doctype_selection_response);
 #else
-	!!!implement!!!
+    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_doctype_selection_response()));
 #endif
 		QString buffer;
 	for (int i = 0; i < selectionState.count(); ++i)

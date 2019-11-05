@@ -6,14 +6,14 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
 	mainLayout(new QVBoxLayout(this)), innerWidget(new inframedWidget(this)),
 	innerLayout(new QVBoxLayout(innerWidget)), topPanelLayout(new QHBoxLayout(innerWidget)),
 	userInfo(new QLabel(innerWidget)),
-	stateInfo(new QLabel(innerWidget)), barcodeField(new QLineEdit(innerWidget)),
+	barcodeField(new QLineEdit(innerWidget)),
 	mainTextView(new QTextEdit(innerWidget)),
 	buttonPanel(new QHBoxLayout(innerWidget)),
  quitButton(new MegaIconButton(innerWidget)), switchFocus(new MegaIconButton(innerWidget)),
 	backButton(new MegaIconButton(innerWidget)),
 	submitButton(new MegaIconButton(innerWidget)), searchButton(new MegaIconButton(innerWidget)),
  itemSuppliedValues(), 
-	controlsList(), awaiter(go.timeoutInt, this)
+	first_control(), second_control(), controlsAvailable(0), awaiter(go.timeoutInt, this)
 {
 	this->setLayout(mainLayout);
 	mainLayout->addWidget(innerWidget);
@@ -22,7 +22,6 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
 	topPanelLayout->addWidget(quitButton);
 	topPanelLayout->addWidget(userInfo);
 	topPanelLayout->addWidget(switchFocus);
-	innerLayout->addWidget(stateInfo);
 	innerLayout->addWidget(barcodeField);
 	innerLayout->addWidget(mainTextView);
 	innerLayout->addLayout(buttonPanel);
@@ -42,9 +41,6 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
 	userInfo->setAlignment(Qt::AlignCenter);
 	userInfo->setFont(scaledFont);
 	
-	stateInfo->setText(tr("scaning_widget_state_ready"));
-	stateInfo->setAlignment(Qt::AlignCenter);
-	stateInfo->setFont(scaledFont);
 
 	mainTextView->setText(tr("scaning_widget_filler_text"));
 	mainTextView->setFont(scaledFont);
@@ -99,4 +95,41 @@ void AbstractScaningWidget::was_timeout()
 {
 	userInfo->setText("scaning_timeout:" + QString::number(globalSettings.timeoutInt));
 	hideProcessingOverlay();
+}
+
+bool AbstractScaningWidget::isManualInFocus()
+{
+	return false;
+}
+
+bool AbstractScaningWidget::handleScannedBarcode()
+{
+	return false;
+}
+
+bool AbstractScaningWidget::handleNumberInbuffer()
+{
+	return false;
+}
+
+int AbstractScaningWidget::flushControl(int)
+{
+	return 0;
+}
+
+void AbstractScaningWidget::processBackPress()
+{
+}
+
+void AbstractScaningWidget::removeManualFocus()
+{
+}
+
+void AbstractScaningWidget::setControlFocus(int)
+{
+}
+
+bool AbstractScaningWidget::isControlFocused()
+{
+	return false;
 }

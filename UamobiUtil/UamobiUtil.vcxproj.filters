@@ -106,6 +106,12 @@
     <Filter Include="Source Files\MultibranchWidgets">
       <UniqueIdentifier>{f06bc4bd-8b0c-431f-98b0-34a63eb64aa7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\InventoryLinked">
+      <UniqueIdentifier>{35bb0461-944a-4361-b5d6-32b1d42b7cc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\InventoryLinked">
+      <UniqueIdentifier>{66ef7938-14d8-43b6-b529-55d756254663}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -240,35 +246,35 @@
     <ClCompile Include="legacy\qtCompatibility\scrollgrabber.cpp">
       <Filter>Source Files\legacy</Filter>
     </ClCompile>
-    <ClCompile Include="ScaningCore\NormalCapturer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ElementWidgets\ProcessingOverlay.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ElementWidgets\ZebraListItemDelegate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ControlsMiniwidgets\ControlManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\InventoryBranch\InventoryRootWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\InventorySpecialWidgets\InventoryScaningWidget.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ScaningRelated</Filter>
     </ClCompile>
     <ClCompile Include="widgets\InventoryBranch\InventoryParamsWidget.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\InventoryLinked</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\InventorySpecialWidgets\ParentDocumentWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\parents\AbstractCheckboxSelection.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="widgets\InventoryBranch\InventoryRootWidget.cpp">
+      <Filter>Source Files\InventoryLinked</Filter>
     </ClCompile>
     <ClCompile Include="widgets\MultibranchWidgets\FilterSelectWidget.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\MultibranchWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\InventorySpecialWidgets\ParentDocumentWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\parents\AbstractCheckboxSelection.cpp">
+      <Filter>Source Files\util\parents</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ElementWidgets\ProcessingOverlay.cpp">
+      <Filter>Source Files\ElementWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ElementWidgets\ZebraListItemDelegate.cpp">
+      <Filter>Source Files\ElementWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="ScaningCore\NormalCapturer.cpp">
+      <Filter>Source Files\ScaningRelated</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ControlsMiniwidgets\ControlManager.cpp">
+      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -335,9 +341,6 @@
     <QtMoc Include="widgets\ElementWidgets\MegaIconButton.h">
       <Filter>Header Files\ElementWidgets</Filter>
     </QtMoc>
-    <QtMoc Include="widgets\ControlsMiniwidgets\abs_control.h">
-      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
-    </QtMoc>
     <QtMoc Include="widgets\parents\AbstractScaningWidget.h">
       <Filter>Header Files\ScaningRelated</Filter>
     </QtMoc>
@@ -350,35 +353,35 @@
     <QtMoc Include="widgets\MultibranchWidgets\ItemSearchWidget.h">
       <Filter>Header Files\MultibranchWidgets</Filter>
     </QtMoc>
-    <QtMoc Include="legacy\qtCompatibility\scrollgrabber.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="ScaningCore\NormalCapturer.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\ElementWidgets\ProcessingOverlay.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="widgets\ControlsMiniwidgets\ControlManager.h">
       <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </QtMoc>
-    <QtMoc Include="widgets\InventoryBranch\InventoryRootWidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\InventorySpecialWidgets\InventoryScaningWidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\InventoryBranch\InventoryParamsWidget.h">
-      <Filter>Header Files</Filter>
+    <QtMoc Include="widgets\parents\AbstractCheckboxSelection.h">
+      <Filter>Header Files\util\parents</Filter>
     </QtMoc>
     <QtMoc Include="widgets\InventorySpecialWidgets\ParentDocumentWidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\parents\AbstractCheckboxSelection.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\MultibranchWidgets</Filter>
     </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\FilterSelectWidget.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\MultibranchWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\InventoryBranch\InventoryParamsWidget.h">
+      <Filter>Header Files\InventoryLinked</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\InventoryBranch\InventoryRootWidget.h">
+      <Filter>Header Files\InventoryLinked</Filter>
+    </QtMoc>
+    <QtMoc Include="legacy\qtCompatibility\scrollgrabber.h">
+      <Filter>Header Files\legacy</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ElementWidgets\ProcessingOverlay.h">
+      <Filter>Header Files\ElementWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="ScaningCore\NormalCapturer.h">
+      <Filter>Header Files\ScaningRelated</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\InventorySpecialWidgets\InventoryScaningWidget.h">
+      <Filter>Header Files\ScaningRelated</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -439,7 +442,10 @@
       <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </ClInclude>
     <ClInclude Include="widgets\ElementWidgets\ZebraListItemDelegate.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ElementWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\ControlsMiniwidgets\abs_control.h">
+      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

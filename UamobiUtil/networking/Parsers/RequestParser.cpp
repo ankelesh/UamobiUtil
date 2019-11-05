@@ -210,19 +210,23 @@ namespace parse_uniresults_functions {
 		}
 		return Document();
 	}
-	PositionalResponse parse_item_info(uniform_parse_result& ures)
+	CombinedNamedLinearResponse parse_item_info(uniform_parse_result& ures)
 	{
-		PositionalResponse temp;
+		CombinedNamedLinearResponse temp;
 #ifdef DEBUG
 		detrace_METHEXPL(showHeap(ures));
 #endif
-		temp.success = ures.request_status == 200;
-		if (((ures.queriesResult.count()%2) == 0))
+		if (((ures.queriesResult.count()%3) == 0))
 		{
-			for (int i = 0; i < ures.queriesResult.count(); ++i)
+			for (int i = 0; i < ures.queriesResult.count(); i+= 3)
 			{
-				temp.values.insert(ures.queriesResult.at(i), ures.queriesResult.at(i + 1));
-				++i;
+				if (ures.queriesResult.at(i).isEmpty()) {
+					temp.named.insert(ures.queriesResult.at(i+1), ures.queriesResult.at(i + 2));
+				}
+				else
+				{
+					temp.linear.push_back(QPair<QString, QString>(ures.queriesResult.at(i + 1), ures.queriesResult.at(i + 2)));
+				}
 			}
 		}
 		return temp;
@@ -543,14 +547,14 @@ namespace RequestParser {
 		}
 		return Document();
 	}
-	PositionalResponse interpretAsItemInfo(QString& res, QString& errtext)
+	CombinedNamedLinearResponse interpretAsItemInfo(QString& res, QString& errtext)
 	{
 		ItemInfoResponseParser parser(res, errtext);
 		if (parser.isSuccessfull())
 		{
 			return parse_item_info(parser.read());
 		}
-		return PositionalResponse();
+		return CombinedNamedLinearResponse();
 	}
 	searchResponse interpretAsSearchResponse(QString& res, QString& errtext)
 	{

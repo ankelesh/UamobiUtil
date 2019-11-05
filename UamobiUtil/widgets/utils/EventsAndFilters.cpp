@@ -45,7 +45,7 @@ bool filters::NoKeyEvents::eventFilter(QObject* object, QEvent* ev)
 		{
 			emit eraseRequired();
 		}
-		else if (keyptr->key() == 0 || keyptr->key() == 33554431 || keyptr->key() == Qt::Key_Dollar)
+        else if (keyptr->key() == 0 || keyptr->key() == 33554431 || keyptr->key() == 16777248 || keyptr->key() == Qt::Key_Dollar)
 		{
 			emit unknownObtained();
 		}

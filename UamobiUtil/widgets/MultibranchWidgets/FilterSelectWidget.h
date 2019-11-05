@@ -1,8 +1,13 @@
 #pragma once
 #include "widgets/parents/AbstractCheckboxSelection.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
+#ifdef QT_VERSION5X
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QScrollArea>
+#else
+#include <QtGui/QLabel>
+#include <QtGui/QScrollArea>
+#endif
 #include "widgets/utils/GlobalAppSettings.h"
 #include "networking/RequestAwaiter.h"
 #include "networking/things.h"

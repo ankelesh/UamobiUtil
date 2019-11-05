@@ -3,7 +3,7 @@
 
 #include <QtWidgets/QItemDelegate>
 #else
-#include <QtGui/ItemDelegate>
+#include <QtGui/QItemDelegate>
 #endif
 #include <QtGui/QPainter>
 

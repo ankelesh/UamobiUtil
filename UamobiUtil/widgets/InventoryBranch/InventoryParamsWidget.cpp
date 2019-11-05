@@ -58,7 +58,9 @@ InventoryParamsWidget::InventoryParamsWidget(QWidget* parent)
 	QObject::connect(selectDocumentButton, &MegaIconButton::clicked, this, &InventoryParamsWidget::selectDocPressed);
 	QObject::connect(okButton, &MegaIconButton::clicked, this, &InventoryParamsWidget::okPressed);
 #else
-	throw;
+    QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
+    QObject::connect(selectDocumentButton, SIGNAL(clicked()), this, SLOT(selectDocPressed()));
+    QObject::connect(okButton, SIGNAL(clicked()), this, SLOT(okPressed()));
 #endif
 
 }

@@ -81,7 +81,13 @@ ParentDocumentWidget::ParentDocumentWidget(GlobalAppSettings& go, QWidget* paren
 	QObject::connect(filterSelect, &FilterSelectWidget::backRequired, this, &ParentDocumentWidget::hideCurrent);
 	QObject::connect(filterSelect, &FilterSelectWidget::filterApplied, this, &ParentDocumentWidget::filterReady);
 #else
-	throw;
+    QObject::connect(filterButton, SIGNAL(clicked()), this, SLOT(filterDocuments()));
+    QObject::connect(backButton, SIGNAL(clicked()),this, SIGNAL(backRequired()));
+    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(load_documents_response()));
+    QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
+    QObject::connect(docSelection, SIGNAL(docSelected(parsedDocument)), this, SIGNAL(docSelected(parsedDocument)));
+    QObject::connect(filterSelect, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+    QObject::connect(filterSelect, SIGNAL(filterApplied()), this, SLOT(filterReady()));
 #endif
 }
 

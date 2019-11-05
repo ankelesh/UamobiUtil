@@ -251,6 +251,7 @@ public:
 		, QObject* receiver
 		, const char* slot
 	);
+	virtual void recSubmit(const QString& code, const QString& num, const QString& parameters, QObject* receiver, const char* slot) override;
 	virtual void recSubmitExpDates
 	(
 		const QString& code
@@ -301,6 +302,10 @@ private slots:
 
 signals:
 	void answerReceived(QString);
+
+	// Inherited via DataUpdateEngine
 };
 
+QString makeParamsFromList(QVector<QPair<QString, QString> >& vect);
+QString makeParamsFromList(QString& paramName, QString& paramVal);
 #endif // DATAUPDATEENGINEHTTP_H

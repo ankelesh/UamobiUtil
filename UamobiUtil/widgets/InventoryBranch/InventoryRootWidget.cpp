@@ -46,7 +46,13 @@ InventoryRootWidget::InventoryRootWidget(GlobalAppSettings& go, QHash<QString, Q
 	QObject::connect(scaningWidget, &InventoryScaningWidget::backRequired, this, &InventoryRootWidget::hideCurrent);
 	QObject::connect(scaningWidget, &InventoryScaningWidget::saveSuccess, this, &InventoryRootWidget::hideCurrent);
 #else
-	throw;
+    QObject::connect(innerWidget, SIGNAL(backRequired()), this, SLOT(backTo()));
+    QObject::connect(innerWidget, SIGNAL(documentConfirmed(Document)), this, SLOT(continueToScaning(Document)));
+    QObject::connect(innerWidget, SIGNAL(documentMustBeSelected(int)), this, SLOT(backToStep(int)));
+    QObject::connect(docSelectionWidget, SIGNAL(docSelected(parsedDocument)), this, SLOT(documentAcquired(parsedDocument)));
+    QObject::connect(docSelectionWidget, SIGNAL(backRequired()), this, SIGNAL(backRequired()));
+    QObject::connect(scaningWidget, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+    QObject::connect(scaningWidget, SIGNAL(saveSuccess()), this, SLOT(hideCurrent()));
 #endif
 }
 

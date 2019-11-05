@@ -1,6 +1,7 @@
 #include "SuppliersSelectWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
+#define DEBUG_FILTER
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -170,6 +171,17 @@ void SuppliersSelectWidget::parse_response()
 	detrace_METHCALL("parse_response");
 #endif
 	allsuppliers = interpreter(awaiter.restext, awaiter.errtext);
+#ifdef DEBUG_FILTER
+	parse_uniresults_functions::supplierResponse temp;
+	for (int i = 0; i < allsuppliers.count(); ++i)
+	{
+		if (allsuppliers.at(i).name.startsWith("f", Qt::CaseInsensitive))
+		{
+			temp << allsuppliers.at(i);
+		}
+	}
+	allsuppliers = temp;
+#endif
 	supplierSelection->reload();
 	QObject::disconnect(&awaiter,SIGNAL(requestReceived()), 0,0);
 	hideProcessingOverlay();

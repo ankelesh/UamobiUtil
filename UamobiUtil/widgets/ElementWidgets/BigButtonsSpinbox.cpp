@@ -122,7 +122,7 @@ void BigButtonsSpinbox::setTime(const QTime& tm)
 	}
 }
 
-int BigButtonsSpinbox::value()
+int BigButtonsSpinbox::value() const
 {
 	if (sptype == intspin) {
 		QSpinBox* isp = qobject_cast<QSpinBox*>(coreSpinbox);
@@ -180,7 +180,7 @@ void BigButtonsSpinbox::backRequire()
 	emit backRequired();
 }
 
-void BigButtonsSpinbox::setFocus()
+void BigButtonsSpinbox::setFocus() const
 {
 	coreSpinbox->setFocus();
 }

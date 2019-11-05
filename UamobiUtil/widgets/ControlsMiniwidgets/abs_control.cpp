@@ -1,12 +1,15 @@
 #include "abs_control.h"
-
-abs_control::abs_control(controlType Type, QWidget* parent)
-	:QWidget(parent), mainLayout(new QHBoxLayout(this)),
-	type(Type), isAwaiting(false)
+#include "QuantityControl.h"
+abs_control::abs_control(QString  cname,QString & assocBuffer, controlType Type)
+	:associatedBuffer(&assocBuffer),
+	type(Type), isAwaiting(false), defaultBuffer(), name(cname)
 {
-	this->setLayout(mainLayout);
 }
-
+abs_control::abs_control(QString cname, controlType Type)
+	:associatedBuffer(&defaultBuffer),
+	type(Type), isAwaiting(false), defaultBuffer(), name(cname)
+{
+}
 QString abs_control::getValue() const
 {
 	return prepareAndReturnValue();
@@ -17,7 +20,7 @@ bool abs_control::canGiveValue() const
 	return valueAvailable();
 }
 
-controlType abs_control::myType()
+abs_control::controlType abs_control::myType()
 {
 	return type;
 }
@@ -35,11 +38,71 @@ bool abs_control::isAwaitingValue()
 void abs_control::setAwaiting()
 {
 	isAwaiting = true;
-	show();
 }
 
 void abs_control::reset()
 {
 	clear();
 	isAwaiting = false;
+}
+
+void abs_control::show()
+{
+}
+
+void abs_control::hide()
+{
+}
+
+void abs_control::unassociateBuffer()
+{
+	associatedBuffer = &defaultBuffer;
+}
+
+void abs_control::associateBuffer(QString& buffer)
+{
+	associatedBuffer = &buffer;
+}
+
+
+abs_control* fabricateControl(QString& assocBuffer, QString initstr,QBoxLayout * layout, QWidget* parent)
+{
+	switch (initstr.length())
+	{
+	case 3:
+		if (initstr == "qty") {
+			QuantityControl* qc = new QuantityControl(assocBuffer,initstr, parent);
+			layout->insertWidget(layout->count() - 1, qc->myWidget());
+			return qc;
+		}
+	case 7:
+		if (initstr == "addqty") {
+			QuantityControl* qc = new QuantityControl(assocBuffer, initstr, parent);
+			layout->insertWidget(layout->count() - 1, qc->myWidget());
+			return qc;
+		}
+	}
+    return Q_NULLPTR;
+}
+
+abs_control* fabricateControl(QString initstr, QBoxLayout* layout, QWidget* parent)
+{
+	switch (initstr.length())
+	{
+	case 3:
+		if (initstr == "qty")
+		{
+			QuantityControl* qc = new QuantityControl(initstr, parent);
+			layout->insertWidget(layout->count() - 1, qc->myWidget());
+			return qc;
+		}
+	case 6:
+		if (initstr == "addqty")
+		{
+			QuantityControl* qc = new QuantityControl(initstr, parent);
+			layout->insertWidget(layout->count() - 1, qc->myWidget());
+			return qc;
+		}
+	}
+    return Q_NULLPTR;
 }

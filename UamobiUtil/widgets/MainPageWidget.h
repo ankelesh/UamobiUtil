@@ -17,10 +17,10 @@
 
 // fixed includes
 #include "widgets/LoginBranch/LoginWidget.h"
-#include "widgets/LoginBranch/LoginSelectWidget.h"
 #include "widgets/SettingsBranches/MainSettingsWidget.h"
 #include "widgets/parents/abstractNodeInterface.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
+#include "widgets/parents/AbstractVariantSelectionWidget.h"
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"

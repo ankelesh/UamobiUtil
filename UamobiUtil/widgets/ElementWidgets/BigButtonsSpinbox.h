@@ -47,7 +47,7 @@ public:
 	void setMinimum(int min);	// sets maximum
 	void setMaximum(int max);	// sets minimum
 	void setValue(int val);		//	sets current value
-	int value();				//	returns current value
+	int value() const;				//	returns current value
 	//	methods of QTimeEdit interface
 	void setTime(const QTime& tm);	//	sets current value
 	QTime time();			//	returns current value
@@ -61,7 +61,7 @@ private slots:
 	void backRequire();
 
 public slots:
-	void setFocus();			//	Sets focus to spinbox
+	void setFocus() const;			//	Sets focus to spinbox
 
 signals:
 	void ivalueChanged(int);			//	emitted only when SpinBox is wrapped

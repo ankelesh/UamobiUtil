@@ -765,6 +765,19 @@ void HttpUpdateEngine::onRequestFinished()
 	}
 }
 
+void HttpUpdateEngine::recSubmit(const QString& code, const QString& qty, const QString& parameters, QObject* receiver, const char* slot)
+{
+	sendQuery(
+		"rec_add_item&session=" + m_sessionId
+		+ "&barcode=" + code
+		+ "&qty=" + qty
+		+ "&price=&params="
+		+ parameters
+		, receiver
+		, slot
+	);
+}
+
 void HttpUpdateEngine::makeRequest(DataRequest* dr)
 {
 #ifdef DEBUG
@@ -847,4 +860,23 @@ QString HttpUpdateEngine::props2str(DataRequest* dr)
 	}
 	//qDebug() << "<< HttpUpdateEngine::props2str end";
 	return res;
+}
+
+QString makeParamsFromList(QVector<QPair<QString, QString>>& vect)
+{
+	QString buffer;
+	QTextStream stream(&buffer);
+	QVector<QPair<QString, QString> >::iterator start = vect.begin();
+	while (start != vect.end())
+	{
+		stream << makeParamsFromList(start->first, start->second);
+		++start;
+	}
+	stream.flush();
+	return buffer;
+}
+
+QString makeParamsFromList(QString& paramName, QString& paramVal)
+{
+	return "#" + paramName + "#" + paramVal;
 }

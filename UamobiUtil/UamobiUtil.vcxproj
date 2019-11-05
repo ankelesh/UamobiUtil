@@ -207,7 +207,7 @@
     <QtMoc Include="widgets\MultibranchWidgets\ItemSearchWidget.h" />
     <QtMoc Include="widgets\ElementWidgets\BigButtonsSpinbox.h" />
     <QtMoc Include="widgets\ElementWidgets\MegaIconButton.h" />
-    <QtMoc Include="widgets\ControlsMiniwidgets\abs_control.h" />
+    <ClInclude Include="widgets\ControlsMiniwidgets\abs_control.h" />
     <QtMoc Include="ScaningCore\NormalCapturer.h" />
     <QtMoc Include="widgets\ControlsMiniwidgets\ControlManager.h" />
     <ClInclude Include="widgets\ControlsMiniwidgets\QuantityControl.h" />

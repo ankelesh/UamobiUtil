@@ -89,11 +89,26 @@ void NormalCapturer::pressScan()
 
 		widgetToApply->handleScannedBarcode();
 	}
-	if (!widgetToApply->numberBuffer.isEmpty() && controlIndex == controlNumber-1)
+	if (isAwaitingControlValue)
 	{
+#ifdef DEBUG
+		detrace_METHEXPL("flushing Q");
+#endif
+		if (widgetToApply->numberBuffer.isEmpty())
+		{
+#ifdef DEBUG
+			detrace_METHEXPL("empty buffer! aborting!");
+#endif
+			clearCaptureEngine();
+			return;
+		}
 		widgetToApply->handleNumberInbuffer();
 		widgetToApply->flushControl(controlIndex);
+		isScaning = true;
 	}
+#ifdef DEBUG
+	detrace_METHEXPL("passed all checks, clearing");
+#endif
 	clearCaptureEngine();
 }
 
@@ -136,6 +151,7 @@ void NormalCapturer::pressReturn()
 	else
 		if (isAwaitingControlValue)
 		{
+			detrace_METHEXPL("flushing control #" << controlIndex << " from " << controlNumber);
 			controlIndex = widgetToApply->flushControl(controlIndex);
 			if (controlIndex >= controlNumber)
 			{
@@ -160,7 +176,7 @@ void NormalCapturer::handleElement(QString elem)
 		detrace_METHEXPL( elem);
 #endif
 		
-		if (lastKeyReleaseTimepoint.msecsTo(QTime::currentTime()) < 80)
+		if (lastKeyReleaseTimepoint.msecsTo(QTime::currentTime()) < 50)
 		{
 			widgetToApply->barcodeBuffer += elem;
 			lastKeyReleaseTimepoint = QTime::currentTime();
@@ -186,7 +202,7 @@ void NormalCapturer::handleElement(QString elem)
 	}
 	else if (isAwaitingControlValue)
 	{
-		if (lastKeyReleaseTimepoint.msecsTo(QTime::currentTime()) > 80)
+		if (lastKeyReleaseTimepoint.msecsTo(QTime::currentTime()) > 50)
 		{
 
 #ifdef DEBUG
@@ -199,18 +215,13 @@ void NormalCapturer::handleElement(QString elem)
 		}
 		else
 		{
-
-#ifdef DEBUG
-			detrace_METHEXPL("toScan");
-#endif
-
-			pressScan();
-			widgetToApply->barcodeBuffer += elem;
+			lastKeyReleaseTimepoint = QTime::currentTime();
 		}
 	}
 	else
 	{
         pressScan();
+		lastKeyReleaseTimepoint = QTime::currentTime();
 	}
 }
 

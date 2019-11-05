@@ -182,3 +182,65 @@ ExpandedItemListParser::ExpandedItemListParser(QString& res, QString& err)
 	}
 	success = true;
 }
+bool ItemInfoResponseParser::couldRead()
+{
+	return success;
+}
+
+bool ItemInfoResponseParser::noRequestErrors()
+{
+	return parseres.request_status == 200;
+}
+
+QString ItemInfoResponseParser::parseErrorText()
+{
+	return errtext;
+}
+
+ItemInfoResponseParser::ItemInfoResponseParser(QString& res, QString& err)
+	: abs_parsed_request(res, err)
+{
+	QDomDocument doc;
+	doc.setContent(res);
+	QString code = doc.elementsByTagName("status").at(0).toElement().text();
+	parseres.request_status = code.toInt();
+	if (parseres.request_status != 200)
+	{
+		success = false;
+		return;
+	}
+	QDomNodeList dmndl = doc.elementsByTagName("nn");
+	if (dmndl.count() > 0)
+	{
+		parseres.queriesResult <<"" << "nn" << dmndl.at(0).toElement().text();
+	}
+	dmndl = doc.elementsByTagName("control");
+	QDomNode cntrl;
+	for (int i = 0; i < dmndl.count(); ++i)
+	{
+		cntrl = dmndl.at(i);
+#ifdef DEBUG
+		detrace_METHEXPL("got control");
+#endif
+		QDomNodeList insides = cntrl.childNodes();
+		parseres.queriesResult << "c";
+		for (int j = 0; j < insides.count(); ++j)
+		{
+#ifdef DEBUG
+			detrace_METHEXPL("getting inside: " << insides.at(j).toElement().text());
+#endif
+			parseres.queriesResult << insides.at(j).toElement().text();
+		}
+	}
+	dmndl = doc.elementsByTagName("richdata");
+	if (dmndl.count() > 0)
+	{
+		parseres.queriesResult << ""<< "richdata" << dmndl.at(0).toElement().text();
+	}
+	else
+	{
+		parseres.queriesResult << "richdata" << "";
+	}
+	success = true;
+	parseres.one_position_entries_quantity = 3;
+}

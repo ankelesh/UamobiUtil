@@ -9,6 +9,7 @@
 #include "legacy/qtCompatibility/scrollgrabber.h"
 #endif
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
+#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -131,10 +132,17 @@ void PlaceSelectionWidget::placeSelected(parsedPlace pl)
 
 void PlaceSelectionWidget::parse_loaded_places()
 {
-#ifdef DEBUG
-	detrace_METHEXPL("loaded");
-#endif
 	allplaces = interpreter(awaiter.restext, awaiter.errtext);
+#ifdef DEBUG
+	parse_uniresults_functions::placesResponse temp;
+	for (int i = 0; i < allplaces.count(); ++i)
+	{
+		if (allplaces.at(i).name.startsWith("L-73"))
+			temp << allplaces.at(i);
+	}
+	allplaces = temp;
+#endif
+
 	placeSelection->reload();
 	QObject::disconnect(&awaiter,SIGNAL(requestReceived()), 0,0);
 	hideProcessingOverlay();

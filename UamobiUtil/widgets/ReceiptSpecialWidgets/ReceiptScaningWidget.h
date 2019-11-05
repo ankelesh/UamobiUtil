@@ -15,7 +15,7 @@ protected:
 	ItemSearchWidget* searchScreen;
 	NormalCapturer* capturer;
 
-	bool qtyRequired;
+	bool controlsRequired;
 	bool manSelected;
 public:
 	ReceiptScaningWidget(GlobalAppSettings& go, QWidget* parent);
@@ -27,7 +27,7 @@ protected:
 	virtual void barcodeConfirmed() override;
 	virtual void searchRequired() override;
 	virtual void backNeeded() override;
-	virtual void useControls() override;
+	virtual void useControls(QVector<QPair<QString, QString> >& ) override;
 	virtual bool isManualInFocus() override;
 
 	virtual bool handleScannedBarcode() override;

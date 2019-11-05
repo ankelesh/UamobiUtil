@@ -13,8 +13,9 @@ protected:
 	ItemSearchWidget* searchScreen;
 	NormalCapturer* capturer;
 
-	bool qtyRequired;
+	bool controlsRequired;
 	bool manSelected;
+	int controlsAvailable;
 
 public:
 	InventoryScaningWidget(GlobalAppSettings& go, QWidget* parent);
@@ -39,7 +40,7 @@ protected:
 
 	virtual void setDocument(parsedOrder) override;
 	virtual void processNumber(QString) override;
-	virtual void useControls() override;
+	virtual void useControls(QVector<QPair<QString, QString> >&) override;
 	virtual void processBarcode(QString) override;
 
 

@@ -52,6 +52,11 @@ namespace parse_uniresults_functions
 		bool last;
 		QVector<C> values;
 	};
+	struct CombinedNamedLinearResponse
+	{
+		QHash<QString, QString> named;
+		QVector<QPair<QString, QString> > linear;
+	};
 	typedef QVector<parsedMode> modesResponse;
 	typedef QVector<parsedPlace> placesResponse;
 	typedef QVector<parsedSupplier> supplierResponse;
@@ -69,7 +74,7 @@ namespace parse_uniresults_functions
 	ordersResponse parse_orders_list(uniform_parse_result& ures);
 	TypicalResponse parse_richtext(uniform_parse_result& ures);
 	Document parse_document_response(uniform_parse_result& ures);
-	PositionalResponse parse_item_info(uniform_parse_result& ures);
+	CombinedNamedLinearResponse parse_item_info(uniform_parse_result& ures);
 	searchResponse parse_search_response(uniform_parse_result & ures);
 	doclistResponse parse_document_listed(uniform_parse_result& ures);
 	documentsResponse parse_documents(uniform_parse_result& ures);
@@ -101,7 +106,7 @@ namespace RequestParser
 	ordersResponse interpretAsOrdersList(QString& res, QString& errtext);
 	TypicalResponse interpretAsRichtextResponse(QString& res, QString& errtext);
 	Document interpretAsDocumentResponse(QString& res, QString& errtext);
-	PositionalResponse interpretAsItemInfo(QString& res, QString& errtext);
+	CombinedNamedLinearResponse interpretAsItemInfo(QString& res, QString& errtext);
 	searchResponse interpretAsSearchResponse(QString& res, QString& errtext);
 	doclistResponse interpretAsListedDocument(QString& res, QString& errtext);
 	documentsResponse interpretAsDocumentsList(QString& res, QString& errtext);

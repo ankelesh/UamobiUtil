@@ -253,6 +253,14 @@ public:
 		, QObject* receiver
 		, const char* slot
 	) = 0;
+	virtual void recSubmit
+	(
+		const QString& code
+		, const QString& num
+		, const QString& parameters
+		, QObject* receiver
+		, const char* slot
+	) = 0;
 	virtual void recSubmitExpDates
 	(
 		const QString& code

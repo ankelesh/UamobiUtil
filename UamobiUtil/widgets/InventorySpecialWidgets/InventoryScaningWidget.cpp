@@ -7,10 +7,15 @@
  // Qt 4 only imports
 #include "legacy/qtCompatibility/scrollgrabber.h"
 #endif
+#define DEBUG
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
+
 InventoryScaningWidget::InventoryScaningWidget(GlobalAppSettings& go, QWidget* parent)
 	: AbstractScaningWidget(go, parent), abstractNode(), captureInterface(),
 	resultScreen(new DocResultsWidget(go, this)), searchScreen(new ItemSearchWidget(go, this)),
-	capturer(new NormalCapturer(this, this)), qtyRequired(false), manSelected(false)
+	capturer(new NormalCapturer(this, this)), controlsRequired(false), manSelected(false), controlsAvailable(0)
 {
 	mainLayout->addWidget(searchScreen);
 	mainLayout->addWidget(resultScreen);
@@ -46,15 +51,15 @@ void InventoryScaningWidget::processBarcode(QString bc)
 
 void InventoryScaningWidget::submitPressed()
 {
-	if (!qtyRequired || awaiter.isAwaiting())
+	if (!controlsRequired || awaiter.isAwaiting())
 	{
 		return;
 	}
-	if (!controlsList.contains("qty"))
+	if (controlsAvailable < 1)
 	{
 		return;
 	}
-	if (!controlsList.value("qty")->canGiveValue())
+	if (!first_control->canGiveValue())
 		return;
 	showProcessingOverlay();
 #ifdef QT_VERSION5X
@@ -62,8 +67,10 @@ void InventoryScaningWidget::submitPressed()
 #else
 	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(item_confirmed_response()));
 #endif
-	globalSettings.networkingEngine->invSubmit(barcodeField->text(), controlsList.value("qty")->getValue(),"", &awaiter, RECEIVER_SLOT_NAME);
+	globalSettings.networkingEngine->invSubmit(barcodeField->text(), first_control->getValue(),"", &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
+	first_control->reset();
+	barcodeField->clear();
 }
 
 void InventoryScaningWidget::barcodeConfirmed()
@@ -83,7 +90,6 @@ void InventoryScaningWidget::barcodeConfirmed()
 #endif
 	globalSettings.networkingEngine->itemGetInfo(barcodeField->text(), &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
-	stateInfo->setText(tr("receipt_scaning_quering"));
 }
 
 void InventoryScaningWidget::processNumber(QString n)
@@ -101,48 +107,116 @@ void InventoryScaningWidget::backNeeded()
 	_hideAny(resultScreen);
 }
 
-void InventoryScaningWidget::useControls()
+void InventoryScaningWidget::useControls(QVector<QPair<QString, QString> > & cvals)
 {
 	numberBuffer.clear();
-#ifdef DEBUG
-	detrace_METHCALL("useControls");
-	detrace_METHEXPL("is containing qty: " << itemSuppliedValues.contains("qty"));
-#endif
-	if (itemSuppliedValues.contains("qty"))
+	switch (cvals.length())
 	{
-		if (!controlsList.contains("qty")) {
-			controlsList.insert("qty", new QuantityControl(innerWidget));
-			innerLayout->insertWidget(innerLayout->count() - 1, controlsList.value("qty"));
-			controlsList.value("qty")->installEventFilter(keyfilter);
-			QObject::connect(controlsList.value("qty"), &abs_control::valueChanged, this, &InventoryScaningWidget::syncControlAndBuffer);
+	case 0:
+		switch (controlsAvailable)
+		{
+		case 2:
+			delete second_control;
+			second_control = Q_NULLPTR;
+		case 1:
+			delete first_control;
+			first_control = Q_NULLPTR;
+		case 0:
+			setFocus();
+			controlsRequired = false;
+			submitButton->setDisabled(true);
+			controlsAvailable = 0;
+			controlsRequired = false;
 		}
-		controlsList.value("qty")->setAwaiting();
+		return;
+	case 1:
+		if (controlsAvailable >= 1)
+		{
+			if (first_control->name == cvals.at(0).first)
+			{
+				first_control->reset();
+				first_control->show();
+			}
+			else
+			{
+				delete first_control;
+				first_control = fabricateControl(numberBuffer, cvals.at(0).first, innerLayout, innerWidget);
+				first_control->installEventFilter(keyfilter);
+			}
+			if (second_control != Q_NULLPTR)
+			{
+				delete second_control;
+				second_control = Q_NULLPTR;
+				--controlsAvailable;
+			}
+		}
+		else
+		{
+			first_control = fabricateControl(numberBuffer, cvals.at(0).first, innerLayout, innerWidget);
+			first_control->installEventFilter(keyfilter);
+			++controlsAvailable;
+		}
 		capturer->setControlNumber(1);
-		qtyRequired = true;
+		first_control->setAwaiting();
+		controlsRequired = true;
 		submitButton->setDisabled(false);
 		this->setFocus();
-	}
-	else
-	{
-		if (controlsList.contains("qty"))
+		return;
+	case 2:
+	default:
+		switch (controlsAvailable)
 		{
-			controlsList.value("qty")->reset();
-			controlsList.value("qty")->hide();
+		case 2:
+			if (!(cvals.at(1).first == second_control->name))
+			{
+				delete second_control;
+				second_control = Q_NULLPTR;
+			}
+		case 1:
+			if (!(cvals.at(1).first == first_control->name))
+			{
+				delete first_control;
+				first_control = Q_NULLPTR;
+			}
+		case 0:
+			if (first_control == Q_NULLPTR)
+			{
+
+				first_control = fabricateControl(numberBuffer, cvals.at(0).first, innerLayout, innerWidget);
+				first_control->installEventFilter(keyfilter);
+			}
+			else
+			{
+				first_control->reset();
+			}
+			if (second_control == Q_NULLPTR)
+			{
+				second_control = fabricateControl(cvals.at(0).first, innerLayout, innerWidget);
+				second_control->installEventFilter(keyfilter);
+			}
+			else
+			{
+				second_control->reset();
+			}
 		}
-		setFocus();
-		qtyRequired = false;
-		submitButton->setDisabled(true);
+		capturer->setControlNumber(2);
+		controlsAvailable = 2;
 	}
+	first_control->setAwaiting();
+	controlsRequired = true;
+	submitButton->setDisabled(false);
+	this->setFocus();
 }
 
 void InventoryScaningWidget::switchedFocus()
 {
-	if (qtyRequired)
+	if (controlsRequired)
 	{
-		if (controlsList.contains("qty"))
+		if (controlsAvailable == 1)
 		{
-			controlsList.value("qty")->setFocus();
+			first_control->setFocus();
 		}
+		manSelected = !manSelected;
 	}
 	else
 	{
@@ -165,22 +239,26 @@ void InventoryScaningWidget::syncControlAndBuffer(QString v)
 
 void InventoryScaningWidget::item_scaned_response()
 {
-	stateInfo->setText(tr("Success!"));
-	parse_uniresults_functions::PositionalResponse resp = RequestParser::interpretAsItemInfo(awaiter.restext, awaiter.errtext);
-	mainTextView->setText(resp.values.value("richdata"));
-	itemSuppliedValues = resp.values;
-	useControls();
+	parse_uniresults_functions::CombinedNamedLinearResponse resp = RequestParser::interpretAsItemInfo(awaiter.restext, awaiter.errtext);
+	mainTextView->setText(resp.named.value("richdata"));
+	itemSuppliedValues = resp.named;
+	useControls(resp.linear);
 	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
 void InventoryScaningWidget::item_confirmed_response()
 {
-	itemSuppliedValues = RequestParser::interpretAsItemInfo(awaiter.restext, awaiter.errtext).values;
+	parse_uniresults_functions::CombinedNamedLinearResponse resp = RequestParser::interpretAsItemInfo(awaiter.restext, awaiter.errtext);
+	itemSuppliedValues = resp.named;
 	mainTextView->setText(itemSuppliedValues.value("richdata"));
-	useControls();
+	useControls(resp.linear);
 	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
+	if (!barcodeField->text().isEmpty())
+	{
+		barcodeConfirmed();
+	}
 }
 
 void InventoryScaningWidget::document_confirmed_response()
@@ -229,9 +307,9 @@ void InventoryScaningWidget::setDocument(Document doc)
 
 bool InventoryScaningWidget::isManualInFocus()
 {
-	if (controlsList.contains("qty"))
+	if (controlsAvailable == 1)
 	{
-		return controlsList.value("qty")->hasFocus();
+		return first_control->hasFocus();
 	}
 	return false;
 }
@@ -248,11 +326,14 @@ bool InventoryScaningWidget::handleScannedBarcode()
 
 bool InventoryScaningWidget::handleNumberInbuffer()
 {
-	if (qtyRequired)
+#ifdef DEBUG
+	detrace_METHCALL("inventoryScaningWidget |" << numberBuffer);
+#endif
+	if (controlsRequired)
 	{
-		if (controlsList.contains("qty"))
+		if (controlsAvailable == 1)
 		{
-			controlsList.value("qty")->setValue(numberBuffer);
+			first_control->refresh();
 			return true;
 		}
 		//detrace_METHEXPL("There was no qty controller");
@@ -262,7 +343,8 @@ bool InventoryScaningWidget::handleNumberInbuffer()
 
 int InventoryScaningWidget::flushControl(int)
 {
-	return 0;
+	submitPressed();
+	return 1;
 }
 
 void InventoryScaningWidget::processBackPress()
@@ -278,11 +360,11 @@ void InventoryScaningWidget::removeManualFocus()
 
 void InventoryScaningWidget::setControlFocus(int)
 {
-	if (qtyRequired)
+	if (controlsRequired)
 	{
-		if (controlsList.contains("qty"))
+		if (controlsAvailable == 1)
 		{
-			controlsList.value("qty")->setFocus();
+			first_control->setFocus();
 			manSelected = false;
 		}
 	}
@@ -290,9 +372,9 @@ void InventoryScaningWidget::setControlFocus(int)
 
 bool InventoryScaningWidget::isControlFocused()
 {
-	if (controlsList.contains("qty"))
+	if (controlsAvailable == 1)
 	{
-		return controlsList.value("qty")->hasFocus();
+		return first_control->hasFocus();
 	}
 	return false;
 }

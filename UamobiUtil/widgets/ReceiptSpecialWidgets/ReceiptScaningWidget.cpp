@@ -11,7 +11,7 @@
 ReceiptScaningWidget::ReceiptScaningWidget(GlobalAppSettings& go, QWidget* parent)
 	: AbstractScaningWidget(go, parent),abstractNode(), captureInterface(), resultScreen(new DocResultsWidget(go,this)),
 	searchScreen(new ItemSearchWidget(go,this)), capturer(new NormalCapturer(this, this)),
-	qtyRequired(false), manSelected(false)
+	controlsRequired(false), manSelected(false)
 {
 	mainLayout->addWidget(searchScreen);
 	mainLayout->addWidget(resultScreen);
@@ -41,15 +41,15 @@ ReceiptScaningWidget::ReceiptScaningWidget(GlobalAppSettings& go, QWidget* paren
 
 void ReceiptScaningWidget::submitPressed()
 {
-	if (!qtyRequired || awaiter.isAwaiting())
+	if (!controlsRequired || awaiter.isAwaiting())
 	{
 		return;
 	}
-	if (!controlsList.contains("qty"))
+	if (first_control == Q_NULLPTR || controlsAvailable == 0)
 	{ 
 		return;
 	}
-	if (!controlsList.value("qty")->canGiveValue())
+	if (!first_control->canGiveValue())
         return;
 	showProcessingOverlay();
 #ifdef QT_VERSION5X
@@ -57,8 +57,20 @@ void ReceiptScaningWidget::submitPressed()
 #else
     QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(item_confirmed_response()));
 #endif
-    globalSettings.networkingEngine->recSubmit(barcodeField->text(), controlsList.value("qty")->getValue(), &awaiter, RECEIVER_SLOT_NAME);
+	switch (controlsAvailable)
+	{
+	case 1:
+		globalSettings.networkingEngine->recSubmit(barcodeField->text(), first_control->getValue(), &awaiter, RECEIVER_SLOT_NAME);
+		break;
+	case 2:
+		globalSettings.networkingEngine->recSubmit(barcodeField->text(), first_control->getValue(), makeParamsFromList(second_control->name, second_control->getValue()), &awaiter, RECEIVER_SLOT_NAME);
+		break;
+	default:
+		break;
+	}
 	awaiter.run();
+	first_control->reset();
+	barcodeField->clear();
 }
 
 void ReceiptScaningWidget::processNumber(QString num)
@@ -91,7 +103,6 @@ void ReceiptScaningWidget::barcodeConfirmed()
 #endif
     globalSettings.networkingEngine->itemGetInfo(barcodeField->text(), &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
-	stateInfo->setText(tr("receipt_scaning_quering"));
 }
 
 void ReceiptScaningWidget::setDocument(parsedOrder po)
@@ -143,14 +154,18 @@ bool ReceiptScaningWidget::handleScannedBarcode()
 
 bool ReceiptScaningWidget::handleNumberInbuffer()
 {
-	if (qtyRequired)
+	if (controlsRequired)
 	{
-		if (controlsList.contains("qty"))
+		switch (controlsAvailable)
 		{
-			controlsList.value("qty")->setValue(numberBuffer);
+		case 2:
+			second_control->refresh();
+		case 1:
+			first_control->refresh();
 			return true;
+		default:
+			return false;
 		}
-		//detrace_METHEXPL("There was no qty controller");
 	}
 	return false;
 }
@@ -168,29 +183,56 @@ void ReceiptScaningWidget::removeManualFocus()
 
 void ReceiptScaningWidget::setControlFocus(int val)
 {
-	if (qtyRequired)
+	if (controlsRequired)
 	{
-		if (controlsList.contains("qty"))
+		switch (val)
 		{
-			controlsList.value("qty")->setFocus();
-			manSelected = false;
+		case 0:
+			if (controlsAvailable >= 1)
+			{
+				first_control->setFocus();
+			}
+			return;
+		case 1:
+			if (controlsAvailable >= 2)
+			{
+				second_control->setFocus();
+			}
+		default:
+			return;
 		}
 	}
 }
 
-int ReceiptScaningWidget::flushControl(int)
+int ReceiptScaningWidget::flushControl(int cnum)
 {
-	submitPressed();
-	return 1;
+	if (controlsAvailable == 1)
+		submitPressed();
+	else
+	{
+		switch (cnum)
+		{
+		case 0:
+			first_control->unassociateBuffer();
+			second_control->associateBuffer(numberBuffer);
+			numberBuffer.clear();
+			second_control->setAwaiting();
+			break;
+		case 1:
+			submitPressed();
+		}
+	}
+	return cnum+1;
 }
 
 void ReceiptScaningWidget::switchedFocus()
 {
-	if (qtyRequired)
+	if (controlsRequired)
 	{
-		if (controlsList.contains("qty"))
+		if (controlsAvailable >= 1)
 		{
-			controlsList.value("qty")->setFocus();
+			first_control->setFocus();
+			manSelected = true;
 		}
 	}
 	else
@@ -214,11 +256,15 @@ void ReceiptScaningWidget::syncControlAndBuffer(QString v)
 
 bool ReceiptScaningWidget::isControlFocused()
 {
-	if (controlsList.contains("qty"))
+	switch (controlsAvailable)
 	{
-		return controlsList.value("qty")->hasFocus();
+	case 1:
+		return first_control->hasFocus();
+	case 2:
+		return first_control->hasFocus() || second_control->hasFocus();
+	default:
+		return false;
 	}
-	return false;
 }
 
 
@@ -232,58 +278,149 @@ void ReceiptScaningWidget::backNeeded()
 	_hideAny(resultScreen);
 }
 
-void ReceiptScaningWidget::useControls()
+void ReceiptScaningWidget::useControls(QVector<QPair<QString, QString> >& cvals)
 {
+	detrace_METHCALL("useControls, cVars: " << controlsAvailable << " & " << controlsRequired);
 	numberBuffer.clear();
-#ifdef DEBUG
-	detrace_METHCALL("useControls");
-	detrace_METHEXPL("is containing qty: " << itemSuppliedValues.contains("qty"));
-#endif
-	if (itemSuppliedValues.contains("qty"))
+	switch (cvals.length())
 	{
-		if (!controlsList.contains("qty")) {
-			controlsList.insert("qty", new QuantityControl(innerWidget));
-			innerLayout->insertWidget(innerLayout->count() - 1, controlsList.value("qty"));
-			controlsList.value("qty")->installEventFilter(keyfilter);
-			QObject::connect(controlsList.value("qty"), &abs_control::valueChanged, this, &ReceiptScaningWidget::syncControlAndBuffer);
+	case 0:
+		switch (controlsAvailable)
+		{
+		case 2:
+			detrace_METHEXPL("deleting second_control, cvs " << controlsAvailable << " & " <<controlsRequired );
+			innerLayout->removeWidget(second_control->myWidget());
+			delete second_control;
+			second_control = Q_NULLPTR;
+		case 1:
+			detrace_METHEXPL("deleting first_control, cvs " << controlsAvailable << " & " << controlsRequired);
+			innerLayout->removeWidget(first_control->myWidget());
+			delete first_control;
+			first_control = Q_NULLPTR;
+		case 0:
+
+			detrace_METHEXPL("resetting vars");
+			setFocus();
+			controlsRequired = false;
+			submitButton->setDisabled(true);
+			controlsAvailable = 0;
+			controlsRequired = false;
 		}
-		controlsList.value("qty")->setAwaiting();
+		return;
+	case 1:
+
+		if (controlsAvailable >= 1)
+		{
+			if (first_control->name == cvals.at(0).first)
+			{
+				first_control->reset();
+				first_control->show();
+			}
+			else
+			{
+				detrace_METHEXPL("deleting first_control, cvs " << controlsAvailable << " & " << controlsRequired);
+				innerLayout->removeWidget(first_control->myWidget());
+				delete first_control;
+				first_control = fabricateControl(numberBuffer, cvals.at(0).first, innerLayout, innerWidget);
+				first_control->installEventFilter(keyfilter);
+			}
+			if (second_control != Q_NULLPTR)
+			{
+				detrace_METHEXPL("deleting second_control, cvs " << controlsAvailable << " & " << controlsRequired);
+				innerLayout->removeWidget(second_control->myWidget());
+				delete second_control;
+				second_control = Q_NULLPTR;
+				--controlsAvailable;
+			}
+		}
+		else
+		{
+			first_control = fabricateControl(numberBuffer, cvals.at(0).first, innerLayout, innerWidget);
+			first_control->installEventFilter(keyfilter);
+			++controlsAvailable;
+		}
 		capturer->setControlNumber(1);
-		qtyRequired = true;
+		first_control->setAwaiting();
+		first_control->show();
+		controlsRequired = true;
 		submitButton->setDisabled(false);
 		this->setFocus();
-	}
-	else
-	{
-		if (controlsList.contains("qty"))
+		return;
+	case 2:
+	default:
+		switch (controlsAvailable)
 		{
-			controlsList.value("qty")->reset();
-			controlsList.value("qty")->hide();
+		case 2:
+			if (!(cvals.at(1).first == second_control->name))
+			{
+				detrace_METHEXPL("deleting second_control, cvs " << controlsAvailable << " & " << controlsRequired);
+				innerLayout->removeWidget(second_control->myWidget());
+				delete second_control;
+				
+				second_control = Q_NULLPTR;
+			}
+		case 1:
+			if (!(cvals.at(1).first == first_control->name))
+			{
+				detrace_METHEXPL("deleting first_control, cvs " << controlsAvailable << " & " << controlsRequired);
+				innerLayout->removeWidget(first_control->myWidget());
+				delete first_control;
+				first_control = Q_NULLPTR;
+			}
+		case 0:
+			if (first_control == Q_NULLPTR)
+			{
+
+				first_control = fabricateControl(numberBuffer, cvals.at(0).first, innerLayout, innerWidget);
+				first_control->installEventFilter(keyfilter);
+			}
+			else
+			{
+				first_control->reset();
+			}
+			if (second_control == Q_NULLPTR)
+			{
+				second_control = fabricateControl(cvals.at(1).first, innerLayout, innerWidget);
+				second_control->installEventFilter(keyfilter);
+			}
+			else
+			{
+				second_control->reset();
+			}
 		}
-        setFocus();
-		qtyRequired = false;
-		submitButton->setDisabled(true);
-    }
+		capturer->setControlNumber(2);
+		controlsAvailable = 2;
+	}
+	first_control->setAwaiting();
+	controlsRequired = true;
+	submitButton->setDisabled(false);
+	this->setFocus();
+	first_control->show();
+	second_control->show();
 }
 
 void ReceiptScaningWidget::item_scaned_response()
 {
-	stateInfo->setText(tr("Success!"));
-	parse_uniresults_functions::PositionalResponse resp = RequestParser::interpretAsItemInfo(awaiter.restext, awaiter.errtext);
-	mainTextView->setText(resp.values.value("richdata"));
-	itemSuppliedValues = resp.values;
-	useControls();
+	parse_uniresults_functions::CombinedNamedLinearResponse resp = RequestParser::interpretAsItemInfo(awaiter.restext, awaiter.errtext);
+	mainTextView->setText(resp.named.value("richdata"));
+	itemSuppliedValues = resp.named;
+	useControls(resp.linear);
 	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
 void ReceiptScaningWidget::item_confirmed_response()
 {
-	itemSuppliedValues = RequestParser::interpretAsItemInfo(awaiter.restext, awaiter.errtext).values;
+	parse_uniresults_functions::CombinedNamedLinearResponse resp = RequestParser::interpretAsItemInfo(awaiter.restext, awaiter.errtext);
+	itemSuppliedValues = resp.named;
 	mainTextView->setText(itemSuppliedValues.value("richdata"));
-	useControls();
+	useControls(resp.linear);
 	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
+	if (!barcodeField->text().isEmpty())
+	{
+		barcodeConfirmed();
+	}
 }
 
 void ReceiptScaningWidget::document_confirmed_response()

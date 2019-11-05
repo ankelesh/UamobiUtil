@@ -3,8 +3,13 @@
 #include "widgets/parents/inframedWidget.h"
 #include "widgets/parents/abstractNodeInterface.h"
 #include "widgets/parents/AbstractListSelectionWidget.h"
+#ifdef QT_VERSION5X
 #include <QtWidgets/qboxlayout.h>
 #include <QtWidgets/qlabel.h>
+#else
+#include <QtGui/qboxlayout.h>
+#include <QtGui/qlabel.h>
+#endif
 #include "widgets/ElementWidgets/MegaIconButton.h"
 #include "networking/things.h"
 #include "widgets/utils/GlobalAppSettings.h"
