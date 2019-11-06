@@ -55,7 +55,7 @@ LoginWidget::LoginWidget(GlobalAppSettings& go, QWidget* parent)
 	mainLayout->addWidget(loginInfo);
 	mainLayout->addWidget(loginField);
 	mainLayout->addWidget(info);
-	
+
 	mainLayout->addWidget(passwordInfo);
 	mainLayout->addWidget(passwordField);
 	mainLayout->addStretch();
@@ -98,8 +98,8 @@ LoginWidget::LoginWidget(GlobalAppSettings& go, QWidget* parent)
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 	QObject::connect(loginField, SIGNAL(returnPressed()), passwordField, SLOT(setFocus()));
 	QObject::connect(passwordField, SIGNAL(returnPressed()), this, SLOT(login_confirmed()));
-    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(checkResponse()));
-    QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
+	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(checkResponse()));
+	QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
 }
 

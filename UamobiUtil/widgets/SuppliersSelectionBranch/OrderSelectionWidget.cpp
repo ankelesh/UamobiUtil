@@ -66,10 +66,10 @@ OrderSelectionWidget::OrderSelectionWidget(GlobalAppSettings& go, const parsedSu
 	QObject::connect(orderSelection, &specwidgets::_OrderListSelectionWidget::orderPicked, this, &OrderSelectionWidget::orderSelected);
 	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &OrderSelectionWidget::was_timeout);
 #else
-    QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
+	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 	QObject::connect(pickButton, SIGNAL(clicked()), this, SLOT(pickClicked()));
 	QObject::connect(orderSelection, SIGNAL(orderPicked(parsedOrder)), this, SLOT(orderSelected(parsedOrder)));
-    QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
+	QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
 }
 
@@ -100,7 +100,6 @@ bool OrderSelectionWidget::isExpectingControl(int val)
 
 void OrderSelectionWidget::orderSelected(parsedOrder Po)
 {
-
 #ifdef DEBUG
 	//detrace_METHCALL("orderSelected(" << Po.text );
 #endif
@@ -110,13 +109,12 @@ void OrderSelectionWidget::orderSelected(parsedOrder Po)
 #ifdef QT_VERSION5X
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &OrderSelectionWidget::parse_select_response);
 #else
-QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_select_response()));
+	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_select_response()));
 #endif
 	po = Po;
-    globalSettings.networkingEngine->recGetOrderInfo(po.code, supplierInWork.code, &awaiter, RECEIVER_SLOT_NAME);
+	globalSettings.networkingEngine->recGetOrderInfo(po.code, supplierInWork.code, &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 }
-
 
 void OrderSelectionWidget::parse_order_response()
 {
@@ -126,7 +124,7 @@ void OrderSelectionWidget::parse_order_response()
 	for (int i = 0; i < allOrders.count(); ++i)
 	{
 		if (allOrders.at(i).code == "18833981")
-			temp.push_back( allOrders.at(i));
+			temp.push_back(allOrders.at(i));
 	}
 	allOrders = temp;
 #endif
@@ -139,7 +137,7 @@ void OrderSelectionWidget::parse_order_response()
 	{
 		orderSelection->setCurrentRow(0);
 	}
-	QObject::disconnect(&awaiter,SIGNAL(requestReceived()), 0,0);
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
@@ -159,21 +157,21 @@ void OrderSelectionWidget::parse_select_response()
 	if (resp.resp)
 	{
 #ifdef DEBUG
-//		detrace_METHEXPL("text transmitted to parms: " << resp.errors << "| while original package packet was " << awaiter.restext);
+		//		detrace_METHEXPL("text transmitted to parms: " << resp.errors << "| while original package packet was " << awaiter.restext);
 #endif
 		emit orderConfirmed(po, resp.errors);
 	}
-	QObject::disconnect(&awaiter,SIGNAL(requestReceived()),0,0);
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
 void OrderSelectionWidget::was_timeout()
 {
 #ifdef DEBUG
-//	detrace_METHCALL("WasTimeout");
+	//	detrace_METHCALL("WasTimeout");
 #endif
 	setTimeoutMessage();
-	QObject::disconnect(&awaiter,SIGNAL(requestReceived()),0,0);
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
@@ -190,9 +188,9 @@ void OrderSelectionWidget::loadOrders()
 #ifdef QT_VERSION5X
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &OrderSelectionWidget::parse_order_response);
 #else
-    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_order_response()));
+	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_order_response()));
 #endif
-    globalSettings.networkingEngine->recListOrders(supplierInWork.code, &awaiter, RECEIVER_SLOT_NAME);
+	globalSettings.networkingEngine->recListOrders(supplierInWork.code, &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 }
 void OrderSelectionWidget::pickClicked()

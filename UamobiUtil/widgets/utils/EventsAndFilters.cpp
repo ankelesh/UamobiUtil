@@ -19,7 +19,7 @@ bool filters::NoKeyEvents::eventFilter(QObject* object, QEvent* ev)
 #ifdef DEBUG
 		detrace_METHFRECALL("key release captured with text");
 #endif
-        QKeyEvent* keyptr = static_cast<QKeyEvent*>(ev);
+		QKeyEvent* keyptr = static_cast<QKeyEvent*>(ev);
 #ifdef DEBUG
 		detrace_METHFRECALL(keyptr->text() << "<<");
 #endif
@@ -45,14 +45,13 @@ bool filters::NoKeyEvents::eventFilter(QObject* object, QEvent* ev)
 		{
 			emit eraseRequired();
 		}
-        else if (keyptr->key() == 0 || keyptr->key() == 33554431 || keyptr->key() == 16777248 || keyptr->key() == Qt::Key_Dollar)
+		else if (keyptr->key() == 0 || keyptr->key() == 33554431 || keyptr->key() == 16777248 || keyptr->key() == Qt::Key_Dollar)
 		{
 			emit unknownObtained();
 		}
-        else if (keyptr->text() == "$")
-        {
-
-        }
+		else if (keyptr->text() == "$")
+		{
+		}
 		else
 		{
 #ifdef DEBUG
@@ -64,7 +63,7 @@ bool filters::NoKeyEvents::eventFilter(QObject* object, QEvent* ev)
 	}
 	else if (ev->type() == QEvent::KeyPress)
 	{ // here was breaker -> possibly it was the solution of old problem? Insert here return if bug restores
-        QKeyEvent* keyptr = static_cast<QKeyEvent*>(ev);
+		QKeyEvent* keyptr = static_cast<QKeyEvent*>(ev);
 		if (keyptr->key() == 0 || keyptr->key() == 33554431)
 		{
 			emit unknownObtained();
@@ -79,7 +78,7 @@ bool filters::CaptureBackFilter::eventFilter(QObject* object, QEvent* ev)
 	// Captures key press events
 	if (ev->type() == QEvent::KeyRelease)
 	{
-        QKeyEvent* keyptr = static_cast<QKeyEvent*>(ev);
+		QKeyEvent* keyptr = static_cast<QKeyEvent*>(ev);
 		// Sorts: now only return, back and numbers must be intercepted
 		if (keyptr->key() == Qt::Key_Back || keyptr->key() == Qt::Key_Escape)
 		{
@@ -87,18 +86,18 @@ bool filters::CaptureBackFilter::eventFilter(QObject* object, QEvent* ev)
 			return true;
 		}
 	}
-    return QObject::eventFilter(object, ev);
+	return QObject::eventFilter(object, ev);
 }
-bool filters::LineEditHelper::eventFilter(QObject *watched, QEvent *event)
+bool filters::LineEditHelper::eventFilter(QObject* watched, QEvent* event)
 {
-       bool temp = QObject::eventFilter(watched, event);
+	bool temp = QObject::eventFilter(watched, event);
 #ifdef Q_OS_ANDROID
-       if (event->type() == QEvent::KeyPress)
-       {
-        qApp->inputMethod()->commit();
-       }
+	if (event->type() == QEvent::KeyPress)
+	{
+		qApp->inputMethod()->commit();
+	}
 #endif
-        return temp;
+	return temp;
 }
 
 filters::GeneralPurposeFilter::CaptureFunction filters::GeneralPurposeFilter::makeCaptureFunction(captureTypes type)
@@ -141,7 +140,7 @@ bool filters::GeneralPurposeFilter::eventFilter(QObject* ob, QEvent* ev)
 		return (*this.*captureFunction)(keyptr);
 	}
 	else
-		return QObject::eventFilter(ob,ev);
+		return QObject::eventFilter(ob, ev);
 }
 
 bool filters::GeneralPurposeFilter::captReturn(QKeyEvent* keyptr)
@@ -170,7 +169,7 @@ bool filters::GeneralPurposeFilter::captSymbol(QKeyEvent* keyptr)
 	{
 		emit symbolPressed(keyptr->text());
 	}
-		return true;
+	return true;
 }
 
 bool filters::GeneralPurposeFilter::captBack(QKeyEvent* keyptr)
@@ -258,7 +257,7 @@ filters::GeneralPurposeFilter::GeneralPurposeFilter(captureTypes type, QObject* 
 	captureFunction = makeCaptureFunction(type);
 }
 
-filters::GeneralPurposeFilter::GeneralPurposeFilter(captureTypes type1,  captureTypes type2, QObject* parent, captureTypes type3, captureTypes type4, captureTypes type5)
+filters::GeneralPurposeFilter::GeneralPurposeFilter(captureTypes type1, captureTypes type2, QObject* parent, captureTypes type3, captureTypes type4, captureTypes type5)
 {
 	if (type1 == All) {
 		captureFunction = &GeneralPurposeFilter::captAll;
@@ -268,22 +267,22 @@ filters::GeneralPurposeFilter::GeneralPurposeFilter(captureTypes type1,  capture
 		captureFunction = &GeneralPurposeFilter::captSome;
 		mytypes[0] = type1;
 		int i;
-			if (type2 != All)
-			{
-				mytypes[i++] = type2;
-			}
-			if (type3 != All)
-			{
-				mytypes[i++] = type3;
-			}
-			if (type4 != All)
-			{
-				mytypes[i++] = type4;
-			}
-			if (type5 != All)
-			{
-				mytypes[i++] = type5;
-			}
+		if (type2 != All)
+		{
+			mytypes[i++] = type2;
+		}
+		if (type3 != All)
+		{
+			mytypes[i++] = type3;
+		}
+		if (type4 != All)
+		{
+			mytypes[i++] = type4;
+		}
+		if (type5 != All)
+		{
+			mytypes[i++] = type5;
+		}
 		typeLen = i;
 		for (int j = 0; j < typeLen; ++j)
 		{
@@ -291,4 +290,3 @@ filters::GeneralPurposeFilter::GeneralPurposeFilter(captureTypes type1,  capture
 		}
 	}
 }
-

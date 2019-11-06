@@ -16,12 +16,10 @@
 		This realisation is Qt5-based, with guarding macros to allow legacy-compatibility with qt4.
 		All new elements must be ready to compile under qt4\CE, so try to provide legacy versions.
 
-
 		Legenda:
-			P'%s' ->encloses any data structure that is parsed from net response. They are stored at RequestParser file; 
+			P'%s' ->encloses any data structure that is parsed from net response. They are stored at RequestParser file;
 			__ASSOCIATED_DATABASE_FUNCTION__  -> this means that this function is used by provided code
 			__OPTIONAL_REPLACEMENT_DBFUNCTION__ -> this means that this fuction can replace upper database function in some cases
-
 
 */
 
@@ -34,21 +32,21 @@ int main(int argc, char* argv[])
 #else		//	actual db
 	global.networkingEngine = new HttpUpdateEngine(global.HttpUrl, &a);
 #endif
-    global.timeoutInt = 10000;					//	while not actual version - timeout is maximized to avoid testing delays
-    global.setTranslator();
+	global.timeoutInt = 10000;					//	while not actual version - timeout is maximized to avoid testing delays
+	global.setTranslator();
 #ifdef Q_OS_WINCE
-    setCurrentSize(calculateAdaptiveSize(1,0.9));
-    UamobiUtil w(global);
-    w.move( 0, 0 );
-    w.showMaximized();
-    w.raise();
-    w.setFixedHeight(calculateAdaptiveButtonHeight(0.9));
-    w.setFixedWidth(calculateAdaptiveWidth(1));
-    QTimer::singleShot( 0, &w, SLOT( showMaximized() ) );
+	setCurrentSize(calculateAdaptiveSize(1, 0.9));
+	UamobiUtil w(global);
+	w.move(0, 0);
+	w.showMaximized();
+	w.raise();
+	w.setFixedHeight(calculateAdaptiveButtonHeight(0.9));
+	w.setFixedWidth(calculateAdaptiveWidth(1));
+	QTimer::singleShot(0, &w, SLOT(showMaximized()));
 #else
-    setCurrentSize(calculateAdaptiveSize(1));
-    UamobiUtil w(global);
-    w.show();
+	setCurrentSize(calculateAdaptiveSize(1));
+	UamobiUtil w(global);
+	w.show();
 #endif
-    return a.exec();
+	return a.exec();
 }

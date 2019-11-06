@@ -34,7 +34,6 @@
 	Update:
 		now more intellegent hiding - > returns to modeselect if user already logged in
 
-
 */
 namespace specwidgets {
 	class LoginSelectWidget : public AbstractVariantSelectionWidget
@@ -54,7 +53,6 @@ namespace specwidgets {
 		void profilePicked(UserProfile);
 	};
 }
-
 
 class MainPageWidget : public inframedWidget, abstractNode
 {
@@ -78,7 +76,7 @@ private:
 	QLabel* userIdInfo;
 	MegaIconButton* exitButton;
 	MegaIconButton* settingsButton;
-    MegaIconButton* refreshButton;
+	MegaIconButton* refreshButton;
 	QLineEdit* userid;
 	// Child widgets
 	LoginWidget* manualLogin;
@@ -99,7 +97,7 @@ private slots:
 	void hideCurrent();							//	hides current
 	void languageChanged();						//	activated when language changed - retranslates text
 	void userIdSearch();
-    void parseUsers();
+	void parseUsers();
 	void wasTimeout();
 	void settingsSaved();
 public slots:

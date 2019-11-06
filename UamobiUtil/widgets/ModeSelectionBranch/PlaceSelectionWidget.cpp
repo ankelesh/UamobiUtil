@@ -63,7 +63,7 @@ PlaceSelectionWidget::PlaceSelectionWidget(const GlobalAppSettings& go, QWidget*
 	modeTip->setText(tr("place_selection_mode_tip: "));
 	modeTip->setFont(scf);
 	modeTip->setAlignment(Qt::AlignCenter);
-	
+
 	placesTip->setText(tr("place_selection_place_tip: "));
 	placesTip->setFont(scf);
 	placesTip->setAlignment(Qt::AlignCenter);
@@ -72,8 +72,7 @@ PlaceSelectionWidget::PlaceSelectionWidget(const GlobalAppSettings& go, QWidget*
 	backButton->setIcon(QIcon(":/res/back.png"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
-
-    scrArea->setWidget(placeSelection);
+	scrArea->setWidget(placeSelection);
 	QScroller::grabGesture(scrArea, QScroller::LeftMouseButtonGesture);
 	placeSelection->installEventFilter(keyfilter);
 
@@ -84,7 +83,7 @@ PlaceSelectionWidget::PlaceSelectionWidget(const GlobalAppSettings& go, QWidget*
 #else
 	QObject::connect(placeSelection, SIGNAL(placeSelected(parsedPlace)), this, SLOT(placeSelected(parsedPlace)));
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
-    QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
+	QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
 }
 
@@ -110,9 +109,7 @@ bool PlaceSelectionWidget::isExpectingControl(int val)
 		}
 		placeSelected(allplaces.at(val));
 		return true;
-
 	}
-
 
 	return false;
 }
@@ -122,11 +119,11 @@ void PlaceSelectionWidget::placeSelected(parsedPlace pl)
 	if (awaiter.isAwaiting())
 		return;
 #ifdef QT_VERSION5X
-    QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &PlaceSelectionWidget::place_select_response);
+	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &PlaceSelectionWidget::place_select_response);
 #else
-    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(place_select_response()));
+	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(place_select_response()));
 #endif
-    globalSettings.networkingEngine->placeSelect(pl.code, &awaiter, RECEIVER_SLOT_NAME);
+	globalSettings.networkingEngine->placeSelect(pl.code, &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 }
 
@@ -144,23 +141,22 @@ void PlaceSelectionWidget::parse_loaded_places()
 #endif
 
 	placeSelection->reload();
-	QObject::disconnect(&awaiter,SIGNAL(requestReceived()), 0,0);
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
-
 
 void PlaceSelectionWidget::place_select_response()
 {
 	hideProcessingOverlay();
 	if (RequestParser::interpretAsSimpliestResponse(awaiter.restext, awaiter.errtext).resp)
 		emit placeAcquired(pl);
-	QObject::disconnect(&awaiter,SIGNAL(requestReceived()), this, SLOT(place_select_response()));
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), this, SLOT(place_select_response()));
 }
 
 void PlaceSelectionWidget::was_timeout()
 {
 	userTip->setText(tr("mode_selection_timeout!") + QString::number(globalSettings.timeoutInt));
-	QObject::disconnect(&awaiter,SIGNAL(requestReceived()), 0,0);
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
@@ -170,10 +166,10 @@ void PlaceSelectionWidget::loadPlaces()
 		return;
 	showProcessingOverlay();
 #ifdef QT_VERSION5X
-    QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &PlaceSelectionWidget::parse_loaded_places);
+	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &PlaceSelectionWidget::parse_loaded_places);
 #else
-    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_loaded_places()));
+	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_loaded_places()));
 #endif
-    DataUpdateEngine* httpointer = (globalSettings.networkingEngine);
+	DataUpdateEngine* httpointer = (globalSettings.networkingEngine);
 	(*httpointer.*listPlaces)(&awaiter, RECEIVER_SLOT_NAME);
 }

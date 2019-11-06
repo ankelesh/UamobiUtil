@@ -59,7 +59,6 @@ class ItemSimplifiedParser : public abs_parsed_request
 {
 protected:
 
-
 	// Inherited via abs_parsed_request
 	virtual bool couldRead() override;
 

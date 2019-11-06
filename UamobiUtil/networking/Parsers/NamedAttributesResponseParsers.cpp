@@ -21,39 +21,38 @@ ModeSelectResponseParser::ModeSelectResponseParser(QString& res, QString& err)
 	: abs_parsed_request(res, err)
 {
 	QDomDocument doc;
-    doc.setContent(result);
-		QString code = doc.elementsByTagName("status").at(0).toElement().text();
-		parseres.request_status = code.toInt();
-		if (parseres.request_status != 200)
-		{
+	doc.setContent(result);
+	QString code = doc.elementsByTagName("status").at(0).toElement().text();
+	parseres.request_status = code.toInt();
+	if (parseres.request_status != 200)
+	{
 #ifdef QT_VERSION5X
-			auto li = doc.elementsByTagName("message");
+		auto li = doc.elementsByTagName("message");
 #else
-			QDomNodeList li = doc.elementsByTagName("message");
+		QDomNodeList li = doc.elementsByTagName("message");
 #endif
-			if (li.count() > 0)
-				parseres.queriesResult.push_back(
-					li.at(0).toElement().text()
-				);
-			li = doc.elementsByTagName("stack");
-			if (li.count() > 0)
-				parseres.queriesResult.push_back(
-					li.at(0).toElement().text()
-				);
-		}
-		else
+		if (li.count() > 0)
+			parseres.queriesResult.push_back(
+				li.at(0).toElement().text()
+			);
+		li = doc.elementsByTagName("stack");
+		if (li.count() > 0)
+			parseres.queriesResult.push_back(
+				li.at(0).toElement().text()
+			);
+	}
+	else
+	{
+		QDomNodeList li = doc.elementsByTagName("s");
+		for (int i = 0; i < li.count(); ++i)
 		{
-			QDomNodeList li = doc.elementsByTagName("s");
-			for (int i = 0; i < li.count(); ++i)
-			{
-				parseres.queriesResult << li.at(0).toElement().text();
-				parseres.queriesResult << li.at(1).toElement().text();
-			}
-			parseres.one_position_entries_quantity = 2;
-			parseres.type = request_parse_type::positional_result;
+			parseres.queriesResult << li.at(0).toElement().text();
+			parseres.queriesResult << li.at(1).toElement().text();
 		}
-        success = true;
-
+		parseres.one_position_entries_quantity = 2;
+		parseres.type = request_parse_type::positional_result;
+	}
+	success = true;
 }
 
 bool DocumentCreationResponseParser::couldRead()
@@ -117,4 +116,3 @@ DocumentCreationResponseParser::DocumentCreationResponseParser(QString& res, QSt
 		success = false;
 	}
 }
-

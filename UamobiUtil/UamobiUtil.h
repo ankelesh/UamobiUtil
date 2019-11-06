@@ -66,7 +66,6 @@ signals:
 	void requestSettings();				//	Deprecated, but may be usefull if app will be reassembled
 };
 
-
 class FramelessUamobiUtil : public QMainWindow
 {
 	Q_OBJECT
@@ -74,7 +73,5 @@ private:
 	UamobiUtil* w;
 
 public:
-	FramelessUamobiUtil(GlobalAppSettings & go);
-
-
+	FramelessUamobiUtil(GlobalAppSettings& go);
 };

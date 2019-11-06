@@ -21,7 +21,7 @@
 	This widget provides realization of list containing all items included in current document.
 
 	__ASSOCIATED_DATABASE_FUNCTION__   :  doc_list_items
-	
+
 */
 
 class DocResultsWidget : public inframedWidget
@@ -45,7 +45,7 @@ protected:
 	int pagenumber;
 	RequestAwaiter awaiter;
 public:
-	DocResultsWidget(GlobalAppSettings & go, QWidget* parent);
+	DocResultsWidget(GlobalAppSettings& go, QWidget* parent);
 	void loadItems();
 	void refresh();
 	void show() override;

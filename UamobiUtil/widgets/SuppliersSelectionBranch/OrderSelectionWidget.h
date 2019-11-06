@@ -25,7 +25,6 @@
 
 	Generally this widget is simplified version of SupplierSelect - no search.
 
-
 	__ASSOCIATED_DATABASE_FUNCTION__   :  P'ordersResponse' list_orders(supplier_code)
 	__ASSOCIATED_DATABASE_FUNCTION__   :  P'TypicalResponse' rec_get_order_info(order_code ,supplier_code)
 

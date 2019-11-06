@@ -31,7 +31,6 @@ int queryReservationSize(uniform_parse_result& ures);
 
 QString showHeap(uniform_parse_result& ures);
 
-
 class abs_parsed_request
 {
 protected:
@@ -43,7 +42,7 @@ public:
 	abs_parsed_request(QString& res, QString& err);	//	Parsing happens in constructor
 	bool isSuccessfull();		//	wraps couldRead && noRequestErrors
 	QString getErrors();		//	wraps virtual parseErrorText
-    uniform_parse_result& read();	//	returns parsed result
+	uniform_parse_result& read();	//	returns parsed result
 private:
 	virtual bool couldRead() = 0;		//	overload to provide value for isSuccesfull. This should return false in case when you found error in packet
 	virtual bool noRequestErrors() = 0;		//	overload to provide value for isSuccesfull. Request is succesfull when both values are good

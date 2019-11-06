@@ -5,7 +5,6 @@
 #include "debugtrace.h"
 #endif
 
-
 UamobiUtil::UamobiUtil(GlobalAppSettings& go, QWidget* parent)
 	: QWidget(parent), globalSettings(go), mainLayout(new QVBoxLayout(this)),
 	mainPage(),
@@ -17,10 +16,10 @@ UamobiUtil::UamobiUtil(GlobalAppSettings& go, QWidget* parent)
 	mainPage = QPointer<inframedWidget>(new MainPageWidget(globalSettings, this));
 	this->setLayout(mainLayout);
 #ifdef Q_OS_WINCE
-    this->setBaseSize(calculateAdaptiveSize(0.8));
+	this->setBaseSize(calculateAdaptiveSize(0.8));
 	this->setMaximumSize(calculateAdaptiveSize(1));
-    this->setMaximumHeight(0.9);
-    this->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum));
+	this->setMaximumHeight(0.9);
+	this->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum));
 #endif
 	//mainLayout->setSizeConstraint(QBoxLayout::SizeConstraint::SetMaximumSize);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -30,15 +29,14 @@ UamobiUtil::UamobiUtil(GlobalAppSettings& go, QWidget* parent)
 #ifdef QT_VERSION5X
 	auto mlp = qobject_cast<MainPageWidget*>(mainPage);
 
-    QTimer::singleShot(500, mlp, SLOT(loadUsers()));
+	QTimer::singleShot(500, mlp, SLOT(loadUsers()));
 	QObject::connect(mlp, &MainPageWidget::loggedIn, this, &UamobiUtil::gotoModeSelection);
 #else
 	MainPageWidget* mlp = qobject_cast<MainPageWidget*> (mainPage);
-    QTimer::singleShot(500, mlp, SLOT(loadUsers()));
+	QTimer::singleShot(500, mlp, SLOT(loadUsers()));
 	QObject::connect(mlp, SIGNAL(loggedIn()), this, SLOT(gotoModeSelection()));
 #endif
 }
-
 
 void UamobiUtil::gotoModeSelection()
 {
@@ -54,7 +52,7 @@ void UamobiUtil::gotoModeSelection()
 	QObject::connect(mb, &ModeSelectionWidget::modeAcquired, this, &UamobiUtil::interpretMode);
 #else
 	QObject::connect(mb, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
-    QObject::connect(mb, SIGNAL(modeAcquired(QHash<QString, QString>, parsedMode)), this, SLOT(interpretMode(QHash<QString,QString>,parsedMode)));
+	QObject::connect(mb, SIGNAL(modeAcquired(QHash<QString, QString>, parsedMode)), this, SLOT(interpretMode(QHash<QString, QString>, parsedMode)));
 #endif
 	modeSelectionBranch = mb;
 	current = &modeSelectionBranch;
@@ -113,7 +111,6 @@ void UamobiUtil::resizeEvent(QResizeEvent* rev)
 
 void UamobiUtil::interpretMode(QHash<QString, QString> sets, parsedMode mode)
 {
-
 #ifdef DEBUG
 	detrace_METHEXPL("mode: " << mode.mode << " while submode " << mode.submode << " and name " << mode.name);
 #endif
@@ -165,4 +162,3 @@ void UamobiUtil::hideCurrent()
 		}
 	}
 }
-

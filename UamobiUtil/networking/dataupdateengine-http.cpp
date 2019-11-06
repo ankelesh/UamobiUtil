@@ -652,7 +652,7 @@ void HttpUpdateEngine::sendQuery
 	QString currurl = url
 		+ "?delay=" + QString("%1").arg(delay) + "&cmd=" + urlpath;
 #ifdef DEBUG
-	detrace_METHDATAS("sendQuery", "url", <<currurl);
+	detrace_METHDATAS("sendQuery", "url", << currurl);
 	//detrace_OCREATED("QNetworkRequest", "HttpUpdateEngine::sendQuery");
 #endif
 	QNetworkRequest r;
@@ -678,19 +678,19 @@ void HttpUpdateEngine::sendQuery
 void HttpUpdateEngine::requestFinish(QNetworkReply* reply)
 {
 #ifdef DEBUG
-    //detrace_SLOTCALL("requestFinish", "HttpUpdateEngine");
+	//detrace_SLOTCALL("requestFinish", "HttpUpdateEngine");
 #endif
 	if (delayTimer) {
 		delay = delayTimer->elapsed();
 	}
 
-    reply->deleteLater();
+	reply->deleteLater();
 	QString res;
-    QTextDecoder td(QTextCodec::codecForName("CP1251"));
+	QTextDecoder td(QTextCodec::codecForName("CP1251"));
 	if (!reply->error())
 		res = td.toUnicode(reply->readAll());
 #ifdef DEBUG
-   // detrace_METHTEXTS("HttpUpdateEngine::requestFinish", "res", res);
+	// detrace_METHTEXTS("HttpUpdateEngine::requestFinish", "res", res);
 #endif
 	/*qDebug() << "REPLY'S RESULT: " << "\n"
 		<< reply->request().url().toString() << "\n" << res;*/
@@ -720,7 +720,7 @@ void HttpUpdateEngine::requestFinish(QNetworkReply* reply)
 			QString dummy;
 			XmlFns::logIn(res, dummy, m_sessionId);
 #ifdef DEBUG
-            detrace_METHEXPL("session now: " << m_sessionId << " while res was: " << res);
+			detrace_METHEXPL("session now: " << m_sessionId << " while res was: " << res);
 #endif
 		}
 		//detrace_METHEXPL("something dark happened, invocation begins")
@@ -733,11 +733,11 @@ void HttpUpdateEngine::requestFinish(QNetworkReply* reply)
 #endif
 		emit responseArrived(res, errText);
 #ifdef DEBUG
-        detrace_METHEXPL("invocation effect was " << QMetaObject::invokeMethod(sp.obj, sp.slot.data(), Q_ARG(QString, res), Q_ARG(QString, errText)));
+		detrace_METHEXPL("invocation effect was " << QMetaObject::invokeMethod(sp.obj, sp.slot.data(), Q_ARG(QString, res), Q_ARG(QString, errText)));
 #else
-   QMetaObject::invokeMethod(sp.obj, sp.slot.data(), Q_ARG(QString, res), Q_ARG(QString, errText));
+		QMetaObject::invokeMethod(sp.obj, sp.slot.data(), Q_ARG(QString, res), Q_ARG(QString, errText));
 #endif
-                //}
+		//}
 	}
 }
 
@@ -839,8 +839,8 @@ void HttpUpdateEngine::getWarehousesList(const QString& text, const bool hasOrd,
 	//detrace_METHCALL("HttpUpdateEngine::getWarehousesList");
 #endif
 	sendQuery(
-        "rec_list_warehouses&session=" + m_sessionId
-         + "&text=&hasorders=&"
+		"rec_list_warehouses&session=" + m_sessionId
+		+ "&text=&hasorders=&"
 		, receiver
 		, slot
 	);

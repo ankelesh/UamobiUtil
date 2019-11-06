@@ -36,9 +36,9 @@ bool QuantityControl::hasFocus() const
 	return innerSpinbox->hasFocus();
 }
 
-QuantityControl::QuantityControl(QString& cname,QWidget* parent)
-	: 
-	abs_control(cname, Int),innerSpinbox(new BigButtonsSpinbox(BigButtonsSpinbox::intspin, parent))
+QuantityControl::QuantityControl(QString& cname, QWidget* parent)
+	:
+	abs_control(cname, Int), innerSpinbox(new BigButtonsSpinbox(BigButtonsSpinbox::intspin, parent))
 {
 	innerSpinbox->setMinimum(0);
 	innerSpinbox->setMaximum(99999);
@@ -46,7 +46,7 @@ QuantityControl::QuantityControl(QString& cname,QWidget* parent)
 	hide();
 }
 
-QuantityControl::QuantityControl( QString& assocBuffer, QString& cname, QWidget* parent)
+QuantityControl::QuantityControl(QString& assocBuffer, QString& cname, QWidget* parent)
 	:abs_control(cname, assocBuffer, Int), innerSpinbox(new BigButtonsSpinbox(BigButtonsSpinbox::intspin, parent))
 {
 	innerSpinbox->setMinimum(0);

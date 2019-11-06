@@ -48,21 +48,21 @@ namespace filters
 	signals:
 		void backRequired();
 	};
-    class LineEditHelper : public QObject
-    {
-        Q_OBJECT
-    protected:
-        bool eventFilter(QObject *watched, QEvent *event) override;
-    public:
-        LineEditHelper(QObject* ob) : QObject(ob){};
-    };
+	class LineEditHelper : public QObject
+	{
+		Q_OBJECT
+	protected:
+		bool eventFilter(QObject* watched, QEvent* event) override;
+	public:
+		LineEditHelper(QObject* ob) : QObject(ob) {};
+	};
 	class GeneralPurposeFilter : public QObject
 	{
 		Q_OBJECT
 	public:
-		enum captureTypes{Number,Return, Back, Scan, Symbol, All, infPack};
+		enum captureTypes { Number, Return, Back, Scan, Symbol, All, infPack };
 	protected:
-		
+
 		captureTypes mytypes[5];
 		int typeLen;
 		typedef	bool(GeneralPurposeFilter::* CaptureFunction)(QKeyEvent*);
@@ -73,10 +73,10 @@ namespace filters
 		// util fuction that turns int into pointer to capture function
 		CaptureFunction makeCaptureFunction(captureTypes type);
 
-		bool eventFilter(QObject* ob, QEvent* ev) override;	
+		bool eventFilter(QObject* ob, QEvent* ev) override;
 
 		//	These functions are used for capturing and are called during eventFiltering
-		//	These one are element captures that search for only one type 
+		//	These one are element captures that search for only one type
 		bool captReturn(QKeyEvent*);
 		bool captNumber(QKeyEvent*);
 		bool captSymbol(QKeyEvent*);

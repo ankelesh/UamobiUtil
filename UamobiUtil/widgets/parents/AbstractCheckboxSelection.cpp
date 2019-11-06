@@ -11,7 +11,7 @@ void AbstractCheckboxSelection::init()
 	int elems = countElems();
 	for (int i = 0; i < elems; ++i)
 	{
-		userButtons.push_back(new specwidgets::toggledIndexedButton(nonT, isT,i, this));
+		userButtons.push_back(new specwidgets::toggledIndexedButton(nonT, isT, i, this));
 		userButtons.last()->setText(elemAsString(i));
 		userButtons.last()->setFont(scf);
 		mainLayout->addWidget(userButtons.last());

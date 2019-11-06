@@ -46,17 +46,20 @@ protected:
 	MegaIconButton* submitButton;
 	MegaIconButton* searchButton;
 
-
 	QHash<QString, QString> itemSuppliedValues;
-	
+
 	abs_control* first_control;
 	abs_control* second_control;
-	
 
 	int controlsAvailable;
+	bool controlsRequired;
 
 	RequestAwaiter awaiter;
-	virtual void useControls(QVector<QPair<QString, QString> >&) = 0;
+	virtual void useControls(QVector<QPair<QString, QString> >&);
+	virtual void refreshControls();
+	virtual bool checkControls();
+	virtual void focusControl(int);
+	virtual bool isControlFocused();
 public:
 	AbstractScaningWidget(GlobalAppSettings& go, QWidget* parent);
 
@@ -68,12 +71,11 @@ protected slots:
 	virtual void searchRequired() = 0;
 	virtual void backNeeded() = 0;
 	virtual void was_timeout();
-	virtual void switchedFocus()=0;
+	virtual void switchedFocus() = 0;
 	virtual void syncControlAndBuffer(QString v) = 0;
 public slots:
 	virtual void setDocument(parsedOrder) = 0;
 signals:
 	void saveSuccess();
-
 };
 QVector<QPair<QString, QString> > make_control_list(QHash<QString, QString>&);

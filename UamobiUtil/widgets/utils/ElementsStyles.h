@@ -28,13 +28,13 @@
 inline static int calculateAdaptiveButtonHeight(double percent = 0.125)
 //Calculates height for buttons, by default is giving 12.5% of screen height
 {
-    return GEOMETRY_SOURCE->availableGeometry().height() * percent;
+	return GEOMETRY_SOURCE->availableGeometry().height() * percent;
 }
 
 inline static int calculateAdaptiveWidth(double percent = 0.5)
 //Calculates width, by default is giving 50% of screen width
 {
-    return GEOMETRY_SOURCE->availableGeometry().width() * percent;
+	return GEOMETRY_SOURCE->availableGeometry().width() * percent;
 }
 inline static QSize calculateAdaptiveSize(double percent = 0.3)
 //Calculates square size, by default is giving 30% of screen dimensions
@@ -42,7 +42,7 @@ inline static QSize calculateAdaptiveSize(double percent = 0.3)
 	return QSize(
 		GEOMETRY_SOURCE->availableGeometry().width() * percent,
 		GEOMETRY_SOURCE->availableGeometry().height() * percent
-    );
+	);
 }
 inline static QSize calculateAdaptiveSize(double Hpercent, double Wpercent)
 //Calculates more adaptive size, allowing to scale both dimensions. No defaults.
@@ -50,9 +50,9 @@ inline static QSize calculateAdaptiveSize(double Hpercent, double Wpercent)
 	return QSize(
 		GEOMETRY_SOURCE->availableGeometry().width() * Wpercent,
 		GEOMETRY_SOURCE->availableGeometry().height() * Hpercent
-    );
+	);
 }
-const QSize & getCurrentSize();
+const QSize& getCurrentSize();
 void setCurrentSize(const QSize&);
 
 extern QString countAdaptiveFont(double perc);

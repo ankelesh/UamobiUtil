@@ -7,9 +7,8 @@
 using namespace filters;
 bool inframedWidget::isExpectingControl(int val)
 {
-
 #ifdef DEBUG
-	detrace_METHCALL(":isExpectingControl(" << val<< " wadress: " << (long long int) this);
+	detrace_METHCALL(":isExpectingControl(" << val << " wadress: " << (long long int) this);
 #endif
 
 	return false;
@@ -17,16 +16,15 @@ bool inframedWidget::isExpectingControl(int val)
 inframedWidget::inframedWidget(QWidget* parent)
 	: QWidget(parent), keyfilter(new filters::GeneralPurposeFilter(filters::GeneralPurposeFilter::infPack, this))
 {
-	
 	QObject::installEventFilter(keyfilter);
 #ifdef QT_VERSION5X
 	QObject::connect(keyfilter, &GeneralPurposeFilter::backPressed, this, &inframedWidget::backReaction);
 	QObject::connect(keyfilter, &GeneralPurposeFilter::returnPressed, this, &inframedWidget::returnReaction);
 	QObject::connect(keyfilter, &GeneralPurposeFilter::numberPressed, this, &inframedWidget::controlReaction);
 #else
-    QObject::connect(keyfilter, SIGNAL(backPressed()), this, SLOT(backReaction()));
-    QObject::connect(keyfilter, SIGNAL(returnPressed()),this, SLOT(returnReaction()));
-    QObject::connect(keyfilter, SIGNAL(numberPressed(int)), this, SLOT(controlReaction(int)));
+	QObject::connect(keyfilter, SIGNAL(backPressed()), this, SLOT(backReaction()));
+	QObject::connect(keyfilter, SIGNAL(returnPressed()), this, SLOT(returnReaction()));
+	QObject::connect(keyfilter, SIGNAL(numberPressed(int)), this, SLOT(controlReaction(int)));
 #endif
 }
 bool inframedWidget::back()
@@ -55,7 +53,6 @@ void inframedWidget::installEventFilter(QObject* obj)
 	}
 }
 
-
 void inframedWidget::returnReaction()
 {
 }
@@ -67,5 +64,5 @@ void inframedWidget::backReaction()
 
 void inframedWidget::controlReaction(int val)
 {
-	isExpectingControl(val-1);
+	isExpectingControl(val - 1);
 }

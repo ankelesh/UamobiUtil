@@ -6,7 +6,6 @@
 
 void InventoryRootWidget::processOptions()
 {
-
 }
 
 void InventoryRootWidget::openCorrespondingSubbranch()
@@ -35,7 +34,7 @@ InventoryRootWidget::InventoryRootWidget(GlobalAppSettings& go, QHash<QString, Q
 	untouchable = innerWidget;
 	main = this;
 	openCorrespondingSubbranch();
-	removeEventFilter(keyfilter); 
+	removeEventFilter(keyfilter);
 #ifdef QT_VERSION5X
 
 	QObject::connect(innerWidget, &InventoryParamsWidget::backRequired, this, &InventoryRootWidget::backTo);
@@ -46,13 +45,13 @@ InventoryRootWidget::InventoryRootWidget(GlobalAppSettings& go, QHash<QString, Q
 	QObject::connect(scaningWidget, &InventoryScaningWidget::backRequired, this, &InventoryRootWidget::hideCurrent);
 	QObject::connect(scaningWidget, &InventoryScaningWidget::saveSuccess, this, &InventoryRootWidget::hideCurrent);
 #else
-    QObject::connect(innerWidget, SIGNAL(backRequired()), this, SLOT(backTo()));
-    QObject::connect(innerWidget, SIGNAL(documentConfirmed(Document)), this, SLOT(continueToScaning(Document)));
-    QObject::connect(innerWidget, SIGNAL(documentMustBeSelected(int)), this, SLOT(backToStep(int)));
-    QObject::connect(docSelectionWidget, SIGNAL(docSelected(parsedDocument)), this, SLOT(documentAcquired(parsedDocument)));
-    QObject::connect(docSelectionWidget, SIGNAL(backRequired()), this, SIGNAL(backRequired()));
-    QObject::connect(scaningWidget, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
-    QObject::connect(scaningWidget, SIGNAL(saveSuccess()), this, SLOT(hideCurrent()));
+	QObject::connect(innerWidget, SIGNAL(backRequired()), this, SLOT(backTo()));
+	QObject::connect(innerWidget, SIGNAL(documentConfirmed(Document)), this, SLOT(continueToScaning(Document)));
+	QObject::connect(innerWidget, SIGNAL(documentMustBeSelected(int)), this, SLOT(backToStep(int)));
+	QObject::connect(docSelectionWidget, SIGNAL(docSelected(parsedDocument)), this, SLOT(documentAcquired(parsedDocument)));
+	QObject::connect(docSelectionWidget, SIGNAL(backRequired()), this, SIGNAL(backRequired()));
+	QObject::connect(scaningWidget, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+	QObject::connect(scaningWidget, SIGNAL(saveSuccess()), this, SLOT(hideCurrent()));
 #endif
 }
 
@@ -101,5 +100,4 @@ void InventoryRootWidget::continueToScaning(Document doc)
 #endif
 	_hideAny(scaningWidget);
 	scaningWidget->setDocument(doc);
-
 }

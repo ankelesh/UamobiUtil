@@ -45,7 +45,7 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 	mainLayout->setSpacing(0);
 	innerWidget->setLayout(innerLayout);
-	innerLayout->setContentsMargins(0,0,0,0);
+	innerLayout->setContentsMargins(0, 0, 0, 0);
 	innerLayout->setSpacing(0);
 	innerLayout->addWidget(userHelp);
 	innerLayout->addLayout(headerLayout);
@@ -69,11 +69,11 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 
 	userinputField->setFont(scf);
 	userinputField->setMaximumWidth(calculateAdaptiveWidth(0.6));
-    userinputField->setMinimumWidth(calculateAdaptiveWidth(0.4));
-    userinputField->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
-    userinputField->setMaximumHeight(calculateAdaptiveButtonHeight());
-    supplierSelection->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding));
-    supplierSelection->setMaximumWidth(calculateAdaptiveWidth(1));
+	userinputField->setMinimumWidth(calculateAdaptiveWidth(0.4));
+	userinputField->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
+	userinputField->setMaximumHeight(calculateAdaptiveButtonHeight());
+	supplierSelection->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding));
+	supplierSelection->setMaximumWidth(calculateAdaptiveWidth(1));
 
 	backButton->setText(tr("suppliers_selection_back"));
 	backButton->setIcon(QIcon(":/res/back.png"));
@@ -98,8 +98,8 @@ SuppliersSelectWidget::SuppliersSelectWidget(GlobalAppSettings& go, QWidget* par
 	QObject::connect(ordfilterButton, SIGNAL(toggled(bool)), this, SLOT(ordFilterSwitched(bool)));
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 	QObject::connect(supplierSelection, SIGNAL(supplierPicked(parsedSupplier)), this, SLOT(supplierPicked(parsedSupplier)));
-    QObject::connect(userinputField, SIGNAL(editingFinished()), this, SLOT(searchPrimed()));
-    QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
+	QObject::connect(userinputField, SIGNAL(editingFinished()), this, SLOT(searchPrimed()));
+	QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
 }
 
@@ -111,7 +111,6 @@ void SuppliersSelectWidget::show()
 
 bool SuppliersSelectWidget::isExpectingControl(int val)
 {
-
 	if (awaiter.isAwaiting())
 		return false;
 	if (val >= -1 && val <= allsuppliers.count() - 1)
@@ -126,14 +125,12 @@ bool SuppliersSelectWidget::isExpectingControl(int val)
 				return false;
 			}
 		}
-		supplierPicked(	allsuppliers.at(val));
+		supplierPicked(allsuppliers.at(val));
 		return true;
-
 	}
 
 	return false;
 }
-
 
 void SuppliersSelectWidget::searchPrimed()
 {
@@ -183,19 +180,18 @@ void SuppliersSelectWidget::parse_response()
 	allsuppliers = temp;
 #endif
 	supplierSelection->reload();
-	QObject::disconnect(&awaiter,SIGNAL(requestReceived()), 0,0);
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
 void SuppliersSelectWidget::was_timeout()
 {
-
 #ifdef DEBUG
 	detrace_METHCALL("WasTimeout");
 #endif
 
 	userHelp->setText(tr("suppliers_select_widget_timeout!") + QString::number(globalSettings.timeoutInt));
-	QObject::disconnect(&awaiter,SIGNAL(requestReceived()),0,0);
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
@@ -205,11 +201,11 @@ void SuppliersSelectWidget::loadSuppliers()
 		return;
 	showProcessingOverlay();
 #ifdef QT_VERSION5X
-    QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &SuppliersSelectWidget::parse_response);
+	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &SuppliersSelectWidget::parse_response);
 #else
-    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_response()));
+	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_response()));
 #endif
-    (*globalSettings.networkingEngine.*listSuppliers)(userinputField->text(), ordfilterButton->isChecked(), &awaiter, RECEIVER_SLOT_NAME);
+	(*globalSettings.networkingEngine.*listSuppliers)(userinputField->text(), ordfilterButton->isChecked(), &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 }
 
@@ -237,9 +233,7 @@ void SuppliersSelectionBranch::show()
 {
 	inframedWidget::show();
 	supplierSelection->setFocus();
-
 }
-
 
 void SuppliersSelectionBranch::hideCurrent()
 {

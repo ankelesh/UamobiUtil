@@ -173,7 +173,7 @@ namespace parse_uniresults_functions {
 		if (ures.queriesResult.count() == 1)
 		{
 #ifdef DEBUG
-				detrace_METHEXPL("richtext parsed" << showHeap(ures));
+			detrace_METHEXPL("richtext parsed" << showHeap(ures));
 #endif
 			temp.errors = ures.queriesResult.at(0);
 			temp.resp = true;
@@ -181,7 +181,7 @@ namespace parse_uniresults_functions {
 		else
 		{
 #ifdef DEBUG
-			detrace_METHEXPL("richtext not parsed: q" << ures.one_position_entries_quantity );
+			detrace_METHEXPL("richtext not parsed: q" << ures.one_position_entries_quantity);
 #endif
 			temp.resp = false;
 		}
@@ -216,12 +216,12 @@ namespace parse_uniresults_functions {
 #ifdef DEBUG
 		detrace_METHEXPL(showHeap(ures));
 #endif
-		if (((ures.queriesResult.count()%3) == 0))
+		if (((ures.queriesResult.count() % 3) == 0))
 		{
-			for (int i = 0; i < ures.queriesResult.count(); i+= 3)
+			for (int i = 0; i < ures.queriesResult.count(); i += 3)
 			{
 				if (ures.queriesResult.at(i).isEmpty()) {
-					temp.named.insert(ures.queriesResult.at(i+1), ures.queriesResult.at(i + 2));
+					temp.named.insert(ures.queriesResult.at(i + 1), ures.queriesResult.at(i + 2));
 				}
 				else
 				{
@@ -240,12 +240,12 @@ namespace parse_uniresults_functions {
 			temp.from = ures.queriesResult.at(0);
 			temp.to = ures.queriesResult.at(1);
 			temp.last = ((ures.queriesResult.at(2) == "true") ? true : false);
-			temp.values.reserve((ures.queriesResult.count() - 3)/2);
+			temp.values.reserve((ures.queriesResult.count() - 3) / 2);
 			for (int i = ures.alternative_result; i < ures.queriesResult.count(); i += ures.one_position_entries_quantity)
 			{
 				temp.values.push_back(parsedItemSimplified
-				(   ures.queriesResult.at(i),
-					ures.queriesResult.at(i+1)
+				(ures.queriesResult.at(i),
+					ures.queriesResult.at(i + 1)
 				));
 			}
 		}
@@ -265,11 +265,11 @@ namespace parse_uniresults_functions {
 			{
 				temp.values.push_back(parsedItem(
 					ures.queriesResult.at(i),
-					ures.queriesResult.at(i+1),
-					ures.queriesResult.at(i+2),
-					ures.queriesResult.at(i+3),
-					ures.queriesResult.at(i+4),
-					ures.queriesResult.at(i+5)
+					ures.queriesResult.at(i + 1),
+					ures.queriesResult.at(i + 2),
+					ures.queriesResult.at(i + 3),
+					ures.queriesResult.at(i + 4),
+					ures.queriesResult.at(i + 5)
 				));
 			}
 		}

@@ -39,7 +39,6 @@ namespace specwidgets
 		void paintEvent(QPaintEvent*) override;
 		virtual void clickCapt() override;
 	public:
-		toggledIndexedButton(QIcon & non, QIcon & is, int Index = 0, QWidget* parent = Q_NULLPTR);
-	
+		toggledIndexedButton(QIcon& non, QIcon& is, int Index = 0, QWidget* parent = Q_NULLPTR);
 	};
 }

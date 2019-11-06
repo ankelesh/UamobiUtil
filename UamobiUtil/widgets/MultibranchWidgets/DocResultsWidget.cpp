@@ -1,7 +1,7 @@
 #include "DocResultsWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
-DocResultsWidget::DocResultsWidget(GlobalAppSettings & go, QWidget* parent)
+DocResultsWidget::DocResultsWidget(GlobalAppSettings& go, QWidget* parent)
 	: inframedWidget(parent), globalSettings(go), mainLayout(new QVBoxLayout(this)),
 	userInfo(new QLabel(this)), listHeaderLayout(new QHBoxLayout(this)),
 	previousButton(new MegaIconButton(this)), indexationInfo(new QLabel(this)),
@@ -65,13 +65,12 @@ DocResultsWidget::DocResultsWidget(GlobalAppSettings & go, QWidget* parent)
 	QObject::connect(previousButton, &MegaIconButton::clicked, this, &DocResultsWidget::previousPage);
 	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &DocResultsWidget::was_timeout);
 #else
-    QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
-    QObject::connect(saveButton, SIGNAL(clicked()), this, SLOT(saveDocument()));
-    QObject::connect(nextButton, SIGNAL(clicked()), this, SLOT(nextPage()));
-    QObject::connect(previousButton, SIGNAL(clicked()), this, SLOT(previousPage()));
-    QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
+	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
+	QObject::connect(saveButton, SIGNAL(clicked()), this, SLOT(saveDocument()));
+	QObject::connect(nextButton, SIGNAL(clicked()), this, SLOT(nextPage()));
+	QObject::connect(previousButton, SIGNAL(clicked()), this, SLOT(previousPage()));
+	QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
-
 }
 
 void DocResultsWidget::loadItems()
@@ -81,12 +80,11 @@ void DocResultsWidget::loadItems()
 #ifdef QT_VERSION5X
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &DocResultsWidget::items_response);
 #else
-    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(items_response()));
+	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(items_response()));
 #endif
-    globalSettings.networkingEngine->docGetResults(pagenumber, &awaiter, RECEIVER_SLOT_NAME);
+	globalSettings.networkingEngine->docGetResults(pagenumber, &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 	showProcessingOverlay();
-	
 }
 
 void DocResultsWidget::refresh()
@@ -137,9 +135,9 @@ void DocResultsWidget::saveDocument()
 #ifdef QT_VERSION5X
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &DocResultsWidget::save_response);
 #else
-    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(save_response()));
+	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(save_response()));
 #endif
-    globalSettings.networkingEngine->docUnlock(true, &awaiter, RECEIVER_SLOT_NAME);
+	globalSettings.networkingEngine->docUnlock(true, &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 	showProcessingOverlay();
 }
@@ -148,7 +146,7 @@ void DocResultsWidget::items_response()
 {
 	items = RequestParser::interpretAsListedDocument(awaiter.restext, awaiter.errtext);
 	refresh();
-	QObject::disconnect(&awaiter,SIGNAL(requestReceived()), 0,0);
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
@@ -156,13 +154,13 @@ void DocResultsWidget::save_response()
 {
 	if (awaiter.restext.contains("_"))
 		emit documentSaved();
-	QObject::disconnect(&awaiter,SIGNAL(requestReceived()), 0,0);
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
 void DocResultsWidget::was_timeout()
 {
 	userInfo->setText(tr("doc_results_timeout") + QString::number(globalSettings.timeoutInt));
-	QObject::disconnect(&awaiter,SIGNAL(requestReceived()),0,0);
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }

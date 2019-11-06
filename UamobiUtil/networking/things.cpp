@@ -99,13 +99,12 @@ parsedItem::parsedItem(QString Code, QString Title, QString Cmid, QString Qty, Q
 
 QString parsedItem::description() const
 {
-	return title + "|bc: " + code +" | "+ cmid + "|bx: " +  box + " qty: " + QString::number(qty) + " highlight: " + ((highlight)? "true" : "false");
+	return title + "|bc: " + code + " | " + cmid + "|bx: " + box + " qty: " + QString::number(qty) + " highlight: " + ((highlight) ? "true" : "false");
 }
 
 parsedDocument::parsedDocument(QString Code, QString Title, QString Text, QString Doctype)
 	: code(Code), title(Title), text(Text), doctype(Doctype)
 {
-
 }
 
 QString parsedDocument::description() const
@@ -120,5 +119,5 @@ parsedDocType::parsedDocType(QString Id, QString Name, QString isF)
 
 QString parsedDocType::description() const
 {
-	return "doctype " + name + " id |" + id + "|" +((notFiltered)? "not" : "is") + " filtered" ;
+	return "doctype " + name + " id |" + id + "|" + ((notFiltered) ? "not" : "is") + " filtered";
 }

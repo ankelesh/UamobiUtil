@@ -89,8 +89,8 @@ ReceiptParametersWidget::ReceiptParametersWidget(GlobalAppSettings& go, QWidget*
 	QObject::connect(cancelledButton, SIGNAL(clicked()), this, SLOT(cancelledClicked()));
 	QObject::connect(inspectButton, SIGNAL(clicked()), this, SLOT(inspectClicked()));
 	QObject::connect(continueButton, SIGNAL(clicked()), this, SLOT(continueClicked()));
-    QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
-    QObject::connect(selectOrderButton, SIGNAL(clicked()), this, SLOT(backToSupplier()));
+	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
+	QObject::connect(selectOrderButton, SIGNAL(clicked()), this, SLOT(backToSupplier()));
 #endif
 }
 

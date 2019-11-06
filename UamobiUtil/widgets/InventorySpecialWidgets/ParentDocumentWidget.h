@@ -14,15 +14,23 @@
 #include "networking/things.h"
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/MultibranchWidgets/FilterSelectWidget.h"
+
+/*
+	This widget is used for selecting parent document. It differs from other selections because of
+	filter subpage.
+
+	__ASSOCIATED_DATABASE_FUNCTION__   :  P'documentsResponse' inv_list_parent_docs
+
+*/
+
 namespace specwidgets
 {
 	class documentSelectionWidget : public AbstractListSelectionWidget
 	{
 		Q_OBJECT
 	private:
-		QVector<parsedDocument> & alldocs;
+		QVector<parsedDocument>& alldocs;
 	protected:
-
 
 		// Inherited via AbstractListSelectionWidget
 		virtual int countElems() override;
@@ -36,8 +44,6 @@ namespace specwidgets
 		void docSelected(parsedDocument);
 	};
 }
-
-
 
 class ParentDocumentWidget : public inframedWidget, abstractNode
 {
@@ -73,5 +79,3 @@ protected slots:
 signals:
 	void docSelected(parsedDocument);
 };
-
-

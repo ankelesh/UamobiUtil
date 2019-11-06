@@ -18,6 +18,16 @@
 #include "networking/things.h"
 #include "widgets/utils/GlobalAppSettings.h"
 
+/*
+	This widget is used for checking inventory document before starting completing it. 
+	It has no additional functions except changing document credintials.
+
+
+	TODO: dateedit is unused now. Make it usefull.
+
+
+*/
+
 
 class InventoryParamsWidget : public inframedWidget
 {

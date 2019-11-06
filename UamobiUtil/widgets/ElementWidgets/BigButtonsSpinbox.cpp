@@ -40,38 +40,38 @@ BigButtonsSpinbox::BigButtonsSpinbox(spintype type, QWidget* parent, double adap
 	QObject::connect(coreSpinbox, &QAbstractSpinBox::editingFinished, this, &BigButtonsSpinbox::editingDone);
 	QObject::connect(keyFilter, &filters::CaptureBackFilter::backRequired, this, &BigButtonsSpinbox::backRequire);
 #else
-    QObject::connect(buttonUp, SIGNAL(pressed()), coreSpinbox, SLOT(stepUp()));
-    QObject::connect(buttonDown, SIGNAL(pressed()), coreSpinbox, SLOT(stepDown()));
-    QObject::connect(coreSpinbox, SIGNAL(editingFinished()), this, SLOT(editingDone()));
-    QObject::connect(keyFilter, SIGNAL(backRequired()), this, SLOT(backRequire()));
+	QObject::connect(buttonUp, SIGNAL(pressed()), coreSpinbox, SLOT(stepUp()));
+	QObject::connect(buttonDown, SIGNAL(pressed()), coreSpinbox, SLOT(stepDown()));
+	QObject::connect(coreSpinbox, SIGNAL(editingFinished()), this, SLOT(editingDone()));
+	QObject::connect(keyFilter, SIGNAL(backRequired()), this, SLOT(backRequire()));
 #endif
-    QSpinBox* isp;
+	QSpinBox* isp;
 	QTimeEdit* tsp;
 	switch (sptype)
 		//RTTI used to connect right signals
 	{
 	case intspin:
 		isp = qobject_cast<QSpinBox*>(coreSpinbox);
-        if (isp != Q_NULLPTR) {
+		if (isp != Q_NULLPTR) {
 			isp->setSpecialValueText("");
 #ifdef QT_VERSION5X
-            QObject::connect(isp, QOverload<int>::of(&QSpinBox::valueChanged), this, &BigButtonsSpinbox::intValueChanged);
+			QObject::connect(isp, QOverload<int>::of(&QSpinBox::valueChanged), this, &BigButtonsSpinbox::intValueChanged);
 #else
-            QObject::connect(isp, SIGNAL(valueChanged(int)), this, SLOT(intValueChanged(int)));
+			QObject::connect(isp, SIGNAL(valueChanged(int)), this, SLOT(intValueChanged(int)));
 #endif
-        }
+		}
 		break;
 	case timespin:
 		tsp = qobject_cast<QTimeEdit*>(coreSpinbox);
-        if (tsp != Q_NULLPTR)
+		if (tsp != Q_NULLPTR)
 		{
 			tsp->setDisplayFormat("HH:mm:ss");
 #ifdef QT_VERSION5X
 			QObject::connect(tsp, &QTimeEdit::timeChanged, this, &BigButtonsSpinbox::timeValueChanged);
 #else
-            QObject::connect(tsp, SIGNAL(timeChanged(QTime)), this, SLOT(timeValueChanged(QTime)));
+			QObject::connect(tsp, SIGNAL(timeChanged(QTime)), this, SLOT(timeValueChanged(QTime)));
 #endif
-        }
+		}
 	default:
 		break;
 	}
@@ -81,7 +81,7 @@ void BigButtonsSpinbox::setMinimum(int min)
 {
 	if (sptype == intspin) {		// }
 		QSpinBox* isp = qobject_cast<QSpinBox*>(coreSpinbox);	// <-This is normal RTTI check:
-        if (isp != Q_NULLPTR)							//	to see if this pointer can be casted
+		if (isp != Q_NULLPTR)							//	to see if this pointer can be casted
 		{								//}
 			isp->setMinimum(min);
 		}
@@ -92,7 +92,7 @@ void BigButtonsSpinbox::setMaximum(int max)
 {
 	if (sptype == intspin) {
 		QSpinBox* isp = qobject_cast<QSpinBox*>(coreSpinbox);
-        if (isp != Q_NULLPTR)
+		if (isp != Q_NULLPTR)
 		{
 			isp->setMaximum(max);
 		}
@@ -103,7 +103,7 @@ void BigButtonsSpinbox::setValue(int val)
 {
 	if (sptype == intspin) {
 		QSpinBox* isp = qobject_cast<QSpinBox*>(coreSpinbox);
-        if (isp != Q_NULLPTR)
+		if (isp != Q_NULLPTR)
 		{
 			isp->setValue(val);
 		}
@@ -126,7 +126,7 @@ int BigButtonsSpinbox::value() const
 {
 	if (sptype == intspin) {
 		QSpinBox* isp = qobject_cast<QSpinBox*>(coreSpinbox);
-        if (isp != Q_NULLPTR)
+		if (isp != Q_NULLPTR)
 		{
 			return isp->value();
 		}
@@ -139,7 +139,7 @@ QTime BigButtonsSpinbox::time()
 	if (sptype == timespin)
 	{
 		QTimeEdit* tsp = qobject_cast<QTimeEdit*>(coreSpinbox);
-        if (tsp != Q_NULLPTR)
+		if (tsp != Q_NULLPTR)
 		{
 			return tsp->time();
 		}
@@ -152,7 +152,7 @@ void BigButtonsSpinbox::setDisplayFormat(const QString& tf)
 	if (sptype == timespin)
 	{
 		QTimeEdit* tsp = qobject_cast<QTimeEdit*>(coreSpinbox);
-        if (tsp != Q_NULLPTR)
+		if (tsp != Q_NULLPTR)
 		{
 			tsp->setDisplayFormat(tf);
 		}

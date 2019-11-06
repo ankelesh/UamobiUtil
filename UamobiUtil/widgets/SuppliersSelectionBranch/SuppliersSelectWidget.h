@@ -118,7 +118,7 @@ public:
 		SuppliersLikeMP meth = &DataUpdateEngine::recListSuppliers,
 		interpretsPointers::interpretAsSupplierLike inter = &RequestParser::interpretAsSupplierList);
 	virtual void show() override;
-	
+
 protected slots:
 	virtual void hideCurrent();
 	virtual void supplierPicked(parsedSupplier) override;

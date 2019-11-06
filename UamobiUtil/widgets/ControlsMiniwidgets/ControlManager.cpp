@@ -8,7 +8,6 @@ ControlManager::ControlManager(QWidget* parent, QLayout* layout)
 	: QObject(parent), controlsList(), currentControl("None"),
 	doesNeedValues(false), controls(0), whereToPlace(layout)
 {
-	
 }
 
 bool ControlManager::parseControls(QStringList list)
@@ -21,7 +20,6 @@ bool ControlManager::parseControls(QStringList list)
 		case 3:
 			if (*start == "qty")
 			{
-				
 			}
 		}
 		++start;

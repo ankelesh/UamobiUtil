@@ -47,8 +47,7 @@ class inframedWidget : public QWidget
 {
 	Q_OBJECT
 protected:
-	filters::GeneralPurposeFilter * keyfilter;
-
+	filters::GeneralPurposeFilter* keyfilter;
 
 public:
 	inframedWidget(QWidget* parent);
@@ -56,7 +55,7 @@ public:
 	virtual bool giveSettings();
 	virtual void handleBarcode(QString) {}
 	virtual bool isExpectingControl(int);	//	Enhanced: now false is returned if value was not used
-	filters::GeneralPurposeFilter* getFilter() {return keyfilter; };
+	filters::GeneralPurposeFilter* getFilter() { return keyfilter; };
 	virtual void show();
 	void installEventFilter(QObject*);
 protected slots:

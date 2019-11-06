@@ -28,15 +28,11 @@
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
 
-
 /*
-	This widget is used for showing receipt parameters. It has a lot of rarely used buttons which are hidden. 
+	This widget is used for showing receipt parameters. It has a lot of rarely used buttons which are hidden.
 	This widget is info-only, and is used mostly to check data and go to next or previous step.
 
-
 */
-
-
 
 class ReceiptParametersWidget : public inframedWidget
 {

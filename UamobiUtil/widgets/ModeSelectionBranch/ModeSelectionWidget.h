@@ -27,7 +27,7 @@
 	This file contains ModeSelectionWidget - which is root of ModeSelection branch. It loads
 	Modes list from web, then allows user to choose one. PlaceSelection is part of this branch, because it must be chosed before
 	other operations will continue.
-	
+
 	__ASSOCIATED_DATABASE_FUNCTION__  :  P'modesResponse' list_modes()
 	__ASSOCIATED_DATABASE_FUNCTION__  :  P'PositionalResponse' select_mode (mode, submode)
 

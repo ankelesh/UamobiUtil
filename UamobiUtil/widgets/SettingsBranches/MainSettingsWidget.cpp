@@ -2,33 +2,33 @@
 #include "widgets/utils/ElementsStyles.h"
 MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	:inframedWidget(parent), globalSettings(go),
-    mainLayout(new QVBoxLayout(this)),
-    scanModeSelector(new QComboBox(this)),
-    scanModeInfo(new QLabel(this)),
-    topExplLabel(new QLabel(this)),
-    connectionInfo(new QLabel(this)), addressField(new QComboBox(this)),
-    langInfo(new QLabel(this)), langField(new QComboBox(this)),
+	mainLayout(new QVBoxLayout(this)),
+	scanModeSelector(new QComboBox(this)),
+	scanModeInfo(new QLabel(this)),
+	topExplLabel(new QLabel(this)),
+	connectionInfo(new QLabel(this)), addressField(new QComboBox(this)),
+	langInfo(new QLabel(this)), langField(new QComboBox(this)),
 	footerLayout(new QHBoxLayout(this)),
 	saveButton(new MegaIconButton(this)), backButton(new MegaIconButton(this))
 {
-    this->setLayout(mainLayout);
+	this->setLayout(mainLayout);
 #ifdef Q_OS_WINCE
-    this->setFixedSize(calculateAdaptiveSize(1));
-    this->setFixedHeight(calculateAdaptiveButtonHeight(0.9));
+	this->setFixedSize(calculateAdaptiveSize(1));
+	this->setFixedHeight(calculateAdaptiveButtonHeight(0.9));
 #endif
 	mainLayout->setSpacing(0);		//	spacing removed to avoid space loss
-    mainLayout->setContentsMargins(0, 0, 0, 0);
+	mainLayout->setContentsMargins(0, 0, 0, 0);
 
-    mainLayout->addWidget(scanModeInfo);
-    mainLayout->addWidget(scanModeSelector);
-    mainLayout->addWidget(topExplLabel);
-    mainLayout->setSpacing(0);
-    mainLayout->setContentsMargins(0,0,0,0);
+	mainLayout->addWidget(scanModeInfo);
+	mainLayout->addWidget(scanModeSelector);
+	mainLayout->addWidget(topExplLabel);
+	mainLayout->setSpacing(0);
+	mainLayout->setContentsMargins(0, 0, 0, 0);
 
-    mainLayout->addWidget(connectionInfo);
-    mainLayout->addWidget(addressField);
-    mainLayout->addWidget(langInfo);
-    mainLayout->addWidget(langField);
+	mainLayout->addWidget(connectionInfo);
+	mainLayout->addWidget(addressField);
+	mainLayout->addWidget(langInfo);
+	mainLayout->addWidget(langField);
 
 	QFont scf = makeFont(0.04);
 
@@ -54,8 +54,8 @@ MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	connectionInfo->setFont(scf);
 
 	addressField->addItem(go.HttpUrl);
-    addressField->addItems(go.AlternativeAdresses);
-    addressField->setCurrentIndex(0);
+	addressField->addItems(go.AlternativeAdresses);
+	addressField->setCurrentIndex(0);
 	addressField->setFont(scf);
 
 	langInfo->setText(tr("settings_system_select_lang_tip"));
@@ -67,12 +67,12 @@ MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	temp.clear();
 	temp << "Russian" << "Romanian" << "English";
 	langField->addItems(temp);
-    if (globalSettings.language == "Russian")
-        langField->setCurrentIndex(0);
-    else if (globalSettings.language == "Romanian")
-        langField->setCurrentIndex(1);
-    else
-        langField->setCurrentIndex(2);
+	if (globalSettings.language == "Russian")
+		langField->setCurrentIndex(0);
+	else if (globalSettings.language == "Romanian")
+		langField->setCurrentIndex(1);
+	else
+		langField->setCurrentIndex(2);
 #endif
 	saveButton->setText(tr("settings_save_button"));
 	saveButton->setIcon(QIcon(":/res/with.png"));
@@ -95,9 +95,9 @@ MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	scanModeSelector->setEditable(false);
 	scanModeSelector->setInsertPolicy(QComboBox::NoInsert);
 	scanModeSelector->setFont(scf);
-    mainLayout->addLayout(footerLayout);
-    footerLayout->addWidget(saveButton);
-    footerLayout->addWidget(backButton);
+	mainLayout->addLayout(footerLayout);
+	footerLayout->addWidget(saveButton);
+	footerLayout->addWidget(backButton);
 
 #ifdef QT_VERSION5X
 	QObject::connect(saveButton, &MegaIconButton::clicked, this, &MainSettingsWidget::saveClicked);
@@ -108,14 +108,13 @@ MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	QObject::connect(saveButton, SIGNAL(clicked()), this, SLOT(saveClicked()));
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 	QObject::connect(langField, SIGNAL(activated(QString)), this, SLOT(langSelected(QString)));
-    QObject::connect(addressField, SIGNAL(activated(QString)), this, SLOT(AddressSelected(QString)));
+	QObject::connect(addressField, SIGNAL(activated(QString)), this, SLOT(AddressSelected(QString)));
 #endif
 }
 
 void MainSettingsWidget::show()
 {
-
-    inframedWidget::show();
+	inframedWidget::show();
 }
 
 void MainSettingsWidget::saveClicked()
@@ -158,7 +157,6 @@ void MainSettingsWidget::langChanged()
 	saveButton->setText(tr("settings_save_button"));
 	backButton->setText(tr("settings_back_button"));
 }
-
 
 void MainSettingsWidget::AddressSelected(const QString& activated)
 {

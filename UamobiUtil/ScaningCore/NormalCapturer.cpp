@@ -3,13 +3,13 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
-NormalCapturer::NormalCapturer(captureInterface* whereToApply, QObject * parent)
+NormalCapturer::NormalCapturer(captureInterface* whereToApply, QObject* parent)
 	: QObject(parent), widgetToApply(whereToApply), isScaning(false), isAwaitingControlValue(false),
 	keyfilter(new filters::NoKeyEvents(this)),
 	lastKeyReleaseTimepoint(), controlIndex(0), controlNumber(0)
 {
 #ifdef DEBUG
-   // detrace_DCONSTR("NormalCapturer");
+	// detrace_DCONSTR("NormalCapturer");
 #endif
 	parent->installEventFilter(keyfilter);
 
@@ -23,32 +23,31 @@ NormalCapturer::NormalCapturer(captureInterface* whereToApply, QObject * parent)
 	//detrace_CONNECTSTAT("returnObtained->pressReturn", state);
 	state =
 #endif
-	
 
-	QObject::connect(keyfilter, &filters::NoKeyEvents::unknownObtained, this, &NormalCapturer::pressScan);
+		QObject::connect(keyfilter, &filters::NoKeyEvents::unknownObtained, this, &NormalCapturer::pressScan);
 #ifdef DEBUG
 	//detrace_CONNECTSTAT("unknownObtained->pressScan", state);
 	state =
 #endif
-	QObject::connect(keyfilter, &filters::NoKeyEvents::numberObtained, this, &NormalCapturer::handleElement);
+		QObject::connect(keyfilter, &filters::NoKeyEvents::numberObtained, this, &NormalCapturer::handleElement);
 #ifdef DEBUG
 	//detrace_CONNECTSTAT("numberObtainerd->handleElement", state);
 	state =
 #endif
-	QObject::connect(keyfilter, &filters::NoKeyEvents::backRequired, this, &NormalCapturer::handleBack);
+		QObject::connect(keyfilter, &filters::NoKeyEvents::backRequired, this, &NormalCapturer::handleBack);
 	QObject::connect(keyfilter, &filters::NoKeyEvents::eraseRequired, this, &NormalCapturer::handleErase);
 #ifdef DEBUG
 	//detrace_CONNECTSTAT("backRequired->handleBack", state);
 #endif
 #else
-    bool state = true;
-    state &= QObject::connect(keyfilter, SIGNAL(returnObtained()), this, SLOT(pressReturn()));
-    state &=QObject::connect(keyfilter, SIGNAL(unknownObtained()), this, SLOT(pressScan()));
-    state &= QObject::connect(keyfilter, SIGNAL(numberObtained(QString)), this, SLOT(handleElement(QString)));
-    state &=QObject::connect(keyfilter, SIGNAL(backRequired()), this, SLOT(handleBack()));
-    state &=QObject::connect(keyfilter, SIGNAL(eraseRequired()), this, SLOT(handleErase()));
+	bool state = true;
+	state &= QObject::connect(keyfilter, SIGNAL(returnObtained()), this, SLOT(pressReturn()));
+	state &= QObject::connect(keyfilter, SIGNAL(unknownObtained()), this, SLOT(pressScan()));
+	state &= QObject::connect(keyfilter, SIGNAL(numberObtained(QString)), this, SLOT(handleElement(QString)));
+	state &= QObject::connect(keyfilter, SIGNAL(backRequired()), this, SLOT(handleBack()));
+	state &= QObject::connect(keyfilter, SIGNAL(eraseRequired()), this, SLOT(handleErase()));
 #ifdef DEBUG
-    detrace_CONNECTSTAT("Capturer slots" , state);
+	detrace_CONNECTSTAT("Capturer slots", state);
 #endif
 #endif
 }
@@ -64,16 +63,14 @@ void NormalCapturer::skipControls(int q)
 
 void NormalCapturer::pressScan()
 {
-
 #ifdef DEBUG
 	detrace_METHCALL("NormalCapturer::pressScan");
 #endif
 
-    if (isScaning)
+	if (isScaning)
 		return;
 	if (widgetToApply->isManualInFocus())
 	{
-
 #ifdef DEBUG
 		detrace_METHCALL("removeManualFocus");
 #endif
@@ -82,9 +79,8 @@ void NormalCapturer::pressScan()
 	}
 	if (!widgetToApply->barcodeBuffer.isEmpty())
 	{
-
 #ifdef DEBUG
-			detrace_METHCALL("handleScannedBarcode");
+		detrace_METHCALL("handleScannedBarcode");
 #endif
 
 		widgetToApply->handleScannedBarcode();
@@ -114,32 +110,31 @@ void NormalCapturer::pressScan()
 
 void NormalCapturer::pressReturn()
 {
-
 #ifdef DEBUG
 	detrace_METHCALL("NormalCapturer::pressReturn");
 #endif
 
-    if (widgetToApply->isManualInFocus())
-        return;
+	if (widgetToApply->isManualInFocus())
+		return;
 #ifdef DEBUG
-    detrace_METHEXPL("return captured in capturer while buffer was " << widgetToApply->barcodeBuffer);
+	detrace_METHEXPL("return captured in capturer while buffer was " << widgetToApply->barcodeBuffer);
 #endif
-    if (isScaning)
+	if (isScaning)
 	{
-        if (widgetToApply->barcodeBuffer.isEmpty())
-            return;
- #ifdef DEBUG
-        detrace_METHEXPL("before calling handler from capturer: " << widgetToApply->barcodeBuffer);
+		if (widgetToApply->barcodeBuffer.isEmpty())
+			return;
+#ifdef DEBUG
+		detrace_METHEXPL("before calling handler from capturer: " << widgetToApply->barcodeBuffer);
 #endif
 
 #ifdef DEBUG
 		detrace_METHINVOK("handleScannedBarcode", "WidgetToApply", " press return", "capturer");
 #endif
 
-        widgetToApply->handleScannedBarcode();
-        isScaning = false;
+		widgetToApply->handleScannedBarcode();
+		isScaning = false;
 		widgetToApply->barcodeBuffer.clear();
-        isAwaitingControlValue = true;
+		isAwaitingControlValue = true;
 		controlIndex = 0;
 
 #ifdef DEBUG
@@ -160,22 +155,21 @@ void NormalCapturer::pressReturn()
 		}
 		else
 		{
-			
 		}
 }
 
 void NormalCapturer::handleElement(QString elem)
 {
-    if (widgetToApply->isManualInFocus())
-    {
-        return;
-    }
+	if (widgetToApply->isManualInFocus())
+	{
+		return;
+	}
 	if (isScaning)
 	{
 #ifdef DEBUG
-		detrace_METHEXPL( elem);
+		detrace_METHEXPL(elem);
 #endif
-		
+
 		if (lastKeyReleaseTimepoint.msecsTo(QTime::currentTime()) < 50)
 		{
 			widgetToApply->barcodeBuffer += elem;
@@ -184,7 +178,6 @@ void NormalCapturer::handleElement(QString elem)
 #ifdef DEBUG
 			detrace_METHEXPL("toBarcode");
 #endif
-
 		}
 		else
 		{
@@ -198,13 +191,11 @@ void NormalCapturer::handleElement(QString elem)
 
 			lastKeyReleaseTimepoint = QTime::currentTime();
 		}
-
 	}
 	else if (isAwaitingControlValue)
 	{
 		if (lastKeyReleaseTimepoint.msecsTo(QTime::currentTime()) > 50)
 		{
-
 #ifdef DEBUG
 			detrace_METHEXPL("toNum");
 #endif
@@ -220,15 +211,13 @@ void NormalCapturer::handleElement(QString elem)
 	}
 	else
 	{
-        pressScan();
+		pressScan();
 		lastKeyReleaseTimepoint = QTime::currentTime();
 	}
 }
 
-
 void NormalCapturer::clearCaptureEngine()
 {
-
 #ifdef DEBUG
 	detrace_METHCALL("NormalCapturer::clearCaptureEngine");
 #endif
@@ -269,20 +258,18 @@ void NormalCapturer::setPhase(int ph)
 		isScaning = false;
 		controlIndex = ph;
 	}
-
 }
 
 void NormalCapturer::setControlNumber(int num)
 {
 	controlNumber = num;
 	if (controlIndex >= num)
-        controlIndex = 0;
+		controlIndex = 0;
 }
 
 QString NormalCapturer::stateOfEngine()
 {
-    return QString("State: ") + ((isScaning)? "Scaning" : ((isAwaitingControlValue) ? "Control" : "other"))
-            + " and control index " + QString::number(controlIndex) + " BBuffer:|" +
-            widgetToApply->barcodeBuffer + " NBuffer: |" + widgetToApply->numberBuffer + "\n";
-
+	return QString("State: ") + ((isScaning) ? "Scaning" : ((isAwaitingControlValue) ? "Control" : "other"))
+		+ " and control index " + QString::number(controlIndex) + " BBuffer:|" +
+		widgetToApply->barcodeBuffer + " NBuffer: |" + widgetToApply->numberBuffer + "\n";
 }

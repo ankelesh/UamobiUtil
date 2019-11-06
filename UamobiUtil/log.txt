@@ -1,7 +1,7 @@
 
 ][Created object HttpUpdateEngine by his default constructor
 in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=133&cmd=list_users
+in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=83&cmd=list_users
 in method RequestAwaiter::requestincoming state of text variable a, b was: 
 ________________________________________
 <?xml version="1.0" encoding="CP1251"?>
@@ -10,20 +10,20 @@ ________________________________________
 <manually>true</manually>
  <servicename>Unimarket</servicename></users>|
 invocation effect was true
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=19&cmd=log_in&username=aivancioglo&password=ai123
-session now: 305 while res was: <?xml version="1.0" encoding="CP1251"?>
+in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=30&cmd=log_in&username=aivancioglo&password=ai123
+session now: 307 while res was: <?xml version="1.0" encoding="CP1251"?>
 <login>
  <status>200</status>
-<session>305</session>
+<session>307</session>
 </login>
 in method RequestAwaiter::requestincoming state of text variable a, b was: 
 ________________________________________
 <?xml version="1.0" encoding="CP1251"?>
 <login>
  <status>200</status>
-<session>305</session>
+<session>307</session>
 </login>|
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=225&cmd=list_modes&session=305&lang=nolang
+in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=223&cmd=list_modes&session=307&lang=nolang
 invocation effect was true
 in method RequestAwaiter::requestincoming state of text variable a, b was: 
 ________________________________________
@@ -37,7 +37,7 @@ ________________________________________
 <mode><modeName>ordersandsldcorrection</modeName><captionMode>ordersandsldcorrection</captionMode></mode>
 <mode><modeName>receiptfromwarehouses</modeName><captionMode>receiptfromwarehouses</captionMode></mode></modes>|
 invocation effect was true
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=130&cmd=select_mode&session=305&mode=receipt&submode=ordersandsldcorrection
+in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=119&cmd=select_mode&session=307&mode=receipt&submode=ordersandsldcorrection
 in method RequestAwaiter::requestincoming state of text variable a, b was: 
 ________________________________________
 <?xml version="1.0" encoding="CP1251"?>
@@ -46,7 +46,7 @@ ________________________________________
 </mode>|
 heap snapshot with tech values:2 opeq, 0 ares,200 status
 
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=117&cmd=list_places&session=305
+in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=118&cmd=list_places&session=307
 invocation effect was true
 in method RequestAwaiter::requestincoming state of text variable a, b was: 
 ________________________________________
@@ -711,1338 +711,725 @@ ________________________________________
  </place>
 </places>|
 invocation effect was true
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=72&cmd=select_place&session=305&place=273
+in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=68&cmd=list_modes&session=307&lang=nolang
+in method RequestAwaiter::requestincoming state of text variable a, b was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<modes>
+ <status>200</status>
+
+<mode><modeName>inventory</modeName><captionMode>inventory</captionMode></mode>
+<mode><modeName>printing</modeName><captionMode>printing</captionMode></mode>
+<mode><modeName>receipt</modeName><captionMode>receipt</captionMode></mode>
+<mode><modeName>ordersandsldcorrection</modeName><captionMode>ordersandsldcorrection</captionMode></mode>
+<mode><modeName>receiptfromwarehouses</modeName><captionMode>receiptfromwarehouses</captionMode></mode></modes>|
+invocation effect was true
+in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=44&cmd=select_mode&session=307&mode=inventory&submode=
+in method RequestAwaiter::requestincoming state of text variable a, b was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<mode>
+ <status>200</status>
+</mode>|
+heap snapshot with tech values:2 opeq, 0 ares,200 status
+
+in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=70&cmd=list_places&session=307
+invocation effect was true
+in method RequestAwaiter::requestincoming state of text variable a, b was: 
+________________________________________
+<?xml version="1.0" encoding="CP1251"?>
+<places>
+ <status>200</status>
+ <place>
+  <code>3</code>
+  <name>Unimarket 01-OUT</name>
+ </place>
+ <place>
+  <code>4</code>
+  <name>Unimarket 02 OUT</name>
+ </place>
+ <place>
+  <code>7</code>
+  <name>Unimarket 03-OUT</name>
+ </place>
+ <place>
+  <code>8</code>
+  <name>Unimarket 04-OUT</name>
+ </place>
+ <place>
+  <code>9</code>
+  <name>Unimarket 05-OUT </name>
+ </place>
+ <place>
+  <code>10</code>
+  <name>Unimarket 06-OUT</name>
+ </place>
+ <place>
+  <code>12</code>
+  <name>Unimarket 07-OUT</name>
+ </place>
+ <place>
+  <code>13</code>
+  <name>Unimarket 08-OUT</name>
+ </place>
+ <place>
+  <code>14</code>
+  <name>Unimarket 09 OUT </name>
+ </place>
+ <place>
+  <code>15</code>
+  <name>Unimarket 10-OUT</name>
+ </place>
+ <place>
+  <code>16</code>
+  <name>Unimarket 11-OUT</name>
+ </place>
+ <place>
+  <code>17</code>
+  <name>Unimarket 12-OUT</name>
+ </place>
+ <place>
+  <code>18</code>
+  <name>Unimarket 13-OUT </name>
+ </place>
+ <place>
+  <code>19</code>
+  <name>Unimarket 14-OUT</name>
+ </place>
+ <place>
+  <code>20</code>
+  <name>Unimarket 15-OUT</name>
+ </place>
+ <place>
+  <code>21</code>
+  <name>Unimarket 16-OUT</name>
+ </place>
+ <place>
+  <code>22</code>
+  <name>Unimarket 17-OUT</name>
+ </place>
+ <place>
+  <code>23</code>
+  <name>Unimarket 18-OUT</name>
+ </place>
+ <place>
+  <code>24</code>
+  <name>Unimarket 19-OUT</name>
+ </place>
+ <place>
+  <code>25</code>
+  <name>Unimarket 20-OUT</name>
+ </place>
+ <place>
+  <code>26</code>
+  <name>Unimarket 21-OUT</name>
+ </place>
+ <place>
+  <code>27</code>
+  <name>Unimarket 22-OUT</name>
+ </place>
+ <place>
+  <code>28</code>
+  <name>Unimarket 23-OUT</name>
+ </place>
+ <place>
+  <code>29</code>
+  <name>Unimarket 24-OUT</name>
+ </place>
+ <place>
+  <code>30</code>
+  <name>Unimarket 25-OUT </name>
+ </place>
+ <place>
+  <code>31</code>
+  <name>Unimarket 26 OUT</name>
+ </place>
+ <place>
+  <code>32</code>
+  <name>Unimarket 27-OUT</name>
+ </place>
+ <place>
+  <code>33</code>
+  <name>Unimarket 28-OUT</name>
+ </place>
+ <place>
+  <code>34</code>
+  <name>Unimarket 29-OUT</name>
+ </place>
+ <place>
+  <code>36</code>
+  <name>Unimarket 31-OUT</name>
+ </place>
+ <place>
+  <code>37</code>
+  <name>Unimarket 32-OUT </name>
+ </place>
+ <place>
+  <code>38</code>
+  <name>Unimarket 33-OUT</name>
+ </place>
+ <place>
+  <code>39</code>
+  <name>Unimarket 34-OUT</name>
+ </place>
+ <place>
+  <code>40</code>
+  <name>Unimarket 35-OUT</name>
+ </place>
+ <place>
+  <code>41</code>
+  <name>Unimarket 36-OUT</name>
+ </place>
+ <place>
+  <code>42</code>
+  <name>Unimarket 37-OUT</name>
+ </place>
+ <place>
+  <code>43</code>
+  <name>Unimarket 38-OUT</name>
+ </place>
+ <place>
+  <code>44</code>
+  <name>Unimarket 39-OUT</name>
+ </place>
+ <place>
+  <code>45</code>
+  <name>Unimarket 40-OUT</name>
+ </place>
+ <place>
+  <code>46</code>
+  <name>Unimarket 41-OUT </name>
+ </place>
+ <place>
+  <code>47</code>
+  <name>Unimarket 42-OUT</name>
+ </place>
+ <place>
+  <code>204</code>
+  <name>L-04 bd. Moscova 10/1</name>
+ </place>
+ <place>
+  <code>205</code>
+  <name>L-05 str. Onisifor Ghibu 7/2</name>
+ </place>
+ <place>
+  <code>206</code>
+  <name>L-06 str. Nicolae Titulescu 47</name>
+ </place>
+ <place>
+  <code>209</code>
+  <name>L-09 str. Matei Basarab 5/1</name>
+ </place>
+ <place>
+  <code>210</code>
+  <name>L-10 str-la Studentilor 2/2</name>
+ </place>
+ <place>
+  <code>212</code>
+  <name>L-12 str. Maria Dragan 4/1</name>
+ </place>
+ <place>
+  <code>214</code>
+  <name>L-14 or.Telenesti</name>
+ </place>
+ <place>
+  <code>215</code>
+  <name>L-15 bd. Mircea cel Batran 11/6</name>
+ </place>
+ <place>
+  <code>216</code>
+  <name>L-16 str. Alba Iulia 196/4</name>
+ </place>
+ <place>
+  <code>217</code>
+  <name>L-17 or.Balti, str. Bulgara 136</name>
+ </place>
+ <place>
+  <code>218</code>
+  <name>L-18 or.Glodeni</name>
+ </place>
+ <place>
+  <code>219</code>
+  <name>L-19 or.Basarabeasca</name>
+ </place>
+ <place>
+  <code>220</code>
+  <name>L-20 str. Ion Dumeniuc 12</name>
+ </place>
+ <place>
+  <code>221</code>
+  <name>L-21 str. Voluntarilor 9</name>
+ </place>
+ <place>
+  <code>222</code>
+  <name>L-22 or.Vadul lui Voda</name>
+ </place>
+ <place>
+  <code>223</code>
+  <name>L-23 str. N. Testemitanu 39</name>
+ </place>
+ <place>
+  <code>224</code>
+  <name>L-24 sos. Muncesti, 402</name>
+ </place>
+ <place>
+  <code>225</code>
+  <name>L-25 str. Miorita 6</name>
+ </place>
+ <place>
+  <code>226</code>
+  <name>L-26 or.Riscani</name>
+ </place>
+ <place>
+  <code>227</code>
+  <name>L-27 or.Stauceni</name>
+ </place>
+ <place>
+  <code>228</code>
+  <name>L-28 or.Taraclia</name>
+ </place>
+ <place>
+  <code>229</code>
+  <name>L-29 or.Comrat</name>
+ </place>
+ <place>
+  <code>230</code>
+  <name>L-30 or.Ceadir-Lunga</name>
+ </place>
+ <place>
+  <code>231</code>
+  <name>L-31 str. A.Iulia 204</name>
+ </place>
+ <place>
+  <code>232</code>
+  <name>L-32 or.Durlesti</name>
+ </place>
+ <place>
+  <code>233</code>
+  <name>L-33 str. Grenoble 128</name>
+ </place>
+ <place>
+  <code>234</code>
+  <name>L-34 b-dul  Dacia 16/1</name>
+ </place>
+ <place>
+  <code>235</code>
+  <name>L-35 str. I.Creanga,32</name>
+ </place>
+ <place>
+  <code>236</code>
+  <name>L-36 str. Decebal, 59</name>
+ </place>
+ <place>
+  <code>237</code>
+  <name>L-37 str. A Sciusev,98</name>
+ </place>
+ <place>
+  <code>238</code>
+  <name>L-38 str. Miorita 11</name>
+ </place>
+ <place>
+  <code>239</code>
+  <name>L-39 str. N.Costin 65</name>
+ </place>
+ <place>
+  <code>240</code>
+  <name>L-40 or.Ungheni, str. Nationala 15</name>
+ </place>
+ <place>
+  <code>241</code>
+  <name>L-41 str. Independentii 4/1</name>
+ </place>
+ <place>
+  <code>242</code>
+  <name>L-42 str. Sarmisegetuza 35/1</name>
+ </place>
+ <place>
+  <code>243</code>
+  <name>L-43 str. IazuLui 4/1</name>
+ </place>
+ <place>
+  <code>244</code>
+  <name>L-44 str.Albisoara  80/5a</name>
+ </place>
+ <place>
+  <code>245</code>
+  <name>L-45 bd. Mircea cel Batrin 32/10</name>
+ </place>
+ <place>
+  <code>246</code>
+  <name>L-46 or.Straseni, str.Stefan cel Mare,125</name>
+ </place>
+ <place>
+  <code>247</code>
+  <name>L-47 str. Vasile Lupu, 61/5</name>
+ </place>
+ <place>
+  <code>248</code>
+  <name>L-48 or.Straseni, str.Stefan cel Mare,26A</name>
+ </place>
+ <place>
+  <code>249</code>
+  <name>L-49 bd. Grigore Vieru, 18</name>
+ </place>
+ <place>
+  <code>250</code>
+  <name>L-50 str. Trandafirilor 13/1</name>
+ </place>
+ <place>
+  <code>251</code>
+  <name>L-51 str. Zadnipru 2/1</name>
+ </place>
+ <place>
+  <code>252</code>
+  <name>L-52 or.Hincesti</name>
+ </place>
+ <place>
+  <code>253</code>
+  <name>L-53 str.Calea Iesilor 55</name>
+ </place>
+ <place>
+  <code>254</code>
+  <name>L-54 str.V.Alecsandri, 143</name>
+ </place>
+ <place>
+  <code>255</code>
+  <name>L-55 sos. Muncesti, 388</name>
+ </place>
+ <place>
+  <code>256</code>
+  <name>L-56 bd. Dacia 44</name>
+ </place>
+ <place>
+  <code>257</code>
+  <name>L-57 or.Cricova</name>
+ </place>
+ <place>
+  <code>258</code>
+  <name>L-58 or. Causeni</name>
+ </place>
+ <place>
+  <code>259</code>
+  <name>L-59 str. M Dragan.11</name>
+ </place>
+ <place>
+  <code>260</code>
+  <name>L-60 str.Macilor,11</name>
+ </place>
+ <place>
+  <code>261</code>
+  <name>L-61 or.Cimislia</name>
+ </place>
+ <place>
+  <code>262</code>
+  <name>L-62 or. Floresti</name>
+ </place>
+ <place>
+  <code>263</code>
+  <name>L-63 or.Falesti</name>
+ </place>
+ <place>
+  <code>264</code>
+  <name>L-64 bd. Renasterii Nationale,12</name>
+ </place>
+ <place>
+  <code>265</code>
+  <name>L-65 or.Singerei</name>
+ </place>
+ <place>
+  <code>266</code>
+  <name>L-66 or.Donduseni</name>
+ </place>
+ <place>
+  <code>267</code>
+  <name>L-67 or.Rezina</name>
+ </place>
+ <place>
+  <code>268</code>
+  <name>L-68 or.Singera</name>
+ </place>
+ <place>
+  <code>269</code>
+  <name>L-69 or.Criuleni</name>
+ </place>
+ <place>
+  <code>270</code>
+  <name>L-70 Aeroport</name>
+ </place>
+ <place>
+  <code>271</code>
+  <name>L-71 str. M.Costin 13/1</name>
+ </place>
+ <place>
+  <code>272</code>
+  <name>L-72 or.Balti, str Kiev 6</name>
+ </place>
+ <place>
+  <code>273</code>
+  <name>L-73 or.Balti, str. Calea Iesilor 112/57</name>
+ </place>
+ <place>
+  <code>274</code>
+  <name>L-74 sos.Muncesti, 162 A,</name>
+ </place>
+ <place>
+  <code>275</code>
+  <name>L-75 str.Onisifor Ghibu 5</name>
+ </place>
+ <place>
+  <code>276</code>
+  <name>L-76 bd. Moscovei 1/3 </name>
+ </place>
+ <place>
+  <code>277</code>
+  <name>L-77 or.Chisinau, str.Ginta Latina 3/1</name>
+ </place>
+ <place>
+  <code>278</code>
+  <name>L-78 or.Nisporeni, str.Suveranitatii 15</name>
+ </place>
+ <place>
+  <code>279</code>
+  <name>L-79 or.Ungheni,str.Bernardazzi 15B</name>
+ </place>
+ <place>
+  <code>280</code>
+  <name>L-80 m.Chisinau, b-ul Traian, 22</name>
+ </place>
+ <place>
+  <code>281</code>
+  <name>L-81 m.Chisinau, str. Vasilie Lupu 59/4</name>
+ </place>
+ <place>
+  <code>282</code>
+  <name>L-82 m.Chisinau, str. Hristo Botev 17</name>
+ </place>
+ <place>
+  <code>283</code>
+  <name>L-83 m.Chisinau, str. Cuza Voda 24 </name>
+ </place>
+ <place>
+  <code>284</code>
+  <name>L-84 or. Ialoveni</name>
+ </place>
+ <place>
+  <code>285</code>
+  <name>L-85 Truseni</name>
+ </place>
+ <place>
+  <code>286</code>
+  <name>L-86 Calarasi</name>
+ </place>
+ <place>
+  <code>287</code>
+  <name>L-87 Magdacesti</name>
+ </place>
+ <place>
+  <code>288</code>
+  <name>L-88 Briceni</name>
+ </place>
+ <place>
+  <code>289</code>
+  <name>L-89 Durlesti</name>
+ </place>
+ <place>
+  <code>290</code>
+  <name>L-90 Cahul</name>
+ </place>
+ <place>
+  <code>291</code>
+  <name>L-91 Hincesti, str. Chisinaului, 198</name>
+ </place>
+ <place>
+  <code>292</code>
+  <name>L-92 Gratiesti</name>
+ </place>
+ <place>
+  <code>293</code>
+  <name>L-93 Vatra</name>
+ </place>
+ <place>
+  <code>294</code>
+  <name>L-94 Peresecina</name>
+ </place>
+ <place>
+  <code>295</code>
+  <name>L-95 Bacioi</name>
+ </place>
+ <place>
+  <code>296</code>
+  <name>L-96 Varnita</name>
+ </place>
+ <place>
+  <code>297</code>
+  <name>L-97 Muncesti 330</name>
+ </place>
+ <place>
+  <code>298</code>
+  <name>L-98 Straseni</name>
+ </place>
+ <place>
+  <code>299</code>
+  <name>L-99 Bubuieci</name>
+ </place>
+ <place>
+  <code>401</code>
+  <name>S-01 Balti </name>
+ </place>
+ <place>
+  <code>402</code>
+  <name>S-02 Ungheni</name>
+ </place>
+ <place>
+  <code>403</code>
+  <name>S-03 Petricani</name>
+ </place>
+ <place>
+  <code>70223</code>
+  <name>Unimarket 30-OUT </name>
+ </place>
+ <place>
+  <code>70316</code>
+  <name>Depozit Distributia</name>
+ </place>
+ <place>
+  <code>124554</code>
+  <name>Sectia Lactate</name>
+ </place>
+ <place>
+  <code>124555</code>
+  <name>Sectia Legume/Fructe</name>
+ </place>
+ <place>
+  <code>124556</code>
+  <name>Sectia Uscate</name>
+ </place>
+ <place>
+  <code>127974</code>
+  <name>Sectia producere Lin</name>
+ </place>
+ <place>
+  <code>129043</code>
+  <name>Prod LINELLA 05 O.Ghibu</name>
+ </place>
+ <place>
+  <code>129044</code>
+  <name>Prod LINELLA 17 Balti</name>
+ </place>
+ <place>
+  <code>129045</code>
+  <name>Prod LINELLA 14 Telenesti</name>
+ </place>
+ <place>
+  <code>129046</code>
+  <name>Prod LINELLA 18 Glodeni</name>
+ </place>
+ <place>
+  <code>129047</code>
+  <name>Prod LINELLA 19 Basarabeasca</name>
+ </place>
+ <place>
+  <code>129048</code>
+  <name>LINELLA Cafenea Telenesti 14</name>
+ </place>
+ <place>
+  <code>129049</code>
+  <name>Prod LINELLA 20 Dumeniuc</name>
+ </place>
+ <place>
+  <code>129051</code>
+  <name>Prod LINELLA 26 Riscani</name>
+ </place>
+ <place>
+  <code>129052</code>
+  <name>Prod LINELLA 27 Stauceni</name>
+ </place>
+ <place>
+  <code>129053</code>
+  <name>Prod LINELLA 29 Comrat</name>
+ </place>
+ <place>
+  <code>129054</code>
+  <name>Prod LINELLA 30 Ceadir-Lunga</name>
+ </place>
+ <place>
+  <code>133050</code>
+  <name>Prod LINELLA 38 Miorita 11</name>
+ </place>
+ <place>
+  <code>133051</code>
+  <name>Prod LINELLA 39 N. Costin 65</name>
+ </place>
+ <place>
+  <code>171722</code>
+  <name>Restaurant Telenesti</name>
+ </place>
+ <place>
+  <code>172392</code>
+  <name>Prod LINELLA 46 Straseni</name>
+ </place>
+ <place>
+  <code>208033</code>
+  <name>Sectia Lactate (черновой график)</name>
+ </place>
+ <place>
+  <code>208034</code>
+  <name>Sectia Legume/Fructe (черновой график)</name>
+ </place>
+ <place>
+  <code>208035</code>
+  <name>Sectia Uscate (черновой график)</name>
+ </place>
+ <place>
+  <code>249504</code>
+  <name>Cantina MRG</name>
+ </place>
+ <place>
+  <code>250144</code>
+  <name>Prod Slavena 01 Balti</name>
+ </place>
+ <place>
+  <code>250145</code>
+  <name>Prod Slavena 02 Ungheni</name>
+ </place>
+ <place>
+  <code>252215</code>
+  <name>Magazin nou plng</name>
+ </place>
+</places>|
+invocation effect was true
+in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=67&cmd=select_place&session=307&place=273
 in method RequestAwaiter::requestincoming state of text variable a, b was: 
 ________________________________________
 <?xml version="1.0" encoding="CP1251"?>
 <place>
  <status>200</status>
 </place>|
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=14&cmd=rec_list_suppliers&session=305&text=&hasorders=true
+in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=19&cmd=inv_list_parent_docs&session=307
 invocation effect was true
 in method RequestAwaiter::requestincoming state of text variable a, b was: 
 ________________________________________
 <?xml version="1.0" encoding="CP1251"?>
-<suppliers>
+<parentdocs>
  <status>200</status>
- <supplier>
-  <code>14495</code>
-  <name>Agrosmix Grup SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>15712</code>
-  <name>AI-PETRIA SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>42153</code>
-  <name>Anavit Stil SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>120946</code>
-  <name>Angromix-77 SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>33271</code>
-  <name>Aniplan SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>14872</code>
-  <name>Anruad SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>180827</code>
-  <name>Aqua Ice SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>23899</code>
-  <name>AquaTrade SRL</name>
-  <orders>12</orders>
- </supplier>
- <supplier>
-  <code>66706</code>
-  <name>Automacri SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>111824</code>
-  <name>Avacon - Prim SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>19520</code>
-  <name>Azamet  Grup SRL</name>
-  <orders>7</orders>
- </supplier>
- <supplier>
-  <code>192047</code>
-  <name>Beermaster Group SRL</name>
-  <orders>13</orders>
- </supplier>
- <supplier>
-  <code>70706</code>
-  <name>Beldornvin SRL</name>
-  <orders>7</orders>
- </supplier>
- <supplier>
-  <code>163174</code>
-  <name>Betty Ice ICS SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>69066</code>
-  <name>Bicicov Grup SRL</name>
-  <orders>17</orders>
- </supplier>
- <supplier>
-  <code>129866</code>
-  <name>Blue Shark SRL</name>
-  <orders>17</orders>
- </supplier>
- <supplier>
-  <code>14642</code>
-  <name>Boiar Grup SRL</name>
-  <orders>9</orders>
- </supplier>
- <supplier>
-  <code>16395</code>
-  <name>Briz  Babina II</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>32797</code>
-  <name>Buelo SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>169720</code>
-  <name>Business Market SRL</name>
-  <orders>12</orders>
- </supplier>
- <supplier>
-  <code>14874</code>
-  <name>Cardiax Plus SRL</name>
-  <orders>35</orders>
- </supplier>
- <supplier>
-  <code>72404</code>
-  <name>Carmez Processing SRL</name>
-  <orders>35</orders>
- </supplier>
- <supplier>
-  <code>70638</code>
-  <name>Centaur SRL</name>
-  <orders>23</orders>
- </supplier>
- <supplier>
-  <code>111783</code>
-  <name>Chocolux  Nord SRL</name>
-  <orders>7</orders>
- </supplier>
- <supplier>
-  <code>55386</code>
-  <name>Combinatul de piine din Balti SA </name>
-  <orders>41</orders>
- </supplier>
- <supplier>
-  <code>14850</code>
-  <name>Consalcom SRL</name>
-  <orders>12</orders>
- </supplier>
- <supplier>
-  <code>180678</code>
-  <name>Cosalem Com SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>22530</code>
-  <name>Cricova Vin CBT SA</name>
-  <orders>7</orders>
- </supplier>
- <supplier>
-  <code>52194</code>
-  <name>Cristilmar SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>15115</code>
-  <name>Customagic SRL</name>
-  <orders>12</orders>
- </supplier>
- <supplier>
-  <code>14535</code>
-  <name>Cvin Com SRL</name>
-  <orders>8</orders>
- </supplier>
- <supplier>
-  <code>220396</code>
-  <name>Dameco-Lux SRL</name>
-  <orders>11</orders>
- </supplier>
- <supplier>
-  <code>14556</code>
-  <name>Deamarim SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>22132</code>
-  <name>Delphi Group SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>14577</code>
-  <name>Diatest  Med SRL</name>
-  <orders>7</orders>
- </supplier>
- <supplier>
-  <code>110846</code>
-  <name>DiNova SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>126294</code>
-  <name>Dita Trade SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>14401</code>
-  <name>Drancor SRL</name>
-  <orders>5</orders>
- </supplier>
- <supplier>
-  <code>14783</code>
-  <name>Dulcinella SRL</name>
-  <orders>41</orders>
- </supplier>
- <supplier>
-  <code>14467</code>
-  <name>El Passo SRL</name>
-  <orders>7</orders>
- </supplier>
- <supplier>
-  <code>71939</code>
-  <name>Evridica-Com SRL</name>
-  <orders>7</orders>
- </supplier>
- <supplier>
-  <code>14522</code>
-  <name>Fabrica de unt din Floresti SA</name>
-  <orders>41</orders>
- </supplier>
- <supplier>
-  <code>77106</code>
-  <name>Fautor SC SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>63852</code>
-  <name>Ferex  GB SRL</name>
-  <orders>18</orders>
- </supplier>
- <supplier>
-  <code>14483</code>
-  <name>Forward International SRL</name>
-  <orders>12</orders>
- </supplier>
- <supplier>
-  <code>14385</code>
-  <name>Franzeluta SA</name>
-  <orders>42</orders>
- </supplier>
- <supplier>
-  <code>194151</code>
-  <name>Gala Design SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>207237</code>
-  <name>Global Bar SRL</name>
-  <orders>7</orders>
- </supplier>
- <supplier>
-  <code>26831</code>
-  <name>Global Spirit SRL</name>
-  <orders>19</orders>
- </supplier>
- <supplier>
-  <code>14966</code>
-  <name>GM COM SRL</name>
-  <orders>11</orders>
- </supplier>
- <supplier>
-  <code>200006</code>
-  <name>Golden Gates SRL</name>
-  <orders>13</orders>
- </supplier>
- <supplier>
-  <code>129634</code>
-  <name>Haruz D and R Foods SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>14490</code>
-  <name>Hendrix Bail Sales House SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>188596</code>
-  <name>Iason SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>14771</code>
-  <name>Ideea-Prim SRL</name>
-  <orders>7</orders>
- </supplier>
- <supplier>
-  <code>23652</code>
-  <name>Imcomvil Grup SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>14386</code>
-  <name>Incomlac SA</name>
-  <orders>41</orders>
- </supplier>
- <supplier>
-  <code>139482</code>
-  <name>Iugintertrans SA</name>
-  <orders>41</orders>
- </supplier>
- <supplier>
-  <code>14434</code>
-  <name>Ivaro SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>37199</code>
-  <name>Jacobasan SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>166617</code>
-  <name>Juglan Prim SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>27719</code>
-  <name>Katifia Lux SRL</name>
-  <orders>17</orders>
- </supplier>
- <supplier>
-  <code>75338</code>
-  <name>KDV MOL SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>166087</code>
-  <name>Kubera SRL</name>
-  <orders>10</orders>
- </supplier>
- <supplier>
-  <code>215164</code>
-  <name>Lactacond SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>14794</code>
-  <name>Lactalis  Alba SRL</name>
-  <orders>17</orders>
- </supplier>
- <supplier>
-  <code>119942</code>
-  <name>Lactis SA</name>
-  <orders>35</orders>
- </supplier>
- <supplier>
-  <code>14449</code>
-  <name>Lapmol SRL ICS</name>
-  <orders>18</orders>
- </supplier>
- <supplier>
-  <code>44758</code>
-  <name>Laska-Mol SRL</name>
-  <orders>16</orders>
- </supplier>
- <supplier>
-  <code>14387</code>
-  <name>LE BRIDGE CORPORATION LIMITED SRL</name>
-  <orders>13</orders>
- </supplier>
- <supplier>
-  <code>14553</code>
-  <name>Lilcora SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>179613</code>
-  <name>Litera A.V.N. SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>15078</code>
-  <name>Luvimap Grup SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>14516</code>
-  <name>Lux Proba Grup SRL</name>
-  <orders>18</orders>
- </supplier>
- <supplier>
-  <code>15100</code>
-  <name>MAG SRL</name>
-  <orders>9</orders>
- </supplier>
- <supplier>
-  <code>158215</code>
-  <name>Magdalinas SRL</name>
-  <orders>17</orders>
- </supplier>
- <supplier>
-  <code>14630</code>
-  <name>Maurt SRL</name>
-  <orders>7</orders>
- </supplier>
- <supplier>
-  <code>21814</code>
-  <name>Mediamagnat Grup  SC SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>39570</code>
-  <name>Mediasucces SRL</name>
-  <orders>11</orders>
- </supplier>
- <supplier>
-  <code>14694</code>
-  <name>Megavil Grup SC SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>157355</code>
-  <name>Moldprodinvest SRL       </name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>130897</code>
-  <name>Moldretail Culinarie</name>
-  <orders>41</orders>
- </supplier>
- <supplier>
-  <code>129651</code>
-  <name>Narine Star SRL</name>
-  <orders>17</orders>
- </supplier>
- <supplier>
-  <code>216181</code>
-  <name>NGM Company SRL</name>
-  <orders>12</orders>
- </supplier>
- <supplier>
-  <code>132213</code>
-  <name>Non Pharma Grup SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>26052</code>
-  <name>Orbico Ma SRL</name>
-  <orders>7</orders>
- </supplier>
- <supplier>
-  <code>205347</code>
-  <name>Panadero 2018 SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>128217</code>
-  <name>Pangrup SRL</name>
-  <orders>18</orders>
- </supplier>
- <supplier>
-  <code>15168</code>
-  <name>Paninella SRL</name>
-  <orders>25</orders>
- </supplier>
- <supplier>
-  <code>14865</code>
-  <name>Pegas SRL</name>
-  <orders>17</orders>
- </supplier>
- <supplier>
-  <code>14738</code>
-  <name>Prodcoop CP</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>214518</code>
-  <name>Prodimpogrup SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>36283</code>
-  <name>Produse de Familie SRL</name>
-  <orders>35</orders>
- </supplier>
- <supplier>
-  <code>60650</code>
-  <name>Proelit Grup SRL</name>
-  <orders>12</orders>
- </supplier>
- <supplier>
-  <code>54893</code>
-  <name>Pyramid  Trade SRL</name>
-  <orders>10</orders>
- </supplier>
- <supplier>
-  <code>14643</code>
-  <name>Reputatia IM SRL</name>
-  <orders>7</orders>
- </supplier>
- <supplier>
-  <code>14489</code>
-  <name>Rideamus SRL</name>
-  <orders>4</orders>
- </supplier>
- <supplier>
-  <code>15013</code>
-  <name>Rikardel SRL</name>
-  <orders>7</orders>
- </supplier>
- <supplier>
-  <code>15029</code>
-  <name>Romsticom SRL</name>
-  <orders>1</orders>
- </supplier>
- <supplier>
-  <code>157377</code>
-  <name>Salent-Exim SRL</name>
-  <orders>7</orders>
- </supplier>
- <supplier>
-  <code>185360</code>
-  <name>Samparex SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>122628</code>
-  <name>Sapte Spice SRL</name>
-  <orders>33</orders>
- </supplier>
- <supplier>
-  <code>14852</code>
-  <name>SCA-COMERT SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>124554</code>
-  <name>Sectia Lactate</name>
-  <orders>1</orders>
- </supplier>
- <supplier>
-  <code>124556</code>
-  <name>Sectia Uscate</name>
-  <orders>24</orders>
- </supplier>
- <supplier>
-  <code>207240</code>
-  <name>Setebos SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>14543</code>
-  <name>Slavena Lux SRL</name>
-  <orders>18</orders>
- </supplier>
- <supplier>
-  <code>24156</code>
-  <name>Solvex  Lux SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>15036</code>
-  <name>Standelev SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>14390</code>
-  <name>Steaua Impex SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>15158</code>
-  <name>STIP SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>37693</code>
-  <name>T and D International SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>56191</code>
-  <name>Tagaer SRL</name>
-  <orders>2</orders>
- </supplier>
- <supplier>
-  <code>14632</code>
-  <name>Tarol  DD SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>127463</code>
-  <name>Tezaurus-VDS SRL</name>
-  <orders>11</orders>
- </supplier>
- <supplier>
-  <code>68621</code>
-  <name>Tiraston SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>14391</code>
-  <name>TRIGOR AVD SRL</name>
-  <orders>7</orders>
- </supplier>
- <supplier>
-  <code>182955</code>
-  <name>Troial-Com SRL</name>
-  <orders>7</orders>
- </supplier>
- <supplier>
-  <code>14498</code>
-  <name>UBFB Trade Group SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>15017</code>
-  <name>Viocris Impex SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>14488</code>
-  <name>Vion Impex SRL</name>
-  <orders>8</orders>
- </supplier>
- <supplier>
-  <code>134168</code>
-  <name>Viorica-Cosmetic SA</name>
-  <orders>8</orders>
- </supplier>
- <supplier>
-  <code>116054</code>
-  <name>Viotop SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>194472</code>
-  <name>VL-Group Service SRL</name>
-  <orders>6</orders>
- </supplier>
- <supplier>
-  <code>14675</code>
-  <name>47TH PARALLEL  SRL</name>
-  <orders>6</orders>
- </supplier>
-</suppliers>|
->>cycling: adding elem Fabrica de unt din Floresti SAby index0
->>cycling: adding elem Fautor SC SRLby index1
->>cycling: adding elem Ferex  GB SRLby index2
->>cycling: adding elem Forward International SRLby index3
->>cycling: adding elem Franzeluta SAby index4
+</parentdocs>|
+got <?xml version="1.0" encoding="CP1251"?>
+<parentdocs>
+ <status>200</status>
+</parentdocs>
+heap snapshot with tech values:4 opeq, 0 ares,200 status
+
 invocation effect was true
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=295&cmd=rec_list_orders&session=305&supplier=14483
+in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=36&cmd=list_modes&session=307&lang=nolang
 in method RequestAwaiter::requestincoming state of text variable a, b was: 
 ________________________________________
 <?xml version="1.0" encoding="CP1251"?>
-<orders>
+<modes>
  <status>200</status>
- <order>
-  <code>18833981</code>
-  <title>№ заявки: 18833981</title>
-  <text>Дата п-ки: 06.09.2019 - 13.09.2019  </text>
- </order>
- <order>
-  <code>18826075</code>
-  <title>№ заявки: 18826075</title>
-  <text>Дата п-ки: 05.09.2019 - 06.09.2019  </text>
- </order>
- <order>
-  <code>18746902</code>
-  <title>№ заявки: 18746902</title>
-  <text>Дата п-ки: 30.08.2019 - 06.09.2019  </text>
- </order>
- <order>
-  <code>18736831</code>
-  <title>№ заявки: 18736831</title>
-  <text>Дата п-ки: 29.08.2019 - 02.09.2019  </text>
- </order>
- <order>
-  <code>18710986</code>
-  <title>№ заявки: 18710986</title>
-  <text>Дата п-ки: 27.08.2019 - 29.08.2019  </text>
- </order>
- <order>
-  <code>18661683</code>
-  <title>№ заявки: 18661683</title>
-  <text>Дата п-ки: 23.08.2019 - 30.08.2019  </text>
- </order>
- <order>
-  <code>18654242</code>
-  <title>№ заявки: 18654242</title>
-  <text>Дата п-ки: 22.08.2019 - 28.08.2019  </text>
- </order>
- <order>
-  <code>18574358</code>
-  <title>№ заявки: 18574358</title>
-  <text>Дата п-ки: 16.08.2019 - 23.08.2019  </text>
- </order>
- <order>
-  <code>18563789</code>
-  <title>№ заявки: 18563789</title>
-  <text>Дата п-ки: 15.08.2019 - 22.08.2019  </text>
- </order>
- <order>
-  <code>18532466</code>
-  <title>№ заявки: 18532466</title>
-  <text>Дата п-ки: 13.08.2019 - 15.08.2019  </text>
- </order>
- <order>
-  <code>18487813</code>
-  <title>№ заявки: 18487813</title>
-  <text>Дата п-ки: 09.08.2019 - 16.08.2019  </text>
- </order>
- <order>
-  <code>18396957</code>
-  <title>№ заявки: 18396957</title>
-  <text>Дата п-ки: 02.08.2019 - 09.08.2019  </text>
- </order>
-
-<supplier>Forward International SRL</supplier>
-</orders>|
->>cycling: adding elem № заявки: 18833981|18833981|Дата п-ки: 06.09.2019 - 13.09.2019  by index0
-invocation effect was true
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=276&cmd=rec_get_order_info&session=305&order=18833981&supplier=14483
-in method RequestAwaiter::requestincoming state of text variable a, b was: 
-________________________________________
-<?xml version="1.0" encoding="CP1251"?>
-<order>
- <status>200</status>
-<richdata>
-<![CDATA[
- <div><b>Поставщик:</b> Forward International SRL</div>
- <div><b>Док. №:</b> 18833981</div>
-<hr><div>DR.OETKER Zahar pudra 80g - 0</div>
-<div>DR.OETKER Cacao 50g - 0</div>
-<div>BANEASA Paste fainoase conchiglie 1kg - 0</div>
-<div>BANEASA Paste fainoase penne rigate 1kg - 0</div>
-<div>GALLINA BLANCA Bulion de gaina 80g - 0</div>
-<div>TYMBARK Suc portocala 200ml - 5</div>
-<div>TYMBARK Suc piersic 200ml - 5</div>
-<div>TYMBARK Suc exotic 200ml - 10</div>
-<div>LA FESTA Ciocolata classico 25g 1buc - 0</div>
-<div>АЛАДУШКИН Faina de griu 2kg - 0</div>
-]]>
-</richdata>
-</order>|
-
-][Created object RichTextRespParser with<?xml version="1.0" encoding="CP1251"?>
-<order>
- <status>200</status>
-<richdata>
-<![CDATA[
- <div><b>Поставщик:</b> Forward International SRL</div>
- <div><b>Док. №:</b> 18833981</div>
-<hr><div>DR.OETKER Zahar pudra 80g - 0</div>
-<div>DR.OETKER Cacao 50g - 0</div>
-<div>BANEASA Paste fainoase conchiglie 1kg - 0</div>
-<div>BANEASA Paste fainoase penne rigate 1kg - 0</div>
-<div>GALLINA BLANCA Bulion de gaina 80g - 0</div>
-<div>TYMBARK Suc portocala 200ml - 5</div>
-<div>TYMBARK Suc piersic 200ml - 5</div>
-<div>TYMBARK Suc exotic 200ml - 10</div>
-<div>LA FESTA Ciocolata classico 25g 1buc - 0</div>
-<div>АЛАДУШКИН Faina de griu 2kg - 0</div>
-]]>
-</richdata>
-</order> by his default constructor
-invocation effect was true
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=15&cmd=rec_new_doc&session=305&date=05.11.2019&parent=18833981&comment=
-in method RequestAwaiter::requestincoming state of text variable a, b was: 
-________________________________________
-<?xml version="1.0" encoding="CP1251"?>
-<newdoc>
- <status>200</status>
- <doc>
-  <code>3751449</code>
-  <parentnr>18847263</parentnr>
-  <supplier>Forward International SRL</supplier>
-  <date>05.11.2019</date>
-  <comment></comment>
-  <closed>false</closed>
-  <canceled>false</canceled>
-  <locked>false</locked>
-  <scanmode>simple</scanmode>
- </doc>
-</newdoc>|
-invocation effect was true
-
-
-->Method called: NormalCapturer::pressScan
-passed all checks, clearing
-
-
-->Method called: NormalCapturer::clearCaptureEngine
-
-
-->Method called: NormalCapturer::pressScan
-A
-toBarcode
-A
-toBarcode
-
-
-->Method called: NormalCapturer::pressScan
-1
-toBarcode
-2
-toBarcode
-3
-toBarcode
-4
-toBarcode
-5
-toBarcode
-5
-toBarcode
-
-
-->Method called: NormalCapturer::pressReturn
-return captured in capturer while buffer was AA123455
-before calling handler from capturer: AA123455
-
-
--)Method handleScannedBarcode of object WidgetToApply invocated in method  press return of object capturer
-got text AA123455 while preparing data
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=36&cmd=doc_get_item_info&session=305&barcode=AA123455&printer=zebra
-
-
--)Method setControlFocus of object WidgetToApply invocated in method  press return of object capturer
-in method RequestAwaiter::requestincoming state of text variable a, b was: 
-________________________________________
-<?xml version="1.0" encoding="CP1251"?>
-<item>
- <status>200</status>
-<nn>AA123455</nn>
-<richdata>
- <![CDATA[
-<div style="background: #b0f0ff"><center>Накладная</center></div>
-<div style="text-align: left">Была выбрана накладная с номером "AA123455".<br>Нажмите <b>Scan</b> для сканирования.</div>
- ]]>
-</richdata>
-</item>|
-
-
-->Method called: useControls, cVars: 0 & false
-resetting vars
-invocation effect was true
-toNum
-
-
-->Method called: NormalCapturer::pressScan
-flushing Q
-empty buffer! aborting!
-
-
-->Method called: NormalCapturer::clearCaptureEngine
-
-
-->Method called: NormalCapturer::pressScan
-5
-toBarcode
-9
-toBarcode
-4
-toBarcode
-1
-toBarcode
-8
-toBarcode
-3
-toBarcode
-2
-toBarcode
-0
-toBarcode
-0
-toBarcode
-0
-toBarcode
-5
-toBarcode
-7
-toBarcode
-6
-toBarcode
-
-
-->Method called: NormalCapturer::pressReturn
-return captured in capturer while buffer was 5941832000576
-before calling handler from capturer: 5941832000576
-
-
--)Method handleScannedBarcode of object WidgetToApply invocated in method  press return of object capturer
-got text 5941832000576 while preparing data
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=14&cmd=doc_get_item_info&session=305&barcode=5941832000576&printer=zebra
-
-
--)Method setControlFocus of object WidgetToApply invocated in method  press return of object capturer
-in method RequestAwaiter::requestincoming state of text variable a, b was: 
-________________________________________
-<?xml version="1.0" encoding="CP1251"?>
-<item>
- <status>200</status>
-<nn>AA123455</nn>
-<richdata>
- <![CDATA[
-<div style="background: #d0f0c0"><center>Товар/Объект</center></div>
-  <div style="text-decoration: underline">
-   <b>Штрихкод:</b>
-   <span>5941832000576</span>
-  </div>
-  <div>
-   <b>Наименование:</b>
-   <span><b>SCOTTI Orez Bob clasic 1kg</b></span>
-  </div>
-  <br />
-  <div>
-   <b>Цена без НДС:</b>
-   <span><b>18.3</b></span>
-  </div>
-  <br>
-  <div>
-   <b>Код:</b>
-   <span>22904</span>
-  </div>
-  <div>
-   <b>Кол-во:</b>
-   <span>60</span>
-  </div>
-  <div style="text-decoration: underline">
-   <b>Уже принято:</b>
-   <span>256</span>
-  </div>
- ]]>
-</richdata>
-<controls>
- <control>
-    <name>qty</name>
-    <default></default>
- </control>
-<control>
-   <name>addqty</name>
-   <default></default>
-</control>
-</controls>
-</item>|
-
-
-->Method called: useControls, cVars: 0 & false
-invocation effect was true
-toNum
-
-
-->Method called: QuantityControl::refresh |true| of QC named addqty
-
-
-->Method called: QuantityControl::refresh |true| of QC named qty
-
-
-->Method called: NormalCapturer::pressReturn
-return captured in capturer while buffer was 
-flushing control #0 from 2
-toNum
-
-
-->Method called: QuantityControl::refresh |true| of QC named addqty
-
-
-->Method called: QuantityControl::refresh |true| of QC named qty
-
-
-->Method called: NormalCapturer::pressReturn
-return captured in capturer while buffer was 
-flushing control #1 from 2
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=127&cmd=rec_add_item&session=305&barcode=5941832000576&qty=4&price=&params=#addqty#5
-
-
-->Method called: NormalCapturer::pressScan
-flushing Q
-
-
-->Method called: QuantityControl::refresh |true| of QC named addqty
-
-
-->Method called: QuantityControl::refresh |true| of QC named qty
-passed all checks, clearing
-
-
-->Method called: NormalCapturer::clearCaptureEngine
-in method RequestAwaiter::requestincoming state of text variable a, b was: 
-________________________________________
-<?xml version="1.0" encoding="CP1251"?>
-<item>
- <status>200</status>
-<nn>AA123455</nn>
-<richdata>
- <![CDATA[
-<div style="background: #d0f0c0"><center>Товар/Объект</center></div>
-  <div style="text-decoration: underline">
-   <b>Штрихкод:</b>
-   <span>5941832000576</span>
-  </div>
-  <div>
-   <b>Наименование:</b>
-   <span><b>SCOTTI Orez Bob clasic 1kg</b></span>
-  </div>
-  <br />
-  <div>
-   <b>Цена без НДС:</b>
-   <span><b>18.3</b></span>
-  </div>
-  <br>
-  <div>
-   <b>Код:</b>
-   <span>22904</span>
-  </div>
-  <div>
-   <b>Кол-во:</b>
-   <span>60</span>
-  </div>
-  <div style="text-decoration: underline">
-   <b>Уже принято:</b>
-   <span>260</span>
-  </div>
- ]]>
-</richdata>
-</item>|
-
-
-->Method called: useControls, cVars: 2 & true
-deleting second_control, cvs 2 & true
-deleting first_control, cvs 2 & true
-resetting vars
-invocation effect was true
-got text 5941132016420 while preparing data
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=129&cmd=doc_get_item_info&session=305&barcode=5941132016420&printer=zebra
-
-
-->Method called: NormalCapturer::pressReturn
-return captured in capturer while buffer was 
-in method RequestAwaiter::requestincoming state of text variable a, b was: 
-________________________________________
-<?xml version="1.0" encoding="CP1251"?>
-<item>
- <status>200</status>
-<nn>AA123455</nn>
-<richdata>
- <![CDATA[
-<div style="background: #d0f0c0"><center>Товар/Объект</center></div>
-  <div style="text-decoration: underline">
-   <b>Штрихкод:</b>
-   <span>5941132016420</span>
-  </div>
-  <div>
-   <b>Наименование:</b>
-   <span><b>DR.OETKER Vanilie 8g</b></span>
-  </div>
-  <br />
-  <div>
-   <b>Цена без НДС:</b>
-   <span><b>2.1</b></span>
-  </div>
-  <br>
-  <div>
-   <b>Код:</b>
-   <span>5730</span>
-  </div>
-  <div>
-   <b>Кол-во:</b>
-   <span>50</span>
-  </div>
- ]]>
-</richdata>
-<controls>
- <control>
-    <name>qty</name>
-    <default></default>
- </control>
-<control>
-   <name>addqty</name>
-   <default></default>
-</control>
-</controls>
-</item>|
-
-
-->Method called: useControls, cVars: 0 & false
-invocation effect was true
-4
-cleaningTobarcode
-4
-cleaningTobarcode
-3
-cleaningTobarcode
-4
-cleaningTobarcode
-3
-cleaningTobarcode
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=111&cmd=rec_add_item&session=305&barcode=5941132016420&qty=34&price=&params=#addqty#44
-in method RequestAwaiter::requestincoming state of text variable a, b was: 
-________________________________________
-<?xml version="1.0" encoding="CP1251"?>
-<item>
- <status>200</status>
-<nn>AA123455</nn>
-<richdata>
- <![CDATA[
-<div style="background: #d0f0c0"><center>Товар/Объект</center></div>
-  <div style="text-decoration: underline">
-   <b>Штрихкод:</b>
-   <span>5941132016420</span>
-  </div>
-  <div>
-   <b>Наименование:</b>
-   <span><b>DR.OETKER Vanilie 8g</b></span>
-  </div>
-  <br />
-  <div>
-   <b>Цена без НДС:</b>
-   <span><b>2.1</b></span>
-  </div>
-  <br>
-  <div>
-   <b>Код:</b>
-   <span>5730</span>
-  </div>
-  <div>
-   <b>Кол-во:</b>
-   <span>50</span>
-  </div>
-  <div style="text-decoration: underline">
-   <b>Уже принято:</b>
-   <span>34</span>
-  </div>
- ]]>
-</richdata>
-</item>|
-
-
-->Method called: useControls, cVars: 2 & true
-deleting second_control, cvs 2 & true
-deleting first_control, cvs 2 & true
-resetting vars
-invocation effect was true
-
-cleaningTobarcode
-
-
-->Method called: NormalCapturer::pressScan
-
-
-->Method called: NormalCapturer::pressScan
-5
-toBarcode
-9
-toBarcode
-4
-toBarcode
-1
-toBarcode
-8
-toBarcode
-3
-toBarcode
-2
-toBarcode
-0
-toBarcode
-0
-toBarcode
-0
-toBarcode
-5
-toBarcode
-7
-toBarcode
-6
-toBarcode
-
-
-->Method called: NormalCapturer::pressReturn
-return captured in capturer while buffer was 5941832000576
-before calling handler from capturer: 5941832000576
-
-
--)Method handleScannedBarcode of object WidgetToApply invocated in method  press return of object capturer
-got text 5941832000576 while preparing data
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=112&cmd=doc_get_item_info&session=305&barcode=5941832000576&printer=zebra
-
-
--)Method setControlFocus of object WidgetToApply invocated in method  press return of object capturer
-in method RequestAwaiter::requestincoming state of text variable a, b was: 
-________________________________________
-<?xml version="1.0" encoding="CP1251"?>
-<item>
- <status>200</status>
-<nn>AA123455</nn>
-<richdata>
- <![CDATA[
-<div style="background: #d0f0c0"><center>Товар/Объект</center></div>
-  <div style="text-decoration: underline">
-   <b>Штрихкод:</b>
-   <span>5941832000576</span>
-  </div>
-  <div>
-   <b>Наименование:</b>
-   <span><b>SCOTTI Orez Bob clasic 1kg</b></span>
-  </div>
-  <br />
-  <div>
-   <b>Цена без НДС:</b>
-   <span><b>18.3</b></span>
-  </div>
-  <br>
-  <div>
-   <b>Код:</b>
-   <span>22904</span>
-  </div>
-  <div>
-   <b>Кол-во:</b>
-   <span>60</span>
-  </div>
-  <div style="text-decoration: underline">
-   <b>Уже принято:</b>
-   <span>260</span>
-  </div>
- ]]>
-</richdata>
-<controls>
- <control>
-    <name>qty</name>
-    <default></default>
- </control>
-<control>
-   <name>addqty</name>
-   <default></default>
-</control>
-</controls>
-</item>|
-
-
-->Method called: useControls, cVars: 0 & false
-invocation effect was true
-toNum
-
-
-->Method called: QuantityControl::refresh |true| of QC named addqty
-
-
-->Method called: QuantityControl::refresh |true| of QC named qty
-toNum
-
-
-->Method called: QuantityControl::refresh |true| of QC named addqty
-
-
-->Method called: QuantityControl::refresh |true| of QC named qty
-
-
-->Method called: NormalCapturer::pressReturn
-return captured in capturer while buffer was 
-flushing control #0 from 2
-toNum
-
-
-->Method called: QuantityControl::refresh |true| of QC named addqty
-
-
-->Method called: QuantityControl::refresh |true| of QC named qty
-toNum
-
-
-->Method called: QuantityControl::refresh |true| of QC named addqty
-
-
-->Method called: QuantityControl::refresh |true| of QC named qty
-
-
-->Method called: NormalCapturer::pressReturn
-return captured in capturer while buffer was 
-flushing control #1 from 2
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=126&cmd=rec_add_item&session=305&barcode=5941832000576&qty=43&price=&params=#addqty#55
-
-
-->Method called: NormalCapturer::pressScan
-flushing Q
-
-
-->Method called: QuantityControl::refresh |true| of QC named addqty
-
-
-->Method called: QuantityControl::refresh |true| of QC named qty
-passed all checks, clearing
-
-
-->Method called: NormalCapturer::clearCaptureEngine
-in method RequestAwaiter::requestincoming state of text variable a, b was: 
-________________________________________
-<?xml version="1.0" encoding="CP1251"?>
-<item>
- <status>200</status>
-<nn>AA123455</nn>
-<richdata>
- <![CDATA[
-<div style="background: #d0f0c0"><center>Товар/Объект</center></div>
-  <div style="text-decoration: underline">
-   <b>Штрихкод:</b>
-   <span>5941832000576</span>
-  </div>
-  <div>
-   <b>Наименование:</b>
-   <span><b>SCOTTI Orez Bob clasic 1kg</b></span>
-  </div>
-  <br />
-  <div>
-   <b>Цена без НДС:</b>
-   <span><b>18.3</b></span>
-  </div>
-  <br>
-  <div>
-   <b>Код:</b>
-   <span>22904</span>
-  </div>
-  <div>
-   <b>Кол-во:</b>
-   <span>60</span>
-  </div>
-  <div style="text-decoration: underline">
-   <b>Уже принято:</b>
-   <span>303</span>
-  </div>
- ]]>
-</richdata>
-</item>|
-
-
-->Method called: useControls, cVars: 2 & true
-deleting second_control, cvs 2 & true
-deleting first_control, cvs 2 & true
-resetting vars
+
+<mode><modeName>inventory</modeName><captionMode>inventory</captionMode></mode>
+<mode><modeName>printing</modeName><captionMode>printing</captionMode></mode>
+<mode><modeName>receipt</modeName><captionMode>receipt</captionMode></mode>
+<mode><modeName>ordersandsldcorrection</modeName><captionMode>ordersandsldcorrection</captionMode></mode>
+<mode><modeName>receiptfromwarehouses</modeName><captionMode>receiptfromwarehouses</captionMode></mode></modes>|
 invocation effect was true

@@ -45,7 +45,6 @@ private:
 	QWidget* wrkflTab;
 	QVBoxLayout* wrkflinnLayout;
 
-
 	QComboBox* scanModeSelector;
 	QLabel* scanModeInfo;
 
@@ -53,7 +52,6 @@ private:
 	QWidget* sysTab;
 	QVBoxLayout* sysinnLayout;
 	QLabel* topExplLabel;
-
 
 	// group of connection changes
 	QLabel* connectionInfo;
@@ -72,10 +70,10 @@ public:
 	MainSettingsWidget(GlobalAppSettings& go, QWidget* parent = Q_NULLPTR);
 	virtual void show() override;
 private slots:
-			 void saveClicked();			//	saves data to GlobalAppSettings widget
-			 void langSelected(const QString&);	//	alters GAS, then retranslates this widget
-			 void langChanged();				//	retranslates this widget
-			 void AddressSelected(const QString& activated);
+	void saveClicked();			//	saves data to GlobalAppSettings widget
+	void langSelected(const QString&);	//	alters GAS, then retranslates this widget
+	void langChanged();				//	retranslates this widget
+	void AddressSelected(const QString& activated);
 signals:
 	void languageChanged();			//	is emitted when language is changed
 	void saveConfirmed();

@@ -24,8 +24,8 @@ private:
 protected:
 	void paintEvent(QPaintEvent*);	//	Draws button
 public:
-    explicit MegaIconButton(QWidget* parent = Q_NULLPTR);
-    MegaIconButton(QIcon  ico, const double imageCoef = 0.7, const QString txt = QString(), QWidget* parent = Q_NULLPTR);
+	explicit MegaIconButton(QWidget* parent = Q_NULLPTR);
+	MegaIconButton(QIcon  ico, const double imageCoef = 0.7, const QString txt = QString(), QWidget* parent = Q_NULLPTR);
 	void setIcon(QIcon ico); // sets icon
 	void setScaleCoefficient(double coe);	//	sets scale coefficient. Warning: does not redrawing button immidiately
 }

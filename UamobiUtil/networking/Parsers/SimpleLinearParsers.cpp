@@ -259,7 +259,6 @@ DocumentParser::DocumentParser(QString& res, QString& err)
 	}
 	parseres.one_position_entries_quantity = 4;
 	success = true;
-
 }
 
 bool DocTypeFiltersParser::couldRead()

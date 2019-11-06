@@ -1,12 +1,12 @@
 #include "abs_control.h"
 #include "QuantityControl.h"
-abs_control::abs_control(QString  cname,QString & assocBuffer, controlType Type)
+abs_control::abs_control(QString  cname, QString& assocBuffer, controlType Type)
 	:associatedBuffer(&assocBuffer),
 	type(Type), isAwaiting(false), defaultBuffer(), name(cname)
 {
 }
 abs_control::abs_control(QString cname, controlType Type)
-	:associatedBuffer(&defaultBuffer),
+	: associatedBuffer(&defaultBuffer),
 	type(Type), isAwaiting(false), defaultBuffer(), name(cname)
 {
 }
@@ -64,14 +64,13 @@ void abs_control::associateBuffer(QString& buffer)
 	associatedBuffer = &buffer;
 }
 
-
-abs_control* fabricateControl(QString& assocBuffer, QString initstr,QBoxLayout * layout, QWidget* parent)
+abs_control* fabricateControl(QString& assocBuffer, QString initstr, QBoxLayout* layout, QWidget* parent)
 {
 	switch (initstr.length())
 	{
 	case 3:
 		if (initstr == "qty") {
-			QuantityControl* qc = new QuantityControl(assocBuffer,initstr, parent);
+			QuantityControl* qc = new QuantityControl(assocBuffer, initstr, parent);
 			layout->insertWidget(layout->count() - 1, qc->myWidget());
 			return qc;
 		}
@@ -82,7 +81,7 @@ abs_control* fabricateControl(QString& assocBuffer, QString initstr,QBoxLayout *
 			return qc;
 		}
 	}
-    return Q_NULLPTR;
+	return Q_NULLPTR;
 }
 
 abs_control* fabricateControl(QString initstr, QBoxLayout* layout, QWidget* parent)
@@ -104,5 +103,5 @@ abs_control* fabricateControl(QString initstr, QBoxLayout* layout, QWidget* pare
 			return qc;
 		}
 	}
-    return Q_NULLPTR;
+	return Q_NULLPTR;
 }

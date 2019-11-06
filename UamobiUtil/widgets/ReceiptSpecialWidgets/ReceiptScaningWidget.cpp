@@ -9,9 +9,9 @@
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #define DEBUG
 ReceiptScaningWidget::ReceiptScaningWidget(GlobalAppSettings& go, QWidget* parent)
-	: AbstractScaningWidget(go, parent),abstractNode(), captureInterface(), resultScreen(new DocResultsWidget(go,this)),
-	searchScreen(new ItemSearchWidget(go,this)), capturer(new NormalCapturer(this, this)),
-	controlsRequired(false), manSelected(false)
+	: AbstractScaningWidget(go, parent), abstractNode(), captureInterface(), resultScreen(new DocResultsWidget(go, this)),
+	searchScreen(new ItemSearchWidget(go, this)), capturer(new NormalCapturer(this, this)),
+	manSelected(false)
 {
 	mainLayout->addWidget(searchScreen);
 	mainLayout->addWidget(resultScreen);
@@ -21,41 +21,34 @@ ReceiptScaningWidget::ReceiptScaningWidget(GlobalAppSettings& go, QWidget* paren
 	untouchable = innerWidget;
 	main = this;
 	submitButton->setDisabled(true);
-    mainTextView->installEventFilter(capturer->keyfilter);
+	mainTextView->installEventFilter(capturer->keyfilter);
 	QScroller::grabGesture(mainTextView, QScroller::LeftMouseButtonGesture);
-    innerWidget->installEventFilter(capturer->keyfilter);
-    barcodeField->installEventFilter(new filters::LineEditHelper(this));
+	innerWidget->installEventFilter(capturer->keyfilter);
+	barcodeField->installEventFilter(new filters::LineEditHelper(this));
 #ifdef QT_VERSION5X
 	QObject::connect(resultScreen, &DocResultsWidget::backRequired, this, &ReceiptScaningWidget::hideCurrent);
 	QObject::connect(searchScreen, &ItemSearchWidget::backRequired, this, &ReceiptScaningWidget::hideCurrent);
 	QObject::connect(searchScreen, &ItemSearchWidget::itemSelected, this, &ReceiptScaningWidget::itemObtained);
 	QObject::connect(resultScreen, &DocResultsWidget::documentSaved, this, &ReceiptScaningWidget::saveSuccesfull);
 #else
-    QObject::connect(resultScreen, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
-    QObject::connect(searchScreen, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
-    QObject::connect(searchScreen, SIGNAL(itemSelected(parsedItemSimplified)), this, SLOT(itemObtained(parsedItemSimplified)));
-    QObject::connect(resultScreen, SIGNAL(documentSaved()), this, SLOT(saveSuccesfull()));
+	QObject::connect(resultScreen, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+	QObject::connect(searchScreen, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+	QObject::connect(searchScreen, SIGNAL(itemSelected(parsedItemSimplified)), this, SLOT(itemObtained(parsedItemSimplified)));
+	QObject::connect(resultScreen, SIGNAL(documentSaved()), this, SLOT(saveSuccesfull()));
 #endif
 }
 
-
 void ReceiptScaningWidget::submitPressed()
 {
-	if (!controlsRequired || awaiter.isAwaiting())
+	if (!checkControls() || awaiter.isAwaiting())
 	{
 		return;
 	}
-	if (first_control == Q_NULLPTR || controlsAvailable == 0)
-	{ 
-		return;
-	}
-	if (!first_control->canGiveValue())
-        return;
 	showProcessingOverlay();
 #ifdef QT_VERSION5X
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ReceiptScaningWidget::item_confirmed_response);
 #else
-    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(item_confirmed_response()));
+	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(item_confirmed_response()));
 #endif
 	switch (controlsAvailable)
 	{
@@ -80,8 +73,8 @@ void ReceiptScaningWidget::processNumber(QString num)
 
 void ReceiptScaningWidget::processBarcode(QString bc)
 {
-    //detrace_METHEXPL("processing barcode as " << bc << " while replacing " << barcodeField->text());
-    barcodeField->clear();
+	//detrace_METHEXPL("processing barcode as " << bc << " while replacing " << barcodeField->text());
+	barcodeField->clear();
 	barcodeField->setText(bc);
 	barcodeConfirmed();
 }
@@ -91,17 +84,17 @@ void ReceiptScaningWidget::barcodeConfirmed()
 	if (awaiter.isAwaiting())
 		return;
 	showProcessingOverlay();
-    this->setFocus();
+	this->setFocus();
 
 #ifdef DEBUG
 	detrace_METHEXPL("got text " << barcodeField->text() << " while preparing data");
 #endif
 #ifdef QT_VERSION5X
-    QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ReceiptScaningWidget::item_scaned_response);
+	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ReceiptScaningWidget::item_scaned_response);
 #else
-    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(item_scaned_response()));
+	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(item_scaned_response()));
 #endif
-    globalSettings.networkingEngine->itemGetInfo(barcodeField->text(), &awaiter, RECEIVER_SLOT_NAME);
+	globalSettings.networkingEngine->itemGetInfo(barcodeField->text(), &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 }
 
@@ -113,11 +106,10 @@ void ReceiptScaningWidget::setDocument(parsedOrder po)
 #ifdef QT_VERSION5X
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ReceiptScaningWidget::document_confirmed_response);
 #else
-    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(document_confirmed_response()));
+	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(document_confirmed_response()));
 #endif
-    globalSettings.networkingEngine->recNew(QDate::currentDate(), po.code, "", &awaiter, RECEIVER_SLOT_NAME);
+	globalSettings.networkingEngine->recNew(QDate::currentDate(), po.code, "", &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
-	
 }
 
 void ReceiptScaningWidget::hideCurrent()
@@ -154,54 +146,24 @@ bool ReceiptScaningWidget::handleScannedBarcode()
 
 bool ReceiptScaningWidget::handleNumberInbuffer()
 {
-	if (controlsRequired)
-	{
-		switch (controlsAvailable)
-		{
-		case 2:
-			second_control->refresh();
-		case 1:
-			first_control->refresh();
-			return true;
-		default:
-			return false;
-		}
-	}
-	return false;
+	refreshControls();
+	return true;
 }
 
 void ReceiptScaningWidget::processBackPress()
 {
-    emit backRequired();
+	emit backRequired();
 }
 
 void ReceiptScaningWidget::removeManualFocus()
 {
-    this->setFocus();
+	this->setFocus();
 	manSelected = false;
 }
 
 void ReceiptScaningWidget::setControlFocus(int val)
 {
-	if (controlsRequired)
-	{
-		switch (val)
-		{
-		case 0:
-			if (controlsAvailable >= 1)
-			{
-				first_control->setFocus();
-			}
-			return;
-		case 1:
-			if (controlsAvailable >= 2)
-			{
-				second_control->setFocus();
-			}
-		default:
-			return;
-		}
-	}
+	focusControl(val);
 }
 
 int ReceiptScaningWidget::flushControl(int cnum)
@@ -222,7 +184,7 @@ int ReceiptScaningWidget::flushControl(int cnum)
 			submitPressed();
 		}
 	}
-	return cnum+1;
+	return cnum + 1;
 }
 
 void ReceiptScaningWidget::switchedFocus()
@@ -256,17 +218,8 @@ void ReceiptScaningWidget::syncControlAndBuffer(QString v)
 
 bool ReceiptScaningWidget::isControlFocused()
 {
-	switch (controlsAvailable)
-	{
-	case 1:
-		return first_control->hasFocus();
-	case 2:
-		return first_control->hasFocus() || second_control->hasFocus();
-	default:
-		return false;
-	}
+	return AbstractScaningWidget::isControlFocused();
 }
-
 
 void ReceiptScaningWidget::searchRequired()
 {
@@ -280,123 +233,15 @@ void ReceiptScaningWidget::backNeeded()
 
 void ReceiptScaningWidget::useControls(QVector<QPair<QString, QString> >& cvals)
 {
-	detrace_METHCALL("useControls, cVars: " << controlsAvailable << " & " << controlsRequired);
-	numberBuffer.clear();
-	switch (cvals.length())
+	AbstractScaningWidget::useControls(cvals);
+	switch (controlsAvailable)
 	{
-	case 0:
-		switch (controlsAvailable)
-		{
-		case 2:
-			detrace_METHEXPL("deleting second_control, cvs " << controlsAvailable << " & " <<controlsRequired );
-			innerLayout->removeWidget(second_control->myWidget());
-			delete second_control;
-			second_control = Q_NULLPTR;
-		case 1:
-			detrace_METHEXPL("deleting first_control, cvs " << controlsAvailable << " & " << controlsRequired);
-			innerLayout->removeWidget(first_control->myWidget());
-			delete first_control;
-			first_control = Q_NULLPTR;
-		case 0:
-
-			detrace_METHEXPL("resetting vars");
-			setFocus();
-			controlsRequired = false;
-			submitButton->setDisabled(true);
-			controlsAvailable = 0;
-			controlsRequired = false;
-		}
-		return;
 	case 1:
-
-		if (controlsAvailable >= 1)
-		{
-			if (first_control->name == cvals.at(0).first)
-			{
-				first_control->reset();
-				first_control->show();
-			}
-			else
-			{
-				detrace_METHEXPL("deleting first_control, cvs " << controlsAvailable << " & " << controlsRequired);
-				innerLayout->removeWidget(first_control->myWidget());
-				delete first_control;
-				first_control = fabricateControl(numberBuffer, cvals.at(0).first, innerLayout, innerWidget);
-				first_control->installEventFilter(keyfilter);
-			}
-			if (second_control != Q_NULLPTR)
-			{
-				detrace_METHEXPL("deleting second_control, cvs " << controlsAvailable << " & " << controlsRequired);
-				innerLayout->removeWidget(second_control->myWidget());
-				delete second_control;
-				second_control = Q_NULLPTR;
-				--controlsAvailable;
-			}
-		}
-		else
-		{
-			first_control = fabricateControl(numberBuffer, cvals.at(0).first, innerLayout, innerWidget);
-			first_control->installEventFilter(keyfilter);
-			++controlsAvailable;
-		}
-		capturer->setControlNumber(1);
-		first_control->setAwaiting();
-		first_control->show();
-		controlsRequired = true;
-		submitButton->setDisabled(false);
-		this->setFocus();
-		return;
 	case 2:
-	default:
-		switch (controlsAvailable)
-		{
-		case 2:
-			if (!(cvals.at(1).first == second_control->name))
-			{
-				detrace_METHEXPL("deleting second_control, cvs " << controlsAvailable << " & " << controlsRequired);
-				innerLayout->removeWidget(second_control->myWidget());
-				delete second_control;
-				
-				second_control = Q_NULLPTR;
-			}
-		case 1:
-			if (!(cvals.at(1).first == first_control->name))
-			{
-				detrace_METHEXPL("deleting first_control, cvs " << controlsAvailable << " & " << controlsRequired);
-				innerLayout->removeWidget(first_control->myWidget());
-				delete first_control;
-				first_control = Q_NULLPTR;
-			}
-		case 0:
-			if (first_control == Q_NULLPTR)
-			{
-
-				first_control = fabricateControl(numberBuffer, cvals.at(0).first, innerLayout, innerWidget);
-				first_control->installEventFilter(keyfilter);
-			}
-			else
-			{
-				first_control->reset();
-			}
-			if (second_control == Q_NULLPTR)
-			{
-				second_control = fabricateControl(cvals.at(1).first, innerLayout, innerWidget);
-				second_control->installEventFilter(keyfilter);
-			}
-			else
-			{
-				second_control->reset();
-			}
-		}
-		capturer->setControlNumber(2);
-		controlsAvailable = 2;
+		first_control->associateBuffer(numberBuffer);
+	case 0:
+		capturer->setControlNumber(controlsAvailable);
 	}
-	first_control->setAwaiting();
-	controlsRequired = true;
-	submitButton->setDisabled(false);
-	this->setFocus();
-	first_control->show();
-	second_control->show();
 }
 
 void ReceiptScaningWidget::item_scaned_response()
@@ -419,6 +264,7 @@ void ReceiptScaningWidget::item_confirmed_response()
 	hideProcessingOverlay();
 	if (!barcodeField->text().isEmpty())
 	{
+		awaiter.stopAwaiting();
 		barcodeConfirmed();
 	}
 }

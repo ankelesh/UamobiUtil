@@ -7,31 +7,42 @@
 #include <QtGui/QBoxLayout>
 #endif
 
-
 /*
 	This file provides interfaces and common features to control widgets. Main idea is to incapsulate control behind string values.
 
+	Update:
+		Now this widget is not QObject to avoid unused levels of inheritance and layouts. Now it fully incapsulates
+		any widget behind it's interfaces.
+		
+		This widget is buffer-based. You can associate it with buffer and then just refresh instead of overriding value.
+		Warning! do not associate it with temporary variables. 
+
+		To construct control without meaning it's full type - use fabricateControl functions. They will use initstr value to define which
+		control type must be created.
 
 */
-
 
 class abs_control
 	//control interfaces
 {
 public:
-	enum controlType { None, Int }; // Types of controls by their inner types. 
+	enum controlType { None, Int }; // Types of controls by their inner types.
 
 protected:
 	QString* associatedBuffer;
 	controlType type;	//	default None
 	bool isAwaiting;	//	tech value, is raised when control awaits value
-	
-	virtual QString prepareAndReturnValue() const =0;	//	inner function, used to return normalized value for using it into web queries
+
+	virtual QString prepareAndReturnValue() const = 0;	//	inner function, used to return normalized value for using it into web queries
 	virtual bool parseAndSetValue(QString) = 0;			//	uses normalized value to set up control
 	virtual void clear() = 0;							//	drops state to default. Does not hides control
 	virtual bool valueAvailable() const = 0;			//	true if value differs from default
 
 public:
+	QString defaultBuffer;
+	QString name;
+
+
 	explicit abs_control(QString cname, QString& assocBuffer, controlType Type = None);
 	explicit abs_control(QString cname, controlType Type = None);
 	QString getValue() const;		//	returns normalized value
@@ -48,12 +59,10 @@ public:
 	virtual void refresh() = 0;
 	virtual void installEventFilter(QObject*) = 0;
 	virtual QWidget* myWidget() = 0;
-	QString defaultBuffer;
 	void unassociateBuffer();
 	void associateBuffer(QString&);
-	QString name;
 	virtual ~abs_control() {};
 };
 
-abs_control* fabricateControl(QString& assocBuffer, QString initstr, QBoxLayout * layout, QWidget* parent = Q_NULLPTR);
+abs_control* fabricateControl(QString& assocBuffer, QString initstr, QBoxLayout* layout, QWidget* parent = Q_NULLPTR);
 abs_control* fabricateControl(QString initstr, QBoxLayout* layout, QWidget* parent = Q_NULLPTR);

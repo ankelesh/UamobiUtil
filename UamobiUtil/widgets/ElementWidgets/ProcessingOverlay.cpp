@@ -7,15 +7,14 @@
 #include "debugtrace.h"
 #endif
 
-
 const double pi = 3.14159265358979323846;		//	not precise pi. More precision is not required
 
 QPoint	find_corner(const QPoint& center, const int& size,
 	const int& corner_num)
 	//	finds corner of pointy hexagon
 {
-	float adeg =  60 * corner_num - 30;
-	float arad =  pi / 180 * adeg;
+	float adeg = 60 * corner_num - 30;
+	float arad = pi / 180 * adeg;
 	return QPoint(center.x() + size * cos(arad), center.y() + size * sin(arad));
 }
 QPolygon makeHexagon(const QPoint& center, const int& size)
@@ -32,11 +31,11 @@ QPolygon makeHexagon(const QPoint& center, const int& size)
 
 void ProcessingOverlay::paintEvent(QPaintEvent* pev)
 {
-	QRect bg(0, 0, width()-1, height()-1);
+	QRect bg(0, 0, width() - 1, height() - 1);
 	QPainter p(this);
 	p.setBrush(QBrush(Qt::white));
 	p.drawRect(bg);
-	p.drawText(10, 10, QString::number((int)currentState/2));
+	p.drawText(10, 10, QString::number((int)currentState / 2));
 	p.setRenderHint(QPainter::Antialiasing);
 	p.setRenderHint(QPainter::TextAntialiasing);
 	p.drawPolygon(mainPolygon);
@@ -51,7 +50,6 @@ void ProcessingOverlay::resizeEvent(QResizeEvent* rev)
 	QWidget::resizeEvent(rev);
 }
 
-
 ProcessingOverlay::ProcessingOverlay(int interval, QWidget* parent)
 	: QWidget(parent), currentState(1), endPoint(10), redrawTimer(new QTimer(this)), mainPolygon(), innerPolygon(),
 	centralPoint()
@@ -62,14 +60,13 @@ ProcessingOverlay::ProcessingOverlay(int interval, QWidget* parent)
 #else
 	QSize parentG = qApp->desktop()->size();
 
-
 	this->setFixedSize(QSize(parentG.width() * 0.4, parentG.height() * 0.4));
 	QSize partial = QSize(parentG.width() * 0.3, parentG.height() * 0.3);
 #endif
 	this->move(partial.width(), partial.height());
 	centralPoint = QPoint(this->width() / 2, this->height() / 2);
 #ifdef Q_OS_WINCE
-    textPoint = QPoint(0 + 2, height() - 2);
+	textPoint = QPoint(0 + 2, height() - 2);
 #else
 	textPoint = QPoint(width() / 5, this->height() - 5);
 #endif
@@ -80,10 +77,9 @@ ProcessingOverlay::ProcessingOverlay(int interval, QWidget* parent)
 #ifdef QT_VERSION5X
 	QObject::connect(redrawTimer, &QTimer::timeout, this, &ProcessingOverlay::step);
 #else
-    QObject::connect(redrawTimer, SIGNAL(timeout()), this, SLOT(step()));
+	QObject::connect(redrawTimer, SIGNAL(timeout()), this, SLOT(step()));
 #endif
 }
-
 
 void ProcessingOverlay::restart()
 {
@@ -114,11 +110,11 @@ void ProcessingOverlay::resize(const QSize& parentG)
 	this->setFixedSize(QSize(parentG.width() * 0.4, parentG.height() * 0.4));
 	QSize partial = QSize(parentG.width() * 0.3, parentG.height() * 0.3);
 	this->move(partial.width(), partial.height());
-	centralPoint = QPoint(this->width() / 2, this->height() / 2); 
+	centralPoint = QPoint(this->width() / 2, this->height() / 2);
 #ifdef Q_OS_WINCE
-    textPoint = QPoint(0 + 2, height() - 2);
+	textPoint = QPoint(0 + 2, height() - 2);
 #else
-	textPoint = QPoint(width() / 5, this->height()-5);
+	textPoint = QPoint(width() / 5, this->height() - 5);
 #endif
 	mainPolygon = makeHexagon(centralPoint, this->height() * 0.45);
 	innerPolySize = this->height() * (0.45 * (currentState / endPoint));
@@ -131,7 +127,7 @@ void ProcessingOverlay::step()
 	--currentState;
 	innerPolySize = this->height() * (0.45 * (currentState / endPoint));
 	innerPolygon = makeHexagon(centralPoint, innerPolySize);
-	repaint(); 
+	repaint();
 	if (currentState == 0)
 	{
 		redrawTimer->stop();
@@ -150,7 +146,7 @@ void showProcessingOverlay()
 		}
 	}
 }
-void bindProcessingOverlay(ProcessingOverlay * over)
+void bindProcessingOverlay(ProcessingOverlay* over)
 {
 	ov = over;
 }

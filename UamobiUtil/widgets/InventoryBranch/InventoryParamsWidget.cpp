@@ -32,7 +32,7 @@ InventoryParamsWidget::InventoryParamsWidget(QWidget* parent)
 	QFont scf = makeFont(0.04);
 	title->setText(tr("inventory_params_title"));
 	title->setFont(scf);
-	
+
 	dateInfo->setText(tr("inventory_params_date_info"));
 	dateInfo->setFont(scf);
 
@@ -58,11 +58,10 @@ InventoryParamsWidget::InventoryParamsWidget(QWidget* parent)
 	QObject::connect(selectDocumentButton, &MegaIconButton::clicked, this, &InventoryParamsWidget::selectDocPressed);
 	QObject::connect(okButton, &MegaIconButton::clicked, this, &InventoryParamsWidget::okPressed);
 #else
-    QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
-    QObject::connect(selectDocumentButton, SIGNAL(clicked()), this, SLOT(selectDocPressed()));
-    QObject::connect(okButton, SIGNAL(clicked()), this, SLOT(okPressed()));
+	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
+	QObject::connect(selectDocumentButton, SIGNAL(clicked()), this, SLOT(selectDocPressed()));
+	QObject::connect(okButton, SIGNAL(clicked()), this, SLOT(okPressed()));
 #endif
-
 }
 
 void InventoryParamsWidget::setDocument(Document doc)

@@ -9,7 +9,6 @@
 
 */
 
-
 class ControlManager : public QObject
 {
 	Q_OBJECT
@@ -29,7 +28,7 @@ public:
 	void setControl(int);
 	void setCurrentValue(QString);
 	void setCurrentValue(int);
-	
+
 private slots:
 	void listenControl(QString&);
 public slots:

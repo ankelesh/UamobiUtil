@@ -21,7 +21,7 @@
 		Item selected emitting
 
 	Update:
-		colorization added. 
+		colorization added.
 
 */
 

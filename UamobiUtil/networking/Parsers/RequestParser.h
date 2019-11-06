@@ -75,7 +75,7 @@ namespace parse_uniresults_functions
 	TypicalResponse parse_richtext(uniform_parse_result& ures);
 	Document parse_document_response(uniform_parse_result& ures);
 	CombinedNamedLinearResponse parse_item_info(uniform_parse_result& ures);
-	searchResponse parse_search_response(uniform_parse_result & ures);
+	searchResponse parse_search_response(uniform_parse_result& ures);
 	doclistResponse parse_document_listed(uniform_parse_result& ures);
 	documentsResponse parse_documents(uniform_parse_result& ures);
 	docFilterResponse parse_filter_list(uniform_parse_result& ures);

@@ -5,7 +5,6 @@
 #include "debugtrace.h"
 #endif // DEBUG
 
-
 AbstractVariantSelectionWidget::AbstractVariantSelectionWidget(QWidget* parent, bool test)
 	: inframedWidget(parent), mainLayout(new QVBoxLayout(this))
 {
@@ -44,7 +43,6 @@ bool AbstractVariantSelectionWidget::isExpectingControl(int val)
 	return false;
 }
 
-
 void AbstractVariantSelectionWidget::init()
 {
 	QFont scf = makeFont(0.05);
@@ -55,14 +53,14 @@ void AbstractVariantSelectionWidget::init()
 		userButtons.last()->setText(elemAsString(i));
 		userButtons.last()->setFont(scf);
 		mainLayout->addWidget(userButtons.last());
-        if (i % 2){
-        userButtons.last()->setStyleSheet(ZEBRAODD_BUTTONS_STYLESHEET);
-        }
-        else
-        {
-            userButtons.last()->setStyleSheet(ZEBRAEVEN_BUTTONS_STYLESHEET);
-        }
-        userButtons.last()->setMinimumHeight(calculateAdaptiveButtonHeight());
+		if (i % 2) {
+			userButtons.last()->setStyleSheet(ZEBRAODD_BUTTONS_STYLESHEET);
+		}
+		else
+		{
+			userButtons.last()->setStyleSheet(ZEBRAEVEN_BUTTONS_STYLESHEET);
+		}
+		userButtons.last()->setMinimumHeight(calculateAdaptiveButtonHeight());
 #ifdef QT_VERSION5X
 		QObject::connect(userButtons.last(), &specwidgets::indexedButton::indexClicked, this, &AbstractVariantSelectionWidget::indexSelected);
 #else

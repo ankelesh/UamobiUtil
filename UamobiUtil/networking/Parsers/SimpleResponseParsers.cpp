@@ -76,7 +76,7 @@ RichtextResponseParser::RichtextResponseParser(QString& res, QString& err)
 		QString code = doc.elementsByTagName("status").at(0).toElement().text();
 		parseres.request_status = code.toInt();
 		if (parseres.request_status != 200)
-		{	
+		{
 			detrace_METHEXPL("status was " << parseres.request_status);
 			success = false;
 			return;

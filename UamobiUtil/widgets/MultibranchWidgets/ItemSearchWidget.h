@@ -19,14 +19,13 @@
 #include "widgets/ElementWidgets/MegaIconButton.h"
 
 /*
-	This widget is concentrated on forming list widget around response. 
+	This widget is concentrated on forming list widget around response.
 	It provides input line for user and trigger-button. On selection is emitted signal
 	containing parsedItem.
 
 	__ASSOCIATED_DATABASE_FUNCTION__  :  P'searchResponse' doc_search_items()
 
 */
-
 
 namespace specwidgets
 {
@@ -35,20 +34,19 @@ namespace specwidgets
 	{
 		Q_OBJECT
 	protected:
-		QVector<parsedItemSimplified> & allitems;
+		QVector<parsedItemSimplified>& allitems;
 		// Inherited via AbstractListSelectionWidget
 		virtual int countElems() override;
 		virtual void itemSelectedFromList(QListWidgetItem*) override;
 		virtual QString elemToString(int);
 
 	public:
-		_ItemSelectionList(parse_uniresults_functions::searchResponse & items, QWidget * parent = Q_NULLPTR);
+		_ItemSelectionList(parse_uniresults_functions::searchResponse& items, QWidget* parent = Q_NULLPTR);
 
 	signals:
 		void itemPicked(parsedItemSimplified);
 	};
 }
-
 
 class ItemSearchWidget : public inframedWidget
 {
@@ -73,7 +71,7 @@ protected:
 	QString toSearch;
 	RequestAwaiter awaiter;
 public:
-	ItemSearchWidget(GlobalAppSettings & go, QWidget* parent);
+	ItemSearchWidget(GlobalAppSettings& go, QWidget* parent);
 	void refresh();
 public slots:
 	void doSearch();		//	triggerSlot

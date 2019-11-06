@@ -1,14 +1,13 @@
 #include "DynamicLinearParsers.h"
 
-
 static QVector<QString> _initOpts()
 {
-    QVector<QString> temp;
-    temp.push_back("cmid");
-    temp.push_back("qty");
-    temp.push_back("box");
-    temp.push_back("highlight");
-    return temp;
+	QVector<QString> temp;
+	temp.push_back("cmid");
+	temp.push_back("qty");
+	temp.push_back("box");
+	temp.push_back("highlight");
+	return temp;
 }
 
 static const QVector<QString> itemOptionals(_initOpts());
@@ -212,7 +211,7 @@ ItemInfoResponseParser::ItemInfoResponseParser(QString& res, QString& err)
 	QDomNodeList dmndl = doc.elementsByTagName("nn");
 	if (dmndl.count() > 0)
 	{
-		parseres.queriesResult <<"" << "nn" << dmndl.at(0).toElement().text();
+		parseres.queriesResult << "" << "nn" << dmndl.at(0).toElement().text();
 	}
 	dmndl = doc.elementsByTagName("control");
 	QDomNode cntrl;
@@ -235,7 +234,7 @@ ItemInfoResponseParser::ItemInfoResponseParser(QString& res, QString& err)
 	dmndl = doc.elementsByTagName("richdata");
 	if (dmndl.count() > 0)
 	{
-		parseres.queriesResult << ""<< "richdata" << dmndl.at(0).toElement().text();
+		parseres.queriesResult << "" << "richdata" << dmndl.at(0).toElement().text();
 	}
 	else
 	{

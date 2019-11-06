@@ -43,8 +43,6 @@ protected:
 	virtual void useControls(QVector<QPair<QString, QString> >&) override;
 	virtual void processBarcode(QString) override;
 
-
-
 	// Inherited via AbstractScaningWidget
 protected slots:
 	virtual void submitPressed() override;
@@ -55,9 +53,8 @@ protected slots:
 	virtual void barcodeConfirmed() override;
 	void item_scaned_response();
 	void item_confirmed_response();
-	void document_confirmed_response(); 
+	void document_confirmed_response();
 	virtual void hideCurrent();
 	virtual void saveSuccesfull();
 	virtual void itemObtained(parsedItemSimplified);
-
 };

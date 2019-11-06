@@ -7,15 +7,15 @@
 QHash<QString, QString> _initRecDefs();
 const QHash<QString, QString> RECEIPT_NONE_SETTINGS_DEFAULTS(_initRecDefs());
 
-
 /*
-	This widget is used as "root" for every other receipt step. It has nothing to display and used mostly for 
+	This widget is used as "root" for every other receipt step. It has nothing to display and used mostly for
 	single-widget like interface. It's contents are another widgets. Inner widget (default) is ReceiptParameters
 
-	This root supports 2 modes now: receiptNone and receiptWarehouses.
-
+	This root supports 3 modes now: 
+				receipt - None 
+				receipt - Warehouses.
+				receipt - ordersAndSldCorrection
 */
-
 
 class ReceiptRootWidget : public inframedWidget, abstractNode
 {
@@ -29,7 +29,7 @@ protected:
 	parsedSupplier confirmedSupplier;		//	stores pair of order\supplier for network requests
 	parsedOrder confirmedOrder;
 
-	QVBoxLayout* mainLayout;				
+	QVBoxLayout* mainLayout;
 
 	ReceiptParametersWidget* innerWidget;
 

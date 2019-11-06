@@ -16,20 +16,20 @@ QString specwidgets::_ItemSelectionList::elemToString(int ind)
 	return allitems.at(ind).title;
 }
 
-specwidgets::_ItemSelectionList::_ItemSelectionList(parse_uniresults_functions::searchResponse & items, QWidget * parent)
+specwidgets::_ItemSelectionList::_ItemSelectionList(parse_uniresults_functions::searchResponse& items, QWidget* parent)
 	: AbstractListSelectionWidget(parent), allitems(items.values)
 {
 	init();
 }
 
-ItemSearchWidget::ItemSearchWidget(GlobalAppSettings & go, QWidget* parent)
+ItemSearchWidget::ItemSearchWidget(GlobalAppSettings& go, QWidget* parent)
 	: inframedWidget(parent), allitems(), globalSettings(go), mainLayout(new QVBoxLayout(this)),
-	searchPanel(new QHBoxLayout(this)),searchInput(new QLineEdit(this)),
+	searchPanel(new QHBoxLayout(this)), searchInput(new QLineEdit(this)),
 	searchButton(new MegaIconButton(this)), listHeaderLayout(new QHBoxLayout(this)),
 	previousButton(new MegaIconButton(this)), nextButton(new MegaIconButton(this)),
 	indexationInfo(new QLabel(this)), itemList(new specwidgets::_ItemSelectionList(allitems, this)),
-	footerLayout(new QHBoxLayout(this)), backButton(new MegaIconButton(this)), 
-	 currentpage(0)
+	footerLayout(new QHBoxLayout(this)), backButton(new MegaIconButton(this)),
+	currentpage(0)
 {
 	this->setLayout(mainLayout);
 	mainLayout->addLayout(searchPanel);
@@ -52,11 +52,9 @@ ItemSearchWidget::ItemSearchWidget(GlobalAppSettings & go, QWidget* parent)
 	searchButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
 	searchButton->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum));
 
-	indexationInfo->setText("0 " + QString(QChar(0x2014))+" 0");
+	indexationInfo->setText("0 " + QString(QChar(0x2014)) + " 0");
 	indexationInfo->setFont(scf);
 	indexationInfo->setAlignment(Qt::AlignCenter);
-	
-
 
 	backButton->setText(tr("item_search_back"));
 	backButton->setIcon(QIcon(":/res/back.png"));
@@ -69,14 +67,13 @@ ItemSearchWidget::ItemSearchWidget(GlobalAppSettings & go, QWidget* parent)
 	previousButton->setIcon(QIcon(":/res/prevpage.png"));
 	previousButton->setStyleSheet(NAVIGATE_BUTTONS_STYLESHEET);
 	previousButton->setDisabled(true);
-	
+
 	searchInput->setFont(scf);
-    searchInput->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    searchInput->setMinimumWidth(calculateAdaptiveWidth(0.6));
-    searchInput->setMaximumWidth(calculateAdaptiveWidth(0.8));
-    searchInput->setMaximumHeight(calculateAdaptiveButtonHeight());
-	
-	
+	searchInput->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	searchInput->setMinimumWidth(calculateAdaptiveWidth(0.6));
+	searchInput->setMaximumWidth(calculateAdaptiveWidth(0.8));
+	searchInput->setMaximumHeight(calculateAdaptiveButtonHeight());
+
 	itemList->setFont(scf);
 #ifdef QT_VERSION5X
 
@@ -88,16 +85,14 @@ ItemSearchWidget::ItemSearchWidget(GlobalAppSettings & go, QWidget* parent)
 	QObject::connect(searchInput, &QLineEdit::editingFinished, this, &ItemSearchWidget::doSearch);
 	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &ItemSearchWidget::was_timeout);
 #else
-    QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(doSearch()));
-    QObject::connect(nextButton, SIGNAL(clicked()), this, SLOT(nextPage()));
-    QObject::connect(previousButton, SIGNAL(clicked()), this, SLOT(previousPage()));
-    QObject::connect(itemList, SIGNAL(itemPicked(parsedItemSimplified)), this, SIGNAL(itemSelected(parsedItemSimplified)));
-    QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
-    QObject::connect(searchInput, SIGNAL(editingFinished()), this, SLOT(doSearch()));
-    QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
+	QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(doSearch()));
+	QObject::connect(nextButton, SIGNAL(clicked()), this, SLOT(nextPage()));
+	QObject::connect(previousButton, SIGNAL(clicked()), this, SLOT(previousPage()));
+	QObject::connect(itemList, SIGNAL(itemPicked(parsedItemSimplified)), this, SIGNAL(itemSelected(parsedItemSimplified)));
+	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
+	QObject::connect(searchInput, SIGNAL(editingFinished()), this, SLOT(doSearch()));
+	QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
-
-
 }
 
 void ItemSearchWidget::refresh()
@@ -124,9 +119,9 @@ void ItemSearchWidget::loadResults()
 #ifdef QT_VERSION5X
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ItemSearchWidget::search_response);
 #else
-    QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(search_response()));
+	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(search_response()));
 #endif
-    globalSettings.networkingEngine->docSearchItems(toSearch, currentpage, &awaiter, RECEIVER_SLOT_NAME);
+	globalSettings.networkingEngine->docSearchItems(toSearch, currentpage, &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 	nextButton->setDisabled(allitems.last);
 	previousButton->setDisabled(currentpage == 0);

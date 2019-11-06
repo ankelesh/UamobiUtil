@@ -7,11 +7,24 @@
 #include "widgets/InventorySpecialWidgets/InventoryScaningWidget.h"
 #include "widgets/InventorySpecialWidgets/ParentDocumentWidget.h"
 
+
+/*
+	This widget is used as core one for inventory branch. It has nothing to display
+	and works like organized workspace. 
+
+	Supported modes:
+		inventory - none
+
+
+*/
+
+
+
 class InventoryRootWidget : public inframedWidget, abstractNode
 {
 	Q_OBJECT
 public:
-	enum steps {parentSelection, Scaning};
+	enum steps { parentSelection, Scaning };
 protected:
 	GlobalAppSettings& globalSettings;
 	QVBoxLayout* mainLayout;

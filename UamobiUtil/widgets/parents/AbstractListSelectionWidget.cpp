@@ -21,7 +21,6 @@ void  AbstractListSelectionWidget::init()
 #ifdef DEBUG
 		detrace_CYCLEEXPL("adding elem " << elemToString(i) << "by index" << i);
 #endif
-
 	}
 }
 
@@ -37,8 +36,8 @@ AbstractListSelectionWidget::AbstractListSelectionWidget(QWidget* parent)
 	QScroller::grabGesture(this, QScroller::LeftMouseButtonGesture);
 	this->setFont(makeFont(0.05));
 	this->setWordWrap(true);
-    ZebraItemDelegate * zd = new ZebraItemDelegate(this);
-    setItemDelegate(zd);
+	ZebraItemDelegate* zd = new ZebraItemDelegate(this);
+	setItemDelegate(zd);
 #ifdef QT_VERSION5X
 	QObject::connect(this, &QListWidget::itemClicked, this, &AbstractListSelectionWidget::itemSelectedFromList);
 #else

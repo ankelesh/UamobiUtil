@@ -1,6 +1,166 @@
 #include "AbstractScaningWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
+void AbstractScaningWidget::useControls(QVector<QPair<QString, QString>>& cvals)
+{
+	switch (cvals.length())
+	{
+	case 0:
+		switch (controlsAvailable)
+		{
+		case 2:
+			innerLayout->removeWidget(second_control->myWidget());
+			delete second_control;
+			second_control = Q_NULLPTR;
+		case 1:
+			innerLayout->removeWidget(first_control->myWidget());
+			delete first_control;
+			first_control = Q_NULLPTR;
+		case 0:
+			setFocus();
+			controlsRequired = false;
+			submitButton->setDisabled(true);
+			controlsAvailable = 0;
+			controlsRequired = false;
+		}
+		return;
+	case 1:
+
+		if (controlsAvailable >= 1)
+		{
+			if (first_control->name == cvals.at(0).first)
+			{
+				first_control->reset();
+				first_control->show();
+			}
+			else
+			{
+				innerLayout->removeWidget(first_control->myWidget());
+				delete first_control;
+				first_control = fabricateControl(cvals.at(0).first, innerLayout, innerWidget);
+				first_control->installEventFilter(keyfilter);
+			}
+			if (second_control != Q_NULLPTR)
+			{
+				innerLayout->removeWidget(second_control->myWidget());
+				delete second_control;
+				second_control = Q_NULLPTR;
+				--controlsAvailable;
+			}
+		}
+		else
+		{
+			first_control = fabricateControl(cvals.at(0).first, innerLayout, innerWidget);
+			first_control->installEventFilter(keyfilter);
+			++controlsAvailable;
+		}
+		first_control->setAwaiting();
+		first_control->show();
+		controlsRequired = true;
+		submitButton->setDisabled(false);
+		this->setFocus();
+		return;
+	case 2:
+	default:
+		switch (controlsAvailable)
+		{
+		case 2:
+			if (!(cvals.at(1).first == second_control->name))
+			{
+				innerLayout->removeWidget(second_control->myWidget());
+				delete second_control;
+
+				second_control = Q_NULLPTR;
+			}
+		case 1:
+			if (!(cvals.at(1).first == first_control->name))
+			{
+				innerLayout->removeWidget(first_control->myWidget());
+				delete first_control;
+				first_control = Q_NULLPTR;
+			}
+		case 0:
+			if (first_control == Q_NULLPTR)
+			{
+				first_control = fabricateControl(cvals.at(0).first, innerLayout, innerWidget);
+				first_control->installEventFilter(keyfilter);
+			}
+			else
+			{
+				first_control->reset();
+			}
+			if (second_control == Q_NULLPTR)
+			{
+				second_control = fabricateControl(cvals.at(1).first, innerLayout, innerWidget);
+				second_control->installEventFilter(keyfilter);
+			}
+			else
+			{
+				second_control->reset();
+			}
+		}
+		controlsAvailable = 2;
+	}
+	first_control->setAwaiting();
+	controlsRequired = true;
+	submitButton->setDisabled(false);
+	this->setFocus();
+	first_control->show();
+	second_control->show();
+}
+void AbstractScaningWidget::refreshControls()
+{
+	if (controlsRequired)
+	{
+		switch (controlsAvailable)
+		{
+		case 2:
+			second_control->refresh();
+		case 1:
+			first_control->refresh();
+		default:
+			return;
+		}
+	}
+}
+bool AbstractScaningWidget::checkControls()
+{
+	if (controlsRequired)
+	{
+		switch (controlsAvailable)
+		{
+		case 1:
+		case 2:
+			return first_control->canGiveValue();
+		case 0:
+		default:
+			return false;
+		}
+	}
+	return false;
+}
+void AbstractScaningWidget::focusControl(int cnum)
+{
+	if (controlsRequired)
+	{
+		switch (cnum)
+		{
+		case 0:
+			if (controlsAvailable >= 1)
+			{
+				first_control->setFocus();
+			}
+			return;
+		case 1:
+			if (controlsAvailable >= 2)
+			{
+				second_control->setFocus();
+			}
+		default:
+			return;
+		}
+	}
+}
 AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* parent)
 	: inframedWidget(parent), globalSettings(go),
 	mainLayout(new QVBoxLayout(this)), innerWidget(new inframedWidget(this)),
@@ -9,10 +169,10 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
 	barcodeField(new QLineEdit(innerWidget)),
 	mainTextView(new QTextEdit(innerWidget)),
 	buttonPanel(new QHBoxLayout(innerWidget)),
- quitButton(new MegaIconButton(innerWidget)), switchFocus(new MegaIconButton(innerWidget)),
+	quitButton(new MegaIconButton(innerWidget)), switchFocus(new MegaIconButton(innerWidget)),
 	backButton(new MegaIconButton(innerWidget)),
 	submitButton(new MegaIconButton(innerWidget)), searchButton(new MegaIconButton(innerWidget)),
- itemSuppliedValues(), 
+	itemSuppliedValues(),
 	first_control(), second_control(), controlsAvailable(0), awaiter(go.timeoutInt, this)
 {
 	this->setLayout(mainLayout);
@@ -40,7 +200,6 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
 	userInfo->setText(tr("scaning_widget_user_info"));
 	userInfo->setAlignment(Qt::AlignCenter);
 	userInfo->setFont(scaledFont);
-	
 
 	mainTextView->setText(tr("scaning_widget_filler_text"));
 	mainTextView->setFont(scaledFont);
@@ -76,18 +235,18 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
 
 	QObject::connect(backButton, &QPushButton::clicked, this, &AbstractScaningWidget::backNeeded);
 	QObject::connect(submitButton, &QPushButton::clicked, this, &AbstractScaningWidget::submitPressed);
-    QObject::connect(barcodeField, &QLineEdit::returnPressed, this, &AbstractScaningWidget::barcodeConfirmed);
+	QObject::connect(barcodeField, &QLineEdit::returnPressed, this, &AbstractScaningWidget::barcodeConfirmed);
 	QObject::connect(searchButton, &QPushButton::clicked, this, &AbstractScaningWidget::searchRequired);
-    QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &AbstractScaningWidget::was_timeout);
+	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &AbstractScaningWidget::was_timeout);
 	QObject::connect(quitButton, &MegaIconButton::clicked, this, &AbstractScaningWidget::backRequired);
 	QObject::connect(switchFocus, &MegaIconButton::clicked, this, &AbstractScaningWidget::switchedFocus);
 #else
-    QObject::connect(backButton, SIGNAL(clicked()), this, SLOT(backNeeded()));
-    QObject::connect(submitButton, SIGNAL(clicked()), this, SLOT(submitPressed()));
-    QObject::connect(barcodeField, SIGNAL(editingFinished()), this, SLOT(barcodeConfirmed()));
-    QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(searchRequired()));
-    QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
-    QObject::connect(quitButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
+	QObject::connect(backButton, SIGNAL(clicked()), this, SLOT(backNeeded()));
+	QObject::connect(submitButton, SIGNAL(clicked()), this, SLOT(submitPressed()));
+	QObject::connect(barcodeField, SIGNAL(editingFinished()), this, SLOT(barcodeConfirmed()));
+	QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(searchRequired()));
+	QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
+	QObject::connect(quitButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 #endif
 }
 
@@ -97,39 +256,15 @@ void AbstractScaningWidget::was_timeout()
 	hideProcessingOverlay();
 }
 
-bool AbstractScaningWidget::isManualInFocus()
-{
-	return false;
-}
-
-bool AbstractScaningWidget::handleScannedBarcode()
-{
-	return false;
-}
-
-bool AbstractScaningWidget::handleNumberInbuffer()
-{
-	return false;
-}
-
-int AbstractScaningWidget::flushControl(int)
-{
-	return 0;
-}
-
-void AbstractScaningWidget::processBackPress()
-{
-}
-
-void AbstractScaningWidget::removeManualFocus()
-{
-}
-
-void AbstractScaningWidget::setControlFocus(int)
-{
-}
-
 bool AbstractScaningWidget::isControlFocused()
 {
-	return false;
+	switch (controlsAvailable)
+	{
+	case 1:
+		return first_control->hasFocus();
+	case 2:
+		return first_control->hasFocus() || second_control->hasFocus();
+	default:
+		return false;
+	}
 }

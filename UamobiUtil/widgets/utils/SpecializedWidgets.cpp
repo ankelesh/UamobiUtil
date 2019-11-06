@@ -47,5 +47,4 @@ void specwidgets::toggledIndexedButton::clickCapt()
 specwidgets::toggledIndexedButton::toggledIndexedButton(QIcon& non, QIcon& is, int Index, QWidget* parent)
 	: indexedButton(Index, parent), stateNon(non), stateToggled(is)
 {
-
 }

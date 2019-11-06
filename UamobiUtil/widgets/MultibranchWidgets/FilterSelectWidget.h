@@ -12,12 +12,21 @@
 #include "networking/RequestAwaiter.h"
 #include "networking/things.h"
 
+
+/*
+	This widget is used to check and change filters which will apply to parent document's query.
+
+
+	__ASSOCIATED_DATABASE_FUNCTION__   :  P'docFilterResponse' doc_get_allowed_types
+	__ASSOCIATED_DATABASE_FUNCTION__   :  P'typicalResponse'   doc_select_filter
+
+*/
 namespace specwidgets {
 	class TypeCheckboxSelection : public AbstractCheckboxSelection
 	{
 		Q_OBJECT
 	protected:
-		QVector<parsedDocType> & alltypes;
+		QVector<parsedDocType>& alltypes;
 		// Inherited via AbstractCheckboxSelection
 		virtual QString elemAsString(int index) override;
 		virtual int countElems() override;
@@ -25,10 +34,6 @@ namespace specwidgets {
 		TypeCheckboxSelection(QVector<parsedDocType>& at, QVector<bool>& statesv, QWidget* parent);
 	};
 }
-
-
-
-
 
 class FilterSelectWidget : public inframedWidget
 {
@@ -63,5 +68,3 @@ protected slots:
 signals:
 	void filterApplied();
 };
-
-

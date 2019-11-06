@@ -18,11 +18,11 @@ const QString BACK_BUTTONS_STYLESHEET("QPushButton { \
 		 }");
 
 const QString COMMIT_BUTTONS_STYLESHEET("QPushButton{ "
-			"background-color: #a0e899;"
-			"border: 1px solid gray;"
-		"} "
-			"QPushButton:disabled {"
-			"background-color:#4a7039;"
+	"background-color: #a0e899;"
+	"border: 1px solid gray;"
+	"} "
+	"QPushButton:disabled {"
+	"background-color:#4a7039;"
 	"}");
 
 const QString DELETE_BUTTONS_STYLESHEET("QPushButton { \
@@ -139,31 +139,29 @@ const QString BETTER_CALENDAR_STYLESHEET = "QCalendarWidget QToolButton{\
 const QString ERROR_TEXT_STYLESHEET = "QLabel {color: red;}";
 
 const QString CANCEL_BUTTONS_STYLESHEET = "QPushButton{"
-        "background-color: #f5a37f; "
-		"border: 1px solid gray;}";
+"background-color: #f5a37f; "
+"border: 1px solid gray;}";
 ;
 
 const QString SETTINGS_BUTTONS_STYLESHEET = "QPushButton {"
-		"background-color: #9893c9; " 
-		"border: 1px solid gray;}";
+"background-color: #9893c9; "
+"border: 1px solid gray;}";
 
 const QString UNCHECKED_BUTTONS_STYLESHEET = "QPushButton{"
 "background-color: #e9edb4; "
 "border: 1px solid gray;}";
 
 const QString NAVIGATE_BUTTONS_STYLESHEET = "QPushButton{ "
-			"background-color: #c6abf5;"
-			"border: 1px solid gray;"
-		"}"
-	"QPushButton:disabled {"
-			"background-color:#7e7785;"
-	"}";
-
+"background-color: #c6abf5;"
+"border: 1px solid gray;"
+"}"
+"QPushButton:disabled {"
+"background-color:#7e7785;"
+"}";
 
 static QSize currsize;
-const QSize & getCurrentSize()
+const QSize& getCurrentSize()
 {
-
 #ifdef DEBUG
 	detrace_METHCALL("getCurrentSize, " << currsize.height() << currsize.width());
 #endif
@@ -171,15 +169,15 @@ const QSize & getCurrentSize()
 	return currsize;
 }
 
- void setCurrentSize(const QSize & sz)
+void setCurrentSize(const QSize& sz)
 {
 #ifdef DEBUG
-	 detrace_METHCALL("setCurrentSize, " << sz.height() << sz.width());
+	detrace_METHCALL("setCurrentSize, " << sz.height() << sz.width());
 #endif
 	currsize = sz;
 }
 
- QString countAdaptiveFont(double perc)
+QString countAdaptiveFont(double perc)
 {
 	return " font-size: " + QString::number((int)(GEOMETRY_SOURCE->availableGeometry().height() * perc)) + "px;";
 }
@@ -190,7 +188,7 @@ QFont makeFont(double perc)
 }
 
 const QString ZEBRAEVEN_BUTTONS_STYLESHEET(
-        "QPushButton {background-color: #f8fced; border: 1px solid gray;}");
+	"QPushButton {background-color: #f8fced; border: 1px solid gray;}");
 const QString ZEBRAODD_BUTTONS_STYLESHEET("QPushButton {background-color: #878a7f; border: 1px solid gray;}");
 const QString CHECKBOX_BUTTON_STYLESHEET(
 	"QPushButton{ "
