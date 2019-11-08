@@ -135,6 +135,7 @@
     <ClCompile Include="UamobiUtil.cpp" />
     <ClCompile Include="widgets\ControlsMiniwidgets\abs_control.cpp" />
     <ClCompile Include="widgets\ControlsMiniwidgets\ControlManager.cpp" />
+    <ClCompile Include="widgets\ControlsMiniwidgets\ControlTranslator.cpp" />
     <ClCompile Include="widgets\ControlsMiniwidgets\QuantityControl.cpp" />
     <ClCompile Include="widgets\ElementWidgets\BigButtonsSpinbox.cpp" />
     <ClCompile Include="widgets\ElementWidgets\MegaIconButton.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="widgets\ControlsMiniwidgets\abs_control.h" />
     <QtMoc Include="ScaningCore\NormalCapturer.h" />
     <QtMoc Include="widgets\ControlsMiniwidgets\ControlManager.h" />
+    <ClInclude Include="widgets\ControlsMiniwidgets\ControlTranslator.h" />
     <ClInclude Include="widgets\ControlsMiniwidgets\QuantityControl.h" />
     <QtMoc Include="widgets\ElementWidgets\ProcessingOverlay.h" />
     <ClInclude Include="widgets\ElementWidgets\ZebraListItemDelegate.h" />

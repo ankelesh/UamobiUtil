@@ -6,7 +6,19 @@
 /*
 	This file contains stylesheet definitions
 */
-
+QString& normalizeLine(QString& line)
+{
+#ifdef Q_OS_WINCE
+    int inserts = line.length() / 22;
+    if (inserts <= 0)
+        return line;
+    for (int i = 1; i <= inserts; ++i)
+    {
+        line.insert(i * 24 + i - 1, "\n");
+    }
+#endif
+    return line;
+}
 const QString OK_BUTTONS_STYLESHEET("QPushButton { \
 			background-color: #a2deae;		\
 			border: 1px solid gray;			\
@@ -158,7 +170,7 @@ const QString NAVIGATE_BUTTONS_STYLESHEET = "QPushButton{ "
 "QPushButton:disabled {"
 "background-color:#7e7785;"
 "}";
-
+const QString LISTENING_CONTROL_STYLESHEET="QSpinBox {border: 2px solid blue;}";
 static QSize currsize;
 const QSize& getCurrentSize()
 {

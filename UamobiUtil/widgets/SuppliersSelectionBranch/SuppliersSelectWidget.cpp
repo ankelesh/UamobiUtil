@@ -1,7 +1,7 @@
 #include "SuppliersSelectWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
-#define DEBUG_FILTER
+//#define DEBUG_FILTER
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif

@@ -52,6 +52,7 @@ HttpUpdateEngine::HttpUpdateEngine(QString& Url, QObject* parent)
 #ifdef DEBUG
 	detrace_DCONSTR("HttpUpdateEngine");
 #endif
+    class_id=1;
 	QTimer::singleShot(0, this, SLOT(initConnection()));
 }
 
@@ -280,6 +281,8 @@ void HttpUpdateEngine::itemGetInfo(const QString& code, QObject* receiver, const
 #ifdef DEBUG
 	//detrace_METHCALL("HttpUpdateEngine::itemGetInfo");
 #endif
+    if (code.isEmpty())
+        return;
 	QString printerType = getSettingsObject()->value("printer/type", "zebra").toString();
 	//--
 	sendQuery(
@@ -771,7 +774,7 @@ void HttpUpdateEngine::recSubmit(const QString& code, const QString& qty, const 
 		"rec_add_item&session=" + m_sessionId
 		+ "&barcode=" + code
 		+ "&qty=" + qty
-		+ "&price=&params="
+		+ "&price=0&prs="
 		+ parameters
 		, receiver
 		, slot
@@ -878,5 +881,5 @@ QString makeParamsFromList(QVector<QPair<QString, QString>>& vect)
 
 QString makeParamsFromList(QString& paramName, QString& paramVal)
 {
-	return "#" + paramName + "#" + paramVal;
+	return  paramName + "-" + paramVal + "-";
 }

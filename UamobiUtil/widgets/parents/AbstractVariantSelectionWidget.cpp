@@ -45,12 +45,13 @@ bool AbstractVariantSelectionWidget::isExpectingControl(int val)
 
 void AbstractVariantSelectionWidget::init()
 {
-	QFont scf = makeFont(0.05);
+    QFont scf = makeFont(0.044);
 	int elems = countElems();
 	for (int i = 0; i < elems; ++i)
 	{
 		userButtons.push_back(new specwidgets::indexedButton(i, this));
-		userButtons.last()->setText(elemAsString(i));
+
+        userButtons.last()->setText(normalizeLine(elemAsString(i)));
 		userButtons.last()->setFont(scf);
 		mainLayout->addWidget(userButtons.last());
 		if (i % 2) {

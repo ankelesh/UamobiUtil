@@ -93,6 +93,8 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	versionLabel->setText(QString::number(VERSION) + " " + SUFFIX);
 	versionLabel->setFont(scf);
 	hostLabel->setText(globalSettings.HttpUrl.section("/", 4, 4));
+    if (globalSettings.networkingEngine->myType() == 2)
+        hostLabel->setText("STATIC");
 	hostLabel->setFont(scf);
 
 	userHelpLabel->setText(tr("main_page_select_profile_tip"));

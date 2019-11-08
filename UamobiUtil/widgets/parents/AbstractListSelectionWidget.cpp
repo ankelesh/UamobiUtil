@@ -16,7 +16,7 @@ void  AbstractListSelectionWidget::init()
 {
 	for (int i = 0; i < countElems(); ++i)
 	{
-		addItem(elemToString(i));
+        addItem(elemToString(i));
 
 #ifdef DEBUG
 		detrace_CYCLEEXPL("adding elem " << elemToString(i) << "by index" << i);
@@ -34,8 +34,9 @@ AbstractListSelectionWidget::AbstractListSelectionWidget(QWidget* parent)
 {
 	this->setSelectionMode(QAbstractItemView::SingleSelection);
 	QScroller::grabGesture(this, QScroller::LeftMouseButtonGesture);
-	this->setFont(makeFont(0.05));
+    this->setFont(makeFont(0.05));
 	this->setWordWrap(true);
+    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	ZebraItemDelegate* zd = new ZebraItemDelegate(this);
 	setItemDelegate(zd);
 #ifdef QT_VERSION5X

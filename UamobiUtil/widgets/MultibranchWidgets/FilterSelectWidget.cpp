@@ -68,6 +68,7 @@ FilterSelectWidget::FilterSelectWidget(GlobalAppSettings& go, QWidget* parent)
 	okButton->setText(tr("filter!"));
 	okButton->setIcon(QIcon(":/res/filter.png"));
 	okButton->setStyleSheet(CHANGE_BUTTONS_STYLESHEET);
+    scrArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
 	QScroller::grabGesture(scrArea, QScroller::LeftMouseButtonGesture);
 #ifdef QT_VERSION5X

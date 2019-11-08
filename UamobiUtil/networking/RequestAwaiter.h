@@ -19,8 +19,8 @@ class RequestAwaiter : public QObject	//	This class is awaiting sent request
 	Q_OBJECT
 private:
 	QTimer* timer;
-	volatile bool awaiting;
-	volatile bool wastimeout;
+	bool awaiting;
+	bool wastimeout;
 	int timeoutinterval;
 public:
 	QString restext;		//	Request result. is overwritten when new response arrives

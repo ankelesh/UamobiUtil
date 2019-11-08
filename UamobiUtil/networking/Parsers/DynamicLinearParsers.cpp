@@ -1,5 +1,9 @@
 #include "DynamicLinearParsers.h"
+#define DEBUG
 
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
 static QVector<QString> _initOpts()
 {
 	QVector<QString> temp;
@@ -30,7 +34,7 @@ QString ModeListParser::parseErrorText()
 void ModeListParser::parse_old_api(QDomDocument& ddoc)
 {
 #ifdef DEBUG
-	//detrace_METHCALL("parse_old_api");
+	detrace_METHCALL("parse_old_api");
 #endif
 	QDomNodeList dmndl = ddoc.elementsByTagName("modes").at(0).childNodes();
 	parseres.queriesResult.reserve(dmndl.count() * 2);
@@ -39,11 +43,11 @@ void ModeListParser::parse_old_api(QDomDocument& ddoc)
 		if (dmndl.at(i).nodeName().simplified() == "mode") {
 			parseres.queriesResult << dmndl.at(i).childNodes().at(0).toElement().text();
 #ifdef DEBUG
-			//detrace_METHDATAS("parse_old_api", " readed ", << parseres.queriesResult.last());
+			detrace_METHDATAS("parse_old_api", " readed ", << parseres.queriesResult.last());
 #endif
 			parseres.queriesResult << dmndl.at(i).childNodes().at(1).toElement().text();
 #ifdef DEBUG
-			//detrace_METHDATAS("parse_old_api", " readed ", << parseres.queriesResult.last());
+			detrace_METHDATAS("parse_old_api", " readed ", << parseres.queriesResult.last());
 #endif
 		}
 	}
@@ -75,7 +79,7 @@ ModeListParser::ModeListParser(QString& res, QString& err)
 	QString code = doc.elementsByTagName("status").at(0).toElement().text();
 	parseres.request_status = code.toInt();
 #ifdef DEBUG
-	//detrace_METHDATAS("UserListParser::dconstr", "code", << code);
+	detrace_METHDATAS("UserListParser::dconstr", "code", << code);
 #endif
 	if (parseres.request_status != 200)
 		return;

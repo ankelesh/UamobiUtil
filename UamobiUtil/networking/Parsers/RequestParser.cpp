@@ -5,7 +5,7 @@
 #include "networking/Parsers/NamedAttributesResponseParsers.h"
 #include "legacy/legacy.h"
 #include <QtXml/QDomDocument>
-//#define DEBUG
+#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -47,7 +47,7 @@ namespace parse_uniresults_functions {
 	modesResponse parse_uniresults_functions::parse_modes(uniform_parse_result& ures)
 	{
 #ifdef DEBUG
-		//detrace_METHEXPL(showHeap(ures));
+		detrace_METHEXPL(showHeap(ures));
 #endif
 		if (!queryLengthOkInResult(ures))
 		{
@@ -59,7 +59,7 @@ namespace parse_uniresults_functions {
 		if (ures.one_position_entries_quantity == 1)
 		{
 #ifdef DEBUG
-			//detrace_METHEXPL("modes->single");
+			detrace_METHEXPL("modes->single");
 #endif
 			while (start != ures.queriesResult.end())
 			{
@@ -74,7 +74,7 @@ namespace parse_uniresults_functions {
 		else
 		{
 #ifdef DEBUG
-			//detrace_METHEXPL("modes->multi");
+			detrace_METHEXPL("modes->multi");
 #endif
 			while (start != ures.queriesResult.end())
 			{

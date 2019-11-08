@@ -59,7 +59,7 @@ ModeSelectionWidget::ModeSelectionWidget(const GlobalAppSettings& go, QWidget* p
 	userTip->setText(tr("mode_selection_user_tip!"));
 	userTip->setAlignment(Qt::AlignCenter);
 	userTip->setFont(scf);
-
+scrArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	modesTip->setText(tr("mode_selection_modes_tip:"));
 	modesTip->setAlignment(Qt::AlignCenter);
 	modesTip->setFont(scf);

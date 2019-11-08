@@ -3,6 +3,9 @@
 #include "networking/dataupdateengine.h"
 #include <QtCore/QTimer>
 
+
+enum StaticModes {NoneModeS, InvModeS, RecModeS, RecWarehModeS, RecOrdSldCorrModeS};
+StaticModes makeStaticModeFromRequizites(const QString& mode, const QString& submode);
 class StaticTestingDataEngine : public DataUpdateEngine
 {
 private:
@@ -10,7 +13,11 @@ private:
 	QPair<QString, QString> pendingResponse;
 	QPair<QObject*, const char*> receiverCoords;
 
-	void pushQuery(const QString&, const QString&, QObject* receiver, const char* slot);
+	StaticModes currentmode;
+	QStringList docListEmulation;
+	bool prescaningCode;
+	void pushQuery(const QString, const QString, QObject* receiver, const char* slot);
+	QString emulateDocList();
 public:
 	StaticTestingDataEngine(int delay);
 
@@ -96,4 +103,8 @@ public:
 	virtual void makeRequest(DataRequest* dr) override;
 public slots:
 	void delayOut();
+
+	// Inherited via DataUpdateEngine
+	virtual void setUrl(QString) override;
+	virtual void recSubmit(const QString& code, const QString& num, const QString& parameters, QObject* receiver, const char* slot) override;
 };

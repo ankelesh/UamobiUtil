@@ -1,6 +1,5 @@
 #include "EventsAndFilters.h"
 #include <QApplication>
-
 #ifdef Q_OS_ANDROID
 #include <QInputMethod>
 #endif

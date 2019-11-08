@@ -41,7 +41,8 @@ DocResultsWidget::DocResultsWidget(GlobalAppSettings& go, QWidget* parent)
 	indexationInfo->setSizePolicy(ma);
 	indexationInfo->setFont(scf);
 	indexationInfo->setAlignment(Qt::AlignCenter);
-
+    itemInfoStorage->setWordWrap(true);
+    itemInfoStorage->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	//TODO: icons
 
 	backButton->setText(tr("doc_results_back"));

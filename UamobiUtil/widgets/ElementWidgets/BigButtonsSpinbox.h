@@ -5,12 +5,16 @@
 #include <QtWidgets/qpushbutton.h>
 #include <QtWidgets/qboxlayout.h>
 #include <QtWidgets/qdatetimeedit.h>
+#include <QtWidgets/qgridlayout.h>
+#include <QtWidgets/QLabel>
 #else
 #include <QtGui/QWidget>
 #include <QtGui/QSpinBox>
 #include <QtGui/qpushbutton.h>
 #include <QtGui/qboxlayout.h>
 #include <QtGui/qdatetimeedit.h>
+#include <QtGui/qgridlayout.h>
+#include <QtGui/QLabel>
 #endif
 #include "widgets/utils/EventsAndFilters.h"
 
@@ -33,9 +37,10 @@ public:
 	enum spintype { intspin, timespin };	//	Used to determine which type of spinbox is wrapped
 
 private:
-	QHBoxLayout* mainLayout;			//	View
+	QGridLayout* mainLayout;			//	View
 	QPushButton* buttonUp;
 	QPushButton* buttonDown;
+	QLabel* infoLabel;
 	QAbstractSpinBox* coreSpinbox;	//	Abstract spinbox allows to place here any spinbox
 	filters::CaptureBackFilter* keyFilter;		//	Captures back press
 
@@ -53,7 +58,7 @@ public:
 	QTime time();			//	returns current value
 	void setDisplayFormat(const QString& tf);//	sets format
 	bool hasFocus() const;
-
+	void setInfo(QString&);
 private slots:
 	void intValueChanged(int);				//	These slots are wrapping slots of inner spinbox
 	void timeValueChanged(const QTime& t);

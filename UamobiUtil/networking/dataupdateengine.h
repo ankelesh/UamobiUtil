@@ -15,10 +15,13 @@ class QNetworkReply;
 class DataUpdateEngine : public QObject
 {
 	Q_OBJECT
+protected:
+    int class_id;
 public:
 	explicit DataUpdateEngine(QObject* parent = 0);
 	~DataUpdateEngine() {}
 	//--
+    int myType(){return class_id;}
 	virtual void setUrl(QString) = 0;
 	virtual void cancelPending() = 0;
 	// meta

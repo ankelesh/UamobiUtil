@@ -3,7 +3,7 @@
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 void AbstractScaningWidget::useControls(QVector<QPair<QString, QString>>& cvals)
 {
-	switch (cvals.length())
+    switch (cvals.count())
 	{
 	case 0:
 		switch (controlsAvailable)
@@ -247,6 +247,7 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
 	QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(searchRequired()));
 	QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 	QObject::connect(quitButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
+    QObject::connect(switchFocus, SIGNAL(clicked()),this, SLOT(switchedFocus()));
 #endif
 }
 

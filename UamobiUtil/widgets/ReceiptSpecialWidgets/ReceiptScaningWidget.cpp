@@ -146,6 +146,7 @@ bool ReceiptScaningWidget::handleScannedBarcode()
 
 bool ReceiptScaningWidget::handleNumberInbuffer()
 {
+    detrace_METHCALL("refreshing from HNIB");
 	refreshControls();
 	return true;
 }
@@ -233,14 +234,17 @@ void ReceiptScaningWidget::backNeeded()
 
 void ReceiptScaningWidget::useControls(QVector<QPair<QString, QString> >& cvals)
 {
+    detrace_METHCALL("useControls");
 	AbstractScaningWidget::useControls(cvals);
 	switch (controlsAvailable)
 	{
 	case 1:
 	case 2:
-		first_control->associateBuffer(numberBuffer);
+        first_control->associateBuffer(numberBuffer);
 	case 0:
-		capturer->setControlNumber(controlsAvailable);
+         detrace_METHEXPL("setting phase 0" << capturer->stateOfEngine());
+         capturer->setControlNumber(controlsAvailable);
+         capturer->setPhase(0);
 	}
 }
 

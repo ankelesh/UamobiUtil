@@ -276,6 +276,9 @@
     <ClCompile Include="widgets\ControlsMiniwidgets\ControlManager.cpp">
       <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
     </ClCompile>
+    <ClCompile Include="widgets\ControlsMiniwidgets\ControlTranslator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -445,6 +448,9 @@
       <Filter>Header Files\ElementWidgets</Filter>
     </ClInclude>
     <ClInclude Include="widgets\ControlsMiniwidgets\abs_control.h">
+      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\ControlsMiniwidgets\ControlTranslator.h">
       <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </ClInclude>
   </ItemGroup>

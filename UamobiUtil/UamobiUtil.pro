@@ -73,7 +73,8 @@ HEADERS += ./UamobiUtil.h \
     widgets/ElementWidgets/ZebraListItemDelegate.h \
     legacy/qtCompatibility/scrollgrabber.h \
     widgets/ControlsMiniwidgets/abs_control.h \
-    widgets/ControlsMiniwidgets/QuantityControl.h
+    widgets/ControlsMiniwidgets/QuantityControl.h \
+	widgets/ControlsMiniwidgets/ControlTranslator.h
 SOURCES += ./main.cpp \
     ./networking/dataupdateengine.cpp \
     ./UamobiUtil.cpp \
@@ -133,6 +134,7 @@ SOURCES += ./main.cpp \
     widgets/parents/inframedWidget.cpp \
     legacy/qtCompatibility/scrollgrabber.cpp \
     widgets/ControlsMiniwidgets/abs_control.cpp \
-    widgets/ControlsMiniwidgets/QuantityControl.cpp
+    widgets/ControlsMiniwidgets/QuantityControl.cpp\
+	widgets/ControlsMiniwidgets/ControlTranslator.cpp
 RESOURCES += UamobiUtil.qrc
 TRANSLATIONS += translations/uamobi_ru.ts translations/uamobi_ro.ts translations/uamobi_en.ts

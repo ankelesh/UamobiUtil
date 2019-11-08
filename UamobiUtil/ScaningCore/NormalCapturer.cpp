@@ -210,9 +210,10 @@ void NormalCapturer::handleElement(QString elem)
 		}
 	}
 	else
-	{
-		pressScan();
-		lastKeyReleaseTimepoint = QTime::currentTime();
+    {
+       // detrace_METHEXPL("pressing scan during non-scan");
+        //pressScan();
+        lastKeyReleaseTimepoint = QTime::currentTime();
 	}
 }
 
@@ -247,17 +248,19 @@ void NormalCapturer::handleErase()
 
 void NormalCapturer::setPhase(int ph)
 {
+    detrace_METHEXPL("ph set: " << ph << "|" << controlNumber);
 	if (ph == -1)
 	{
 		clearCaptureEngine();
 		pressScan();
 	}
-	else if (ph < controlNumber)
+    else if (ph < controlNumber)
 	{
 		isAwaitingControlValue = true;
 		isScaning = false;
 		controlIndex = ph;
 	}
+    detrace_METHEXPL(stateOfEngine());
 }
 
 void NormalCapturer::setControlNumber(int num)

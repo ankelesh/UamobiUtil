@@ -37,11 +37,11 @@ protected:
 	virtual bool parseAndSetValue(QString) = 0;			//	uses normalized value to set up control
 	virtual void clear() = 0;							//	drops state to default. Does not hides control
 	virtual bool valueAvailable() const = 0;			//	true if value differs from default
-
+    virtual void setListening(bool) = 0;
 public:
 	QString defaultBuffer;
 	QString name;
-
+	QString label;
 
 	explicit abs_control(QString cname, QString& assocBuffer, controlType Type = None);
 	explicit abs_control(QString cname, controlType Type = None);

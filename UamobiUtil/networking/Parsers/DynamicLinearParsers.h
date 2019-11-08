@@ -1,7 +1,6 @@
 #pragma once
 #include "abs_parsed_request.h"
 #include <QtXml/QDomDocument>
-#include "debugtrace.h"
 
 /*
 	This class contains parsers, which one_position_entries_quantity is different

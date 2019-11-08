@@ -119,7 +119,7 @@ void OrderSelectionWidget::orderSelected(parsedOrder Po)
 void OrderSelectionWidget::parse_order_response()
 {
 	allOrders = RequestParser::interpretAsOrdersList(awaiter.restext, awaiter.errtext);
-#ifdef DEBUG
+#ifdef DEBUG_FILTER
 	parse_uniresults_functions::ordersResponse temp;
 	for (int i = 0; i < allOrders.count(); ++i)
 	{

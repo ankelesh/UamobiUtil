@@ -2,8 +2,9 @@
 #include "widgets/utils/ElementsStyles.h"
 
 BigButtonsSpinbox::BigButtonsSpinbox(spintype type, QWidget* parent, double adaptH)
-	: QWidget(parent), mainLayout(new QHBoxLayout(this)),
+	: QWidget(parent), mainLayout(new QGridLayout(this)),
 	buttonUp(new QPushButton(this)), buttonDown(new QPushButton(this)),
+	infoLabel(new QLabel(this)),
 	keyFilter(new filters::CaptureBackFilter(this)),
 	coreSpinbox()
 {
@@ -17,9 +18,10 @@ BigButtonsSpinbox::BigButtonsSpinbox(spintype type, QWidget* parent, double adap
 	}
 	sptype = type;
 	this->setLayout(mainLayout);
-	mainLayout->addWidget(buttonUp);
-	mainLayout->addWidget(coreSpinbox);
-	mainLayout->addWidget(buttonDown);
+	mainLayout->addWidget(buttonUp, 0,0,3,1);
+	mainLayout->addWidget(infoLabel, 0, 1);
+	mainLayout->addWidget(coreSpinbox, 1, 1, 2, 1);
+	mainLayout->addWidget(buttonDown, 0, 2, 3, 1);
 	mainLayout->setSpacing(0);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 	buttonUp->setIcon(QIcon(":/res/uparrow.png"));
@@ -27,11 +29,15 @@ BigButtonsSpinbox::BigButtonsSpinbox(spintype type, QWidget* parent, double adap
 	coreSpinbox->setButtonSymbols(QAbstractSpinBox::NoButtons);
 	buttonUp->setMinimumHeight(calculateAdaptiveButtonHeight(adaptH));
 	buttonDown->setMinimumHeight(calculateAdaptiveButtonHeight(adaptH));
-	coreSpinbox->setMinimumHeight(calculateAdaptiveButtonHeight(adaptH));
+	infoLabel->setMinimumHeight(calculateAdaptiveButtonHeight(adaptH / 3));
+	infoLabel->setFont(makeFont(0.027));
+	infoLabel->setAlignment(Qt::AlignCenter);
+	coreSpinbox->setMinimumHeight(calculateAdaptiveButtonHeight(adaptH * 0.6666));
 	coreSpinbox->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum));
 
 	coreSpinbox->installEventFilter(keyFilter);
 
+	infoLabel->setStyleSheet("QLabel{border: 1px solid black;}");
 	buttonUp->setStyleSheet(UP_SPINBOX_STYLESHEET);
 	buttonDown->setStyleSheet(DOWN_SPINBOX_STYLESHEET);
 #ifdef QT_VERSION5X
@@ -162,6 +168,11 @@ void BigButtonsSpinbox::setDisplayFormat(const QString& tf)
 bool BigButtonsSpinbox::hasFocus() const
 {
 	return coreSpinbox->hasFocus();
+}
+
+void BigButtonsSpinbox::setInfo(QString& str)
+{
+	infoLabel->setText(str);
 }
 
 void BigButtonsSpinbox::timeValueChanged(const QTime& t)

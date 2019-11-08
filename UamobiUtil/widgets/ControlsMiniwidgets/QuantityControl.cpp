@@ -1,5 +1,5 @@
 #include "QuantityControl.h"
-
+#include "widgets/utils/ElementsStyles.h"
 #define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
@@ -33,7 +33,20 @@ bool QuantityControl::valueAvailable() const
 
 bool QuantityControl::hasFocus() const
 {
-	return innerSpinbox->hasFocus();
+    return innerSpinbox->hasFocus();
+}
+
+void QuantityControl::setListening(bool isListening)
+{
+    if (isListening)
+    {
+
+        innerSpinbox->setStyleSheet(LISTENING_CONTROL_STYLESHEET);
+    }
+    else
+    {
+        innerSpinbox->setStyleSheet("");
+    }
 }
 
 QuantityControl::QuantityControl(QString& cname, QWidget* parent)
@@ -43,6 +56,7 @@ QuantityControl::QuantityControl(QString& cname, QWidget* parent)
 	innerSpinbox->setMinimum(0);
 	innerSpinbox->setMaximum(99999);
 	innerSpinbox->setValue(0);
+	innerSpinbox->setInfo(label);
 	hide();
 }
 
@@ -52,6 +66,7 @@ QuantityControl::QuantityControl(QString& assocBuffer, QString& cname, QWidget* 
 	innerSpinbox->setMinimum(0);
 	innerSpinbox->setMaximum(99999);
 	innerSpinbox->setValue(0);
+	innerSpinbox->setInfo(label);
 	hide();
 }
 

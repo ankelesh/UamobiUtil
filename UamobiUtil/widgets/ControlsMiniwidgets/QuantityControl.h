@@ -17,10 +17,11 @@ protected:
 	virtual void clear() override;
 	virtual bool valueAvailable() const override;
 	virtual bool hasFocus() const override;
+    virtual void setListening(bool) override;
 public:
 	explicit QuantityControl(QString& cname, QWidget* parent);
 	explicit QuantityControl(QString& cname, QString& assocBuffer, QWidget* parent);
-	virtual ~QuantityControl() override;
+    virtual ~QuantityControl();
 
 	// Inherited via abs_control
 	virtual void setFocus() const override;

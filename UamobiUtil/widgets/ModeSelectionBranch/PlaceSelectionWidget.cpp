@@ -9,7 +9,6 @@
 #include "legacy/qtCompatibility/scrollgrabber.h"
 #endif
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
-#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -72,6 +71,7 @@ PlaceSelectionWidget::PlaceSelectionWidget(const GlobalAppSettings& go, QWidget*
 	backButton->setIcon(QIcon(":/res/back.png"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
+    scrArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	scrArea->setWidget(placeSelection);
 	QScroller::grabGesture(scrArea, QScroller::LeftMouseButtonGesture);
 	placeSelection->installEventFilter(keyfilter);
@@ -130,7 +130,7 @@ void PlaceSelectionWidget::placeSelected(parsedPlace pl)
 void PlaceSelectionWidget::parse_loaded_places()
 {
 	allplaces = interpreter(awaiter.restext, awaiter.errtext);
-#ifdef DEBUG
+#ifdef DEBUG_FILTER
 	parse_uniresults_functions::placesResponse temp;
 	for (int i = 0; i < allplaces.count(); ++i)
 	{

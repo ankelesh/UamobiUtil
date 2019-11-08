@@ -52,6 +52,9 @@ inline static QSize calculateAdaptiveSize(double Hpercent, double Wpercent)
 		GEOMETRY_SOURCE->availableGeometry().height() * Hpercent
 	);
 }
+
+QString& normalizeLine(QString& line);
+
 const QSize& getCurrentSize();
 void setCurrentSize(const QSize&);
 
@@ -109,3 +112,4 @@ extern const QString ZEBRAODD_BUTTONS_STYLESHEET;
 // stylesheet for odd buttons
 
 extern const QString CHECKBOX_BUTTON_STYLESHEET;
+extern const QString LISTENING_CONTROL_STYLESHEET;

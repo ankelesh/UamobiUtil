@@ -22,7 +22,7 @@
 			__OPTIONAL_REPLACEMENT_DBFUNCTION__ -> this means that this fuction can replace upper database function in some cases
 
 */
-
+#define TESTING
 int main(int argc, char* argv[])
 {
 	QApplication a(argc, argv);
