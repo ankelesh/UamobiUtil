@@ -106,12 +106,13 @@ void HttpUpdateEngine::userLogIn(
 	, const QString& passwd
 	, QObject* receiver
 	, const char* slot
+	, const float version
 ) {
 #ifdef DEBUG
 	//detrace_METHCALL("HttpUpdateEngine::userLogin");
 #endif
 	sendQuery(
-		"log_in&username=" + acc + "&password=" + passwd
+		"log_in&username=" + acc + "&password=" + passwd + "&version=" + QString::number(version)
 		, receiver
 		, slot
 		, QString("LogIn")

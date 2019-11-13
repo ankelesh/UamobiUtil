@@ -70,7 +70,7 @@ void StaticTestingDataEngine::userUpdateList(QObject* receiver, const char* slot
 	);
 }
 
-void StaticTestingDataEngine::userLogIn(const QString& acc, const QString& passwd, QObject* receiver, const char* slot)
+void StaticTestingDataEngine::userLogIn(const QString& acc, const QString& passwd, QObject* receiver, const char* slot, const float v)
 {
 	detrace_METHCALL("StaticTestingDataEngine::userLogin");
 	pushQuery("<?xml version=\"1.0\" encoding=\"CP1251\"?>"

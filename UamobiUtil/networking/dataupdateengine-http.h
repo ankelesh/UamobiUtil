@@ -40,6 +40,7 @@ public:
 		, const QString& passwd
 		, QObject* receiver
 		, const char* slot
+		,const float version = 0
 	);
 	virtual void userLogOut
 	(

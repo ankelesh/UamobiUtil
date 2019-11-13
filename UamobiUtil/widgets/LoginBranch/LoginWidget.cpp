@@ -15,7 +15,7 @@ void LoginWidget::login_confirmed()
 		return;
 	}
 	showProcessingOverlay();
-	globalSettings.networkingEngine->userLogIn(loginField->text(), passwordField->text(), &awaiter, RECEIVER_SLOT_NAME);
+	globalSettings.networkingEngine->userLogIn(loginField->text(), passwordField->text(), &awaiter, RECEIVER_SLOT_NAME, VERSION);
 	awaiter.run();
 }
 

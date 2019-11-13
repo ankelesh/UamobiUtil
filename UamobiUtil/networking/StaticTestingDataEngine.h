@@ -26,7 +26,7 @@ public:
 
 	virtual void userUpdateList(QObject* receiver, const char* slot, const QString& placeCodeFilter = QString()) override;
 
-	virtual void userLogIn(const QString& acc, const QString& passwd, QObject* receiver, const char* slot) override;
+	virtual void userLogIn(const QString& acc, const QString& passwd, QObject* receiver, const char* slot, const float v = 0) override;
 
 	virtual void userLogOut(QObject* receiver, const char* slot) override;
 
