@@ -63,6 +63,3 @@ public:
 	void associateBuffer(QString&);
 	virtual ~abs_control() {};
 };
-
-abs_control* fabricateControl(QString& assocBuffer, QString initstr, QBoxLayout* layout, QWidget* parent = Q_NULLPTR);
-abs_control* fabricateControl(QString initstr, QBoxLayout* layout, QWidget* parent = Q_NULLPTR);

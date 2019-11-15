@@ -247,3 +247,64 @@ ItemInfoResponseParser::ItemInfoResponseParser(QString& res, QString& err)
 	success = true;
 	parseres.one_position_entries_quantity = 3;
 }
+
+bool SerializedListParser::couldRead()
+{
+	return success;
+}
+
+bool SerializedListParser::noRequestErrors()
+{
+	return parseres.request_status == 200;
+}
+
+QString SerializedListParser::parseErrorText()
+{
+	return errtext;
+}
+
+SerializedListParser::SerializedListParser(QString& res, QString& err)
+	:abs_parsed_request(res, err)
+{
+	QDomDocument doc;
+	doc.setContent(res);
+	QDomNode announcementNode = doc.elementsByTagName("announcement").at(0);
+	if (!(announcementNode.namedItem("type").toElement().text() == "list"))
+	{
+		success = false;
+		return;
+	}
+	bool ok;
+	QString intbuffer = announcementNode.namedItem("status").toElement().text();
+	parseres.request_status = intbuffer.toInt(&ok);
+	if (parseres.request_status != 200 || !ok)
+	{
+		success = false;
+		return;
+	}
+	intbuffer = announcementNode.namedItem("entrysize").toElement().text();
+	parseres.one_position_entries_quantity = intbuffer.toInt(&ok);
+	if (!ok)
+	{
+		success = false;
+		return;
+	}
+	parseres.containingType = announcementNode.namedItem("entryname").toElement().text();
+	if (parseres.containingType.isEmpty())
+	{
+		success = false;
+		return;
+	}
+	QDomNodeList entrylist = doc.elementsByTagName("e");
+	QDomNode oneEntry;
+	parseres.queriesResult.reserve(entrylist.count() * parseres.one_position_entries_quantity);
+	for (int i = 0; i < entrylist.count(); ++i)
+	{
+		oneEntry = entrylist.at(i);
+		for (int j = 0; j < parseres.one_position_entries_quantity; ++j)
+		{
+			parseres.queriesResult << oneEntry.namedItem("e" + QString::number(j + 1)).toElement().text();
+		}
+	}
+	success = true;
+}

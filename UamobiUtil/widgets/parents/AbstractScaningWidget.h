@@ -20,7 +20,7 @@
 #include "networking/Parsers/RequestParser.h"
 #include "networking/RequestAwaiter.h"
 #include "widgets/utils/EventsAndFilters.h"
-#include"widgets/ControlsMiniwidgets/QuantityControl.h"
+#include "widgets/ControlsMiniwidgets/ControlManager.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
 #include "ScaningCore/NormalCapturer.h"
 

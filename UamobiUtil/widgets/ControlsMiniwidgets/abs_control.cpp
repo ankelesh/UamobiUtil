@@ -1,6 +1,9 @@
 #include "abs_control.h"
 #include "QuantityControl.h"
 #include "ControlTranslator.h"
+
+
+
 abs_control::abs_control(QString  cname, QString& assocBuffer, controlType Type)
 	:associatedBuffer(&assocBuffer),
 	type(Type), isAwaiting(false), defaultBuffer(), name(cname)
@@ -69,44 +72,4 @@ void abs_control::associateBuffer(QString& buffer)
     setListening(true);
 }
 
-abs_control* fabricateControl(QString& assocBuffer, QString initstr, QBoxLayout* layout, QWidget* parent)
-{
-	switch (initstr.length())
-	{
-	case 3:
-		if (initstr == "qty") {
-			QuantityControl* qc = new QuantityControl(assocBuffer, initstr, parent);
-			layout->insertWidget(layout->count() - 1, qc->myWidget());
-			return qc;
-		}
-	case 7:
-		if (initstr == "addqty") {
-			QuantityControl* qc = new QuantityControl(assocBuffer, initstr, parent);
-			layout->insertWidget(layout->count() - 1, qc->myWidget());
-			return qc;
-		}
-	}
-	return Q_NULLPTR;
-}
 
-abs_control* fabricateControl(QString initstr, QBoxLayout* layout, QWidget* parent)
-{
-	switch (initstr.length())
-	{
-	case 3:
-		if (initstr == "qty")
-		{
-			QuantityControl* qc = new QuantityControl(initstr, parent);
-			layout->insertWidget(layout->count() - 1, qc->myWidget());
-			return qc;
-		}
-	case 6:
-		if (initstr == "addqty")
-		{
-			QuantityControl* qc = new QuantityControl(initstr, parent);
-			layout->insertWidget(layout->count() - 1, qc->myWidget());
-			return qc;
-		}
-	}
-	return Q_NULLPTR;
-}

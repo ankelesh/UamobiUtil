@@ -1,6 +1,6 @@
 #include "QuantityControl.h"
 #include "widgets/utils/ElementsStyles.h"
-#define DEBUG
+//#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -54,7 +54,7 @@ QuantityControl::QuantityControl(QString& cname, QWidget* parent)
 	abs_control(cname, Int), innerSpinbox(new BigButtonsSpinbox(BigButtonsSpinbox::intspin, parent))
 {
 	innerSpinbox->setMinimum(0);
-	innerSpinbox->setMaximum(99999);
+	innerSpinbox->setMaximum(10000);
 	innerSpinbox->setValue(0);
 	innerSpinbox->setInfo(label);
 	hide();
@@ -64,7 +64,7 @@ QuantityControl::QuantityControl(QString& assocBuffer, QString& cname, QWidget* 
 	:abs_control(cname, assocBuffer, Int), innerSpinbox(new BigButtonsSpinbox(BigButtonsSpinbox::intspin, parent))
 {
 	innerSpinbox->setMinimum(0);
-	innerSpinbox->setMaximum(99999);
+	innerSpinbox->setMaximum(10000);
 	innerSpinbox->setValue(0);
 	innerSpinbox->setInfo(label);
 	hide();
@@ -103,6 +103,7 @@ void QuantityControl::refresh()
 	{
 		innerSpinbox->setValue(toSet);
 	}
+	innerSpinbox->update();
 }
 
 void QuantityControl::installEventFilter(QObject* keyfilter)

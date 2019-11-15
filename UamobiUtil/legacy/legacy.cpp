@@ -126,4 +126,12 @@ namespace legacy {
 		}
 		vect = tvect;
 	}
+	int guessControlType(QString& cname)
+	{
+		if (cname.contains("qty"))
+		{
+			return 1;
+		}
+		return 0;
+	}
 }

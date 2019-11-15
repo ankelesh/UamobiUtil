@@ -18,23 +18,16 @@ bool ScrollKeyFilter::eventFilter(QObject* o, QEvent* ev)
 			}
 		}
 	}
-	else if (ev->type() == QEvent::MouseButtonRelease)
+	else if (ev->type() == QEvent::MouseMove)
 	{
 		QMouseEvent* mep = static_cast<QMouseEvent*>(ev);
 		if (mep != Q_NULLPTR)
 		{
 			if (mep->button() == Qt::LeftButton)
 			{
-				if (mep->y() - lastCoord > 15 || mep->y() - lastCoord < -15)
-				{
-					int val = mep->y() - lastCoord;
-					emit scrollDistanceObtained(-(val * 2));
-					return true;
-				}
-				else
-				{
-					return QObject::eventFilter(o, ev);
-				}
+				int val = mep->y() - lastCoord;
+				emit scrollDistanceObtained(-(val * 2));
+				return true;
 			}
 		}
 	}

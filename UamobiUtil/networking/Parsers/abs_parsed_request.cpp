@@ -55,6 +55,12 @@ QString showHeap(uniform_parse_result& ures)
 	return temp;
 }
 
+QString makeUPResSnapshot(uniform_parse_result& ures)
+{
+	return "Parseres of type: " + QString::number(ures.type) + "containing type" + 
+		ures.containingType + "\n" + showHeap(ures);
+}
+
 uniform_parse_result::uniform_parse_result(request_parse_type t)
 	: type(t), queriesResult(), request_status(0), one_position_entries_quantity(0), alternative_result(0)
 {

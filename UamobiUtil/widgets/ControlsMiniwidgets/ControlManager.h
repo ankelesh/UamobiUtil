@@ -1,38 +1,18 @@
 #pragma once
 #include <QObject>
 #include <QHash>
-#include "abs_control.h"
+#include "QuantityControl.h"
+#include "legacy/legacy.h"
 
 /*
-	TODO:
-		this
-
+	This file is providing fabricators for controls. It tries to guess control type by legacy names, then constructs and returns control.
 */
-
-class ControlManager : public QObject
+namespace ControlManager
 {
-	Q_OBJECT
-private:
-	QHash<QString, abs_control*> controlsList;
-	QString currentControl;
-	bool doesNeedValues;
-	int controls;
-	QLayout* whereToPlace;
+	enum GuessedControlType {None, Quantity};
+}
 
-	void allocateIntControl(QString& name);
-public:
-	ControlManager(QWidget* parent, QLayout* layout);
-	bool parseControls(QStringList);
-	bool parseControls(QString);
-	void setControl(QString);
-	void setControl(int);
-	void setCurrentValue(QString);
-	void setCurrentValue(int);
+abs_control* fabricateControl(QString& assocBuffer, QString initstr, QBoxLayout* layout, QWidget* parent);
 
-private slots:
-	void listenControl(QString&);
-public slots:
-	void autosetControl(QString&);
-signals:
-	void controlChanged(QString&);
-};
+
+abs_control* fabricateControl(QString initstr, QBoxLayout* layout, QWidget* parent);

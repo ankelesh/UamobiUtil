@@ -7,6 +7,7 @@
 
 class ControlTranslator : private QObject
 {
+	Q_OBJECT
 public:
 	ControlTranslator();
 	QString translate(QString&);

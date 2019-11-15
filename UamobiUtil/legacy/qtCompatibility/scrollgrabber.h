@@ -19,6 +19,7 @@ class ScrollKeyFilter : public QObject
 	Q_OBJECT
 protected:
 	int lastCoord;
+	int offset;
 
 	bool eventFilter(QObject*, QEvent*);
 public:
@@ -30,7 +31,7 @@ signals:
 class QScroller : public QObject
 {
 	Q_OBJECT
-		QAbstractScrollArea* grabbed;
+	QAbstractScrollArea* grabbed;
 	ScrollKeyFilter* filter;
 public:
 	enum ScrollerGestureType { LeftMouseButtonGesture };

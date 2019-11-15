@@ -72,7 +72,7 @@ scrArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	modeSelection->reload();
 	innerWidget->installEventFilter(keyfilter);
 	scrArea->setWidget(modeSelection);
-	QScroller::grabGesture(scrArea, QScroller::LeftMouseButtonGesture);
+	QScroller::grabGesture(modeSelection, QScroller::LeftMouseButtonGesture);
 
 #ifdef QT_VERSION5X
 	QObject::connect(logoutButton, &QPushButton::clicked, this, &ModeSelectionWidget::logoutPressed);

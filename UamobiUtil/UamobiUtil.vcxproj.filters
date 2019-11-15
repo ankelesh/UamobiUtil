@@ -279,6 +279,9 @@
     <ClCompile Include="widgets\ControlsMiniwidgets\ControlTranslator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\BarcodeFilterSelectionSubbranch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -356,9 +359,6 @@
     <QtMoc Include="widgets\MultibranchWidgets\ItemSearchWidget.h">
       <Filter>Header Files\MultibranchWidgets</Filter>
     </QtMoc>
-    <QtMoc Include="widgets\ControlsMiniwidgets\ControlManager.h">
-      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
-    </QtMoc>
     <QtMoc Include="widgets\parents\AbstractCheckboxSelection.h">
       <Filter>Header Files\util\parents</Filter>
     </QtMoc>
@@ -385,6 +385,12 @@
     </QtMoc>
     <QtMoc Include="widgets\InventorySpecialWidgets\InventoryScaningWidget.h">
       <Filter>Header Files\ScaningRelated</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ControlsMiniwidgets\ControlTranslator.h">
+      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\BarcodeFilterSelectionSubbranch.h">
+      <Filter>Header Files\MultibranchWidgets</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -450,7 +456,7 @@
     <ClInclude Include="widgets\ControlsMiniwidgets\abs_control.h">
       <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="widgets\ControlsMiniwidgets\ControlTranslator.h">
+    <ClInclude Include="widgets\ControlsMiniwidgets\ControlManager.h">
       <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </ClInclude>
   </ItemGroup>

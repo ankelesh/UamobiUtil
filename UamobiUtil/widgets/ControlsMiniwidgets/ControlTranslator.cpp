@@ -1,4 +1,8 @@
 #include "ControlTranslator.h"
+#define DEBUG
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif // DEBUG
 
 ControlTranslator::ControlTranslator()
 	: QObject(Q_NULLPTR)
@@ -7,16 +11,18 @@ ControlTranslator::ControlTranslator()
 
 QString ControlTranslator::translate(QString& str)
 {
+	detrace_METHCALL("translate control " << str << str.count() << " |");
 	switch (str.count())
 	{
 	case 3:
-		if (str.compare("qty"))
+		if (str == "qty")
 		{
+			detrace_METHEXPL("returning" << tr("control_quantity"));
 			return tr("control_quantity");
 		}
 		break;
 	case 6:
-		if (str.compare("addqty"))
+		if (str =="addqty")
 		{
 			return tr("control_addqty");
 		}
@@ -29,7 +35,7 @@ QString ControlTranslator::translate(QString& str)
 
 
 
-static ControlTranslator translator;
+ControlTranslator translator;
 
 QString makeControlTranslation(QString& str)
 {

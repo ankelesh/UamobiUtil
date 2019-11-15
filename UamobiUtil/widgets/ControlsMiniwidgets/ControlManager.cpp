@@ -1,57 +1,31 @@
 #include "ControlManager.h"
 
-void ControlManager::allocateIntControl(QString& name)
+abs_control* fabricateControl(QString& assocBuffer, QString initstr, QBoxLayout* layout, QWidget* parent)
 {
-}
-
-ControlManager::ControlManager(QWidget* parent, QLayout* layout)
-	: QObject(parent), controlsList(), currentControl("None"),
-	doesNeedValues(false), controls(0), whereToPlace(layout)
-{
-}
-
-bool ControlManager::parseControls(QStringList list)
-{
-	QStringList::iterator start = list.begin();
-	while (start != list.end())
+	switch (legacy::guessControlType(initstr))
 	{
-		switch (start->count())
-		{
-		case 3:
-			if (*start == "qty")
-			{
-			}
-		}
-		++start;
+	case ControlManager::Quantity:
+	{
+		QuantityControl* qc = new QuantityControl(assocBuffer, initstr, parent);
+		layout->insertWidget(layout->count() - 1, qc->myWidget());
+		return qc;
 	}
-	return false;
+	default:
+		return Q_NULLPTR;
+	}
 }
 
-bool ControlManager::parseControls(QString)
+abs_control* fabricateControl(QString initstr, QBoxLayout* layout, QWidget* parent)
 {
-	return false;
-}
-
-void ControlManager::setControl(QString)
-{
-}
-
-void ControlManager::setControl(int)
-{
-}
-
-void ControlManager::setCurrentValue(QString)
-{
-}
-
-void ControlManager::setCurrentValue(int)
-{
-}
-
-void ControlManager::listenControl(QString&)
-{
-}
-
-void ControlManager::autosetControl(QString&)
-{
+	switch (legacy::guessControlType(initstr))
+	{
+	case ControlManager::Quantity:
+	{	
+		QuantityControl* qc = new QuantityControl(initstr, parent);
+		layout->insertWidget(layout->count() - 1, qc->myWidget());
+		return qc;
+	}
+	default:
+		return Q_NULLPTR;
+	}
 }

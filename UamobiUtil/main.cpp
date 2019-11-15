@@ -8,7 +8,8 @@
 #ifdef Q_OS_WINCE
 #include <QtCore/QTimer>
 #endif
-
+#include "networking/Parsers/DynamicLinearParsers.h"
+#include "debugtrace.h"
 //#define TESTING
 
 /*
@@ -23,6 +24,24 @@
 
 */
 //#define TESTING
+
+QString p = "<?xml version=\"1.0\" encoding=\"CP1251\"?>"
+"<serverresponse>"
+"<announcement>"
+"<status>200</status>"
+"<type>list</type>"
+"<entrysize>2</entrysize>"
+"<entryname>stillage</entryname>"
+"</announcement>"
+"<entries>"
+"<e>"
+"<e1>205333065</e1>"
+"<e2>Vata CL 4-8</e2>"
+"</e>"
+"</entries>"
+"</serverresponse>";
+
+
 int main(int argc, char* argv[])
 {
 	QApplication a(argc, argv);
@@ -34,6 +53,7 @@ int main(int argc, char* argv[])
 #endif
 	global.timeoutInt = 10000;					//	while not actual version - timeout is maximized to avoid testing delays
 	global.setTranslator();
+	detrace_METHEXPL("making parsing: " << makeUPResSnapshot(SerializedListParser(p, p).read()));
 #ifdef Q_OS_WINCE
 	setCurrentSize(calculateAdaptiveSize(1, 0.9));
 	UamobiUtil w(global);
