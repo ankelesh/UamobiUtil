@@ -769,6 +769,18 @@ void HttpUpdateEngine::onRequestFinished()
 	}
 }
 
+void HttpUpdateEngine::recListTemplated(const QString listedType, const QString& searchText,const QString optparameters, QObject* receiver, const char* slot)
+{
+	sendQuery("rec_list_" + listedType + "&session=" + m_sessionId + "&text=" + searchText + ((optparameters.isEmpty()) ? "" : "&" + optparameters), receiver, slot);
+}
+
+void HttpUpdateEngine::applyBarcodeFilter(const QString type, const QString& value, QObject* receiver, const char* slot)
+{
+	sendQuery(
+		"select_filter_item&session=" + m_sessionId + "&filter=" + type + "&value=" + value, receiver, slot
+	);
+}
+
 void HttpUpdateEngine::recSubmit(const QString& code, const QString& qty, const QString& parameters, QObject* receiver, const char* slot)
 {
 	sendQuery(

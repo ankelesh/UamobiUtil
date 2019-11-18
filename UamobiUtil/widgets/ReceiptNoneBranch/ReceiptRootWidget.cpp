@@ -12,11 +12,11 @@ void ReceiptRootWidget::processOptions()
 {
 	if (modeItself.submode.contains("warehouse", Qt::CaseInsensitive))
 	{
-		suppliersSelect = new SuppliersSelectWidget(globalSettings, this, &DataUpdateEngine::getWarehousesList);
+		suppliersSelect = new SuppliersSelectWidget(globalSettings, this, "warehouses");
 	}
 	else
 	{
-		suppliersSelect = new SuppliersSelectWidget(globalSettings, this);
+		suppliersSelect = new SuppliersSelectWidget(globalSettings, this, "suppliers");
 	}
 	orderSelect = new OrderSelectionWidget(globalSettings, confirmedSupplier, this);
 }

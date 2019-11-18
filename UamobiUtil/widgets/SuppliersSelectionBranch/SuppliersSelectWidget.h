@@ -14,8 +14,7 @@
 
 #endif
 // widgets imports
-#include "widgets/parents/inframedWidget.h"
-#include "widgets/parents/AbstractListSelectionWidget.h"
+#include "widgets/parents/AbstractSearchAndPickWidget.h"
 #include "OrderSelectionWidget.h"
 #include "widgets/parents/abstractNodeInterface.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
@@ -58,52 +57,26 @@ namespace specwidgets
 	};
 }
 
-class SuppliersSelectWidget : public inframedWidget
+class SuppliersSelectWidget : public AbstractSearchAndPickWidget
 {
 	Q_OBJECT
 protected:
-	GlobalAppSettings& globalSettings;
 	QVector<parsedSupplier> allsuppliers;
-
-	// pointers
 	interpretsPointers::interpretAsSupplierLike interpreter;
-	SuppliersLikeMP listSuppliers;
 
-	parsedSupplier confirmedSupplier;
-
-	QVBoxLayout* mainLayout;
-	inframedWidget* innerWidget;
-	QVBoxLayout* innerLayout;
-	QHBoxLayout* headerLayout;
-	QHBoxLayout* footerLayout;
-	QLabel* userHelp;
-	QLineEdit* userinputField;
-	MegaIconButton* searchButton;
-	MegaIconButton* ordfilterButton;
-	specwidgets::_SupplierSelectionWidget* supplierSelection;
-	MegaIconButton* backButton;
-
-	QIcon withOrd;
-	QIcon withoutOrd;
-	RequestAwaiter awaiter;
-
+	// Inherited via AbstractSearchAndPickWidget
+	virtual void interpretResult() override;
 public:
 	SuppliersSelectWidget(GlobalAppSettings& go, QWidget* parent,
-		SuppliersLikeMP meth = &DataUpdateEngine::recListSuppliers,
-		interpretsPointers::interpretAsSupplierLike inter = &RequestParser::interpretAsSupplierList);
+		QString itemName,
+		interpretsPointers::interpretAsSupplierLike inter = &RequestParser::interpretAsSupplierList, bool isOrdNeeded = true);
 
-	virtual void show() override;
 	virtual bool isExpectingControl(int) override;
 protected slots:
-	void searchPrimed();
-	void ordFilterSwitched(bool);
 	virtual void supplierPicked(parsedSupplier);
-	void parse_response();
-	void was_timeout();
-public slots:
-	void loadSuppliers();
 signals:
 	void supplierAcquired(parsedSupplier);
+
 };
 
 class SuppliersSelectionBranch : public SuppliersSelectWidget, abstractNode
@@ -111,11 +84,12 @@ class SuppliersSelectionBranch : public SuppliersSelectWidget, abstractNode
 	Q_OBJECT
 protected:
 
+	parsedSupplier confirmedSupplier;
 	OrderSelectionWidget* orderSelection;
 
 public:
 	SuppliersSelectionBranch(GlobalAppSettings& go, QWidget* parent,
-		SuppliersLikeMP meth = &DataUpdateEngine::recListSuppliers,
+		QString item,
 		interpretsPointers::interpretAsSupplierLike inter = &RequestParser::interpretAsSupplierList);
 	virtual void show() override;
 

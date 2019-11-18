@@ -207,6 +207,13 @@ public:
 		, QObject* receiver
 		, const char* slot
 	) = 0;
+	virtual void recListTemplated(
+		const QString listedType,
+		const QString& searchText,
+		const QString optparameters,
+		QObject* receiver
+		, const char* slot
+		)=0;
 	virtual void invSubmitExpDates
 	(
 		const QString& code
@@ -286,7 +293,12 @@ public:
 		QObject* receiver = Q_NULLPTR,
 		const char* slot = Q_NULLPTR
 	) = 0;
-
+	virtual void applyBarcodeFilter(
+		const QString type,
+		const QString& value,
+		QObject* receiver = Q_NULLPTR,
+		const char* slot = ""
+	) = 0;
 	// photo-specific
 	virtual void makeRequest(DataRequest* dr) = 0;
 	static DataUpdateEngine* getMain(QObject* parent = 0);
@@ -306,5 +318,7 @@ typedef void (DataUpdateEngine::* SuppliersLikeMP)(const QString&, const bool, Q
 
 //	  -- Any method without args pointer
 typedef void (DataUpdateEngine::* NoArgsRequestMP)(QObject*, const char*);
+
+typedef void (DataUpdateEngine::* TemplatedListRequest)(const QString, const QString&, const QString, QObject*, const char*);
 
 #endif // UPDATEDATAENGINE_H

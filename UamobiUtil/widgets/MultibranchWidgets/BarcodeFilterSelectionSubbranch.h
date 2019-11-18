@@ -16,16 +16,17 @@
 #include "widgets/parents/abstractNodeInterface.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
 #include "widgets/SuppliersSelectionBranch/SuppliersSelectWidget.h"
+#include "widgets/MultibranchWidgets/GroupSelectionWidget.h"
+#include "widgets/MultibranchWidgets/StillageSelectionWidget.h"
 
 
-
-class StillageSelectWidget;
-class GroupSelectWidget;
 
 class BarcodeFilterSelectionSubbranch : public inframedWidget, abstractNode
 {
 	Q_OBJECT
 protected:
+	GlobalAppSettings& globalSettings;
+
 	QVBoxLayout* mainLayout;
 	inframedWidget* innerWidget;
 	QVBoxLayout* innerLayout;
@@ -36,17 +37,20 @@ protected:
 	MegaIconButton* backButton;
 
 	SuppliersSelectWidget* supplierWidget;
-	StillageSelectWidget* stillageWidget;
-	GroupSelectWidget* groupWidget;
+	StillageSelectionWidget* stillageWidget;
+	GroupSelectionWidget* groupWidget;
 
 public:
-	BarcodeFilterSelectionSubbranch(QWidget* parent = Q_NULLPTR);
+	BarcodeFilterSelectionSubbranch(GlobalAppSettings & go, QWidget* parent = Q_NULLPTR);
 
 protected slots:
-	void continuePressed();
 	void supplierSelectRequired();
 	void stillageSelectRequired();
 	void groupSelectRequired();
-	void selectionHappened(QString);
-
+	void supplierProxyWrapper(parsedSupplier);
+	void noFilterRequired();
+	void applyFilter(QString param, QString type);
+	void hideCurrent();
+signals:
+	void selectionHappened();
 };

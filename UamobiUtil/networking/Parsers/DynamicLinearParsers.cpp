@@ -268,10 +268,12 @@ SerializedListParser::SerializedListParser(QString& res, QString& err)
 {
 	QDomDocument doc;
 	doc.setContent(res);
+	detrace_METHEXPL("before announcement");
 	QDomNode announcementNode = doc.elementsByTagName("announcement").at(0);
 	if (!(announcementNode.namedItem("type").toElement().text() == "list"))
 	{
 		success = false;
+		detrace_METHEXPL("failed type check");
 		return;
 	}
 	bool ok;
@@ -279,6 +281,7 @@ SerializedListParser::SerializedListParser(QString& res, QString& err)
 	parseres.request_status = intbuffer.toInt(&ok);
 	if (parseres.request_status != 200 || !ok)
 	{
+		detrace_METHEXPL("failed status check");
 		success = false;
 		return;
 	}
@@ -286,15 +289,18 @@ SerializedListParser::SerializedListParser(QString& res, QString& err)
 	parseres.one_position_entries_quantity = intbuffer.toInt(&ok);
 	if (!ok)
 	{
+		detrace_METHEXPL("failed entrysize check");
 		success = false;
 		return;
 	}
 	parseres.containingType = announcementNode.namedItem("entryname").toElement().text();
 	if (parseres.containingType.isEmpty())
 	{
+		detrace_METHEXPL("failed name check");
 		success = false;
 		return;
 	}
+	detrace_METHEXPL("before entries");
 	QDomNodeList entrylist = doc.elementsByTagName("e");
 	QDomNode oneEntry;
 	parseres.queriesResult.reserve(entrylist.count() * parseres.one_position_entries_quantity);
@@ -306,5 +312,6 @@ SerializedListParser::SerializedListParser(QString& res, QString& err)
 			parseres.queriesResult << oneEntry.namedItem("e" + QString::number(j + 1)).toElement().text();
 		}
 	}
+	detrace_METHEXPL("at end of parser");
 	success = true;
 }

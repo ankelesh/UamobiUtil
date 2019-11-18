@@ -10,6 +10,14 @@ void InventoryRootWidget::processOptions()
 
 void InventoryRootWidget::openCorrespondingSubbranch()
 {
+	if (modeItself.submode.contains("partial", Qt::CaseInsensitive))
+	{
+		bfilterWidget = new BarcodeFilterSelectionSubbranch(globalSettings, this);
+		mainLayout->addWidget(bfilterWidget);
+		QObject::connect(bfilterWidget, &BarcodeFilterSelectionSubbranch::selectionHappened, this, &InventoryRootWidget::continueToScaning);
+		QObject::connect(bfilterWidget, &BarcodeFilterSelectionSubbranch::backRequired, this, &InventoryRootWidget::backTo);
+		bfilterWidget->hide();
+	}
 	_hideAny(docSelectionWidget);
 	docSelectionWidget->loadDocuments();
 }
@@ -18,6 +26,7 @@ InventoryRootWidget::InventoryRootWidget(GlobalAppSettings& go, QHash<QString, Q
 	: inframedWidget(parent), abstractNode(), globalSettings(go), mainLayout(new QVBoxLayout(this)),
 	innerWidget(new InventoryParamsWidget(this)),
 	docSelectionWidget(new ParentDocumentWidget(globalSettings, this)), scaningWidget(new InventoryScaningWidget(go, this)),
+	bfilterWidget(),
 	options(settings), modeItself("inventory", "inventory", submode)
 {
 	this->setLayout(mainLayout);
@@ -64,6 +73,11 @@ void InventoryRootWidget::documentAcquired(parsedDocument doc)
 	Doc.comment = doc.text;
 	Doc.docId = doc.code;
 	innerWidget->setDocument(Doc);
+	if (bfilterWidget != Q_NULLPTR)
+	{
+		_hideAny(bfilterWidget);
+		return;
+	}
 	_hideCurrent(innerWidget);
 }
 
@@ -93,11 +107,8 @@ void InventoryRootWidget::backToStep(int step)
 	}
 }
 
-void InventoryRootWidget::continueToScaning(Document doc)
+void InventoryRootWidget::continueToScaning()
 {
-#ifdef DEBUG
-	detrace_METHEXPL("doc id " << doc.docId);
-#endif
 	_hideAny(scaningWidget);
-	scaningWidget->setDocument(doc);
+	scaningWidget->setDocument(innerWidget->getDoc());
 }

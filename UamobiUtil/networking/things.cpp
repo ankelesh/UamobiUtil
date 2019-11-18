@@ -121,3 +121,13 @@ QString parsedDocType::description() const
 {
 	return "doctype " + name + " id |" + id + "|" + ((notFiltered) ? "not" : "is") + " filtered";
 }
+
+parsedGroup::parsedGroup(QString Name, QString Code)
+	: name(Name), code(Code)
+{
+}
+
+parsedStillage::parsedStillage(QString Name, QString Code)
+	: name(Name), code(Code)
+{
+}

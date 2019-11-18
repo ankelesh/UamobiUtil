@@ -1,18 +1,15 @@
 
 ][Created object HttpUpdateEngine by his default constructor
-elist len: 1
-working on node at 0
-checking element: e1
-it was: |205333065|
-checking element: e2
-it was: |Vata CL 4-8|
+before announcement
+before entries
+at end of parser
 making parsing: Parseres of type: 3containing typestillage
 heap snapshot with tech values:2 opeq, 0 ares,200 status
 
 |205333065|<0>
 |Vata CL 4-8|<1>
 in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
-in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=93&cmd=list_users
+in method sendQuery state of variables url was http://92.115.237.226:60080/um/unitest.php?delay=58&cmd=list_users
 in method RequestAwaiter::requestincoming state of text variable a, b was: 
 ________________________________________
 <?xml version="1.0" encoding="CP1251"?>

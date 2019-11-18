@@ -6,7 +6,7 @@
 #include "widgets/InventoryBranch/InventoryParamsWidget.h"
 #include "widgets/InventorySpecialWidgets/InventoryScaningWidget.h"
 #include "widgets/InventorySpecialWidgets/ParentDocumentWidget.h"
-
+#include "widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.h"
 
 /*
 	This widget is used as core one for inventory branch. It has nothing to display
@@ -31,6 +31,7 @@ protected:
 	InventoryParamsWidget* innerWidget;
 	ParentDocumentWidget* docSelectionWidget;
 	InventoryScaningWidget* scaningWidget;
+	BarcodeFilterSelectionSubbranch* bfilterWidget;
 
 	QHash<QString, QString> options;	//	options of this mode. UNUSED
 	parsedMode modeItself;				//	mode object which is used for netrequests
@@ -48,5 +49,5 @@ private slots:
 	void hideCurrent();			//	hides current widget to show inner
 	void backTo();				//	returns to previous step
 	void backToStep(int step);	//	returns to specified step
-	void continueToScaning(Document);	//	is triggered when all data is gathered and ScaningWidget can be created
+	void continueToScaning();	//	is triggered when all data is gathered and ScaningWidget can be created
 };

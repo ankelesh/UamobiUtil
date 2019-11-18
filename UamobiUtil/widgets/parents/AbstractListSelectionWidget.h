@@ -27,4 +27,6 @@ public:
 	void reload();
 protected slots:
 	virtual void itemSelectedFromList(QListWidgetItem*) = 0;
+signals:
+	void elemSelected(int index);
 };

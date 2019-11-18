@@ -81,6 +81,18 @@ struct parsedDocType
 	parsedDocType(QString id = "", QString name = "", QString isF = "");
 	QString description() const;
 };
+struct parsedGroup
+{
+	QString name;
+	QString code;
+	parsedGroup(QString name = "", QString code = "");
+};
+struct parsedStillage
+{
+	QString name;
+	QString code;
+	parsedStillage(QString name = "", QString code = "");
+};
 //			HERE START LEGACY STRUCTURES. DO NOT TOUCH THEM - INSTEAD CREATE NEW, BETTER ONES		//
 struct Answer
 {

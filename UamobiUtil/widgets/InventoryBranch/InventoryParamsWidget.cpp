@@ -71,6 +71,11 @@ void InventoryParamsWidget::setDocument(Document doc)
 	document = doc;
 }
 
+Document& InventoryParamsWidget::getDoc()
+{
+	return document;
+}
+
 void InventoryParamsWidget::selectDocPressed()
 {
 	emit documentMustBeSelected(0);
@@ -79,5 +84,5 @@ void InventoryParamsWidget::selectDocPressed()
 void InventoryParamsWidget::okPressed()
 {
 	document.comment = commentField->toPlainText();
-	emit documentConfirmed(document);
+	emit documentConfirmed();
 }

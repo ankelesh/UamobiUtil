@@ -79,7 +79,8 @@ namespace parse_uniresults_functions
 	doclistResponse parse_document_listed(uniform_parse_result& ures);
 	documentsResponse parse_documents(uniform_parse_result& ures);
 	docFilterResponse parse_filter_list(uniform_parse_result& ures);
-
+	QVector<parsedGroup> parse_groups(uniform_parse_result& ures);
+	QVector<parsedStillage> parse_stillages(uniform_parse_result& ures);
 	// deprecated, should make better
 	bool isSimpliest(QString& res);
 	bool isUserProfiles(QString& res);
@@ -111,6 +112,8 @@ namespace RequestParser
 	doclistResponse interpretAsListedDocument(QString& res, QString& errtext);
 	documentsResponse interpretAsDocumentsList(QString& res, QString& errtext);
 	docFilterResponse interpretAsDocFilterList(QString& res, QString& errtext);
+	QVector<parsedGroup> interpretAsGroupList(QString& res, QString& errtext);
+	QVector<parsedStillage> interpretAsStillageList(QString& res, QString& errtext);
 };
 namespace interpretsPointers
 {

@@ -63,6 +63,7 @@ namespace legacy {
 		t.clear();
 		t["printing"] = modecut("printing", "");
 		t["productionwriteoff"] = modecut("inventory", "productionwriteoff");
+		t["partialinventory"] = modecut("inventory", "partialinventory");
 		temp['p'] = t;
 		t.clear();
 		t["receipt"] = modecut("receipt", "");
@@ -120,7 +121,13 @@ namespace legacy {
 			else if (start->mode == "inventory")
 			{
 				if (start->submode.isEmpty())
+				{
 					tvect << *start;
+				}
+				else if (start->submode.contains("partial", Qt::CaseInsensitive))
+				{
+					tvect << *start;
+				}
 			}
 			++start;
 		}

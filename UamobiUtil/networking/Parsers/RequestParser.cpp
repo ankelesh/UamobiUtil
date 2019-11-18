@@ -313,6 +313,47 @@ namespace parse_uniresults_functions {
 		return temp;
 	}
 
+	QVector<parsedGroup> parse_groups(uniform_parse_result& ures)
+	{
+
+#ifdef DEBUG
+		detrace_METHEXPL(showHeap(ures));
+#endif
+
+		QVector<parsedGroup> temp;
+		{
+			if (queryLengthOkInResult(ures) && ures.containingType == "groups")
+			{
+				temp.reserve(queryReservationSize(ures));
+				QStringList::iterator start = ures.queriesResult.begin();
+				while (start != ures.queriesResult.end())
+				{
+					temp.push_back(parsedGroup(*(start+1), *start));
+					start += ures.one_position_entries_quantity;
+				}
+			}
+		}
+		return temp;
+	}
+
+	QVector<parsedStillage> parse_stillages(uniform_parse_result& ures)
+	{
+		QVector<parsedStillage> temp;
+		{
+			if (queryLengthOkInResult(ures) && ures.containingType == "stillages")
+			{
+				temp.reserve(queryReservationSize(ures));
+				QStringList::iterator start = ures.queriesResult.begin();
+				while (start != ures.queriesResult.end())
+				{
+					temp.push_back(parsedStillage(*(start + 1), *start));
+					start += ures.one_position_entries_quantity;
+				}
+			}
+		}
+		return temp;
+	}
+
 	bool isSimpliest(QString& res)
 	{
 		if (res.contains("<status>"))
@@ -591,5 +632,23 @@ namespace RequestParser {
 			return parse_filter_list(parser.read());
 		}
 		return docFilterResponse();
+	}
+	QVector<parsedGroup> interpretAsGroupList(QString& res, QString& errtext)
+	{
+		SerializedListParser parser(res, errtext);
+		if (parser.isSuccessfull())
+		{
+			return parse_groups(parser.read());
+		}
+		return QVector<parsedGroup>();
+	}
+	QVector<parsedStillage> interpretAsStillageList(QString& res, QString& errtext)
+	{
+		SerializedListParser parser(res, errtext);
+		if (parser.isSuccessfull())
+		{
+			return parse_stillages(parser.read());
+		}
+		return QVector<parsedStillage>();
 	}
 }

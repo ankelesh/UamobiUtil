@@ -275,6 +275,12 @@ public:
 		const char* slot = Q_NULLPTR
 	) override;
 	virtual void makeRequest(DataRequest* dr);
+	virtual void recListTemplated(const QString listedType, const QString& searchText, const QString optparams, QObject* receiver, const char* slot) override;
+
+
+	// Inherited via DataUpdateEngine
+	virtual void applyBarcodeFilter(const QString type, const QString& value, QObject* receiver = Q_NULLPTR, const char* slot = "") override;
+
 private:
 	void sendQuery
 	(
@@ -304,6 +310,9 @@ private slots:
 signals:
 	void answerReceived(QString);
 
+
+	// Inherited via DataUpdateEngine
+	
 	// Inherited via DataUpdateEngine
 };
 

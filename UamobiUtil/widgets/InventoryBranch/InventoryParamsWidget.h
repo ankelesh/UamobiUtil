@@ -52,10 +52,11 @@ public:
 	InventoryParamsWidget(QWidget* parent = Q_NULLPTR);
 
 	void setDocument(Document);
+	Document& getDoc();
 private slots:
 	void selectDocPressed();
 	void okPressed();
 signals:
 	void documentMustBeSelected(int);
-	void documentConfirmed(Document);
+	void documentConfirmed();
 };
