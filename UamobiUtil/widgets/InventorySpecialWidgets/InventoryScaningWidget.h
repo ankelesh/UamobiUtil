@@ -13,10 +13,8 @@ protected:
 	ItemSearchWidget* searchScreen;
 	NormalCapturer* capturer;
 
-	bool controlsRequired;
 	bool manSelected;
-	int controlsAvailable;
-
+	
 public:
 	InventoryScaningWidget(GlobalAppSettings& go, QWidget* parent);
 	void setDocument(Document);

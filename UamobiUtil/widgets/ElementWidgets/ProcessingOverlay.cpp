@@ -122,6 +122,13 @@ void ProcessingOverlay::resize(const QSize& parentG)
 	oldSize = parentG;
 }
 
+void ProcessingOverlay::setTemporaryDelay(int additionalDelay)
+{
+	currentState = endPoint + additionalDelay / 500;
+	redrawTimer->start();
+	QWidget::show();
+}
+
 void ProcessingOverlay::step()
 {
 	--currentState;
@@ -144,6 +151,14 @@ void showProcessingOverlay()
 			ov->show();
 			ov->raise();
 		}
+	}
+}
+void showProcessingOverlay(int additionalDelay)
+{
+	if (ov != Q_NULLPTR)
+	{
+		ov->setTemporaryDelay(additionalDelay);
+		ov->raise();
 	}
 }
 void bindProcessingOverlay(ProcessingOverlay* over)

@@ -34,7 +34,7 @@ class BigButtonsSpinbox : public QWidget
 {
 	Q_OBJECT
 public:
-	enum spintype { intspin, timespin };	//	Used to determine which type of spinbox is wrapped
+	enum spintype { intspin, timespin, floatspin };	//	Used to determine which type of spinbox is wrapped
 
 private:
 	QGridLayout* mainLayout;			//	View
@@ -52,7 +52,9 @@ public:
 	void setMinimum(int min);	// sets maximum
 	void setMaximum(int max);	// sets minimum
 	void setValue(int val);		//	sets current value
+	void setDValue(double val);
 	int value() const;				//	returns current value
+	double dvalue() const;
 	//	methods of QTimeEdit interface
 	void setTime(const QTime& tm);	//	sets current value
 	QTime time();			//	returns current value
@@ -62,6 +64,7 @@ public:
 private slots:
 	void intValueChanged(int);				//	These slots are wrapping slots of inner spinbox
 	void timeValueChanged(const QTime& t);
+	void doubleValueChanged(double);
 	void editingDone();
 	void backRequire();
 
@@ -72,6 +75,7 @@ signals:
 	void ivalueChanged(int);			//	emitted only when SpinBox is wrapped
 	void timeChanged(const QTime& t);	//	emitted only when TimeEdit is wrapped
 	void valueChanged(QString);
+	void dvalueChanged(double);
 	void returnPressed();				//	return was pressed
 	void backRequired();				//	back was pressed
 };

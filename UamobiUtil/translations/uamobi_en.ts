@@ -42,36 +42,35 @@
 <context>
     <name>ControlTranslator</name>
     <message>
-        <location filename="../widgets/ControlsMiniwidgets/ControlTranslator.cpp" line="20"/>
-        <location filename="../widgets/ControlsMiniwidgets/ControlTranslator.cpp" line="21"/>
+        <location filename="../widgets/ControlsMiniwidgets/ControlTranslator.cpp" line="15"/>
         <source>control_quantity</source>
-        <translation>quantity</translation>
+        <translation>количество</translation>
     </message>
     <message>
-        <location filename="../widgets/ControlsMiniwidgets/ControlTranslator.cpp" line="27"/>
+        <location filename="../widgets/ControlsMiniwidgets/ControlTranslator.cpp" line="21"/>
         <source>control_addqty</source>
-        <translation>quantity</translation>
+        <translation>остатки</translation>
     </message>
 </context>
 <context>
     <name>DocResultsWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="48"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="47"/>
         <source>doc_results_back</source>
         <translation>back</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="52"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="51"/>
         <source>doc_results_text</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="56"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="55"/>
         <source>doc_results_userinfo</source>
         <translation>All data in current document</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="164"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="163"/>
         <source>doc_results_timeout</source>
         <translation>Timeout</translation>
     </message>
@@ -104,7 +103,7 @@
         <translation>Use filter!</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/FilterSelectWidget.cpp" line="148"/>
+        <location filename="../widgets/MultibranchWidgets/FilterSelectWidget.cpp" line="147"/>
         <source>timeout:</source>
         <translation>Timeout:</translation>
     </message>
@@ -112,7 +111,7 @@
 <context>
     <name>HttpUpdateEngine</name>
     <message>
-        <location filename="../networking/dataupdateengine-http.cpp" line="712"/>
+        <location filename="../networking/dataupdateengine-http.cpp" line="708"/>
         <source>Network error</source>
         <translation>Network error</translation>
     </message>
@@ -217,36 +216,36 @@
 <context>
     <name>MainPageWidget</name>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="100"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="210"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="98"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="208"/>
         <source>main_page_select_profile_tip</source>
         <translation>Please select your profile</translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="102"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="211"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="100"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="209"/>
         <source>main_page_enter_profile_id_tip</source>
         <translation>Enter id</translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="107"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="212"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="105"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="210"/>
         <source>main_page_exit_button</source>
         <translation>[0] Quit</translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="111"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="213"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="109"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="211"/>
         <source>main_page_settings_button</source>
         <translation>Settings</translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="116"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="114"/>
         <source>refresh</source>
         <translation>Refresh</translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="254"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="252"/>
         <source>timeout_with_delay:</source>
         <translation>Timeout:</translation>
     </message>
@@ -416,7 +415,7 @@
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="158"/>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="157"/>
         <source>mode_selection_timeout!</source>
         <translation>Connection timeout!</translation>
     </message>
@@ -530,7 +529,7 @@
 <context>
     <name>ReceiptScaningWidget</name>
     <message>
-        <location filename="../widgets/ReceiptSpecialWidgets/ReceiptScaningWidget.cpp" line="279"/>
+        <location filename="../widgets/ReceiptSpecialWidgets/ReceiptScaningWidget.cpp" line="275"/>
         <source>receipt_scaning_mode_name</source>
         <translation>Receipt mode</translation>
     </message>

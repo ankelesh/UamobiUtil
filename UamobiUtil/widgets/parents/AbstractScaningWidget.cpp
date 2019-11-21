@@ -59,6 +59,7 @@ void AbstractScaningWidget::useControls(QVector<QPair<QString, QString>>& cvals)
 		controlsRequired = true;
 		submitButton->setDisabled(false);
 		this->setFocus();
+		controlsAvailable = 1;
 		return;
 	case 2:
 	default:
@@ -243,7 +244,7 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
 #else
 	QObject::connect(backButton, SIGNAL(clicked()), this, SLOT(backNeeded()));
 	QObject::connect(submitButton, SIGNAL(clicked()), this, SLOT(submitPressed()));
-	QObject::connect(barcodeField, SIGNAL(editingFinished()), this, SLOT(barcodeConfirmed()));
+    QObject::connect(barcodeField, SIGNAL(returnPressed()), this, SLOT(barcodeConfirmed()));
 	QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(searchRequired()));
 	QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 	QObject::connect(quitButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
@@ -254,7 +255,13 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
 void AbstractScaningWidget::was_timeout()
 {
 	userInfo->setText("scaning_timeout:" + QString::number(globalSettings.timeoutInt));
-	hideProcessingOverlay();
+    hideProcessingOverlay();
+}
+
+void AbstractScaningWidget::quitNoSave()
+{
+   globalSettings.networkingEngine->docUnlock(false, Q_NULLPTR, "");
+   emit backRequired();
 }
 
 bool AbstractScaningWidget::isControlFocused()

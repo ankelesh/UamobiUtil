@@ -6,7 +6,7 @@ abs_control* fabricateControl(QString& assocBuffer, QString initstr, QBoxLayout*
 	{
 	case ControlManager::Quantity:
 	{
-		QuantityControl* qc = new QuantityControl(assocBuffer, initstr, parent);
+		QuantityControl* qc = new QuantityControl(false, initstr, assocBuffer, parent);
 		layout->insertWidget(layout->count() - 1, qc->myWidget());
 		return qc;
 	}
@@ -21,7 +21,7 @@ abs_control* fabricateControl(QString initstr, QBoxLayout* layout, QWidget* pare
 	{
 	case ControlManager::Quantity:
 	{	
-		QuantityControl* qc = new QuantityControl(initstr, parent);
+		QuantityControl* qc = new QuantityControl(false, initstr, parent);
 		layout->insertWidget(layout->count() - 1, qc->myWidget());
 		return qc;
 	}

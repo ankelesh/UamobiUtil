@@ -291,6 +291,9 @@
     <ClCompile Include="widgets\MultibranchWidgets\StillageSelectionWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\ControlListWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -410,6 +413,9 @@
     <QtMoc Include="widgets\MultibranchWidgets\StillageSelectionWidget.h">
       <Filter>Header Files\MultibranchWidgets</Filter>
     </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\ControlListWidget.h">
+      <Filter>Header Files\MultibranchWidgets</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="UamobiUtil.qrc">
@@ -476,6 +482,9 @@
     </ClInclude>
     <ClInclude Include="widgets\ControlsMiniwidgets\ControlManager.h">
       <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\ControlsMiniwidgets\FloatControl.h">
+      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

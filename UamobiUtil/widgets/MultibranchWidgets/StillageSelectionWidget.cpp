@@ -1,6 +1,6 @@
 #include "StillageSelectionWidget.h"
 #include "networking/Parsers/RequestParser.h"
-#define DEBUG
+
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif

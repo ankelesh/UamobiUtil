@@ -43,6 +43,8 @@ unsigned SlotPointer::maxid = 0;
 
 Q_DECLARE_METATYPE(SlotPointer)
 
+
+
 HttpUpdateEngine::HttpUpdateEngine(QString& Url, QObject* parent)
 	: DataUpdateEngine(parent), url(Url), m_nextQueryId(0), delay(0)
 {
@@ -595,7 +597,7 @@ void HttpUpdateEngine::recNew
 		"rec_new_doc&session=" + m_sessionId
 		+ "&date=" + date.toString("dd.MM.yyyy")
 		+ "&parent=" + parent
-		+ "&comment=" + comment.toLocal8Bit().toPercentEncoding()
+        + "&comment=" + comment.toLocal8Bit().toPercentEncoding()
 		, receiver
 		, slot
 	);
@@ -664,7 +666,11 @@ void HttpUpdateEngine::sendQuery
 		r.setAttribute(static_cast<QNetworkRequest::Attribute>(DataInternal), data);
 	}
 	r.setRawHeader("User-Agent", "UAMobi/1.999a2");
-	r.setUrl(QUrl::fromUserInput(currurl));
+#ifdef QT_VERSION5X
+	r.setUrl(QUrl::fromEncoded(currurl.toUtf8(), QUrl::ParsingMode::TolerantMode));
+#else
+    r.setUrl(QUrl::fromUserInput(currurl));
+#endif
 	SlotPointer sp(o, slot);
 	m_nextQueryId = sp.id;
 	r.setAttribute(static_cast<QNetworkRequest::Attribute>(DataSlot), qVariantFromValue(sp));
@@ -767,6 +773,24 @@ void HttpUpdateEngine::onRequestFinished()
 		reply->disconnect(this);
 		requestFinish(reply);
 	}
+}
+
+void HttpUpdateEngine::docDeleteAll(QObject* receiver = Q_NULLPTR, const char* slot = "")
+{
+	sendQuery(
+		"doc_result_delete_all&session=" + m_sessionId,
+		receiver,
+		slot
+	);
+}
+
+void HttpUpdateEngine::docDeleteByBarcode(const QString& barcode, const QString optionals, QObject* receiver, const char* slot)
+{
+	sendQuery(
+		"doc_result_delete_by_bc&session=" + m_sessionId + "&barcode=" + barcode + optionals,
+		receiver,
+		slot
+	);
 }
 
 void HttpUpdateEngine::recListTemplated(const QString listedType, const QString& searchText,const QString optparameters, QObject* receiver, const char* slot)

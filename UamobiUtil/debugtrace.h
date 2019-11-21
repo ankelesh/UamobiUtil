@@ -107,6 +107,11 @@
 #define detrace_METHPERROR(_METHOD_, _CONTEXT_) detrace << detr_supply::errorPossible << \
 	"Error possible in method " << _METHOD_ << "with context: " << _CONTEXT_ << '\n'
 
+#define detrace_SUCCESS detrace << detr_supply::methodDataSnapshot << "Operation success!" << '\n'
+
+#define detrace_FAIL detrace << detr_supply::methodDataSnapshot << "Operation failed!" << '\n'
+
+
 namespace detr_supply { // Holds enums for defining output method and priorities
 	enum OutputMode { toall, file, qDeb, qStr, Cons, some_united, buffConsole };
 	// Defines output mode: file-> prints to log.txt, qDeb-> prints to console,

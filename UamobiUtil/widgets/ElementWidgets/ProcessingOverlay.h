@@ -40,6 +40,7 @@ public:
 	virtual void hide();	//	stops timer, hides this
 	virtual void show();	//	restarts timer and shows widget
 	void resize(const QSize&);	//	normal resize
+	void setTemporaryDelay(int additionalDelay);
 private slots:
 	void step();				//	is triggered by redrawTimer
 };

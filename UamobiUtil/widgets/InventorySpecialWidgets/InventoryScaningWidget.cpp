@@ -15,7 +15,7 @@
 InventoryScaningWidget::InventoryScaningWidget(GlobalAppSettings& go, QWidget* parent)
 	: AbstractScaningWidget(go, parent), abstractNode(), captureInterface(),
 	resultScreen(new DocResultsWidget(go, this)), searchScreen(new ItemSearchWidget(go, this)),
-	capturer(new NormalCapturer(this, this)), controlsRequired(false), manSelected(false), controlsAvailable(0)
+	capturer(new NormalCapturer(this, this)), manSelected(false)
 {
 	mainLayout->addWidget(searchScreen);
 	mainLayout->addWidget(resultScreen);
@@ -28,7 +28,9 @@ InventoryScaningWidget::InventoryScaningWidget(GlobalAppSettings& go, QWidget* p
 	mainTextView->installEventFilter(capturer->keyfilter);
 	QScroller::grabGesture(mainTextView, QScroller::LeftMouseButtonGesture);
 	innerWidget->installEventFilter(capturer->keyfilter);
+#ifdef Q_OS_ANDROID
 	barcodeField->installEventFilter(new filters::LineEditHelper(this));
+#endif
 #ifdef QT_VERSION5X
 	QObject::connect(resultScreen, &DocResultsWidget::backRequired, this, &InventoryScaningWidget::hideCurrent);
 	QObject::connect(searchScreen, &ItemSearchWidget::backRequired, this, &InventoryScaningWidget::hideCurrent);
@@ -182,6 +184,7 @@ void InventoryScaningWidget::hideCurrent()
 
 void InventoryScaningWidget::saveSuccesfull()
 {
+    _hideCurrent(innerWidget);
 	emit saveSuccess();
 }
 
@@ -206,7 +209,7 @@ void InventoryScaningWidget::setDocument(Document doc)
 #else
 	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(document_confirmed_response()));
 #endif
-	globalSettings.networkingEngine->recNew(QDate::currentDate(), doc.docId, doc.comment, &awaiter, RECEIVER_SLOT_NAME);
+	globalSettings.networkingEngine->invNew(QDate::currentDate(), doc.docId, doc.comment, &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
 }
 

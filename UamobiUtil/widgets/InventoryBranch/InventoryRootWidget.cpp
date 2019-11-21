@@ -14,8 +14,13 @@ void InventoryRootWidget::openCorrespondingSubbranch()
 	{
 		bfilterWidget = new BarcodeFilterSelectionSubbranch(globalSettings, this);
 		mainLayout->addWidget(bfilterWidget);
-		QObject::connect(bfilterWidget, &BarcodeFilterSelectionSubbranch::selectionHappened, this, &InventoryRootWidget::continueToScaning);
+#ifdef QT_VERSION5X
+        QObject::connect(bfilterWidget, &BarcodeFilterSelectionSubbranch::selectionHappened, this, &InventoryRootWidget::continueToScaning);
 		QObject::connect(bfilterWidget, &BarcodeFilterSelectionSubbranch::backRequired, this, &InventoryRootWidget::backTo);
+#else
+        QObject::connect(bfilterWidget, SIGNAL(backRequired()), this, SLOT(backTo()));
+        QObject::connect(bfilterWidget, SIGNAL(selectionHappened()), this, SLOT(continueToScaning()));
+#endif
 		bfilterWidget->hide();
 	}
 	_hideAny(docSelectionWidget);
@@ -55,7 +60,7 @@ InventoryRootWidget::InventoryRootWidget(GlobalAppSettings& go, QHash<QString, Q
 	QObject::connect(scaningWidget, &InventoryScaningWidget::saveSuccess, this, &InventoryRootWidget::hideCurrent);
 #else
 	QObject::connect(innerWidget, SIGNAL(backRequired()), this, SLOT(backTo()));
-	QObject::connect(innerWidget, SIGNAL(documentConfirmed(Document)), this, SLOT(continueToScaning(Document)));
+    QObject::connect(innerWidget, SIGNAL(documentConfirmed()), this, SLOT(continueToScaning()));
 	QObject::connect(innerWidget, SIGNAL(documentMustBeSelected(int)), this, SLOT(backToStep(int)));
 	QObject::connect(docSelectionWidget, SIGNAL(docSelected(parsedDocument)), this, SLOT(documentAcquired(parsedDocument)));
 	QObject::connect(docSelectionWidget, SIGNAL(backRequired()), this, SIGNAL(backRequired()));

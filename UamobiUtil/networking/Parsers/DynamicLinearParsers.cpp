@@ -168,7 +168,8 @@ ExpandedItemListParser::ExpandedItemListParser(QString& res, QString& err)
 	parseres.queriesResult << pageinfo.at(0).namedItem("from").toElement().text();
 	parseres.queriesResult << pageinfo.at(0).namedItem("to").toElement().text();
 	parseres.queriesResult << pageinfo.at(0).namedItem("last").toElement().text();
-	parseres.alternative_result = 3;
+	parseres.queriesResult << doc.elementsByTagName("allowdelete").at(0).toElement().text();
+	parseres.alternative_result = 4;
 	QDomNodeList dmndl = doc.elementsByTagName("result");
 	int len = dmndl.count();
 	for (int i = 0; i < len; ++i)

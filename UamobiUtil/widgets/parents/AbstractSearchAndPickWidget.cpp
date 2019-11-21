@@ -3,7 +3,7 @@
 
 void AbstractSearchAndPickWidget::emplaceSelection(AbstractListSelectionWidget* toEmplace)
 {
-	mainLayout->insertWidget(1, toEmplace);
+    innerLayout->insertWidget(1, toEmplace);
 	itemSelection = toEmplace;
 	itemSelection->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding));
 	itemSelection->setMaximumWidth(calculateAdaptiveWidth(1));
@@ -90,6 +90,7 @@ AbstractSearchAndPickWidget::AbstractSearchAndPickWidget(
 
 void AbstractSearchAndPickWidget::show()
 {
+    loadItems();
 	inframedWidget::show();
 	setFocus();
 }

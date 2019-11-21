@@ -1,5 +1,4 @@
 #include "NormalCapturer.h"
-#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -146,7 +145,11 @@ void NormalCapturer::pressReturn()
 	else
 		if (isAwaitingControlValue)
 		{
+
+#ifdef DEBUG
 			detrace_METHEXPL("flushing control #" << controlIndex << " from " << controlNumber);
+#endif
+
 			controlIndex = widgetToApply->flushControl(controlIndex);
 			if (controlIndex >= controlNumber)
 			{
@@ -199,7 +202,14 @@ void NormalCapturer::handleElement(QString elem)
 #ifdef DEBUG
 			detrace_METHEXPL("toNum");
 #endif
-
+			if (elem == ".")
+			{
+				if (widgetToApply->numberBuffer.contains("."))
+				{
+					lastKeyReleaseTimepoint = QTime::currentTime();
+					return;
+				}
+			}
 			widgetToApply->numberBuffer += elem;
 			widgetToApply->handleNumberInbuffer();
 			lastKeyReleaseTimepoint = QTime::currentTime();
@@ -248,7 +258,9 @@ void NormalCapturer::handleErase()
 
 void NormalCapturer::setPhase(int ph)
 {
-    detrace_METHEXPL("ph set: " << ph << "|" << controlNumber);
+#ifdef DEBUG
+	detrace_METHEXPL("ph set: " << ph << "|" << controlNumber);
+#endif
 	if (ph == -1)
 	{
 		clearCaptureEngine();
@@ -260,7 +272,11 @@ void NormalCapturer::setPhase(int ph)
 		isScaning = false;
 		controlIndex = ph;
 	}
-    detrace_METHEXPL(stateOfEngine());
+
+#ifdef DEBUG
+	detrace_METHEXPL(stateOfEngine());
+#endif
+
 }
 
 void NormalCapturer::setControlNumber(int num)

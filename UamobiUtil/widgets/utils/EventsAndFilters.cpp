@@ -9,59 +9,38 @@
 
 bool filters::NoKeyEvents::eventFilter(QObject* object, QEvent* ev)
 {
-#ifdef DEBUG
-	detrace_METHFRECALL("NoKeyEvents::eventFilter");
-#endif
 	// Captures key press events
-	if (ev->type() == QEvent::KeyRelease)
+	switch (ev->type())
 	{
-#ifdef DEBUG
-		detrace_METHFRECALL("key release captured with text");
-#endif
+	case QEvent::KeyRelease:
+	{
 		QKeyEvent* keyptr = static_cast<QKeyEvent*>(ev);
-#ifdef DEBUG
-		detrace_METHFRECALL(keyptr->text() << "<<");
-#endif
 		// Sorts: now only return, back and numbers must be intercepted
-		if (keyptr->key() == Qt::Key_Return)
+		switch (keyptr->key())
 		{
-#ifdef DEBUG
-			detrace_METHFRECALL("Caught kind of return");
-
-#endif
+		case Qt::Key_Return:
 			emit returnObtained();
-		}
-		else if (keyptr->key() == Qt::Key_Back || keyptr->key() == Qt::Key_Escape)
-		{
-#ifdef DEBUG
-
-			detrace_METHFRECALL("Caught kind of back");
-
-#endif
-			emit backRequired();
-		}
-		else if (keyptr->key() == Qt::Key_Backspace)
-		{
+			break;
+		case Qt::Key_Back:
+		case Qt::Key_Escape:
+			emit backRequired(); break;
+		case Qt::Key_Backspace:
 			emit eraseRequired();
-		}
-		else if (keyptr->key() == 0 || keyptr->key() == 33554431 || keyptr->key() == 16777248 || keyptr->key() == Qt::Key_Dollar)
-		{
-			emit unknownObtained();
-		}
-		else if (keyptr->text() == "$")
-		{
-		}
-		else
-		{
-#ifdef DEBUG
-			detrace_METHFRECALL("Caught non-controlling value");
-#endif
+			break;
+		case Qt::Key_Dollar:
+		case 0:
+		case 33554431:
+		case 16777248:
+			emit unknownObtained(); break;
+		default:
+			if (keyptr->text() == "$")
+				return true;
 			emit numberObtained(keyptr->text());
+			return true;
 		}
-		return true;
 	}
-	else if (ev->type() == QEvent::KeyPress)
-	{ // here was breaker -> possibly it was the solution of old problem? Insert here return if bug restores
+	case QEvent::KeyPress:
+	{
 		QKeyEvent* keyptr = static_cast<QKeyEvent*>(ev);
 		if (keyptr->key() == 0 || keyptr->key() == 33554431)
 		{
@@ -69,7 +48,9 @@ bool filters::NoKeyEvents::eventFilter(QObject* object, QEvent* ev)
 			return true;
 		}
 	}
-	return QObject::eventFilter(object, ev);
+	default:
+		return QObject::eventFilter(object, ev);
+	}
 }
 
 bool filters::CaptureBackFilter::eventFilter(QObject* object, QEvent* ev)

@@ -280,6 +280,13 @@ public:
 
 	// Inherited via DataUpdateEngine
 	virtual void applyBarcodeFilter(const QString type, const QString& value, QObject* receiver = Q_NULLPTR, const char* slot = "") override;
+	// Inherited via DataUpdateEngine
+	virtual void docDeleteAll(QObject* receiver, const char* slot) override;
+
+	virtual void docDeleteByBarcode(const QString& barcode,
+		const QString optionals,
+		QObject* receiver = Q_NULLPTR,
+		const char* slot = "") override;
 
 private:
 	void sendQuery
@@ -313,6 +320,8 @@ signals:
 
 	// Inherited via DataUpdateEngine
 	
+
+
 	// Inherited via DataUpdateEngine
 };
 

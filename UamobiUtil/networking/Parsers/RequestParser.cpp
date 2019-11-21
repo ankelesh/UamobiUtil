@@ -255,12 +255,13 @@ namespace parse_uniresults_functions {
 	doclistResponse parse_document_listed(uniform_parse_result& ures)
 	{
 		doclistResponse temp;
-		if (ures.one_position_entries_quantity == 6 && ures.alternative_result == 3)
+		if (ures.one_position_entries_quantity == 6 && ures.alternative_result == 4)
 		{
 			temp.from = ures.queriesResult.at(0);
 			temp.to = ures.queriesResult.at(1);
 			temp.last = ((ures.queriesResult.at(2) == "true") ? true : false);
-			temp.values.reserve((ures.queriesResult.count() - 3) / 6);
+			temp.optionals = ures.queriesResult.at(3);
+			temp.values.reserve((ures.queriesResult.count() - 4) / 6);
 			for (int i = ures.alternative_result; i < ures.queriesResult.count(); i += ures.one_position_entries_quantity)
 			{
 				temp.values.push_back(parsedItem(

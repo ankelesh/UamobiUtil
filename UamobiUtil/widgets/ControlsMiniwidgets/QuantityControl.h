@@ -19,8 +19,8 @@ protected:
 	virtual bool hasFocus() const override;
     virtual void setListening(bool) override;
 public:
-	explicit QuantityControl(QString& cname, QWidget* parent);
-	explicit QuantityControl(QString& cname, QString& assocBuffer, QWidget* parent);
+	explicit QuantityControl(bool isInt, QString& cname, QWidget* parent);
+	explicit QuantityControl(bool isInt, QString& cname, QString& assocBuffer, QWidget* parent);
     virtual ~QuantityControl();
 
 	// Inherited via abs_control
@@ -37,4 +37,7 @@ public:
 	// Inherited via abs_control
 	virtual void installEventFilter(QObject* keyfilter) override;
 	virtual QWidget* myWidget() override { return innerSpinbox; };
+
+	// Inherited via abs_control
+	virtual void makeConnectionBetweenControls(abs_control* another) override;
 };

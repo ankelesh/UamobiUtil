@@ -26,7 +26,7 @@ class abs_control
 	//control interfaces
 {
 public:
-	enum controlType { None, Int }; // Types of controls by their inner types.
+	enum controlType { None, Int, Float }; // Types of controls by their inner types.
 
 protected:
 	QString* associatedBuffer;
@@ -59,6 +59,7 @@ public:
 	virtual void refresh() = 0;
 	virtual void installEventFilter(QObject*) = 0;
 	virtual QWidget* myWidget() = 0;
+	virtual void makeConnectionBetweenControls(abs_control* another) = 0;
 	void unassociateBuffer();
 	void associateBuffer(QString&);
 	virtual ~abs_control() {};

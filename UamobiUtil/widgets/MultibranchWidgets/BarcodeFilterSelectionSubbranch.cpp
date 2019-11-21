@@ -66,7 +66,17 @@ BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(GlobalAppSettin
 	QObject::connect(stillageWidget, &StillageSelectionWidget::backRequired, this, &BarcodeFilterSelectionSubbranch::hideCurrent);
 
 #else
-	!!!implement!!!
+    QObject::connect(stillageButton, SIGNAL(clicked()), this, SLOT(stillageSelectRequired()));
+    QObject::connect(groupButton, SIGNAL(clicked()), this, SLOT(groupSelectRequired()));
+    QObject::connect(suppliersButton, SIGNAL(clicked()), this, SLOT(supplierSelectRequired()));
+    QObject::connect(nofilterButton, SIGNAL(clicked()), this, SLOT(noFilterRequired()));
+    QObject::connect(backButton, SIGNAL(clicked()), this, SLOT(backRequired()));
+    QObject::connect(supplierWidget, SIGNAL(supplierAcquired(parsedSupplier)), this, SLOT(supplierProxyWrapper(parsedSupplier)));
+    QObject::connect(supplierWidget, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+    QObject::connect(groupWidget, SIGNAL(done(QString,QString)), this, SLOT(applyFilter(QString,QString)));
+    QObject::connect(groupWidget, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+    QObject::connect(stillageWidget, SIGNAL(done(QString,QString)), this, SLOT(applyFilter(QString,QString)));
+    QObject::connect(stillageWidget, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
 #endif
 }
 

@@ -73,6 +73,7 @@ protected slots:
 	virtual void was_timeout();
 	virtual void switchedFocus() = 0;
 	virtual void syncControlAndBuffer(QString v) = 0;
+    virtual void quitNoSave();
 public slots:
 	virtual void setDocument(parsedOrder) = 0;
 signals:

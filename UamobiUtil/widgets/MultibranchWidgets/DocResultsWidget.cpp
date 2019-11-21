@@ -1,16 +1,26 @@
 #include "DocResultsWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
+
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
+
 DocResultsWidget::DocResultsWidget(GlobalAppSettings& go, QWidget* parent)
 	: inframedWidget(parent), globalSettings(go), mainLayout(new QVBoxLayout(this)),
+	toolPanel(new QHBoxLayout(this)), deleteAllButton(new MegaIconButton(this)),
+	deleteSelectedButton(new MegaIconButton(this)),
 	userInfo(new QLabel(this)), listHeaderLayout(new QHBoxLayout(this)),
 	previousButton(new MegaIconButton(this)), indexationInfo(new QLabel(this)),
 	nextButton(new MegaIconButton(this)), itemInfoStorage(new QListWidget(this)),
 	footerLayout(new QHBoxLayout(this)), backButton(new MegaIconButton(this)),
-	saveButton(new MegaIconButton(this)), items(), pagenumber(0), awaiter(go.timeoutInt, this)
+	saveButton(new MegaIconButton(this)), items(), pagenumber(0), awaiter(go.timeoutInt + 20000, this)
 {
 	this->setLayout(mainLayout);
 	mainLayout->addWidget(userInfo);
+	mainLayout->addLayout(toolPanel);
+	toolPanel->addWidget(deleteAllButton);
+	toolPanel->addWidget(deleteSelectedButton);
 	mainLayout->addLayout(listHeaderLayout);
 	listHeaderLayout->addWidget(previousButton);
 	listHeaderLayout->addWidget(indexationInfo);
@@ -45,6 +55,18 @@ DocResultsWidget::DocResultsWidget(GlobalAppSettings& go, QWidget* parent)
     itemInfoStorage->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	//TODO: icons
 
+	deleteAllButton->setFont(scf);
+	deleteAllButton->setText(tr("delete all"));
+	deleteAllButton->setIcon(QIcon(":/res/data.png"));
+	deleteAllButton->setStyleSheet(DELETE_BUTTONS_STYLESHEET);
+	deleteAllButton->hide();
+	
+	deleteSelectedButton->setFont(scf);
+	deleteSelectedButton->setText(tr("delete selected"));
+	deleteSelectedButton->setIcon(QIcon(":/res/deleteData.png"));
+	deleteSelectedButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
+	deleteSelectedButton->hide();
+
 	backButton->setText(tr("doc_results_back"));
 	backButton->setIcon(QIcon(":/res/back.png"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
@@ -59,13 +81,16 @@ DocResultsWidget::DocResultsWidget(GlobalAppSettings& go, QWidget* parent)
 
 	itemInfoStorage->setFont(scf);
 #ifdef QT_VERSION5X
-
+	QObject::connect(deleteAllButton, &MegaIconButton::clicked, this, &DocResultsWidget::deleteAll);
+	QObject::connect(deleteSelectedButton, &MegaIconButton::clicked, this, &DocResultsWidget::deleteCurrent);
 	QObject::connect(backButton, &MegaIconButton::clicked, this, &DocResultsWidget::backRequired);
 	QObject::connect(saveButton, &MegaIconButton::clicked, this, &DocResultsWidget::saveDocument);
 	QObject::connect(nextButton, &MegaIconButton::clicked, this, &DocResultsWidget::nextPage);
 	QObject::connect(previousButton, &MegaIconButton::clicked, this, &DocResultsWidget::previousPage);
 	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &DocResultsWidget::was_timeout);
 #else
+    QObject::connect(deleteAllButton, SIGNAL(clicked()), this, SLOT(deleteAll()));
+    QObject::connect(deleteSelectedButton, SIGNAL(clicked()), this, SLOT(deleteCurrent()));
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 	QObject::connect(saveButton, SIGNAL(clicked()), this, SLOT(saveDocument()));
 	QObject::connect(nextButton, SIGNAL(clicked()), this, SLOT(nextPage()));
@@ -84,6 +109,8 @@ void DocResultsWidget::loadItems()
 	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(items_response()));
 #endif
 	globalSettings.networkingEngine->docGetResults(pagenumber, &awaiter, RECEIVER_SLOT_NAME);
+	deleteAllButton->hide();
+	deleteSelectedButton->hide();
 	awaiter.run();
 	showProcessingOverlay();
 }
@@ -95,11 +122,27 @@ void DocResultsWidget::refresh()
 	QVector<parsedItem>::iterator start = items.values.begin();
 	while (start != items.values.end())
 	{
+
+#ifdef DEBUG
+		detrace_METHEXPL("inserting item: " << start->description());
+#endif
+
 		itemInfoStorage->addItem(start++->title);
 	}
 	nextButton->setDisabled(items.last);
 	previousButton->setDisabled(pagenumber == 0);
 	saveButton->setDisabled(items.values.isEmpty());
+	bool ok = items.optionals == "true";
+	if (ok)
+	{
+		deleteAllButton->show();
+		deleteSelectedButton->show();
+	}
+	else
+	{
+		deleteAllButton->hide();
+		deleteSelectedButton->hide();
+	}
 }
 
 void DocResultsWidget::show()
@@ -146,6 +189,7 @@ void DocResultsWidget::saveDocument()
 void DocResultsWidget::items_response()
 {
 	items = RequestParser::interpretAsListedDocument(awaiter.restext, awaiter.errtext);
+	
 	refresh();
 	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
@@ -164,4 +208,39 @@ void DocResultsWidget::was_timeout()
 	userInfo->setText(tr("doc_results_timeout") + QString::number(globalSettings.timeoutInt));
 	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
+}
+
+void DocResultsWidget::deleteAll()
+{
+	if (awaiter.isAwaiting())
+		return;
+#ifdef QT_VERSION5X
+	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &DocResultsWidget::items_response);
+#else
+	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(items_response()));
+#endif
+	globalSettings.networkingEngine->docDeleteAll(&awaiter, RECEIVER_SLOT_NAME);
+	deleteAllButton->hide();
+	deleteSelectedButton->hide();
+	awaiter.run();
+	showProcessingOverlay();
+}
+
+void DocResultsWidget::deleteCurrent()
+{
+	if (awaiter.isAwaiting())
+		return;
+	if (itemInfoStorage->currentItem() == Q_NULLPTR)
+		return;
+#ifdef QT_VERSION5X
+	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &DocResultsWidget::items_response);
+#else
+	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(items_response()));
+#endif
+	globalSettings.networkingEngine->docDeleteByBarcode(items.values.at(itemInfoStorage->currentRow()).code, 
+		"&qty=" + QString::number(items.values.at(itemInfoStorage->currentRow()).qty), &awaiter, RECEIVER_SLOT_NAME);
+	deleteAllButton->hide();
+	deleteSelectedButton->hide();
+	awaiter.run();
+	showProcessingOverlay();
 }

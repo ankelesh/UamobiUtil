@@ -299,6 +299,16 @@ public:
 		QObject* receiver = Q_NULLPTR,
 		const char* slot = ""
 	) = 0;
+	virtual void docDeleteAll(
+		QObject* receiver = Q_NULLPTR,
+		const char* slot = ""
+	) = 0;
+	virtual void docDeleteByBarcode(
+		const QString& barcode,
+		const QString optionals,
+		QObject* receiver = Q_NULLPTR,
+		const char* slot = ""
+	) = 0;
 	// photo-specific
 	virtual void makeRequest(DataRequest* dr) = 0;
 	static DataUpdateEngine* getMain(QObject* parent = 0);

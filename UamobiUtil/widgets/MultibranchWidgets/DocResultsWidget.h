@@ -31,6 +31,10 @@ protected:
 	GlobalAppSettings& globalSettings;
 
 	QVBoxLayout* mainLayout;
+	QHBoxLayout* toolPanel;
+	MegaIconButton* deleteAllButton;
+	MegaIconButton* deleteSelectedButton;
+
 	QLabel* userInfo;
 	QHBoxLayout* listHeaderLayout;
 	MegaIconButton* previousButton;
@@ -57,7 +61,8 @@ protected slots:
 	void items_response();			//	netresponse
 	void save_response();
 	void was_timeout();
-
+	void deleteAll();
+	void deleteCurrent();
 signals:
 	void documentSaved();
 };

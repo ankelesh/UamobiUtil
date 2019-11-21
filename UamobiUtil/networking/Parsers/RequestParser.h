@@ -50,6 +50,7 @@ namespace parse_uniresults_functions
 		QString from;
 		QString to;
 		bool last;
+		QString optionals;
 		QVector<C> values;
 	};
 	struct CombinedNamedLinearResponse
