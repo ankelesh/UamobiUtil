@@ -54,7 +54,6 @@
         <file>res/scanner.png</file>
         <file>res/sent.png</file>
         <file>res/seo2-25-512.png</file>
-        <file>res/seo2-32-512.png</file>
         <file>res/seo3-18-512.png</file>
         <file>res/seo3-21-512.png</file>
         <file>res/seo3-89-512.png</file>
@@ -93,5 +92,11 @@
         <file>res/nextpage.png</file>
         <file>res/prevpage.png</file>
         <file>res/filter.png</file>
+        <file>res/groups.png</file>
+        <file>res/stillages.png</file>
+        <file>res/suppliers.png</file>
+        <file>res/uamobiU.ico</file>
+        <file>res/uamobiU.png</file>
+        <file>res/UamobiUtillowres.ico</file>
     </qresource>
 </RCC>

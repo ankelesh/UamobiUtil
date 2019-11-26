@@ -116,6 +116,15 @@ void LoginWidget::show()
 	}
 }
 
+void LoginWidget::langCh()
+{
+	loginInfo->setText(tr("login_widget_login_tip"));
+	passwordInfo->setText(tr("login_widget_password_tip"));
+	okButton->setText(tr("login_widget_ok_button"));
+	backButton->setText(tr("login_widget_back_button"));
+	
+}
+
 void LoginWidget::set_login(const QString str)
 {
 	loginField->setText(str);

@@ -3,7 +3,11 @@
 
 void AbstractSearchAndPickWidget::emplaceSelection(AbstractListSelectionWidget* toEmplace)
 {
+#ifdef QT_VERSION5X
     innerLayout->insertWidget(1, toEmplace);
+#else
+    innerLayout->insertWidget(2, toEmplace);
+#endif
 	itemSelection = toEmplace;
 	itemSelection->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding));
 	itemSelection->setMaximumWidth(calculateAdaptiveWidth(1));

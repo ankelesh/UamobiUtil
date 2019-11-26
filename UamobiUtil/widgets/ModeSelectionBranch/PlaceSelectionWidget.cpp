@@ -114,6 +114,11 @@ bool PlaceSelectionWidget::isExpectingControl(int val)
 	return false;
 }
 
+void PlaceSelectionWidget::setMode(parsedMode& pmode)
+{
+	modeTip->setText(tr("place_selection_mode_tip: ") + pmode.name);
+}
+
 void PlaceSelectionWidget::placeSelected(parsedPlace pl)
 {
 	if (awaiter.isAwaiting())

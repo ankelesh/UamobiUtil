@@ -4,50 +4,117 @@
 <context>
     <name>AbstractScaningWidget</name>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="200"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="202"/>
         <source>scaning_widget_user_info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="204"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="206"/>
         <source>scaning_widget_filler_text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="211"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="213"/>
         <source>scaning_widget_back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="215"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="217"/>
         <source>scaining_widget_submit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="219"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="221"/>
         <source>scaning_widget_search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="223"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="225"/>
         <source>quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="228"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="230"/>
         <source>focus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="264"/>
+        <source>QuitWithoutSave?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="264"/>
+        <source>quit_without_save_info?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AbstractSearchAndPickWidget</name>
+    <message>
+        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="43"/>
+        <source>suppliers_selection_widget_user_tip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="48"/>
+        <source>suppliers_selection_search!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="59"/>
+        <source>suppliers_selection_back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="63"/>
+        <source>W\O</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="139"/>
+        <source>suppliers_select_widget_timeout!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BarcodeFilterSelectionSubbranch</name>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.cpp" line="32"/>
+        <source>stillages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.cpp" line="37"/>
+        <source>suppliers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.cpp" line="42"/>
+        <source>groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.cpp" line="47"/>
+        <source>nofilter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.cpp" line="52"/>
+        <source>back</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ControlTranslator</name>
     <message>
-        <location filename="../widgets/ControlsMiniwidgets/ControlTranslator.cpp" line="15"/>
+        <location filename="../widgets/ControlsMiniwidgets/ControlTranslator.cpp" line="20"/>
+        <location filename="../widgets/ControlsMiniwidgets/ControlTranslator.cpp" line="21"/>
         <source>control_quantity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ControlsMiniwidgets/ControlTranslator.cpp" line="21"/>
+        <location filename="../widgets/ControlsMiniwidgets/ControlTranslator.cpp" line="27"/>
         <source>control_addqty</source>
         <translation type="unfinished"></translation>
     </message>
@@ -55,22 +122,32 @@
 <context>
     <name>DocResultsWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="47"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="65"/>
+        <source>delete all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="71"/>
+        <source>delete selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="76"/>
         <source>doc_results_back</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="51"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="80"/>
         <source>doc_results_text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="55"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="84"/>
         <source>doc_results_userinfo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="163"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="214"/>
         <source>doc_results_timeout</source>
         <translation type="unfinished"></translation>
     </message>
@@ -103,7 +180,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/FilterSelectWidget.cpp" line="147"/>
+        <location filename="../widgets/MultibranchWidgets/FilterSelectWidget.cpp" line="148"/>
         <source>timeout:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -111,7 +188,7 @@
 <context>
     <name>HttpUpdateEngine</name>
     <message>
-        <location filename="../networking/dataupdateengine-http.cpp" line="708"/>
+        <location filename="../networking/dataupdateengine-http.cpp" line="718"/>
         <source>Network error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -157,7 +234,7 @@
 <context>
     <name>InventoryScaningWidget</name>
     <message>
-        <location filename="../widgets/InventorySpecialWidgets/InventoryScaningWidget.cpp" line="173"/>
+        <location filename="../widgets/InventorySpecialWidgets/InventoryScaningWidget.cpp" line="175"/>
         <source>receipt_scaning_mode_name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -194,21 +271,25 @@
     </message>
     <message>
         <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="71"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="121"/>
         <source>login_widget_login_tip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="76"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="122"/>
         <source>login_widget_password_tip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="77"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="123"/>
         <source>login_widget_ok_button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="78"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="124"/>
         <source>login_widget_back_button</source>
         <translation type="unfinished"></translation>
     </message>
@@ -216,36 +297,36 @@
 <context>
     <name>MainPageWidget</name>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="98"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="208"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="100"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="210"/>
         <source>main_page_select_profile_tip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="100"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="209"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="102"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="211"/>
         <source>main_page_enter_profile_id_tip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="105"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="210"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="107"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="212"/>
         <source>main_page_exit_button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="109"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="211"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="111"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="213"/>
         <source>main_page_settings_button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="114"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="116"/>
         <source>refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="252"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="255"/>
         <source>timeout_with_delay:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -253,72 +334,62 @@
 <context>
     <name>MainSettingsWidget</name>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="144"/>
-        <source>settings_workflow_tab_title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="145"/>
-        <source>settings_system_tab_title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="35"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="146"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="144"/>
         <source>settings_scan_mode_info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="39"/>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="42"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="148"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="151"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="146"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="149"/>
         <source>settings_scmode_one</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="39"/>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="42"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="148"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="151"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="146"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="149"/>
         <source>settings_scmode_autos</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="39"/>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="42"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="148"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="151"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="146"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="149"/>
         <source>settings_scmode_simple</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="48"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="154"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="152"/>
         <source>settings_system_title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="52"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="155"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="153"/>
         <source>settings_select_address_tip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="61"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="156"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="154"/>
         <source>settings_system_select_lang_tip</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="77"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="157"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="155"/>
         <source>settings_save_button</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="81"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="158"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="156"/>
         <source>settings_back_button</source>
         <translation type="unfinished"></translation>
     </message>
@@ -341,7 +412,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="198"/>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="201"/>
         <source>mode_selection_timeout!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -401,6 +472,7 @@
     </message>
     <message>
         <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="62"/>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="119"/>
         <source>place_selection_mode_tip: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -415,7 +487,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="157"/>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="163"/>
         <source>mode_selection_timeout!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -423,7 +495,7 @@
 <context>
     <name>ProcessingOverlay</name>
     <message>
-        <location filename="../widgets/ElementWidgets/ProcessingOverlay.cpp" line="42"/>
+        <location filename="../widgets/ElementWidgets/ProcessingOverlay.cpp" line="59"/>
         <source>Awaiting network response</source>
         <translation type="unfinished"></translation>
     </message>
@@ -529,36 +601,8 @@
 <context>
     <name>ReceiptScaningWidget</name>
     <message>
-        <location filename="../widgets/ReceiptSpecialWidgets/ReceiptScaningWidget.cpp" line="275"/>
+        <location filename="../widgets/ReceiptSpecialWidgets/ReceiptScaningWidget.cpp" line="281"/>
         <source>receipt_scaning_mode_name</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SuppliersSelectWidget</name>
-    <message>
-        <location filename="../widgets/SuppliersSelectionBranch/SuppliersSelectWidget.cpp" line="60"/>
-        <source>suppliers_selection_widget_user_tip</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/SuppliersSelectionBranch/SuppliersSelectWidget.cpp" line="65"/>
-        <source>suppliers_selection_search!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/SuppliersSelectionBranch/SuppliersSelectWidget.cpp" line="82"/>
-        <source>W\O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/SuppliersSelectionBranch/SuppliersSelectWidget.cpp" line="78"/>
-        <source>suppliers_selection_back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/SuppliersSelectionBranch/SuppliersSelectWidget.cpp" line="193"/>
-        <source>suppliers_select_widget_timeout!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -132,7 +132,7 @@ void ModeSelectionWidget::loadModes()
 #else
 	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_modes()));
 #endif
-	globalSettings.networkingEngine->modeList(&awaiter, RECEIVER_SLOT_NAME, "nolang");
+    globalSettings.networkingEngine->modeList(&awaiter, RECEIVER_SLOT_NAME, globalSettings.language.toCaseFolded());
 	awaiter.run();
 }
 
@@ -255,5 +255,6 @@ void ModeBranchRootWidget::mode_select_response()
 	{
 		_hideAny(placeSelection);
 		placeSelection->loadPlaces();
+		placeSelection->setMode(selected);
 	}
 }

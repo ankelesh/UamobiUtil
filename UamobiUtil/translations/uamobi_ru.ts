@@ -4,75 +4,152 @@
 <context>
     <name>AbstractScaningWidget</name>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="200"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="202"/>
         <source>scaning_widget_user_info</source>
-        <translation type="unfinished"></translation>
+        <translation>Информация</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="204"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="206"/>
         <source>scaning_widget_filler_text</source>
-        <translation type="unfinished"></translation>
+        <translation>Нажмите SCAN для начала сканирования</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="211"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="213"/>
         <source>scaning_widget_back</source>
-        <translation type="unfinished"></translation>
+        <translation>назад</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="215"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="217"/>
         <source>scaining_widget_submit</source>
-        <translation type="unfinished"></translation>
+        <translation>Отправить</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="219"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="221"/>
         <source>scaning_widget_search</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="223"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="225"/>
         <source>quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="228"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="230"/>
         <source>focus</source>
-        <translation type="unfinished"></translation>
+        <translation>К вводу</translation>
+    </message>
+    <message>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="264"/>
+        <source>QuitWithoutSave?</source>
+        <translation>Выйти без сохранения?</translation>
+    </message>
+    <message>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="264"/>
+        <source>quit_without_save_info?</source>
+        <translation>Вы желаете выйти без сохранения?</translation>
+    </message>
+</context>
+<context>
+    <name>AbstractSearchAndPickWidget</name>
+    <message>
+        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="43"/>
+        <source>suppliers_selection_widget_user_tip</source>
+        <translation>Поставщик</translation>
+    </message>
+    <message>
+        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="48"/>
+        <source>suppliers_selection_search!</source>
+        <translation>Поиск!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="59"/>
+        <source>suppliers_selection_back</source>
+        <translation>Назад</translation>
+    </message>
+    <message>
+        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="63"/>
+        <source>W\O</source>
+        <translation>Заявки</translation>
+    </message>
+    <message>
+        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="139"/>
+        <source>suppliers_select_widget_timeout!</source>
+        <translation>Долго нет соединения!</translation>
+    </message>
+</context>
+<context>
+    <name>BarcodeFilterSelectionSubbranch</name>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.cpp" line="32"/>
+        <source>stillages</source>
+        <translation>Стеллажи</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.cpp" line="37"/>
+        <source>suppliers</source>
+        <translation>Поставщики</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.cpp" line="42"/>
+        <source>groups</source>
+        <translation>Группы</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.cpp" line="47"/>
+        <source>nofilter</source>
+        <translation>Без фильтра</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.cpp" line="52"/>
+        <source>back</source>
+        <translation>назад</translation>
     </message>
 </context>
 <context>
     <name>ControlTranslator</name>
     <message>
-        <location filename="../widgets/ControlsMiniwidgets/ControlTranslator.cpp" line="15"/>
+        <location filename="../widgets/ControlsMiniwidgets/ControlTranslator.cpp" line="20"/>
+        <location filename="../widgets/ControlsMiniwidgets/ControlTranslator.cpp" line="21"/>
         <source>control_quantity</source>
-        <translation type="unfinished"></translation>
+        <translation>Кол-во</translation>
     </message>
     <message>
-        <location filename="../widgets/ControlsMiniwidgets/ControlTranslator.cpp" line="21"/>
+        <location filename="../widgets/ControlsMiniwidgets/ControlTranslator.cpp" line="27"/>
         <source>control_addqty</source>
-        <translation type="unfinished"></translation>
+        <translation>Остаток</translation>
     </message>
 </context>
 <context>
     <name>DocResultsWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="47"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="65"/>
+        <source>delete all</source>
+        <translation>Удалить всё</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="71"/>
+        <source>delete selected</source>
+        <translation>Удалить этот</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="76"/>
         <source>doc_results_back</source>
-        <translation type="unfinished"></translation>
+        <translation>назад</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="51"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="80"/>
         <source>doc_results_text</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="55"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="84"/>
         <source>doc_results_userinfo</source>
-        <translation type="unfinished"></translation>
+        <translation>Просмотр результатов поддокумента</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="163"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="214"/>
         <source>doc_results_timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Долго нет соединения</translation>
     </message>
 </context>
 <context>
@@ -80,38 +157,38 @@
     <message>
         <location filename="../widgets/MultibranchWidgets/FilterSelectWidget.cpp" line="58"/>
         <source>filter_widget_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Фильтры</translation>
     </message>
     <message>
         <location filename="../widgets/MultibranchWidgets/FilterSelectWidget.cpp" line="59"/>
         <source>all_on_button</source>
-        <translation type="unfinished"></translation>
+        <translation>Отметить все</translation>
     </message>
     <message>
         <location filename="../widgets/MultibranchWidgets/FilterSelectWidget.cpp" line="64"/>
         <source>all_off_button</source>
-        <translation type="unfinished"></translation>
+        <translation>Отменить все</translation>
     </message>
     <message>
         <location filename="../widgets/MultibranchWidgets/FilterSelectWidget.cpp" line="65"/>
         <source>back</source>
-        <translation type="unfinished"></translation>
+        <translation>назад</translation>
     </message>
     <message>
         <location filename="../widgets/MultibranchWidgets/FilterSelectWidget.cpp" line="68"/>
         <source>filter!</source>
-        <translation type="unfinished"></translation>
+        <translation>Фильтровать!</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/FilterSelectWidget.cpp" line="147"/>
+        <location filename="../widgets/MultibranchWidgets/FilterSelectWidget.cpp" line="148"/>
         <source>timeout:</source>
-        <translation type="unfinished"></translation>
+        <translation>Долго нет соединения:</translation>
     </message>
 </context>
 <context>
     <name>HttpUpdateEngine</name>
     <message>
-        <location filename="../networking/dataupdateengine-http.cpp" line="708"/>
+        <location filename="../networking/dataupdateengine-http.cpp" line="718"/>
         <source>Network error</source>
         <translation>Ошибка соединения</translation>
     </message>
@@ -121,45 +198,45 @@
     <message>
         <location filename="../widgets/InventoryBranch/InventoryParamsWidget.cpp" line="33"/>
         <source>inventory_params_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Оформление документа</translation>
     </message>
     <message>
         <location filename="../widgets/InventoryBranch/InventoryParamsWidget.cpp" line="36"/>
         <source>inventory_params_date_info</source>
-        <translation type="unfinished"></translation>
+        <translation>Дата</translation>
     </message>
     <message>
         <location filename="../widgets/InventoryBranch/InventoryParamsWidget.cpp" line="40"/>
         <source>inventory_select_doc</source>
-        <translation type="unfinished"></translation>
+        <translation>выбрать документ</translation>
     </message>
     <message>
         <location filename="../widgets/InventoryBranch/InventoryParamsWidget.cpp" line="44"/>
         <source>inventory_comment_info</source>
-        <translation type="unfinished"></translation>
+        <translation>Комментарий</translation>
     </message>
     <message>
         <location filename="../widgets/InventoryBranch/InventoryParamsWidget.cpp" line="47"/>
         <source>inventory_status_info</source>
-        <translation type="unfinished"></translation>
+        <translation>Статус</translation>
     </message>
     <message>
         <location filename="../widgets/InventoryBranch/InventoryParamsWidget.cpp" line="49"/>
         <source>back</source>
-        <translation type="unfinished"></translation>
+        <translation>назад</translation>
     </message>
     <message>
         <location filename="../widgets/InventoryBranch/InventoryParamsWidget.cpp" line="52"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Подтвердить</translation>
     </message>
 </context>
 <context>
     <name>InventoryScaningWidget</name>
     <message>
-        <location filename="../widgets/InventorySpecialWidgets/InventoryScaningWidget.cpp" line="173"/>
+        <location filename="../widgets/InventorySpecialWidgets/InventoryScaningWidget.cpp" line="175"/>
         <source>receipt_scaning_mode_name</source>
-        <translation type="unfinished"></translation>
+        <translation>Инвентаризация</translation>
     </message>
 </context>
 <context>
@@ -167,17 +244,17 @@
     <message>
         <location filename="../widgets/MultibranchWidgets/ItemSearchWidget.cpp" line="49"/>
         <source>item_search_search</source>
-        <translation type="unfinished"></translation>
+        <translation>Поиск</translation>
     </message>
     <message>
         <location filename="../widgets/MultibranchWidgets/ItemSearchWidget.cpp" line="59"/>
         <source>item_search_back</source>
-        <translation type="unfinished"></translation>
+        <translation>назад</translation>
     </message>
     <message>
         <location filename="../widgets/MultibranchWidgets/ItemSearchWidget.cpp" line="170"/>
         <source>item_search_timeout: </source>
-        <translation type="unfinished"></translation>
+        <translation>Долго нет соединения: </translation>
     </message>
 </context>
 <context>
@@ -185,30 +262,34 @@
     <message>
         <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="14"/>
         <source>login_widget_no_password!</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите пароль!</translation>
     </message>
     <message>
         <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="25"/>
         <source>login_widget_connection_timeout:</source>
-        <translation type="unfinished"></translation>
+        <translation>Долго нет соединения:</translation>
     </message>
     <message>
         <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="71"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="121"/>
         <source>login_widget_login_tip</source>
         <translation>Имя пользователя:</translation>
     </message>
     <message>
         <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="76"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="122"/>
         <source>login_widget_password_tip</source>
         <translation>Пароль:</translation>
     </message>
     <message>
         <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="77"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="123"/>
         <source>login_widget_ok_button</source>
         <translation>Вход</translation>
     </message>
     <message>
         <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="78"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="124"/>
         <source>login_widget_back_button</source>
         <translation>Назад</translation>
     </message>
@@ -216,109 +297,107 @@
 <context>
     <name>MainPageWidget</name>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="98"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="208"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="100"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="210"/>
         <source>main_page_select_profile_tip</source>
         <translation>Пожалуйста выберите ваш профиль</translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="100"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="209"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="102"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="211"/>
         <source>main_page_enter_profile_id_tip</source>
         <translation>Введите ID</translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="105"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="210"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="107"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="212"/>
         <source>main_page_exit_button</source>
         <translation>[0]Выход</translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="109"/>
-        <location filename="../widgets/MainPageWidget.cpp" line="211"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="111"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="213"/>
         <source>main_page_settings_button</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="114"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="116"/>
         <source>refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="../widgets/MainPageWidget.cpp" line="252"/>
+        <location filename="../widgets/MainPageWidget.cpp" line="255"/>
         <source>timeout_with_delay:</source>
-        <translation type="unfinished"></translation>
+        <translation>Долго нет соединения:</translation>
     </message>
 </context>
 <context>
     <name>MainSettingsWidget</name>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="144"/>
         <source>settings_workflow_tab_title</source>
-        <translation>Сканирования</translation>
+        <translation type="vanished">Сканирования</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="145"/>
         <source>settings_system_tab_title</source>
-        <translation>Системные</translation>
+        <translation type="vanished">Системные</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="35"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="146"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="144"/>
         <source>settings_scan_mode_info</source>
         <translation>Режим сканирования</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="39"/>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="42"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="148"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="151"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="146"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="149"/>
         <source>settings_scmode_one</source>
         <translation>Одиночный</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="39"/>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="42"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="148"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="151"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="146"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="149"/>
         <source>settings_scmode_autos</source>
         <translation>Автоматический</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="39"/>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="42"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="148"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="151"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="146"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="149"/>
         <source>settings_scmode_simple</source>
         <translation>Простой</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="48"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="154"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="152"/>
         <source>settings_system_title</source>
         <translation>Основные</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="52"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="155"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="153"/>
         <source>settings_select_address_tip</source>
         <translation>Адрес сервера</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="61"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="156"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="154"/>
         <source>settings_system_select_lang_tip</source>
         <translation>Настройки языка</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="77"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="157"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="155"/>
         <source>settings_save_button</source>
         <translation>Сохранить</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="81"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="158"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="156"/>
         <source>settings_back_button</source>
         <translation>Назад</translation>
     </message>
@@ -328,22 +407,22 @@
     <message>
         <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="59"/>
         <source>mode_selection_user_tip!</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор режима!</translation>
     </message>
     <message>
         <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="63"/>
         <source>mode_selection_modes_tip:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите режим:</translation>
     </message>
     <message>
         <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="69"/>
         <source>mode_selection_logout_tip</source>
-        <translation type="unfinished"></translation>
+        <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="198"/>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="201"/>
         <source>mode_selection_timeout!</source>
-        <translation type="unfinished"></translation>
+        <translation>Долго нет соединения!</translation>
     </message>
 </context>
 <context>
@@ -351,22 +430,22 @@
     <message>
         <location filename="../widgets/SuppliersSelectionBranch/OrderSelectionWidget.cpp" line="51"/>
         <source>order_selection_user_info</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор заявки</translation>
     </message>
     <message>
         <location filename="../widgets/SuppliersSelectionBranch/OrderSelectionWidget.cpp" line="52"/>
         <source>order_selection_pick_button</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать</translation>
     </message>
     <message>
         <location filename="../widgets/SuppliersSelectionBranch/OrderSelectionWidget.cpp" line="53"/>
         <source>order_selection_back</source>
-        <translation type="unfinished"></translation>
+        <translation>назад</translation>
     </message>
     <message>
         <location filename="../widgets/SuppliersSelectionBranch/OrderSelectionWidget.cpp" line="180"/>
         <source>order_selection_timeout</source>
-        <translation type="unfinished"></translation>
+        <translation>Долго нет соединения</translation>
     </message>
 </context>
 <context>
@@ -374,22 +453,22 @@
     <message>
         <location filename="../widgets/InventorySpecialWidgets/ParentDocumentWidget.cpp" line="63"/>
         <source>parent_doc_search_info</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор родительского документа</translation>
     </message>
     <message>
         <location filename="../widgets/InventorySpecialWidgets/ParentDocumentWidget.cpp" line="67"/>
         <source>parent_doc_filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Фильтр</translation>
     </message>
     <message>
         <location filename="../widgets/InventorySpecialWidgets/ParentDocumentWidget.cpp" line="69"/>
         <source>back</source>
-        <translation type="unfinished"></translation>
+        <translation>назад</translation>
     </message>
     <message>
         <location filename="../widgets/InventorySpecialWidgets/ParentDocumentWidget.cpp" line="72"/>
         <source>ok</source>
-        <translation type="unfinished"></translation>
+        <translation>Подтвердить</translation>
     </message>
 </context>
 <context>
@@ -397,35 +476,36 @@
     <message>
         <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="58"/>
         <source>place_selection_user_tip!</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор места!</translation>
     </message>
     <message>
         <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="62"/>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="119"/>
         <source>place_selection_mode_tip: </source>
-        <translation type="unfinished"></translation>
+        <translation>Текущий режим: </translation>
     </message>
     <message>
         <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="66"/>
         <source>place_selection_place_tip: </source>
-        <translation type="unfinished"></translation>
+        <translation>Доступные места: </translation>
     </message>
     <message>
         <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="70"/>
         <source>place_selection_back</source>
-        <translation type="unfinished"></translation>
+        <translation>назад</translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="157"/>
+        <location filename="../widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp" line="163"/>
         <source>mode_selection_timeout!</source>
-        <translation type="unfinished"></translation>
+        <translation>Долго нет соединения!</translation>
     </message>
 </context>
 <context>
     <name>ProcessingOverlay</name>
     <message>
-        <location filename="../widgets/ElementWidgets/ProcessingOverlay.cpp" line="42"/>
+        <location filename="../widgets/ElementWidgets/ProcessingOverlay.cpp" line="59"/>
         <source>Awaiting network response</source>
-        <translation type="unfinished"></translation>
+        <translation>Ожидание ответа от сервера</translation>
     </message>
 </context>
 <context>
@@ -488,78 +568,50 @@
     <message>
         <location filename="../widgets/ReceiptSpecialWidgets/ReceiptParametersWidget.cpp" line="49"/>
         <source>receipt_parameters_announce</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметры</translation>
     </message>
     <message>
         <location filename="../widgets/ReceiptSpecialWidgets/ReceiptParametersWidget.cpp" line="50"/>
         <source>receipt_parameters_status</source>
-        <translation type="unfinished"></translation>
+        <translation>Статус</translation>
     </message>
     <message>
         <location filename="../widgets/ReceiptSpecialWidgets/ReceiptParametersWidget.cpp" line="51"/>
         <source>receipt_parameters_closed_button</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../widgets/ReceiptSpecialWidgets/ReceiptParametersWidget.cpp" line="52"/>
         <source>receipt_parameters_cancelled_button</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../widgets/ReceiptSpecialWidgets/ReceiptParametersWidget.cpp" line="53"/>
         <source>receipt_parameters_select_order</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор заявки</translation>
     </message>
     <message>
         <location filename="../widgets/ReceiptSpecialWidgets/ReceiptParametersWidget.cpp" line="54"/>
         <source>receipt_parameters_inspect</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../widgets/ReceiptSpecialWidgets/ReceiptParametersWidget.cpp" line="55"/>
         <source>receipt_parameters_continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Далее</translation>
     </message>
     <message>
         <location filename="../widgets/ReceiptSpecialWidgets/ReceiptParametersWidget.cpp" line="56"/>
         <source>receipt_parameters_back</source>
-        <translation type="unfinished"></translation>
+        <translation>назад</translation>
     </message>
 </context>
 <context>
     <name>ReceiptScaningWidget</name>
     <message>
-        <location filename="../widgets/ReceiptSpecialWidgets/ReceiptScaningWidget.cpp" line="275"/>
+        <location filename="../widgets/ReceiptSpecialWidgets/ReceiptScaningWidget.cpp" line="281"/>
         <source>receipt_scaning_mode_name</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SuppliersSelectWidget</name>
-    <message>
-        <location filename="../widgets/SuppliersSelectionBranch/SuppliersSelectWidget.cpp" line="60"/>
-        <source>suppliers_selection_widget_user_tip</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/SuppliersSelectionBranch/SuppliersSelectWidget.cpp" line="65"/>
-        <source>suppliers_selection_search!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/SuppliersSelectionBranch/SuppliersSelectWidget.cpp" line="82"/>
-        <source>W\O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/SuppliersSelectionBranch/SuppliersSelectWidget.cpp" line="78"/>
-        <source>suppliers_selection_back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../widgets/SuppliersSelectionBranch/SuppliersSelectWidget.cpp" line="193"/>
-        <source>suppliers_select_widget_timeout!</source>
-        <translation type="unfinished"></translation>
+        <translation>Приём</translation>
     </message>
 </context>
 </TS>

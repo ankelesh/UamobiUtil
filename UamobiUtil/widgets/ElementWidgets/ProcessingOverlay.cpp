@@ -7,28 +7,44 @@
 #include "debugtrace.h"
 #endif
 
-const double pi = 3.14159265358979323846;		//	not precise pi. More precision is not required
+const float PI = 3.141592653589793238463;
+const float RadMult = PI / 180;
 
-QPoint	find_corner(const QPoint& center, const int& size,
-	const int& corner_num)
-	//	finds corner of pointy hexagon
+
+QPoint find_point_on(const QPoint center, const int distance, const double grades)
 {
-	float adeg = 60 * corner_num - 30;
-	float arad = pi / 180 * adeg;
-	return QPoint(center.x() + size * cos(arad), center.y() + size * sin(arad));
+	double arad = RadMult * grades;
+	return QPoint(center.x() + distance * cos(arad), center.y() + distance * sin(arad));
 }
-QPolygon makeHexagon(const QPoint& center, const int& size)
-// makes polygon ready to be drawn
+
+QPolygon makeTriangle(const QPoint& center, const int& size, bool isUp)
+// makes triangle
 {
 	QVector<QPoint> points;
-	points.reserve(6);
-	for (int i = 0; i < 6; ++i)
-	{
-		points.push_back(find_corner(center, size, i));
-	}
+	points.reserve(3);
+	points.push_back(center);
+	points.push_back(find_point_on(center, size, ((isUp) ? 215 : 145)));
+	points.push_back(find_point_on(center, size, ((isUp) ? 325 : 35)));
 	return QPolygon(points);
 }
+QPoint pointOnLine(const QPoint f, const QPoint s, const int distance, const int totalDistance)
+{
+	QPoint tret;
+	tret.rx() = f.x() - ((distance * (f.x() - s.x()) / totalDistance));
+	tret.ry() = f.y() - ((distance * (f.y() - s.y()) / totalDistance));
+	return tret;
+}
+QPolygon makeParrallellogram(const QPoint center, const QPoint lowerR, const QPoint lowerL, const int dist, const int sz)
+{
+	QVector<QPoint> points;
+	points.reserve(4);
+	points.push_back(lowerR);
+	points.push_back(lowerL);
+	points.push_back(pointOnLine(lowerL, center, dist, sz));
+	points.push_back(pointOnLine(lowerR, center, dist, sz));
+	return QPolygon(points);
 
+}
 void ProcessingOverlay::paintEvent(QPaintEvent* pev)
 {
 	QRect bg(0, 0, width() - 1, height() - 1);
@@ -38,11 +54,12 @@ void ProcessingOverlay::paintEvent(QPaintEvent* pev)
 	p.drawText(10, 10, QString::number((int)currentState / 2));
 	p.setRenderHint(QPainter::Antialiasing);
 	p.setRenderHint(QPainter::TextAntialiasing);
-	p.drawPolygon(mainPolygon);
+	p.drawPolygon(TopTriangle);
+	p.drawPolygon(lowerTriangle);
 	p.drawText(textPoint, tr("Awaiting network response"));
 	p.setBrush(QBrush(Qt::red));
 	p.setOpacity(0.6);
-	p.drawPolygon(innerPolygon);
+	p.drawPolygon(LowerInnerTriangle);
 }
 
 void ProcessingOverlay::resizeEvent(QResizeEvent* rev)
@@ -51,8 +68,7 @@ void ProcessingOverlay::resizeEvent(QResizeEvent* rev)
 }
 
 ProcessingOverlay::ProcessingOverlay(int interval, QWidget* parent)
-	: QWidget(parent), currentState(1), endPoint(10), redrawTimer(new QTimer(this)), mainPolygon(), innerPolygon(),
-	centralPoint()
+	: QWidget(parent), currentState(1), endPoint(10), redrawTimer(new QTimer(this))
 {
 #ifdef Q_OS_WINCE
 	this->setFixedSize(calculateAdaptiveSize(0.4));
@@ -71,8 +87,14 @@ ProcessingOverlay::ProcessingOverlay(int interval, QWidget* parent)
 	textPoint = QPoint(width() / 5, this->height() - 5);
 #endif
 	endPoint = interval / 500;
-	mainPolygon = makeHexagon(centralPoint, this->height() * 0.45);
-	innerPolySize = this->height() * (0.45 * (currentState / endPoint));
+	TopTriangle = makeTriangle(centralPoint, this->height() * 0.7, true);
+	lowerTriangle = makeTriangle(centralPoint, this->height() * 0.7, false);
+	lowerPointLeft = lowerTriangle.at(1);
+	lowerPointRight = lowerTriangle.at(2);
+	LowerInnerTriangle = makeTriangle(centralPoint, this->height() * 0.7, false);
+	innerTopSize = this->height() * (0.7 * (currentState / endPoint));
+	innerLowerSize = this->height() * (0.7 * (currentState / endPoint));
+	totalRibSize = innerTopSize; 
 	redrawTimer->setInterval(interval / endPoint);
 #ifdef QT_VERSION5X
 	QObject::connect(redrawTimer, &QTimer::timeout, this, &ProcessingOverlay::step);
@@ -84,8 +106,9 @@ ProcessingOverlay::ProcessingOverlay(int interval, QWidget* parent)
 void ProcessingOverlay::restart()
 {
 	currentState = endPoint;
-	innerPolySize = this->height() * (0.45 * (currentState / endPoint));
-	innerPolygon = makeHexagon(centralPoint, innerPolySize);
+	innerTopSize = this->height() * (0.7 * (currentState / endPoint));
+	innerLowerSize = this->height() * (0.7 * (currentState / endPoint));
+	LowerInnerTriangle = makeParrallellogram(centralPoint, lowerPointRight, lowerPointLeft, this->height() * (1.38 * (currentState / (endPoint))), totalRibSize);
 	redrawTimer->start();
 }
 
@@ -99,9 +122,6 @@ void ProcessingOverlay::hide()
 void ProcessingOverlay::show()
 {
 	restart();
-	if (oldSize != parentWidget()->size()) {
-		resize(parentWidget()->size());
-	}
 	QWidget::show();
 }
 
@@ -116,10 +136,15 @@ void ProcessingOverlay::resize(const QSize& parentG)
 #else
 	textPoint = QPoint(width() / 5, this->height() - 5);
 #endif
-	mainPolygon = makeHexagon(centralPoint, this->height() * 0.45);
-	innerPolySize = this->height() * (0.45 * (currentState / endPoint));
-	innerPolygon = makeHexagon(centralPoint, innerPolySize);
-	oldSize = parentG;
+	TopTriangle = makeTriangle(centralPoint, this->height() * 0.7, true);
+	lowerTriangle = makeTriangle(centralPoint, this->height() * 0.7, false);
+	lowerPointLeft = lowerTriangle.at(1);
+	lowerPointRight = lowerTriangle.at(2);
+	LowerInnerTriangle = makeParrallellogram(centralPoint, lowerPointRight, lowerPointLeft, this->height() * (1.38 * (currentState / (endPoint))), totalRibSize);
+
+	innerTopSize = this->height() * (0.7 * (currentState / endPoint));
+	innerLowerSize = this->height() * (0.7 * (currentState / endPoint));
+	totalRibSize = innerTopSize;
 }
 
 void ProcessingOverlay::setTemporaryDelay(int additionalDelay)
@@ -132,8 +157,8 @@ void ProcessingOverlay::setTemporaryDelay(int additionalDelay)
 void ProcessingOverlay::step()
 {
 	--currentState;
-	innerPolySize = this->height() * (0.45 * (currentState / endPoint));
-	innerPolygon = makeHexagon(centralPoint, innerPolySize);
+	innerLowerSize = this->height() * (1.38 * (currentState / (endPoint)));
+	LowerInnerTriangle = makeParrallellogram(centralPoint, lowerPointRight, lowerPointLeft, innerLowerSize, totalRibSize);
 	repaint();
 	if (currentState == 0)
 	{

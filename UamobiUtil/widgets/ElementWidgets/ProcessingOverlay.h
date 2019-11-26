@@ -25,13 +25,17 @@ class ProcessingOverlay : public QWidget
 protected:
 	float currentState;	//	current state of countdown
 	float endPoint;		//	end point of countdown
-	int innerPolySize;	//	size of inner polygon which is representing "remaining" time
+	int innerTopSize;	//	size of inner polygon which is representing "remaining" time
+	int innerLowerSize;
+	int totalRibSize;
 	QTimer* redrawTimer;	//	timer which is calling repaint
-	QPolygon mainPolygon;	//	outer polygon representing all time
-	QPolygon innerPolygon;	//	inner polygon representing remaining time
+	QPolygon TopTriangle;	//	outer polygon representing all time
+	QPoint lowerPointLeft;
+	QPoint lowerPointRight;
+	QPolygon LowerInnerTriangle;
+	QPolygon lowerTriangle;	//	inner polygon representing remaining time
 	QPoint centralPoint;	//	center of widget, used as starting point for drawing polygons
 	QPoint textPoint;		//	point where text is drawn
-	QSize oldSize;			//	deprecated
 	void paintEvent(QPaintEvent*);
 	void resizeEvent(QResizeEvent*);
 public:

@@ -87,7 +87,7 @@ public:
 	);
 	virtual void show() override;
 	virtual bool isExpectingControl(int);
-
+	void setMode(parsedMode&);
 private slots:
 	void placeSelected(parsedPlace);	//	sends place_select request, then emits parsedPlace
 	void parse_loaded_places();			//	netresponses

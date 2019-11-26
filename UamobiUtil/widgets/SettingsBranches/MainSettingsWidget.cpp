@@ -141,8 +141,6 @@ void MainSettingsWidget::langSelected(const QString& lang)
 void MainSettingsWidget::langChanged()
 {
 	globalSettings.setTranslator();
-	innerWidget->setTabText(0, tr("settings_workflow_tab_title"));
-	innerWidget->setTabText(1, tr("settings_system_tab_title"));
 	scanModeInfo->setText(tr("settings_scan_mode_info"));
 #ifdef QT_VERSION5X
 	scanModeSelector->addItems(QStringList({ tr("settings_scmode_one"), tr("settings_scmode_autos"), tr("settings_scmode_simple") }));

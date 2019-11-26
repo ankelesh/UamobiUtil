@@ -211,6 +211,7 @@ void MainPageWidget::languageChanged()
 	userIdInfo->setText(tr("main_page_enter_profile_id_tip"));
 	exitButton->setText(tr("main_page_exit_button"));
 	settingsButton->setText(tr("main_page_settings_button"));
+	manualLogin->langCh();
 }
 
 void MainPageWidget::userIdSearch()

@@ -1,6 +1,15 @@
 #include "AbstractScaningWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
+#ifdef QT_VERSION5X
+#include <QtWidgets/QMessageBox>
+#else
+#include <QtGui/QMessageBox>
+#endif
+#define DEBUG
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
 void AbstractScaningWidget::useControls(QVector<QPair<QString, QString>>& cvals)
 {
     switch (cvals.count())
@@ -239,7 +248,7 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
 	QObject::connect(barcodeField, &QLineEdit::returnPressed, this, &AbstractScaningWidget::barcodeConfirmed);
 	QObject::connect(searchButton, &QPushButton::clicked, this, &AbstractScaningWidget::searchRequired);
 	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &AbstractScaningWidget::was_timeout);
-	QObject::connect(quitButton, &MegaIconButton::clicked, this, &AbstractScaningWidget::backRequired);
+	QObject::connect(quitButton, &MegaIconButton::clicked, this, &AbstractScaningWidget::quitNoSave);
 	QObject::connect(switchFocus, &MegaIconButton::clicked, this, &AbstractScaningWidget::switchedFocus);
 #else
 	QObject::connect(backButton, SIGNAL(clicked()), this, SLOT(backNeeded()));
@@ -247,7 +256,7 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
     QObject::connect(barcodeField, SIGNAL(returnPressed()), this, SLOT(barcodeConfirmed()));
 	QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(searchRequired()));
 	QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
-	QObject::connect(quitButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
+    QObject::connect(quitButton, SIGNAL(clicked()), this, SLOT(quitNoSave()));
     QObject::connect(switchFocus, SIGNAL(clicked()),this, SLOT(switchedFocus()));
 #endif
 }
@@ -260,8 +269,16 @@ void AbstractScaningWidget::was_timeout()
 
 void AbstractScaningWidget::quitNoSave()
 {
-   globalSettings.networkingEngine->docUnlock(false, Q_NULLPTR, "");
-   emit backRequired();
+#ifdef DEBUG
+    detrace_METHCALL("quitNoSave");
+#endif
+	QMessageBox::StandardButton response =  QMessageBox::question(this, tr("QuitWithoutSave?"), tr("quit_without_save_info?"),
+        QMessageBox::StandardButton::Ok| QMessageBox::StandardButton::Cancel);
+    if (response == QMessageBox::StandardButton::Ok)
+	{
+        globalSettings.networkingEngine->docUnlock(false, Q_NULLPTR, "");
+		emit backRequired();
+	}
 }
 
 bool AbstractScaningWidget::isControlFocused()

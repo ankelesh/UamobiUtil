@@ -169,6 +169,8 @@ void ReceiptScaningWidget::setControlFocus(int val)
 
 int ReceiptScaningWidget::flushControl(int cnum)
 {
+	if (controlsAvailable == 0)
+		return cnum;
 	if (controlsAvailable == 1)
 		submitPressed();
 	else

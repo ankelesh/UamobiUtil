@@ -16,7 +16,7 @@
 #include "widgets/parents/inframedWidget.h"
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
-
+#include "widgets/parents/abstractNodeInterface.h"
 /*
 	This widget provides realization of list containing all items included in current document.
 
@@ -24,13 +24,14 @@
 
 */
 
-class DocResultsWidget : public inframedWidget
+class DocResultsWidget : public inframedWidget, abstractNode
 {
 	Q_OBJECT
 protected:
 	GlobalAppSettings& globalSettings;
-
 	QVBoxLayout* mainLayout;
+	inframedWidget* innerWidget;
+	QVBoxLayout* innerLayout;
 	QHBoxLayout* toolPanel;
 	MegaIconButton* deleteAllButton;
 	MegaIconButton* deleteSelectedButton;

@@ -8,29 +8,37 @@
 
 DocResultsWidget::DocResultsWidget(GlobalAppSettings& go, QWidget* parent)
 	: inframedWidget(parent), globalSettings(go), mainLayout(new QVBoxLayout(this)),
-	toolPanel(new QHBoxLayout(this)), deleteAllButton(new MegaIconButton(this)),
-	deleteSelectedButton(new MegaIconButton(this)),
-	userInfo(new QLabel(this)), listHeaderLayout(new QHBoxLayout(this)),
-	previousButton(new MegaIconButton(this)), indexationInfo(new QLabel(this)),
-	nextButton(new MegaIconButton(this)), itemInfoStorage(new QListWidget(this)),
-	footerLayout(new QHBoxLayout(this)), backButton(new MegaIconButton(this)),
-	saveButton(new MegaIconButton(this)), items(), pagenumber(0), awaiter(go.timeoutInt + 20000, this)
+	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
+	toolPanel(new QHBoxLayout(innerWidget)), deleteAllButton(new MegaIconButton(innerWidget)),
+	deleteSelectedButton(new MegaIconButton(innerWidget)),
+	userInfo(new QLabel(innerWidget)), listHeaderLayout(new QHBoxLayout(innerWidget)),
+	previousButton(new MegaIconButton(innerWidget)), indexationInfo(new QLabel(innerWidget)),
+	nextButton(new MegaIconButton(innerWidget)), itemInfoStorage(new QListWidget(innerWidget)),
+	footerLayout(new QHBoxLayout(innerWidget)), backButton(new MegaIconButton(innerWidget)),
+	saveButton(new MegaIconButton(innerWidget)), items(), pagenumber(0), awaiter(go.timeoutInt + 20000, this)
 {
+	untouchable = innerWidget;
+	main = this;
+	current = innerWidget;
 	this->setLayout(mainLayout);
-	mainLayout->addWidget(userInfo);
-	mainLayout->addLayout(toolPanel);
+	mainLayout->addWidget(innerWidget);
+	innerWidget->setLayout(innerLayout);
+	innerLayout->addWidget(userInfo);
+	innerLayout->addLayout(toolPanel);
 	toolPanel->addWidget(deleteAllButton);
 	toolPanel->addWidget(deleteSelectedButton);
-	mainLayout->addLayout(listHeaderLayout);
+	innerLayout->addLayout(listHeaderLayout);
 	listHeaderLayout->addWidget(previousButton);
 	listHeaderLayout->addWidget(indexationInfo);
 	listHeaderLayout->addWidget(nextButton);
-	mainLayout->addWidget(itemInfoStorage);
-	mainLayout->addLayout(footerLayout);
+	innerLayout->addWidget(itemInfoStorage);
+	innerLayout->addLayout(footerLayout);
 	footerLayout->addWidget(backButton);
 	footerLayout->addWidget(saveButton);
-	mainLayout->setContentsMargins(0, 0, 0, 0);
-	mainLayout->setSpacing(0);
+	innerLayout->setContentsMargins(0, 0, 0, 0);
+	innerLayout->setSpacing(0);
+    mainLayout->setContentsMargins(0,0,0,0);
+    mainLayout->setSpacing(0);
 
 	QSizePolicy mi(QSizePolicy::Maximum, QSizePolicy::Maximum);
 	QSizePolicy ma(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum);

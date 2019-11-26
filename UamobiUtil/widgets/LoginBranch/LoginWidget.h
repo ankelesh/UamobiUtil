@@ -51,6 +51,7 @@ public:
 	LoginWidget(GlobalAppSettings& go, QWidget* parent);
 
 	virtual void show() override;
+	void langCh();
 private slots:
 	void login_confirmed();
 	void was_timeout();
