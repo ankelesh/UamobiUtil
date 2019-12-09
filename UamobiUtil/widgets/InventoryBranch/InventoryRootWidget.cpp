@@ -27,12 +27,12 @@ void InventoryRootWidget::openCorrespondingSubbranch()
 	docSelectionWidget->loadDocuments();
 }
 
-InventoryRootWidget::InventoryRootWidget(GlobalAppSettings& go, QHash<QString, QString> settings, QString submode, QWidget* parent)
+InventoryRootWidget::InventoryRootWidget(GlobalAppSettings& go, QHash<QString, QString> settings, parsedMode mode, QWidget* parent)
 	: inframedWidget(parent), abstractNode(), globalSettings(go), mainLayout(new QVBoxLayout(this)),
 	innerWidget(new InventoryParamsWidget(this)),
 	docSelectionWidget(new ParentDocumentWidget(globalSettings, this)), scaningWidget(new InventoryScaningWidget(go, this)),
 	bfilterWidget(),
-	options(settings), modeItself("inventory", "inventory", submode)
+	options(settings), modeItself(mode)
 {
 	this->setLayout(mainLayout);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -116,4 +116,5 @@ void InventoryRootWidget::continueToScaning()
 {
 	_hideAny(scaningWidget);
 	scaningWidget->setDocument(innerWidget->getDoc());
+	scaningWidget->setModeName(modeItself.name);
 }

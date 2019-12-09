@@ -26,7 +26,7 @@ specwidgets::TypeCheckboxSelection::TypeCheckboxSelection(QVector<parsedDocType>
 }
 
 FilterSelectWidget::FilterSelectWidget(GlobalAppSettings& go, QWidget* parent)
-	: inframedWidget(parent), globalSettings(go), doctypes(),
+	: inframedWidget(true, parent), globalSettings(go), doctypes(),
 	selectionState(), mainLayout(new QVBoxLayout(this)),
 	title(new QLabel(this)), topPanelLayout(new QHBoxLayout(this)),
 	allonButton(new MegaIconButton(this)), alloffButton(new MegaIconButton(this)),

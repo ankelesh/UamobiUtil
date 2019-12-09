@@ -41,7 +41,7 @@ protected:
 
 public:
 	InventoryRootWidget(GlobalAppSettings& go, QHash<QString, QString> settings,
-		QString submode = "",
+		parsedMode mode = parsedMode("inventory", "inventory",""),
 		QWidget* parent = Q_NULLPTR);
 
 private slots:

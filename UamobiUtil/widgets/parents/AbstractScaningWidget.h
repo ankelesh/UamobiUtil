@@ -54,15 +54,18 @@ protected:
 	int controlsAvailable;
 	bool controlsRequired;
 
+	QString modename;
 	RequestAwaiter awaiter;
 	virtual void useControls(QVector<QPair<QString, QString> >&);
 	virtual void refreshControls();
 	virtual bool checkControls();
 	virtual void focusControl(int);
 	virtual bool isControlFocused();
+	virtual void _postClear() =0;
 public:
 	AbstractScaningWidget(GlobalAppSettings& go, QWidget* parent);
-
+	void clear();
+	void setModeName(QString& name);
 protected slots:
 	virtual void processBarcode(QString) = 0;
 	virtual void submitPressed() = 0;

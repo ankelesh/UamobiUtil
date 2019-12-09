@@ -2,7 +2,7 @@
 
 
 BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(GlobalAppSettings& go, QWidget* parent)
-	: inframedWidget(parent), globalSettings(go), mainLayout(new QVBoxLayout(this)), innerWidget(new inframedWidget(this)),
+	: inframedWidget(true, parent), globalSettings(go), mainLayout(new QVBoxLayout(this)), innerWidget(new inframedWidget(this)),
 	innerLayout(new QVBoxLayout(innerWidget)), stillageButton(new MegaIconButton(innerWidget)), suppliersButton(new MegaIconButton(innerWidget)),
 	groupButton(new MegaIconButton(innerWidget)), nofilterButton(new MegaIconButton(innerWidget)), backButton(new MegaIconButton(innerWidget)),
 	supplierWidget(new SuppliersSelectWidget(go, this, "suppliers", &RequestParser::interpretAsSupplierList, false)), stillageWidget(new StillageSelectionWidget(go, this)),

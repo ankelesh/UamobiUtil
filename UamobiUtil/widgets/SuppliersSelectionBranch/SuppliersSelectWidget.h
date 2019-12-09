@@ -96,5 +96,7 @@ public:
 protected slots:
 	virtual void hideCurrent();
 	virtual void supplierPicked(parsedSupplier) override;
-	virtual void orderAcquired(parsedOrder);
+	virtual void orderAcquired(parsedOrder, QString);
+signals:
+	void orderReady(parsedOrder, QString);
 };

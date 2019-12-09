@@ -17,7 +17,7 @@ void AbstractSearchAndPickWidget::emplaceSelection(AbstractListSelectionWidget* 
 AbstractSearchAndPickWidget::AbstractSearchAndPickWidget(
 	GlobalAppSettings& go, QWidget* parent, QString iname, TemplatedListRequest meth,
 	 bool isRequiredOrd)
-	: inframedWidget(parent), globalSettings(go),
+	: inframedWidget(true,parent), globalSettings(go),
 	listItems(meth), 
 	mainLayout(new QVBoxLayout(this)),
 	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),

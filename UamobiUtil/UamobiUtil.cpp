@@ -71,7 +71,7 @@ void UamobiUtil::gotoReceiptBranch(QHash<QString, QString> opts, parsedMode mode
 		mainLayout->removeWidget(*current);
 		(*current)->deleteLater();
 	}
-	ReceiptRootWidget* RR = new ReceiptRootWidget(globalSettings, opts, mode.submode, this);
+	ReceiptRootWidget* RR = new ReceiptRootWidget(globalSettings, opts, mode, this);
 #ifdef QT_VERSION5X
 	QObject::connect(RR, &ReceiptRootWidget::backRequired, this, &UamobiUtil::hideCurrent);
 #else
@@ -91,7 +91,7 @@ void UamobiUtil::gotoInventoryBranch(QHash<QString, QString> opts, parsedMode mo
 		mainLayout->removeWidget(*current);
 		(*current)->deleteLater();
 	}
-	InventoryRootWidget* IR = new InventoryRootWidget(globalSettings, opts, mode.submode, this);
+	InventoryRootWidget* IR = new InventoryRootWidget(globalSettings, opts, mode, this);
 #ifdef QT_VERSION5X
 	QObject::connect(IR, &InventoryRootWidget::backRequired, this, &UamobiUtil::hideCurrent);
 #else

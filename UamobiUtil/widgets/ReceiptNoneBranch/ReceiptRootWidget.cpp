@@ -1,4 +1,5 @@
 #include "ReceiptRootWidget.h"
+#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -12,13 +13,13 @@ void ReceiptRootWidget::processOptions()
 {
 	if (modeItself.submode.contains("warehouse", Qt::CaseInsensitive))
 	{
-		suppliersSelect = new SuppliersSelectWidget(globalSettings, this, "warehouses");
+		suppliersSelect = new SuppliersSelectionBranch(globalSettings, this, "warehouses");
 	}
 	else
 	{
-		suppliersSelect = new SuppliersSelectWidget(globalSettings, this, "suppliers");
+		suppliersSelect = new SuppliersSelectionBranch(globalSettings, this, "suppliers");
 	}
-	orderSelect = new OrderSelectionWidget(globalSettings, confirmedSupplier, this);
+	suppliersSelect->loadItems();
 }
 
 void ReceiptRootWidget::openCorrespondingSubbranch()
@@ -26,14 +27,13 @@ void ReceiptRootWidget::openCorrespondingSubbranch()
 	_hideAny(suppliersSelect);
 }
 
-ReceiptRootWidget::ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QString> settings, QString submode, QWidget* parent)
+ReceiptRootWidget::ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QString> settings, parsedMode mode, QWidget* parent)
 	: inframedWidget(parent), abstractNode(), globalSettings(go),
 	confirmedSupplier(), confirmedOrder(), mainLayout(new QVBoxLayout(this)),
 	innerWidget(new ReceiptParametersWidget(go, parent)),
 	suppliersSelect(),
-	orderSelect(),
 	scaning(new ReceiptScaningWidget(go, this)),
-	options(settings), modeItself("receipt", "receipt", submode)
+	options(settings), modeItself(mode)
 {
 	this->setLayout(mainLayout);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -41,31 +41,25 @@ ReceiptRootWidget::ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QStri
 	processOptions();
 	mainLayout->addWidget(innerWidget);
 	mainLayout->addWidget(suppliersSelect);
-	mainLayout->addWidget(orderSelect);
 	mainLayout->addWidget(scaning);
 	suppliersSelect->hide();
-	orderSelect->hide();
 	scaning->hide();
-
+	
 	current = innerWidget;
 	untouchable = innerWidget;
 	main = innerWidget;
 	openCorrespondingSubbranch();
 	removeEventFilter(keyfilter);
 #ifdef QT_VERSION5X
-	QObject::connect(suppliersSelect, &SuppliersSelectWidget::supplierAcquired, this, &ReceiptRootWidget::supplierAcquired);
-	QObject::connect(suppliersSelect, &SuppliersSelectWidget::backRequired, this, &ReceiptRootWidget::backTo);
-	QObject::connect(orderSelect, &OrderSelectionWidget::orderConfirmed, this, &ReceiptRootWidget::orderAcquired);
-	QObject::connect(orderSelect, &OrderSelectionWidget::backRequired, this, &ReceiptRootWidget::backTo);
+	QObject::connect(suppliersSelect, &SuppliersSelectionBranch::orderReady, this, &ReceiptRootWidget::orderAcquired);
+	QObject::connect(suppliersSelect, &SuppliersSelectionBranch::backRequired, this, &ReceiptRootWidget::backTo);
 	QObject::connect(innerWidget, &ReceiptParametersWidget::backRequired, this, &ReceiptRootWidget::backTo);
 	QObject::connect(innerWidget, &ReceiptParametersWidget::dataConfirmed, this, &ReceiptRootWidget::continueToScaning);
 	QObject::connect(innerWidget, &ReceiptParametersWidget::backTo, this, &ReceiptRootWidget::backToStep);
 	QObject::connect(scaning, &ReceiptScaningWidget::backRequired, this, &ReceiptRootWidget::hideCurrent);
 #else
-	QObject::connect(suppliersSelect, SIGNAL(supplierAcquired(parsedSupplier)), this, SLOT(supplierAcquired(parsedSupplier)));
-	QObject::connect(suppliersSelect, SIGNAL(backRequired()), this, SLOT(backTo()));
-	QObject::connect(orderSelect, SIGNAL(orderConfirmed(parsedOrder, QString)), this, SLOT(orderAcquired(parsedOrder, QString)));
-	QObject::connect(orderSelect, SIGNAL(backRequired()), this, SLOT(backTo()));
+    QObject::connect(suppliersSelect, SIGNAL(orderReady(parsedOrder,QString)), this, SLOT(orderAcquired(parsedOrder,QString)));
+    QObject::connect(suppliersSelect, SIGNAL(backRequired()), this, SLOT(backTo()));
 	QObject::connect(innerWidget, SIGNAL(backRequired()), this, SLOT(backTo()));
 	QObject::connect(innerWidget, SIGNAL(dataConfirmed()), this, SLOT(continueToScaning()));
 	QObject::connect(innerWidget, SIGNAL(backTo(int)), this, SLOT(backToStep(int)));
@@ -75,15 +69,16 @@ ReceiptRootWidget::ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QStri
 
 void ReceiptRootWidget::supplierAcquired(parsedSupplier supp)
 {
+#ifdef DEBUG
+	detrace_SLOTCALL("supplierAcquired", "receiptRootWidget");
+#endif
 	confirmedSupplier = supp;
-	orderSelect->loadOrders();
-	_hideAny(orderSelect);
 }
 
 void ReceiptRootWidget::orderAcquired(parsedOrder po, QString  richtext)
 {
 #ifdef DEBUG
-	//detrace_SLOTCALL("orderAcquired", "ReceiptRootWidget");
+    detrace_SLOTCALL("orderAcquired", "ReceiptRootWidget");
 #endif
 	innerWidget->setMainView(richtext);
 	confirmedOrder = po;
@@ -95,6 +90,7 @@ void ReceiptRootWidget::hideCurrent()
 {
 	_hideCurrent(innerWidget);
 	innerWidget->setFocus();
+	scaning->clear();
 }
 
 void ReceiptRootWidget::backTo()
@@ -107,15 +103,10 @@ void ReceiptRootWidget::backTo()
 		emit backRequired();
 		return;
 	}
-	if (current == orderSelect)
-	{
-#ifdef DEBUG
-		detrace_METHEXPL("opening supplier");
-#endif
-		_hideAny(suppliersSelect);
-		return;
-	}
-	_hideAny(orderSelect);
+    else if (current == untouchable)
+    {
+       _hideAny(suppliersSelect);
+    }
 }
 
 void ReceiptRootWidget::backToStep(int step)
@@ -133,5 +124,6 @@ void ReceiptRootWidget::backToStep(int step)
 void ReceiptRootWidget::continueToScaning()
 {
 	scaning->setDocument(confirmedOrder);
+	scaning->setModeName(modeItself.name);
 	_hideAny(scaning);
 }

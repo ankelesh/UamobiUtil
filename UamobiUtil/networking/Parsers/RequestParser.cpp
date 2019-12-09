@@ -9,7 +9,7 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
-
+#include <QApplication>
 namespace parse_uniresults_functions {
 	UserProfilesResult parse_uniresults_functions::parse_user_profiles(uniform_parse_result& ures)
 	{
@@ -104,6 +104,7 @@ namespace parse_uniresults_functions {
 		temp.reserve(queryReservationSize(ures));
 		parsedPlace pplace;
 		QList<QString>::iterator start = ures.queriesResult.begin();
+        int i = 0;
 		while (start != ures.queriesResult.end())
 		{
 			pplace.code = *start;
@@ -114,6 +115,12 @@ namespace parse_uniresults_functions {
 				++start;
 				temp.push_back(pplace);
 			}
+            if (i > 20)
+            {
+                qApp->processEvents();
+                i = 0;
+            }
+            ++i;
 		}
 		return temp;
 	}

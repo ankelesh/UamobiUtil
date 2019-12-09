@@ -159,7 +159,7 @@ void ProcessingOverlay::step()
 	--currentState;
 	innerLowerSize = this->height() * (1.38 * (currentState / (endPoint)));
 	LowerInnerTriangle = makeParrallellogram(centralPoint, lowerPointRight, lowerPointLeft, innerLowerSize, totalRibSize);
-	repaint();
+	update();
 	if (currentState == 0)
 	{
 		redrawTimer->stop();

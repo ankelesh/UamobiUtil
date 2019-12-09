@@ -54,7 +54,7 @@ public:
 	void loadItems();
 	void refresh();
 	void show() override;
-
+	void clear();
 protected slots:
 	void previousPage();
 	void nextPage();

@@ -2,7 +2,7 @@
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "networking/Parsers/RequestParser.h"
-#define DEBUG
+//#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -29,7 +29,7 @@ specwidgets::documentSelectionWidget::documentSelectionWidget(QVector<parsedDocu
 }
 
 ParentDocumentWidget::ParentDocumentWidget(GlobalAppSettings& go, QWidget* parent)
-	: inframedWidget(parent), abstractNode(), alldocs(),
+	: inframedWidget(true,parent), abstractNode(), alldocs(),
 	globalSettings(go), mainLayout(new QVBoxLayout(this)),
 	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
 	userInfo(new QLabel(innerWidget)), filterButton(new MegaIconButton(innerWidget)),

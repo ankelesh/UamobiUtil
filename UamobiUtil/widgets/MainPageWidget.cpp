@@ -45,7 +45,7 @@ void MainPageWidget::resizeEvent(QResizeEvent* rev)
 }
 
 MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
-	: inframedWidget(parent), abstractNode(), globalSettings(go), mainLayout(new QVBoxLayout(this)),
+	: inframedWidget(true, parent), abstractNode(), globalSettings(go), mainLayout(new QVBoxLayout(this)),
 	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
 	topPanelLayout(new QHBoxLayout(innerWidget)), bottomPanelLayout(new QHBoxLayout(innerWidget)),
 	versionLabel(new QLabel(innerWidget)), hostLabel(new QLabel(innerWidget)),

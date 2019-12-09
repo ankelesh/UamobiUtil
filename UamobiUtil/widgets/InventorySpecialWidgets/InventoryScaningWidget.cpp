@@ -11,7 +11,7 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
-
+#include "widgets/utils/ElementsStyles.h"
 InventoryScaningWidget::InventoryScaningWidget(GlobalAppSettings& go, QWidget* parent)
 	: AbstractScaningWidget(go, parent), abstractNode(), captureInterface(),
 	resultScreen(new DocResultsWidget(go, this)), searchScreen(new ItemSearchWidget(go, this)),
@@ -174,6 +174,12 @@ void InventoryScaningWidget::document_confirmed_response()
 	document = RequestParser::interpretAsDocumentResponse(awaiter.restext, awaiter.errtext);
 	userInfo->setText(tr("receipt_scaning_mode_name") + "(" + document.docId + ")\n" + document.supplier);
 	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+
+#ifdef Q_OS_WINCE
+    userInfo->setText(normalizeLine(modename  + " (" + document.docId + ")\n" + document.supplier));
+#else
+    userInfo->setText(modename  + " (" + document.docId + ")\n" + document.supplier);
+#endif
 	hideProcessingOverlay();
 }
 
@@ -192,6 +198,13 @@ void InventoryScaningWidget::itemObtained(parsedItemSimplified item)
 {
 	barcodeField->setText(item.barcode);
 	barcodeConfirmed();
+	_hideCurrent(innerWidget);
+}
+
+void InventoryScaningWidget::_postClear()
+{
+	resultScreen->clear();
+	searchScreen->clear();
 	_hideCurrent(innerWidget);
 }
 
@@ -234,9 +247,6 @@ bool InventoryScaningWidget::handleScannedBarcode()
 
 bool InventoryScaningWidget::handleNumberInbuffer()
 {
-#ifdef DEBUG
-	detrace_METHCALL("inventoryScaningWidget |" << numberBuffer);
-#endif
 	refreshControls();
 	return true;
 }

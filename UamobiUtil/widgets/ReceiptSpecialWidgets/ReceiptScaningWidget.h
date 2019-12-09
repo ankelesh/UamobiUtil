@@ -28,6 +28,8 @@ protected:
 	virtual void backNeeded() override;
 	virtual void useControls(QVector<QPair<QString, QString> >&) override;
 	virtual bool isManualInFocus() override;
+	// Inherited via AbstractScaningWidget
+	virtual void _postClear() override;
 
 	virtual bool handleScannedBarcode() override;
 
@@ -58,6 +60,8 @@ public slots:
 	// Inherited via captureInterface
 
 	// Inherited via AbstractScaningWidget
+
+
 
 	// Inherited via AbstractScaningWidget
 };

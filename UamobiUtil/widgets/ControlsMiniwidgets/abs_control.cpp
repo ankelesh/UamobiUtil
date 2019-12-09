@@ -64,12 +64,14 @@ void abs_control::unassociateBuffer()
 {
 	associatedBuffer = &defaultBuffer;
     setListening(false);
+	isAwaiting = false;
 }
 
 void abs_control::associateBuffer(QString& buffer)
 {
 	associatedBuffer = &buffer;
     setListening(true);
+	isAwaiting = true;
 }
 
 

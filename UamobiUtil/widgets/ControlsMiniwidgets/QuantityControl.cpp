@@ -1,6 +1,6 @@
 #include "QuantityControl.h"
 #include "widgets/utils/ElementsStyles.h"
-#define DEBUG
+//#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -40,7 +40,6 @@ void QuantityControl::setListening(bool isListening)
 {
     if (isListening)
     {
-
         innerSpinbox->setStyleSheet(LISTENING_CONTROL_STYLESHEET);
     }
     else
@@ -93,9 +92,14 @@ void QuantityControl::hide()
 }
 void QuantityControl::refresh()
 {
-#ifdef DEBUG
-	detrace_METHCALL("QuantityControl::refresh |" << *associatedBuffer << "| of QC named " << name);
-#endif
+	if (!isAwaiting)
+		return;
+	if (associatedBuffer->isEmpty())
+	{
+		innerSpinbox->setValue(0);
+		innerSpinbox->update();
+		return;
+	}
 	bool ok;
 	double toSet = associatedBuffer->toDouble(&ok);
 	if (toSet - (int)toSet)
@@ -105,10 +109,12 @@ void QuantityControl::refresh()
 	}
 	if (ok)
 	{
-		detrace_SUCCESS;
 		innerSpinbox->setDValue(toSet);
 	}
 	innerSpinbox->update();
+#ifdef DEBUG
+	detrace_METHEXPL("hadling finished: "  << (long long int) this << "  " << QTime::currentTime().msecsSinceStartOfDay());
+#endif
 }
 
 void QuantityControl::installEventFilter(QObject* keyfilter)

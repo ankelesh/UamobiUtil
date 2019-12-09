@@ -48,9 +48,10 @@ class inframedWidget : public QWidget
 	Q_OBJECT
 protected:
 	filters::GeneralPurposeFilter* keyfilter;
-
+	virtual void keyReleaseEvent(QKeyEvent* kev) override;
 public:
 	inframedWidget(QWidget* parent);
+	inframedWidget(bool installFilter, QWidget * parent);
 	virtual bool back();
 	virtual bool giveSettings();
 	virtual void handleBarcode(QString) {}

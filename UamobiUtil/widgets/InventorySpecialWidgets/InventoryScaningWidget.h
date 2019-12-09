@@ -40,6 +40,8 @@ protected:
 	virtual void processNumber(QString) override;
 	virtual void useControls(QVector<QPair<QString, QString> >&) override;
 	virtual void processBarcode(QString) override;
+	// Inherited via AbstractScaningWidget
+	virtual void _postClear() override;
 
 	// Inherited via AbstractScaningWidget
 protected slots:
@@ -55,4 +57,5 @@ protected slots:
 	virtual void hideCurrent();
 	virtual void saveSuccesfull();
 	virtual void itemObtained(parsedItemSimplified);
+
 };

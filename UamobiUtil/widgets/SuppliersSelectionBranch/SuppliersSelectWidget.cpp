@@ -2,6 +2,7 @@
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 //#define DEBUG_FILTER
+//#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -68,7 +69,6 @@ void SuppliersSelectWidget::supplierPicked(parsedSupplier supp)
 {
 	if (awaiter.isAwaiting())
 		return;
-	hideProcessingOverlay();
 	emit supplierAcquired(supp);
 }
 
@@ -94,7 +94,7 @@ SuppliersSelectionBranch::SuppliersSelectionBranch(GlobalAppSettings& go, QWidge
 	QObject::connect(orderSelection, &OrderSelectionWidget::orderConfirmed, this, &SuppliersSelectionBranch::orderAcquired);
 	QObject::connect(orderSelection, &OrderSelectionWidget::backRequired, this, &SuppliersSelectionBranch::hideCurrent);
 #else
-	QObject::connect(orderSelection, SIGNAL(orderConfirmed(parsedOrder, QString)), this, SLOT(orderAcquired(parsedOrder)));
+    QObject::connect(orderSelection, SIGNAL(orderConfirmed(parsedOrder, QString)), this, SLOT(orderAcquired(parsedOrder, QString)));
 	QObject::connect(orderSelection, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
 #endif
 }
@@ -120,7 +120,7 @@ void SuppliersSelectionBranch::hideCurrent()
 void SuppliersSelectionBranch::supplierPicked(parsedSupplier ps)
 {
 #ifdef DEBUG
-	//detrace_METHCALL("supplier picked");
+	detrace_METHCALL("supplier picked");
 #endif
 	SuppliersSelectWidget::supplierPicked(ps);
 	confirmedSupplier = ps;
@@ -128,6 +128,8 @@ void SuppliersSelectionBranch::supplierPicked(parsedSupplier ps)
 	orderSelection->loadOrders();
 }
 
-void SuppliersSelectionBranch::orderAcquired(parsedOrder po)
+void SuppliersSelectionBranch::orderAcquired(parsedOrder po, QString str)
 {
+	_hideCurrent(innerWidget);
+	emit orderReady(po, str);
 }

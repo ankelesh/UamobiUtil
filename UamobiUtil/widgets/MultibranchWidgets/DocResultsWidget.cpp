@@ -7,7 +7,7 @@
 #endif
 
 DocResultsWidget::DocResultsWidget(GlobalAppSettings& go, QWidget* parent)
-	: inframedWidget(parent), globalSettings(go), mainLayout(new QVBoxLayout(this)),
+	: inframedWidget(true, parent), globalSettings(go), mainLayout(new QVBoxLayout(this)),
 	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
 	toolPanel(new QHBoxLayout(innerWidget)), deleteAllButton(new MegaIconButton(innerWidget)),
 	deleteSelectedButton(new MegaIconButton(innerWidget)),
@@ -158,6 +158,12 @@ void DocResultsWidget::show()
 	pagenumber = 0;
 	loadItems();
 	inframedWidget::show();
+}
+
+void DocResultsWidget::clear()
+{
+	itemInfoStorage->clear();
+	indexationInfo->setText(" -- ");
 }
 
 void DocResultsWidget::previousPage()

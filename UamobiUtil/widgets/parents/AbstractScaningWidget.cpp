@@ -47,7 +47,6 @@ void AbstractScaningWidget::useControls(QVector<QPair<QString, QString>>& cvals)
 				innerLayout->removeWidget(first_control->myWidget());
 				delete first_control;
 				first_control = fabricateControl(cvals.at(0).first, innerLayout, innerWidget);
-				first_control->installEventFilter(keyfilter);
 			}
 			if (second_control != Q_NULLPTR)
 			{
@@ -60,7 +59,6 @@ void AbstractScaningWidget::useControls(QVector<QPair<QString, QString>>& cvals)
 		else
 		{
 			first_control = fabricateControl(cvals.at(0).first, innerLayout, innerWidget);
-			first_control->installEventFilter(keyfilter);
 			++controlsAvailable;
 		}
 		first_control->setAwaiting();
@@ -93,7 +91,6 @@ void AbstractScaningWidget::useControls(QVector<QPair<QString, QString>>& cvals)
 			if (first_control == Q_NULLPTR)
 			{
 				first_control = fabricateControl(cvals.at(0).first, innerLayout, innerWidget);
-				first_control->installEventFilter(keyfilter);
 			}
 			else
 			{
@@ -102,7 +99,6 @@ void AbstractScaningWidget::useControls(QVector<QPair<QString, QString>>& cvals)
 			if (second_control == Q_NULLPTR)
 			{
 				second_control = fabricateControl(cvals.at(1).first, innerLayout, innerWidget);
-				second_control->installEventFilter(keyfilter);
 			}
 			else
 			{
@@ -206,7 +202,6 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
 	topPanelLayout->setSpacing(0);
 
 	QFont scaledFont = makeFont(0.04);
-
 	userInfo->setText(tr("scaning_widget_user_info"));
 	userInfo->setAlignment(Qt::AlignCenter);
 	userInfo->setFont(scaledFont);
@@ -259,6 +254,18 @@ AbstractScaningWidget::AbstractScaningWidget(GlobalAppSettings& go, QWidget* par
     QObject::connect(quitButton, SIGNAL(clicked()), this, SLOT(quitNoSave()));
     QObject::connect(switchFocus, SIGNAL(clicked()),this, SLOT(switchedFocus()));
 #endif
+}
+
+void AbstractScaningWidget::clear()
+{
+	mainTextView->clear();
+	useControls(QVector<QPair<QString, QString> >());
+	_postClear();
+}
+
+void AbstractScaningWidget::setModeName(QString& name)
+{
+    modename = name;
 }
 
 void AbstractScaningWidget::was_timeout()

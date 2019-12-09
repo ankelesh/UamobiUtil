@@ -1,4 +1,5 @@
 #include "NormalCapturer.h"
+#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -63,7 +64,7 @@ void NormalCapturer::skipControls(int q)
 void NormalCapturer::pressScan()
 {
 #ifdef DEBUG
-	detrace_METHCALL("NormalCapturer::pressScan");
+//	detrace_METHCALL("NormalCapturer::pressScan");
 #endif
 
 	if (isScaning)
@@ -71,7 +72,7 @@ void NormalCapturer::pressScan()
 	if (widgetToApply->isManualInFocus())
 	{
 #ifdef DEBUG
-		detrace_METHCALL("removeManualFocus");
+	//	detrace_METHCALL("removeManualFocus");
 #endif
 
 		widgetToApply->removeManualFocus();
@@ -79,7 +80,7 @@ void NormalCapturer::pressScan()
 	if (!widgetToApply->barcodeBuffer.isEmpty())
 	{
 #ifdef DEBUG
-		detrace_METHCALL("handleScannedBarcode");
+	//	detrace_METHCALL("handleScannedBarcode");
 #endif
 
 		widgetToApply->handleScannedBarcode();
@@ -87,12 +88,12 @@ void NormalCapturer::pressScan()
 	if (isAwaitingControlValue)
 	{
 #ifdef DEBUG
-		detrace_METHEXPL("flushing Q");
+	//	detrace_METHEXPL("flushing Q");
 #endif
 		if (widgetToApply->numberBuffer.isEmpty())
 		{
 #ifdef DEBUG
-			detrace_METHEXPL("empty buffer! aborting!");
+//			detrace_METHEXPL("empty buffer! aborting!");
 #endif
 			clearCaptureEngine();
 			return;
@@ -102,7 +103,7 @@ void NormalCapturer::pressScan()
 		isScaning = true;
 	}
 #ifdef DEBUG
-	detrace_METHEXPL("passed all checks, clearing");
+//	detrace_METHEXPL("passed all checks, clearing");
 #endif
 	clearCaptureEngine();
 }
@@ -110,24 +111,24 @@ void NormalCapturer::pressScan()
 void NormalCapturer::pressReturn()
 {
 #ifdef DEBUG
-	detrace_METHCALL("NormalCapturer::pressReturn");
+	//detrace_METHCALL("NormalCapturer::pressReturn");
 #endif
 
 	if (widgetToApply->isManualInFocus())
 		return;
 #ifdef DEBUG
-	detrace_METHEXPL("return captured in capturer while buffer was " << widgetToApply->barcodeBuffer);
+//	detrace_METHEXPL("return captured in capturer while buffer was " << widgetToApply->barcodeBuffer);
 #endif
 	if (isScaning)
 	{
 		if (widgetToApply->barcodeBuffer.isEmpty())
 			return;
 #ifdef DEBUG
-		detrace_METHEXPL("before calling handler from capturer: " << widgetToApply->barcodeBuffer);
+//		detrace_METHEXPL("before calling handler from capturer: " << widgetToApply->barcodeBuffer);
 #endif
 
 #ifdef DEBUG
-		detrace_METHINVOK("handleScannedBarcode", "WidgetToApply", " press return", "capturer");
+	//	detrace_METHINVOK("handleScannedBarcode", "WidgetToApply", " press return", "capturer");
 #endif
 
 		widgetToApply->handleScannedBarcode();
@@ -137,7 +138,7 @@ void NormalCapturer::pressReturn()
 		controlIndex = 0;
 
 #ifdef DEBUG
-		detrace_METHINVOK("setControlFocus", "WidgetToApply", " press return", "capturer");
+	//	detrace_METHINVOK("setControlFocus", "WidgetToApply", " press return", "capturer");
 #endif
 
 		widgetToApply->setControlFocus(controlIndex);
@@ -147,7 +148,7 @@ void NormalCapturer::pressReturn()
 		{
 
 #ifdef DEBUG
-			detrace_METHEXPL("flushing control #" << controlIndex << " from " << controlNumber);
+		//	detrace_METHEXPL("flushing control #" << controlIndex << " from " << controlNumber);
 #endif
 
 			controlIndex = widgetToApply->flushControl(controlIndex);
@@ -170,7 +171,7 @@ void NormalCapturer::handleElement(QString elem)
 	if (isScaning)
 	{
 #ifdef DEBUG
-		detrace_METHEXPL(elem);
+	//	detrace_METHEXPL(elem);
 #endif
 
 		if (lastKeyReleaseTimepoint.msecsTo(QTime::currentTime()) < 50)
@@ -179,7 +180,7 @@ void NormalCapturer::handleElement(QString elem)
 			lastKeyReleaseTimepoint = QTime::currentTime();
 
 #ifdef DEBUG
-			detrace_METHEXPL("toBarcode");
+		//	detrace_METHEXPL("toBarcode");
 #endif
 		}
 		else
@@ -189,7 +190,7 @@ void NormalCapturer::handleElement(QString elem)
 			widgetToApply->barcodeBuffer += elem;
 
 #ifdef DEBUG
-			detrace_METHEXPL("cleaningTobarcode");
+			//detrace_METHEXPL("cleaningTobarcode");
 #endif
 
 			lastKeyReleaseTimepoint = QTime::currentTime();
@@ -200,7 +201,7 @@ void NormalCapturer::handleElement(QString elem)
 		if (lastKeyReleaseTimepoint.msecsTo(QTime::currentTime()) > 50)
 		{
 #ifdef DEBUG
-			detrace_METHEXPL("toNum");
+			//detrace_METHEXPL("toNum");
 #endif
 			if (elem == ".")
 			{
@@ -212,6 +213,11 @@ void NormalCapturer::handleElement(QString elem)
 			}
 			widgetToApply->numberBuffer += elem;
 			widgetToApply->handleNumberInbuffer();
+
+#ifdef DEBUG
+			detrace_METHEXPL("handling started: " << QTime::currentTime().msecsSinceStartOfDay());
+#endif
+
 			lastKeyReleaseTimepoint = QTime::currentTime();
 		}
 		else
@@ -230,7 +236,7 @@ void NormalCapturer::handleElement(QString elem)
 void NormalCapturer::clearCaptureEngine()
 {
 #ifdef DEBUG
-	detrace_METHCALL("NormalCapturer::clearCaptureEngine");
+	//detrace_METHCALL("NormalCapturer::clearCaptureEngine");
 #endif
 
 	isScaning = true;
@@ -259,7 +265,7 @@ void NormalCapturer::handleErase()
 void NormalCapturer::setPhase(int ph)
 {
 #ifdef DEBUG
-	detrace_METHEXPL("ph set: " << ph << "|" << controlNumber);
+//	detrace_METHEXPL("ph set: " << ph << "|" << controlNumber);
 #endif
 	if (ph == -1)
 	{
@@ -274,7 +280,7 @@ void NormalCapturer::setPhase(int ph)
 	}
 
 #ifdef DEBUG
-	detrace_METHEXPL(stateOfEngine());
+//	detrace_METHEXPL(stateOfEngine());
 #endif
 
 }

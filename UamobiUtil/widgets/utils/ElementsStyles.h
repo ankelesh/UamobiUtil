@@ -54,7 +54,7 @@ inline static QSize calculateAdaptiveSize(double Hpercent, double Wpercent)
 }
 
 QString& normalizeLine(QString& line);
-
+QString normalizeLine(const QString line);
 const QSize& getCurrentSize();
 void setCurrentSize(const QSize&);
 

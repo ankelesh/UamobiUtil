@@ -23,7 +23,7 @@ specwidgets::_ItemSelectionList::_ItemSelectionList(parse_uniresults_functions::
 }
 
 ItemSearchWidget::ItemSearchWidget(GlobalAppSettings& go, QWidget* parent)
-	: inframedWidget(parent), allitems(), globalSettings(go), mainLayout(new QVBoxLayout(this)),
+	: inframedWidget(true, parent), allitems(), globalSettings(go), mainLayout(new QVBoxLayout(this)),
 	searchPanel(new QHBoxLayout(this)), searchInput(new QLineEdit(this)),
 	searchButton(new MegaIconButton(this)), listHeaderLayout(new QHBoxLayout(this)),
 	previousButton(new MegaIconButton(this)), nextButton(new MegaIconButton(this)),

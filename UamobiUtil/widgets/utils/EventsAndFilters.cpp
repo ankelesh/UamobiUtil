@@ -3,6 +3,7 @@
 #ifdef Q_OS_ANDROID
 #include <QInputMethod>
 #endif
+#define DEBUG
 #ifdef DEBUG
 #include <debugtrace.h>
 #endif
@@ -10,6 +11,8 @@
 bool filters::NoKeyEvents::eventFilter(QObject* object, QEvent* ev)
 {
 	// Captures key press events
+
+
 	switch (ev->type())
 	{
 	case QEvent::KeyRelease:
@@ -111,11 +114,9 @@ filters::GeneralPurposeFilter::CaptureFunction filters::GeneralPurposeFilter::ma
 
 bool filters::GeneralPurposeFilter::eventFilter(QObject* ob, QEvent* ev)
 {
+
 	if (ev->type() == QEvent::KeyRelease)
 	{
-#ifdef DEBUG
-		detrace_METHFRECALL("key release captured with text");
-#endif
 		QKeyEvent* keyptr = static_cast<QKeyEvent*>(ev);
 		return (*this.*captureFunction)(keyptr);
 	}

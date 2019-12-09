@@ -34,7 +34,7 @@ void specwidgets::_modeSelectionWidget::indexSelected(int Index)
 }
 
 ModeSelectionWidget::ModeSelectionWidget(const GlobalAppSettings& go, QWidget* parent)
-	: inframedWidget(parent), globalSettings(go), allmodes(), mainLayout(new QVBoxLayout(this)),
+	: inframedWidget(true, parent), globalSettings(go), allmodes(), mainLayout(new QVBoxLayout(this)),
 	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
 	buttonLayout(new QHBoxLayout(innerWidget)), scrArea(new QScrollArea(innerWidget)), userTip(new QLabel(innerWidget)),
 	modesTip(new QLabel(innerWidget)), modeSelection(new specwidgets::_modeSelectionWidget(allmodes, scrArea)),

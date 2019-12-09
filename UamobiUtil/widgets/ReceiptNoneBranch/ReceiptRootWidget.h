@@ -33,8 +33,7 @@ protected:
 
 	ReceiptParametersWidget* innerWidget;
 
-	SuppliersSelectWidget* suppliersSelect;
-	OrderSelectionWidget* orderSelect;
+	SuppliersSelectionBranch* suppliersSelect;
 	ReceiptScaningWidget* scaning;
 
 	QHash<QString, QString> options;	//	options of this mode. UNUSED
@@ -45,7 +44,7 @@ protected:
 
 public:
 	ReceiptRootWidget(GlobalAppSettings& go, QHash<QString, QString> settings = RECEIPT_NONE_SETTINGS_DEFAULTS,
-		QString submode = "",
+		parsedMode submode = parsedMode("receipt", "receipt", ""),
 		QWidget* parent = Q_NULLPTR);
 
 private slots:

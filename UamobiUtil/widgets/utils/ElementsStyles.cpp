@@ -19,6 +19,20 @@ QString& normalizeLine(QString& line)
 #endif
     return line;
 }
+QString normalizeLine(const QString line)
+{
+    QString nline = line;
+#ifdef Q_OS_WINCE
+    int inserts = nline.length() / 22;
+    if (inserts <= 0)
+        return nline;
+    for (int i = 1; i <= inserts; ++i)
+    {
+        nline.insert(i * 24 + i - 1, "\n");
+    }
+#endif
+    return nline;
+}
 const QString OK_BUTTONS_STYLESHEET("QPushButton { \
 			background-color: #a2deae;		\
 			border: 1px solid gray;			\

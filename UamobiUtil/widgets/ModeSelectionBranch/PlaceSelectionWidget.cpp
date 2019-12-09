@@ -34,7 +34,7 @@ void specwidgets::_placeSelectionWidget::indexSelected(int Index)
 
 PlaceSelectionWidget::PlaceSelectionWidget(const GlobalAppSettings& go, QWidget* parent,
 	NoArgsRequestMP lplaces, interpretsPointers::interpretAsPlaceLike inter)
-	: inframedWidget(parent), globalSettings(go), listPlaces(lplaces), interpreter(inter), allplaces(),
+	: inframedWidget(true, parent), globalSettings(go), listPlaces(lplaces), interpreter(inter), allplaces(),
 	mainLayout(new QVBoxLayout(this)), buttonLayout(new QHBoxLayout(this)),
 	scrArea(new QScrollArea(this)), userTip(new QLabel(this)),
 	modeTip(new QLabel(this)), placesTip(new QLabel(this)),
@@ -73,7 +73,9 @@ PlaceSelectionWidget::PlaceSelectionWidget(const GlobalAppSettings& go, QWidget*
 
     scrArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	scrArea->setWidget(placeSelection);
-	QScroller::grabGesture(scrArea, QScroller::LeftMouseButtonGesture);
+#ifdef QT_VERSION5X
+	QScroller::grabGesture(placeSelection, QScroller::LeftMouseButtonGesture);
+#endif
 	placeSelection->installEventFilter(keyfilter);
 
 #ifdef QT_VERSION5X

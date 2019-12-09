@@ -7,6 +7,7 @@
 #include "legacy/qtCompatibility/scrollgrabber.h"
 #endif
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
+#include "widgets/utils/ElementsStyles.h"
 #define DEBUG
 ReceiptScaningWidget::ReceiptScaningWidget(GlobalAppSettings& go, QWidget* parent)
 	: AbstractScaningWidget(go, parent), abstractNode(), captureInterface(), resultScreen(new DocResultsWidget(go, this)),
@@ -23,8 +24,10 @@ ReceiptScaningWidget::ReceiptScaningWidget(GlobalAppSettings& go, QWidget* paren
 	submitButton->setDisabled(true);
 	mainTextView->installEventFilter(capturer->keyfilter);
 	QScroller::grabGesture(mainTextView, QScroller::LeftMouseButtonGesture);
-	innerWidget->installEventFilter(capturer->keyfilter);
+	
+#ifdef Q_OS_ANDROID
 	barcodeField->installEventFilter(new filters::LineEditHelper(this));
+#endif
 #ifdef QT_VERSION5X
 	QObject::connect(resultScreen, &DocResultsWidget::backRequired, this, &ReceiptScaningWidget::hideCurrent);
 	QObject::connect(searchScreen, &ItemSearchWidget::backRequired, this, &ReceiptScaningWidget::hideCurrent);
@@ -219,6 +222,13 @@ void ReceiptScaningWidget::syncControlAndBuffer(QString v)
 	numberBuffer = v;
 }
 
+void ReceiptScaningWidget::_postClear()
+{
+	resultScreen->clear();
+	searchScreen->clear();
+	_hideCurrent(innerWidget);
+}
+
 bool ReceiptScaningWidget::isControlFocused()
 {
 	return AbstractScaningWidget::isControlFocused();
@@ -278,8 +288,12 @@ void ReceiptScaningWidget::item_confirmed_response()
 void ReceiptScaningWidget::document_confirmed_response()
 {
 	document = RequestParser::interpretAsDocumentResponse(awaiter.restext, awaiter.errtext);
-	userInfo->setText(tr("receipt_scaning_mode_name") + "(" + document.docId + ")\n" + document.supplier);
 	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+#ifdef Q_OS_WINCE
+    userInfo->setText(normalizeLine(modename  + " (" + document.docId + ")\n" + document.supplier));
+#else
+    userInfo->setText(modename  + " (" + document.docId + ")\n" + document.supplier);
+#endif
 	hideProcessingOverlay();
 }
 

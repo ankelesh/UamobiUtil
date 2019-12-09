@@ -13,7 +13,22 @@ bool inframedWidget::isExpectingControl(int val)
 
 	return false;
 }
+void inframedWidget::keyReleaseEvent(QKeyEvent* kev)
+{
+	switch (kev->key())
+	{
+		case Qt::Key_Escape:
+		case Qt::Key_Back:
+			backReaction();
+		default:
+			break;
+	}
+}
 inframedWidget::inframedWidget(QWidget* parent)
+	: QWidget(parent), keyfilter()
+{
+}
+inframedWidget::inframedWidget(bool installFilter, QWidget* parent) 
 	: QWidget(parent), keyfilter(new filters::GeneralPurposeFilter(filters::GeneralPurposeFilter::infPack, this))
 {
 	QObject::installEventFilter(keyfilter);
@@ -39,6 +54,7 @@ bool inframedWidget::giveSettings()
 
 void inframedWidget::show()
 {
+	
 	QWidget::show();
 }
 

@@ -1,5 +1,5 @@
 #include "SimpleLinearParsers.h"
-
+#include <QApplication>
 bool UserListParser::couldRead()
 {
 	return success;
@@ -87,10 +87,16 @@ PlacesListParser::PlacesListParser(QString& res, QString& err)
 	if (parseres.request_status != 200)
 		return;
 	QDomNodeList dmndl = doc.elementsByTagName("place");
+    int j = 0;
 	for (int i = 0; i < dmndl.count(); ++i)
 	{
 		parseres.queriesResult << dmndl.at(i).childNodes().at(0).toElement().text();
 		parseres.queriesResult << dmndl.at(i).childNodes().at(1).toElement().text();
+        if ( i - j > 20)
+        {
+            qApp->processEvents();
+            j+=20;
+        }
 	}
 	parseres.type = linear_result;
 	parseres.one_position_entries_quantity = 2;
