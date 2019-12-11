@@ -309,6 +309,10 @@ public:
 		QObject* receiver = Q_NULLPTR,
 		const char* slot = ""
 	) = 0;
+	virtual void invGetFilters(
+		QObject* receiver = Q_NULLPTR,
+		const char* slot = ""
+	) = 0;
 	// photo-specific
 	virtual void makeRequest(DataRequest* dr) = 0;
 	static DataUpdateEngine* getMain(QObject* parent = 0);

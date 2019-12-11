@@ -19,6 +19,12 @@
 #include "widgets/MultibranchWidgets/GroupSelectionWidget.h"
 #include "widgets/MultibranchWidgets/StillageSelectionWidget.h"
 
+/*
+	This widget branch is allowing user to select barcode filter that will be sent to server.
+
+	__ASSOCIATED_DB_FUNCTION__	:	void	select_filter_item(filter, value)
+
+*/
 
 
 class BarcodeFilterSelectionSubbranch : public inframedWidget, abstractNode

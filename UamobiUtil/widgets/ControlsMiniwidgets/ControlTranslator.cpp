@@ -1,5 +1,4 @@
 #include "ControlTranslator.h"
-#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif // DEBUG
@@ -10,14 +9,19 @@ ControlTranslator::ControlTranslator()
 }
 
 QString ControlTranslator::translate(QString& str)
+// This object simply maps normal strings to translations
 {
+#ifdef DEBUG
 	detrace_METHCALL("translate control " << str << str.count() << " |");
+#endif
 	switch (str.count())
 	{
 	case 3:
 		if (str == "qty")
 		{
+#ifdef DEBUG
 			detrace_METHEXPL("returning" << tr("control_quantity"));
+#endif
 			return tr("control_quantity");
 		}
 		break;

@@ -14,7 +14,11 @@
 
 	Supported modes:
 		inventory - none
+		inventory - partialinventory
 
+	Update:
+	now this widget is calling barcodeFilterSelection only when document was initiated within scanned widget.
+	This led to changes in goToSelection.
 
 */
 
@@ -50,4 +54,6 @@ private slots:
 	void backTo();				//	returns to previous step
 	void backToStep(int step);	//	returns to specified step
 	void continueToScaning();	//	is triggered when all data is gathered and ScaningWidget can be created
+	void prescaningRequest();	//	is used only in case when barcodeFilterSelection exists
+	void filterReceived(QString resp);	//	checking filter response to define, should it show filter screen or not
 };

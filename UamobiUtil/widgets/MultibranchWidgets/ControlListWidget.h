@@ -6,6 +6,10 @@
 #include <QtWidgets/QLabel>
 
 
+/*
+	This widget is used for future pages with multiple controls.
+	Now it is not used. Do not include this under Qt4
+*/
 
 
 class ControlListWidget : public inframedWidget

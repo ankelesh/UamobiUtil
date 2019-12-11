@@ -73,9 +73,7 @@ PlaceSelectionWidget::PlaceSelectionWidget(const GlobalAppSettings& go, QWidget*
 
     scrArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	scrArea->setWidget(placeSelection);
-#ifdef QT_VERSION5X
-	QScroller::grabGesture(placeSelection, QScroller::LeftMouseButtonGesture);
-#endif
+	QScroller::grabGesture(scrArea, QScroller::LeftMouseButtonGesture);
 	placeSelection->installEventFilter(keyfilter);
 
 #ifdef QT_VERSION5X

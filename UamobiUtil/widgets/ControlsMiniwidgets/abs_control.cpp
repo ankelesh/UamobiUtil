@@ -1,6 +1,10 @@
 #include "abs_control.h"
 #include "QuantityControl.h"
 #include "ControlTranslator.h"
+//#define DEBUG
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
 
 
 
@@ -74,4 +78,42 @@ void abs_control::associateBuffer(QString& buffer)
 	isAwaiting = true;
 }
 
-
+QString chopZeros(QString val, bool cdot)
+// removes .0000 from end of the line to avoid cursor-to-end behaviour
+{
+	val.replace(',', '.');
+	if (cdot)
+	{
+		while (val.endsWith('0'))
+		{
+			val.chop(1);
+		}
+	}
+	else
+	{
+		while (val.endsWith('0') || val.endsWith('.'))
+		{
+			val.chop(1);
+		}
+	}
+	return val;
+}
+void control_utils::refresher::sync(QString& sval)
+{
+#ifdef DEBUG
+	detrace_METHCALL("refresher::sync(" << sval << ")");
+#endif
+	if (bufferPointer != Q_NULLPTR)
+	{
+		if (spbox != Q_NULLPTR)
+		{
+			if (spbox->hasFocus())
+			{
+				(*(*bufferPointer)) = chopZeros(sval, (*bufferPointer)->contains('.'));
+#ifdef DEBUG
+				detrace_METHEXPL("after sync: " << (*(*bufferPointer)));
+#endif
+			}
+		}
+	}
+}

@@ -213,14 +213,16 @@
     <QtMoc Include="widgets\MultibranchWidgets\ItemSearchWidget.h" />
     <QtMoc Include="widgets\ElementWidgets\BigButtonsSpinbox.h" />
     <QtMoc Include="widgets\ElementWidgets\MegaIconButton.h" />
-    <ClInclude Include="widgets\ControlsMiniwidgets\abs_control.h" />
+    <QtMoc Include="widgets\ControlsMiniwidgets\abs_control.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
+    </QtMoc>
     <QtMoc Include="ScaningCore\NormalCapturer.h" />
     <ClInclude Include="widgets\ControlsMiniwidgets\ControlManager.h" />
     <QtMoc Include="widgets\ControlsMiniwidgets\ControlTranslator.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
     </QtMoc>
-    <ClInclude Include="widgets\ControlsMiniwidgets\FloatControl.h" />
     <ClInclude Include="widgets\ControlsMiniwidgets\QuantityControl.h" />
     <QtMoc Include="widgets\ElementWidgets\ProcessingOverlay.h" />
     <ClInclude Include="widgets\ElementWidgets\ZebraListItemDelegate.h" />

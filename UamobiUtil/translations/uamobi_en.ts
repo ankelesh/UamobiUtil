@@ -4,47 +4,47 @@
 <context>
     <name>AbstractScaningWidget</name>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="202"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="205"/>
         <source>scaning_widget_user_info</source>
         <translation>User info</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="206"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="209"/>
         <source>scaning_widget_filler_text</source>
         <translation>Press SCAN to start</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="213"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="216"/>
         <source>scaning_widget_back</source>
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="217"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="220"/>
         <source>scaining_widget_submit</source>
         <translation>Submit</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="221"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="224"/>
         <source>scaning_widget_search</source>
         <translation>Search</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="225"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="228"/>
         <source>quit</source>
         <translation>Quit</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="230"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="233"/>
         <source>focus</source>
         <translation>Focus</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="264"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="282"/>
         <source>QuitWithoutSave?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="264"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="282"/>
         <source>quit_without_save_info?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -52,27 +52,27 @@
 <context>
     <name>AbstractSearchAndPickWidget</name>
     <message>
-        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="43"/>
+        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="47"/>
         <source>suppliers_selection_widget_user_tip</source>
         <translation>Select supplier</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="48"/>
+        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="52"/>
         <source>suppliers_selection_search!</source>
         <translation>search!</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="59"/>
+        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="63"/>
         <source>suppliers_selection_back</source>
         <translation>back</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="63"/>
+        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="67"/>
         <source>W\O</source>
         <translation>W\O</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="139"/>
+        <location filename="../widgets/parents/AbstractSearchAndPickWidget.cpp" line="143"/>
         <source>suppliers_select_widget_timeout!</source>
         <translation>Timeout!</translation>
     </message>
@@ -122,32 +122,32 @@
 <context>
     <name>DocResultsWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="65"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="67"/>
         <source>delete all</source>
         <translation>Delete All</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="71"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="73"/>
         <source>delete selected</source>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="76"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="78"/>
         <source>doc_results_back</source>
         <translation>back</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="80"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="82"/>
         <source>doc_results_text</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="84"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="86"/>
         <source>doc_results_userinfo</source>
         <translation>All data in current document</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="214"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="222"/>
         <source>doc_results_timeout</source>
         <translation>Timeout</translation>
     </message>
@@ -183,6 +183,14 @@
         <location filename="../widgets/MultibranchWidgets/FilterSelectWidget.cpp" line="148"/>
         <source>timeout:</source>
         <translation>Timeout:</translation>
+    </message>
+</context>
+<context>
+    <name>GroupSelectionWidget</name>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/GroupSelectionWidget.cpp" line="30"/>
+        <source>Group_selection</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -333,14 +341,6 @@
 </context>
 <context>
     <name>MainSettingsWidget</name>
-    <message>
-        <source>settings_workflow_tab_title</source>
-        <translation type="vanished">Workflow</translation>
-    </message>
-    <message>
-        <source>settings_system_tab_title</source>
-        <translation type="vanished">System</translation>
-    </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="35"/>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="144"/>
@@ -607,11 +607,11 @@
     </message>
 </context>
 <context>
-    <name>ReceiptScaningWidget</name>
+    <name>StillageSelectionWidget</name>
     <message>
-        <location filename="../widgets/ReceiptSpecialWidgets/ReceiptScaningWidget.cpp" line="281"/>
-        <source>receipt_scaning_mode_name</source>
-        <translation>Receipt mode</translation>
+        <location filename="../widgets/MultibranchWidgets/StillageSelectionWidget.cpp" line="37"/>
+        <source>stillage_selection</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

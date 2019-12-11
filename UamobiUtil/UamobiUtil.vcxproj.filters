@@ -276,23 +276,23 @@
     <ClCompile Include="widgets\ControlsMiniwidgets\ControlManager.cpp">
       <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\ControlsMiniwidgets\ControlTranslator.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="widgets\parents\AbstractSearchAndPickWidget.cpp">
+      <Filter>Source Files\util\parents</Filter>
     </ClCompile>
     <ClCompile Include="widgets\MultibranchWidgets\BarcodeFilterSelectionSubbranch.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\MultibranchWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\GroupSelectionWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\parents\AbstractSearchAndPickWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\StillageSelectionWidget.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="widgets\ControlsMiniwidgets\ControlTranslator.cpp">
+      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
     </ClCompile>
     <ClCompile Include="widgets\MultibranchWidgets\ControlListWidget.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\MultibranchWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\GroupSelectionWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\StillageSelectionWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -416,6 +416,9 @@
     <QtMoc Include="widgets\MultibranchWidgets\ControlListWidget.h">
       <Filter>Header Files\MultibranchWidgets</Filter>
     </QtMoc>
+    <QtMoc Include="widgets\ControlsMiniwidgets\abs_control.h">
+      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="UamobiUtil.qrc">
@@ -477,14 +480,8 @@
     <ClInclude Include="widgets\ElementWidgets\ZebraListItemDelegate.h">
       <Filter>Header Files\ElementWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="widgets\ControlsMiniwidgets\abs_control.h">
-      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
-    </ClInclude>
     <ClInclude Include="widgets\ControlsMiniwidgets\ControlManager.h">
       <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
-    </ClInclude>
-    <ClInclude Include="widgets\ControlsMiniwidgets\FloatControl.h">
-      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

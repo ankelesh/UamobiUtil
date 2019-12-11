@@ -17,6 +17,8 @@
 	This widget contains possibility to open it from any place in your code in case you placed it as child of the root widget.
 	Use bindOverlay to bind particular object, use hideProcessingOverlay and showProcessingOverlay function for showing
 	and hiding bound widget.
+
+	Update: Hexagon replaced with hourglass
 */
 
 class ProcessingOverlay : public QWidget

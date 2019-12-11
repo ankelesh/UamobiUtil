@@ -13,6 +13,6 @@
 */
 namespace legacy {
 	parsedMode parseLegacyMode(QString& name, QString& mode); // Determines mode\submode from single string
-	void filterNonCompatibleModes(QVector < parsedMode>&);
-	int guessControlType(QString& cname);
+	void filterNonCompatibleModes(QVector < parsedMode>&);		//	removes all modes that are not implemented
+	int guessControlType(QString& cname);		//	guesses type of control from it's name
 }

@@ -4,6 +4,8 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
+
+using namespace control_utils;
 QString QuantityControl::prepareAndReturnValue() const
 {
     return QString::number(innerSpinbox->dvalue());
@@ -50,22 +52,35 @@ void QuantityControl::setListening(bool isListening)
 
 QuantityControl::QuantityControl(bool isInt, QString& cname, QWidget* parent)
 	:
-	abs_control(cname, (isInt)? Int : Float), innerSpinbox(new BigButtonsSpinbox((isInt)? BigButtonsSpinbox::intspin : BigButtonsSpinbox::floatspin, parent))
+	abs_control(cname, (isInt)? Int : Float), 
+	innerSpinbox(new BigButtonsSpinbox((isInt)? BigButtonsSpinbox::intspin : BigButtonsSpinbox::floatspin, parent))
+	, synchronizer(new refresher(&associatedBuffer, innerSpinbox))
 {
 	innerSpinbox->setMinimum(0);
 	innerSpinbox->setMaximum(10000);
 	innerSpinbox->setValue(0);
 	innerSpinbox->setInfo(label);
+#ifdef QT_VERSION5X
+	QObject::connect(innerSpinbox, &BigButtonsSpinbox::valueChanged, synchronizer, &refresher::sync);
+#else
+	QObject::connect(innerSpinbox, SIGNAL(valueChanged(QString&)), synchronizer, SLOT(sync(QString&)));
+#endif
 	hide();
 }
 
 QuantityControl::QuantityControl(bool isInt, QString& assocBuffer, QString& cname, QWidget* parent)
 	:abs_control(cname, assocBuffer, Int), innerSpinbox(new BigButtonsSpinbox(BigButtonsSpinbox::intspin, parent))
+	, synchronizer(new refresher(&associatedBuffer, innerSpinbox))
 {
 	innerSpinbox->setMinimum(0);
 	innerSpinbox->setMaximum(10000);
 	innerSpinbox->setValue(0);
 	innerSpinbox->setInfo(label);
+#ifdef QT_VERSION5X
+	QObject::connect(innerSpinbox, &BigButtonsSpinbox::valueChanged, synchronizer, &refresher::sync);
+#else
+	QObject::connect(innerSpinbox, SIGNAL(valueChanged(QString&)), synchronizer, SLOT(sync(QString&)));
+#endif
 	hide();
 }
 
@@ -74,6 +89,7 @@ QuantityControl::~QuantityControl()
 	innerSpinbox->hide();
 	innerSpinbox->blockSignals(true);
 	innerSpinbox->deleteLater();
+	synchronizer->deleteLater();
 }
 
 void QuantityControl::setFocus() const
@@ -92,6 +108,11 @@ void QuantityControl::hide()
 }
 void QuantityControl::refresh()
 {
+
+#ifdef DEBUG
+	detrace_METHCALL("QuantityControl::refresh");
+#endif
+
 	if (!isAwaiting)
 		return;
 	if (associatedBuffer->isEmpty())
@@ -130,3 +151,4 @@ void QuantityControl::makeConnectionBetweenControls(abs_control* another)
 	QObject::connect(innerSpinbox, SIGNAL(returnPressed()), another->myWidget(), SLOT(setFocus()));
 #endif
 }
+

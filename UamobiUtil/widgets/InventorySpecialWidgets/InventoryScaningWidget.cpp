@@ -150,6 +150,7 @@ void InventoryScaningWidget::item_scaned_response()
 	mainTextView->setText(resp.named.value("richdata"));
 	itemSuppliedValues = resp.named;
 	useControls(resp.linear);
+	capturer->setPhase(0);
 	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
@@ -180,6 +181,27 @@ void InventoryScaningWidget::document_confirmed_response()
 #else
     userInfo->setText(modename  + " (" + document.docId + ")\n" + document.supplier);
 #endif
+	hideProcessingOverlay();
+	if (isFiltersRequired)
+	{
+		showProcessingOverlay();
+#ifdef QT_VERSION5X
+		QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &InventoryScaningWidget::filter_required_response);
+#else
+		QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(filter_required_response()));
+#endif
+		globalSettings.networkingEngine->invGetFilters(&awaiter, RECEIVER_SLOT_NAME);
+		awaiter.run();
+	}
+}
+
+void InventoryScaningWidget::filter_required_response()
+{
+	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+	if (isFiltersRequired)
+	{
+		emit filterRequired(awaiter.restext);
+	}
 	hideProcessingOverlay();
 }
 
@@ -212,7 +234,7 @@ void InventoryScaningWidget::setDocument(parsedOrder)
 {
 }
 
-void InventoryScaningWidget::setDocument(Document doc)
+void InventoryScaningWidget::setDocument(Document doc, bool frec)
 {
 	if (awaiter.isAwaiting())
 		return;
@@ -224,6 +246,7 @@ void InventoryScaningWidget::setDocument(Document doc)
 #endif
 	globalSettings.networkingEngine->invNew(QDate::currentDate(), doc.docId, doc.comment, &awaiter, RECEIVER_SLOT_NAME);
 	awaiter.run();
+	isFiltersRequired = true;
 }
 
 bool InventoryScaningWidget::isManualInFocus()

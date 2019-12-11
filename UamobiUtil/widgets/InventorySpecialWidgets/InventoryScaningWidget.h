@@ -14,10 +14,10 @@ protected:
 	NormalCapturer* capturer;
 
 	bool manSelected;
-	
+	bool isFiltersRequired;
 public:
 	InventoryScaningWidget(GlobalAppSettings& go, QWidget* parent);
-	void setDocument(Document);
+	void setDocument(Document, bool);
 protected:
 	// Inherited via captureInterface
 	virtual bool isManualInFocus() override;
@@ -54,8 +54,11 @@ protected slots:
 	void item_scaned_response();
 	void item_confirmed_response();
 	void document_confirmed_response();
+	void filter_required_response();
 	virtual void hideCurrent();
 	virtual void saveSuccesfull();
 	virtual void itemObtained(parsedItemSimplified);
 
+signals:
+	void filterRequired(QString resp);
 };

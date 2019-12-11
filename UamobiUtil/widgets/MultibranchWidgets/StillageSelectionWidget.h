@@ -2,6 +2,15 @@
 #include "widgets/parents/AbstractSearchAndPickWidget.h"
 
 
+
+/*
+	This file contains specialization of ASAPW for stillage selection.
+
+	__ASSOCIATED_DB_FUNCTIONS__	:	P'parsedStillage' rec_list_stillages(text)
+
+
+*/
+
 namespace specwidgets
 {
 	class StillageSelectList : public AbstractListSelectionWidget

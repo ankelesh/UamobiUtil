@@ -775,7 +775,16 @@ void HttpUpdateEngine::onRequestFinished()
 	}
 }
 
-void HttpUpdateEngine::docDeleteAll(QObject* receiver = Q_NULLPTR, const char* slot = "")
+void HttpUpdateEngine::invGetFilters(QObject* receiver , const char* slot  )
+{
+	sendQuery(
+		"get_filter_item&session=" + m_sessionId,
+		receiver,
+		slot
+	);
+}
+
+void HttpUpdateEngine::docDeleteAll(QObject* receiver, const char* slot )
 {
 	sendQuery(
 		"doc_result_delete_all&session=" + m_sessionId,

@@ -1,5 +1,5 @@
 #include "NormalCapturer.h"
-#define DEBUG
+//#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -136,7 +136,7 @@ void NormalCapturer::pressReturn()
 		widgetToApply->barcodeBuffer.clear();
 		isAwaitingControlValue = true;
 		controlIndex = 0;
-
+		lastKeyReleaseTimepoint = QTime::currentTime();
 #ifdef DEBUG
 	//	detrace_METHINVOK("setControlFocus", "WidgetToApply", " press return", "capturer");
 #endif
@@ -278,7 +278,7 @@ void NormalCapturer::setPhase(int ph)
 		isScaning = false;
 		controlIndex = ph;
 	}
-
+	lastKeyReleaseTimepoint = QTime::currentTime();
 #ifdef DEBUG
 //	detrace_METHEXPL(stateOfEngine());
 #endif

@@ -287,6 +287,8 @@ public:
 		const QString optionals,
 		QObject* receiver = Q_NULLPTR,
 		const char* slot = "") override;
+	// Inherited via DataUpdateEngine
+	virtual void invGetFilters(QObject* receiver = Q_NULLPTR, const char* slot = "") override;
 
 private:
 	void sendQuery
@@ -320,6 +322,8 @@ signals:
 
 	// Inherited via DataUpdateEngine
 	
+
+
 
 
 	// Inherited via DataUpdateEngine

@@ -27,7 +27,7 @@ BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(GlobalAppSettin
 	main = this;
 
 	QSizePolicy qsp(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-	stillageButton->setIcon(QIcon(":/res/stillage.png"));
+    stillageButton->setIcon(QIcon(":/res/stillages.png"));
 	stillageButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 	stillageButton->setText(tr("stillages"));
 	stillageButton->setSizePolicy(qsp);
@@ -37,7 +37,7 @@ BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(GlobalAppSettin
 	suppliersButton->setText(tr("suppliers"));
 	suppliersButton->setSizePolicy(qsp);
 
-	groupButton->setIcon(QIcon(":/res/group.png"));
+    groupButton->setIcon(QIcon(":/res/groups.png"));
 	groupButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 	groupButton->setText(tr("groups"));
 	groupButton->setSizePolicy(qsp);

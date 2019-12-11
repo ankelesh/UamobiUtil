@@ -34,6 +34,7 @@ void StillageSelectionWidget::interpretResult()
 StillageSelectionWidget::StillageSelectionWidget(GlobalAppSettings& go, QWidget* parent)
 	: AbstractSearchAndPickWidget(go, parent, "stillages", &DataUpdateEngine::recListTemplated, false), stills()
 {
+	userHelp->setText(tr("stillage_selection"));
 	specwidgets::StillageSelectList* gsel = new specwidgets::StillageSelectList(stills, this);
 #ifdef QT_VERSION5X
 	QObject::connect(gsel, &specwidgets::StillageSelectList::stillageSelected, this, &StillageSelectionWidget::stillageSelected);

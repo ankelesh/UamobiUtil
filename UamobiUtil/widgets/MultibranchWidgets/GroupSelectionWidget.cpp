@@ -27,6 +27,7 @@ specwidgets::GroupSelectList::GroupSelectList(QVector<parsedGroup>& cgl, QWidget
 GroupSelectionWidget::GroupSelectionWidget(GlobalAppSettings& go, QWidget* parent)
 	: AbstractSearchAndPickWidget(go, parent, "groups", &DataUpdateEngine::recListTemplated, false), groups()
 {
+	userHelp->setText(tr("Group_selection"));
 	specwidgets::GroupSelectList* gsel = new specwidgets::GroupSelectList(groups, this);
 
 #ifdef QT_VERSION5X

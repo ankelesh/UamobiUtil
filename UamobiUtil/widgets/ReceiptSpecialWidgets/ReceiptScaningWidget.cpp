@@ -266,6 +266,7 @@ void ReceiptScaningWidget::item_scaned_response()
 	mainTextView->setText(resp.named.value("richdata"));
 	itemSuppliedValues = resp.named;
 	useControls(resp.linear);
+	capturer->setPhase(0);
 	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }

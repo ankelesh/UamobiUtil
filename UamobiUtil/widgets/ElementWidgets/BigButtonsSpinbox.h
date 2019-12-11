@@ -27,6 +27,8 @@
 	Update:
 		Now Keyfilter is filtering input to get back presses. Signal backRequired is emitted
 		on <- key.
+	Update:
+		now floatspin is supproted. It shares all interface with intspin except signals.
 */
 
 class BigButtonsSpinbox : public QWidget
@@ -74,7 +76,7 @@ public slots:
 signals:
 	void ivalueChanged(int);			//	emitted only when SpinBox is wrapped
 	void timeChanged(const QTime& t);	//	emitted only when TimeEdit is wrapped
-	void valueChanged(QString);
+	void valueChanged(QString &);
 	void dvalueChanged(double);
 	void returnPressed();				//	return was pressed
 	void backRequired();				//	back was pressed
