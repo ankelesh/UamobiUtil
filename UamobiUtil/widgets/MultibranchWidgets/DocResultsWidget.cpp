@@ -6,16 +6,49 @@
 #include "debugtrace.h"
 #endif
 
-DocResultsWidget::DocResultsWidget(GlobalAppSettings& go, QWidget* parent)
-	: inframedWidget(true, parent), globalSettings(go), mainLayout(new QVBoxLayout(this)),
+void DocResultsWidget::_handleRecord(RecEntity)
+{
+	loadItems();
+}
+
+void DocResultsWidget::setIndexation(XmlObjects& settings)
+{
+	if (settings.isEmpty())
+		userInfo->setText("No indexation in data");
+	else
+	{
+		indexationInfo->setText(
+			settings.first()->value("from")
+			+ " -- " +
+			settings.first()->value("to")
+		);
+		bool ok = settings.count() > 1;
+		if (ok)
+		{
+			deleteAllButton->show();
+			deleteSelectedButton->show();
+		}
+		else
+		{
+			deleteAllButton->hide();
+			deleteSelectedButton->hide();
+		}
+		nextButton->setDisabled(settings.first()->value("last") == true);
+		previousButton->setDisabled(pagenumber == 0);
+	}
+}
+
+DocResultsWidget::DocResultsWidget( QWidget* parent)
+	: IndependentBranchNode(independent_nodes::DocResults, true, parent), mainLayout(new QVBoxLayout(this)),
 	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
 	toolPanel(new QHBoxLayout(innerWidget)), deleteAllButton(new MegaIconButton(innerWidget)),
 	deleteSelectedButton(new MegaIconButton(innerWidget)),
 	userInfo(new QLabel(innerWidget)), listHeaderLayout(new QHBoxLayout(innerWidget)),
 	previousButton(new MegaIconButton(innerWidget)), indexationInfo(new QLabel(innerWidget)),
-	nextButton(new MegaIconButton(innerWidget)), itemInfoStorage(new QListWidget(innerWidget)),
+	nextButton(new MegaIconButton(innerWidget)), itemInfoStorage(new QListView(innerWidget)),
 	footerLayout(new QHBoxLayout(innerWidget)), backButton(new MegaIconButton(innerWidget)),
-	saveButton(new MegaIconButton(innerWidget)), items(), pagenumber(0), awaiter(go.timeoutInt + 20000, this)
+	saveButton(new MegaIconButton(innerWidget)), items(new DataEntityListModel(this)), pagenumber(0), 
+	awaiter(new RequestAwaiter(AppSettings->timeoutInt + 20000, this))
 {
 	untouchable = innerWidget;
 	main = this;
@@ -88,6 +121,8 @@ DocResultsWidget::DocResultsWidget(GlobalAppSettings& go, QWidget* parent)
 	userInfo->setAlignment(Qt::AlignCenter);
 
 	itemInfoStorage->setFont(scf);
+
+	itemInfoStorage->setModel(items);
 #ifdef QT_VERSION5X
 	QObject::connect(deleteAllButton, &MegaIconButton::clicked, this, &DocResultsWidget::deleteAll);
 	QObject::connect(deleteSelectedButton, &MegaIconButton::clicked, this, &DocResultsWidget::deleteCurrent);
@@ -95,7 +130,7 @@ DocResultsWidget::DocResultsWidget(GlobalAppSettings& go, QWidget* parent)
 	QObject::connect(saveButton, &MegaIconButton::clicked, this, &DocResultsWidget::saveDocument);
 	QObject::connect(nextButton, &MegaIconButton::clicked, this, &DocResultsWidget::nextPage);
 	QObject::connect(previousButton, &MegaIconButton::clicked, this, &DocResultsWidget::previousPage);
-	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &DocResultsWidget::was_timeout);
+	QObject::connect(awaiter, &RequestAwaiter::requestTimeout, this, &DocResultsWidget::was_timeout);
 #else
     QObject::connect(deleteAllButton, SIGNAL(clicked()), this, SLOT(deleteAll()));
     QObject::connect(deleteSelectedButton, SIGNAL(clicked()), this, SLOT(deleteCurrent()));
@@ -109,66 +144,50 @@ DocResultsWidget::DocResultsWidget(GlobalAppSettings& go, QWidget* parent)
 
 void DocResultsWidget::loadItems()
 {
-	if (awaiter.isAwaiting())
+	if (awaiter->isAwaiting())
 		return;
 #ifdef QT_VERSION5X
-	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &DocResultsWidget::items_response);
+	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &DocResultsWidget::items_response);
 #else
-	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(items_response()));
+	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(items_response()));
 #endif
-	globalSettings.networkingEngine->docGetResults(pagenumber, &awaiter, RECEIVER_SLOT_NAME);
+	FullItemEntity::sendGetRequest(pagenumber, awaiter);
 	deleteAllButton->hide();
 	deleteSelectedButton->hide();
-	awaiter.run();
 	showProcessingOverlay();
 }
 
 void DocResultsWidget::refresh()
 {
-	itemInfoStorage->clear();
-	indexationInfo->setText(items.from + " -- " + items.to);
-	QVector<parsedItem>::iterator start = items.values.begin();
-	while (start != items.values.end())
+	ResponseParser parser(new LinearListParser(awaiter->restext, awaiter->errtext));
+	PolyResponse response = RequestParser::parseResponse(parser, RecEntity(new FullItemEntity()));
+	if (response.isError)
 	{
-
-#ifdef DEBUG
-		detrace_METHEXPL("inserting item: " << start->description());
-#endif
-
-		itemInfoStorage->addItem(start++->title);
-	}
-	nextButton->setDisabled(items.last);
-	previousButton->setDisabled(pagenumber == 0);
-	saveButton->setDisabled(items.values.isEmpty());
-	bool ok = items.optionals == "true";
-	if (ok)
-	{
-		deleteAllButton->show();
-		deleteSelectedButton->show();
+		userInfo->setText(response.errtext);
 	}
 	else
 	{
-		deleteAllButton->hide();
-		deleteSelectedButton->hide();
+		setIndexation(response.additionalObjects);
+		saveButton->setDisabled(response.objects.isEmpty());
+		items->setData(response.objects);
 	}
 }
 
 void DocResultsWidget::show()
 {
 	pagenumber = 0;
-	loadItems();
 	inframedWidget::show();
 }
 
 void DocResultsWidget::clear()
 {
-	itemInfoStorage->clear();
+	itemInfoStorage->reset();
 	indexationInfo->setText(" -- ");
 }
 
 void DocResultsWidget::previousPage()
 {
-	if (awaiter.isAwaiting())
+	if (awaiter->isAwaiting())
 		return;
 	if (pagenumber == 0)
 		return;
@@ -178,9 +197,7 @@ void DocResultsWidget::previousPage()
 
 void DocResultsWidget::nextPage()
 {
-	if (awaiter.isAwaiting())
-		return;
-	if (items.last)
+	if (awaiter->isAwaiting())
 		return;
 	++pagenumber;
 	loadItems();
@@ -188,73 +205,78 @@ void DocResultsWidget::nextPage()
 
 void DocResultsWidget::saveDocument()
 {
-	if (awaiter.isAwaiting())
+	if (awaiter->isAwaiting())
 		return;
 #ifdef QT_VERSION5X
-	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &DocResultsWidget::save_response);
+	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &DocResultsWidget::save_response);
 #else
-	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(save_response()));
+	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(save_response()));
 #endif
-	globalSettings.networkingEngine->docUnlock(true, &awaiter, RECEIVER_SLOT_NAME);
-	awaiter.run();
+	AppNetwork->execQueryByTemplate(QueryTemplates::unlockDocument, "true", awaiter);
 	showProcessingOverlay();
 }
 
 void DocResultsWidget::items_response()
 {
-	items = RequestParser::interpretAsListedDocument(awaiter.restext, awaiter.errtext);
-	
 	refresh();
-	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
 void DocResultsWidget::save_response()
 {
-	if (awaiter.restext.contains("_"))
+	if (awaiter->restext.contains("_"))
 		emit documentSaved();
-	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
 void DocResultsWidget::was_timeout()
 {
-	userInfo->setText(tr("doc_results_timeout") + QString::number(globalSettings.timeoutInt));
-	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+	userInfo->setText(tr("doc_results_timeout") + QString::number(AppSettings->timeoutInt));
+	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
 void DocResultsWidget::deleteAll()
 {
-	if (awaiter.isAwaiting())
+	if (awaiter->isAwaiting())
 		return;
 #ifdef QT_VERSION5X
-	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &DocResultsWidget::items_response);
+	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &DocResultsWidget::items_response);
 #else
-	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(items_response()));
+	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(items_response()));
 #endif
-	globalSettings.networkingEngine->docDeleteAll(&awaiter, RECEIVER_SLOT_NAME);
+	AppNetwork->execQueryByTemplate(QueryTemplates::documentDeleteAll, awaiter);
 	deleteAllButton->hide();
 	deleteSelectedButton->hide();
-	awaiter.run();
 	showProcessingOverlay();
 }
 
 void DocResultsWidget::deleteCurrent()
 {
-	if (awaiter.isAwaiting())
+	if (awaiter->isAwaiting())
 		return;
-	if (itemInfoStorage->currentItem() == Q_NULLPTR)
+	if (!itemInfoStorage->currentIndex().isValid())
 		return;
 #ifdef QT_VERSION5X
-	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &DocResultsWidget::items_response);
+	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &DocResultsWidget::items_response);
 #else
-	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(items_response()));
+	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(items_response()));
 #endif
-	globalSettings.networkingEngine->docDeleteByBarcode(items.values.at(itemInfoStorage->currentRow()).code, 
-		"&qty=" + QString::number(items.values.at(itemInfoStorage->currentRow()).qty), &awaiter, RECEIVER_SLOT_NAME);
+	FullItem item = upcastRecord<FullItemEntity>(
+		itemInfoStorage->currentIndex().data(
+			DataEntityListModel::DirectAccess
+		).value<RecEntity>());
+	if (item.isNull())
+		return;
+	item->sendDeleteThisRequest(awaiter);
 	deleteAllButton->hide();
 	deleteSelectedButton->hide();
-	awaiter.run();
 	showProcessingOverlay();
+}
+
+void DocResultsWidget::_sendDataRequest()
+{
+	loadItems();
 }

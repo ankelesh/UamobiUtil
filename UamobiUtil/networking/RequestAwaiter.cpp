@@ -1,4 +1,5 @@
 #include "RequestAwaiter.h"
+#include <QTextDecoder>
 #define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
@@ -6,7 +7,8 @@
 const char* RECEIVER_SLOT_NAME = "requestIncoming";
 
 RequestAwaiter::RequestAwaiter(int interval, QObject* parent)
-	: QObject(parent), timer(new QTimer(this)), awaiting(false), timeoutinterval(interval)
+	: QObject(parent), timer(new QTimer(this)), awaiting(false), timeoutinterval(interval),
+	awaitedReply(Q_NULLPTR), QueryOverrides()
 {
 #ifdef DEBUG
 	//detrace_METHEXPL("interval was:" << interval );
@@ -30,11 +32,6 @@ void RequestAwaiter::run()
 {
 	timer->setInterval(timeoutinterval);
 	timer->start();
-
-#ifdef DEBUG
-	//detrace_METHEXPL("now with interval " << timer->interval() << " remaining is " << timer->remainingTime());
-#endif
-
 	awaiting = true;
 	wastimeout = false;
 	restext = QString();
@@ -56,6 +53,41 @@ int RequestAwaiter::getInterval()
 	return timeoutinterval;
 }
 
+void RequestAwaiter::pushQueryOverride(const QString newUrl, QueryTemplates::QueryId id)
+{
+	QueryOverrides.insert(id, newUrl);
+}
+
+const QString& RequestAwaiter::overrideQuery(const QString& normal, QueryTemplates::QueryId usedId)
+{
+	if (QueryOverrides.isEmpty())
+		return normal;
+	if (QueryOverrides.contains(usedId))
+	{
+		return QueryOverrides.value(usedId);
+	}
+	else
+	{
+		return normal;
+	}
+}
+
+void RequestAwaiter::setReplyToAwait(QNetworkReply* toAwait)
+{
+	if (awaitedReply != Q_NULLPTR)
+		return;
+	awaitedReply = toAwait;
+#ifdef QT_VERSION5X
+	QObject::connect(toAwait, &QNetworkReply::finished, this, &RequestAwaiter::requestIncoming);
+	QObject::connect(toAwait, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error), this, &RequestAwaiter::replyError);
+#else
+	QObject::connect(toAwait, SIGNAL(finished()), this, SLOT(requestIncoming()));
+	QObject::connect(toAwait, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(replyError(QNetworkReply::NetworkError)));
+#endif
+	run();
+}
+
+
 void RequestAwaiter::stopAwaiting()
 {
 	awaiting = false;
@@ -74,20 +106,39 @@ void RequestAwaiter::timeout()
 	emit requestTimeout();
 }
 
-void RequestAwaiter::requestIncoming(QString a, QString b)
-{/*
-	if (a.isEmpty() && b.isEmpty())
-		return;*/
-#ifdef DEBUG
-		//detrace_METHCALL("RequestAwaiter::requestIncoming");
-		//detrace_METHEXPL(timer->remainingTime() << " msecs remaining");
-	detrace_METHTEXTS("RequestAwaiter::requestincoming", "a, b", a << "|" << b);
-#endif
-	restext = a; errtext = b;
-
+void RequestAwaiter::requestIncoming()
+{
+	QTextDecoder td(QTextCodec::codecForName("CP1251"));
+	if (!awaitedReply->error())
+		restext = td.toUnicode(awaitedReply->readAll());
+	if (awaitedReply->error() == QNetworkReply::NoError) {
+		if (awaitedReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() != 200)
+			errtext =
+			awaitedReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString()
+			+ " "
+			+ awaitedReply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
+	}
+	else
+	{
+		errtext = awaitedReply->errorString();
+	}
 	awaiting = false;
 	timer->stop();
 	wastimeout = false;
-	emit requestSuccess(a, b);
+	if (awaitedReply != nullptr) {
+		awaitedReply->deleteLater();
+		awaitedReply = nullptr;
+	}
+#ifdef DEBUG
+	detrace_METHEXPL("received packet: " << restext << " | " << errtext);
+#endif
+	emit requestSuccess(restext, errtext);
 	emit requestReceived();
+}
+
+void RequestAwaiter::replyError(QNetworkReply::NetworkError error)
+{
+#ifdef DEBUG
+	detrace_METHEXPL("Reply error! " << (int) error);
+#endif
 }

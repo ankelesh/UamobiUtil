@@ -11,16 +11,18 @@ void InventoryRootWidget::openCorrespondingSubbranch()
 {
 	if (modeItself.submode.contains("partial", Qt::CaseInsensitive))
     {
-		bfilterWidget = new BarcodeFilterSelectionSubbranch(globalSettings, this);
+		bfilterWidget = new BarcodeFilterSelectionSubbranch(this);
 		mainLayout->addWidget(bfilterWidget);
 #ifdef QT_VERSION5X
 		QObject::connect(innerWidget, &InventoryParamsWidget::documentConfirmed, this, &InventoryRootWidget::prescaningRequest);
         QObject::connect(bfilterWidget, &BarcodeFilterSelectionSubbranch::selectionHappened, this, &InventoryRootWidget::continueToScaning);
-		QObject::connect(bfilterWidget, &BarcodeFilterSelectionSubbranch::backRequired, this, &InventoryRootWidget::backTo);
+		QObject::connect(bfilterWidget, &BarcodeFilterSelectionSubbranch::backRequired, this, &InventoryRootWidget::hideCurrent);
+		QObject::connect(bfilterWidget, &BarcodeFilterSelectionSubbranch::showMe, this, &InventoryRootWidget::backToStep);
 #else
-        QObject::connect(bfilterWidget, SIGNAL(backRequired()), this, SLOT(backTo()));
+        QObject::connect(bfilterWidget, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
         QObject::connect(bfilterWidget, SIGNAL(selectionHappened()), this, SLOT(continueToScaning()));
 		QObject::connect(innerWidget, SIGNAL(documentConfirmed()), this, SLOT(prescaningRequest()));
+		QObject::connect(bfilterWidget, SIGNAL(showMe(int)), this, SLOT(backToStep(int)));
 #endif
 		bfilterWidget->hide();
 	}
@@ -38,10 +40,10 @@ void InventoryRootWidget::openCorrespondingSubbranch()
 	docSelectionWidget->loadDocuments();
 }
 
-InventoryRootWidget::InventoryRootWidget(GlobalAppSettings& go, QHash<QString, QString> settings, parsedMode mode, QWidget* parent)
-	: inframedWidget(parent), abstractNode(), globalSettings(go), mainLayout(new QVBoxLayout(this)),
+InventoryRootWidget::InventoryRootWidget(QHash<QString, QString> settings, parsedMode mode, QWidget* parent)
+	: inframedWidget(parent), abstractNode(),  mainLayout(new QVBoxLayout(this)),
 	innerWidget(new InventoryParamsWidget(this)),
-	docSelectionWidget(new ParentDocumentWidget(globalSettings, this)), scaningWidget(new InventoryScaningWidget(go, this)),
+	docSelectionWidget(new ParentDocumentWidget(this)), scaningWidget(new InventoryScaningWidget(this)),
 	bfilterWidget(),
 	options(settings), modeItself(mode)
 {
@@ -68,7 +70,6 @@ InventoryRootWidget::InventoryRootWidget(GlobalAppSettings& go, QHash<QString, Q
 	QObject::connect(docSelectionWidget, &ParentDocumentWidget::backRequired, this, &InventoryRootWidget::backRequired);
 	QObject::connect(scaningWidget, &InventoryScaningWidget::backRequired, this, &InventoryRootWidget::hideCurrent);
 	QObject::connect(scaningWidget, &InventoryScaningWidget::saveSuccess, this, &InventoryRootWidget::hideCurrent);
-	QObject::connect(scaningWidget, &InventoryScaningWidget::filterRequired, this, &InventoryRootWidget::filterReceived);
 #else
 	QObject::connect(innerWidget, SIGNAL(backRequired()), this, SLOT(backTo()));
 	QObject::connect(innerWidget, SIGNAL(documentMustBeSelected(int)), this, SLOT(backToStep(int)));
@@ -76,7 +77,6 @@ InventoryRootWidget::InventoryRootWidget(GlobalAppSettings& go, QHash<QString, Q
 	QObject::connect(docSelectionWidget, SIGNAL(backRequired()), this, SIGNAL(backRequired()));
 	QObject::connect(scaningWidget, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
 	QObject::connect(scaningWidget, SIGNAL(saveSuccess()), this, SLOT(hideCurrent()));
-	QObject::connect(scaningWidget, SIGNAL(filterRequired(QString)), this, SLOT(filterReceived(QString)));
 #endif
 }
 
@@ -113,6 +113,8 @@ void InventoryRootWidget::backToStep(int step)
 	case steps::Scaning:
 		_hideAny(scaningWidget);
 		break;
+	case steps::filterSelection:
+		_hideAny(bfilterWidget);
 	default:
 		return;
 	}
@@ -120,32 +122,13 @@ void InventoryRootWidget::backToStep(int step)
 
 void InventoryRootWidget::continueToScaning()
 {
-	if (bfilterWidget == Q_NULLPTR)
-	{
-		scaningWidget->setDocument(innerWidget->getDoc(), false);
-		scaningWidget->setModeName(modeItself.name);
-	}
+	scaningWidget->setDocument(innerWidget->getDoc(), false);
+	scaningWidget->setModeName(modeItself.name);
 	_hideAny(scaningWidget);
 }
 
 void InventoryRootWidget::prescaningRequest()
 {
-	scaningWidget->setDocument(innerWidget->getDoc(), true);
-	scaningWidget->setModeName(modeItself.name);
+	bfilterWidget->assertAndShow(innerWidget->getDoc().docId);
 }
 
-void InventoryRootWidget::filterReceived(QString resp)
-{
-	if (resp.contains(QLatin1String("all")))
-	{
-		if (bfilterWidget != Q_NULLPTR)
-		{
-			_hideAny(bfilterWidget);
-			return;
-		}
-	}
-	else if (resp.contains(QLatin1String("none")))
-	{
-		continueToScaning();
-	}
-}

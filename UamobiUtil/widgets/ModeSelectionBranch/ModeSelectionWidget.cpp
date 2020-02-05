@@ -13,32 +13,16 @@
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 
-QString specwidgets::_modeSelectionWidget::elemAsString(int index)
-{
-	return modes.at(index).name;
-}
 
-int specwidgets::_modeSelectionWidget::countElems()
-{
-	return modes.count();
-}
 
-specwidgets::_modeSelectionWidget::_modeSelectionWidget(modesResponse& Modes, QWidget* parent)
-	: AbstractVariantSelectionWidget(parent), modes(Modes)
-{
-}
 
-void specwidgets::_modeSelectionWidget::indexSelected(int Index)
-{
-	emit modeSelected(modes.at(Index));
-}
-
-ModeSelectionWidget::ModeSelectionWidget(const GlobalAppSettings& go, QWidget* parent)
-	: inframedWidget(true, parent), globalSettings(go), allmodes(), mainLayout(new QVBoxLayout(this)),
+ModeSelectionWidget::ModeSelectionWidget( QWidget* parent)
+	: inframedWidget(true, parent), innerModel(new DataEntityListModel(this)), mainLayout(new QVBoxLayout(this)),
 	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
-	buttonLayout(new QHBoxLayout(innerWidget)), scrArea(new QScrollArea(innerWidget)), userTip(new QLabel(innerWidget)),
-	modesTip(new QLabel(innerWidget)), modeSelection(new specwidgets::_modeSelectionWidget(allmodes, scrArea)),
-	logoutButton(new MegaIconButton(innerWidget)), awaiter(globalSettings.timeoutInt, this)
+	buttonLayout(new QHBoxLayout(innerWidget)), userTip(new QLabel(innerWidget)),
+	modesTip(new QLabel(innerWidget)), modeSelection(new QListView(innerWidget)),
+	logoutButton(new MegaIconButton(innerWidget)),settings(), 
+	selected(new ModeEntity()), awaiter(AppSettings->timeoutInt, this)
 {
 	this->setLayout(mainLayout);
 	mainLayout->setSpacing(0);
@@ -49,8 +33,7 @@ ModeSelectionWidget::ModeSelectionWidget(const GlobalAppSettings& go, QWidget* p
 	innerWidget->setLayout(innerLayout);
 	innerLayout->addWidget(userTip);
 	innerLayout->addWidget(modesTip);
-	scrArea->setWidgetResizable(true);
-	innerLayout->addWidget(scrArea);
+	innerLayout->addWidget(modeSelection);
 	innerLayout->addLayout(buttonLayout);
 	buttonLayout->addWidget(logoutButton);
 	//buttonLayout->addStretch();
@@ -59,7 +42,6 @@ ModeSelectionWidget::ModeSelectionWidget(const GlobalAppSettings& go, QWidget* p
 	userTip->setText(tr("mode_selection_user_tip!"));
 	userTip->setAlignment(Qt::AlignCenter);
 	userTip->setFont(scf);
-scrArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	modesTip->setText(tr("mode_selection_modes_tip:"));
 	modesTip->setAlignment(Qt::AlignCenter);
 	modesTip->setFont(scf);
@@ -68,24 +50,16 @@ scrArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	logoutButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 	logoutButton->setText(tr("mode_selection_logout_tip"));
 
-	loadModes();
-	modeSelection->reload();
-	innerWidget->installEventFilter(keyfilter);
-	scrArea->setWidget(modeSelection);
-#ifdef QT_VERSION5X
-    QScroller::grabGesture(modeSelection, QScroller::LeftMouseButtonGesture);
-#else
-    QScroller::grabGesture(scrArea, QScroller::LeftMouseButtonGesture);
-#endif
+	modeSelection->setModel(innerModel);
 #ifdef QT_VERSION5X
 	QObject::connect(logoutButton, &QPushButton::clicked, this, &ModeSelectionWidget::logoutPressed);
-	QObject::connect(modeSelection, &specwidgets::_modeSelectionWidget::modeSelected, this, &ModeSelectionWidget::modeSelected);
-	QObject::connect(modeSelection, &specwidgets::_modeSelectionWidget::backRequired, this, &ModeSelectionWidget::backRequired);
+	QObject::connect(modeSelection, &QListView::clicked, innerModel, &DataEntityListModel::mapClickToEntity);
+	QObject::connect(innerModel, &DataEntityListModel::dataEntityClicked, this, &ModeSelectionWidget::modeSelected);
 	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &ModeSelectionWidget::was_timeout);
 #else
 	QObject::connect(logoutButton, SIGNAL(clicked()), this, SLOT(logoutPressed()));
-	QObject::connect(modeSelection, SIGNAL(modeSelected(parsedMode)), this, SLOT(modeSelected(parsedMode)));
-	QObject::connect(modeSelection, SIGNAL(backRequired()), this, SIGNAL(backRequired()));
+	QObject::connect(modeSelection, SIGNAL(clicked(const QModelIndex&)), innerModel, SLOT(mapClickToEntity(const QModelIndex&)));
+	QObject::connect(innerModel, SIGNAL(dataEntityClicked(RecEntity)), this, SLOT(modeSelected(RecEntity)));
 	QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
 }
@@ -99,17 +73,18 @@ bool ModeSelectionWidget::isExpectingControl(int val)
 {
 	if (awaiter.isAwaiting())
 		return false;
-	if (val >= -1 && val <= allmodes.count() - 1)
+	if (val >= -1 && val <= innerModel->rowCount() - 1)
 	{
 		if (val == -1)
 		{
-			if (allmodes.count() > 10)
-				val = 9;
-			else
-				return false;
+			val = 9;
 		}
-
-		modeSelected(allmodes.at(val));
+		QModelIndex index = innerModel->index(val);
+		if (index.isValid())
+		{
+			innerModel->mapClickToEntity(index);
+			return true;
+		}
 		return true;
 	}
 	return false;
@@ -118,7 +93,6 @@ bool ModeSelectionWidget::isExpectingControl(int val)
 void ModeSelectionWidget::show()
 {
 	this->setFocus();
-	loadModes();
 	inframedWidget::show();
 }
 
@@ -132,17 +106,16 @@ void ModeSelectionWidget::loadModes()
 #else
 	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_modes()));
 #endif
-    globalSettings.networkingEngine->modeList(&awaiter, RECEIVER_SLOT_NAME, globalSettings.language.toCaseFolded());
-	awaiter.run();
+	selected->sendAssociatedGetRequest(QStringList(), &awaiter);
 }
 
 void ModeSelectionWidget::logoutPressed()
 {
-	globalSettings.networkingEngine->userLogOut(Q_NULLPTR, "");
+	AppNetwork->execQueryByTemplate(QueryTemplates::LogOut, Q_NULLPTR);
 	emit backRequired();
 }
 
-void ModeSelectionWidget::modeSelected(parsedMode Mode)
+void ModeSelectionWidget::modeSelected(RecEntity Mode)
 {
 	if (awaiter.isAwaiting())
 		return;
@@ -152,9 +125,8 @@ void ModeSelectionWidget::modeSelected(parsedMode Mode)
 #else
 	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(mode_select_response()));
 #endif
-	globalSettings.networkingEngine->modeSelect(Mode.mode, Mode.submode, &awaiter, RECEIVER_SLOT_NAME);
-	awaiter.run();
-	selected = Mode;
+	selected = upcastRecord(RecEntity(Mode->clone()), selected);
+	selected->sendAssociatedPostRequest(QStringList(), &awaiter);
 }
 
 void ModeSelectionWidget::hideCurrent()
@@ -166,45 +138,42 @@ void ModeSelectionWidget::hideCurrent()
 
 void ModeSelectionWidget::parse_modes()
 {
-	using RequestParser::interpretAsModeList;
-	allmodes = interpretAsModeList(awaiter.restext, awaiter.errtext);
-	legacy::filterNonCompatibleModes(allmodes);
-	modeSelection->reload();
+	ResponseParser parser(new LinearListParser(awaiter.restext, awaiter.errtext));
+	PolyResponse result = RequestParser::parseResponse(parser, RecEntity(selected->clone()));
+	if (result.isError)
+	{
+		userTip->setText(result.errtext);
+	}
+	else
+	{
+		innerModel->setData(result.objects);
+	}
 	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
 void ModeSelectionWidget::mode_select_response()
 {
-	parse_uniresults_functions::PositionalResponse resp =
-		RequestParser::interpretAsPositionalResponse(awaiter.restext, awaiter.errtext);
-#ifdef DEBUG
-	detrace_METHEXPL("request was " << resp.success);
-#endif
-	if (resp.success)
+	SimpliestResponceParser parser(awaiter.restext, awaiter.errtext);
+	if (!parser.isSuccessfull())
 	{
-		settings = resp.values;
-#ifdef DEBUG
-		detrace_METHEXPL("mode approved: " << selected.debugSnapshot());
-#endif
-	}
-	else
-	{
-		selected.mode = "None";
+		userTip->setText(parser.getErrors());
+		selected->drop();
 	}
 	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
+	emit modeAcquired(QHash<QString, QString>(), Mode(new ModeEntity(*selected)));
 }
 
 void ModeSelectionWidget::was_timeout()
 {
-	userTip->setText(tr("mode_selection_timeout!") + QString::number(globalSettings.timeoutInt));
+	userTip->setText(tr("mode_selection_timeout!") + QString::number(AppSettings->timeoutInt));
 	QObject::disconnect(&awaiter, SIGNAL(requestReceived), 0, 0);
 	hideProcessingOverlay();
 }
 
-ModeBranchRootWidget::ModeBranchRootWidget(const GlobalAppSettings& go, QWidget* parent)
-	: ModeSelectionWidget(go, parent), abstractNode(), placeSelection(new PlaceSelectionWidget(go, this))
+ModeBranchRootWidget::ModeBranchRootWidget( QWidget* parent)
+	: ModeSelectionWidget(parent), abstractNode(), placeSelection(new PlaceSelectionWidget( this))
 {
 	mainLayout->addWidget(placeSelection);
 	placeSelection->hide();
@@ -212,15 +181,13 @@ ModeBranchRootWidget::ModeBranchRootWidget(const GlobalAppSettings& go, QWidget*
 	untouchable = innerWidget;
 	main = this;
 #ifdef QT_VERSION5X
-	QObject::connect(placeSelection, &PlaceSelectionWidget::placeAcquired, this, &ModeBranchRootWidget::placeAcquired);
 	QObject::connect(placeSelection, &PlaceSelectionWidget::backRequired, this, &ModeBranchRootWidget::hideCurrent);
 #else
-	QObject::connect(placeSelection, SIGNAL(placeAcquired(parsedPlace)), this, SLOT(placeAcquired(parsedPlace)));
 	QObject::connect(placeSelection, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
 #endif
 }
 
-void ModeBranchRootWidget::placeAcquired(parsedPlace pm)
+void ModeBranchRootWidget::placeAcquired(Place pm)
 {
 #ifdef DEBUG
 	detrace_METHEXPL("emitting mode " << selected.debugSnapshot());
@@ -247,7 +214,7 @@ void ModeBranchRootWidget::hideCurrent()
 void ModeBranchRootWidget::mode_select_response()
 {
 	ModeSelectionWidget::mode_select_response();
-	if (selected.mode == "None")
+	if (selected->isEmpty())
 	{
 		return;
 	}

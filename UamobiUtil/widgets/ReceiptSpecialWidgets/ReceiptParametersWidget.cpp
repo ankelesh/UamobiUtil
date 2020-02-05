@@ -5,8 +5,21 @@
 #else
 #include "legacy/qtCompatibility/scrollgrabber.h"
 #endif
-ReceiptParametersWidget::ReceiptParametersWidget(GlobalAppSettings& go, QWidget* parent)
-	: inframedWidget(parent), globalSettings(go),
+void ReceiptParametersWidget::_handleRecord(RecEntity e)
+{
+	if (e.isNull())
+		return;
+	if (e->myType() == UniformXmlObject::Order)
+	{
+		setMainView(upcastRecord<OrderEntity>(e)->text);
+	}
+}
+void ReceiptParametersWidget::_sendDataRequest()
+{
+
+}
+ReceiptParametersWidget::ReceiptParametersWidget(QWidget* parent)
+	: IndependentBranchNode(independent_nodes::ReceiptParameters, parent),
 	mainLayout(new QVBoxLayout(this)), innerWidget(new inframedWidget(this)),
 	innerLayout(new QVBoxLayout(innerWidget)), userInfo(new QLabel(innerWidget)),
 	innerFrame(new QFrame(innerWidget)), frameLayout(new QVBoxLayout(innerFrame)),

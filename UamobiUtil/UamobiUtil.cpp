@@ -1,19 +1,18 @@
 #include "UamobiUtil.h"
-#include "widgets/InventoryBranch/InventoryRootWidget.h"
 #include <QtGui/qevent.h>
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
+#include "widgets/BranchingTools/EmbeddedBranches.h"
 
-UamobiUtil::UamobiUtil(GlobalAppSettings& go, QWidget* parent)
-	: QWidget(parent), globalSettings(go), mainLayout(new QVBoxLayout(this)),
-	mainPage(),
-	modeSelectionBranch(),
-	current(&mainPage), overlay(new ProcessingOverlay(go.timeoutInt, this))
+UamobiUtil::UamobiUtil( QWidget* parent)
+	: QWidget(parent), abstractDynamicNode(
+		new MainPageWidget(this),
+		new QVBoxLayout(this)),
+	overlay(new ProcessingOverlay(AppSettings->timeoutInt, this))
 {
 	bindProcessingOverlay(overlay);
 	overlay->hide();
-	mainPage = QPointer<inframedWidget>(new MainPageWidget(globalSettings, this));
 	this->setLayout(mainLayout);
 #ifdef Q_OS_WINCE
 	this->setBaseSize(calculateAdaptiveSize(0.8));
@@ -21,17 +20,13 @@ UamobiUtil::UamobiUtil(GlobalAppSettings& go, QWidget* parent)
 	this->setMaximumHeight(0.9);
 	this->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum));
 #endif
-	//mainLayout->setSizeConstraint(QBoxLayout::SizeConstraint::SetMaximumSize);
-	mainLayout->setContentsMargins(0, 0, 0, 0);
-	mainLayout->setSpacing(0);
-	mainLayout->addWidget(mainPage);
-	mainPage->setFocus();
 #ifdef QT_VERSION5X
-	auto mlp = qobject_cast<MainPageWidget*>(mainPage);
 
-	QTimer::singleShot(500, mlp, SLOT(loadUsers()));
-	QObject::connect(mlp, &MainPageWidget::loggedIn, this, &UamobiUtil::gotoModeSelection);
+	QTimer::singleShot(500, _upCO<MainPageWidget>(), SLOT(loadUsers()));
+	QObject::connect(_upCO<MainPageWidget>(), &MainPageWidget::loggedIn, 
+		this, &UamobiUtil::gotoModeSelection);
 #else
+	//TODO
 	MainPageWidget* mlp = qobject_cast<MainPageWidget*> (mainPage);
 	QTimer::singleShot(500, mlp, SLOT(loadUsers()));
 	QObject::connect(mlp, SIGNAL(loggedIn()), this, SLOT(gotoModeSelection()));
@@ -40,13 +35,8 @@ UamobiUtil::UamobiUtil(GlobalAppSettings& go, QWidget* parent)
 
 void UamobiUtil::gotoModeSelection()
 {
-	(*current)->hide();
-	if (*current != mainPage)
-	{
-		mainLayout->removeWidget(*current);
-		delete (*current);
-	}
-	ModeSelectionWidget* mb = new ModeBranchRootWidget(globalSettings, this);
+	ModeSelectionWidget* mb = new ModeSelectionWidget(this);
+	mb->loadModes();
 #ifdef QT_VERSION5X
 	QObject::connect(mb, &ModeSelectionWidget::backRequired, this, &UamobiUtil::hideCurrent);
 	QObject::connect(mb, &ModeSelectionWidget::modeAcquired, this, &UamobiUtil::interpretMode);
@@ -54,53 +44,66 @@ void UamobiUtil::gotoModeSelection()
 	QObject::connect(mb, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
 	QObject::connect(mb, SIGNAL(modeAcquired(QHash<QString, QString>, parsedMode)), this, SLOT(interpretMode(QHash<QString, QString>, parsedMode)));
 #endif
-	modeSelectionBranch = mb;
-	current = &modeSelectionBranch;
-	mainLayout->addWidget(*current);
-	(*current)->show();
+	_hideAndDeleteCurrent(mb);
 }
 
-void UamobiUtil::gotoReceiptBranch(QHash<QString, QString> opts, parsedMode mode)
+void UamobiUtil::gotoReceiptBranch(QHash<QString, QString> opts, Mode mode)
 {
 #ifdef DEBUG
 	detrace_METHCALL("goto Receipt");
 #endif
-	(*current)->hide();
-	if (*current != mainPage)
+	AbsBranch* mainBranch;
+	if (mode->submode.isEmpty())
 	{
-		mainLayout->removeWidget(*current);
-		(*current)->deleteLater();
+		mainBranch = BranchFactory::createNWAdjustableBranch(
+			embeddedBranches::receiptDesc
+		);
 	}
-	ReceiptRootWidget* RR = new ReceiptRootWidget(globalSettings, opts, mode, this);
+	else if (mode->submode.contains("warehouse", Qt::CaseInsensitive))
+	{
+		mainBranch = BranchFactory::createNWAdjustableBranch(
+			embeddedBranches::warehouseReceiptDesc
+		);
+	}
+	else
+	{
+		mainBranch = BranchFactory::createNWAdjustableBranch(
+			embeddedBranches::correctionReceiptDesc
+		);
+	}
 #ifdef QT_VERSION5X
-	QObject::connect(RR, &ReceiptRootWidget::backRequired, this, &UamobiUtil::hideCurrent);
+	QObject::connect(mainBranch, &AbsBranch::backRequired, this, &UamobiUtil::hideCurrent);
+	QObject::connect(mainBranch, &AbsBranch::done, this, &UamobiUtil::closeBranch);
 #else
 	QObject::connect(RR, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
 #endif
-	receiptBranch = RR;
-	current = &receiptBranch;
-	mainLayout->addWidget(*current);
-	(*current)->show();
+	_hideAndDeleteCurrent(mainBranch);
+	mainBranch->raiseThisBranch(mode.staticCast<AbsRecEntity>());
 }
 
-void UamobiUtil::gotoInventoryBranch(QHash<QString, QString> opts, parsedMode mode)
+void UamobiUtil::gotoInventoryBranch(QHash<QString, QString> opts, Mode mode)
 {
-	(*current)->hide();
-	if (*current != mainPage)
+	AbsBranch* mainBranch;
+	if (mode->submode.isEmpty())
 	{
-		mainLayout->removeWidget(*current);
-		(*current)->deleteLater();
+		mainBranch = BranchFactory::createNWAdjustableBranch(
+			embeddedBranches::inventoryDesc
+		);
 	}
-	InventoryRootWidget* IR = new InventoryRootWidget(globalSettings, opts, mode, this);
+	else 
+	{
+		mainBranch = BranchFactory::createNWAdjustableBranch(
+			embeddedBranches::partInventoryDesc
+		);
+	}
 #ifdef QT_VERSION5X
-	QObject::connect(IR, &InventoryRootWidget::backRequired, this, &UamobiUtil::hideCurrent);
+	QObject::connect(mainBranch, &AbsBranch::backRequired, this, &UamobiUtil::hideCurrent);
+	QObject::connect(mainBranch, &AbsBranch::done, this, &UamobiUtil::closeBranch);
 #else
-	QObject::connect(IR, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+	QObject::connect(RR, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
 #endif
-	inventoryBranch = IR;
-	current = &inventoryBranch;
-	mainLayout->addWidget(*current);
-	(*current)->show();
+	_hideAndDeleteCurrent(mainBranch);
+	mainBranch->raiseThisBranch(mode.staticCast<AbsRecEntity>());
 }
 
 void UamobiUtil::resizeEvent(QResizeEvent* rev)
@@ -109,56 +112,31 @@ void UamobiUtil::resizeEvent(QResizeEvent* rev)
 	QWidget::resizeEvent(rev);
 }
 
-void UamobiUtil::interpretMode(QHash<QString, QString> sets, parsedMode mode)
+void UamobiUtil::interpretMode(QHash<QString, QString> sets, Mode mode)
 {
 #ifdef DEBUG
 	detrace_METHEXPL("mode: " << mode.mode << " while submode " << mode.submode << " and name " << mode.name);
 #endif
 
-	if (mode.mode == "receipt")
+	if (mode->mode == "receipt")
 	{
 		gotoReceiptBranch(sets, mode);
 	}
-	else if (mode.mode == "inventory")
+	else if (mode->mode == "inventory")
 	{
 		gotoInventoryBranch(sets, mode);
 	}
 }
 
-void UamobiUtil::gotoBranch(branches branch)
-{
-	switch (branch)
-	{
-	case login:
-		hideCurrent();
-		mainPage->show();
-		current = &mainPage;
-		break;
-	case modeselect:
-		gotoModeSelection();
-		break;
 
-	default:
-		break;
-	}
+
+void UamobiUtil::closeBranch(RecEntity e)
+{
+	_hideAndDeleteCurrent(untouchable);
+	_upCO<MainPageWidget>()->loadUsers();
 }
 
 void UamobiUtil::hideCurrent()
 {
-	if (current != &mainPage)
-	{
-		if (current == &modeSelectionBranch)
-		{
-			(*current)->hide();
-			mainLayout->removeWidget(*current);
-			(*current)->deleteLater();
-			current = &mainPage;
-			(*current)->show();
-			(*current)->setFocus();
-		}
-		else
-		{
-			gotoModeSelection();
-		}
-	}
+	_hideAndDeleteCurrent(untouchable);
 }

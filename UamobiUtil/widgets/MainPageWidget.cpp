@@ -9,51 +9,22 @@
 #include "debugtrace.h"
 #endif
 
-namespace specwidgets
+void MainPageWidget::show_login_widget(User u)
 {
-	LoginSelectWidget::LoginSelectWidget(QVector<UserProfile>& Profiles, QWidget* parent)
-		:AbstractVariantSelectionWidget(parent), profiles(Profiles)
-	{
-		init();
-	}
-
-	QString LoginSelectWidget::elemAsString(int index)
-	{
-		return profiles.at(index).name;
-	}
-
-	int LoginSelectWidget::countElems()
-	{
-		return profiles.count();
-	}
-
-	void LoginSelectWidget::indexSelected(int Index)
-	{
-		emit profilePicked(profiles.at(Index));
-	}
-}
-
-void MainPageWidget::show_login_widget(QString& log)
-{
-	manualLogin->set_login(log);
+	manualLogin->set_user(u);
 	_hideAny(manualLogin);
 }
 
-void MainPageWidget::resizeEvent(QResizeEvent* rev)
-{
-	inframedWidget::resizeEvent(rev);
-}
-
-MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
-	: inframedWidget(true, parent), abstractNode(), globalSettings(go), mainLayout(new QVBoxLayout(this)),
+MainPageWidget::MainPageWidget(QWidget* parent)
+	: inframedWidget(true, parent), abstractNode(), innerModel(new DataEntityListModel(this)),
+	mainLayout(new QVBoxLayout(this)),
 	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
 	topPanelLayout(new QHBoxLayout(innerWidget)), bottomPanelLayout(new QHBoxLayout(innerWidget)),
 	versionLabel(new QLabel(innerWidget)), hostLabel(new QLabel(innerWidget)),
-	scrArea(new QScrollArea(innerWidget)),
-	userHelpLabel(new QLabel(innerWidget)), loginsStorageWidget(new specwidgets::LoginSelectWidget(profiles, scrArea)), userIdInfo(new QLabel(innerWidget)),
+	userHelpLabel(new QLabel(innerWidget)), loginsView(new QListView(this)), userIdInfo(new QLabel(innerWidget)),
 	exitButton(new MegaIconButton(innerWidget)), settingsButton(new MegaIconButton(innerWidget)), refreshButton(new MegaIconButton(innerWidget)),
-	userid(new QLineEdit(innerWidget)), manualLogin(new LoginWidget(go, this)),
-	settingsScreen(new MainSettingsWidget(go, this)), awaiter(go.timeoutInt, this)
+	userid(new QLineEdit(innerWidget)), manualLogin(new LoginWidget( this)),
+	settingsScreen(new MainSettingsWidget( this)), awaiter(AppSettings->timeoutInt, this)
 {
 	current = innerWidget;
 	untouchable = innerWidget;
@@ -75,8 +46,8 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	innerLayout->addLayout(topPanelLayout);
 	innerLayout->addWidget(userHelpLabel);
 
-	scrArea->setWidgetResizable(true);
-	innerLayout->addWidget(scrArea);
+	innerLayout->addWidget(loginsView);
+
 	innerLayout->addWidget(userIdInfo);
 	innerLayout->addWidget(userid);
 
@@ -92,9 +63,7 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	QFont scf = makeFont(0.04);
 	versionLabel->setText(QString::number(VERSION) + " " + SUFFIX);
 	versionLabel->setFont(scf);
-	hostLabel->setText(globalSettings.HttpUrl.section("/", 4, 4));
-    if (globalSettings.networkingEngine->myType() == 2)
-        hostLabel->setText("STATIC");
+	hostLabel->setText(AppSettings->HttpUrl.section("/", 4, 4));
 	hostLabel->setFont(scf);
 
 	userHelpLabel->setText(tr("main_page_select_profile_tip"));
@@ -116,7 +85,6 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	refreshButton->setText(tr("refresh"));
 	refreshButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 	refreshButton->setFont(scf);
-	QScroller::grabGesture(scrArea, QScroller::ScrollerGestureType::LeftMouseButtonGesture);
 	userid->setFont(scf);
 
 	innerWidget->installEventFilter(keyfilter);
@@ -129,10 +97,10 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	QObject::connect(settingsScreen, &MainSettingsWidget::backRequired, this, &MainPageWidget::hideCurrent);
 	QObject::connect(settingsScreen, &MainSettingsWidget::languageChanged, this, &MainPageWidget::languageChanged);
 	QObject::connect(settingsScreen, &MainSettingsWidget::saveConfirmed, this, &MainPageWidget::settingsSaved);
-	QObject::connect(loginsStorageWidget, &specwidgets::LoginSelectWidget::profilePicked, this, &MainPageWidget::userPicked);
+	QObject::connect(innerModel, &DataEntityListModel::dataEntityClicked, this, &MainPageWidget::userPicked);
 	QObject::connect(userid, &QLineEdit::returnPressed, this, &MainPageWidget::userIdSearch);
 	QObject::connect(this, &MainPageWidget::backRequired, qApp, &QApplication::quit);
-	QObject::connect(loginsStorageWidget, &specwidgets::LoginSelectWidget::backRequired, qApp, &QApplication::quit);
+	QObject::connect(loginsView, &QListView::clicked, innerModel, &DataEntityListModel::mapClickToEntity);
 	QObject::connect(refreshButton, &MegaIconButton::clicked, this, &MainPageWidget::loadUsers);
 	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &MainPageWidget::wasTimeout);
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &MainPageWidget::parseUsers);
@@ -144,15 +112,14 @@ MainPageWidget::MainPageWidget(GlobalAppSettings& go, QWidget* parent)
 	QObject::connect(settingsScreen, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
 	QObject::connect(settingsScreen, SIGNAL(languageChanged()), this, SLOT(languageChanged()));
 	QObject::connect(settingsScreen, SIGNAL(saveConfirmed()), this, SLOT(settingsSaved()));
-	QObject::connect(loginsStorageWidget, SIGNAL(profilePicked(UserProfile)), this, SLOT(userPicked(UserProfile)));
+	QObject::connect(innerModel, SIGNAL(dataEntityClicked(RecEntity)), this, SLOT(userPicked(RecEntity)));
 	QObject::connect(userid, SIGNAL(returnPressed()), this, SLOT(userIdSearch()));
 	QObject::connect(this, SIGNAL(backRequired()), qApp, SLOT(quit()));
-	QObject::connect(loginsStorageWidget, SIGNAL(backRequired()), qApp, SLOT(quit()));
+	QObject::connect(loginsView, SIGNAL(clicked(const QModelIndex&)), innerModel, SLOT(mapClickToEntity(const QModelIndex&)));
 	QObject::connect(refreshButton, SIGNAL(clicked()), this, SLOT(loadUsers()));
 	QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(wasTimeout()));
 	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parseUsers()));
 #endif
-	scrArea->setWidget(loginsStorageWidget);
 }
 
 bool MainPageWidget::isExpectingControl(int val)
@@ -169,9 +136,10 @@ bool MainPageWidget::isExpectingControl(int val)
 		}
 		else
 		{
-			if (val < profiles.count() - 1)
+			QModelIndex index = innerModel->index(val);
+			if (index.isValid())
 			{
-				userPicked(profiles.at(val));
+				innerModel->mapClickToEntity(index);
 				return true;
 			}
 		}
@@ -190,11 +158,12 @@ void MainPageWidget::userIdOk(const QString log, const  QString pass)
 	emit loggedIn();
 }
 
-void MainPageWidget::userPicked(UserProfile up)
+void MainPageWidget::userPicked(RecEntity up)
 {
 	if (awaiter.isAwaiting())
 		return;
-	show_login_widget(up.login);
+	User temp = upcastRecord<UserEntity>(up);
+	show_login_widget(temp);
 }
 
 void MainPageWidget::hideCurrent()
@@ -218,46 +187,46 @@ void MainPageWidget::userIdSearch()
 {
 	if (awaiter.isAwaiting())
 		return;
-	QVector<UserProfile>::iterator start = profiles.begin();
-	while (start != profiles.end())
-	{
-		if (start->name.contains(userid->text()))
-		{
-			userPicked(*start);
-			return;
-		}
-		++start;
-	}
+	innerModel->lookForEntity(User(new UserEntity(userid->text())));
 }
 
 void MainPageWidget::parseUsers()
 {
 	hideProcessingOverlay();
-	parse_uniresults_functions::UserProfilesResult temp = RequestParser::interpretAsLogin(awaiter.restext, awaiter.errtext);
-	if (temp.manually)
+
+	NetRequestResponse<UserEntity> result = RequestParser::parseResponse<UserEntity>(
+		ResponseParser(new TwoStateListParser(awaiter.restext, awaiter.errtext))
+		);
+	if (result.isError)
 	{
-#ifdef DEBUG
-		detrace_METHEXPL("manually parsed from request");
-#endif
-		QString temp;
-		show_login_widget(temp);
+		userHelpLabel->setText(result.errtext);
+		return;
 	}
-	else
+	switch (result.alternative_result)
 	{
-		profiles = temp.profiles;
-		loginsStorageWidget->reload();
+	case 0:
+		innerModel->setData(downcastRecords(result.objects));
+		if (!result.additionalObjects.isEmpty())
+			hostLabel->setText(result.additionalObjects.first()->value("servicename"));
+		break;
+	case 1:
+		show_login_widget(User(new UserEntity()));
+		break;
+	default:
+		userHelpLabel->setText(tr("response error - wrong interpretation"));
+		break;
 	}
 }
 
 void MainPageWidget::wasTimeout()
 {
 	hideProcessingOverlay();
-	userHelpLabel->setText(tr("timeout_with_delay:") + QString::number(globalSettings.timeoutInt));
+	userHelpLabel->setText(tr("timeout_with_delay:") + QString::number(AppSettings->timeoutInt));
 }
 
 void MainPageWidget::settingsSaved()
 {
-	hostLabel->setText(globalSettings.HttpUrl.section("/", 4, 4));
+	hostLabel->setText(AppSettings->HttpUrl.section("/", 4, 4));
 	loadUsers();
 }
 
@@ -266,6 +235,6 @@ void MainPageWidget::loadUsers()
 	if (awaiter.isAwaiting())
 		return;
 	showProcessingOverlay();
-	globalSettings.networkingEngine->userUpdateList(&awaiter, RECEIVER_SLOT_NAME);
-	awaiter.run();
+	UserEntity e;
+	e.sendAssociatedGetRequest(QStringList(), &awaiter);
 }

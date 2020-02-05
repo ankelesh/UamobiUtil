@@ -1,8 +1,6 @@
 #pragma once
 
-#include "widgets/SuppliersSelectionBranch/SuppliersSelectWidget.h"
 #include "widgets/ReceiptSpecialWidgets/ReceiptParametersWidget.h"
-#include "widgets/ReceiptSpecialWidgets/ReceiptScaningWidget.h"
 
 QHash<QString, QString> _initRecDefs();
 const QHash<QString, QString> RECEIPT_NONE_SETTINGS_DEFAULTS(_initRecDefs());

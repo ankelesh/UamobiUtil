@@ -20,7 +20,7 @@
 #endif
 
 // widgets imports
-#include "widgets/parents/inframedWidget.h"
+#include "widgets/parents/IndependentBranchNode.h"
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/parents/abstractNodeInterface.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
@@ -34,11 +34,10 @@
 
 */
 
-class ReceiptParametersWidget : public inframedWidget
+class ReceiptParametersWidget : public IndependentBranchNode
 {
 	Q_OBJECT
 protected:
-	GlobalAppSettings& globalSettings;
 
 	QVBoxLayout* mainLayout;
 	inframedWidget* innerWidget;
@@ -58,9 +57,10 @@ protected:
 	QHBoxLayout* continueLayout;
 	MegaIconButton* continueButton;
 	MegaIconButton* backButton;
-
+	virtual void _handleRecord(RecEntity) override;
+	virtual void _sendDataRequest() override;
 public:
-	ReceiptParametersWidget(GlobalAppSettings& go, QWidget* parent);
+	ReceiptParametersWidget(QWidget* parent);
 
 protected slots:
 	void closedClicked();		//	button reactions
@@ -73,5 +73,7 @@ public slots:
 	void setMainView(const QString&);		//	uses provided string for mainView content
 signals:
 	void dataConfirmed();					//	is emitted when user confirmed that this receipt is required
-	void backTo(int step);					//	is emitted when user requires non-previous step
+	void backTo(int step);
+	// Inherited via IndependentBranchNode
+	//	is emitted when user requires non-previous step
 };

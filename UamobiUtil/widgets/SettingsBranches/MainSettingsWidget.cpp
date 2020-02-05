@@ -1,7 +1,8 @@
 #include "MainSettingsWidget.h"
 #include "widgets/utils/ElementsStyles.h"
-MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
-	:inframedWidget(parent), globalSettings(go),
+
+MainSettingsWidget::MainSettingsWidget(QWidget* parent)
+	:inframedWidget(parent),
 	mainLayout(new QVBoxLayout(this)),
 	scanModeSelector(new QComboBox(this)),
 	scanModeInfo(new QLabel(this)),
@@ -53,8 +54,8 @@ MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	connectionInfo->setAlignment(Qt::AlignCenter);
 	connectionInfo->setFont(scf);
 
-	addressField->addItem(go.HttpUrl);
-	addressField->addItems(go.AlternativeAdresses);
+	addressField->addItem(AppSettings->HttpUrl);
+	addressField->addItems(AppSettings->AlternativeAdresses);
 	addressField->setCurrentIndex(0);
 	addressField->setFont(scf);
 
@@ -67,9 +68,9 @@ MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	temp.clear();
 	temp << "Russian" << "Romanian" << "English";
 	langField->addItems(temp);
-	if (globalSettings.language == "Russian")
+	if (AppSettings->language == "Russian")
 		langField->setCurrentIndex(0);
-	else if (globalSettings.language == "Romanian")
+	else if (AppSettings->language == "Romanian")
 		langField->setCurrentIndex(1);
 	else
 		langField->setCurrentIndex(2);
@@ -88,9 +89,9 @@ MainSettingsWidget::MainSettingsWidget(GlobalAppSettings& go, QWidget* parent)
 	langField->setFont(scf);
 	langField->setInsertPolicy(QComboBox::NoInsert);
 #ifdef QT_VERSION5X
-	langField->setCurrentText(go.language);
+	langField->setCurrentText(AppSettings->language);
 #else
-	langField->setCurrentIndex(temp.indexOf(go.language));
+	langField->setCurrentIndex(temp.indexOf(AppSettings->language));
 #endif
 	scanModeSelector->setEditable(false);
 	scanModeSelector->setInsertPolicy(QComboBox::NoInsert);
@@ -119,28 +120,28 @@ void MainSettingsWidget::show()
 
 void MainSettingsWidget::saveClicked()
 {
-	globalSettings.HttpUrl = (addressField->currentText().isEmpty()) ? globalSettings.HttpUrl : addressField->currentText();
-	if (!globalSettings.AlternativeAdresses.contains(globalSettings.HttpUrl))
+	AppSettings->HttpUrl = (addressField->currentText().isEmpty()) ? AppSettings->HttpUrl : addressField->currentText();
+	if (!AppSettings->AlternativeAdresses.contains(AppSettings->HttpUrl))
 	{
-		globalSettings.AlternativeAdresses.push_back(globalSettings.HttpUrl);
-		addressField->addItem(globalSettings.HttpUrl);
-		globalSettings.dump();
+		AppSettings->AlternativeAdresses.push_back(AppSettings->HttpUrl);
+		addressField->addItem(AppSettings->HttpUrl);
+		AppSettings->dump();
 	}
-	globalSettings.networkingEngine->setUrl(globalSettings.HttpUrl);
+	AppNetwork->setUrl(AppSettings->HttpUrl);
 	emit saveConfirmed();
 	emit backRequired();
 }
 
 void MainSettingsWidget::langSelected(const QString& lang)
 {
-	globalSettings.language = lang;
+	AppSettings->language = lang;
 	langChanged();
 	emit languageChanged();
 }
 
 void MainSettingsWidget::langChanged()
 {
-	globalSettings.setTranslator();
+	AppSettings->setTranslator();
 	scanModeInfo->setText(tr("settings_scan_mode_info"));
 #ifdef QT_VERSION5X
 	scanModeSelector->addItems(QStringList({ tr("settings_scmode_one"), tr("settings_scmode_autos"), tr("settings_scmode_simple") }));
@@ -158,5 +159,5 @@ void MainSettingsWidget::langChanged()
 
 void MainSettingsWidget::AddressSelected(const QString& activated)
 {
-	globalSettings.HttpUrl = activated;
+	AppSettings->HttpUrl = activated;
 }

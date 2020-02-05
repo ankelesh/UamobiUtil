@@ -7,36 +7,17 @@
 #include "debugtrace.h"
 #endif
 
-int specwidgets::documentSelectionWidget::countElems()
-{
-	return alldocs.count();
-}
 
-void specwidgets::documentSelectionWidget::itemSelectedFromList(QListWidgetItem* it)
-{
-	emit docSelected(alldocs.at(currentRow()));
-}
-
-QString specwidgets::documentSelectionWidget::elemToString(int index)
-{
-	return alldocs.at(index).title;
-}
-
-specwidgets::documentSelectionWidget::documentSelectionWidget(QVector<parsedDocument>& docs, QWidget* parent)
-	: AbstractListSelectionWidget(parent), alldocs(docs)
-{
-	init();
-}
-
-ParentDocumentWidget::ParentDocumentWidget(GlobalAppSettings& go, QWidget* parent)
-	: inframedWidget(true,parent), abstractNode(), alldocs(),
-	globalSettings(go), mainLayout(new QVBoxLayout(this)),
+ParentDocumentWidget::ParentDocumentWidget(RecEntity proto, QWidget* parent)
+	: IndependentBranchNode(independent_nodes::ParentDocument, true,parent), abstractNode(),
+	entityModel(new DataEntityListModel(this)),
+	prototype(proto), mainLayout(new QVBoxLayout(this)),
 	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
 	userInfo(new QLabel(innerWidget)), filterButton(new MegaIconButton(innerWidget)),
-	docSelection(new specwidgets::documentSelectionWidget(alldocs, innerWidget)),
+	docSelection(new QListView(this)),
 	footerLayout(new QHBoxLayout(innerWidget)), backButton(new MegaIconButton(innerWidget)),
-	selectButton(new MegaIconButton(innerWidget)), filterSelect(new FilterSelectWidget(go, this)),
-	awaiter(go.timeoutInt, this)
+	selectButton(new MegaIconButton(innerWidget)), filterSelect(new FilterSelectWidget(this)),
+	awaiter( new RequestAwaiter(AppSettings->timeoutInt, this))
 {
 	current = innerWidget;
 	untouchable = innerWidget;
@@ -72,20 +53,23 @@ ParentDocumentWidget::ParentDocumentWidget(GlobalAppSettings& go, QWidget* paren
 	selectButton->setText(tr("ok"));
 	selectButton->setIcon(QIcon(":/res/submit.png"));
 	selectButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
+	docSelection->setModel(entityModel);
 #ifdef QT_VERSION5X
 	QObject::connect(filterButton, &MegaIconButton::clicked, this, &ParentDocumentWidget::filterDocuments);
 	QObject::connect(backButton, &QPushButton::clicked, this, &ParentDocumentWidget::backRequired);
-	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &ParentDocumentWidget::load_documents_response);
-	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &ParentDocumentWidget::was_timeout);
-	QObject::connect(docSelection, &specwidgets::documentSelectionWidget::docSelected, this, &ParentDocumentWidget::docSelected);
+	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &ParentDocumentWidget::load_documents_response);
+	QObject::connect(awaiter, &RequestAwaiter::requestTimeout, this, &ParentDocumentWidget::was_timeout);
+	QObject::connect(docSelection, &QListView::clicked, entityModel, &DataEntityListModel::mapClickToEntity);
+	QObject::connect(entityModel, &DataEntityListModel::dataEntityClicked, this, &IndependentBranchNode::done);
 	QObject::connect(filterSelect, &FilterSelectWidget::backRequired, this, &ParentDocumentWidget::hideCurrent);
 	QObject::connect(filterSelect, &FilterSelectWidget::filterApplied, this, &ParentDocumentWidget::filterReady);
 #else
 	QObject::connect(filterButton, SIGNAL(clicked()), this, SLOT(filterDocuments()));
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
-	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(load_documents_response()));
-	QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
-	QObject::connect(docSelection, SIGNAL(docSelected(parsedDocument)), this, SIGNAL(docSelected(parsedDocument)));
+	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(load_documents_response()));
+	QObject::connect(awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
+	QObject::connect(entityModel, SIGNAL(dataEntityClicked(RecEntity)), this, SIGNAL(done(RecEntity)));
+	QObject::connect(docSelection, SIGNAL(clicked(const QModelIndex&)), entityModel, SLOT(mapClickToEntity(const QModelIndex&)));
 	QObject::connect(filterSelect, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
 	QObject::connect(filterSelect, SIGNAL(filterApplied()), this, SLOT(filterReady()));
 #endif
@@ -93,11 +77,10 @@ ParentDocumentWidget::ParentDocumentWidget(GlobalAppSettings& go, QWidget* paren
 
 void ParentDocumentWidget::loadDocuments()
 {
-	if (awaiter.isAwaiting())
+	if (awaiter->isAwaiting())
 		return;
 	showProcessingOverlay();
-	globalSettings.networkingEngine->invGetParentDocsList(&awaiter, RECEIVER_SLOT_NAME);
-	awaiter.run();
+	prototype->sendAssociatedGetRequest(QStringList(), awaiter);
 }
 
 void ParentDocumentWidget::filterDocuments()
@@ -108,11 +91,18 @@ void ParentDocumentWidget::filterDocuments()
 
 void ParentDocumentWidget::load_documents_response()
 {
-#ifdef DEBUG
-	detrace_METHEXPL("got " << awaiter.restext);
-#endif
-	alldocs = RequestParser::interpretAsDocumentsList(awaiter.restext, awaiter.errtext);
-	docSelection->reload();
+	ResponseParser parser(new LinearListParser(awaiter->restext, awaiter->errtext));
+	PolyResponse response(RequestParser::parseResponse(parser, prototype));
+	if (response.isError)
+	{
+		userInfo->setText(response.errtext);
+	}
+	else
+	{
+		if (response.objects.isEmpty())
+			userInfo->setText(tr("no data received during request"));
+		entityModel->setData(response.objects);
+	}
 	hideProcessingOverlay();
 }
 
@@ -130,5 +120,10 @@ void ParentDocumentWidget::hideCurrent()
 void ParentDocumentWidget::filterReady()
 {
 	_hideCurrent(innerWidget);
+	loadDocuments();
+}
+
+void ParentDocumentWidget::_sendDataRequest()
+{
 	loadDocuments();
 }

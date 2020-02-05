@@ -1,7 +1,25 @@
 #include "InventoryParamsWidget.h"
 #include "widgets/utils/ElementsStyles.h"
+void InventoryParamsWidget::_handleRecord(RecEntity e)
+{
+	if (e.isNull())
+		return;
+	if (e->myType() == UniformXmlObject::Document)
+		setDocument(upcastRecord<FullDocumentEntity>(e));
+	if (e->myType() == UniformXmlObject::LesserDocument)
+	{
+		QSharedPointer<LesserDocumentEntity> temp = upcastRecord<LesserDocumentEntity>(e);
+		setDocument(FullDocument(new FullDocumentEntity(
+			temp->code)));
+	}
+	
+}
+void InventoryParamsWidget::_sendDataRequest()
+{
+
+}
 InventoryParamsWidget::InventoryParamsWidget(QWidget* parent)
-	: inframedWidget(parent), mainLayout(new QVBoxLayout(this)),
+	: IndependentBranchNode(independent_nodes::InventoryParameters, parent), mainLayout(new QVBoxLayout(this)),
 	title(new QLabel(this)), dateInfo(new QLabel(this)),
 	dateField(new QDateEdit(this)), selectDocumentButton(new MegaIconButton(this)),
 	commentInfo(new QLabel(this)), commentField(new QTextEdit(this)),
@@ -64,14 +82,14 @@ InventoryParamsWidget::InventoryParamsWidget(QWidget* parent)
 #endif
 }
 
-void InventoryParamsWidget::setDocument(Document doc)
+void InventoryParamsWidget::setDocument(FullDocument doc)
 {
 	okButton->setDisabled(false);
-	commentField->setText(doc.comment);
+	commentField->setText(doc->comment);
 	document = doc;
 }
 
-Document& InventoryParamsWidget::getDoc()
+FullDocument InventoryParamsWidget::getDoc()
 {
 	return document;
 }
@@ -83,6 +101,6 @@ void InventoryParamsWidget::selectDocPressed()
 
 void InventoryParamsWidget::okPressed()
 {
-	document.comment = commentField->toPlainText();
-	emit documentConfirmed();
+	document->comment = commentField->toPlainText();
+	emit done(RecEntity(document->clone()));
 }

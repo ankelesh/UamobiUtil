@@ -15,7 +15,7 @@
 #include <QtGui/QLineEdit>
 #include <QtGui/QLabel>
 #endif
-
+#include "widgets/parents/IndependentBranchNode.h"
 #include "widgets/parents/inframedWidget.h"
 #include "networking/Parsers/RequestParser.h"
 #include "networking/RequestAwaiter.h"
@@ -23,14 +23,14 @@
 #include "widgets/ControlsMiniwidgets/ControlManager.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
 #include "ScaningCore/NormalCapturer.h"
+#include "networking/things.h"
 
-class AbstractScaningWidget : public inframedWidget
+class AbstractScaningWidget : public IndependentBranchNode
 {
 	Q_OBJECT
 protected:
-	GlobalAppSettings& globalSettings;
 
-	Document document;
+	FullDocument document;
 
 	QVBoxLayout* mainLayout;
 	inframedWidget* innerWidget;
@@ -48,22 +48,22 @@ protected:
 
 	QHash<QString, QString> itemSuppliedValues;
 
-	abs_control* first_control;
-	abs_control* second_control;
+	Control first_control;
+	Control second_control;
 
 	int controlsAvailable;
 	bool controlsRequired;
 
 	QString modename;
-	RequestAwaiter awaiter;
-	virtual void useControls(QVector<QPair<QString, QString> >&);
+	RequestAwaiter* awaiter;
+	virtual void useControls(QVector<QSharedPointer<InputControlEntity> > &);
 	virtual void refreshControls();
 	virtual bool checkControls();
 	virtual void focusControl(int);
 	virtual bool isControlFocused();
 	virtual void _postClear() =0;
 public:
-	AbstractScaningWidget(GlobalAppSettings& go, QWidget* parent);
+	AbstractScaningWidget(int id, QWidget* parent);
 	void clear();
 	void setModeName(QString& name);
 protected slots:
@@ -78,7 +78,7 @@ protected slots:
 	virtual void syncControlAndBuffer(QString v) = 0;
     virtual void quitNoSave();
 public slots:
-	virtual void setDocument(parsedOrder) = 0;
+	virtual void setDocument(Order) = 0;
 signals:
 	void saveSuccess();
 };

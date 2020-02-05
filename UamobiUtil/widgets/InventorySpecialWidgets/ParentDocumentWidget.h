@@ -1,6 +1,6 @@
 #pragma once
 #include "networking/RequestAwaiter.h"
-#include "widgets/parents/inframedWidget.h"
+#include "widgets/parents/IndependentBranchNode.h"
 #include "widgets/parents/abstractNodeInterface.h"
 #include "widgets/parents/AbstractListSelectionWidget.h"
 #ifdef QT_VERSION5X
@@ -23,50 +23,29 @@
 
 */
 
-namespace specwidgets
-{
-	class documentSelectionWidget : public AbstractListSelectionWidget
-	{
-		Q_OBJECT
-	private:
-		QVector<parsedDocument>& alldocs;
-	protected:
-
-		// Inherited via AbstractListSelectionWidget
-		virtual int countElems() override;
-
-		virtual void itemSelectedFromList(QListWidgetItem*) override;
-
-		virtual QString elemToString(int);
-	public:
-		documentSelectionWidget(QVector<parsedDocument>& docs, QWidget* parent);
-	signals:
-		void docSelected(parsedDocument);
-	};
-}
-
-class ParentDocumentWidget : public inframedWidget, abstractNode
+class ParentDocumentWidget : public IndependentBranchNode, abstractNode
 {
 	Q_OBJECT
 protected:
-	QVector<parsedDocument> alldocs;
-	GlobalAppSettings& globalSettings;
+	DataEntityListModel*  entityModel;
+	RecEntity prototype;
 
 	QVBoxLayout* mainLayout;
 	inframedWidget* innerWidget;
 	QVBoxLayout* innerLayout;
 	QLabel* userInfo;
 	MegaIconButton* filterButton;
-	specwidgets::documentSelectionWidget* docSelection;
+	QListView* docSelection;
 	QHBoxLayout* footerLayout;
 	MegaIconButton* backButton;
 	MegaIconButton* selectButton;
 
 	FilterSelectWidget* filterSelect;
 
-	RequestAwaiter awaiter;
+	RequestAwaiter* awaiter;
+	virtual void _sendDataRequest() override;
 public:
-	ParentDocumentWidget(GlobalAppSettings& go, QWidget* parent);
+	ParentDocumentWidget(RecEntity proto, QWidget* parent);
 public slots:
 	void loadDocuments();
 	void filterDocuments();
@@ -76,6 +55,4 @@ protected slots:
 	void was_timeout();
 	void hideCurrent();
 	void filterReady();
-signals:
-	void docSelected(parsedDocument);
 };

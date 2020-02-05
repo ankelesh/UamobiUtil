@@ -1,133 +1,114 @@
 #include "things.h"
 
-Document::Document()
-	: closed(false), cancelled(false), locked(false)
+DataEntityListModel::DataEntityListModel(const Records& data, QObject* parent)
+	: QAbstractListModel(parent), innerList(data)
 {
 }
 
-QString Document::toString(bool sshort)
+int DataEntityListModel::rowCount(const QModelIndex& parent) const
 {
-	const QString closed = QObject::tr("Closed.");
-	const QString cancelled = QObject::tr("Canceled.");
-	const QString closedCanceled = QObject::tr("Closed, cancelled.");
-	const QString open = QObject::tr("Open.");
-	const QString locked = QObject::tr("Locked.");
-
-	QString l1, l2, l3;
-	l1 = this->parentNr + " > " + this->docId + " — " + this->dateStr;
-
-	if (!supplier.isEmpty())
-		l3 = QObject::tr("Supplier: ") + this->supplier;
-
-	if (this->closed && !this->cancelled)
-		l2 = closed;
-	else if (!this->closed && this->cancelled)
-		l2 = cancelled;
-	else if (this->closed && this->cancelled)
-		l2 = closedCanceled;
-	else
-		l2 = open;
-	if (this->locked)
-		l2 += " " + locked;
-	return (!sshort ? l1 + "\n" : QString()) + l2 + (l3.isEmpty() ? "" : "\n" + l3);
+	return innerList.count();
 }
 
-QString Document::title()
+QVariant DataEntityListModel::data(const QModelIndex& index, int role) const
 {
-	return this->parentNr + " > " + this->docId + " — " + this->dateStr;
+	if (!index.isValid())
+		return QVariant();
+	if (index.row() >= rowCount())
+		return QVariant();
+	switch (role)
+	{
+	case Qt::DisplayRole:
+		return innerList.at(index.row())->getTitle();
+	case SearchRole:
+	{
+		QVariant temp;
+		temp.setValue<RecEntity>(innerList.at(index.row()));
+		return temp;
+	}
+	case DataCopyRole:
+	{
+		QVariant temp;
+		temp.setValue<RecEntity>(RecEntity(innerList.at(index.row())->clone()));
+		return temp;
+	}
+	case DirectAccess:
+		QVariant temp;
+		temp.setValue<RecEntity>(innerList.at(index.row()));
+		return temp;
+	}
+	return QVariant();
 }
 
-QString Document::toStringShort()
+QVariant DataEntityListModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-	return toString(true);
+	return QVariant();
 }
 
-QDate Document::date()
+void DataEntityListModel::setData(const Records& data)
 {
-	QStringList l = this->dateStr.split(".");
-	QDate d;
-	if (l.length() == 3)
-		d = QDate(l.at(0).toInt(), l.at(1).toInt(), l.at(2).toInt());
-	return d;
+	beginResetModel();
+	innerList.clear();
+	innerList << data;
+	endResetModel();
 }
 
-parsedMode::parsedMode(QString n, QString m, QString s)
-	: name(n), mode(m), submode(s)
+void DataEntityListModel::removeDataEntity(const QModelIndex& mindex)
 {
+	if (!mindex.isValid())
+		return;
+	beginRemoveRows(mindex, mindex.row(), mindex.row());
+	innerList.removeAt(mindex.row());
+	endRemoveRows();
 }
 
-QString parsedMode::debugSnapshot()
+void DataEntityListModel::removeDataEntity(RecEntity e)
 {
-	return "mode " + name + " modeV: " + mode + " submode " + submode;
+	for (int i = 0; i < innerList.count(); ++i)
+	{
+		if (innerList.at(i)->isSame(&(*e)))
+		{
+			beginRemoveRows(createIndex(i, 0), i, i);
+			innerList.removeAt(i);
+			endRemoveRows();
+		}
+	}
 }
 
-parsedPlace::parsedPlace(QString Code, QString Name)
-	: code(Code), name(Name)
+void DataEntityListModel::replaceDataEntity(RecEntity e)
 {
+	for (int i = 0; i < innerList.count(); ++i)
+	{
+		if (innerList.at(i)->isSame(&(*(e))))
+		{
+			innerList[i] = e;
+		}
+	}
 }
 
-parsedSupplier::parsedSupplier(QString Code, QString Name, QString Orders)
-	: code(Code), name(Name), orders(Orders)
+void DataEntityListModel::reset()
 {
+	beginResetModel();
+	innerList.clear();
+	endResetModel();
 }
 
-parsedOrder::parsedOrder(QString Code, QString Title, QString Text)
-	: code(Code), title(Title), text(Text)
+void DataEntityListModel::mapClickToEntity(const QModelIndex& index)
 {
+	if (!index.isValid())
+		return;
+	emit dataEntityClicked(innerList.at(index.row()));
 }
 
-parsedItemSimplified::parsedItemSimplified(QString Barcode, QString Title)
-	: barcode(Barcode), title(Title)
+void DataEntityListModel::lookForEntity(const RecEntity e)
 {
-}
-
-QString parsedItemSimplified::description() const
-{
-	return title + " " + barcode;
-}
-
-parsedItem::parsedItem(QString Code, QString Title, QString Cmid, QString Qty, QString Box, QString Highlight)
-	: title(Title), code(Code), cmid(Cmid), box(Box), qty(0), highlight(false)
-{
-	bool ok;
-	qty = Qty.toInt(&ok);
-	if (!ok)
-		qty = 0;
-	if (Highlight.contains("high"))
-		highlight = true;
-}
-
-QString parsedItem::description() const
-{
-	return title + "|bc: " + code + " | " + cmid + "|bx: " + box + " qty: " + QString::number(qty) + " highlight: " + ((highlight) ? "true" : "false");
-}
-
-parsedDocument::parsedDocument(QString Code, QString Title, QString Text, QString Doctype)
-	: code(Code), title(Title), text(Text), doctype(Doctype)
-{
-}
-
-QString parsedDocument::description() const
-{
-	return "parsedDoc: |Code: " + code + " title: " + title + " \ntext " + text + " \ndoctype: " + doctype;
-}
-
-parsedDocType::parsedDocType(QString Id, QString Name, QString isF)
-	: id(Id), name(Name), notFiltered(isF.isEmpty())
-{
-}
-
-QString parsedDocType::description() const
-{
-	return "doctype " + name + " id |" + id + "|" + ((notFiltered) ? "not" : "is") + " filtered";
-}
-
-parsedGroup::parsedGroup(QString Name, QString Code)
-	: name(Name), code(Code)
-{
-}
-
-parsedStillage::parsedStillage(QString Name, QString Code)
-	: name(Name), code(Code)
-{
+	AbsRecEntity* tofind = e.data();
+	for (int i = 0; i < rowCount(); ++i)
+	{
+		if (innerList.at(i)->isSame(tofind))
+		{
+			emit dataEntityClicked(innerList.at(i));
+			return;
+		}
+	}
 }

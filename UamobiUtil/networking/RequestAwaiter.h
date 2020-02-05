@@ -1,7 +1,8 @@
 #pragma once
 #include <QtCore/QObject>
 #include <QtCore/QTimer>
-
+#include <QtNetwork/QNetworkReply>
+#include "QueryTemplates.h"
 /*
 	This file contains Awaiter class - a simple solution to await request. It has dataupdateengine-compatible interface and
 	can wait until response will arrive - or timeout happens. method isAwaiting provides simple interface - when it returns
@@ -13,7 +14,6 @@
 */
 
 extern const char* RECEIVER_SLOT_NAME; // char string used in dataupdeng to call slot using Qmetacall
-
 class RequestAwaiter : public QObject	//	This class is awaiting sent request
 {
 	Q_OBJECT
@@ -22,6 +22,8 @@ private:
 	bool awaiting;
 	bool wastimeout;
 	int timeoutinterval;
+	QNetworkReply* awaitedReply;
+	QHash<QueryTemplates::QueryId, QString> QueryOverrides;
 public:
 	QString restext;		//	Request result. is overwritten when new response arrives
 	QString errtext;		//	error string. Provides info about errors
@@ -31,10 +33,14 @@ public:
 	bool isAwaiting();		//	true if there was no timeout and no response
 	bool wasTimeout();		//	true if there was timeout
 	int getInterval();		//	returns interval
+	void pushQueryOverride(const QString newUrl, QueryTemplates::QueryId id);
+	const QString& overrideQuery(const QString& normal, QueryTemplates::QueryId usedId);
+	void setReplyToAwait(QNetworkReply* toAwait);
 	void stopAwaiting();
-private slots:
+public slots:
 	void timeout();			//	sets wastimeout flag, stops awaiting
-	void requestIncoming(QString, QString);	//	receives data strings
+	void requestIncoming();	//	receives data strings
+	void replyError(QNetworkReply::NetworkError);
 signals:
 	void requestSuccess(QString, QString);	//	emitted when response arrived with results
 	void requestReceived();					//	emitted when response arrived

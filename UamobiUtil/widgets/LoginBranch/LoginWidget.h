@@ -44,11 +44,11 @@ private:
 	MegaIconButton* backButton;
 	MegaIconButton* okButton;
 
-	GlobalAppSettings& globalSettings;
 	RequestAwaiter awaiter;
-
+	
+	User userToSend;
 public:
-	LoginWidget(GlobalAppSettings& go, QWidget* parent);
+	LoginWidget(QWidget* parent);
 
 	virtual void show() override;
 	void langCh();
@@ -57,7 +57,7 @@ private slots:
 	void was_timeout();
 	void checkResponse();
 public slots:
-	void set_login(const QString);
+	void set_user(const User);
 signals:
 	void loginConfirmed(const QString, const QString);
 };

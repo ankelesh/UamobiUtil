@@ -5,10 +5,12 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/qboxlayout.h>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QListView>
 // include here legacy-versions of top ones
 #else
 #include <QtGui/QLabel>
 #include <QtGui/QBoxLayout>
+#include <QtGui/QListView>
 #include <QtGui/QLineEdit>
 #endif
 // include here version-independents
@@ -16,6 +18,7 @@
 #include <QtCore/QPointer>
 
 // fixed includes
+#include "networking/things.h"
 #include "widgets/LoginBranch/LoginWidget.h"
 #include "widgets/SettingsBranches/MainSettingsWidget.h"
 #include "widgets/parents/abstractNodeInterface.h"
@@ -33,34 +36,12 @@
 
 	Update:
 		now more intellegent hiding - > returns to modeselect if user already logged in
-
 */
-namespace specwidgets {
-	class LoginSelectWidget : public AbstractVariantSelectionWidget
-	{
-		Q_OBJECT
-	private:
-		QVector<UserProfile>& profiles;
-	protected:
-		// Inherited via AbstractVariantSelectionWidget
-		virtual QString elemAsString(int index) override;
-		virtual int countElems() override;
-	public:
-		LoginSelectWidget(QVector<UserProfile>& Profiles, QWidget* parent = Q_NULLPTR);
-	private slots:
-		virtual void indexSelected(int Index);
-	signals:
-		void profilePicked(UserProfile);
-	};
-}
-
 class MainPageWidget : public inframedWidget, abstractNode
 {
 	Q_OBJECT
 private:
-	// Uses global settings
-	GlobalAppSettings& globalSettings;
-	QVector<UserProfile> profiles;
+	DataEntityListModel* innerModel;
 
 	// has own view while is root
 	QVBoxLayout* mainLayout;
@@ -70,9 +51,8 @@ private:
 	QHBoxLayout* bottomPanelLayout;
 	QLabel* versionLabel;
 	QLabel* hostLabel;
-	QScrollArea* scrArea;
 	QLabel* userHelpLabel;
-	specwidgets::LoginSelectWidget* loginsStorageWidget;
+	QListView* loginsView;
 	QLabel* userIdInfo;
 	MegaIconButton* exitButton;
 	MegaIconButton* settingsButton;
@@ -82,18 +62,19 @@ private:
 	LoginWidget* manualLogin;
 	MainSettingsWidget* settingsScreen;
 
+
+
 	RequestAwaiter awaiter;
 
-	void show_login_widget(QString& log); // Utility: hides inner, shows login widget, sets it up.
-	void resizeEvent(QResizeEvent* rev) override;
+	void show_login_widget(User user); // Utility: hides inner, shows login widget, sets it up.
 public:
-	MainPageWidget(GlobalAppSettings& go, QWidget* parent);
+	MainPageWidget( QWidget* parent);
 	virtual bool isExpectingControl(int) override;
 
 private slots:
 	void settinsPressed();					//	activated on button press
 	void userIdOk(const QString  log, const QString  pass);	//	activated when user logged in
-	void userPicked(UserProfile);					//	activated when item was selected on LoginSelectWidget
+	void userPicked(RecEntity);					//	activated when item was selected on LoginSelectWidget
 	void hideCurrent();							//	hides current
 	void languageChanged();						//	activated when language changed - retranslates text
 	void userIdSearch();

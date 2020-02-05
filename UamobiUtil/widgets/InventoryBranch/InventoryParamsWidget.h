@@ -17,7 +17,7 @@
 #include "widgets/ElementWidgets/MegaIconButton.h"
 #include "networking/things.h"
 #include "widgets/utils/GlobalAppSettings.h"
-
+#include "widgets/parents/IndependentBranchNode.h"
 /*
 	This widget is used for checking inventory document before starting completing it. 
 	It has no additional functions except changing document credintials.
@@ -29,7 +29,7 @@
 */
 
 
-class InventoryParamsWidget : public inframedWidget
+class InventoryParamsWidget : public IndependentBranchNode
 {
 	Q_OBJECT
 protected:
@@ -47,12 +47,15 @@ protected:
 	QHBoxLayout* footerLayout;
 	MegaIconButton* backButton;
 	MegaIconButton* okButton;
-	Document document;
+	FullDocument document;
+
+	virtual void _handleRecord(RecEntity) override;
+	virtual void _sendDataRequest() override;
 public:
 	InventoryParamsWidget(QWidget* parent = Q_NULLPTR);
 
-	void setDocument(Document);
-	Document& getDoc();
+	void setDocument(FullDocument);
+	FullDocument getDoc();
 private slots:
 	void selectDocPressed();
 	void okPressed();

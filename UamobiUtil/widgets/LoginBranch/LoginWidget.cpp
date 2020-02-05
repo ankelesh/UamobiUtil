@@ -6,8 +6,6 @@
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 void LoginWidget::login_confirmed()
 {
-	using parse_uniresults_functions::TypicalResponse;
-
 	if (awaiter.isAwaiting()) return;
 	if (loginField->text().isEmpty() || passwordField->text().isEmpty())
 	{
@@ -15,38 +13,44 @@ void LoginWidget::login_confirmed()
 		return;
 	}
 	showProcessingOverlay();
-	globalSettings.networkingEngine->userLogIn(loginField->text(), passwordField->text(), &awaiter, RECEIVER_SLOT_NAME, VERSION);
-	awaiter.run();
+	userToSend = User(new UserEntity("", loginField->text()));
+	userToSend->sendLoginRequest(passwordField->text(), &awaiter);
 }
 
 void LoginWidget::was_timeout()
 {
 	hideProcessingOverlay();
-	info->setText(tr("login_widget_connection_timeout:") + QString::number(globalSettings.timeoutInt));
+	info->setText(tr("login_widget_connection_timeout:") + QString::number(AppSettings->timeoutInt));
 }
 
 void LoginWidget::checkResponse()
 {
-	using namespace parse_uniresults_functions;
 	if (awaiter.wasTimeout())
 		return;
-	TypicalResponse resp = RequestParser::interpretAsLoginResponse(awaiter.restext, awaiter.errtext);
-	if (resp.resp == true)
+	QString result = AppNetwork->setSession(awaiter.restext);
+	if (AppNetwork->sessionReady())
 	{
-		emit loginConfirmed(loginField->text(), passwordField->text());
+		emit loginConfirmed(userToSend->login, passwordField->text());
 	}
 	else
 	{
-		info->setText(resp.errors);
+		info->setText(result);
 	}
 	hideProcessingOverlay();
 }
 
-LoginWidget::LoginWidget(GlobalAppSettings& go, QWidget* parent)
+void LoginWidget::set_user(const User u)
+{
+	userToSend = User( upcastRecord<UserEntity>(u->clone()));
+	loginField->setText(userToSend->login);
+	passwordField->clear();
+}
+
+LoginWidget::LoginWidget( QWidget* parent)
 	: inframedWidget(parent), mainLayout(new QVBoxLayout(this)), loginInfo(new QLabel(this)),
 	passwordInfo(new QLabel(this)), info(new QLabel(this)), loginField(new QLineEdit(this)),
 	passwordField(new QLineEdit(this)), buttonPanel(new QHBoxLayout(this)), backButton(new MegaIconButton(this)),
-	okButton(new MegaIconButton(this)), globalSettings(go), awaiter(go.timeoutInt, this)
+	okButton(new MegaIconButton(this)), awaiter(AppSettings->timeoutInt, this), userToSend(new UserEntity())
 {
 	this->setLayout(mainLayout);
 	mainLayout->setSpacing(0);
@@ -123,10 +127,4 @@ void LoginWidget::langCh()
 	okButton->setText(tr("login_widget_ok_button"));
 	backButton->setText(tr("login_widget_back_button"));
 	
-}
-
-void LoginWidget::set_login(const QString str)
-{
-	loginField->setText(str);
-	passwordField->clear();
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <QtCore/QStringList>
+#include "datacore/UniformXmlObject.h"
 
 /*
 		This file contains abstract parent for all request parsers. main idea of this object family is to make fully abstract parsing
@@ -11,41 +12,30 @@
 
 */
 
-// Type of parsing, usually it helps to conversion functions to understand, does this result hold any value they can use
-enum request_parse_type { login, mode, query_result, linear_result, positional_result };
 
-struct uniform_parse_result  // This is highly abstract result of parsing. You can wrap it with non-abstract RequestParser to obtain formatted values
-	//or use it in raw view
-{
-	request_parse_type type;		//	type of request
-	QStringList queriesResult;		//	values in heap. To select them you must use one_position_entries
-	int request_status;			//	status of request. 200 - ok
-	int one_position_entries_quantity;	//	maximum of values per one entry. Always use this value as MINIMUM border. Example: if in one notation <mode> holds 1 value and
-	// in other - 2, you must always count 2 to get next <mode> entry
-	int alternative_result;		//	alternative result is kind of non-error result making change target widget. Like <manually> in login.
-	QString containingType;		//	type of sent data
-	uniform_parse_result(request_parse_type = linear_result);
-};
 
-bool queryLengthOkInResult(uniform_parse_result& ures);
-int queryReservationSize(uniform_parse_result& ures);
+QString makeError(QDomDocument&);
+bool isError(QDomDocument&);
 
-QString showHeap(uniform_parse_result& ures);
-QString makeUPResSnapshot(uniform_parse_result& ures);
-class abs_parsed_request
+class AbsResponseParser
 {
 protected:
-	QString result;			///	Raw result data
+	QDomDocument xmldoc;
 	QString errtext;		//	raw error log
 	bool success;			//	defines if parser was successfull.
-	uniform_parse_result parseres;	//	result to return
+	XmlObjects parseResult;
+	int alternativeResult;
+
+	virtual bool _doParsing() = 0;
+	bool _stopWithError(const char *);
+	bool run();
 public:
-	abs_parsed_request(QString& res, QString& err);	//	Parsing happens in constructor
+	AbsResponseParser(QString& res, QString& err);	//	Parsing happens in constructor
 	bool isSuccessfull();		//	wraps couldRead && noRequestErrors
 	QString getErrors();		//	wraps virtual parseErrorText
-	uniform_parse_result& read();	//	returns parsed result
-private:
-	virtual bool couldRead() = 0;		//	overload to provide value for isSuccesfull. This should return false in case when you found error in packet
-	virtual bool noRequestErrors() = 0;		//	overload to provide value for isSuccesfull. Request is succesfull when both values are good
-	virtual QString parseErrorText() = 0;	//	overload to provide text of errors and for request errors, and for parsing errors
+	int isAlternative();
+	void reset(QString& res, QString& err);
+	XmlObjects& read();	//	returns parsed result
 };
+
+typedef QSharedPointer<AbsResponseParser> ResponseParser;

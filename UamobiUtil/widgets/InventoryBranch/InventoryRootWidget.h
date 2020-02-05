@@ -4,7 +4,6 @@
 #include "widgets/utils/GlobalAppSettings.h"
 #include "networking/things.h"
 #include "widgets/InventoryBranch/InventoryParamsWidget.h"
-#include "widgets/InventorySpecialWidgets/InventoryScaningWidget.h"
 #include "widgets/InventorySpecialWidgets/ParentDocumentWidget.h"
 #include "widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.h"
 
@@ -28,9 +27,8 @@ class InventoryRootWidget : public inframedWidget, abstractNode
 {
 	Q_OBJECT
 public:
-	enum steps { parentSelection, Scaning };
+	enum steps { parentSelection,filterSelection, Scaning };
 protected:
-	GlobalAppSettings& globalSettings;
 	QVBoxLayout* mainLayout;
 	InventoryParamsWidget* innerWidget;
 	ParentDocumentWidget* docSelectionWidget;
@@ -42,9 +40,9 @@ protected:
 
 	void processOptions();				//	uses options to modify this widget
 	void openCorrespondingSubbranch();	//	opens subbranch depending on settings.UNUSED
-
+	 
 public:
-	InventoryRootWidget(GlobalAppSettings& go, QHash<QString, QString> settings,
+	InventoryRootWidget(QHash<QString, QString> settings,
 		parsedMode mode = parsedMode("inventory", "inventory",""),
 		QWidget* parent = Q_NULLPTR);
 
@@ -55,5 +53,4 @@ private slots:
 	void backToStep(int step);	//	returns to specified step
 	void continueToScaning();	//	is triggered when all data is gathered and ScaningWidget can be created
 	void prescaningRequest();	//	is used only in case when barcodeFilterSelection exists
-	void filterReceived(QString resp);	//	checking filter response to define, should it show filter screen or not
 };

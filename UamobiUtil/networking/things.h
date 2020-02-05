@@ -1,172 +1,64 @@
 #ifndef USER_H
 #define USER_H
-
 #include <QtCore/QStringList>
 #include <QtCore/QDate>
 #include <QtCore/QObject>
-
+#include "datacore/NamedIdEntity.h"
+#include "datacore/ModeEntity.h"
+#include "datacore/EntitledEntity.h"
+#include "datacore/FullItemEntity.h"
+#include "datacore/FullDocumentEntity.h"
+#include "datacore/InputControlEntity.h"
+#include <QtCore/qabstractitemmodel.h>
 /*
 		This file contains definitions for structures used in the application. It is kinda too functional
 		approach, but this legacy thing is needed. Later these structures will be morphed into classes, except legacy ones.
 
 */
 
-struct parsedMode
-	// Mode, which was parsed from netquery
-{
-	QString name;	//	name
-	QString mode;	//	mode - larger part
-	QString submode;	//	submode - sometimes is 0
-	parsedMode(QString Name = "", QString Mode = "", QString Submode = "");
-	QString debugSnapshot();
-};
 
-struct parsedPlace
-	// Place parsed from netquery
+class DataEntityListModel : public QAbstractListModel
+	// This data model is used for fully dynamical data entity model. Use right delegate to show data in view.
+	// You can place in this model even polymorthic data, just install suitable delegate for it.
 {
-	QString code;	//	code, used in queries
-	QString name;	//	name which is shown to user
-	parsedPlace(QString Code = "", QString Name = "");
-};
-
-struct parsedSupplier
-	// Supplier parsed from netquery
-{
-	QString code;	//	code, used in queries
-	QString name;	//	name which is shown to user
-	QString orders;	//	orders, which are used for various actions
-	parsedSupplier(QString Code = "", QString Name = "", QString Orders = "");
-};
-struct parsedOrder
-	// order parsed from netquery
-{
-	QString code;	//	code, used in queries
-	QString title;	//	title, used as title
-	QString text;	//	richtext, used to create label view
-	parsedOrder(QString Code = "", QString Title = "", QString Text = "");
-};
-struct parsedItem
-{
-	QString title;
-	QString code;
-	QString cmid;
-	QString box;
-	int qty;
-	bool highlight;
-	parsedItem(QString title = "", QString code = "", QString cmid = "", QString box = "", QString qty = "", QString highlight = "");
-	QString description() const;
-};
-struct parsedItemSimplified
-{
-	QString barcode;
-	QString title;
-	parsedItemSimplified(QString Barcode = "", QString title = "");
-	QString description() const;
-};
-
-struct parsedDocument
-{
-	QString code;
-	QString title;
-	QString text;
-	QString doctype;
-	parsedDocument(QString code = "", QString title = "", QString text = "", QString doctype = "");
-	QString description() const;
-};
-struct parsedDocType
-{
-	QString id;
-	QString name;
-	bool notFiltered;
-	parsedDocType(QString id = "", QString name = "", QString isF = "");
-	QString description() const;
-};
-struct parsedGroup
-{
-	QString name;
-	QString code;
-	parsedGroup(QString name = "", QString code = "");
-};
-struct parsedStillage
-{
-	QString name;
-	QString code;
-	parsedStillage(QString name = "", QString code = "");
-};
-//			HERE START LEGACY STRUCTURES. DO NOT TOUCH THEM - INSTEAD CREATE NEW, BETTER ONES		//
-struct Answer
-{
-	enum Statuses {
-		Ok = 200,
-		Frobidden = 403,
-		NotFound = 404,
-		InternalError = 500
+	Q_OBJECT
+protected:
+	// real data storage
+	Records innerList;
+public:
+	// Roles for data entity operations
+	enum ExtendedRoles {
+		// Search role returns polymorthic pointer to call ->compare
+		SearchRole = Qt::UserRole + 1,
+		// Quantity view is used to return quantity of items. Not used in this model
+		QuantityView,
+		// DataCopyRole returns full copy of an object to avoid changing model
+		DataCopyRole,
+		DirectAccess
 	};
 
-	Statuses status;
+	using QAbstractListModel::QAbstractListModel;
+	DataEntityListModel(const Records& data, QObject* parent = Q_NULLPTR);
+	// Inherited from QAbstractListModel
+	int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+	QVariant data(const QModelIndex& index, int role) const override;
+	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
+	// dataoperation methods
+	//post-constructor
+	void setData(const Records& data);
+	// deletes data entity in the model by it's index or pointer
+	void removeDataEntity(const QModelIndex&);
+	void removeDataEntity(RecEntity);
+	// replaces data entity by it's id. This method is used only if you have a copy with the same id and other data.
+	void replaceDataEntity(RecEntity);
+	// empties model
+	void reset();
+public slots:
+	//If index was valid - emits signal with pointer to clicked entity.
+	void mapClickToEntity(const QModelIndex& index);
+	void lookForEntity(const RecEntity);
+signals:
+	// delivers pointer to data entity. Warning - changing this entity by pointer will affect model.
+	void dataEntityClicked(RecEntity);
 };
-struct UserProfile : public Answer
-{
-	QString login;
-	QString name;
-	QString place;
-
-	void clear()
-	{
-		login.clear();
-		name.clear();
-		place.clear();
-	}
-};
-struct Mode : public Answer
-{
-	QString name;  // служебное наименование, используется внутри проекта;
-	QString caption;  // пользовательское наименование, установка из конфигуратора - св-во CaptionMode;
-};
-struct Place : public Answer
-{
-	QString code;
-	QString name;
-};
-struct DocResultItem : public Answer
-{
-	QString code;
-	QString title;
-	float num;
-};
-struct DocType : public Answer
-{
-	DocType(const QString& code, const QString& title)
-	{
-		this->code = code;
-		this->title = title;
-	}
-
-	QString code;
-	QString title;
-};
-struct Document
-{
-	Document();
-
-	QString docId;
-	QString parentNr;
-	QString dateStr;
-	QString comment;
-	QString supplier;
-	//	Q_DECL_DEPRECATED int scanMode;
-	bool inspect;
-	bool closed;
-	bool cancelled;
-	bool locked;
-
-	QString toString(bool sshort = false);
-
-	QString title();
-
-	QString toStringShort();
-
-	QDate date();
-};
-
 #endif // USER_H

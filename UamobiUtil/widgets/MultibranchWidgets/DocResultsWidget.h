@@ -4,19 +4,20 @@
 #ifdef QT_VERSION5X
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QBoxLayout>
-#include <QtWidgets/QListWidget>
+#include <QtWidgets/QListView>
 #else
  // Qt 4 only imports
 #include <QtGui/QLabel>
 #include <QtGui/QBoxLayout>
-#include <QtGui/QListWidget>
+#include <QtGui/QListView>
 #endif
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
-#include "widgets/parents/inframedWidget.h"
+#include "widgets/parents/IndependentBranchNode.h"
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
 #include "widgets/parents/abstractNodeInterface.h"
+#include "networking/things.h"
 /*
 	This widget provides realization of list containing all items included in current document.
 
@@ -24,11 +25,10 @@
 
 */
 
-class DocResultsWidget : public inframedWidget, abstractNode
+class DocResultsWidget : public IndependentBranchNode, abstractNode
 {
 	Q_OBJECT
 protected:
-	GlobalAppSettings& globalSettings;
 	QVBoxLayout* mainLayout;
 	inframedWidget* innerWidget;
 	QVBoxLayout* innerLayout;
@@ -41,16 +41,20 @@ protected:
 	MegaIconButton* previousButton;
 	QLabel* indexationInfo;
 	MegaIconButton* nextButton;
-	QListWidget* itemInfoStorage;
+	QListView * itemInfoStorage;
 	QHBoxLayout* footerLayout;
 	MegaIconButton* backButton;
 	MegaIconButton* saveButton;
 
-	parse_uniresults_functions::doclistResponse items;
+	DataEntityListModel* items;
 	int pagenumber;
-	RequestAwaiter awaiter;
+	RequestAwaiter* awaiter;
+
+	void _handleRecord(RecEntity) override;
+	void setIndexation(XmlObjects& settings);
+	virtual void _sendDataRequest() override;
 public:
-	DocResultsWidget(GlobalAppSettings& go, QWidget* parent);
+	DocResultsWidget(QWidget* parent);
 	void loadItems();
 	void refresh();
 	void show() override;
@@ -66,4 +70,5 @@ protected slots:
 	void deleteCurrent();
 signals:
 	void documentSaved();
+
 };

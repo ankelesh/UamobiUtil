@@ -6,54 +6,12 @@
 	This class contains parsers, which one_position_entries_quantity is different
 */
 
-class ModeListParser : public abs_parsed_request	//	parses mode lists
+
+class TwoStateListParser : public AbsResponseParser
 {
 protected:
-	// Inherited via abs_parsed_request
-	virtual bool couldRead() override;
-	virtual bool noRequestErrors() override;
-	virtual QString parseErrorText() override;
-
-	void parse_old_api(QDomDocument& ddoc);	//	old api has 2 fields
-	void parse_new_api(QDomDocument& ddoc);	//	new api has one field
+	virtual bool _doParsing() override;
 public:
-	ModeListParser(QString& res, QString& err);
-};
-class ExpandedItemListParser : public abs_parsed_request
-{
-protected:
-	// Inherited via abs_parsed_request
-	virtual bool couldRead() override;
-	virtual bool noRequestErrors() override;
-	virtual QString parseErrorText() override;
+	TwoStateListParser(QString res, QString err) : AbsResponseParser(res, err) { success = run(); };
 
-	void parse_item_core(const QDomNode ddoc);
-	void parse_item_optionals(const QDomNode ddoc);
-public:
-	ExpandedItemListParser(QString& res, QString& err);
-};
-
-class ItemInfoResponseParser : public abs_parsed_request
-{
-protected:
-	// Inherited via abs_parsed_request
-	virtual bool couldRead() override;
-	virtual bool noRequestErrors() override;
-	virtual QString parseErrorText() override;
-public:
-	ItemInfoResponseParser(QString& res, QString& err);
-};
-class SerializedListParser : public abs_parsed_request
-{
-protected:
-
-
-	// Inherited via abs_parsed_request
-	virtual bool couldRead() override;
-
-	virtual bool noRequestErrors() override;
-
-	virtual QString parseErrorText() override;
-public:
-	SerializedListParser(QString& res, QString& err);
 };

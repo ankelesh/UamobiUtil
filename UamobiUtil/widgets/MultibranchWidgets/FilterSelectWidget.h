@@ -1,12 +1,15 @@
 #pragma once
 #include "widgets/parents/AbstractCheckboxSelection.h"
+#include "widgets/parents/IndependentBranchNode.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
 #ifdef QT_VERSION5X
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QScrollArea>
+#include <QtWidgets/QListView>
 #else
 #include <QtGui/QLabel>
 #include <QtGui/QScrollArea>
+#include <QtGui/QListView>
 #endif
 #include "widgets/utils/GlobalAppSettings.h"
 #include "networking/RequestAwaiter.h"
@@ -21,46 +24,34 @@
 	__ASSOCIATED_DATABASE_FUNCTION__   :  P'typicalResponse'   doc_select_filter
 
 */
-namespace specwidgets {
-	class TypeCheckboxSelection : public AbstractCheckboxSelection
-	{
-		Q_OBJECT
-	protected:
-		QVector<parsedDocType>& alltypes;
-		// Inherited via AbstractCheckboxSelection
-		virtual QString elemAsString(int index) override;
-		virtual int countElems() override;
-	public:
-		TypeCheckboxSelection(QVector<parsedDocType>& at, QVector<bool>& statesv, QWidget* parent);
-	};
-}
 
-class FilterSelectWidget : public inframedWidget
+
+class FilterSelectWidget : public IndependentBranchNode
 {
 	Q_OBJECT
 protected:
-	GlobalAppSettings& globalSettings;
-	QVector<parsedDocType> doctypes;
-	QVector<bool> selectionState;
+	DataEntityListModel* doctypes;
 
 	QVBoxLayout* mainLayout;
 	QLabel* title;
 	QHBoxLayout* topPanelLayout;
 	MegaIconButton* allonButton;
 	MegaIconButton* alloffButton;
-	QScrollArea* scrArea;
-	specwidgets::TypeCheckboxSelection* typesel;
+	QListView* typesel;
 	QHBoxLayout* footerLayout;
 	MegaIconButton* backButton;
 	MegaIconButton* okButton;
 
-	RequestAwaiter awaiter;
+	RequestAwaiter* awaiter;
+	void _handleRecord(RecEntity) override;
+	virtual void _sendDataRequest() override;
 public:
-	FilterSelectWidget(GlobalAppSettings& go, QWidget* parent = Q_NULLPTR);
+	FilterSelectWidget(QWidget* parent = Q_NULLPTR);
 	void loadFilters();
 protected slots:
 	void checkAll();
 	void uncheckAll();
+	void changeState(const QModelIndex& index);
 	void okPressed();
 	void was_timeout();
 	void parse_doctype_list_response();

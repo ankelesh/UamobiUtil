@@ -3,26 +3,30 @@
 #include "networking/dataupdateengine-http.h"
 #include <QtCore/QTranslator>
 
-const float VERSION = 0.003;
-const char SUFFIX[] = "alpha";
+const float VERSION = 0.01;
+const char SUFFIX[] = "nightly";
+
+#define AppSettings GlobalAppSettings::instanse()
 
 class GlobalAppSettings
 {
+protected:
+	static GlobalAppSettings* _instanse;
 public:
 	//	Stored vars
 	QString HttpUrl;
 	QStringList AlternativeAdresses;
 	QString language;
 	int timeoutInt;
+	int scanPrefix;
+	int scanSuffix;
 	//  Global generated vars
-	DataUpdateEngine* networkingEngine;
 	QTranslator translator;
 
-	// utility
-	void setDefaultsToEmpty();
+	explicit GlobalAppSettings();
+	
 	void setTranslator();
 	void dump();
 
-	explicit GlobalAppSettings();
-	~GlobalAppSettings();
+	static GlobalAppSettings * instanse();
 };

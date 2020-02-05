@@ -9,31 +9,22 @@
  // Qt 4 only imports
 #include "legacy/qtCompatibility/scrollgrabber.h"
 #endif
+#include "widgets/ExtendedDelegates/CheckableDelegate.h"
 
-QString specwidgets::TypeCheckboxSelection::elemAsString(int index)
+void FilterSelectWidget::_handleRecord(RecEntity)
 {
-	return alltypes.at(index).name + " " + alltypes.at(index).id;
+	loadFilters();
 }
 
-int specwidgets::TypeCheckboxSelection::countElems()
-{
-	return alltypes.count();
-}
-
-specwidgets::TypeCheckboxSelection::TypeCheckboxSelection(QVector<parsedDocType>& at, QVector<bool>& statesv, QWidget* parent)
-	: AbstractCheckboxSelection(statesv, parent), alltypes(at)
-{
-}
-
-FilterSelectWidget::FilterSelectWidget(GlobalAppSettings& go, QWidget* parent)
-	: inframedWidget(true, parent), globalSettings(go), doctypes(),
-	selectionState(), mainLayout(new QVBoxLayout(this)),
+FilterSelectWidget::FilterSelectWidget(QWidget* parent)
+	: IndependentBranchNode(independent_nodes::FilterSelect, true, parent),
+	doctypes(new DataEntityListModel(this)),
+	mainLayout(new QVBoxLayout(this)),
 	title(new QLabel(this)), topPanelLayout(new QHBoxLayout(this)),
 	allonButton(new MegaIconButton(this)), alloffButton(new MegaIconButton(this)),
-	scrArea(new QScrollArea(this)),
-	typesel(new specwidgets::TypeCheckboxSelection(doctypes, selectionState, scrArea)),
+	typesel(new QListView(this)),
 	footerLayout(new QHBoxLayout(this)), backButton(new MegaIconButton(this)),
-	okButton(new MegaIconButton(this)), awaiter(go.timeoutInt, this)
+	okButton(new MegaIconButton(this)), awaiter(new RequestAwaiter(AppSettings->timeoutInt, this))
 {
 	this->setLayout(mainLayout);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -44,8 +35,7 @@ FilterSelectWidget::FilterSelectWidget(GlobalAppSettings& go, QWidget* parent)
 	topPanelLayout->setSpacing(0);
 	topPanelLayout->addWidget(allonButton);
 	topPanelLayout->addWidget(alloffButton);
-	mainLayout->addWidget(scrArea);
-	scrArea->setWidgetResizable(true);
+	mainLayout->addWidget(typesel);
 	typesel->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
 	mainLayout->addLayout(footerLayout);
 	footerLayout->setContentsMargins(0, 0, 0, 0);
@@ -68,110 +58,149 @@ FilterSelectWidget::FilterSelectWidget(GlobalAppSettings& go, QWidget* parent)
 	okButton->setText(tr("filter!"));
 	okButton->setIcon(QIcon(":/res/filter.png"));
 	okButton->setStyleSheet(CHANGE_BUTTONS_STYLESHEET);
-    scrArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-	QScroller::grabGesture(scrArea, QScroller::LeftMouseButtonGesture);
+	typesel->setItemDelegate(new CheckableDelegate(QColor(210, 224, 146), QColor(245, 164, 188), this));
 #ifdef QT_VERSION5X
-
 	QObject::connect(allonButton, &MegaIconButton::clicked, this, &FilterSelectWidget::checkAll);
 	QObject::connect(alloffButton, &MegaIconButton::clicked, this, &FilterSelectWidget::uncheckAll);
 	QObject::connect(backButton, &MegaIconButton::clicked, this, &FilterSelectWidget::backRequired);
 	QObject::connect(okButton, &MegaIconButton::clicked, this, &FilterSelectWidget::okPressed);
-	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &FilterSelectWidget::was_timeout);
+	QObject::connect(typesel, &QListView::clicked, this, &FilterSelectWidget::changeState);
+	QObject::connect(awaiter, &RequestAwaiter::requestTimeout, this, &FilterSelectWidget::was_timeout);
 
 #else
 	QObject::connect(allonButton, SIGNAL(clicked()), this, SLOT(checkAll()));
 	QObject::connect(alloffButton, SIGNAL(clicked()), this, SLOT(uncheckAll()));
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 	QObject::connect(okButton, SIGNAL(clicked()), this, SLOT(okPressed()));
-	QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
+	QObject::connect(awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
+	QObject::connect(typesel, SIGNAL(clicked(const QModelIndex&)), this, SLOT(changeState(const QModelIndex&)));
 #endif
-	scrArea->setWidget(typesel);
 }
 
 void FilterSelectWidget::loadFilters()
 {
-	if (awaiter.isAwaiting())
+	if (awaiter->isAwaiting())
 		return;
 	showProcessingOverlay();
 #ifdef QT_VERSION5X
-	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &FilterSelectWidget::parse_doctype_list_response);
+	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &FilterSelectWidget::parse_doctype_list_response);
 #else
-	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_doctype_list_response()));
+	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(parse_doctype_list_response()));
 #endif
-	globalSettings.networkingEngine->docGetAllowedTypes(&awaiter, RECEIVER_SLOT_NAME);
-	awaiter.run();
+	DocTypeEntity::sendGetRequest(awaiter);
 }
 
 void FilterSelectWidget::checkAll()
 {
-	for (int i = 0; i < selectionState.count(); ++i)
+	DocType doc(new DocTypeEntity());
+	for (int i = 0; i < doctypes->rowCount(); ++i)
 	{
-		selectionState[i] = true;
+		doc = upcastRecord(doctypes->data(
+			doctypes->index(i),
+			DataEntityListModel::DirectAccess).value<RecEntity>(), doc);
+		if (doc.isNull())
+			continue;
+		doc->isSelected = true;
 	}
-	typesel->reload();
+	typesel->update();
 }
 
 void FilterSelectWidget::uncheckAll()
 {
-	for (int i = 0; i < selectionState.count(); ++i)
+	DocType doc(new DocTypeEntity());
+	for (int i = 0; i < doctypes->rowCount(); ++i)
 	{
-		selectionState[i] = false;
+		doc = upcastRecord(doctypes->data(
+			doctypes->index(i),
+			DataEntityListModel::DirectAccess).value<RecEntity>(), doc);
+		if (doc.isNull())
+			continue;
+		doc->isSelected = false;
 	}
-	typesel->reload();
+	typesel->update();
+}
+
+void FilterSelectWidget::changeState(const QModelIndex& index)
+{
+	if (index.isValid())
+	{
+		DocType doctype = upcastRecord<DocTypeEntity>(index.data().value<RecEntity>());
+		if (doctype.isNull())
+			return;
+		else
+		{
+			doctype->isSelected = !doctype->isSelected;
+			typesel->update(index);
+		}
+	}
 }
 
 void FilterSelectWidget::okPressed()
 {
-	if (awaiter.isAwaiting())
+	if (awaiter->isAwaiting())
 		return;
 	showProcessingOverlay();
 #ifdef QT_VERSION5X
-	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &FilterSelectWidget::parse_doctype_selection_response);
+	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &FilterSelectWidget::parse_doctype_selection_response);
 #else
-	QObject::connect(&awaiter, SIGNAL(requestReceived()), this, SLOT(parse_doctype_selection_response()));
+	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(parse_doctype_selection_response()));
 #endif
 	QString buffer;
-	for (int i = 0; i < selectionState.count(); ++i)
+	RecEntity record;
+	for (int i = 0; i < doctypes->rowCount(); ++i)
 	{
-		if (selectionState.at(i))
+		record = doctypes->data(
+			doctypes->index(i),
+			DataEntityListModel::DirectAccess
+		).value<RecEntity>();
+		if (record->getAttachedNumber() == 1)
 		{
-			buffer += doctypes.at(i).id;
+			buffer += QString::number(record->getId()) + ",";
 		}
 	}
-	globalSettings.networkingEngine->docSetFilter(buffer, &awaiter, RECEIVER_SLOT_NAME);
-	awaiter.run();
+	buffer.chop(1);
+	DocTypeEntity::sendFilterList(buffer, awaiter);
 }
 
 void FilterSelectWidget::was_timeout()
 {
-	title->setText(tr("timeout:") + QString::number(awaiter.getInterval()));
-	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+	title->setText(tr("timeout:") + QString::number(awaiter->getInterval()));
+	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
 void FilterSelectWidget::parse_doctype_list_response()
 {
-	doctypes = RequestParser::interpretAsDocFilterList(awaiter.restext, awaiter.errtext);
-	selectionState.clear();
-	RequestParser::docFilterResponse::iterator start = doctypes.begin();
-	while (start != doctypes.end())
+	ResponseParser parser(new LinearListParser(awaiter->restext, awaiter->errtext));
+	PolyResponse response = RequestParser::parseResponse(parser, RecEntity(new DocTypeEntity()));
+	if (response.isError)
 	{
-		selectionState.push_back(start->notFiltered);
-		++start;
+		title->setText(response.errtext);
 	}
-	typesel->reload();
-	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+	else
+	{
+		doctypes->setData(response.objects);
+	}
+	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
 void FilterSelectWidget::parse_doctype_selection_response()
 {
-	RequestParser::TypicalResponse resp = RequestParser::interpretAsSimpliestResponse(awaiter.restext, awaiter.errtext);
-	if (resp.resp)
+	ResponseParser parser(new SimpliestResponceParser(awaiter->restext, awaiter->errtext));
+	if (parser->isSuccessfull())
 	{
 		emit filterApplied();
 	}
-	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+	else
+	{
+		title->setText(parser->getErrors());
+	}
+	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
+}
+
+void FilterSelectWidget::_sendDataRequest()
+{
+	loadFilters();
 }

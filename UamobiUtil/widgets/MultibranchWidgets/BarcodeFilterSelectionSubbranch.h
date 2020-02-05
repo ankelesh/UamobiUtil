@@ -11,14 +11,12 @@
 #include <QtGui/QBoxLayout>
 #include <QtGui/QLabel>
 #endif
-#include "widgets/parents/inframedWidget.h"
+#include "widgets/parents/IndependentBranchNode.h"
 #include "widgets/parents/AbstractVariantSelectionWidget.h"
 #include "widgets/parents/abstractNodeInterface.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
-#include "widgets/SuppliersSelectionBranch/SuppliersSelectWidget.h"
-#include "widgets/MultibranchWidgets/GroupSelectionWidget.h"
-#include "widgets/MultibranchWidgets/StillageSelectionWidget.h"
-
+#include "widgets/parents/SelectItemFromListWidget.h"
+#include "networking/things.h"
 /*
 	This widget branch is allowing user to select barcode filter that will be sent to server.
 
@@ -26,37 +24,41 @@
 
 */
 
-
-class BarcodeFilterSelectionSubbranch : public inframedWidget, abstractNode
+class BarcodeFilterSelectionSubbranch : public IndependentBranchNode, abstractNode
 {
 	Q_OBJECT
 protected:
-	GlobalAppSettings& globalSettings;
 
 	QVBoxLayout* mainLayout;
 	inframedWidget* innerWidget;
 	QVBoxLayout* innerLayout;
+	QLabel * currentFilterInfo;
 	MegaIconButton* stillageButton;
 	MegaIconButton* suppliersButton;
 	MegaIconButton* groupButton;
 	MegaIconButton* nofilterButton;
+	MegaIconButton* passButton;
 	MegaIconButton* backButton;
 
-	SuppliersSelectWidget* supplierWidget;
-	StillageSelectionWidget* stillageWidget;
-	GroupSelectionWidget* groupWidget;
+	SelectItemFromListWidget* supplierWidget;
+	SelectItemFromListWidget* stillageWidget;
+	SelectItemFromListWidget* groupWidget;
+	RequestAwaiter* awaiter;
 
+	RecEntity doc;
+	virtual void _handleRecord(RecEntity) override;
+	virtual void _sendDataRequest() override;
 public:
-	BarcodeFilterSelectionSubbranch(GlobalAppSettings & go, QWidget* parent = Q_NULLPTR);
-
+	BarcodeFilterSelectionSubbranch(QWidget* parent = Q_NULLPTR);
+	void assertAndShow(QString& pdoc);
+	void applyFilter(QString param, QString type);
 protected slots:
 	void supplierSelectRequired();
 	void stillageSelectRequired();
 	void groupSelectRequired();
-	void supplierProxyWrapper(parsedSupplier);
 	void noFilterRequired();
-	void applyFilter(QString param, QString type);
+	void filterSelected(RecEntity);
+	void got_response();
 	void hideCurrent();
-signals:
-	void selectionHappened();
+
 };

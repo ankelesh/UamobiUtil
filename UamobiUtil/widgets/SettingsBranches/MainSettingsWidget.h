@@ -36,7 +36,6 @@ class MainSettingsWidget : public inframedWidget
 {
 	Q_OBJECT
 private:
-	GlobalAppSettings& globalSettings;
 
 	QVBoxLayout* mainLayout;
 	QTabWidget* innerWidget;
@@ -67,7 +66,7 @@ private:
 	MegaIconButton* backButton;
 
 public:
-	MainSettingsWidget(GlobalAppSettings& go, QWidget* parent = Q_NULLPTR);
+	MainSettingsWidget(QWidget* parent = Q_NULLPTR);
 	virtual void show() override;
 private slots:
 	void saveClicked();			//	saves data to GlobalAppSettings widget

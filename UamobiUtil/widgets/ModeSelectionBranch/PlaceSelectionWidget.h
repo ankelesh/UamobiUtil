@@ -4,17 +4,19 @@
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QScrollArea>
+#include <QtWidgets/QListView>
 #else
 // Qt 4 widgets
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QScrollArea>
 #include <QtGui/QLabel>
+#include <QtGui/QListView>
 #endif
 
 // Qt imports
 #include <QtCore/QString>
 // widgets imports
-#include "widgets/parents/inframedWidget.h"
+#include "widgets/parents/IndependentBranchNode.h"
 #include "widgets/parents/AbstractVariantSelectionWidget.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
 // networking imports
@@ -34,67 +36,44 @@
 	__ASSOCIATED_DATABASE_FUNCTION__  :   P'simpliestResponse'   select_place(place_code)
 */
 
-using parse_uniresults_functions::placesResponse;
-namespace specwidgets
-	// This namespace must contain transformed base widgets with minor changes and specializations of abstract widgets
-{
-	class _placeSelectionWidget : public AbstractVariantSelectionWidget // This class wraps places list
-	{
-		Q_OBJECT
-	private:
-		placesResponse& places;
-	protected:
-		// Inherited via AbstractVariantSelectionWidget
-		virtual QString elemAsString(int index) override;
-		virtual int countElems() override;
-	public:
-		_placeSelectionWidget(placesResponse& Places, QWidget* parent);
-	private slots:
-		virtual void indexSelected(int Index);
-	signals:
-		void placeSelected(parsedPlace);
-	};
-}
 
-class PlaceSelectionWidget : public inframedWidget // This widget is top of ModeSelection and allows place selection from obtained list
+class PlaceSelectionWidget : public IndependentBranchNode // This widget is top of ModeSelection and allows place selection from obtained list
 {
 	Q_OBJECT
 protected:
-	// uses GAS
-	const GlobalAppSettings& globalSettings;
 	// pointer to function used for fetching place list
-	NoArgsRequestMP listPlaces;
-	interpretsPointers::interpretAsPlaceLike interpreter;
+	QueryTemplates::QueryId listPlacesQueryId;
 	// place list
-	placesResponse allplaces;
+	DataEntityListModel* allplaces;
 	// widgets
 	QVBoxLayout* mainLayout;
 	QHBoxLayout* buttonLayout;
-	QScrollArea* scrArea;
 	QLabel* userTip;
 	QLabel* modeTip;
 	QLabel* placesTip;
-	specwidgets::_placeSelectionWidget* placeSelection;
+	QListView* placeSelection;
 	MegaIconButton* backButton;
 
-	RequestAwaiter awaiter;
+	RequestAwaiter* awaiter;
 
-	parsedPlace pl;
+	Place place;
+
+	void _handleRecord(RecEntity) override;
+	virtual void _sendDataRequest() override;
 public:
-	PlaceSelectionWidget(const GlobalAppSettings& go, QWidget* parent = Q_NULLPTR,
-		NoArgsRequestMP meth = &DataUpdateEngine::placeList,
-		interpretsPointers::interpretAsPlaceLike inter = &RequestParser::interpretAsPlaceList
+	PlaceSelectionWidget( QWidget* parent = Q_NULLPTR,
+		QueryTemplates::QueryId listPlacesQuery = QueryTemplates::placeList
 	);
 	virtual void show() override;
 	virtual bool isExpectingControl(int);
-	void setMode(parsedMode&);
+	void setMode(Mode);
 private slots:
-	void placeSelected(parsedPlace);	//	sends place_select request, then emits parsedPlace
+	void placeSelected(RecEntity);	//	sends place_select request, then emits parsedPlace
 	void parse_loaded_places();			//	netresponses
 	void place_select_response();
 	void was_timeout();
 public slots:
-	void loadPlaces();					//	loads place list from web
-signals:
-	void placeAcquired(parsedPlace);	//	is emitted when place_request is succesfull
+	void loadPlaces();			
+	// Inherited via IndependentBranchNode
+	//	is emitted when place_request is succesfull
 };

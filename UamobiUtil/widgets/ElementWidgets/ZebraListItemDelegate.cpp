@@ -13,7 +13,7 @@ void ZebraItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 #ifdef DEBUG
 	detrace_CYCLEEXPL("drawing item on index " << index.row() << " wa " << index.row() % 2);
 #endif
-
+	painter->save();
 	if (index.row() % 2)
 	{
 		painter->setBrush(QBrush(Qt::lightGray, Qt::SolidPattern));
@@ -23,5 +23,6 @@ void ZebraItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 		painter->setBrush(QBrush(Qt::white));
 	}
 	painter->drawRect(rct);
+	painter->restore();
 	QItemDelegate::paint(painter, option, index);
 }

@@ -2,66 +2,109 @@
 #include <QtCore/QString>
 #include <QtCore/QDataStream>
 
-abs_parsed_request::abs_parsed_request(QString& res, QString& err)
-	: result(res), errtext(err), success(false)
+
+QString makeError(QDomDocument& xmldoc)
 {
+	QDomNodeList tlist = xmldoc.elementsByTagName("status");
+	QString errtext;
+	if (tlist.count() < 1)
+	{
+		return "No status code";
+	}
+	else
+	{
+		int code = tlist.at(0).toElement().text().toInt();
+		switch (code)
+		{
+		case 200:
+			errtext = "possibly fake error, check logs";
+			break;
+		case 403:
+			errtext = "Forbidden request";
+			break;
+		case 404:
+			errtext = "Data not exists";
+			break;
+		case 500:
+			errtext = "Internal error";
+			break;
+		default:
+			errtext = "Unknown error code: "
+				+ tlist.at(0).toElement().text();
+			break;
+		}
+	}
+	tlist = xmldoc.elementsByTagName("message");
+	if (tlist.count() > 0)
+		errtext += tlist.at(0).toElement().text();
+	return errtext;
+}
+bool isError(QDomDocument& xmldoc)
+{
+	QDomNodeList tlist = xmldoc.elementsByTagName("status");
+	if (tlist.count() < 1)
+	{
+		return true;
+	}
+	if (tlist.at(0).toElement().text().toInt() != 200)
+	{
+		return true;
+	}
+	return false;
 }
 
-bool abs_parsed_request::isSuccessfull()
+bool AbsResponseParser::_stopWithError(const char* estr)
+{
+	xmldoc.clear();
+	errtext += estr;
+	return false;
+}
+
+bool AbsResponseParser::run()
+{
+	return _doParsing();
+}
+
+AbsResponseParser::AbsResponseParser(QString& res, QString& err)
+	: xmldoc(), errtext(err), success(false), parseResult(), alternativeResult(0)
+{
+	xmldoc.setContent(res);
+	if (isError(xmldoc))
+	{
+		errtext = makeError(xmldoc);
+	}	
+}
+
+bool AbsResponseParser::isSuccessfull()
 {
 	return success;
 }
 
-QString abs_parsed_request::getErrors()
+QString AbsResponseParser::getErrors()
 {
-	if (!couldRead())
-		return QString("Error reading request");
-	if (!noRequestErrors())
-		return parseErrorText();
-	else
-		return QString("Other error");
+	return errtext;
 }
 
-uniform_parse_result& abs_parsed_request::read()
+int AbsResponseParser::isAlternative()
 {
-	return parseres;
+	return alternativeResult;
 }
 
-bool queryLengthOkInResult(uniform_parse_result& ures)
+void AbsResponseParser::reset(QString& res, QString& err)
 {
-	if (ures.queriesResult.count() == 0 || ures.one_position_entries_quantity == 0) {
-		return false;
-	}
-	return (ures.queriesResult.count() % ures.one_position_entries_quantity) == 0;
-}
-
-int queryReservationSize(uniform_parse_result& ures)
-{
-	if (ures.queriesResult.count() == 0)
-		return 1;
-	return ures.queriesResult.count() / ures.one_position_entries_quantity;
-}
-
-QString showHeap(uniform_parse_result& ures)
-{
-	QString temp("heap snapshot with tech values:");
-	temp += QString::number(ures.one_position_entries_quantity) + " opeq, " + QString::number(ures.alternative_result) + " ares,";
-	temp += QString::number(ures.request_status) + " status\r\n";
-	for (int i = 0; i < ures.queriesResult.count(); ++i)
+	xmldoc.setContent(res);
+	errtext = err;
+	if (isError(xmldoc))
 	{
-		temp += "\r\n|" + ures.queriesResult.at(i) + "|<" + QString::number(i) + ">";
+		errtext += makeError(xmldoc);
 	}
-
-	return temp;
+	else
+	{
+		success = _doParsing();
+	}
 }
 
-QString makeUPResSnapshot(uniform_parse_result& ures)
+XmlObjects& AbsResponseParser::read()
 {
-	return "Parseres of type: " + QString::number(ures.type) + "containing type" + 
-		ures.containingType + "\n" + showHeap(ures);
-}
-
-uniform_parse_result::uniform_parse_result(request_parse_type t)
-	: type(t), queriesResult(), request_status(0), one_position_entries_quantity(0), alternative_result(0)
-{
+	return parseResult;
 }

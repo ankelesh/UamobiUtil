@@ -46,9 +46,6 @@
     <Filter Include="Source Files\util">
       <UniqueIdentifier>{3e215254-81ad-4a74-97a7-4c856df9ad11}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\ModeSelectionBranch">
-      <UniqueIdentifier>{16265999-2c98-4616-8bb5-6844853b4255}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\ModeSelectionBranch">
       <UniqueIdentifier>{72d62486-61c3-4d7a-a800-86b700487f81}</UniqueIdentifier>
     </Filter>
@@ -63,9 +60,6 @@
     </Filter>
     <Filter Include="Header Files\Network\Parsing">
       <UniqueIdentifier>{ad05bfea-4a23-4cc0-be0f-4e0a935e4c41}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\SuppliersSelectionBranch">
-      <UniqueIdentifier>{67a8043e-2662-433b-8028-11c902f61cfc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\SuppliersSelectionBranch">
       <UniqueIdentifier>{7f6fba08-a8c6-464d-bd25-d4b43adce392}</UniqueIdentifier>
@@ -112,6 +106,18 @@
     <Filter Include="Header Files\InventoryLinked">
       <UniqueIdentifier>{66ef7938-14d8-43b6-b529-55d756254663}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Network\ReceivedEntities">
+      <UniqueIdentifier>{85ad0003-da79-469e-bd28-be39dfb6e938}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Delegates">
+      <UniqueIdentifier>{b84ae3e0-c1af-476f-9a62-a7b9f2e7569a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BranchingTools">
+      <UniqueIdentifier>{39a5e562-2e80-45e9-8244-6a47bbcc35e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BranchesToFix">
+      <UniqueIdentifier>{16265999-2c98-4616-8bb5-6844853b4255}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -119,12 +125,6 @@
     </ClCompile>
     <ClCompile Include="UamobiUtil.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="networking\photo\datarequest.cpp">
-      <Filter>Source Files\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="networking\dataupdateengine.cpp">
-      <Filter>Source Files\Network</Filter>
     </ClCompile>
     <ClCompile Include="networking\dataupdateengine-http.cpp">
       <Filter>Source Files\Network</Filter>
@@ -147,9 +147,6 @@
     <ClCompile Include="networking\RequestAwaiter.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
-    <ClCompile Include="networking\xml_funcs.cpp">
-      <Filter>Source Files\Network</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\ModeSelectionBranch\ModeSelectionWidget.cpp">
       <Filter>Source Files\ModeSelectionBranch</Filter>
     </ClCompile>
@@ -168,9 +165,6 @@
     <ClCompile Include="networking\Parsers\abs_parsed_request.cpp">
       <Filter>Source Files\Network\Parsing</Filter>
     </ClCompile>
-    <ClCompile Include="networking\Parsers\NamedAttributesResponseParsers.cpp">
-      <Filter>Source Files\Network\Parsing</Filter>
-    </ClCompile>
     <ClCompile Include="networking\Parsers\RequestParser.cpp">
       <Filter>Source Files\Network\Parsing</Filter>
     </ClCompile>
@@ -186,26 +180,11 @@
     <ClCompile Include="widgets\parents\AbstractListSelectionWidget.cpp">
       <Filter>Source Files\util\parents</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\SuppliersSelectionBranch\SuppliersSelectWidget.cpp">
-      <Filter>Source Files\SuppliersSelectionBranch</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\SuppliersSelectionBranch\OrderSelectionWidget.cpp">
-      <Filter>Source Files\SuppliersSelectionBranch</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\parents\abstractNodeInterface.cpp">
       <Filter>Source Files\util\parents</Filter>
     </ClCompile>
     <ClCompile Include="widgets\ReceiptSpecialWidgets\ReceiptParametersWidget.cpp">
       <Filter>Source Files\ReceiptLinked</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ReceiptNoneBranch\ReceiptRootWidget.cpp">
-      <Filter>Source Files\ReceiptLinked</Filter>
-    </ClCompile>
-    <ClCompile Include="networking\StaticTestingDataEngine.cpp">
-      <Filter>Source Files\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="networking\NetCallArgs.cpp">
-      <Filter>Source Files\Network</Filter>
     </ClCompile>
     <ClCompile Include="networking\things.cpp">
       <Filter>Source Files\Network</Filter>
@@ -228,12 +207,6 @@
     <ClCompile Include="widgets\parents\AbstractScaningWidget.cpp">
       <Filter>Source Files\ScaningRelated</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\ReceiptSpecialWidgets\ReceiptScaningWidget.cpp">
-      <Filter>Source Files\ScaningRelated</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\ItemSearchWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\MultibranchWidgets\DocResultsWidget.cpp">
       <Filter>Source Files\MultibranchWidgets</Filter>
     </ClCompile>
@@ -246,13 +219,7 @@
     <ClCompile Include="legacy\qtCompatibility\scrollgrabber.cpp">
       <Filter>Source Files\legacy</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\InventorySpecialWidgets\InventoryScaningWidget.cpp">
-      <Filter>Source Files\ScaningRelated</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\InventoryBranch\InventoryParamsWidget.cpp">
-      <Filter>Source Files\InventoryLinked</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\InventoryBranch\InventoryRootWidget.cpp">
       <Filter>Source Files\InventoryLinked</Filter>
     </ClCompile>
     <ClCompile Include="widgets\MultibranchWidgets\FilterSelectWidget.cpp">
@@ -276,9 +243,6 @@
     <ClCompile Include="widgets\ControlsMiniwidgets\ControlManager.cpp">
       <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\parents\AbstractSearchAndPickWidget.cpp">
-      <Filter>Source Files\util\parents</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\MultibranchWidgets\BarcodeFilterSelectionSubbranch.cpp">
       <Filter>Source Files\MultibranchWidgets</Filter>
     </ClCompile>
@@ -288,22 +252,76 @@
     <ClCompile Include="widgets\MultibranchWidgets\ControlListWidget.cpp">
       <Filter>Source Files\MultibranchWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\GroupSelectionWidget.cpp">
+    <ClCompile Include="networking\QueryTemplates.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScaningCore\BarcodeObserver.cpp">
+      <Filter>Source Files\ScaningRelated</Filter>
+    </ClCompile>
+    <ClCompile Include="datacore\AbsEntityPrototype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="datacore\UniformXmlObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="datacore\NamedIdEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="datacore\EntitledEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="datacore\ModeEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="datacore\FullItemEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ExtendedDelegates\CheckableDelegate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\parents\SelectItemFromListWidget.cpp">
+      <Filter>Source Files\util\parents</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\SuppliersSelectionBranch\IdDependentSelectWidget.cpp">
+      <Filter>Source Files\SuppliersSelectionBranch</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\PagedSearchWidget.cpp">
       <Filter>Source Files\MultibranchWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\StillageSelectionWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
+    <ClCompile Include="datacore\FullDocumentEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="datacore\InputControlEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\InventorySpecialWidgets\NormalScaningWidget.cpp">
+      <Filter>Source Files\ScaningRelated</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\BranchingTools\AbsBranch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\BranchingTools\AdjustableBranch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\BranchingTools\BranchNodeFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\parents\IndependentBranchNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\BranchingTools\BranchDescriptionParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\BranchingTools\BranchFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\BranchingTools\EmbeddedBranches.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
       <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="networking\dataupdateengine.h">
-      <Filter>Header Files\Network</Filter>
-    </QtMoc>
-    <QtMoc Include="networking\photo\datarequest.h">
-      <Filter>Header Files\Network</Filter>
     </QtMoc>
     <QtMoc Include="networking\dataupdateengine-http.h">
       <Filter>Header Files\Network</Filter>
@@ -324,10 +342,7 @@
       <Filter>Header Files\util</Filter>
     </QtMoc>
     <QtMoc Include="widgets\ModeSelectionBranch\ModeSelectionWidget.h">
-      <Filter>Header Files\ModeSelectionBranch</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\ModeSelectionBranch\PlaceSelectionWidget.h">
-      <Filter>Header Files\ModeSelectionBranch</Filter>
+      <Filter>Header Files\BranchesToFix</Filter>
     </QtMoc>
     <QtMoc Include="widgets\parents\inframedWidget.h">
       <Filter>Header Files\util\parents</Filter>
@@ -338,20 +353,8 @@
     <QtMoc Include="widgets\parents\AbstractVariantSelectionWidget.h">
       <Filter>Header Files\util\parents</Filter>
     </QtMoc>
-    <QtMoc Include="widgets\SuppliersSelectionBranch\SuppliersSelectWidget.h">
-      <Filter>Header Files\SuppliersSelectionBranch</Filter>
-    </QtMoc>
     <QtMoc Include="widgets\parents\AbstractListSelectionWidget.h">
       <Filter>Header Files\util\parents</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\SuppliersSelectionBranch\OrderSelectionWidget.h">
-      <Filter>Header Files\SuppliersSelectionBranch</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\ReceiptSpecialWidgets\ReceiptParametersWidget.h">
-      <Filter>Header Files\ReceiptLinked</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\ReceiptNoneBranch\ReceiptRootWidget.h">
-      <Filter>Header Files\ReceiptLinked</Filter>
     </QtMoc>
     <QtMoc Include="widgets\ElementWidgets\BigButtonsSpinbox.h">
       <Filter>Header Files\ElementWidgets</Filter>
@@ -362,29 +365,14 @@
     <QtMoc Include="widgets\parents\AbstractScaningWidget.h">
       <Filter>Header Files\ScaningRelated</Filter>
     </QtMoc>
-    <QtMoc Include="widgets\ReceiptSpecialWidgets\ReceiptScaningWidget.h">
-      <Filter>Header Files\ScaningRelated</Filter>
-    </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\DocResultsWidget.h">
-      <Filter>Header Files\MultibranchWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\MultibranchWidgets\ItemSearchWidget.h">
       <Filter>Header Files\MultibranchWidgets</Filter>
     </QtMoc>
     <QtMoc Include="widgets\parents\AbstractCheckboxSelection.h">
       <Filter>Header Files\util\parents</Filter>
     </QtMoc>
-    <QtMoc Include="widgets\InventorySpecialWidgets\ParentDocumentWidget.h">
-      <Filter>Header Files\MultibranchWidgets</Filter>
-    </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\FilterSelectWidget.h">
       <Filter>Header Files\MultibranchWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\InventoryBranch\InventoryParamsWidget.h">
-      <Filter>Header Files\InventoryLinked</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\InventoryBranch\InventoryRootWidget.h">
-      <Filter>Header Files\InventoryLinked</Filter>
     </QtMoc>
     <QtMoc Include="legacy\qtCompatibility\scrollgrabber.h">
       <Filter>Header Files\legacy</Filter>
@@ -395,29 +383,56 @@
     <QtMoc Include="ScaningCore\NormalCapturer.h">
       <Filter>Header Files\ScaningRelated</Filter>
     </QtMoc>
-    <QtMoc Include="widgets\InventorySpecialWidgets\InventoryScaningWidget.h">
-      <Filter>Header Files\ScaningRelated</Filter>
-    </QtMoc>
     <QtMoc Include="widgets\ControlsMiniwidgets\ControlTranslator.h">
       <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\MultibranchWidgets\BarcodeFilterSelectionSubbranch.h">
-      <Filter>Header Files\MultibranchWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\MultibranchWidgets\GroupSelectionWidget.h">
-      <Filter>Header Files\MultibranchWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\parents\AbstractSearchAndPickWidget.h">
-      <Filter>Header Files\util\parents</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\MultibranchWidgets\StillageSelectionWidget.h">
-      <Filter>Header Files\MultibranchWidgets</Filter>
     </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\ControlListWidget.h">
       <Filter>Header Files\MultibranchWidgets</Filter>
     </QtMoc>
     <QtMoc Include="widgets\ControlsMiniwidgets\abs_control.h">
       <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="ScaningCore\BarcodeObserver.h">
+      <Filter>Header Files\ScaningRelated</Filter>
+    </QtMoc>
+    <QtMoc Include="networking\things.h">
+      <Filter>Header Files\Network</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\InventorySpecialWidgets\ParentDocumentWidget.h">
+      <Filter>Header Files\MultibranchWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\PagedSearchWidget.h">
+      <Filter>Header Files\MultibranchWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\parents\IndependentBranchNode.h">
+      <Filter>Header Files\util\parents</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ModeSelectionBranch\PlaceSelectionWidget.h">
+      <Filter>Header Files\MultibranchWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ReceiptSpecialWidgets\ReceiptParametersWidget.h">
+      <Filter>Header Files\MultibranchWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\InventorySpecialWidgets\NormalScaningWidget.h">
+      <Filter>Header Files\MultibranchWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\parents\SelectItemFromListWidget.h">
+      <Filter>Header Files\MultibranchWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\SuppliersSelectionBranch\IdDependentSelectWidget.h">
+      <Filter>Header Files\MultibranchWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\BarcodeFilterSelectionSubbranch.h">
+      <Filter>Header Files\BranchesToFix</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\BranchingTools\AbsBranch.h">
+      <Filter>Header Files\BranchingTools</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\BranchingTools\AdjustableBranch.h">
+      <Filter>Header Files\BranchingTools</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\InventoryBranch\InventoryParamsWidget.h">
+      <Filter>Header Files\MultibranchWidgets</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -426,15 +441,6 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="networking\things.h">
-      <Filter>Header Files\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="networking\xml_funcs.h">
-      <Filter>Header Files\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="networking\global.h">
-      <Filter>Header Files\Network</Filter>
-    </ClInclude>
     <ClInclude Include="widgets\utils\GlobalAppSettings.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
@@ -445,9 +451,6 @@
       <Filter>Header Files\util</Filter>
     </ClInclude>
     <ClInclude Include="networking\Parsers\abs_parsed_request.h">
-      <Filter>Header Files\Network\Parsing</Filter>
-    </ClInclude>
-    <ClInclude Include="networking\Parsers\NamedAttributesResponseParsers.h">
       <Filter>Header Files\Network\Parsing</Filter>
     </ClInclude>
     <ClInclude Include="networking\Parsers\RequestParser.h">
@@ -461,12 +464,6 @@
     </ClInclude>
     <ClInclude Include="legacy\legacy.h">
       <Filter>Header Files\legacy</Filter>
-    </ClInclude>
-    <ClInclude Include="networking\NetCallArgs.h">
-      <Filter>Header Files\Network</Filter>
-    </ClInclude>
-    <ClInclude Include="networking\StaticTestingDataEngine.h">
-      <Filter>Header Files\Network</Filter>
     </ClInclude>
     <ClInclude Include="widgets\parents\abstractNodeInterface.h">
       <Filter>Header Files\util\parents</Filter>
@@ -482,6 +479,51 @@
     </ClInclude>
     <ClInclude Include="widgets\ControlsMiniwidgets\ControlManager.h">
       <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="networking\QueryTemplates.h">
+      <Filter>Header Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="datacore\AbsEntityPrototype.h">
+      <Filter>Header Files\Network\ReceivedEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="datacore\UniformXmlObject.h">
+      <Filter>Header Files\Network\Parsing</Filter>
+    </ClInclude>
+    <ClInclude Include="networking\dataupdateengine.h">
+      <Filter>Header Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="datacore\NamedIdEntity.h">
+      <Filter>Header Files\Network\ReceivedEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="datacore\EntitledEntity.h">
+      <Filter>Header Files\Network\ReceivedEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="datacore\ModeEntity.h">
+      <Filter>Header Files\Network\ReceivedEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="datacore\FullItemEntity.h">
+      <Filter>Header Files\Network\ReceivedEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\ExtendedDelegates\CheckableDelegate.h">
+      <Filter>Header Files\Delegates</Filter>
+    </ClInclude>
+    <ClInclude Include="datacore\FullDocumentEntity.h">
+      <Filter>Header Files\Network\ReceivedEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="datacore\InputControlEntity.h">
+      <Filter>Header Files\Network\ReceivedEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\BranchingTools\BranchDescriptionParser.h">
+      <Filter>Header Files\BranchingTools</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\BranchingTools\BranchFactory.h">
+      <Filter>Header Files\BranchingTools</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\BranchingTools\BranchNodeFactory.h">
+      <Filter>Header Files\BranchingTools</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\BranchingTools\EmbeddedBranches.h">
+      <Filter>Header Files\BranchingTools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

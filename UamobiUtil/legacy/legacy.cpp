@@ -88,51 +88,13 @@ namespace legacy {
 
 	static QHash<QChar, QHash<QString, modecut> > legacymodes(_initlm());
 
-	parsedMode parseLegacyMode(QString& name, QString& mode)
+	QPair<QString, QString> splitLegacyMode(QString& mode)
 	{
 		modecut m = legacymodes.value(mode.at(0)).value(mode);
-		parsedMode tmp;
-		tmp.name = name;
-		tmp.mode = m.modename;
-		tmp.submode = m.submodename;
-		return tmp;
+		return QPair<QString, QString>(m.modename, m.submodename);
 	}
-	void filterNonCompatibleModes(QVector < parsedMode>& vect)
-	{
-		QVector<parsedMode> tvect;
-		tvect.reserve(2);
-		QVector<parsedMode>::iterator start = vect.begin();
-		while (start != vect.end())
-		{
-			if (start->mode == "receipt")
-			{
-				if (start->submode.isEmpty()) {
-					tvect << *start;
-				}
-				else if (start->submode.contains("warehouse"))
-				{
-					tvect << *start;
-				}
-				else if (start->submode.contains("andsld"))
-				{
-					tvect << *start;
-				}
-			}
-			else if (start->mode == "inventory")
-			{
-				if (start->submode.isEmpty())
-				{
-					tvect << *start;
-				}
-				else if (start->submode.contains("partial", Qt::CaseInsensitive))
-				{
-					tvect << *start;
-				}
-			}
-			++start;
-		}
-		vect = tvect;
-	}
+
+
 	int guessControlType(QString& cname)
 	{
 		if (cname.contains("qty"))

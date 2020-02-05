@@ -11,6 +11,8 @@
 #endif
 #include <QString>
 #include "widgets/ElementWidgets/BigButtonsSpinbox.h"
+#include "qsharedpointer.h"
+
 /*
 	This file provides interfaces and common features to control widgets. Main idea is to incapsulate control behind string values.
 
@@ -73,6 +75,8 @@ public:
 	void associateBuffer(QString&);							//	sets buffer to provided
 	virtual ~abs_control() {};								//	must be virtual to correctly delete inner widget
 };
+
+typedef QSharedPointer<abs_control> Control;
 
 namespace control_utils
 {

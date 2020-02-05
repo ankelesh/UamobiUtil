@@ -59,7 +59,7 @@ const QSize& getCurrentSize();
 void setCurrentSize(const QSize&);
 
 extern QString countAdaptiveFont(double perc);
-extern QFont makeFont(double perc);
+extern const QFont& makeFont(double perc);
 
 extern const QString OK_BUTTONS_STYLESHEET;
 // All buttons which are made for confirmation (commit button is separated from simple confirm)

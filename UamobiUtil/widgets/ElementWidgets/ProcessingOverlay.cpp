@@ -167,7 +167,7 @@ void ProcessingOverlay::step()
 	}
 }
 // this pointer is used for outer calls to main overlay
-static ProcessingOverlay* ov;
+ProcessingOverlay* ov;
 
 void showProcessingOverlay()
 {

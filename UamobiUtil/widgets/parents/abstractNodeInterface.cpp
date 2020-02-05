@@ -40,19 +40,62 @@ void abstractNode::_hideAny(inframedWidget* replacement)
 #endif
 }
 
-void abstractDynamicNode::hideAndDeleteCurrent(QPointer<inframedWidget>* replacement)
+
+abstractDynamicNode::abstractDynamicNode(inframedWidget* untouch, QLayout* mLayout)
+	: mainLayout(mLayout), currentlyOpened(untouch), untouchable(untouch)
 {
-	if (current != untouchable)
+	if (untouch && mLayout)
 	{
-		delete (*current);
-		current = replacement;
-		(*current)->show();
+		mLayout->addWidget(untouch);
+		mainLayout->setContentsMargins(0, 0, 0, 0);
+		mainLayout->setSpacing(0);
 	}
 }
 
-void abstractDynamicNode::hideAndDeleteAny(QPointer<inframedWidget>* replacement)
+void abstractDynamicNode::_hideAndDeleteCurrent(inframedWidget* replacement)
 {
-	delete (*current);
-	current = replacement;
-	(*current)->show();
+	// hides and deletes current, but stores root one
+	if (replacement == Q_NULLPTR)
+		return;
+	if (currentlyOpened != untouchable)
+	{
+		mainLayout->removeWidget(currentlyOpened);
+		currentlyOpened->hide();
+		currentlyOpened->deleteLater();
+		if (replacement != untouchable)
+		{
+			mainLayout->addWidget(replacement);
+		}
+		replacement->show();
+		currentlyOpened = replacement;
+		currentlyOpened->setFocus();
+	}
+	else 
+	{
+		untouchable->hide();
+		mainLayout->addWidget(replacement);
+		replacement->show();
+		currentlyOpened = replacement;
+		currentlyOpened->setFocus();
+	}
+}
+
+void abstractDynamicNode::_hideAnyWithDelete(inframedWidget* replacement)
+{
+	// hides and deletes any widget
+	if (replacement == Q_NULLPTR)
+		return;
+	if (currentlyOpened != untouchable)
+	{
+		_hideAndDeleteCurrent(replacement);
+		return;
+	}
+	else
+	{
+		untouchable->hide();
+		mainLayout->addWidget(replacement);
+		replacement->show();
+		currentlyOpened = replacement;
+		currentlyOpened->setFocus();
+	}
 }

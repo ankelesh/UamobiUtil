@@ -9,86 +9,28 @@
 	empty spaces and one_position_entries_quantity is stable - one parser class provides same value in any modification
 
 */
-class UserListParser : public abs_parsed_request // parses lists of users
+
+
+class LinearListParser : public AbsResponseParser
 {
 protected:
-	// Inherited via abs_parsed_request
-	virtual bool couldRead() override;
-	virtual bool noRequestErrors() override;
-	virtual QString parseErrorText() override;
+	virtual bool _doParsing() override;
+	// switch to new style serialization if possible
+	void assertAndSwitchToNewStyle(QDomNode& node, QDomNodeList& list);
 public:
-	UserListParser(QString& res, QString& err);
+	LinearListParser(QString res, QString err) : AbsResponseParser(res, err) { success = run(); };
+	static XmlObjects parseLinearList(QString & r, QString& e);
 };
 
-class PlacesListParser : public abs_parsed_request // parses lists of places
+class LinearListWithSublistParser : public AbsResponseParser
 {
 protected:
-	// Inherited via abs_parsed_request
-	virtual bool couldRead() override;
-	virtual bool noRequestErrors() override;
-	virtual QString parseErrorText() override;
+	// Inherited via AbsResponseParser
+	virtual bool _doParsing() override;
 public:
-	PlacesListParser(QString& res, QString& err);
+	LinearListWithSublistParser(QString res, QString err) : AbsResponseParser(res, err) { success = run(); };
+
 };
-class SuppliersListParser : public abs_parsed_request
-{
-protected:
-	// Inherited via abs_parsed_request
-	virtual bool couldRead() override;
 
-	virtual bool noRequestErrors() override;
 
-	virtual QString parseErrorText() override;
-public:
-	SuppliersListParser(QString& res, QString& errtext);
-};
-class OrdersListParser : public abs_parsed_request
-{
-protected:
 
-	// Inherited via abs_parsed_request
-	virtual bool couldRead() override;
-
-	virtual bool noRequestErrors() override;
-
-	virtual QString parseErrorText() override;
-public:
-	OrdersListParser(QString& res, QString& errtext);
-};
-class ItemSimplifiedParser : public abs_parsed_request
-{
-protected:
-
-	// Inherited via abs_parsed_request
-	virtual bool couldRead() override;
-
-	virtual bool noRequestErrors() override;
-
-	virtual QString parseErrorText() override;
-
-public:
-	ItemSimplifiedParser(QString& res, QString& errtext);
-};
-class DocumentParser : public abs_parsed_request
-{
-protected:
-
-	// Inherited via abs_parsed_request
-	virtual bool couldRead() override;
-	virtual bool noRequestErrors() override;
-	virtual QString parseErrorText() override;
-public:
-	DocumentParser(QString& res, QString& err);
-};
-class DocTypeFiltersParser : public abs_parsed_request
-{
-protected:
-	// Inherited via abs_parsed_request
-	virtual bool couldRead() override;
-
-	virtual bool noRequestErrors() override;
-
-	virtual QString parseErrorText() override;
-public:
-	DocTypeFiltersParser(QString& res, QString& err);
-};
