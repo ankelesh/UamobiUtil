@@ -23,18 +23,18 @@ private:
 	bool wastimeout;
 	int timeoutinterval;
 	QNetworkReply* awaitedReply;
-	QHash<QueryTemplates::QueryId, QString> QueryOverrides;
+	long long int deliverTo;
 public:
 	QString restext;		//	Request result. is overwritten when new response arrives
 	QString errtext;		//	error string. Provides info about errors
 public:
 	RequestAwaiter(int interval = 1000, QObject* parent = Q_NULLPTR);
 	void run();				//	primes awaiter - launches timer countdown, raises awaiting flag, drops timeout flag
+	void deliverResultTo(long long int num);
+	bool deliverHere(long long int num);
 	bool isAwaiting();		//	true if there was no timeout and no response
 	bool wasTimeout();		//	true if there was timeout
 	int getInterval();		//	returns interval
-	void pushQueryOverride(const QString newUrl, QueryTemplates::QueryId id);
-	const QString& overrideQuery(const QString& normal, QueryTemplates::QueryId usedId);
 	void setReplyToAwait(QNetworkReply* toAwait);
 	void stopAwaiting();
 public slots:
@@ -43,6 +43,6 @@ public slots:
 	void replyError(QNetworkReply::NetworkError);
 signals:
 	void requestSuccess(QString, QString);	//	emitted when response arrived with results
-	void requestReceived();					//	emitted when response arrived
+	void requestReceived(int mnum = 0);					//	emitted when response arrived
 	void requestTimeout();					//	emitted when timeout appeared
 };

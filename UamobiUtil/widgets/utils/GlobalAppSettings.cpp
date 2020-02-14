@@ -4,6 +4,9 @@
 // utility
 
 
+const float VERSION = 0.03f;
+const char* SUFFIX = "nightly";
+
 void GlobalAppSettings::setTranslator()
 {
 	if (this->language == "Russian")
@@ -30,6 +33,10 @@ void GlobalAppSettings::dump()
 	setting.setValue("alt_hosts", AlternativeAdresses);
 	setting.setValue("scan_prefix", scanPrefix);
 	setting.setValue("scan_suffix", scanSuffix);
+    setting.setValue("printer_designation", printerPortDesignation);
+    setting.setValue("printer_port", printerPort);
+    setting.setValue("printer_type", printerType);
+	setting.setValue("printer_alternatives", alternativePrinters);
 }
 
 GlobalAppSettings* GlobalAppSettings::_instanse = Q_NULLPTR;
@@ -50,5 +57,12 @@ GlobalAppSettings::GlobalAppSettings()
 	AlternativeAdresses = settings.value("alt_hosts", QVariant(QStringList())).toStringList();
 	scanPrefix = settings.value("scan_prefix", 36).toInt();
 	scanSuffix = settings.value("scan_suffix", 10).toInt();
+	fontMinHeight = settings.value("font_min_height", 15).toInt();
+	fontMaxHeight = settings.value("font_max_height", 30).toInt();
+	fontPercent = settings.value("font_scale_percent", 0.03).toDouble();
+    printerPortDesignation = settings.value("printer_designation", "COM6:").toString();
+	printerPort = settings.value("printer_port", 19200).toInt();
+	printerType = settings.value("printer_type", "zebra").toString();
+	alternativePrinters = settings.value("alternative_printers", QVariant(QStringList())).toStringList();
 	setTranslator();
 }

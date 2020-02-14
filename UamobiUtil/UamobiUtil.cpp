@@ -14,23 +14,25 @@ UamobiUtil::UamobiUtil( QWidget* parent)
 	bindProcessingOverlay(overlay);
 	overlay->hide();
 	this->setLayout(mainLayout);
+
 #ifdef Q_OS_WINCE
 	this->setBaseSize(calculateAdaptiveSize(0.8));
 	this->setMaximumSize(calculateAdaptiveSize(1));
 	this->setMaximumHeight(0.9);
 	this->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum));
 #endif
+#ifdef Q_OS_WIN
+#ifndef Q_OS_WINCE
+	setFixedSize(imitatePhoneSize(0.66));
+#endif
+#endif
 #ifdef QT_VERSION5X
-
-	QTimer::singleShot(500, _upCO<MainPageWidget>(), SLOT(loadUsers()));
 	QObject::connect(_upCO<MainPageWidget>(), &MainPageWidget::loggedIn, 
 		this, &UamobiUtil::gotoModeSelection);
 #else
-	//TODO
-	MainPageWidget* mlp = qobject_cast<MainPageWidget*> (mainPage);
-	QTimer::singleShot(500, mlp, SLOT(loadUsers()));
-	QObject::connect(mlp, SIGNAL(loggedIn()), this, SLOT(gotoModeSelection()));
+    QObject::connect(_upCO<MainPageWidget>(), SIGNAL(loggedIn()), this, SLOT(gotoModeSelection()));
 #endif
+	_upCO<MainPageWidget>()->loadUsers();
 }
 
 void UamobiUtil::gotoModeSelection()
@@ -42,7 +44,7 @@ void UamobiUtil::gotoModeSelection()
 	QObject::connect(mb, &ModeSelectionWidget::modeAcquired, this, &UamobiUtil::interpretMode);
 #else
 	QObject::connect(mb, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
-	QObject::connect(mb, SIGNAL(modeAcquired(QHash<QString, QString>, parsedMode)), this, SLOT(interpretMode(QHash<QString, QString>, parsedMode)));
+    QObject::connect(mb, SIGNAL(modeAcquired(QHash<QString, QString>, Mode)), this, SLOT(interpretMode(QHash<QString, QString>, Mode)));
 #endif
 	_hideAndDeleteCurrent(mb);
 }
@@ -52,30 +54,35 @@ void UamobiUtil::gotoReceiptBranch(QHash<QString, QString> opts, Mode mode)
 #ifdef DEBUG
 	detrace_METHCALL("goto Receipt");
 #endif
+	using namespace independent_nodes;
 	AbsBranch* mainBranch;
 	if (mode->submode.isEmpty())
 	{
-		mainBranch = BranchFactory::createNWAdjustableBranch(
-			embeddedBranches::receiptDesc
+		mainBranch = BranchFactory::createNWBranch(
+			embeddedBranches::receiptDesc,
+			this
 		);
 	}
 	else if (mode->submode.contains("warehouse", Qt::CaseInsensitive))
 	{
-		mainBranch = BranchFactory::createNWAdjustableBranch(
-			embeddedBranches::warehouseReceiptDesc
+		mainBranch = BranchFactory::createNWBranch(
+			embeddedBranches::warehouseReceiptDesc,
+			this
 		);
 	}
 	else
 	{
-		mainBranch = BranchFactory::createNWAdjustableBranch(
-			embeddedBranches::correctionReceiptDesc
+		mainBranch = BranchFactory::createNWBranch(
+			embeddedBranches::correctionReceiptDesc,
+			this
 		);
 	}
 #ifdef QT_VERSION5X
-	QObject::connect(mainBranch, &AbsBranch::backRequired, this, &UamobiUtil::hideCurrent);
+	QObject::connect(mainBranch, &AbsBranch::backRequired, this, &UamobiUtil::gotoModeSelection);
 	QObject::connect(mainBranch, &AbsBranch::done, this, &UamobiUtil::closeBranch);
 #else
-	QObject::connect(RR, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+    QObject::connect(mainBranch, SIGNAL(backRequired()), this, SLOT(gotoModeSelection()));
+    QObject::connect(mainBranch, SIGNAL(done(RecEntity)), this, SLOT(closeBranch(RecEntity)));
 #endif
 	_hideAndDeleteCurrent(mainBranch);
 	mainBranch->raiseThisBranch(mode.staticCast<AbsRecEntity>());
@@ -83,24 +90,48 @@ void UamobiUtil::gotoReceiptBranch(QHash<QString, QString> opts, Mode mode)
 
 void UamobiUtil::gotoInventoryBranch(QHash<QString, QString> opts, Mode mode)
 {
+	using namespace independent_nodes;
 	AbsBranch* mainBranch;
 	if (mode->submode.isEmpty())
 	{
-		mainBranch = BranchFactory::createNWAdjustableBranch(
-			embeddedBranches::inventoryDesc
+		mainBranch = BranchFactory::createNWBranch(
+			embeddedBranches::inventoryDesc,
+			this
 		);
 	}
 	else 
 	{
-		mainBranch = BranchFactory::createNWAdjustableBranch(
-			embeddedBranches::partInventoryDesc
+		mainBranch = BranchFactory::createNWBranch(
+			embeddedBranches::partInventoryDesc,
+			this
 		);
 	}
 #ifdef QT_VERSION5X
-	QObject::connect(mainBranch, &AbsBranch::backRequired, this, &UamobiUtil::hideCurrent);
+	QObject::connect(mainBranch, &AbsBranch::backRequired, this, &UamobiUtil::gotoModeSelection);
+    QObject::connect(mainBranch, &AbsBranch::done, this, &UamobiUtil::closeBranch);
+#else
+    QObject::connect(mainBranch, SIGNAL(backRequired()), this, SLOT(gotoModeSelection()));
+    QObject::connect(mainBranch, SIGNAL(done(RecEntity)), this, SLOT(closeBranch(RecEntity)));
+#endif
+	_hideAndDeleteCurrent(mainBranch);
+	mainBranch->raiseThisBranch(mode.staticCast<AbsRecEntity>());
+}
+
+void UamobiUtil::gotoPrintingBranch(QHash<QString, QString>, Mode mode)
+{
+	using namespace independent_nodes;
+	AbsBranch* mainBranch;
+	
+	mainBranch = BranchFactory::createNWBranch(
+			embeddedBranches::printingDesc,
+		this
+		);
+#ifdef QT_VERSION5X
+	QObject::connect(mainBranch, &AbsBranch::backRequired, this, &UamobiUtil::gotoModeSelection);
 	QObject::connect(mainBranch, &AbsBranch::done, this, &UamobiUtil::closeBranch);
 #else
-	QObject::connect(RR, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
+	QObject::connect(mainBranch, SIGNAL(backRequired()), this, SLOT(gotoModeSelection()));
+	QObject::connect(mainBranch, SIGNAL(done(RecEntity)), this, SLOT(closeBranch(RecEntity)));
 #endif
 	_hideAndDeleteCurrent(mainBranch);
 	mainBranch->raiseThisBranch(mode.staticCast<AbsRecEntity>());
@@ -114,9 +145,6 @@ void UamobiUtil::resizeEvent(QResizeEvent* rev)
 
 void UamobiUtil::interpretMode(QHash<QString, QString> sets, Mode mode)
 {
-#ifdef DEBUG
-	detrace_METHEXPL("mode: " << mode.mode << " while submode " << mode.submode << " and name " << mode.name);
-#endif
 
 	if (mode->mode == "receipt")
 	{
@@ -126,14 +154,17 @@ void UamobiUtil::interpretMode(QHash<QString, QString> sets, Mode mode)
 	{
 		gotoInventoryBranch(sets, mode);
 	}
+	else if (mode->mode == "printing")
+	{
+		gotoPrintingBranch(sets, mode);
+	}
 }
 
 
 
 void UamobiUtil::closeBranch(RecEntity e)
 {
-	_hideAndDeleteCurrent(untouchable);
-	_upCO<MainPageWidget>()->loadUsers();
+	gotoModeSelection();
 }
 
 void UamobiUtil::hideCurrent()

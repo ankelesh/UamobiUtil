@@ -238,7 +238,7 @@ filters::GeneralPurposeFilter::GeneralPurposeFilter(captureTypes type, QObject* 
 	captureFunction = makeCaptureFunction(type);
 }
 
-filters::GeneralPurposeFilter::GeneralPurposeFilter(captureTypes type1, captureTypes type2, QObject* parent, captureTypes type3, captureTypes type4, captureTypes type5)
+filters::GeneralPurposeFilter::GeneralPurposeFilter(captureTypes type1, captureTypes type2, QObject* /*parent*/, captureTypes type3, captureTypes type4, captureTypes type5)
 {
 	if (type1 == All) {
 		captureFunction = &GeneralPurposeFilter::captAll;
@@ -247,7 +247,7 @@ filters::GeneralPurposeFilter::GeneralPurposeFilter(captureTypes type1, captureT
 	{
 		captureFunction = &GeneralPurposeFilter::captSome;
 		mytypes[0] = type1;
-		int i;
+		int i = 0;
 		if (type2 != All)
 		{
 			mytypes[i++] = type2;

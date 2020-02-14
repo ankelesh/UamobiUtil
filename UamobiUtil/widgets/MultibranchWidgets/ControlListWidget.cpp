@@ -37,7 +37,7 @@ ControlListWidget::ControlListWidget(QWidget* parent)
 	QObject::connect(backButton, &MegaIconButton::clicked, this, &ControlListWidget::backRequired);
 #else
 	QObject::connect(okButton, SIGNAL(clicked()), this, SLOT(checkAndConfirmControls()));
-	QObject::connect(backButton, SIGNAL(clicked())), this, SLOT(backRequired()));
+    QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 #endif
 }
 
@@ -58,7 +58,7 @@ void ControlListWidget::useControls(QStringList& initstrings)
 		abs_control* ctrl = fabricateControl(*(begin++), mainLayout, this);
 		if (controls.count() > 0)
 		{
-			controls.last()->makeConnectionBetweenControls(ctrl);
+			//controls.last()->makeConnectionBetweenControls(ctrl);
 		}
 		controls.push_back(ctrl);
 	}
@@ -75,7 +75,7 @@ void ControlListWidget::useControls(QStringList& initstrings, QStringList& cvalu
 		abs_control* ctrl = fabricateControl(*(begin++), mainLayout, this);
 		if (controls.count() > 0)
 		{
-			controls.last()->makeConnectionBetweenControls(ctrl);
+			//controls.last()->makeConnectionBetweenControls(ctrl);
 		}
 		ctrl->setValue(*(cvalbegin++));
 		controls.push_back(ctrl);
@@ -126,11 +126,11 @@ ControlListWidget::~ControlListWidget()
 
 void ControlListWidget::checkAndConfirmControls()
 {
-	bool ok;
+	bool ok = false;
 	QVector<abs_control*>::iterator begin = controls.begin();
 	while (begin != controls.end())
 	{
-		ok &= (*(begin++))->canGiveValue();
+		//ok &= (*(begin++))->canGiveValue();
 	}
 	if (ok)
 	{

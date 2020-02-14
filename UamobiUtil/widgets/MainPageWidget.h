@@ -23,7 +23,6 @@
 #include "widgets/SettingsBranches/MainSettingsWidget.h"
 #include "widgets/parents/abstractNodeInterface.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
-#include "widgets/parents/AbstractVariantSelectionWidget.h"
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
@@ -34,8 +33,7 @@
 
 	__ASSOCIATED_DATABASE_FUNCTION__   : P'UserProfilesResult' list_users(void)
 
-	Update:
-		now more intellegent hiding - > returns to modeselect if user already logged in
+	This widget can not be created via node factory, it is remaining from old app.
 */
 class MainPageWidget : public inframedWidget, abstractNode
 {

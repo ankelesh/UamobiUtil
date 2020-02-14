@@ -12,29 +12,24 @@
 #endif
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
-
+#include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
 
 
 
 ModeSelectionWidget::ModeSelectionWidget( QWidget* parent)
 	: inframedWidget(true, parent), innerModel(new DataEntityListModel(this)), mainLayout(new QVBoxLayout(this)),
-	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
-	buttonLayout(new QHBoxLayout(innerWidget)), userTip(new QLabel(innerWidget)),
-	modesTip(new QLabel(innerWidget)), modeSelection(new QListView(innerWidget)),
-	logoutButton(new MegaIconButton(innerWidget)),settings(), 
+	buttonLayout(new QHBoxLayout(this)), userTip(new QLabel(this)),
+	modesTip(new QLabel(this)), modeSelection(new QListView(this)),
+	logoutButton(new MegaIconButton(this)),settings(), 
 	selected(new ModeEntity()), awaiter(AppSettings->timeoutInt, this)
 {
 	this->setLayout(mainLayout);
 	mainLayout->setSpacing(0);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
-	innerLayout->setSpacing(0);
-	innerLayout->setContentsMargins(0, 0, 0, 0);
-	mainLayout->addWidget(innerWidget);
-	innerWidget->setLayout(innerLayout);
-	innerLayout->addWidget(userTip);
-	innerLayout->addWidget(modesTip);
-	innerLayout->addWidget(modeSelection);
-	innerLayout->addLayout(buttonLayout);
+	mainLayout->addWidget(userTip);
+	mainLayout->addWidget(modesTip);
+	mainLayout->addWidget(modeSelection);
+	mainLayout->addLayout(buttonLayout);
 	buttonLayout->addWidget(logoutButton);
 	//buttonLayout->addStretch();
 
@@ -51,6 +46,7 @@ ModeSelectionWidget::ModeSelectionWidget( QWidget* parent)
 	logoutButton->setText(tr("mode_selection_logout_tip"));
 
 	modeSelection->setModel(innerModel);
+	modeSelection->setItemDelegate(new ZebraItemDelegate(this));
 #ifdef QT_VERSION5X
 	QObject::connect(logoutButton, &QPushButton::clicked, this, &ModeSelectionWidget::logoutPressed);
 	QObject::connect(modeSelection, &QListView::clicked, innerModel, &DataEntityListModel::mapClickToEntity);
@@ -58,16 +54,12 @@ ModeSelectionWidget::ModeSelectionWidget( QWidget* parent)
 	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &ModeSelectionWidget::was_timeout);
 #else
 	QObject::connect(logoutButton, SIGNAL(clicked()), this, SLOT(logoutPressed()));
-	QObject::connect(modeSelection, SIGNAL(clicked(const QModelIndex&)), innerModel, SLOT(mapClickToEntity(const QModelIndex&)));
+    QObject::connect(modeSelection, SIGNAL(clicked(QModelIndex)), innerModel, SLOT(mapClickToEntity(QModelIndex)));
 	QObject::connect(innerModel, SIGNAL(dataEntityClicked(RecEntity)), this, SLOT(modeSelected(RecEntity)));
 	QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
 }
 
-bool ModeSelectionWidget::back()
-{
-	return false;
-}
 
 bool ModeSelectionWidget::isExpectingControl(int val)
 {
@@ -170,58 +162,4 @@ void ModeSelectionWidget::was_timeout()
 	userTip->setText(tr("mode_selection_timeout!") + QString::number(AppSettings->timeoutInt));
 	QObject::disconnect(&awaiter, SIGNAL(requestReceived), 0, 0);
 	hideProcessingOverlay();
-}
-
-ModeBranchRootWidget::ModeBranchRootWidget( QWidget* parent)
-	: ModeSelectionWidget(parent), abstractNode(), placeSelection(new PlaceSelectionWidget( this))
-{
-	mainLayout->addWidget(placeSelection);
-	placeSelection->hide();
-	current = innerWidget;
-	untouchable = innerWidget;
-	main = this;
-#ifdef QT_VERSION5X
-	QObject::connect(placeSelection, &PlaceSelectionWidget::backRequired, this, &ModeBranchRootWidget::hideCurrent);
-#else
-	QObject::connect(placeSelection, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
-#endif
-}
-
-void ModeBranchRootWidget::placeAcquired(Place pm)
-{
-#ifdef DEBUG
-	detrace_METHEXPL("emitting mode " << selected.debugSnapshot());
-#endif
-	emit modeAcquired(settings, selected);
-}
-
-void ModeBranchRootWidget::hideCurrent()
-{
-	if (!current->back())
-	{
-		if (current == innerWidget)
-		{
-			logoutPressed();
-		}
-		else
-		{
-			loadModes();
-			_hideCurrent(innerWidget);
-		}
-	}
-}
-
-void ModeBranchRootWidget::mode_select_response()
-{
-	ModeSelectionWidget::mode_select_response();
-	if (selected->isEmpty())
-	{
-		return;
-	}
-	else
-	{
-		_hideAny(placeSelection);
-		placeSelection->loadPlaces();
-		placeSelection->setMode(selected);
-	}
 }

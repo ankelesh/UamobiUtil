@@ -10,6 +10,7 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
+#include "ScaningCore/BarcodeObserver.h"
 void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEntity> >& cvals)
 {
     switch (cvals.count())
@@ -44,7 +45,7 @@ void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEnt
 			{
 				innerLayout->removeWidget(first_control->myWidget());
 				first_control.clear();
-				first_control.reset( fabricateControl(cvals.at(0)->name, innerLayout, innerWidget));
+                first_control = Control(fabricateControl(cvals.at(0)->name, innerLayout, innerWidget));
 			}
 			if (!second_control.isNull())
 			{
@@ -55,10 +56,9 @@ void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEnt
 		}
 		else
 		{
-			first_control.reset(fabricateControl(cvals.at(0)->name, innerLayout, innerWidget));
+            first_control = Control(fabricateControl(cvals.at(0)->name, innerLayout, innerWidget));
 			++controlsAvailable;
 		}
-		first_control->setAwaiting();
 		first_control->show();
 		controlsRequired = true;
 		submitButton->setDisabled(false);
@@ -84,7 +84,7 @@ void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEnt
 		case 0:
 			if (first_control.isNull())
 			{
-				first_control.reset(fabricateControl(cvals.at(0)->name, innerLayout, innerWidget));
+                first_control = Control(fabricateControl(cvals.at(0)->name, innerLayout, innerWidget));
 			}
 			else
 			{
@@ -92,7 +92,7 @@ void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEnt
 			}
 			if (second_control.isNull())
 			{
-				second_control.reset(fabricateControl(cvals.at(1)->name, innerLayout, innerWidget));
+                second_control = Control(fabricateControl(cvals.at(1)->name, innerLayout, innerWidget));
 			}
 			else
 			{
@@ -101,66 +101,20 @@ void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEnt
 		}
 		controlsAvailable = 2;
 	}
-	first_control->setAwaiting();
 	controlsRequired = true;
 	submitButton->setDisabled(false);
 	this->setFocus();
 	first_control->show();
 	second_control->show();
 }
-void AbstractScaningWidget::refreshControls()
+
+void AbstractScaningWidget::wipe()
 {
-	if (controlsRequired)
-	{
-		switch (controlsAvailable)
-		{
-		case 2:
-			second_control->refresh();
-		case 1:
-			first_control->refresh();
-		default:
-			return;
-		}
-	}
+	barcodeField->clear();
 }
-bool AbstractScaningWidget::checkControls()
-{
-	if (controlsRequired)
-	{
-		switch (controlsAvailable)
-		{
-		case 1:
-		case 2:
-			return first_control->canGiveValue();
-		case 0:
-		default:
-			return false;
-		}
-	}
-	return false;
-}
-void AbstractScaningWidget::focusControl(int cnum)
-{
-	if (controlsRequired)
-	{
-		switch (cnum)
-		{
-		case 0:
-			if (controlsAvailable >= 1)
-			{
-				first_control->setFocus();
-			}
-			return;
-		case 1:
-			if (controlsAvailable >= 2)
-			{
-				second_control->setFocus();
-			}
-		default:
-			return;
-		}
-	}
-}
+
+
+
 AbstractScaningWidget::AbstractScaningWidget(int id, QWidget* parent)
 	: IndependentBranchNode(id, parent), document(new FullDocumentEntity()),
 	mainLayout(new QVBoxLayout(this)), innerWidget(new inframedWidget(this)),
@@ -169,7 +123,7 @@ AbstractScaningWidget::AbstractScaningWidget(int id, QWidget* parent)
 	barcodeField(new QLineEdit(innerWidget)),
 	mainTextView(new QTextEdit(innerWidget)),
 	buttonPanel(new QHBoxLayout(innerWidget)),
-	quitButton(new MegaIconButton(innerWidget)), switchFocus(new MegaIconButton(innerWidget)),
+	quitButton(new MegaIconButton(innerWidget)),
 	backButton(new MegaIconButton(innerWidget)),
 	submitButton(new MegaIconButton(innerWidget)), searchButton(new MegaIconButton(innerWidget)),
 	itemSuppliedValues(),
@@ -182,7 +136,6 @@ AbstractScaningWidget::AbstractScaningWidget(int id, QWidget* parent)
 	innerLayout->addLayout(topPanelLayout);
 	topPanelLayout->addWidget(quitButton);
 	topPanelLayout->addWidget(userInfo);
-	topPanelLayout->addWidget(switchFocus);
 	innerLayout->addWidget(barcodeField);
 	innerLayout->addWidget(mainTextView);
 	innerLayout->addLayout(buttonPanel);
@@ -201,13 +154,15 @@ AbstractScaningWidget::AbstractScaningWidget(int id, QWidget* parent)
 	userInfo->setAlignment(Qt::AlignCenter);
 	userInfo->setFont(scaledFont);
 	userInfo->setWordWrap(true);
-	userInfo->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
+    userInfo->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
+    userInfo->setMinimumWidth(calculateAdaptiveWidth(0.75));
+    userInfo->setMaximumHeight(calculateAdaptiveButtonHeight(0.2));
 
 	mainTextView->setText(tr("scaning_widget_filler_text"));
 	mainTextView->setFont(scaledFont);
 	mainTextView->setAcceptRichText(true);
 	mainTextView->setReadOnly(true);
-	mainTextView->setTextInteractionFlags(Qt::TextInteractionFlag::NoTextInteraction);
+    mainTextView->setTextInteractionFlags(Qt::NoTextInteraction);
 	mainTextView->setStyleSheet("QLabel{background-color: white; border: 1px solid black}");
 	mainTextView->setAlignment(Qt::AlignTop);
 	backButton->setText(tr("scaning_widget_back"));
@@ -225,12 +180,11 @@ AbstractScaningWidget::AbstractScaningWidget(int id, QWidget* parent)
 	quitButton->setText(tr("quit"));
 	quitButton->setIcon(QIcon(":/res/data.png"));
 	quitButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
-	quitButton->setMaximumWidth(calculateAdaptiveWidth(0.2));
+    quitButton->setMaximumWidth(calculateAdaptiveWidth(0.25));
+    quitButton->setMinimumWidth(calculateAdaptiveWidth(0.25));
+    quitButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.2));
+    quitButton->setMinimumHeight(calculateAdaptiveButtonHeight(0.2));
 
-	switchFocus->setText(tr("focus"));
-	switchFocus->setIcon(QIcon(":/res/toinput.png"));
-	switchFocus->setStyleSheet(SETTINGS_BUTTONS_STYLESHEET);
-	switchFocus->setMaximumWidth(calculateAdaptiveWidth(0.2));
 	barcodeField->setFocus();
 
 #ifdef QT_VERSION5X
@@ -241,7 +195,6 @@ AbstractScaningWidget::AbstractScaningWidget(int id, QWidget* parent)
 	QObject::connect(searchButton, &QPushButton::clicked, this, &AbstractScaningWidget::searchRequired);
 	QObject::connect(awaiter, &RequestAwaiter::requestTimeout, this, &AbstractScaningWidget::was_timeout);
 	QObject::connect(quitButton, &MegaIconButton::clicked, this, &AbstractScaningWidget::quitNoSave);
-	QObject::connect(switchFocus, &MegaIconButton::clicked, this, &AbstractScaningWidget::switchedFocus);
 #else
 	QObject::connect(backButton, SIGNAL(clicked()), this, SLOT(backNeeded()));
 	QObject::connect(submitButton, SIGNAL(clicked()), this, SLOT(submitPressed()));
@@ -249,7 +202,6 @@ AbstractScaningWidget::AbstractScaningWidget(int id, QWidget* parent)
 	QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(searchRequired()));
 	QObject::connect(awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
     QObject::connect(quitButton, SIGNAL(clicked()), this, SLOT(quitNoSave()));
-    QObject::connect(switchFocus, SIGNAL(clicked()),this, SLOT(switchedFocus()));
 #endif
 }
 
@@ -257,7 +209,6 @@ void AbstractScaningWidget::clear()
 {
 	mainTextView->clear();
 	useControls(QVector< QSharedPointer< InputControlEntity> >());
-	_postClear();
 }
 
 void AbstractScaningWidget::setModeName(QString& name)
@@ -277,23 +228,12 @@ void AbstractScaningWidget::quitNoSave()
     detrace_METHCALL("quitNoSave");
 #endif
 	QMessageBox::StandardButton response =  QMessageBox::question(this, tr("QuitWithoutSave?"), tr("quit_without_save_info?"),
-        QMessageBox::StandardButton::Ok| QMessageBox::StandardButton::Cancel);
-    if (response == QMessageBox::StandardButton::Ok)
+        QMessageBox::Ok| QMessageBox::Cancel);
+    if (response == QMessageBox::Ok)
 	{
 		AppNetwork->execQueryByTemplate(QueryTemplates::unlockDocument, false, awaiter); 
+		BarcodeObs->deactivate();
 		emit backRequired();
 	}
 }
 
-bool AbstractScaningWidget::isControlFocused()
-{
-	switch (controlsAvailable)
-	{
-	case 1:
-		return first_control->hasFocus();
-	case 2:
-		return first_control->hasFocus() || second_control->hasFocus();
-	default:
-		return false;
-	}
-}

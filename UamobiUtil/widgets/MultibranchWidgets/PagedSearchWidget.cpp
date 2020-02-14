@@ -1,11 +1,13 @@
 #include "PagedSearchWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
+#include "widgets/utils/GlobalAppSettings.h"
+#include "networking/Parsers/RequestParser.h"
+#include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
 
 
 void PagedSearchWidget::_handleRecord(RecEntity)
 {
-	loadResults();
 }
 
 void PagedSearchWidget::setIndexation(XmlObjects settings)
@@ -19,7 +21,7 @@ void PagedSearchWidget::setIndexation(XmlObjects settings)
 			+ " -- " +
 			settings.first()->value("to")
 		);
-		nextButton->setDisabled(settings.first()->value("last") == true);
+		nextButton->setDisabled(settings.first()->value("last") == "true");
 		previousButton->setDisabled(currentpage == 0);
 	}
 }
@@ -33,7 +35,8 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 	previousButton(new MegaIconButton(this)), nextButton(new MegaIconButton(this)),
 	indexationInfo(new QLabel(this)), itemList(new QListView(this)),
 	footerLayout(new QHBoxLayout(this)), backButton(new MegaIconButton(this)),
-	currentpage(0), toSearch(), awaiter(new RequestAwaiter(AppSettings->timeoutInt, this))
+	currentpage(0), toSearch(), awaiter(new RequestAwaiter(AppSettings->timeoutInt, this)),
+	loadDataQuery(-2, ping)
 {
 	this->setLayout(mainLayout);
 	mainLayout->addLayout(searchPanel);
@@ -79,6 +82,9 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 	searchInput->setMaximumHeight(calculateAdaptiveButtonHeight());
 
 	itemList->setFont(scf);
+
+	itemList->setModel(entityModel);
+	itemList->setItemDelegate(new ZebraItemDelegate(this));
 #ifdef QT_VERSION5X
 
 	QObject::connect(searchButton, &MegaIconButton::clicked, this, &PagedSearchWidget::doSearch);
@@ -94,7 +100,7 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 	QObject::connect(nextButton, SIGNAL(clicked()), this, SLOT(nextPage()));
 	QObject::connect(previousButton, SIGNAL(clicked()), this, SLOT(previousPage()));
 	QObject::connect(entityModel, SIGNAL(dataEntityClicked(RecEntity)), this, SIGNAL(done(RecEntity)));
-	QObject::connect(itemList, SIGNAL(clicked(const QModelIndex&)), entityModel, SLOT(mapClickToEntity(const QModelIndex&)));
+    QObject::connect(itemList, SIGNAL(clicked(QModelIndex)), entityModel, SLOT(mapClickToEntity(QModelIndex)));
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 	QObject::connect(searchInput, SIGNAL(editingFinished()), this, SLOT(doSearch()));
 	QObject::connect(awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
@@ -136,7 +142,14 @@ void PagedSearchWidget::loadResults()
 #else
 	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(search_response()));
 #endif
-	prototype->sendAssociatedGetRequest(QStringList{ QString::number(currentpage) }, awaiter);
+	if (loadDataQuery.isDefault())
+    {
+        QStringList t;
+        t << toSearch << QString::number(currentpage);
+        prototype->sendAssociatedGetRequest(t, awaiter);
+    }
+	else
+		AppNetwork->execQueryByTemplate(loadDataQuery, toSearch, QString::number(currentpage), awaiter);
 	showProcessingOverlay();
 }
 
@@ -178,6 +191,18 @@ void PagedSearchWidget::was_timeout()
 	indexationInfo->setText(tr("item_search_timeout: ") + QString::number(awaiter->getInterval()));
 	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
+}
+
+void PagedSearchWidget::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads)
+{
+	if (overloads.isEmpty())
+		return;
+    QStringList t;
+    t << "text" << "page";
+	loadDataQuery = overloads.first().assertedAndMappedCopy(
+		documentSearchItems,
+        t,t
+	);
 }
 
 void PagedSearchWidget::_sendDataRequest()

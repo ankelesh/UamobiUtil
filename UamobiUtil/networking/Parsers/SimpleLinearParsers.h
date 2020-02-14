@@ -16,7 +16,7 @@ class LinearListParser : public AbsResponseParser
 protected:
 	virtual bool _doParsing() override;
 	// switch to new style serialization if possible
-	void assertAndSwitchToNewStyle(QDomNode& node, QDomNodeList& list);
+	UniformXmlObject::ThingsIds assertAndSwitchToNewStyle(QDomNode& node, QDomNodeList& list);
 public:
 	LinearListParser(QString res, QString err) : AbsResponseParser(res, err) { success = run(); };
 	static XmlObjects parseLinearList(QString & r, QString& e);

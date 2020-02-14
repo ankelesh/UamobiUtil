@@ -4,6 +4,8 @@
 
 bool LinearListParser::_doParsing()
 {
+	if (!errtext.isEmpty())
+		return false;
 	QDomNodeList tempList = xmldoc.childNodes();
 	if (tempList.count() < 2)
 		return _stopWithError("No list detected");
@@ -12,22 +14,37 @@ bool LinearListParser::_doParsing()
 	if (listedObjects.isEmpty())
 		return _stopWithError("List unpacking fail: no status code");
 	
-	assertAndSwitchToNewStyle(listNode, listedObjects);
-	
-	for (int i = 1; i < listedObjects.count(); ++i)
+	UniformXmlObject::ThingsIds type = assertAndSwitchToNewStyle(listNode, listedObjects);
+	if (type == UniformXmlObject::NotAThing)
 	{
-		parseResult << XmlObject(new UniformXmlObject(listedObjects.at(i)));
+		for (int i = 1; i < listedObjects.count(); ++i)
+		{
+			parseResult << XmlObject(new UniformXmlObject(listedObjects.at(i)));
+		}
+	}
+	else
+	{
+		for (int i = 1; i < listedObjects.count(); ++i)
+		{
+			parseResult << XmlObject(new UniformXmlObject(type,
+				listedObjects.at(i)));
+		}
 	}
 	return true;
 }
 
-void LinearListParser::assertAndSwitchToNewStyle(QDomNode& node, QDomNodeList& list)
+UniformXmlObject::ThingsIds LinearListParser::assertAndSwitchToNewStyle(QDomNode& node, QDomNodeList& list)
 {
 	if (list.at(0).nodeName() == "announcement")
 	{
+		UniformXmlObject::ThingsIds type = guessObjectId(
+			list.at(0).childNodes().at(3).toElement().text()
+		);
 		node = list.at(1);
 		list= node.childNodes();
+		return type;
 	}
+	return UniformXmlObject::NotAThing;
 }
 
 XmlObjects LinearListParser::parseLinearList(QString& r, QString& e)

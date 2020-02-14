@@ -1,14 +1,13 @@
 #include "DocResultsWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
-
+#include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
 
 void DocResultsWidget::_handleRecord(RecEntity)
 {
-	loadItems();
 }
 
 void DocResultsWidget::setIndexation(XmlObjects& settings)
@@ -22,7 +21,7 @@ void DocResultsWidget::setIndexation(XmlObjects& settings)
 			+ " -- " +
 			settings.first()->value("to")
 		);
-		bool ok = settings.count() > 1;
+		bool ok = settings.first()->value("last") == "true";
 		if (ok)
 		{
 			deleteAllButton->show();
@@ -33,8 +32,8 @@ void DocResultsWidget::setIndexation(XmlObjects& settings)
 			deleteAllButton->hide();
 			deleteSelectedButton->hide();
 		}
-		nextButton->setDisabled(settings.first()->value("last") == true);
-		previousButton->setDisabled(pagenumber == 0);
+		nextButton->setDisabled(ok);
+		previousButton->setDisabled(pagenumber >= 0);
 	}
 }
 
@@ -123,6 +122,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	itemInfoStorage->setFont(scf);
 
 	itemInfoStorage->setModel(items);
+	itemInfoStorage->setItemDelegate(new ZebraItemDelegate(this));
 #ifdef QT_VERSION5X
 	QObject::connect(deleteAllButton, &MegaIconButton::clicked, this, &DocResultsWidget::deleteAll);
 	QObject::connect(deleteSelectedButton, &MegaIconButton::clicked, this, &DocResultsWidget::deleteCurrent);
@@ -138,7 +138,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	QObject::connect(saveButton, SIGNAL(clicked()), this, SLOT(saveDocument()));
 	QObject::connect(nextButton, SIGNAL(clicked()), this, SLOT(nextPage()));
 	QObject::connect(previousButton, SIGNAL(clicked()), this, SLOT(previousPage()));
-	QObject::connect(&awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
+    QObject::connect(awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
 }
 
@@ -151,7 +151,12 @@ void DocResultsWidget::loadItems()
 #else
 	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(items_response()));
 #endif
-	FullItemEntity::sendGetRequest(pagenumber, awaiter);
+	if (localCache.contains(documentGetResults))
+	{
+		AppNetwork->execQueryByTemplate(localCache[documentGetResults], QString::number(pagenumber), awaiter);
+	}
+	else
+		FullItemEntity::sendGetRequest(pagenumber, awaiter);
 	deleteAllButton->hide();
 	deleteSelectedButton->hide();
 	showProcessingOverlay();
@@ -179,11 +184,6 @@ void DocResultsWidget::show()
 	inframedWidget::show();
 }
 
-void DocResultsWidget::clear()
-{
-	itemInfoStorage->reset();
-	indexationInfo->setText(" -- ");
-}
 
 void DocResultsWidget::previousPage()
 {
@@ -212,7 +212,10 @@ void DocResultsWidget::saveDocument()
 #else
 	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(save_response()));
 #endif
-	AppNetwork->execQueryByTemplate(QueryTemplates::unlockDocument, "true", awaiter);
+	if (localCache.contains(unlockDocument))
+		AppNetwork->execQueryByTemplate(localCache[unlockDocument],"true", awaiter);
+	else
+		AppNetwork->execQueryByTemplate(QueryTemplates::unlockDocument, "true", awaiter);
 	showProcessingOverlay();
 }
 
@@ -226,7 +229,7 @@ void DocResultsWidget::items_response()
 void DocResultsWidget::save_response()
 {
 	if (awaiter->restext.contains("_"))
-		emit documentSaved();
+		emit done(RecEntity());
 	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
@@ -247,7 +250,10 @@ void DocResultsWidget::deleteAll()
 #else
 	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(items_response()));
 #endif
-	AppNetwork->execQueryByTemplate(QueryTemplates::documentDeleteAll, awaiter);
+	if (localCache.contains(documentDeleteAll))
+		AppNetwork->execQueryByTemplate(localCache[documentDeleteAll], awaiter);
+	else
+		AppNetwork->execQueryByTemplate(QueryTemplates::documentDeleteAll, awaiter);
 	deleteAllButton->hide();
 	deleteSelectedButton->hide();
 	showProcessingOverlay();
@@ -270,10 +276,52 @@ void DocResultsWidget::deleteCurrent()
 		).value<RecEntity>());
 	if (item.isNull())
 		return;
-	item->sendDeleteThisRequest(awaiter);
+	if (localCache.contains(docDeleteByBarcode))
+		item->sendDeleteThisRequest(localCache[docDeleteByBarcode], awaiter);
+	else
+		item->sendDeleteThisRequest(awaiter);
 	deleteAllButton->hide();
 	deleteSelectedButton->hide();
 	showProcessingOverlay();
+}
+
+void DocResultsWidget::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads)
+{
+	using namespace QueryTemplates;
+	switch (
+		((overloads.count()>4) ? 4 : overloads.count())
+		)
+	{
+	case 4:
+		localCache.insert(documentDeleteAll, overloads.at(3).assertedAndMappedCopy(
+		documentDeleteAll));
+	case 3:
+    {
+        QStringList t;
+        t << "code" << "qty";
+		localCache.insert(docDeleteByBarcode, overloads.at(2).assertedAndMappedCopy(
+            docDeleteByBarcode,t,t
+		));
+    }
+	case 2:
+    {
+        QStringList t;
+        t << "save";
+        localCache.insert(unlockDocument, overloads.at(1).assertedAndMappedCopy(
+            unlockDocument, t,t
+		));
+    }
+	case 1:
+    {
+        QStringList t;
+        t << "page" << "opts";
+        localCache.insert(documentGetResults, overloads.at(1).assertedAndMappedCopy(
+            documentGetResults,t,t
+		));
+    }
+	default:
+		break;
+	}
 }
 
 void DocResultsWidget::_sendDataRequest()

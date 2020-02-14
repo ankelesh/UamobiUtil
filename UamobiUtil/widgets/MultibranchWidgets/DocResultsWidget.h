@@ -20,10 +20,12 @@
 #include "networking/things.h"
 /*
 	This widget provides realization of list containing all items included in current document.
-
-	__ASSOCIATED_DATABASE_FUNCTION__   :  doc_list_items
-
+	It expects paged result and allows some extra operations over results - like delete.
+	Also it has "save and exit" button which will save current state of the document.
 */
+
+using QueryTemplates::OverloadableQuery;
+using QueryTemplates::QueryCache;
 
 class DocResultsWidget : public IndependentBranchNode, abstractNode
 {
@@ -50,15 +52,17 @@ protected:
 	int pagenumber;
 	RequestAwaiter* awaiter;
 
+	QueryCache localCache;
+
 	void _handleRecord(RecEntity) override;
 	void setIndexation(XmlObjects& settings);
 	virtual void _sendDataRequest() override;
+	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
 public:
 	DocResultsWidget(QWidget* parent);
 	void loadItems();
 	void refresh();
 	void show() override;
-	void clear();
 protected slots:
 	void previousPage();
 	void nextPage();
@@ -68,7 +72,4 @@ protected slots:
 	void was_timeout();
 	void deleteAll();
 	void deleteCurrent();
-signals:
-	void documentSaved();
-
 };

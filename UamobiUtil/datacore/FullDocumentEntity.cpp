@@ -3,7 +3,8 @@
 FullDocumentEntity::FullDocumentEntity(QString docid, QString parentnr, 
 	QString datestr, QString comm, QString supp,
 	bool insp, bool clos, bool cancel, bool lcked)
-	: docId(docid),parentNr(parentnr),dateStr(datestr),comment(comm),
+	: AbsRecEntity(UniformXmlObject::Document), docId(docid),
+	parentNr(parentnr),dateStr(datestr),comment(comm),
 	supplier(supp), inspect(insp), closed(clos), cancelled(cancel),
 	locked(lcked)
 {
@@ -34,9 +35,9 @@ QString FullDocumentEntity::makeTitle() const
 	return docId;
 }
 
-IdInt FullDocumentEntity::extractId() const
+QString FullDocumentEntity::extractId() const
 {
-	return docId.toInt();
+	return docId;
 }
 
 bool FullDocumentEntity::deepCompare(const AbsRecEntity* another) const

@@ -9,6 +9,7 @@
 #endif
 #include "networking/Parsers/DynamicLinearParsers.h"
 #include "debugtrace.h"
+#include <QProxyStyle>
 //#define TESTING
 
 /*
@@ -23,7 +24,23 @@
 
 */
 //#define TESTING
-
+class WinCEProxyStyle : public QProxyStyle
+{
+    virtual int pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const
+    {
+        if (metric == QStyle::PM_ButtonMargin)
+            return baseStyle()->pixelMetric(metric, option, widget)*2.5;
+        /*else if (metric == QStyle::PM_LayoutLeftMargin
+                          || metric == QStyle::PM_LayoutTopMargin
+                          || metric == QStyle::PM_LayoutRightMargin
+                          || metric == QStyle::PM_LayoutBottomMargin
+                          || metric == QStyle::PM_LayoutHorizontalSpacing
+                          || metric == QStyle::PM_LayoutVerticalSpacing)
+                return 2;*/
+        else
+            return baseStyle()->pixelMetric(metric, option, widget);
+    }
+};
 
 
 int main(int argc, char* argv[])
@@ -33,16 +50,19 @@ int main(int argc, char* argv[])
 	AppSettings->setTranslator();
 	AppSettings->HttpUrl = "http://92.115.237.226:60080/um/unitest.php";
 #ifdef Q_OS_WINCE
-	setCurrentSize(calculateAdaptiveSize(1, 0.9));
-	UamobiUtil w(global);
+    UamobiUtil w;
 	w.move(0, 0);
-	w.showMaximized();
-	w.raise();
-	w.setFixedHeight(calculateAdaptiveButtonHeight(0.9));
+    a.setStyle(new WinCEProxyStyle());
+    w.showNormal();
+    w.raise();
+    w.move(0, -24);
+    w.setWindowFlags((w.windowFlags() | Qt::FramelessWindowHint | Qt::CustomizeWindowHint)
+                                  & ~(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowMinMaxButtonsHint
+                                       | Qt::WindowCloseButtonHint | Qt::Dialog | Qt::WindowContextHelpButtonHint));
+    w.setFixedHeight(calculateAdaptiveButtonHeight(1));
 	w.setFixedWidth(calculateAdaptiveWidth(1));
-	QTimer::singleShot(0, &w, SLOT(showMaximized()));
+    QTimer::singleShot(1, &w, SLOT(showMaximized()));
 #else
-	setCurrentSize(calculateAdaptiveSize(1));
 	UamobiUtil w;
 	w.show();
 #endif

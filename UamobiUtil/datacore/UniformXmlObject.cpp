@@ -1,20 +1,22 @@
 #include "UniformXmlObject.h"
-#include <QHash>
+#include <QtCore/QHash>
 
 
 
-QHash<QString, int> _initiateObjectIdHash()
+QHash<QString, UniformXmlObject::ThingsIds> _initiateObjectIdHash()
 {
-	QHash<QString, int> t;
+	QHash<QString, UniformXmlObject::ThingsIds> t;
 	t["place"] = UniformXmlObject::Place;
 	t["type"] = UniformXmlObject::Doctype;
 	t["doc"] = UniformXmlObject::Document;
-	t["result"] = UniformXmlObject::Item;
+	t["result"] = UniformXmlObject::SimpleItem;
 	t["mode"] = UniformXmlObject::Mode;
 	t["group"] = UniformXmlObject::Group;
+	t["groups"] = UniformXmlObject::Group;
 	t["order"] = UniformXmlObject::Order;
 	t["place"] = UniformXmlObject::Place;
 	t["res"] = UniformXmlObject::SimpleItem;
+	t["stillages"] = UniformXmlObject::Stillage;
 	t["stillage"] = UniformXmlObject::Stillage;
 	t["supplier"] = UniformXmlObject::Supplier;
 	t["page"] = UniformXmlObject::Page;
@@ -23,7 +25,7 @@ QHash<QString, int> _initiateObjectIdHash()
 	t["parentdoc"] = UniformXmlObject::LesserDocument;
 	return t;
 }
-QHash<QString, int> objectIdLinking(_initiateObjectIdHash());
+QHash<QString, UniformXmlObject::ThingsIds> objectIdLinking(_initiateObjectIdHash());
 
 
 
@@ -55,10 +57,10 @@ UniformXmlObject::UniformXmlObject(const QDomNode& dnode)
 	: object_id(0), values()
 {
 	QString nname = dnode.nodeName();
-	object_id = guessObjectId(nname);
 	QDomNodeList insideObject = dnode.childNodes();
 	for (int j = 0; j < insideObject.count(); ++j)
 		values[insideObject.at(j).nodeName()] = insideObject.at(j).toElement().text();
+	object_id = guessObjectId(nname, values.count());
 }
 
 UniformXmlObject::UniformXmlObject(const UniformXmlObject::ThingsIds oid, const QDomNode& dnode)
@@ -156,7 +158,21 @@ bool UniformXmlObject::hasField(const char* field)
 	return values.contains(QLatin1String(field));
 }
 
-int guessObjectId(QString& oname)
+UniformXmlObject::ThingsIds guessObjectId(QString& oname, int fcount, UniformXmlObject::ThingsIds desired)
 {
-	return objectIdLinking[oname.toLower()];
+	UniformXmlObject::ThingsIds temp = objectIdLinking[oname.toLower()];
+	switch (temp)
+	{
+	case UniformXmlObject::SimpleItem:
+		if (desired)
+			return desired;
+		else
+			if (fcount > 2)
+				return UniformXmlObject::Item;
+			else
+				return UniformXmlObject::SimpleItem;
+		break;
+	default:
+		return temp;
+	}
 }

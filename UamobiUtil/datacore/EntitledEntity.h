@@ -1,6 +1,10 @@
 #pragma once
 #include "AbsEntityPrototype.h"
 
+/*
+	This file contains entities with unified data set - text with title and code
+*/
+
 
 
 class EntitledEntity : public AbsRecEntity
@@ -13,7 +17,7 @@ public:
 	EntitledEntity(int subclassId, QString c = QString(), QString t = QString(), QString tx = QString());
 protected:
 	virtual QString makeTitle() const override;
-	virtual IdInt extractId() const override;
+	virtual QString extractId() const override;
 	virtual bool deepCompare(const AbsRecEntity* another) const override;
 	virtual bool sortingCompare(const AbsRecEntity* another) const override;
 	virtual bool sortingCompare(const QSharedPointer<AbsRecEntity> another) const override;

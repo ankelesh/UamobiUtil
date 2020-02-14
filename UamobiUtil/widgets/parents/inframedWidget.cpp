@@ -11,7 +11,7 @@ bool inframedWidget::isExpectingControl(int val)
 	detrace_METHCALL(":isExpectingControl(" << val << " wadress: " << (long long int) this);
 #endif
 
-	return false;
+    return val == 0;
 }
 void inframedWidget::keyReleaseEvent(QKeyEvent* kev)
 {
@@ -31,7 +31,7 @@ inframedWidget::inframedWidget(QWidget* parent)
 inframedWidget::inframedWidget(bool installFilter, QWidget* parent) 
 	: QWidget(parent), keyfilter(new filters::GeneralPurposeFilter(filters::GeneralPurposeFilter::infPack, this))
 {
-	QObject::installEventFilter(keyfilter);
+    if (installFilter)	QObject::installEventFilter(keyfilter);
 #ifdef QT_VERSION5X
 	QObject::connect(keyfilter, &GeneralPurposeFilter::backPressed, this, &inframedWidget::backReaction);
 	QObject::connect(keyfilter, &GeneralPurposeFilter::returnPressed, this, &inframedWidget::returnReaction);
@@ -41,15 +41,6 @@ inframedWidget::inframedWidget(bool installFilter, QWidget* parent)
 	QObject::connect(keyfilter, SIGNAL(returnPressed()), this, SLOT(returnReaction()));
 	QObject::connect(keyfilter, SIGNAL(numberPressed(int)), this, SLOT(controlReaction(int)));
 #endif
-}
-bool inframedWidget::back()
-{
-	return false;
-}
-
-bool inframedWidget::giveSettings()
-{
-	return false;
 }
 
 void inframedWidget::show()

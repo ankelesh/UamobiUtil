@@ -35,7 +35,7 @@ QString AbsRecEntity::getTitle() const
 	return makeTitle();
 }
 
-IdInt AbsRecEntity::getId() const
+QString AbsRecEntity::getId() const
 {
 	return extractId();
 }

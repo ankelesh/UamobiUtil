@@ -4,8 +4,6 @@
 
 QPixmap* cachedChI;
 QPixmap* cachedUchI;
-QIcon checkedImage(":/res/with.png");
-QIcon uncheckedImage(":/res/without.png");
 
 void CheckableDelegate::cacheImages(QRect& newRect) const
 {
@@ -30,9 +28,9 @@ void CheckableDelegate::cacheImages(QRect& newRect) const
 CheckableDelegate::CheckableDelegate(
 	QColor checked, QColor unchecked, QObject* parent)
 	: QStyledItemDelegate(parent), 
-	checkedColor(checked), uncheckedColor(unchecked)
+	checkedColor(checked), uncheckedColor(unchecked),
+	checkedImage(":/res/with.png"), uncheckedImage(":/res/without.png")
 {
-
 }
 
 void CheckableDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
@@ -50,8 +48,8 @@ void CheckableDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 		painter->setBrush(QBrush(uncheckedColor));
 	}
 	painter->drawRect(option.rect);
-	QRect imgRect(option.rect.height() * 0.1, 
-		option.rect.height() * 0.1, option.rect.height() * 0.9,
+	QRect imgRect(option.rect.topLeft().x() + option.rect.height() * 0.1, 
+		option.rect.topLeft().y() + option.rect.height() * 0.1, option.rect.height() * 0.9,
 		option.rect.height() * 0.9);
 	cacheImages(imgRect);
 	if (item->getAttachedNumber() == 1)

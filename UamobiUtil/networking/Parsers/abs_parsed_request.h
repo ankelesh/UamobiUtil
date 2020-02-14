@@ -1,6 +1,7 @@
 #pragma once
 #include <QtCore/QStringList>
 #include "datacore/UniformXmlObject.h"
+#include <QVector>
 
 /*
 		This file contains abstract parent for all request parsers. main idea of this object family is to make fully abstract parsing

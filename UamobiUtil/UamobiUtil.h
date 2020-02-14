@@ -19,7 +19,7 @@
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/ModeSelectionBranch/ModeSelectionWidget.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
-
+#include "widgets/BranchingTools/AbsBranch.h"
 #include "widgets/BranchingTools/BranchFactory.h"
 /*
 	This is main widget of the project. It is based on QWidget and has no gui representation. Main goal
@@ -39,6 +39,7 @@ private:
 	ProcessingOverlay* overlay;
 	void gotoReceiptBranch(QHash<QString, QString>, Mode);
 	void gotoInventoryBranch(QHash<QString, QString>, Mode);
+	void gotoPrintingBranch(QHash<QString, QString>, Mode);
 	void resizeEvent(QResizeEvent* rev) override;
 public:
 
@@ -46,7 +47,7 @@ public:
 
 private slots:
 	void gotoModeSelection();			//	Switch to modeSelectionBranch
-	void interpretMode(QHash<QString, QString>, Mode mode);	//	interprets mode settings obtained through "select mode". NOT IMPLEMENTED
+	void interpretMode(QHash<QString, QString>, Mode mode);	
 public slots:
 	void hideCurrent();					//	hides current branch if it is not main page
 	void closeBranch(RecEntity e);

@@ -28,6 +28,8 @@
 		loginConfirmed is emitted after logging in confirmed
 
 		__ASSOCIATED_DATABASE_FUNCTION__  :  P'LoginResponse'  log_in(login, password)
+
+	This widget can not be created via node factory - it is remaining from old application.
 */
 
 class LoginWidget : public inframedWidget

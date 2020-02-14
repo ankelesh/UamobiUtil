@@ -1,14 +1,10 @@
 #pragma once
-#include <QStringList>
-#include <QString>
-#include <QHash>
+#include <QtCore/QStringList>
+#include <QtCore/QString>
+#include <QtCore/QHash>
 #include <QtXml/QDomNode>
 #include <QtCore/qsharedpointer.h>
-
-int guessObjectId(QString& oname);
-
-
-
+#include <QtCore/QVector>
 
 
 class UniformXmlObject
@@ -16,6 +12,7 @@ class UniformXmlObject
 public:
 	enum ThingsIds
 	{
+		NotAThing,
 		Mode,
 		Place,
 		Supplier,
@@ -57,6 +54,11 @@ public:
 	bool hasField(const QString field);
 	bool hasField(const char* field);
 };
+
+
+UniformXmlObject::ThingsIds guessObjectId(QString& oname, 
+	int fcount = 0, UniformXmlObject::ThingsIds desired = UniformXmlObject::NotAThing);
+
 
 
 typedef QSharedPointer<UniformXmlObject> XmlObject;

@@ -10,43 +10,62 @@ FullItemEntity::FullItemEntity(QString Title, QString Code, QString Cmid,
 void FullItemEntity::sendGetRequest(int pagenumber, RequestAwaiter* awaiter, QString doc)
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::documentGetResults,
-		"&page=" + QString::number(pagenumber), doc, awaiter
+		"&page=" + QString::number(pagenumber), "", awaiter
 	);
 }
 
 void FullItemEntity::sendDeleteThisRequest(RequestAwaiter* awaiter)
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::docDeleteByBarcode,
-		code, "&qty=" + qty, awaiter);
+		code, "&qty=" + QString::number(qty),  awaiter);
 }
 
+void FullItemEntity::sendDeleteThisRequest(const QueryTemplates::OverloadableQuery& oq, RequestAwaiter* awaiter)
+{
+	AppNetwork->execQueryByTemplate(oq,
+		code, "&qty=" + QString::number(qty), awaiter);
+}
 
-QStringList FullItemEntityFields
+QStringList _initFullItemEntityFields()
 {
-	"barcode",
-	"qty",
-	"title",
-	"cmid",
-	"box",
-	"highlight"
-};
-QStringList FullItemEntityDefaults
+   QStringList t;
+    t << "barcode" <<
+    "qty" <<
+    "title" <<
+    "cmid" <<
+    "box" <<
+    "highlight";
+    return t;
+}
+QStringList _initFullItemEntityDefaults()
 {
-	QString(),
-	QString(),
-	QString(),
-	QString(),
-	QString(),
-	QString()
+    QStringList t;
+    t << QString() <<
+    QString("0") <<
+    QString() <<
+    QString() <<
+    QString() <<
+    QString();
+    return t;
 };
+
+QStringList FullItemEntityFields(_initFullItemEntityFields());
+QStringList FullItemEntityDefaults(_initFullItemEntityDefaults());
 
 bool FullItemEntity::fromUniXml(const UniformXmlObject& o)
 {
 	if (o.myOID() == UniformXmlObject::Item)
 	{
+		bool ok;
 		QStringList temp = o.mapFields(FullItemEntityFields, FullItemEntityDefaults);
-		if (title.isEmpty())
-			throw InitializationError("title", " ");
+		code = temp.at(0);
+        qty = temp.at(1).toDouble(&ok);
+		title = temp.at(2);
+		cmid = temp.at(3);
+		box = temp.at(4);
+		highlight = temp.at(5) == "true";
+		if (title.isEmpty() || !ok)
+			throw InitializationError("title is empty or qty conv failed", " ");
 		return true;
 	}
 	return false;
@@ -57,13 +76,10 @@ QString FullItemEntity::makeTitle() const
 	return title;
 }
 
-IdInt FullItemEntity::extractId() const
+QString FullItemEntity::extractId() const
 {
-	bool ok;
-	IdInt cd = code.toLongLong(&ok);
-	if (!ok)
-		return (IdInt)(this);
-	return cd;
+	
+	return code;
 }
 
 bool FullItemEntity::deepCompare(const AbsRecEntity* another) const
@@ -126,9 +142,9 @@ QString ShortItemEntity::makeTitle() const
 	return name;
 }
 
-IdInt ShortItemEntity::extractId() const
+QString ShortItemEntity::extractId() const
 {
-	return (IdInt)this;
+	return  QString::number((long long int)this);
 }
 
 bool ShortItemEntity::deepCompare(const AbsRecEntity* another) const

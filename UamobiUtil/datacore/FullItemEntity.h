@@ -1,6 +1,6 @@
 #pragma once
 #include "AbsEntityPrototype.h"
-#include <qregularexpression.h>
+
 
 
 
@@ -11,7 +11,7 @@ public:
 	QString code;
 	QString cmid;
 	QString box;
-	int qty;
+    double qty;
 	bool highlight;
 
 	FullItemEntity(QString Title = QString(), QString Code = QString(),
@@ -19,11 +19,12 @@ public:
 		QString Qty = QString(), QString Highlight = QString());
 	static void sendGetRequest(int pagenumber, RequestAwaiter* awaiter, QString doc = QString());
 	void sendDeleteThisRequest(RequestAwaiter* awaiter);
+	void sendDeleteThisRequest(const QueryTemplates::OverloadableQuery& oq, RequestAwaiter* awaiter);
 protected:
 	// Inherited via AbsRecEntity
 	virtual bool fromUniXml(const UniformXmlObject& o) override;
 	virtual QString makeTitle() const override;
-	virtual IdInt extractId() const override;
+	virtual QString extractId() const override;
 	virtual bool deepCompare(const AbsRecEntity* another) const override;
 	virtual AbsRecEntity* fabricate() const override;
 	virtual bool sortingCompare(const AbsRecEntity* another) const override;
@@ -45,7 +46,7 @@ protected:
 	// Inherited via AbsRecEntity
 	virtual bool fromUniXml(const UniformXmlObject& o) override;
 	virtual QString makeTitle() const override;
-	virtual IdInt extractId() const override;
+	virtual QString extractId() const override;
 	virtual bool deepCompare(const AbsRecEntity* another) const override;
 	virtual AbsRecEntity* fabricate() const override;
 	virtual bool sortingCompare(const AbsRecEntity* another) const override;

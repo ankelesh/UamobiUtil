@@ -1,15 +1,16 @@
 #pragma once
-#include "widgets/parents/AbstractCheckboxSelection.h"
 #include "widgets/parents/IndependentBranchNode.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
 #ifdef QT_VERSION5X
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QScrollArea>
 #include <QtWidgets/QListView>
+#include <QtWidgets/QBoxLayout>
 #else
 #include <QtGui/QLabel>
 #include <QtGui/QScrollArea>
 #include <QtGui/QListView>
+#include <QtGui/QBoxLayout>
 #endif
 #include "widgets/utils/GlobalAppSettings.h"
 #include "networking/RequestAwaiter.h"
@@ -24,7 +25,7 @@
 	__ASSOCIATED_DATABASE_FUNCTION__   :  P'typicalResponse'   doc_select_filter
 
 */
-
+using QueryTemplates::QueryCache;
 
 class FilterSelectWidget : public IndependentBranchNode
 {
@@ -43,19 +44,25 @@ protected:
 	MegaIconButton* okButton;
 
 	RequestAwaiter* awaiter;
+
+	QueryCache localCache;
+
 	void _handleRecord(RecEntity) override;
 	virtual void _sendDataRequest() override;
+	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
 public:
 	FilterSelectWidget(QWidget* parent = Q_NULLPTR);
 	void loadFilters();
 protected slots:
 	void checkAll();
 	void uncheckAll();
-	void changeState(const QModelIndex& index);
+#ifdef QT_VERSION5X
+    void changeState(const QModelIndex & index);
+#else
+    void changeState(QModelIndex  index);
+#endif
 	void okPressed();
 	void was_timeout();
 	void parse_doctype_list_response();
 	void parse_doctype_selection_response();
-signals:
-	void filterApplied();
 };

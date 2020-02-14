@@ -13,7 +13,7 @@
 
 void FilterSelectWidget::_handleRecord(RecEntity)
 {
-	loadFilters();
+
 }
 
 FilterSelectWidget::FilterSelectWidget(QWidget* parent)
@@ -24,7 +24,8 @@ FilterSelectWidget::FilterSelectWidget(QWidget* parent)
 	allonButton(new MegaIconButton(this)), alloffButton(new MegaIconButton(this)),
 	typesel(new QListView(this)),
 	footerLayout(new QHBoxLayout(this)), backButton(new MegaIconButton(this)),
-	okButton(new MegaIconButton(this)), awaiter(new RequestAwaiter(AppSettings->timeoutInt, this))
+	okButton(new MegaIconButton(this)), awaiter(new RequestAwaiter(AppSettings->timeoutInt, this)),
+	localCache()
 {
 	this->setLayout(mainLayout);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -59,6 +60,7 @@ FilterSelectWidget::FilterSelectWidget(QWidget* parent)
 	okButton->setIcon(QIcon(":/res/filter.png"));
 	okButton->setStyleSheet(CHANGE_BUTTONS_STYLESHEET);
 	typesel->setItemDelegate(new CheckableDelegate(QColor(210, 224, 146), QColor(245, 164, 188), this));
+	typesel->setModel(doctypes);
 #ifdef QT_VERSION5X
 	QObject::connect(allonButton, &MegaIconButton::clicked, this, &FilterSelectWidget::checkAll);
 	QObject::connect(alloffButton, &MegaIconButton::clicked, this, &FilterSelectWidget::uncheckAll);
@@ -73,7 +75,7 @@ FilterSelectWidget::FilterSelectWidget(QWidget* parent)
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 	QObject::connect(okButton, SIGNAL(clicked()), this, SLOT(okPressed()));
 	QObject::connect(awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
-	QObject::connect(typesel, SIGNAL(clicked(const QModelIndex&)), this, SLOT(changeState(const QModelIndex&)));
+    QObject::connect(typesel, SIGNAL(clicked(QModelIndex)), this, SLOT(changeState(QModelIndex)));
 #endif
 }
 
@@ -87,7 +89,10 @@ void FilterSelectWidget::loadFilters()
 #else
 	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(parse_doctype_list_response()));
 #endif
-	DocTypeEntity::sendGetRequest(awaiter);
+	if (localCache.contains(documentGetAllowedTypes))
+		AppNetwork->execQueryByTemplate(localCache[documentGetAllowedTypes], awaiter);
+	else
+		DocTypeEntity::sendGetRequest(awaiter);
 }
 
 void FilterSelectWidget::checkAll()
@@ -119,12 +124,13 @@ void FilterSelectWidget::uncheckAll()
 	}
 	typesel->update();
 }
-
-void FilterSelectWidget::changeState(const QModelIndex& index)
+#ifdef QT_VERSION5X
+void FilterSelectWidget::changeState(const QModelIndex & index)
 {
 	if (index.isValid())
 	{
-		DocType doctype = upcastRecord<DocTypeEntity>(index.data().value<RecEntity>());
+		DocType doctype = upcastRecord<DocTypeEntity>(
+			index.data(DataEntityListModel::DirectAccess).value<RecEntity>());
 		if (doctype.isNull())
 			return;
 		else
@@ -134,6 +140,23 @@ void FilterSelectWidget::changeState(const QModelIndex& index)
 		}
 	}
 }
+#else
+void FilterSelectWidget::changeState(QModelIndex index)
+{
+    if (index.isValid())
+    {
+        DocType doctype = upcastRecord<DocTypeEntity>(
+            index.data(DataEntityListModel::DirectAccess).value<RecEntity>());
+        if (doctype.isNull())
+            return;
+        else
+        {
+            doctype->isSelected = !doctype->isSelected;
+            typesel->update(index);
+        }
+    }
+}
+#endif
 
 void FilterSelectWidget::okPressed()
 {
@@ -155,11 +178,14 @@ void FilterSelectWidget::okPressed()
 		).value<RecEntity>();
 		if (record->getAttachedNumber() == 1)
 		{
-			buffer += QString::number(record->getId()) + ",";
+			buffer += record->getId() + ",";
 		}
 	}
 	buffer.chop(1);
-	DocTypeEntity::sendFilterList(buffer, awaiter);
+	if (localCache.contains(documentSetFilter))
+		AppNetwork->execQueryByTemplate(localCache[documentSetFilter], buffer, awaiter);
+	else
+		DocTypeEntity::sendFilterList(buffer, awaiter);
 }
 
 void FilterSelectWidget::was_timeout()
@@ -190,7 +216,7 @@ void FilterSelectWidget::parse_doctype_selection_response()
 	ResponseParser parser(new SimpliestResponceParser(awaiter->restext, awaiter->errtext));
 	if (parser->isSuccessfull())
 	{
-		emit filterApplied();
+		emit done(RecEntity());
 	}
 	else
 	{
@@ -198,6 +224,31 @@ void FilterSelectWidget::parse_doctype_selection_response()
 	}
 	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
+}
+
+void FilterSelectWidget::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads)
+{
+	switch (
+		((overloads.count() > 2) ? 2 : overloads.count())
+		)
+	{
+	case 2:
+    {
+		localCache.insert(documentGetAllowedTypes, overloads.at(1).assertedAndMappedCopy(
+			documentGetAllowedTypes
+		));
+    }
+	case 1:
+    {
+        QStringList t;
+        t<<"ids";
+        localCache.insert(documentSetFilter, overloads.at(0).assertedAndMappedCopy(
+            documentGetAllowedTypes, t,t
+		));
+    }
+	default:
+		return;
+	}
 }
 
 void FilterSelectWidget::_sendDataRequest()

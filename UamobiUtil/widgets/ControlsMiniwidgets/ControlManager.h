@@ -12,7 +12,5 @@ namespace ControlManager
 	enum GuessedControlType {None, Quantity};
 }
 
-abs_control* fabricateControl(QString& assocBuffer, QString initstr, QBoxLayout* layout, QWidget* parent);
-
 
 abs_control* fabricateControl(QString initstr, QBoxLayout* layout, QWidget* parent);

@@ -36,6 +36,8 @@ BigButtonsSpinbox::BigButtonsSpinbox(spintype type, QWidget* parent, double adap
 	coreSpinbox->setButtonSymbols(QAbstractSpinBox::NoButtons);
 	buttonUp->setMinimumHeight(calculateAdaptiveButtonHeight(adaptH));
 	buttonDown->setMinimumHeight(calculateAdaptiveButtonHeight(adaptH));
+	buttonDown->setFocusPolicy(Qt::NoFocus);
+	buttonUp->setFocusPolicy(Qt::NoFocus);
 	infoLabel->setMinimumHeight(calculateAdaptiveButtonHeight(adaptH / 3));
 	infoLabel->setFont(makeFont(0.027));
 	infoLabel->setAlignment(Qt::AlignCenter);
@@ -305,6 +307,16 @@ bool BigButtonsSpinbox::hasFocus() const
 void BigButtonsSpinbox::setInfo(QString& str)
 {
 	infoLabel->setText(str);
+}
+
+void BigButtonsSpinbox::selectAll()
+{
+	coreSpinbox->selectAll();
+}
+
+void BigButtonsSpinbox::setStyleSheet(const QString& st)
+{
+	coreSpinbox->setStyleSheet(st);
 }
 
 void BigButtonsSpinbox::timeValueChanged(const QTime& t)

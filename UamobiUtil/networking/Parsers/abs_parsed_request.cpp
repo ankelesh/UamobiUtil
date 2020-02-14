@@ -68,6 +68,11 @@ bool AbsResponseParser::run()
 AbsResponseParser::AbsResponseParser(QString& res, QString& err)
 	: xmldoc(), errtext(err), success(false), parseResult(), alternativeResult(0)
 {
+	if (res.isEmpty())
+	{
+		errtext = "Empty result!";
+		return;
+	}
 	xmldoc.setContent(res);
 	if (isError(xmldoc))
 	{

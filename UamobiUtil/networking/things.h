@@ -15,8 +15,6 @@
 		approach, but this legacy thing is needed. Later these structures will be morphed into classes, except legacy ones.
 
 */
-
-
 class DataEntityListModel : public QAbstractListModel
 	// This data model is used for fully dynamical data entity model. Use right delegate to show data in view.
 	// You can place in this model even polymorthic data, just install suitable delegate for it.
@@ -25,6 +23,7 @@ class DataEntityListModel : public QAbstractListModel
 protected:
 	// real data storage
 	Records innerList;
+	QVector<int> heights;
 public:
 	// Roles for data entity operations
 	enum ExtendedRoles {
@@ -34,10 +33,11 @@ public:
 		QuantityView,
 		// DataCopyRole returns full copy of an object to avoid changing model
 		DataCopyRole,
-		DirectAccess
+		DirectAccess,
+		HeightAccess
 	};
 
-	using QAbstractListModel::QAbstractListModel;
+    DataEntityListModel(QObject* parent) : QAbstractListModel(parent), innerList(), heights(){}
 	DataEntityListModel(const Records& data, QObject* parent = Q_NULLPTR);
 	// Inherited from QAbstractListModel
 	int rowCount(const QModelIndex& parent = QModelIndex()) const override;
@@ -55,10 +55,16 @@ public:
 	void reset();
 public slots:
 	//If index was valid - emits signal with pointer to clicked entity.
-	void mapClickToEntity(const QModelIndex& index);
+#ifdef QT_VERSION5X
+    void mapClickToEntity(const QModelIndex& index);
+#else
+    void mapClickToEntity(QModelIndex index);
+#endif
 	void lookForEntity(const RecEntity);
 signals:
 	// delivers pointer to data entity. Warning - changing this entity by pointer will affect model.
 	void dataEntityClicked(RecEntity);
 };
+
+
 #endif // USER_H

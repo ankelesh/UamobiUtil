@@ -34,11 +34,11 @@ bool ScrollKeyFilter::eventFilter(QObject* o, QEvent* ev)
 	return QObject::eventFilter(o, ev);
 }
 
-ScrollKeyFilter::ScrollKeyFilter(QObject* parent)
+ScrollKeyFilter::ScrollKeyFilter(QObject* /*parent*/)
 {
 }
 
-QScroller::QScroller(QAbstractScrollArea* from, QScroller::ScrollerGestureType what, QObject* parent)
+QScroller::QScroller(QAbstractScrollArea* from, QScroller::ScrollerGestureType /*what*/, QObject* parent)
 	:QObject(parent), grabbed(from), filter(new ScrollKeyFilter(this))
 {
 	from->viewport()->installEventFilter(filter);
@@ -47,7 +47,7 @@ QScroller::QScroller(QAbstractScrollArea* from, QScroller::ScrollerGestureType w
 
 void QScroller::grabGesture(QAbstractScrollArea* from, QScroller::ScrollerGestureType what)
 {
-	QScroller* tmp = new QScroller(from, what, from);
+    new QScroller(from, what, from);
 }
 
 void QScroller::processScrollDistance(int dist)

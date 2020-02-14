@@ -22,7 +22,7 @@ bool RichtextResponseParser::_doParsing()
 		return _stopWithError("No richtext object detected");
 	QDomNode listNode = tempList.at(1);
 	parseResult << XmlObject(new UniformXmlObject(UniformXmlObject::Richtext, listNode));
-	if (!parseResult.first()->hasField("richdata"))
+	if (!(parseResult.first()->hasField("richdata") || parseResult.first()->hasField("code")))
 	{
 		errtext += " No richdata field found in main object!";
 		return false;

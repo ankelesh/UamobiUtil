@@ -5,17 +5,16 @@
 #include <QtWidgets/QBoxLayout>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QListView>
 #else
  // Qt 4 only imports
 #include <QtGui/QBoxLayout>
 #include <QtGui/QLineEdit>
 #include <QtGui/QLabel>
+#include <QtGui/QListView>
 #endif
-#include "widgets/parents/AbstractListSelectionWidget.h"
 #include "networking/RequestAwaiter.h"
-#include "networking/Parsers/RequestParser.h"
 #include "widgets/parents/IndependentBranchNode.h"
-#include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
 
 /*
@@ -26,7 +25,7 @@
 	__ASSOCIATED_DATABASE_FUNCTION__  :  P'searchResponse' doc_search_items()
 
 */
-
+using QueryTemplates::OverloadableQuery;
 class PagedSearchWidget : public IndependentBranchNode
 {
 	Q_OBJECT
@@ -49,8 +48,12 @@ protected:
 	int currentpage;
 	QString toSearch;
 	RequestAwaiter* awaiter;
+
+	OverloadableQuery loadDataQuery;
+
 	virtual void _handleRecord(RecEntity) override;
 	virtual void _sendDataRequest() override;
+	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
 	void setIndexation(XmlObjects items);
 public:
 	PagedSearchWidget(RecEntity proto, QWidget* parent);
@@ -63,8 +66,4 @@ public slots:
 	void previousPage();	//	sends request for prev page
 	void search_response();	//	netresponse functions
 	void was_timeout();
-signals:
-	void done(RecEntity);
-	// Inherited via IndependentBranchNode
-	//	is emitted when item picked
 };

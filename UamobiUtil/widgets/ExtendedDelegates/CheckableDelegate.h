@@ -5,11 +5,12 @@
 #include <QtWidgets/qstyleditemdelegate.h>
 #else
 #include <QtGui/QItemDelegate>
+#include <QtGui/QStyledItemDelegate>
 #endif
 #include <QtGui/QPainter>
 
 /*
-	Uses enumerable as checked flag
+	Uses int value obtained from entity as checked flag
 */
 
 class CheckableDelegate : public QStyledItemDelegate
@@ -17,6 +18,8 @@ class CheckableDelegate : public QStyledItemDelegate
 private:
 	QColor checkedColor;
 	QColor uncheckedColor;
+	QIcon checkedImage;
+	QIcon uncheckedImage;
 
 	void cacheImages(QRect& newRect) const;
 public:

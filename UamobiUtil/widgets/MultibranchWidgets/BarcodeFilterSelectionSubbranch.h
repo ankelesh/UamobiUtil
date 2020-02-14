@@ -12,18 +12,16 @@
 #include <QtGui/QLabel>
 #endif
 #include "widgets/parents/IndependentBranchNode.h"
-#include "widgets/parents/AbstractVariantSelectionWidget.h"
 #include "widgets/parents/abstractNodeInterface.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
-#include "widgets/parents/SelectItemFromListWidget.h"
 #include "networking/things.h"
+
 /*
 	This widget branch is allowing user to select barcode filter that will be sent to server.
-
-	__ASSOCIATED_DB_FUNCTION__	:	void	select_filter_item(filter, value)
-
+	It allows to attach 3 nodes which must return entity with id to successfully finish branch.
+	This widget is similar with switch widget, but has all functionality required prebuilt.
 */
-
+using QueryTemplates::OverloadableQuery;
 class BarcodeFilterSelectionSubbranch : public IndependentBranchNode, abstractNode
 {
 	Q_OBJECT
@@ -40,25 +38,42 @@ protected:
 	MegaIconButton* passButton;
 	MegaIconButton* backButton;
 
-	SelectItemFromListWidget* supplierWidget;
-	SelectItemFromListWidget* stillageWidget;
-	SelectItemFromListWidget* groupWidget;
+	// attachments. 
+	IndependentBranchNode* supplierWidget;
+	IndependentBranchNode* stillageWidget;
+	IndependentBranchNode* groupWidget;
 	RequestAwaiter* awaiter;
 
 	RecEntity doc;
+
+	// overloadable queries
+	OverloadableQuery applyFilterQuery;
+	OverloadableQuery getFiltersQuery;
+	// Inherited via IndependentBranchNode
+	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
 	virtual void _handleRecord(RecEntity) override;
 	virtual void _sendDataRequest() override;
 public:
-	BarcodeFilterSelectionSubbranch(QWidget* parent = Q_NULLPTR);
+	// uses default subbranches if no subbranch provided
+	BarcodeFilterSelectionSubbranch(QWidget* parent = Q_NULLPTR, IndependentBranchNode* supp = Q_NULLPTR,
+		IndependentBranchNode* still = Q_NULLPTR, IndependentBranchNode* group = Q_NULLPTR
+		);
+	// sends getFilters to define what to show user
 	void assertAndShow(QString& pdoc);
+	// applies filter, not requires record
 	void applyFilter(QString param, QString type);
 protected slots:
+	// buttons reactions
 	void supplierSelectRequired();
 	void stillageSelectRequired();
 	void groupSelectRequired();
 	void noFilterRequired();
+	// reaction to subbranch end
 	void filterSelected(RecEntity);
+	// awaiter reaction
 	void got_response();
 	void hideCurrent();
+
+
 
 };

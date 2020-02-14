@@ -17,6 +17,11 @@ QHash<QString, independent_nodes::nodelist> _initBinding()
 	h["PlaceSelect"] = PlaceSelect;
 	h["InventoryParameters"] = InventoryParameters;
 	h["ParentDocument"] = ParentDocument;
+	h["BarcodeFilterSelect"] = BarcodeFilterSelect;
+	h["Subbranch"] = Subbranch;
+	h["PrintingScaning"] = PrintingScaning;
+	h["Switch"] = Switch;
+	h["Sender"] = Sender;
 	return h;
 }
 
@@ -57,56 +62,56 @@ void BranchDescriptionParser::_prepareString(QString& buffer)
 void BranchDescriptionParser::_extractAndPush(QString buffer)
 {
 	_prepareString(buffer);
-	if (current.type != independent_nodes::Subbranch)
+	if (currentToAdd->type != independent_nodes::NotANode)
 	{
-		descriptions.push_back(current);
-		current = BranchElementDescription();
+		currentNode->emplaceNode(currentToAdd);
 	}
-	current.type = widgetBinding.value(buffer);
+	currentToAdd->type = widgetBinding.value(buffer);
 }
 
 void BranchDescriptionParser::_extractEntity(QString buffer)
 {
+	_prepareString(buffer);
 	switch (entityBinding.value(buffer))
 	{
 	case UniformXmlObject::Mode:
-		current.entity.reset(new ModeEntity());
+        currentToAdd->entity = RecEntity(new ModeEntity());
 			break;
 	case UniformXmlObject::Place:
-		current.entity.reset(new PlaceEntity());
+        currentToAdd->entity = RecEntity(new PlaceEntity());
 			break;
 	case UniformXmlObject::Supplier:
-		current.entity.reset(new SupplierEntity());
+        currentToAdd->entity = RecEntity(new SupplierEntity());
 			break;
 	case UniformXmlObject::Order:
-		current.entity.reset(new OrderEntity());
+        currentToAdd->entity = RecEntity(new OrderEntity());
 			break;
 	case UniformXmlObject::Item:
-		current.entity.reset(new FullItemEntity());
+        currentToAdd->entity = RecEntity(new FullItemEntity());
 			break;
 	case UniformXmlObject::SimpleItem:
-		current.entity.reset(new ShortItemEntity());
+        currentToAdd->entity = RecEntity(new ShortItemEntity());
 			break;
 	case UniformXmlObject::Document:
-		current.entity.reset(new FullDocumentEntity());
+        currentToAdd->entity = RecEntity(new FullDocumentEntity());
 			break;
 	case UniformXmlObject::Doctype:
-		current.entity.reset(new DocTypeEntity());
+        currentToAdd->entity = RecEntity(new DocTypeEntity());
 			break;
 	case UniformXmlObject::Group:
-		current.entity.reset(new GroupEntity());
+        currentToAdd->entity = RecEntity(new GroupEntity());
 			break;
 	case UniformXmlObject::Stillage:
-		current.entity.reset(new StillageEntity());
+        currentToAdd->entity = RecEntity(new StillageEntity());
 			break;
 	case UniformXmlObject::Control:
-		current.entity.reset(new InputControlEntity());
+        currentToAdd->entity = RecEntity(new InputControlEntity());
 			break;
 	case UniformXmlObject::User:
-		current.entity.reset(new UserEntity());
+        currentToAdd->entity = RecEntity(new UserEntity());
 			break;
 	case UniformXmlObject::LesserDocument:
-		current.entity.reset(new LesserDocumentEntity());
+        currentToAdd->entity = RecEntity(new LesserDocumentEntity());
 			break;
 	default:
 		return;
@@ -119,18 +124,18 @@ void BranchDescriptionParser::_extractOverload(QString buffer)
 	_prepareString(buffer);
 	if (buffer.isEmpty())
 	{
-		current.oqs.push_back(OverloadableQuery::defaultQuery());
+		currentToAdd->oqs.push_back(OverloadableQuery::defaultQuery());
 		return;
 	}
-	QVector<QStringRef> temp = buffer.splitRef(" : ");
+    QStringList temp = buffer.split(" : ");
 	if (temp.count() != 2)
 	{
 		if (temp.count() == 1)
-			current.oqs.push_back(OverloadableQuery(temp.at(0).toString()));
+            currentToAdd->oqs.push_back(OverloadableQuery(temp.at(0)));
 		return;
 	}
-	QVector<QStringRef> args(temp.at(1).split(" , "));
-	current.oqs.push_back(OverloadableQuery(temp.first(), args));
+    QStringList args(temp.at(1).split(" , "));
+	currentToAdd->oqs.push_back(OverloadableQuery(temp.first(), args));
 }
 
 void BranchDescriptionParser::_extractBacktrack(QString buffer)
@@ -140,49 +145,93 @@ void BranchDescriptionParser::_extractBacktrack(QString buffer)
 	int backtrack = buffer.toInt(&ok);
 	if (!ok)
 		return;
-	current.backtracking = backtrack;
+	currentToAdd->backtracking = backtrack;
+}
+
+void BranchDescriptionParser::_openSubbranchCapture()
+{
+	if (currentNode->isEmpty())
+		return;
+	if (currentToAdd->type != independent_nodes::NotANode)
+	{
+		currentNode->emplaceNode(currentToAdd);
+	}
+	parentStack.push(currentNode);
+	currentNode = currentNode->last().data();
+}
+
+void BranchDescriptionParser::_closeSubbranchCapture()
+{
+	if (parentStack.isEmpty())
+		return;
+	if (currentToAdd->type != independent_nodes::NotANode)
+	{
+		currentNode->emplaceNode(currentToAdd);
+	}
+	currentNode = parentStack.pop();
+}
+
+void BranchDescriptionParser::_extractNameOverload(QString buffer)
+{
+	_prepareString(buffer);
+	currentNode->namesOverload << buffer;
 }
 
 BranchDescriptionParser::BranchDescriptionParser()
-	: cin(), descriptions(), current()
+	: cin(), root(), currentNode(), currentToAdd()
 {
 }
 
-QVector<BranchElementDescription> BranchDescriptionParser::doParsing(QString what)
+BranchDescription BranchDescriptionParser::doParsing(QString what)
 {
-	descriptions.clear();
+    root = BranchDescription(new BranchElementDescription());
+    currentToAdd = BranchDescription(new BranchElementDescription());
+	currentNode = root.data();
+	parentStack.clear();
 	cin.setString(&what, QIODevice::ReadOnly);
 	QString buffer;
 	while (true)
 	{
-		cin.readLineInto(&buffer);
+        buffer = cin.readLine();
+		if (!buffer.isEmpty())
+		{
+			switch (buffer.at(0).toLatin1())
+			{
+			case '[':
+				_extractAndPush(buffer);
+				break;
+			case '%':
+				_extractEntity(buffer);
+				break;
+			case '<':
+				_extractOverload(buffer);
+				break;
+			case '*':
+				_extractBacktrack(buffer);
+				break;
+			case '{':
+				_openSubbranchCapture();
+				break;
+			case '}':
+				_closeSubbranchCapture();
+				break;
+			case '(':
+				_extractNameOverload(buffer);
+				break;
+			default:
+				break;
+			}
+		}
 		if (cin.atEnd())
 		{
-			if (current.type != independent_nodes::Subbranch)
-				descriptions.push_back(current);
-			break;
-		}
-		if (buffer.isEmpty())
-			continue;
-		switch (buffer.at(0).toLatin1())
-		{
-		case '[':
-			_extractAndPush(buffer);
-			break;
-		case '%':
-			_extractEntity(buffer);
-			break;
-		case '<':
-			_extractOverload(buffer);
-			break;
-		case '*':
-			_extractBacktrack(buffer);
-			break;
-		default:
+			if (currentToAdd->type != independent_nodes::NotANode)
+				currentNode->emplaceNode(currentToAdd);
 			break;
 		}
 	}
-	return descriptions;
+	if (!root->isEmpty())
+		root->type = independent_nodes::Subbranch;
+	return root;
 }
 
 BranchDescriptionParser* BranchDescriptionParser::_instanse = Q_NULLPTR;
@@ -193,13 +242,7 @@ BranchDescriptionParser* BranchDescriptionParser::instanse()
 	return _instanse;
 }
 
-QVector<BranchElementDescription> BranchDescriptionParser::parse(QString what)
+BranchDescription BranchDescriptionParser::parse(QString what)
 {
 	return instanse()->doParsing(what);
-}
-
-BranchElementDescription::BranchElementDescription(independent_nodes::nodelist Type,
-	QVector<QueryTemplates::OverloadableQuery> Oqs, int Backtracking, RecEntity Entity)
-	: type(Type), oqs(Oqs), backtracking(Backtracking), entity(Entity)
-{
 }

@@ -12,13 +12,9 @@ QString EntitledEntity::makeTitle() const
 	return title;
 }
 
-IdInt EntitledEntity::extractId() const
+QString EntitledEntity::extractId() const
 {
-	bool ok;
-	IdInt d = code.toLongLong(&ok);
-	if (!ok)
-		return 0;
-	return d;
+	return code;
 }
 
 bool EntitledEntity::deepCompare(const AbsRecEntity* another) const
@@ -64,7 +60,7 @@ AbsRecEntity* SupplierEntity::fabricate() const
 	return new SupplierEntity(*this);
 }
 
-bool SupplierEntity::useAssociatedNetworkSendMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool SupplierEntity::useAssociatedNetworkSendMethod(QStringList& /*arguments*/, RequestAwaiter* /*awaiter*/) const
 {
 	return false;
 }
@@ -143,7 +139,7 @@ AbsRecEntity* LesserDocumentEntity::fabricate() const
 	return new LesserDocumentEntity(*this);
 }
 
-bool LesserDocumentEntity::useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool LesserDocumentEntity::useAssociatedNetworkGetMethod(QStringList& /*arguments*/, RequestAwaiter* awaiter) const
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::inventoryListParentDocs, awaiter);
 	return true;

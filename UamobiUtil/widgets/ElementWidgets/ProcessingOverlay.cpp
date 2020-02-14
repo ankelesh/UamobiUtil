@@ -7,7 +7,7 @@
 #include "debugtrace.h"
 #endif
 
-const float PI = 3.141592653589793238463;
+const float PI = 3.141592653589793238463f;
 const float RadMult = PI / 180;
 
 
@@ -45,7 +45,7 @@ QPolygon makeParrallellogram(const QPoint center, const QPoint lowerR, const QPo
 	return QPolygon(points);
 
 }
-void ProcessingOverlay::paintEvent(QPaintEvent* pev)
+void ProcessingOverlay::paintEvent(QPaintEvent* /*pev*/)
 {
 	QRect bg(0, 0, width() - 1, height() - 1);
 	QPainter p(this);
@@ -58,7 +58,7 @@ void ProcessingOverlay::paintEvent(QPaintEvent* pev)
 	p.drawPolygon(lowerTriangle);
 	p.drawText(textPoint, tr("Awaiting network response"));
 	p.setBrush(QBrush(Qt::red));
-	p.setOpacity(0.6);
+    p.setOpacity(0.6f);
 	p.drawPolygon(LowerInnerTriangle);
 }
 
@@ -71,8 +71,8 @@ ProcessingOverlay::ProcessingOverlay(int interval, QWidget* parent)
 	: QWidget(parent), currentState(1), endPoint(10), redrawTimer(new QTimer(this))
 {
 #ifdef Q_OS_WINCE
-	this->setFixedSize(calculateAdaptiveSize(0.4));
-	QSize partial = calculateAdaptiveSize(0.3);
+    this->setFixedSize(calculateAdaptiveSize(0.5));
+    QSize partial = calculateAdaptiveSize(0.4);
 #else
 	QSize parentG = qApp->desktop()->size();
 
@@ -87,13 +87,13 @@ ProcessingOverlay::ProcessingOverlay(int interval, QWidget* parent)
 	textPoint = QPoint(width() / 5, this->height() - 5);
 #endif
 	endPoint = interval / 500;
-	TopTriangle = makeTriangle(centralPoint, this->height() * 0.7, true);
-	lowerTriangle = makeTriangle(centralPoint, this->height() * 0.7, false);
+	TopTriangle = makeTriangle(centralPoint, this->height() * 0.4, true);
+	lowerTriangle = makeTriangle(centralPoint, this->height() * 0.4, false);
 	lowerPointLeft = lowerTriangle.at(1);
 	lowerPointRight = lowerTriangle.at(2);
-	LowerInnerTriangle = makeTriangle(centralPoint, this->height() * 0.7, false);
-	innerTopSize = this->height() * (0.7 * (currentState / endPoint));
-	innerLowerSize = this->height() * (0.7 * (currentState / endPoint));
+	LowerInnerTriangle = makeTriangle(centralPoint, this->height() * 0.4, false);
+	innerTopSize = this->height() * (0.4 * (currentState / endPoint));
+	innerLowerSize = this->height() * (0.4 * (currentState / endPoint));
 	totalRibSize = innerTopSize; 
 	redrawTimer->setInterval(interval / endPoint);
 #ifdef QT_VERSION5X
@@ -106,9 +106,10 @@ ProcessingOverlay::ProcessingOverlay(int interval, QWidget* parent)
 void ProcessingOverlay::restart()
 {
 	currentState = endPoint;
-	innerTopSize = this->height() * (0.7 * (currentState / endPoint));
-	innerLowerSize = this->height() * (0.7 * (currentState / endPoint));
-	LowerInnerTriangle = makeParrallellogram(centralPoint, lowerPointRight, lowerPointLeft, this->height() * (1.38 * (currentState / (endPoint))), totalRibSize);
+	innerTopSize = this->height() * (0.4 * (currentState / endPoint));
+	innerLowerSize = this->height() * (0.4 * (currentState / endPoint));
+    LowerInnerTriangle = makeParrallellogram(centralPoint, lowerPointRight, lowerPointLeft, this->height() *
+                                             (0.8 * (currentState / (endPoint))), totalRibSize);
 	redrawTimer->start();
 }
 
@@ -134,16 +135,16 @@ void ProcessingOverlay::resize(const QSize& parentG)
 #ifdef Q_OS_WINCE
 	textPoint = QPoint(0 + 2, height() - 2);
 #else
-	textPoint = QPoint(width() / 5, this->height() - 5);
+	textPoint = QPoint(5, this->height() - 5);
 #endif
-	TopTriangle = makeTriangle(centralPoint, this->height() * 0.7, true);
-	lowerTriangle = makeTriangle(centralPoint, this->height() * 0.7, false);
+	TopTriangle = makeTriangle(centralPoint, this->height() * 0.4, true);
+	lowerTriangle = makeTriangle(centralPoint, this->height() * 0.4, false);
 	lowerPointLeft = lowerTriangle.at(1);
 	lowerPointRight = lowerTriangle.at(2);
 	LowerInnerTriangle = makeParrallellogram(centralPoint, lowerPointRight, lowerPointLeft, this->height() * (1.38 * (currentState / (endPoint))), totalRibSize);
 
-	innerTopSize = this->height() * (0.7 * (currentState / endPoint));
-	innerLowerSize = this->height() * (0.7 * (currentState / endPoint));
+	innerTopSize = this->height() * (0.4 * (currentState / endPoint));
+	innerLowerSize = this->height() * (0.4 * (currentState / endPoint));
 	totalRibSize = innerTopSize;
 }
 
@@ -157,7 +158,7 @@ void ProcessingOverlay::setTemporaryDelay(int additionalDelay)
 void ProcessingOverlay::step()
 {
 	--currentState;
-	innerLowerSize = this->height() * (1.38 * (currentState / (endPoint)));
+	innerLowerSize = this->height() * (0.8 * (currentState / (endPoint)));
 	LowerInnerTriangle = makeParrallellogram(centralPoint, lowerPointRight, lowerPointLeft, innerLowerSize, totalRibSize);
 	update();
 	if (currentState == 0)

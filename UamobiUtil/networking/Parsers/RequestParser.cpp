@@ -2,7 +2,6 @@
 #include "networking/Parsers/SimpleLinearParsers.h"
 #include "networking/Parsers/SimpleResponseParsers.h"
 #include "networking/Parsers/DynamicLinearParsers.h"
-#include "networking/Parsers/NamedAttributesResponseParsers.h"
 #include "legacy/legacy.h"
 #include <QtXml/QDomDocument>
 #define DEBUG

@@ -1,7 +1,9 @@
 #include "QueryTemplates.h"
 #include <QtCore/QSettings>
 #include "debugtrace.h"
-
+#ifndef QStringLiteral
+#define QStringLiteral(A) QString::fromUtf8("" A "" , sizeof(A)-1)
+#endif
 namespace QueryTemplates
 {
 	QHash<QueryId, QString> queryCache(_initCache());
@@ -27,7 +29,7 @@ namespace QueryTemplates
 		c[documentNewParent] = queryTemplates.value(QStringLiteral("documentNewParent"), QStringLiteral("doc_parent_new&session=%1&sysfid=%2")).toString();
 		c[documentSearchItems] = queryTemplates.value(QStringLiteral("documentSearchItems"), QStringLiteral("doc_search_items&session=%1&text=%2&page=%3")).toString();
 		c[getItemInfo] = queryTemplates.value(QStringLiteral("getItemInfo"), QStringLiteral("doc_get_item_info&session=%1&barcode=%2&printer=%3")).toString();
-		c[documentGetResults] = queryTemplates.value(QStringLiteral("documentGetResults"), QStringLiteral("doc_list_items&session=%1%2&document=%3")).toString();
+		c[documentGetResults] = queryTemplates.value(QStringLiteral("documentGetResults"), QStringLiteral("doc_list_items&session=%1%2%3")).toString();
 		c[documentResultGetBox] = queryTemplates.value(QStringLiteral("documentResultsGetBox"), QStringLiteral("doc_result_get_box_data&session=%1&box_id=%2")).toString();
 		c[docResultEditByBoxId] = queryTemplates.value(QStringLiteral("docResultEditByBoxId"), QStringLiteral("doc_result_edit_by_box_id&session=%1&box_id=%2&qty=%3&qty_of_pkg=%4&lot=%5")).toString();
 		c[docResultDeleteItem] = queryTemplates.value(QStringLiteral("docResultDeleteItem"), QStringLiteral("doc_result_delete_item&session=%1&box_id=%2")).toString();
@@ -39,19 +41,19 @@ namespace QueryTemplates
 		c[inventoryAddItem] = queryTemplates.value(QStringLiteral("inventoryAddItem"), QStringLiteral("inv_add_item&session=%1&code=%2&qty=%3&show_code=%4")).toString();
 		c[invAddItemExpDate] = queryTemplates.value(QStringLiteral("invAddItemExpDate"), QStringLiteral("inv_add_item_w_ed&session=%1&code=%2&expdates=%3")).toString();
 		c[receiptListSuppliers] = queryTemplates.value(QStringLiteral("receiptListSuppliers"), QStringLiteral("rec_list_suppliers&session=%1&text=%2&hasorders=%3")).toString();
-		c[warehouseList] = queryTemplates.value(QStringLiteral("warehouseList", QStringLiteral("rec_list_warehouses&session=%1&text=%2&hasorders=%3"))).toString();
+		c[warehouseList] = queryTemplates.value(QStringLiteral("warehouseList"), QStringLiteral("rec_list_warehouses&session=%1&text=%2&hasorders=%3")).toString();
 		c[receiptListOrders] = queryTemplates.value(QStringLiteral("receiptListOrders"), QStringLiteral("rec_list_orders&session=%1&%2%3")).toString();
 		c[receiptGetOrderInfo] = queryTemplates.value(QStringLiteral("receiptGetOrderInfo"), QStringLiteral("rec_get_order_info&session=%1&order=%2&supplier=%3")).toString();
 		c[receiptNewDocument] = queryTemplates.value(QStringLiteral("receiptNewDocument"), QStringLiteral("rec_new_doc&session=%1&date=%2&parent=%3&comment=%4")).toString();
 		c[receiptAddItem] = queryTemplates.value(QStringLiteral("receiptAddItem"), QStringLiteral("rec_add_item&session=%1&barcode=%2&qty=%3")).toString();
 		c[receiptAddItemExpDate] = queryTemplates.value(QStringLiteral("receiptAddItemExpDate"), QStringLiteral("rec_add_item_w_ed&session=%1&code=%2&expdates=%3")).toString();
 		c[getFilterItem] = queryTemplates.value(QStringLiteral("getFilterItem"), QStringLiteral("get_filter_item&session=%1&parent=%2")).toString();
-		c[documentDeleteAll] = queryTemplates.value(QStringLiteral("DocumentDeleteAll"), QStringLiteral("doc_result_delete_all&session=%1")).toString();
+		c[documentDeleteAll] = queryTemplates.value(QStringLiteral("DocumentDeleteAll"), QStringLiteral("	")).toString();
 		c[docDeleteByBarcode] = queryTemplates.value(QStringLiteral("docDeleteByBarcode"), QStringLiteral("doc_result_delete_by_bc&session=%1&barcode=%2%3")).toString();
 		c[recListTemplated] = queryTemplates.value(QStringLiteral("recListTemplated"), QStringLiteral("rec_list_%2&session=%1&text=%3%4")).toString();
 		c[applyBarcodeFilter] = queryTemplates.value(QStringLiteral("applyBarcodeFilter"), QStringLiteral("select_filter_item&session=%1&filter=%2&value=%3")).toString();
 		c[receiptAddItemExpanded] = queryTemplates.value(QStringLiteral("receiptAddItemExpanded"), QStringLiteral("rec_add_item&session=%1&barcode=%2&qty=%3&price=0&prs=%4")).toString();
-
+		c[docGetItemLabel] = queryTemplates.value(QStringLiteral("docGetItemLabel"), QStringLiteral("doc_get_item_label&session=%1&barcode=%2&qty=%3&printer=%4")).toString();
 		if (!ok)
 		{
 			int i = 0;
@@ -95,14 +97,14 @@ namespace QueryTemplates
 			queryTemplates.setValue(QStringLiteral("recListTemplated"), c[static_cast<QueryId>(i++)]);
 			queryTemplates.setValue(QStringLiteral("applyBarcodeFilter"), c[static_cast<QueryId>(i++)]);
 			queryTemplates.setValue(QStringLiteral("receiptAddItemExpanded"), c[static_cast<QueryId>(i++)]);
+			queryTemplates.setValue(QStringLiteral("docGetItemLabel"), c[static_cast<QueryId>(i++)]);
 		}
 		return c;
 	}
 
 
 	OverloadableQuery nullQuery(-2, ping);
-	
-}
+
 int QueryTemplates::getQueryArguments(const QueryId id)
 {
 	switch (id)
@@ -140,7 +142,7 @@ int QueryTemplates::getQueryArguments(const QueryId id)
 	case getItemInfo:
 		return   2;
 	case documentGetResults:
-		return   1;
+		return   2;
 	case documentResultGetBox:
 		return   1;
 	case docResultEditByBoxId:
@@ -164,7 +166,7 @@ int QueryTemplates::getQueryArguments(const QueryId id)
 	case receiptListSuppliers:
 		return   2;
 	case receiptListOrders:
-		return   0;
+		return   2;
 	case receiptGetOrderInfo:
 		return   2;
 	case receiptNewDocument:
@@ -180,10 +182,12 @@ int QueryTemplates::getQueryArguments(const QueryId id)
 	case docDeleteByBarcode:
 		return   2;
 	case recListTemplated:
-		return   1;
+		return   3;
 	case applyBarcodeFilter:
 		return   2;
 	case receiptAddItemExpanded:
+		return   3;
+	case docGetItemLabel:
 		return   3;
 	default:
 		return 0;
@@ -208,6 +212,12 @@ const QString& QueryTemplates::OverloadableQuery::assertRightQuery() const
 		return overloadedQuery;
 }
 
+OverloadableQuery::OverloadableQuery()
+	: expectedQuery(ping), overloadedQuery(),
+	argumentListLength(-2), emplaceValues(), valuesForUnpacking()
+{
+}
+
 QueryTemplates::OverloadableQuery::OverloadableQuery(QueryId id)
 	: expectedQuery(id), overloadedQuery(), argumentListLength(),
 	emplaceValues(), valuesForUnpacking()
@@ -215,7 +225,7 @@ QueryTemplates::OverloadableQuery::OverloadableQuery(QueryId id)
 }
 
 QueryTemplates::OverloadableQuery::OverloadableQuery(QString oq)
-	:expectedQuery(QueryId::ping), overloadedQuery(oq), argumentListLength(), emplaceValues(), valuesForUnpacking()
+    :expectedQuery(ping), overloadedQuery(oq), argumentListLength(), emplaceValues(), valuesForUnpacking()
 {
 }
 
@@ -228,7 +238,7 @@ QueryTemplates::OverloadableQuery::OverloadableQuery(QStringList allValues, QStr
 	: expectedQuery(), overloadedQuery(), argumentListLength(allValues.count()), emplaceValues(), valuesForUnpacking(unpackedValues)
 {
 	for (int i = 0;
-		i < (unpackedValues.count() <= argumentListLength)? unpackedValues.count() : argumentListLength;
+		i < ((unpackedValues.count() <= argumentListLength)? unpackedValues.count() : argumentListLength);
 		++i)
 	{
 		int argIndex = allValues.indexOf(unpackedValues.at(i));
@@ -263,7 +273,7 @@ QueryTemplates::OverloadableQuery::OverloadableQuery(QString oq, QStringList all
 	emplaceValues(), valuesForUnpacking(unpackedValues)
 {
 	for (int i = 0;
-		i < (unpackedValues.count() <= argumentListLength) ? unpackedValues.count() : argumentListLength;
+		i < ((unpackedValues.count() <= argumentListLength) ? unpackedValues.count() : argumentListLength);
 		++i)
 	{
 		int argIndex = allValues.indexOf(unpackedValues.at(i));
@@ -293,18 +303,38 @@ QueryTemplates::OverloadableQuery::OverloadableQuery(QStringRef oq, QVector<QStr
 	}
 }
 
-QString& QueryTemplates::OverloadableQuery::arg(QString& whereTo, QString& toEmplaceName, QString& toEmplaceValue) const
-{
-	if (valuesForUnpacking.contains(toEmplaceName))
-		return whereTo.arg(toEmplaceValue);
-	return whereTo;
-}
 
 
 
 void QueryTemplates::OverloadableQuery::setExpected(QueryId exp)
 {
 	expectedQuery = exp;
+}
+
+void QueryTemplates::OverloadableQuery::assertAndSetMapping(QueryId defId, QStringList normal, QStringList defMap)
+{
+	if (isDefault())
+	{
+		expectedQuery = defId;
+		setFieldMapping(normal, defMap);
+	}
+	else if (requiresAllArgs())
+	{
+		setAllArgsFilter(normal);
+	}
+	else
+	{ 
+		setFieldMapping(normal, defMap);
+	}
+}
+
+OverloadableQuery OverloadableQuery::assertedAndMappedCopy(QueryId defId, QStringList allArgs, QStringList defMap) const
+{
+	OverloadableQuery oq(*this);
+	if (allArgs.isEmpty() && defMap.isEmpty())
+		return oq;
+	oq.assertAndSetMapping(defId, allArgs, defMap);
+	return oq;
 }
 
 void QueryTemplates::OverloadableQuery::setFieldMapping(QStringList normal, QStringList unpacked)
@@ -353,7 +383,9 @@ bool QueryTemplates::OverloadableQuery::isDefault() const
 
 bool QueryTemplates::OverloadableQuery::requiresAllArgs() const
 {
-	return argumentListLength == 0 && valuesForUnpacking.count() > 0;
+	return argumentListLength == 0 && (
+		(valuesForUnpacking.count() > 0 && 
+			(!overloadedQuery.isEmpty() || expectedQuery != ping)));
 }
 
 const QueryTemplates::OverloadableQuery& QueryTemplates::OverloadableQuery::defaultQuery()
@@ -388,3 +420,5 @@ QString QueryTemplates::OverloadableQuery::filterAndApply(QStringList arguments,
 	return result;
 }
 
+
+}

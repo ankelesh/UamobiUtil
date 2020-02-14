@@ -20,16 +20,17 @@ public:
 	void execQueryOutsideSession(QueryTemplates::QueryId id, RequestAwaiter* awaiter);
 	void execQueryOutsideSession(QueryTemplates::QueryId id, QString arg1, RequestAwaiter* awaiter);
 	void execQueryOutsideSession(QueryTemplates::QueryId id, QString arg1, QString arg2, RequestAwaiter* awaiter);
+	void execQueryOutsideSession(QueryTemplates::QueryId id, QString arg1, QString arg2, QString arg3, RequestAwaiter* awaiter);
 	void execQueryByTemplate(QueryTemplates::QueryId id, RequestAwaiter* awaiter);
 	void execQueryByTemplate(QueryTemplates::QueryId id, QString arg1, RequestAwaiter* awaiter);
 	void execQueryByTemplate(QueryTemplates::QueryId  id, QString arg1, QString arg2, RequestAwaiter* awaiter);
 	void execQueryByTemplate(QueryTemplates::QueryId  id, QString arg1, QString arg2, QString arg3, RequestAwaiter* awaiter);
 	void execQueryByTemplate(QueryTemplates::QueryId  id, int argc, QStringList argv, RequestAwaiter* awaiter);
-	void execQueryByTemplate(OverloadableQuery& oq, RequestAwaiter* awaiter);
-	void execQueryByTemplate(OverloadableQuery& oq, QString arg1, RequestAwaiter* awaiter);
-	void execQueryByTemplate(OverloadableQuery& oq, QString arg1, QString arg2, RequestAwaiter* awaiter);
-	void execQueryByTemplate(OverloadableQuery& oq, QString arg1, QString arg2, QString arg3, RequestAwaiter* awaiter);
-	void execQueryByTemplate(OverloadableQuery& oq, int argc, QStringList argv, RequestAwaiter* awaiter);
+	void execQueryByTemplate(const OverloadableQuery& oq, RequestAwaiter* awaiter);
+	void execQueryByTemplate(const OverloadableQuery& oq, QString arg1, RequestAwaiter* awaiter);
+	void execQueryByTemplate(const OverloadableQuery& oq, QString arg1, QString arg2, RequestAwaiter* awaiter);
+	void execQueryByTemplate(const OverloadableQuery& oq, QString arg1, QString arg2, QString arg3, RequestAwaiter* awaiter);
+	void execQueryByTemplate(const OverloadableQuery& oq, int argc, QStringList argv, RequestAwaiter* awaiter);
 
 	void setUrl(QString url) ;
 	QString setSession(QString& requestResult);
@@ -42,14 +43,13 @@ private:
 		const QString& urlpath,
 		RequestAwaiter* awaiter
 	);
-	const QString& letAwaiterOverride(RequestAwaiter* awaiter, const QString& normal, QueryTemplates::QueryId);
 	unsigned int nextQueryId;
 	qint64 delay;
 	QString sessionId;
 	QNetworkAccessManager netManager;
 };
 
-
+extern const QString DATE_ENCODING_FORMAT;
 QString makeParamsFromList(QVector<QPair<QString, QString> >& vect);
 QString makeParamsFromList(QString& paramName, QString& paramVal);
 #endif // DATAUPDATEENGINEHTTP_H

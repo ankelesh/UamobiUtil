@@ -1,8 +1,11 @@
 #include "ElementsStyles.h"
+#include "widgets/utils/GlobalAppSettings.h"
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
-
+#ifndef QStringLiteral
+#define QStringLiteral(A) QString::fromUtf8("" A "" , sizeof(A)-1)
+#endif
 /*
 	This file contains stylesheet definitions
 */
@@ -202,34 +205,66 @@ const QString CHECKBOX_BUTTON_STYLESHEET(
 		"border: 1px solid black;"
 		"}")
 );
-static QSize currsize;
-const QSize& getCurrentSize()
-{
-#ifdef DEBUG
-	detrace_METHCALL("getCurrentSize, " << currsize.height() << currsize.width());
-#endif
 
-	return currsize;
+const QString FOCUSED_SPINBOX_STYLESHEET(
+	QStringLiteral(
+		"QAbstractSpinBox:focus"
+		" {"
+		"background-color: #d7effa;"
+		"border: 2px solid #7ec0de; }"
+	)
+);
+
+
+const QFont & makeFont(double /*perc*/)
+{
+	return *(FontAdapter::general());
 }
 
-void setCurrentSize(const QSize& sz)
+FontAdapter::FontAdapter(int mh, int mah, double mfp)
+	: minheight(mh), maxheight(mah), minimumFontPercent(mfp)
 {
-#ifdef DEBUG
-	detrace_METHCALL("setCurrentSize, " << sz.height() << sz.width());
-#endif
-	currsize = sz;
+#ifdef  Q_OS_WIN
+	minimumFontPercent = mfp * 0.6;
+#endif //  Q_OS_WIN
 }
-
-QString countAdaptiveFont(double perc)
+void FontAdapter::reset(int mh, int Mh, double mfp)
 {
-	return " font-size: " + QString::number((int)(GEOMETRY_SOURCE->availableGeometry().height() * perc)) + "px;";
+	minheight = mh;
+	maxheight = Mh;
+	minimumFontPercent = mfp;
+	*_generalFont = QFont(makeFont(1.0));
 }
-const QFont *statfont;
-const QFont & makeFont(double perc)
+FontAdapter* FontAdapter::_instanse = Q_NULLPTR;
+QFont* FontAdapter::_generalFont = Q_NULLPTR;
+FontAdapter* FontAdapter::instanse()
 {
-	if (statfont == nullptr)
+	if (_instanse == Q_NULLPTR)
 	{
-		statfont = new QFont("Arial", GEOMETRY_SOURCE->availableGeometry().height() * 0.04);
+		_instanse = new FontAdapter(AppSettings->fontMinHeight, AppSettings->fontMaxHeight,
+			AppSettings->fontPercent);
 	}
-	return *statfont;
+	return _instanse;
+}
+
+const QFont* FontAdapter::general()
+{
+	if (_generalFont == Q_NULLPTR)
+	{
+		_generalFont = new QFont(FontAdapter::makeFont(1.0));
+	}
+	return _generalFont;
+}
+
+QFont FontAdapter::makeFont(double extrapercents)
+{
+	int currentHeight = GEOMETRY_SOURCE->availableGeometry().height();
+	currentHeight *= FontAdapter::instanse()->minimumFontPercent;
+	currentHeight *= extrapercents;
+	if (currentHeight < _instanse->minheight)
+		currentHeight = _instanse->minheight;
+	else
+		if (currentHeight > _instanse->maxheight)
+			currentHeight = _instanse->maxheight;
+	return QFont("Times new Roman", currentHeight);
 }

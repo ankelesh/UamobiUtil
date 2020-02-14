@@ -3,28 +3,47 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
+#include "widgets/utils/GlobalAppSettings.h"
+#include "widgets/utils/ElementsStyles.h"
+#include "widgets/MultibranchWidgets/SelectItemFromListWidget.h"
 
 void BarcodeFilterSelectionSubbranch::_handleRecord(RecEntity e)
 {
 	if (e->myType() == UniformXmlObject::Document)
 	{
-		FullDocument temp = upcastRecord<FullDocumentEntity>(e);
-		doc = temp;
-		assertAndShow(temp->parentNr);
+		assertAndShow(e->getId());
+		doc = e;
+	}
+	else
+	{
+		currentFilterInfo->setText(tr("Wrong document type"));
 	}
 }
 
-BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(QWidget* parent)
+BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(QWidget* parent,IndependentBranchNode* supp,
+	IndependentBranchNode* still, IndependentBranchNode* group)
 	: IndependentBranchNode(true, parent), mainLayout(new QVBoxLayout(this)), innerWidget(new inframedWidget(this)),
 	innerLayout(new QVBoxLayout(innerWidget)), currentFilterInfo(new QLabel(innerWidget)),
 	stillageButton(new MegaIconButton(innerWidget)), suppliersButton(new MegaIconButton(innerWidget)),
 	groupButton(new MegaIconButton(innerWidget)), nofilterButton(new MegaIconButton(innerWidget)),
 	passButton(new MegaIconButton(innerWidget)), backButton(new MegaIconButton(innerWidget)),
-	supplierWidget(new SelectItemFromListWidget(this, RecEntity(new SupplierEntity()))),
-	stillageWidget(new SelectItemFromListWidget(this, RecEntity(new StillageEntity()))),
-	groupWidget(new SelectItemFromListWidget(this, RecEntity(new GroupEntity()))),
-	awaiter(new RequestAwaiter(AppSettings->timeoutInt, this))
+	supplierWidget(supp),
+	stillageWidget(still),
+	groupWidget(group),
+	awaiter(new RequestAwaiter(AppSettings->timeoutInt, this)), applyFilterQuery(), getFiltersQuery()
 {
+	if (supplierWidget == Q_NULLPTR)
+		supplierWidget = new SelectItemFromListWidget(this, RecEntity(new SupplierEntity()));
+	else
+		supplierWidget->setParent(this);
+	if (stillageWidget == Q_NULLPTR)
+		stillageWidget = new SelectItemFromListWidget(this, RecEntity(new StillageEntity()));
+	else
+		stillageWidget->setParent(this);
+	if (groupWidget == Q_NULLPTR)
+		groupWidget = new SelectItemFromListWidget(this, RecEntity(new GroupEntity()));
+	else
+		groupWidget->setParent(this);
 	this->setLayout(mainLayout);
 	mainLayout->addWidget(innerWidget);
 	innerWidget->setLayout(innerLayout);
@@ -86,29 +105,29 @@ BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(QWidget* parent
 	QObject::connect(suppliersButton, &MegaIconButton::clicked, this, &BarcodeFilterSelectionSubbranch::supplierSelectRequired);
 	QObject::connect(nofilterButton, &MegaIconButton::clicked, this, &BarcodeFilterSelectionSubbranch::noFilterRequired);
 	QObject::connect(backButton, &MegaIconButton::clicked, this, &BarcodeFilterSelectionSubbranch::backRequired);
-	QObject::connect(supplierWidget, &SelectItemFromListWidget::done, this, &BarcodeFilterSelectionSubbranch::filterSelected);
-	QObject::connect(supplierWidget, &SelectItemFromListWidget::backRequired, this, &BarcodeFilterSelectionSubbranch::hideCurrent);
-	QObject::connect(groupWidget, &SelectItemFromListWidget::done, this, &BarcodeFilterSelectionSubbranch::filterSelected);
-	QObject::connect(groupWidget, &SelectItemFromListWidget::backRequired, this, &BarcodeFilterSelectionSubbranch::hideCurrent);
-	QObject::connect(stillageWidget, &SelectItemFromListWidget::done, this, &BarcodeFilterSelectionSubbranch::filterSelected);
-	QObject::connect(stillageWidget, &SelectItemFromListWidget::backRequired, this, &BarcodeFilterSelectionSubbranch::hideCurrent);
+	QObject::connect(supplierWidget, &IndependentBranchNode::done, this, &BarcodeFilterSelectionSubbranch::filterSelected);
+	QObject::connect(supplierWidget, &IndependentBranchNode::backRequired, this, &BarcodeFilterSelectionSubbranch::hideCurrent);
+	QObject::connect(groupWidget, &IndependentBranchNode::done, this, &BarcodeFilterSelectionSubbranch::filterSelected);
+	QObject::connect(groupWidget, &IndependentBranchNode::backRequired, this, &BarcodeFilterSelectionSubbranch::hideCurrent);
+	QObject::connect(stillageWidget, &IndependentBranchNode::done, this, &BarcodeFilterSelectionSubbranch::filterSelected);
+	QObject::connect(stillageWidget, &IndependentBranchNode::backRequired, this, &BarcodeFilterSelectionSubbranch::hideCurrent);
 	QObject::connect(passButton, &MegaIconButton::clicked, this, &BarcodeFilterSelectionSubbranch::noFilterRequired);
 	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &BarcodeFilterSelectionSubbranch::got_response);
 
 #else
 	//NONFIXED
-    QObject::connect(stillageButton, &MegaIconButton::clicked, this, SLOT(stillageSelectRequired()));
+    QObject::connect(stillageButton, SIGNAL(clicked()), this, SLOT(stillageSelectRequired()));
     QObject::connect(groupButton, SIGNAL(clicked()), this, SLOT(groupSelectRequired()));
     QObject::connect(suppliersButton, SIGNAL(clicked()), this, SLOT(supplierSelectRequired()));
     QObject::connect(nofilterButton, SIGNAL(clicked()), this, SLOT(noFilterRequired()));
     QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
-    QObject::connect(supplierWidget, SIGNAL(supplierAcquired(parsedSupplier)), this, SLOT(supplierProxyWrapper(parsedSupplier)));
+    QObject::connect(supplierWidget, SIGNAL(done(RecEntity)), this, SLOT(filterSelected(RecEntity)));
     QObject::connect(supplierWidget, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
-    QObject::connect(groupWidget, SIGNAL(done(QString,QString)), this, SLOT(applyFilter(QString,QString)));
+    QObject::connect(groupWidget, SIGNAL(done(RecEntity)), this, SLOT(filterSelected(RecEntity)));
     QObject::connect(groupWidget, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
-    QObject::connect(stillageWidget, SIGNAL(done(QString,QString)), this, SLOT(applyFilter(QString,QString)));
+    QObject::connect(stillageWidget, SIGNAL(done(RecEntity)), this, SLOT(filterSelected(RecEntity)));
     QObject::connect(stillageWidget, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
-	QObject::connect(passButton, SIGNAL(clicked()), this, SIGNAL(selectionHappened()));
+    QObject::connect(passButton, SIGNAL(clicked()), this, SIGNAL(noFilterRequired()));
 	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(got_response()));
 #endif
 }
@@ -116,25 +135,31 @@ BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(QWidget* parent
 void BarcodeFilterSelectionSubbranch::assertAndShow(QString &pdoc)
 {
 	showProcessingOverlay();
-	AppNetwork->execQueryByTemplate(QueryTemplates::getFilterItem, pdoc, awaiter);
+	if (getFiltersQuery.isDefault())
+		AppNetwork->execQueryByTemplate(QueryTemplates::getFilterItem, pdoc, awaiter);
+	else
+		AppNetwork->execQueryByTemplate(getFiltersQuery, pdoc, awaiter);
 }
 
 void BarcodeFilterSelectionSubbranch::supplierSelectRequired()
 {
 	_hideAny(supplierWidget);
-	supplierWidget->loadItems();
+	supplierWidget->loadData();
+	supplierWidget->processRecord(doc);
 }
 
 void BarcodeFilterSelectionSubbranch::stillageSelectRequired()
 {
 	_hideAny(stillageWidget);
-	stillageWidget->loadItems();
+	stillageWidget->loadData();
+	stillageWidget->processRecord(doc);
 }
 
 void BarcodeFilterSelectionSubbranch::groupSelectRequired()
 {
 	_hideAny(groupWidget);
-	groupWidget->loadItems();
+	groupWidget->loadData();
+	groupWidget->processRecord(doc);
 }
 
 
@@ -169,7 +194,10 @@ void BarcodeFilterSelectionSubbranch::filterSelected(RecEntity e)
 void BarcodeFilterSelectionSubbranch::applyFilter(QString param, QString type)
 {
 	_hideAny(innerWidget);
-	AppNetwork->execQueryByTemplate(QueryTemplates::applyBarcodeFilter, type, param, awaiter);
+	if (applyFilterQuery.isDefault())
+		AppNetwork->execQueryByTemplate(QueryTemplates::applyBarcodeFilter, type, param, awaiter);
+	else
+		AppNetwork->execQueryByTemplate(applyFilterQuery, type, param, awaiter);
 	emit done(doc);
 }
 
@@ -217,6 +245,33 @@ void BarcodeFilterSelectionSubbranch::got_response()
 void BarcodeFilterSelectionSubbranch::hideCurrent()
 {
 	_hideCurrent(innerWidget);
+}
+
+void BarcodeFilterSelectionSubbranch::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads)
+{
+	switch (
+		((overloads.count() > 2) ? 2 : overloads.count())
+		)
+	{
+	case 1:
+    {
+        QStringList t;
+        t << "type" << "param" ;
+		applyFilterQuery = overloads.at(1).assertedAndMappedCopy(
+            applyBarcodeFilter,t,t
+		);
+    }
+	case 0:
+    {
+        QStringList t;
+        t << "nrdoc";
+        getFiltersQuery = overloads.at(0).assertedAndMappedCopy(
+            getFilterItem, t,t
+		);
+    }
+	default:
+		break;
+	}
 }
 
 void BarcodeFilterSelectionSubbranch::_sendDataRequest()

@@ -3,8 +3,8 @@
 #include "networking/dataupdateengine-http.h"
 #include <QtCore/QTranslator>
 
-const float VERSION = 0.01;
-const char SUFFIX[] = "nightly";
+extern const float VERSION;
+extern const char * SUFFIX;
 
 #define AppSettings GlobalAppSettings::instanse()
 
@@ -20,8 +20,16 @@ public:
 	int timeoutInt;
 	int scanPrefix;
 	int scanSuffix;
+	QString printerPortDesignation;
+	int printerPort;
+	QString printerType;
+	QStringList alternativePrinters;
 	//  Global generated vars
 	QTranslator translator;
+	
+	int fontMinHeight;
+	int fontMaxHeight;
+	double fontPercent;
 
 	explicit GlobalAppSettings();
 	

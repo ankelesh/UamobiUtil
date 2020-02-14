@@ -2,8 +2,8 @@
 #include "widgets/ControlsMiniwidgets/ControlManager.h"
 #include "widgets/parents/inframedWidget.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
-#include <QtWidgets/QBoxLayout>
-#include <QtWidgets/QLabel>
+#include <QBoxLayout>
+#include <QLabel>
 
 
 /*

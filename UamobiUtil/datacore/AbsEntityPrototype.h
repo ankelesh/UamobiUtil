@@ -1,15 +1,21 @@
 #pragma once
-#include "networking/Parsers/abs_parsed_request.h"
 #include "UniformXmlObject.h"
-#include <QSharedPointer>
-#include <qmetatype.h>
+#include <QtCore/QSharedPointer>
+#include <QtCore/qmetatype.h>
 #include <exception>
 #include "networking/RequestAwaiter.h"
-typedef long long int IdInt;
+
+/*
+	This file contains abstract class for all entities used in application. 
+	This class allows widgets to ignore entity type and be polymorthic without 
+	losing type bounds.
+*/
+
 
 class AbsRecEntity
 {
 protected:
+	// id used for emulation of dynamic casting
 	int class_id;
 
 	// attempts to get from object corresponding data
@@ -17,7 +23,7 @@ protected:
 	// returns string which can be used as representation of this object
 	virtual QString makeTitle() const = 0;
 	// returns value that can be considered as id of this. If it has no id, you can return memory address
-	virtual IdInt extractId() const = 0;
+	virtual QString extractId() const = 0;
 	// performs type and equality comparation
 	virtual bool deepCompare(const AbsRecEntity* another) const = 0;
 	// constructs copy of the object
@@ -34,11 +40,13 @@ protected:
 	virtual bool useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const;
 public:
 	explicit AbsRecEntity(const int class_id = 0);
+
+	// interfaces
 	bool fromXmlObject(const UniformXmlObject& o);
 	bool fromXmlObject(const XmlObject o);
 	
 	QString getTitle() const;
-	IdInt getId() const;
+	QString getId() const;
 	int myType() const;
 	bool sendAssociatedGetRequest(QStringList& arguments, RequestAwaiter* awaiter) const;
 	bool sendAssociatedPostRequest(QStringList& arguments, RequestAwaiter* awaiter) const;
@@ -51,8 +59,17 @@ public:
 typedef QSharedPointer<AbsRecEntity> RecEntity;
 typedef QVector<QSharedPointer<AbsRecEntity> > Records;
 
+
+
+/*
+	next section is emulating dynamic_cast for platforms which has no dynamic casts.
+*/
+
+
+
 template < class T>
 Records downcastRecords(const QVector<T>& v)
+// casts records vector into basic class to allow inserting this vector in data model
 {
 	Records r;
 	QVector<T>::const_iterator b = v.begin();
@@ -65,6 +82,7 @@ Records downcastRecords(const QVector<T>& v)
 
 template <class T>
 T* upcastRecord(AbsRecEntity* e)
+// performs upcast by creating prototype and using it's type as control value
 {
 	if (e == Q_NULLPTR)
 		return Q_NULLPTR;
@@ -78,6 +96,7 @@ T* upcastRecord(AbsRecEntity* e)
 
 template <class T>
 T* upcastRecord(const AbsRecEntity* e)
+// performs upcast by creating prototype and using it's type as control value. Not working (qualifiers)
 {
 	if (e == Q_NULLPTR)
 		return Q_NULLPTR;
@@ -90,6 +109,7 @@ T* upcastRecord(const AbsRecEntity* e)
 }
 template <class T>
 const T* upcastRecord(const AbsRecEntity* e, const AbsRecEntity* prototype)
+// performs upcast using prototype's type as control value
 {
 	if (e == Q_NULLPTR)
 		return Q_NULLPTR;
@@ -101,32 +121,41 @@ const T* upcastRecord(const AbsRecEntity* e, const AbsRecEntity* prototype)
 }
 template <class T>
 QSharedPointer<T> upcastRecord(RecEntity e)
+// performs upcast of shared pointer
 {
 	if (e.isNull())
-		return Q_NULLPTR;
+        return QSharedPointer<T>();
 	T t;
 	if (e->myType() == t.myType())
 	{
 		return e.staticCast<T>();
 	}
-	return Q_NULLPTR;
+    return QSharedPointer<T>();
 }
 template <class T>
 QSharedPointer<T> upcastRecord(RecEntity e, QSharedPointer<T> prototype)
+// performs upcast of shared pointer using prototype's type
 {
 	if (e.isNull())
-		return Q_NULLPTR;
+        return QSharedPointer<T>();
 	if (e->myType() == prototype->myType())
 	{
 		return e.staticCast<T>();
 	}
-	return Q_NULLPTR;
+    return QSharedPointer<T>();
 }
 Q_DECLARE_METATYPE(RecEntity);
 
 class InitializationError : public std::exception
 	// Initialization error is thrown when initialization is interrupted, but not denied
 {
+	// wince has no strings
+#ifdef Q_OS_WINCE
+public:
+    InitializationError(QString field_name, QString value)
+    {};
+    virtual const char* what() const override { return "init error of record"; };
+#else
 private:
 	std::string msg;
 public:
@@ -135,17 +164,33 @@ public:
 	{
 		msg += (field_name + " : " + value).toStdString();
 	};
-	virtual const char* what() const noexcept override { return msg.c_str(); };
+    virtual const char* what() const override { return msg.c_str(); };
+#endif
 };
+
+/*
+	Next section contains class of response container. It stores homogenic vector of 
+	templated enitities, vector of unparsed heterogenic entities and technical values.
+	You can use it to extract from uniform xml objects real objects.
+*/
+
 
 template <class NetObject>
 class NetRequestResponse
+	// stores parsed homogenic entities and unparsed objects
 {
 public:
+	// determines if request was parsed succesfully
 	bool isError;
+	// stores result which was considered alterative (not normal, but not wrong)
+	// use this value if responses to the same request can be different
 	int alternative_result;
+	// stores error log
 	QString errtext;
+	// stores parsed objects
 	QVector<QSharedPointer<NetObject>> objects;
+	// stores unparsed objects as pointers to enhance performance. Warning - this can affect your long 
+	// stored results
 	XmlObjects additionalObjects;
 
 	explicit NetRequestResponse()
@@ -180,6 +225,8 @@ public:
 		return isNormal() && !isEmpty();
 	}
 	bool fromHeterogenicXmlObjects(const XmlObjects& objs, RecEntity prototype, int ares = 0)
+		// treats list as unknown objects and performs type checking. All non compatible objects
+		// are moved into additional objects
 	{
 		alternative_result = ares;
 		objects.clear();
@@ -215,6 +262,7 @@ public:
 		return true;
 	}
 	bool fromHomogenicXmlObjects(const XmlObjects& objs, RecEntity prototype, int ares = 0)
+		// treats list as homogenic objects and does not checks their type. Can be dangerous
 	{
 		alternative_result = ares;
 		bool ok = true;
@@ -242,7 +290,7 @@ public:
 };
 
 typedef NetRequestResponse<AbsRecEntity> PolyResponse;
-
+// This specialization stops polymorthic response from casting parsing results
 template <>
 bool NetRequestResponse<AbsRecEntity>::fromHomogenicXmlObjects(const XmlObjects& objs, RecEntity prototype, int ares)
 {
@@ -268,6 +316,7 @@ bool NetRequestResponse<AbsRecEntity>::fromHomogenicXmlObjects(const XmlObjects&
 	}
 	return true;
 }
+// This specialization stops polymorthic response from casting parsing results
 template<>
 bool NetRequestResponse<AbsRecEntity>::fromHeterogenicXmlObjects(const XmlObjects& objs, RecEntity prototype, int ares)
 {

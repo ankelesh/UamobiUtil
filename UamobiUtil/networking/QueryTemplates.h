@@ -1,6 +1,7 @@
 #pragma once
 #include <QHash>
-
+#include <QVector>
+#include <QStringList>
 namespace QueryTemplates
 {
 	enum QueryId
@@ -34,7 +35,7 @@ namespace QueryTemplates
 		invAddItemExpDate,			// 2 arguments required 
 		receiptListSuppliers,		// 2 arguments required 
 		warehouseList,				// 2 arguments required
-		receiptListOrders,			// 0 arguments required 
+		receiptListOrders,			// 2 arguments required 
 		receiptGetOrderInfo,		// 2 arguments required 
 		receiptNewDocument,			// 3 arguments required 
 		receiptAddItem,				// 2 arguments required 
@@ -45,6 +46,7 @@ namespace QueryTemplates
 		recListTemplated,			// 1 arguments required 
 		applyBarcodeFilter,			// 2 arguments required 
 		receiptAddItemExpanded,		// 3 arguments required 
+		docGetItemLabel
 	};
 
 	QHash<QueryId, QString> _initCache();
@@ -63,6 +65,7 @@ namespace QueryTemplates
 		inline int _argNameToInt(const QString arg) const;
 		inline const QString& assertRightQuery() const;
 	public:
+		OverloadableQuery();
 		explicit OverloadableQuery(QueryId id);
 		explicit OverloadableQuery(QString oq);
 		explicit OverloadableQuery(int argListLength, QueryId queryId);
@@ -73,16 +76,20 @@ namespace QueryTemplates
 		OverloadableQuery(QString oq, QStringList unpacked);
 		OverloadableQuery(QStringRef oq, QVector<QStringRef>& unpacked);
 
-		QString& arg(QString& whereTo,QString& toEmplaceName, QString& toEmplaceValue) const;
 		void setExpected(QueryId);
+		void assertAndSetMapping(QueryId defId, QStringList allArgs, QStringList defMap);
+		OverloadableQuery assertedAndMappedCopy(QueryId defId, QStringList allArgs = QStringList(), QStringList defMap = QStringList()) const;
 		void setFieldMapping(QStringList normal, QStringList unpacked);
 		void setAllArgsFilter(QStringList allArgs);
 		bool assertArgQuantity(int argc) const;
 		bool isDefault() const;
 		bool requiresAllArgs() const;
+		bool requiresRemapping() const { 
+			return !overloadedQuery.isEmpty() && argumentListLength == 0 && valuesForUnpacking.isEmpty();
+		}
 		QueryId getQID() const { return expectedQuery; };
 		static const OverloadableQuery& defaultQuery();
 		QString filterAndApply(QStringList arguments, QString ssid) const;
-		
 	};
+	typedef QHash<QueryTemplates::QueryId, QueryTemplates::OverloadableQuery> QueryCache;
 }

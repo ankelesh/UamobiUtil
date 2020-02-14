@@ -63,6 +63,8 @@ public:
 	void setDisplayFormat(const QString& tf);//	sets format
 	bool hasFocus() const;
 	void setInfo(QString&);
+	void selectAll();
+	void setStyleSheet(const QString&);
 private slots:
 	void intValueChanged(int);				//	These slots are wrapping slots of inner spinbox
 	void timeValueChanged(const QTime& t);

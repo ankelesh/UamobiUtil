@@ -23,9 +23,9 @@ QString InputControlEntity::makeTitle() const
 	return name;
 }
 
-IdInt InputControlEntity::extractId() const
+QString InputControlEntity::extractId() const
 {
-	return (IdInt)(this);
+	return QString::number((long long int)this);
 }
 
 bool InputControlEntity::deepCompare(const AbsRecEntity* another) const

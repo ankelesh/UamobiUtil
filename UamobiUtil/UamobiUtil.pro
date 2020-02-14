@@ -4,133 +4,138 @@
 
 TEMPLATE = app
 TARGET = UamobiUtil
-QT += core xml network gui
-CONFIG += release
-INCLUDEPATH += C:/Qt/4.8.3-CE6-static/include
-DEFINES += "Q_NULLPTR=0"
-wince* {
-        DEFINES += FTR_COM
-        QMAKE_CXX += -Ox -GL
-        QMAKE_LFLAGS += /LTCG
-}
-win32: RC_ICONS = uamobiU.ico
-HEADERS += ./UamobiUtil.h \
-    ./networking/dataupdateengine.h \
+DESTDIR = ../Win32/Debug
+QT += core xml network gui widgets
+CONFIG += debug
+DEFINES += _UNICODE _ENABLE_EXTENDED_ALIGNED_STORAGE WIN64 QT_VERSION5X QT_NETWORK_LIB QT_WIDGETS_LIB QT_XML_LIB
+INCLUDEPATH += ./GeneratedFiles \
+    . \
+    ./GeneratedFiles/$(ConfigurationName)
+DEPENDPATH += .
+MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
+OBJECTS_DIR += debug
+UI_DIR += ./GeneratedFiles
+RCC_DIR += ./GeneratedFiles
+win32:RC_FILE = UamobiUtil.rc
+HEADERS += ./widgets/MultibranchWidgets/SelectItemFromListWidget.h \
+    ./UamobiUtil.h \
+    ./networking/QueryTemplates.h \
     ./networking/dataupdateengine-http.h \
-    ./networking/global.h \
+    ./networking/RequestAwaiter.h \
     ./networking/things.h \
-    ./networking/xml_funcs.h \
-    ./networking/photo/datarequest.h \
-    ./widgets/parents/inframedWidget.h \
-    ./widgets/utils/ElementsStyles.h \
-    ./widgets/utils/EventsAndFilters.h \
+    ./datacore/UniformXmlObject.h \
+    ./networking/Parsers/abs_parsed_request.h \
+    ./networking/Parsers/DynamicLinearParsers.h \
+    ./networking/Parsers/RequestParser.h \
+    ./networking/Parsers/SimpleLinearParsers.h \
+    ./networking/Parsers/SimpleResponseParsers.h \
+    ./datacore/EntitledEntity.h \
+    ./datacore/FullDocumentEntity.h \
+    ./datacore/FullItemEntity.h \
+    ./datacore/InputControlEntity.h \
+    ./datacore/ModeEntity.h \
+    ./datacore/NamedIdEntity.h \
+    ./datacore/AbsEntityPrototype.h \
+    ./widgets/LoginBranch/LoginWidget.h \
+    ./widgets/SettingsBranches/MainSettingsWidget.h \
     ./widgets/MainPageWidget.h \
     ./debugtrace.h \
-    widgets/LoginBranch/LoginWidget.h \
-    widgets/SettingsBranches/MainSettingsWidget.h \
-    widgets/utils/SpecializedWidgets.h \
-    networking/RequestAwaiter.h \
-    networking/Parsers/abs_parsed_request.h \
-    networking/Parsers/RequestParser.h \
-    networking/Parsers/SimpleLinearParsers.h \
-    legacy/legacy.h \
-    networking/Parsers/DynamicLinearParsers.h \
-    networking/Parsers/NamedAttributesResponseParsers.h \
-    networking/Parsers/SimpleResponseParsers.h \
-    widgets/ModeSelectionBranch/ModeSelectionWidget.h \
-    widgets/ModeSelectionBranch/PlaceSelectionWidget.h \
-    widgets/parents/AbstractVariantSelectionWidget.h \
-    widgets/ReceiptNoneBranch/ReceiptRootWidget.h \
-    widgets/ReceiptSpecialWidgets/ReceiptParametersWidget.h \
-    widgets/ReceiptSpecialWidgets/ReceiptScaningWidget.h \
-    widgets/SuppliersSelectionBranch/OrderSelectionWidget.h \
-    widgets/SuppliersSelectionBranch/SuppliersSelectWidget.h \
-    widgets/parents/AbstractListSelectionWidget.h \
-    widgets/parents/abstractNodeInterface.h \
-    widgets/parents/AbstractScaningWidget.h \
-    networking/NetCallArgs.h \
-    networking/StaticTestingDataEngine.h \
-    widgets/utils/GlobalAppSettings.h \
-    widgets/MultibranchWidgets/DocResultsWidget.h \
-    widgets/MultibranchWidgets/ItemSearchWidget.h \
-    ScaningCore/NormalCapturer.h \
-    widgets/ElementWidgets/BigButtonsSpinbox.h \
-    widgets/ElementWidgets/MegaIconButton.h \
-    widgets/ElementWidgets/ZebraListItemDelegate.h \
-    legacy/qtCompatibility/scrollgrabber.h \
-    widgets/ControlsMiniwidgets/abs_control.h \
-    widgets/ControlsMiniwidgets/QuantityControl.h \
-    widgets/ElementWidgets/ProcessingOverlay.h \
-    widgets/InventoryBranch/InventoryParamsWidget.h \
-    widgets/InventoryBranch/InventoryRootWidget.h \
-    widgets/InventorySpecialWidgets/InventoryScaningWidget.h \
-    widgets/InventorySpecialWidgets/ParentDocumentWidget.h \
-    widgets/MultibranchWidgets/FilterSelectWidget.h \
-    widgets/parents/AbstractCheckboxSelection.h \
-    widgets/ControlsMiniwidgets/ControlTranslator.h \
-    widgets/MultibranchWidgets/StillageSelectionWidget.h \
-    widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.h \
-    widgets/MultibranchWidgets/GroupSelectionWidget.h \
-    widgets/parents/AbstractSearchAndPickWidget.h \
-    widgets/ControlsMiniwidgets/ControlManager.h
-SOURCES += ./main.cpp \
-    ./networking/dataupdateengine.cpp \
+    ./widgets/utils/GlobalAppSettings.h \
+    ./widgets/utils/ElementsStyles.h \
+    ./widgets/utils/EventsAndFilters.h \
+    ./widgets/parents/abstractNodeInterface.h \
+    ./widgets/parents/IndependentBranchNode.h \
+    ./widgets/parents/inframedWidget.h \
+    ./legacy/legacy.h \
+    ./legacy/qtCompatibility/scrollgrabber.h \
+    ./widgets/ElementWidgets/BigButtonsSpinbox.h \
+    ./widgets/ElementWidgets/MegaIconButton.h \
+    ./widgets/ElementWidgets/ProcessingOverlay.h \
+    ./widgets/ControlsMiniwidgets/ControlManager.h \
+    ./widgets/ControlsMiniwidgets/QuantityControl.h \
+    ./widgets/ControlsMiniwidgets/abs_control.h \
+    ./widgets/ControlsMiniwidgets/ControlTranslator.h \
+    ./ScaningCore/BarcodeObserver.h \
+    ./widgets/parents/AbstractScaningWidget.h \
+    ./widgets/MultibranchWidgets/NormalScaningWidget.h \
+    ./widgets/MultibranchWidgets/InventoryParamsWidget.h \
+    ./widgets/MultibranchWidgets/IdDependentSelectWidget.h \
+    ./widgets/MultibranchWidgets/PagedSearchWidget.h \
+    ./widgets/MultibranchWidgets/ControlListWidget.h \
+    ./widgets/MultibranchWidgets/FilterSelectWidget.h \
+    ./widgets/MultibranchWidgets/DocResultsWidget.h \
+    ./widgets/ExtendedDelegates/CheckableDelegate.h \
+    ./widgets/BranchingTools/BranchDescriptionParser.h \
+    ./widgets/BranchingTools/BranchElementDescription.h \
+    ./widgets/BranchingTools/BranchFactory.h \
+    ./widgets/BranchingTools/EmbeddedBranches.h \
+    ./widgets/BranchingTools/AbsBranch.h \
+    ./widgets/BranchingTools/AdjustableBranch.h \
+    ./widgets/ModeSelectionBranch/ModeSelectionWidget.h \
+    ./widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.h \
+    ./widgets/ExtendedDelegates/ZebraListItemDelegate.h \
+    ./widgets/MultibranchWidgets/ParentDocumentWidget.h \
+    ./widgets/MultibranchWidgets/PlaceSelectionWidget.h \
+    ./widgets/MultibranchWidgets/ReceiptParametersWidget.h
+SOURCES += ./datacore/AbsEntityPrototype.cpp \
+    ./datacore/EntitledEntity.cpp \
+    ./datacore/FullDocumentEntity.cpp \
+    ./datacore/FullItemEntity.cpp \
+    ./datacore/InputControlEntity.cpp \
+    ./datacore/ModeEntity.cpp \
+    ./datacore/NamedIdEntity.cpp \
+    ./datacore/UniformXmlObject.cpp \
+    ./main.cpp \
+    ./networking/QueryTemplates.cpp \
     ./UamobiUtil.cpp \
+    ./widgets/BranchingTools/AbsBranch.cpp \
+    ./widgets/BranchingTools/AdjustableBranch.cpp \
+    ./widgets/BranchingTools/BranchDescriptionParser.cpp \
+    ./widgets/BranchingTools/BranchElementDescription.cpp \
+    ./widgets/BranchingTools/BranchFactory.cpp \
+    ./widgets/BranchingTools/EmbeddedBranches.cpp \
+    ./widgets/ExtendedDelegates/CheckableDelegate.cpp \
+    ./widgets/parents/IndependentBranchNode.cpp \
     ./networking/dataupdateengine-http.cpp \
-    ./networking/xml_funcs.cpp \
-    ./networking/photo/datarequest.cpp \
-    ./widgets/utils/ElementsStyles.cpp \
+    ./networking/RequestAwaiter.cpp \
+    ./networking/things.cpp \
+    ./networking/Parsers/abs_parsed_request.cpp \
+    ./networking/Parsers/DynamicLinearParsers.cpp \
+    ./networking/Parsers/RequestParser.cpp \
+    ./networking/Parsers/SimpleLinearParsers.cpp \
+    ./networking/Parsers/SimpleResponseParsers.cpp \
+    ./widgets/LoginBranch/LoginWidget.cpp \
     ./widgets/MainPageWidget.cpp \
+    ./widgets/SettingsBranches/MainSettingsWidget.cpp \
     ./debugtrace.cpp \
-    widgets/LoginBranch/LoginWidget.cpp \
-    widgets/SettingsBranches/MainSettingsWidget.cpp \
-    widgets/utils/SpecializedWidgets.cpp \
-    networking/RequestAwaiter.cpp \
-    networking/Parsers/abs_parsed_request.cpp \
-    networking/Parsers/RequestParser.cpp \
-    networking/Parsers/SimpleLinearParsers.cpp \
-    legacy/legacy.cpp \
-    networking/Parsers/SimpleResponseParsers.cpp \
-    networking/Parsers/DynamicLinearParsers.cpp \
-    networking/Parsers/NamedAttributesResponseParsers.cpp \
-    widgets/ModeSelectionBranch/ModeSelectionWidget.cpp \
-    widgets/ModeSelectionBranch/PlaceSelectionWidget.cpp \
-    widgets/parents/AbstractVariantSelectionWidget.cpp \
-    widgets/ReceiptNoneBranch/ReceiptRootWidget.cpp \
-    widgets/ReceiptSpecialWidgets/ReceiptParametersWidget.cpp \
-    widgets/ReceiptSpecialWidgets/ReceiptScaningWidget.cpp \
-    widgets/SuppliersSelectionBranch/OrderSelectionWidget.cpp \
-    widgets/SuppliersSelectionBranch/SuppliersSelectWidget.cpp \
-    widgets/parents/AbstractListSelectionWidget.cpp \
-    widgets/parents/abstractNodeInterface.cpp \
-    widgets/parents/AbstractScaningWidget.cpp \
-    networking/NetCallArgs.cpp \
-    networking/StaticTestingDataEngine.cpp \
-    networking/things.cpp \
-    widgets/utils/GlobalAppSettings.cpp \
-    widgets/MultibranchWidgets/DocResultsWidget.cpp \
-    widgets/MultibranchWidgets/ItemSearchWidget.cpp \
-    ScaningCore/NormalCapturer.cpp \
-    widgets/ElementWidgets/BigButtonsSpinbox.cpp \
-    widgets/ElementWidgets/MegaIconButton.cpp \
-    widgets/ElementWidgets/ZebraListItemDelegate.cpp \
-    widgets/utils/EventsAndFilters.cpp \
-    widgets/parents/inframedWidget.cpp \
-    legacy/qtCompatibility/scrollgrabber.cpp \
-    widgets/ControlsMiniwidgets/abs_control.cpp \
-    widgets/ControlsMiniwidgets/QuantityControl.cpp \
-    widgets/ElementWidgets/ProcessingOverlay.cpp \
-    widgets/InventoryBranch/InventoryParamsWidget.cpp \
-    widgets/InventoryBranch/InventoryRootWidget.cpp \
-    widgets/InventorySpecialWidgets/InventoryScaningWidget.cpp \
-    widgets/InventorySpecialWidgets/ParentDocumentWidget.cpp \
-    widgets/MultibranchWidgets/FilterSelectWidget.cpp \
-    widgets/parents/AbstractCheckboxSelection.cpp \
-    widgets/ControlsMiniwidgets/ControlTranslator.cpp \
-    widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.cpp \
-    widgets/MultibranchWidgets/GroupSelectionWidget.cpp \
-    widgets/MultibranchWidgets/StillageSelectionWidget.cpp \
-    widgets/parents/AbstractSearchAndPickWidget.cpp \
-    widgets/ControlsMiniwidgets/ControlManager.cpp
+    ./widgets/utils/ElementsStyles.cpp \
+    ./widgets/utils/EventsAndFilters.cpp \
+    ./widgets/utils/GlobalAppSettings.cpp \
+    ./widgets/parents/abstractNodeInterface.cpp \
+    ./widgets/parents/inframedWidget.cpp \
+    ./widgets/ModeSelectionBranch/ModeSelectionWidget.cpp \
+    ./legacy/legacy.cpp \
+    ./legacy/qtCompatibility/scrollgrabber.cpp \
+    ./widgets/MultibranchWidgets/SelectItemFromListWidget.cpp \
+    ./widgets/ElementWidgets/BigButtonsSpinbox.cpp \
+    ./widgets/ElementWidgets/MegaIconButton.cpp \
+    ./widgets/ElementWidgets/ProcessingOverlay.cpp \
+    ./widgets/ControlsMiniwidgets/abs_control.cpp \
+    ./widgets/ControlsMiniwidgets/ControlManager.cpp \
+    ./widgets/ControlsMiniwidgets/ControlTranslator.cpp \
+    ./widgets/ControlsMiniwidgets/QuantityControl.cpp \
+    ./ScaningCore/BarcodeObserver.cpp \
+    ./widgets/parents/AbstractScaningWidget.cpp \
+    ./widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.cpp \
+    ./widgets/MultibranchWidgets/ControlListWidget.cpp \
+    ./widgets/MultibranchWidgets/DocResultsWidget.cpp \
+    ./widgets/MultibranchWidgets/FilterSelectWidget.cpp \
+    ./widgets/MultibranchWidgets/PagedSearchWidget.cpp \
+    ./widgets/MultibranchWidgets/IdDependentSelectWidget.cpp \
+    ./widgets/MultibranchWidgets/ParentDocumentWidget.cpp \
+    ./widgets/MultibranchWidgets/InventoryParamsWidget.cpp \
+    ./widgets/MultibranchWidgets/NormalScaningWidget.cpp \
+    ./widgets/ExtendedDelegates/ZebraListItemDelegate.cpp \
+    ./widgets/MultibranchWidgets/PlaceSelectionWidget.cpp \
+    ./widgets/MultibranchWidgets/ReceiptParametersWidget.cpp
 RESOURCES += UamobiUtil.qrc
-TRANSLATIONS += translations/uamobi_ru.ts translations/uamobi_ro.ts translations/uamobi_en.ts

@@ -10,15 +10,13 @@
 	This file contains smart hovering widget that is trying to pin to the screen center. It will display
 	timeout counter with provided interval and will automatically hide itself on timeout.
 	Widget elements:
-		Hexagon with inner hexagon displaying remaining timer in pure visual
+		Hourglass made from 4 triangles
 		Countdown in left corner in seconds
 		Explaining text
 
 	This widget contains possibility to open it from any place in your code in case you placed it as child of the root widget.
 	Use bindOverlay to bind particular object, use hideProcessingOverlay and showProcessingOverlay function for showing
 	and hiding bound widget.
-
-	Update: Hexagon replaced with hourglass
 */
 
 class ProcessingOverlay : public QWidget

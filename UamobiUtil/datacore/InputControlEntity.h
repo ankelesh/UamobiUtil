@@ -14,7 +14,7 @@ protected:
 	// Inherited via AbsRecEntity
 	virtual bool fromUniXml(const UniformXmlObject& o) override;
 	virtual QString makeTitle() const override;
-	virtual IdInt extractId() const override;
+	virtual QString extractId() const override;
 	virtual bool deepCompare(const AbsRecEntity* another) const override;
 	virtual AbsRecEntity* fabricate() const override;
 	virtual bool sortingCompare(const AbsRecEntity* another) const override;

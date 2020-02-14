@@ -22,7 +22,6 @@
 #include "widgets/utils/EventsAndFilters.h"
 #include "widgets/ControlsMiniwidgets/ControlManager.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
-#include "ScaningCore/NormalCapturer.h"
 #include "networking/things.h"
 
 class AbstractScaningWidget : public IndependentBranchNode
@@ -41,7 +40,6 @@ protected:
 	QTextEdit* mainTextView;
 	QHBoxLayout* buttonPanel;
 	MegaIconButton* quitButton;
-	MegaIconButton* switchFocus;
 	MegaIconButton* backButton;
 	MegaIconButton* submitButton;
 	MegaIconButton* searchButton;
@@ -56,30 +54,23 @@ protected:
 
 	QString modename;
 	RequestAwaiter* awaiter;
+
+
 	virtual void useControls(QVector<QSharedPointer<InputControlEntity> > &);
-	virtual void refreshControls();
-	virtual bool checkControls();
-	virtual void focusControl(int);
-	virtual bool isControlFocused();
-	virtual void _postClear() =0;
+	virtual void wipe();
 public:
 	AbstractScaningWidget(int id, QWidget* parent);
 	void clear();
 	void setModeName(QString& name);
+
 protected slots:
-	virtual void processBarcode(QString) = 0;
 	virtual void submitPressed() = 0;
 	virtual void barcodeConfirmed() = 0;
-	virtual void processNumber(QString) = 0;
 	virtual void searchRequired() = 0;
 	virtual void backNeeded() = 0;
 	virtual void was_timeout();
-	virtual void switchedFocus() = 0;
-	virtual void syncControlAndBuffer(QString v) = 0;
     virtual void quitNoSave();
 public slots:
 	virtual void setDocument(Order) = 0;
-signals:
-	void saveSuccess();
 };
 QVector<QPair<QString, QString> > make_control_list(QHash<QString, QString>&);

@@ -28,17 +28,32 @@
 inline static int calculateAdaptiveButtonHeight(double percent = 0.125)
 //Calculates height for buttons, by default is giving 12.5% of screen height
 {
+#ifdef Q_OS_WIN
+#ifndef Q_OS_WINCE
+	percent /= 2;
+#endif
+#endif
 	return GEOMETRY_SOURCE->availableGeometry().height() * percent;
 }
 
 inline static int calculateAdaptiveWidth(double percent = 0.5)
 //Calculates width, by default is giving 50% of screen width
 {
+#ifdef Q_OS_WIN
+#ifndef Q_OS_WINCE
+	percent /= 4;
+#endif
+#endif
 	return GEOMETRY_SOURCE->availableGeometry().width() * percent;
 }
 inline static QSize calculateAdaptiveSize(double percent = 0.3)
 //Calculates square size, by default is giving 30% of screen dimensions
 {
+#ifdef Q_OS_WIN
+#ifndef Q_OS_WINCE
+	percent /= 2;
+#endif
+#endif
 	return QSize(
 		GEOMETRY_SOURCE->availableGeometry().width() * percent,
 		GEOMETRY_SOURCE->availableGeometry().height() * percent
@@ -47,18 +62,49 @@ inline static QSize calculateAdaptiveSize(double percent = 0.3)
 inline static QSize calculateAdaptiveSize(double Hpercent, double Wpercent)
 //Calculates more adaptive size, allowing to scale both dimensions. No defaults.
 {
+#ifdef Q_OS_WIN
+#ifndef Q_OS_WINCE
+	Hpercent /= 2;
+	Wpercent /= 4;
+#endif
+#endif
 	return QSize(
 		GEOMETRY_SOURCE->availableGeometry().width() * Wpercent,
 		GEOMETRY_SOURCE->availableGeometry().height() * Hpercent
 	);
 }
 
+inline static QSize imitatePhoneSize(double HPercent)
+// sets window size in vertical projection using screen height
+{
+	return QSize(
+		GEOMETRY_SOURCE->availableGeometry().height() * (HPercent * 0.66),
+		GEOMETRY_SOURCE->availableGeometry().height() * HPercent
+	);
+}
+
+class FontAdapter
+	// creates scaled fonts
+{
+	int minheight;		//	minimum height of letter
+	int maxheight;		//	maximum height of letter
+	double minimumFontPercent;	// default font percent, which used to create original scaling
+	static FontAdapter* _instanse;
+	static QFont* _generalFont;
+public:
+	FontAdapter(int minheight, int maxheight, double minimumFontPercent);
+	void reset(int mh, int Mh, double mfp);
+	static FontAdapter* instanse();
+	static const QFont* general();
+	// creates scaled font by using adapter. Extra percents are relational to calculated minheight
+	static QFont makeFont(double extrapercents);
+};
+
+
+
 QString& normalizeLine(QString& line);
 QString normalizeLine(const QString line);
-const QSize& getCurrentSize();
-void setCurrentSize(const QSize&);
 
-extern QString countAdaptiveFont(double perc);
 extern const QFont& makeFont(double perc);
 
 extern const QString OK_BUTTONS_STYLESHEET;
@@ -94,22 +140,17 @@ extern const QString SETTINGS_BUTTONS_STYLESHEET;
 extern const QString NAVIGATE_BUTTONS_STYLESHEET;
 // Nav buttons differ with their enhanced disabled style
 
-extern const QString LARGE_BUTTON_STYLESHEET;
-// deprecated
-
 extern const QString BETTER_CALENDAR_STYLESHEET;
 // large calendar
+
 extern const QString ERROR_TEXT_STYLESHEET;
 // red text for emergency messages
+
 extern const QString UNCHECKED_BUTTONS_STYLESHEET;
 // stylesheet for toggled buttons
 
-// This pair of stylesheets is used in zebra-styled items
-
-extern const QString ZEBRAEVEN_BUTTONS_STYLESHEET;
-// stylesheet for even buttons
-extern const QString ZEBRAODD_BUTTONS_STYLESHEET;
-// stylesheet for odd buttons
-
 extern const QString CHECKBOX_BUTTON_STYLESHEET;
+
 extern const QString LISTENING_CONTROL_STYLESHEET;
+
+extern const QString FOCUSED_SPINBOX_STYLESHEET;

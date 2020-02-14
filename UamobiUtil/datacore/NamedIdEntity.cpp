@@ -1,6 +1,6 @@
 #include "NamedIdEntity.h"
 #include "networking/dataupdateengine-http.h"
-
+#include "widgets/utils/GlobalAppSettings.h"
 NamedIdEntity::NamedIdEntity(int subclassId, QString i, QString nm)
 	: AbsRecEntity(subclassId), id(i), name(nm)
 {
@@ -11,9 +11,9 @@ QString NamedIdEntity::makeTitle() const
 	return name;
 }
 
-IdInt NamedIdEntity::extractId() const
+QString NamedIdEntity::extractId() const
 {
-	return id.toLongLong();
+	return id;
 }
 
 bool NamedIdEntity::deepCompare(const AbsRecEntity* another) const
@@ -59,13 +59,13 @@ bool PlaceEntity::fromUniXml(const UniformXmlObject& o)
 	return false;
 }
 
-bool PlaceEntity::useAssociatedNetworkSendMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool PlaceEntity::useAssociatedNetworkSendMethod(QStringList& /*arguments*/, RequestAwaiter* awaiter) const
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::selectPlace, id, awaiter);
 	return true;
 }
 
-bool PlaceEntity::useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool PlaceEntity::useAssociatedNetworkGetMethod(QStringList& /*arguments*/, RequestAwaiter* awaiter) const
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::placeList, awaiter);
 	return true;
@@ -94,7 +94,7 @@ bool GroupEntity::fromUniXml(const UniformXmlObject& o)
 	}
 	return false;
 }
-bool GroupEntity::useAssociatedNetworkSendMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool GroupEntity::useAssociatedNetworkSendMethod(QStringList& /*arguments*/, RequestAwaiter* awaiter) const
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::applyBarcodeFilter, "groups", id, awaiter);
 	return true;
@@ -116,7 +116,7 @@ StillageEntity::StillageEntity(QString id, QString nm)
 }
 bool StillageEntity::fromUniXml(const UniformXmlObject& o)
 {
-	if (o.myOID() == UniformXmlObject::Group)
+	if (o.myOID() == UniformXmlObject::Stillage)
 	{
 		id = o.value("e1");
 		name = o.value("e2");
@@ -127,7 +127,7 @@ bool StillageEntity::fromUniXml(const UniformXmlObject& o)
 	return false;
 }
 
-bool StillageEntity::useAssociatedNetworkSendMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool StillageEntity::useAssociatedNetworkSendMethod(QStringList& /*arguments*/, RequestAwaiter* awaiter) const
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::applyBarcodeFilter, "stillages", id, awaiter);
 	return true;
@@ -153,12 +153,14 @@ UserEntity::UserEntity(QString Name, QString Login)
 
 void UserEntity::sendLoginRequest(const QString& password, RequestAwaiter* awaiter) const
 {
-	useAssociatedNetworkSendMethod(QStringList{ password }, awaiter);
+    QStringList t;
+    t<<password;
+    useAssociatedNetworkSendMethod(t, awaiter);
 }
 
 bool UserEntity::fromUniXml(const UniformXmlObject& o)
 {
-	if (o.myOID() == UniformXmlObject::Group)
+	if (o.myOID() == UniformXmlObject::User)
 	{
 		login = o.value("login");
 		name = o.value("name");
@@ -174,9 +176,9 @@ QString UserEntity::makeTitle() const
 	return name;
 }
 
-IdInt UserEntity::extractId() const
+QString UserEntity::extractId() const
 {
-	return IdInt(this);
+	return QString::number((long long int)this);
 }
 
 bool UserEntity::deepCompare(const AbsRecEntity* another) const
@@ -206,7 +208,8 @@ bool UserEntity::useAssociatedNetworkSendMethod(QStringList& arguments, RequestA
 {
 	if (arguments.isEmpty())
 		return false;
-	AppNetwork->execQueryOutsideSession(QueryTemplates::Login, login, arguments.first(), awaiter);
+	AppNetwork->execQueryOutsideSession(QueryTemplates::Login, login, arguments.first(),
+		QString::number(VERSION), awaiter);
 	return true;
 }
 
@@ -266,7 +269,7 @@ int DocTypeEntity::extractEnumerable() const
 	return 0;
 }
 
-bool DocTypeEntity::useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool DocTypeEntity::useAssociatedNetworkGetMethod(QStringList& /*arguments*/, RequestAwaiter* awaiter) const
 {
 	sendGetRequest(awaiter);
 	return true;

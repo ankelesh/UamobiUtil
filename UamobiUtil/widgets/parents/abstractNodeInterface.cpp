@@ -47,6 +47,9 @@ abstractDynamicNode::abstractDynamicNode(inframedWidget* untouch, QLayout* mLayo
 	if (untouch && mLayout)
 	{
 		mLayout->addWidget(untouch);
+    }
+    if (mLayout)
+    {
 		mainLayout->setContentsMargins(0, 0, 0, 0);
 		mainLayout->setSpacing(0);
 	}
@@ -85,14 +88,19 @@ void abstractDynamicNode::_hideAnyWithDelete(inframedWidget* replacement)
 	// hides and deletes any widget
 	if (replacement == Q_NULLPTR)
 		return;
-	if (currentlyOpened != untouchable)
+	if (currentlyOpened != Q_NULLPTR)
 	{
-		_hideAndDeleteCurrent(replacement);
+		mainLayout->removeWidget(currentlyOpened);
+		currentlyOpened->hide();
+		currentlyOpened->deleteLater();
+			mainLayout->addWidget(replacement);
+		replacement->show();
+		currentlyOpened = replacement;
+		currentlyOpened->setFocus();
 		return;
 	}
 	else
 	{
-		untouchable->hide();
 		mainLayout->addWidget(replacement);
 		replacement->show();
 		currentlyOpened = replacement;

@@ -1,14 +1,29 @@
 #include "MainSettingsWidget.h"
 #include "widgets/utils/ElementsStyles.h"
-
+#include "ScaningCore/BarcodeObserver.h"
 MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	:inframedWidget(parent),
 	mainLayout(new QVBoxLayout(this)),
-	scanModeSelector(new QComboBox(this)),
-	scanModeInfo(new QLabel(this)),
-	topExplLabel(new QLabel(this)),
-	connectionInfo(new QLabel(this)), addressField(new QComboBox(this)),
-	langInfo(new QLabel(this)), langField(new QComboBox(this)),
+	innerWidget(new QTabWidget(this)),
+	wrkflTab(new QWidget(innerWidget)),
+	wrkflinnLayout(new QFormLayout(wrkflTab)),
+	scanModeSelector(new QComboBox(wrkflTab)),
+	fontMin(new QSpinBox(wrkflTab)),
+	fontMax(new QSpinBox(wrkflTab)),
+	fontDec(new QSpinBox(wrkflTab)),
+	sysTab(new QWidget(innerWidget)),
+	sysinnLayout(new QFormLayout(sysTab)),
+	topExplLabel(new QLabel(sysTab)),
+	addressField(new QComboBox(sysTab)),
+	langField(new QComboBox(sysTab)),
+	prefix(new QSpinBox(sysTab)),
+	suffix(new QSpinBox(sysTab)),
+	printTab(new QWidget(innerWidget)),
+	printinnLayout(new QFormLayout(printTab)),
+	buildState(new QLabel(printTab)),
+	portDesignation(new QComboBox(printTab)),
+	portNumber(new QSpinBox(printTab)),
+	portType(new QComboBox(printTab)),
 	footerLayout(new QHBoxLayout(this)),
 	saveButton(new MegaIconButton(this)), backButton(new MegaIconButton(this))
 {
@@ -20,51 +35,53 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	mainLayout->setSpacing(0);		//	spacing removed to avoid space loss
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 
-	mainLayout->addWidget(scanModeInfo);
-	mainLayout->addWidget(scanModeSelector);
-	mainLayout->addWidget(topExplLabel);
+	mainLayout->addWidget(innerWidget);
+	innerWidget->addTab(sysTab, tr("system"));
+	innerWidget->addTab(wrkflTab, tr("workflow"));
+	innerWidget->addTab(printTab, tr("printer"));
+
+	sysTab->setLayout(sysinnLayout);
+	sysinnLayout->addRow(topExplLabel);
+	sysinnLayout->addRow(tr("HTTP address"), addressField);
+	sysinnLayout->addRow(tr("language"), langField);
+	sysinnLayout->addRow(tr("prefix ") + QChar(AppSettings->scanPrefix), prefix);
+	sysinnLayout->addRow(tr("suffix ") + QChar(AppSettings->scanSuffix), suffix);
+	
+	wrkflTab->setLayout(wrkflinnLayout);
+	wrkflinnLayout->addRow(tr("scanMode"), scanModeSelector);
+	wrkflinnLayout->addRow(tr("font min"), fontMin);
+	wrkflinnLayout->addRow(tr("font max"), fontMax);
+	wrkflinnLayout->addRow(tr("font dec"), fontDec);
+
+	printTab->setLayout(printinnLayout);
+	printinnLayout->addRow(tr("Printer support"), buildState);
+	printinnLayout->addRow(tr("Port name"), portDesignation);
+	printinnLayout->addRow(tr("Port"), portNumber);
+	printinnLayout->addRow(tr("Printer"), portType);
+
 	mainLayout->setSpacing(0);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 
-	mainLayout->addWidget(connectionInfo);
-	mainLayout->addWidget(addressField);
-	mainLayout->addWidget(langInfo);
-	mainLayout->addWidget(langField);
 
-	QFont scf = makeFont(0.04);
+	const QFont & scf = *FontAdapter::general();
 
-	scanModeInfo->setText(tr("settings_scan_mode_info"));
-	scanModeInfo->setAlignment(Qt::AlignCenter);
-	scanModeInfo->setFont(scf);
-#ifdef QT_VERSION5X
-	scanModeSelector->addItems(QStringList({ tr("settings_scmode_one"), tr("settings_scmode_autos"), tr("settings_scmode_simple") }));
-#else
+
 	QStringList temp;
 	temp << tr("settings_scmode_one") << tr("settings_scmode_autos") << tr("settings_scmode_simple");
 	scanModeSelector->addItems(temp);
-#endif
+
 	scanModeSelector->setFont(scf);
 	scanModeSelector->setMinimumHeight(calculateAdaptiveButtonHeight());
 
 	topExplLabel->setText(tr("settings_system_title"));
 	topExplLabel->setAlignment(Qt::AlignCenter);
 	topExplLabel->setFont(scf);
-
-	connectionInfo->setText(tr("settings_select_address_tip"));
-	connectionInfo->setAlignment(Qt::AlignCenter);
-	connectionInfo->setFont(scf);
-
+	
 	addressField->addItem(AppSettings->HttpUrl);
 	addressField->addItems(AppSettings->AlternativeAdresses);
 	addressField->setCurrentIndex(0);
 	addressField->setFont(scf);
 
-	langInfo->setText(tr("settings_system_select_lang_tip"));
-	langInfo->setAlignment(Qt::AlignCenter);
-	langInfo->setFont(scf);
-#ifdef QT_VERSION5X
-	langField->addItems(QStringList({ "Russian", "Romanian", "English" }));
-#else
 	temp.clear();
 	temp << "Russian" << "Romanian" << "English";
 	langField->addItems(temp);
@@ -74,7 +91,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 		langField->setCurrentIndex(1);
 	else
 		langField->setCurrentIndex(2);
-#endif
+
 	saveButton->setText(tr("settings_save_button"));
 	saveButton->setIcon(QIcon(":/res/with.png"));
 	saveButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
@@ -99,17 +116,55 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	mainLayout->addLayout(footerLayout);
 	footerLayout->addWidget(saveButton);
 	footerLayout->addWidget(backButton);
+	prefix->setValue(AppSettings->scanPrefix);
+	prefix->setMaximum(1112063);
+	suffix->setValue(AppSettings->scanSuffix);
+	suffix->setMaximum(1112063);
+	fontMin->setValue(AppSettings->fontMinHeight);
+	fontMin->setMaximum(500);
+	fontMax->setValue(AppSettings->fontMaxHeight);
+	fontMax->setMaximum(500);
+	fontDec->setValue(AppSettings->fontPercent * 100);
+	fontDec->setMaximum(100);
+
+#ifdef FTR_COM
+	buildState->setPixmap(QIcon(":/res/with.png").pixmap(calculateAdaptiveSize(0.15, 0.2)));
+#else
+	buildState->setPixmap(QIcon(":/res/without.png").pixmap(calculateAdaptiveSize(0.15, 0.2)));
+#endif
+	temp.clear();
+	temp << AppSettings->printerPortDesignation << "COM4:" << "COM2:" << "COM6:" << "BSP2:";
+	portDesignation->addItems(temp);
+	portDesignation->setEditable(true);
+	portNumber->setMaximum(35565);
+	portNumber->setValue(AppSettings->printerPort);
+	portType->addItem(AppSettings->printerType);
+	portType->addItems(AppSettings->alternativePrinters);
+	portType->setEditable(true);
+	
+	
+
 
 #ifdef QT_VERSION5X
 	QObject::connect(saveButton, &MegaIconButton::clicked, this, &MainSettingsWidget::saveClicked);
 	QObject::connect(backButton, &MegaIconButton::clicked, this, &MainSettingsWidget::backRequired);
 	QObject::connect(langField, QOverload<const QString&>::of(&QComboBox::activated), this, &MainSettingsWidget::langSelected);
 	QObject::connect(addressField, QOverload<const QString&>::of(&QComboBox::activated), this, &MainSettingsWidget::AddressSelected);
+	QObject::connect(prefix, QOverload<int>::of(&QSpinBox::valueChanged), this, &MainSettingsWidget::setPSLabels);
+	QObject::connect(suffix, QOverload<int>::of(&QSpinBox::valueChanged), this, &MainSettingsWidget::setPSLabels);
+	QObject::connect(fontMin, &QSpinBox::editingFinished, this, &MainSettingsWidget::applyFonts);
+	QObject::connect(fontMax, &QSpinBox::editingFinished, this, &MainSettingsWidget::applyFonts);
+	QObject::connect(fontDec, &QSpinBox::editingFinished, this, &MainSettingsWidget::applyFonts);
 #else
-	QObject::connect(saveButton, SIGNAL(clicked()), this, SLOT(saveClicked()));
-	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
-	QObject::connect(langField, SIGNAL(activated(QString)), this, SLOT(langSelected(QString)));
-	QObject::connect(addressField, SIGNAL(activated(QString)), this, SLOT(AddressSelected(QString)));
+    QObject::connect(saveButton, SIGNAL(clicked()), this, SLOT(saveClicked()));
+    QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
+    QObject::connect(langField, SIGNAL(activated(QString)), this, SLOT(langSelected(QString)));
+    QObject::connect(addressField, SIGNAL(activated(QString)), this, SLOT(AddressSelected(QString)));
+    QObject::connect(prefix, SIGNAL(valueChanged(int)), this, SLOT(setPSLabels(int)));
+    QObject::connect(suffix, SIGNAL(valueChanged(int)), this, SLOT(setPSLabels(int)));
+    QObject::connect(fontMin, SIGNAL(editingFinished()), this, SLOT(applyFonts()));
+    QObject::connect(fontMax, SIGNAL(editingFinished()), this, SLOT(applyFonts()));
+    QObject::connect(fontDec, SIGNAL(editingFinished()), this, SLOT(applyFonts()));
 #endif
 }
 
@@ -125,9 +180,22 @@ void MainSettingsWidget::saveClicked()
 	{
 		AppSettings->AlternativeAdresses.push_back(AppSettings->HttpUrl);
 		addressField->addItem(AppSettings->HttpUrl);
-		AppSettings->dump();
 	}
 	AppNetwork->setUrl(AppSettings->HttpUrl);
+	AppSettings->scanSuffix = suffix->value();
+	AppSettings->scanPrefix = prefix->value();
+	AppSettings->fontMinHeight = fontMin->value();
+	AppSettings->fontMaxHeight = fontMax->value();
+	AppSettings->fontPercent = ((fontDec->value() > 0) ? fontDec->value() : 1) / 100;
+	if (!AppSettings->alternativePrinters.contains(portType->currentText()))
+	{
+		AppSettings->alternativePrinters << portType->currentText();
+	}
+	AppSettings->printerType = portType->currentText();
+	AppSettings->printerPort = portNumber->value();
+	AppSettings->printerPortDesignation = portDesignation->currentText();
+	BarcodeObs->resetCapture(AppSettings->scanPrefix, AppSettings->scanSuffix);
+	AppSettings->dump();
 	emit saveConfirmed();
 	emit backRequired();
 }
@@ -142,17 +210,10 @@ void MainSettingsWidget::langSelected(const QString& lang)
 void MainSettingsWidget::langChanged()
 {
 	AppSettings->setTranslator();
-	scanModeInfo->setText(tr("settings_scan_mode_info"));
-#ifdef QT_VERSION5X
-	scanModeSelector->addItems(QStringList({ tr("settings_scmode_one"), tr("settings_scmode_autos"), tr("settings_scmode_simple") }));
-#else
 	QStringList temp;
 	temp << tr("settings_scmode_one") << tr("settings_scmode_autos") << tr("settings_scmode_simple");
 	scanModeSelector->addItems(temp);
-#endif
 	topExplLabel->setText(tr("settings_system_title"));
-	connectionInfo->setText(tr("settings_select_address_tip"));
-	langInfo->setText(tr("settings_system_select_lang_tip"));
 	saveButton->setText(tr("settings_save_button"));
 	backButton->setText(tr("settings_back_button"));
 }
@@ -160,4 +221,16 @@ void MainSettingsWidget::langChanged()
 void MainSettingsWidget::AddressSelected(const QString& activated)
 {
 	AppSettings->HttpUrl = activated;
+}
+
+void MainSettingsWidget::setPSLabels(int /*val*/)
+{
+	qobject_cast<QLabel*>(sysinnLayout->labelForField(prefix))->setText(tr("prefix ") + QChar(prefix->value()));
+	qobject_cast<QLabel*>(sysinnLayout->labelForField(suffix))->setText(tr("suffix ") + QChar(suffix->value()));
+}
+
+void MainSettingsWidget::applyFonts()
+{
+	FontAdapter::instanse()->reset(fontMin->value(), fontMax->value(), 
+		(((fontDec->value()>0)? fontDec->value() : 1) / 100));
 }

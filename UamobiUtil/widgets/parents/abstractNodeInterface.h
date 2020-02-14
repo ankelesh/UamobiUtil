@@ -3,26 +3,27 @@
 #include <QtCore/QPointer>
 #include <QLayout>
 #include "widgets/parents/inframedWidget.h"
-
+#include "widgets/parents/IndependentBranchNode.h"
 /*
 	Attempts to make uniform interface for any node
-
-	NOT DONE
-
-	Problems:
-		slots incompatible, must be QObject, but this will lead to double QObjects in child
-		no idea how to dynamically connect or delete widgets of really different types
 
 */
 
 class CastFailedException : public std::exception
 // is thrown if cast failed during upcasting widget
 {
-private:
-	std::string msg = "Error upcasting inframed pointer with from type ";
+#ifdef Q_OS_WINCE
 public:
-	CastFailedException(QString str) { msg += str.toStdString(); };
-	virtual const char* what() const noexcept override { return msg.c_str(); };
+    CastFailedException(QString str) { };
+    virtual const char* what() const override { return "Error upcasting inframed pointer"; };
+
+#else
+private:
+    std::string msg;
+public:
+    CastFailedException(QString str) { msg =  "Error upcasting inframed pointer with from type " + str.toStdString(); };
+    virtual const char* what() const override { return msg.c_str(); };
+#endif
 };
 class abstractNode
 {
@@ -50,7 +51,7 @@ protected:
 	// widget which must never be deleted (root one)
 	inframedWidget* untouchable;
 public:
-	abstractDynamicNode(inframedWidget* untouch = nullptr, QLayout* mLayout = nullptr);
+    abstractDynamicNode(inframedWidget* untouch = Q_NULLPTR, QLayout* mLayout = Q_NULLPTR);
 	// hides current, but respects root widget
 	virtual void _hideAndDeleteCurrent(inframedWidget* replacement);
 	// hides any widget. Use this if your root is too heavy or never used later
@@ -60,7 +61,7 @@ public:
 		// upcasts currently opened widget, thus allowing you to connect it as normal
 	{
 		T* temp = qobject_cast<T*>(currentlyOpened);
-		if (temp == nullptr)
+        if (temp == Q_NULLPTR)
 		{
 			throw CastFailedException(currentlyOpened->objectName());
 		}

@@ -8,7 +8,7 @@ const char* RECEIVER_SLOT_NAME = "requestIncoming";
 
 RequestAwaiter::RequestAwaiter(int interval, QObject* parent)
 	: QObject(parent), timer(new QTimer(this)), awaiting(false), timeoutinterval(interval),
-	awaitedReply(Q_NULLPTR), QueryOverrides()
+	awaitedReply(Q_NULLPTR), deliverTo(0)
 {
 #ifdef DEBUG
 	//detrace_METHEXPL("interval was:" << interval );
@@ -36,6 +36,17 @@ void RequestAwaiter::run()
 	wastimeout = false;
 	restext = QString();
 	errtext = QString();
+	deliverTo = 0;
+}
+
+void RequestAwaiter::deliverResultTo(long long int num)
+{
+	deliverTo = num;
+}
+
+bool RequestAwaiter::deliverHere(long long int num)
+{
+	return deliverTo == num;
 }
 
 bool RequestAwaiter::isAwaiting()
@@ -53,24 +64,7 @@ int RequestAwaiter::getInterval()
 	return timeoutinterval;
 }
 
-void RequestAwaiter::pushQueryOverride(const QString newUrl, QueryTemplates::QueryId id)
-{
-	QueryOverrides.insert(id, newUrl);
-}
 
-const QString& RequestAwaiter::overrideQuery(const QString& normal, QueryTemplates::QueryId usedId)
-{
-	if (QueryOverrides.isEmpty())
-		return normal;
-	if (QueryOverrides.contains(usedId))
-	{
-		return QueryOverrides.value(usedId);
-	}
-	else
-	{
-		return normal;
-	}
-}
 
 void RequestAwaiter::setReplyToAwait(QNetworkReply* toAwait)
 {
@@ -103,14 +97,15 @@ void RequestAwaiter::timeout()
 #endif
 	awaiting = false;
 	wastimeout = true;
+	deliverTo = 0;
 	emit requestTimeout();
 }
 
 void RequestAwaiter::requestIncoming()
 {
-	QTextDecoder td(QTextCodec::codecForName("CP1251"));
+    QTextDecoder td(QTextCodec::codecForName("CP1251"));
 	if (!awaitedReply->error())
-		restext = td.toUnicode(awaitedReply->readAll());
+        restext = td.toUnicode(awaitedReply->readAll());
 	if (awaitedReply->error() == QNetworkReply::NoError) {
 		if (awaitedReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() != 200)
 			errtext =
@@ -121,19 +116,19 @@ void RequestAwaiter::requestIncoming()
 	else
 	{
 		errtext = awaitedReply->errorString();
-	}
+    }
 	awaiting = false;
 	timer->stop();
 	wastimeout = false;
-	if (awaitedReply != nullptr) {
+    if (awaitedReply != Q_NULLPTR) {
 		awaitedReply->deleteLater();
-		awaitedReply = nullptr;
+        awaitedReply = Q_NULLPTR;
 	}
 #ifdef DEBUG
-	detrace_METHEXPL("received packet: " << restext << " | " << errtext);
+    detrace_METHEXPL("received packet: " << restext.left(400) << " | " << errtext);
 #endif
 	emit requestSuccess(restext, errtext);
-	emit requestReceived();
+	emit requestReceived(deliverTo);
 }
 
 void RequestAwaiter::replyError(QNetworkReply::NetworkError error)
