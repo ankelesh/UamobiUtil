@@ -28,7 +28,8 @@ public:
 		StatusString,
 		LesserDocument,
 		Richtext,
-		Control
+		Control,
+		Barcode
 	};
 
 private:

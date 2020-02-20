@@ -4,7 +4,7 @@
 #include "widgets/ElementWidgets/MegaIconButton.h"
 #include <QBoxLayout>
 #include <QLabel>
-
+#include "widgets/ControlsMiniwidgets/abs_control.h"
 
 /*
 	This widget is used for future pages with multiple controls.
@@ -17,9 +17,6 @@ class ControlListWidget : public inframedWidget
 	Q_OBJECT
 protected:
 	QVBoxLayout* mainLayout;
-	QLabel* userInfo;
-	QLabel* barcodeInfo;
-	QLabel* addInfo;
 	QVector<abs_control*> controls;
 	QHBoxLayout* footerLayout;
 	MegaIconButton* okButton;
@@ -27,15 +24,13 @@ protected:
 
 public:
 	ControlListWidget(QWidget* parent);
-
 	void clearControls();
-	void useControls(QStringList & initstrings);
-	void useControls(QStringList& initstrings, QStringList& cvalues);
+	void useControls(IControlList & controls);
 	QStringList getControlsValues();
 	QString getValueAt(int index);
-	void emplaceControl(QString& initstr);
-	void setLabels(QString barcode, QString additional = "", QString uinfo = "");
-	void clearLabels();
+	void emplaceControl(InputControl);
+	QString joinedControls();
+	QString mappedControls();
 	~ControlListWidget();
 private slots:
 	void checkAndConfirmControls();

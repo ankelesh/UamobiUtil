@@ -23,12 +23,19 @@ bool ModeEntity::fromUniXml(const UniformXmlObject& o)
 {
 	if (o.myOID() == UniformXmlObject::Mode)
 	{
-		if (o.mySize() == 1)
+		switch (o.mySize())
 		{
+		case 1:
 			name = o.value("modeName");
-		}
-		else
-		{
+			break;
+		
+		case 4:
+			name = o.value("captionMode");
+			mode = o.value("mode");
+			submode = o.value("submode");
+			break;
+		default:
+		case 2:
 			name = o.value("captionMode");
 			mode = o.value("modeName");
 			QPair<QString, QString > mpair = legacy::splitLegacyMode(mode);
@@ -36,6 +43,7 @@ bool ModeEntity::fromUniXml(const UniformXmlObject& o)
 			submode = mpair.second;
 			if (name.isEmpty() && !mode.isEmpty())
 				name = mode;
+			break;
 		}
 		if (mode.isEmpty() || name.isEmpty())
 			throw InitializationError("modeName", o.value("modeName"));

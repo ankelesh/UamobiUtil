@@ -1,6 +1,9 @@
 #include "MainSettingsWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #include "ScaningCore/BarcodeObserver.h"
+#include "widgets/utils/GlobalAppSettings.h"
+
+
 MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	:inframedWidget(parent),
 	mainLayout(new QVBoxLayout(this)),
@@ -168,10 +171,6 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 #endif
 }
 
-void MainSettingsWidget::show()
-{
-	inframedWidget::show();
-}
 
 void MainSettingsWidget::saveClicked()
 {

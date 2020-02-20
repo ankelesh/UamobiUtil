@@ -36,7 +36,6 @@ NormalScaningWidget::NormalScaningWidget(QWidget* parent, IndependentBranchNode*
 	searchScreen(searchScr),
 	localCache()
 {
-    detrace_DCONSTR("NormalScaningWidget");
 	if (resultScreen == Q_NULLPTR)
 		resultScreen = new DocResultsWidget(this);
 	else
@@ -143,7 +142,7 @@ void NormalScaningWidget::useControls(IControlList & cvals)
         QObject::connect(second_control.data(), SIGNAL(editingFinished()), this, SLOT(submitPressed()));
         QObject::connect(first_control.data(), SIGNAL(editingFinished()), second_control.data(), SLOT(setFocus()));
 #endif
-		second_control->setFocus();
+		first_control->setFocus();
 		break;
 	case 1:
 #ifdef QT_VERSION5X

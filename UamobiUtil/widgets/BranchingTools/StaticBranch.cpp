@@ -2,7 +2,13 @@
 #include "BranchFactory.h"
 void StaticBranch::_allocateNode(BranchDescription desc)
 {
-	createdNodesStack.push_back(BranchNodeFactory::createNode(desc, this));
+	IndependentBranchNode* node = BranchNodeFactory::createNode(desc, this);
+	if (node == Q_NULLPTR)
+	{
+		toNext(RecEntity());
+		return;
+	}
+	createdNodesStack.push_back(node);
 	if (current == Q_NULLPTR)
 		current = createdNodesStack.last();
 	mainLayout->addWidget(createdNodesStack.last());

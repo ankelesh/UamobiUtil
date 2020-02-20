@@ -19,10 +19,8 @@
 
 /*
 	This widget is used to check and change filters which will apply to parent document's query.
-
-
-	__ASSOCIATED_DATABASE_FUNCTION__   :  P'docFilterResponse' doc_get_allowed_types
-	__ASSOCIATED_DATABASE_FUNCTION__   :  P'typicalResponse'   doc_select_filter
+	If there will be more entities with ability to check themselves, this widget can be
+	made more abstract by removing bindings to entity fields.
 
 */
 using QueryTemplates::QueryCache;
@@ -52,17 +50,25 @@ protected:
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
 public:
 	FilterSelectWidget(QWidget* parent = Q_NULLPTR);
+
+	// sends request to list all filters. Deprecated, used only for separation
 	void loadFilters();
 protected slots:
+	// checks all entities in model
 	void checkAll();
+	// unchecks entities in model
 	void uncheckAll();
 #ifdef QT_VERSION5X
+	// swaps state to !state. Two definitions to avoid incompatibility on Qt4
     void changeState(const QModelIndex & index);
 #else
     void changeState(QModelIndex  index);
 #endif
+	// sends all selected joined fields, then emits done
 	void okPressed();
 	void was_timeout();
+	// sets model with new values
 	void parse_doctype_list_response();
+	// emits done if 200
 	void parse_doctype_selection_response();
 };

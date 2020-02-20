@@ -36,7 +36,7 @@ void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEnt
 
 		if (controlsAvailable >= 1)
 		{
-			if (first_control->name == cvals.at(0)->name)
+			if (first_control->myType() == cvals.at(0)->type)
 			{
 				first_control->reset();
 				first_control->show();
@@ -45,7 +45,7 @@ void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEnt
 			{
 				innerLayout->removeWidget(first_control->myWidget());
 				first_control.clear();
-                first_control = Control(fabricateControl(cvals.at(0)->name, innerLayout, innerWidget));
+                first_control = Control(fabricateControl(cvals.at(0), innerLayout, innerWidget));
 			}
 			if (!second_control.isNull())
 			{
@@ -56,13 +56,12 @@ void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEnt
 		}
 		else
 		{
-            first_control = Control(fabricateControl(cvals.at(0)->name, innerLayout, innerWidget));
+            first_control = Control(fabricateControl(cvals.at(0), innerLayout, innerWidget));
 			++controlsAvailable;
 		}
 		first_control->show();
 		controlsRequired = true;
 		submitButton->setDisabled(false);
-		this->setFocus();
 		controlsAvailable = 1;
 		return;
 	case 2:
@@ -70,13 +69,13 @@ void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEnt
 		switch (controlsAvailable)
 		{
 		case 2:
-			if (!(cvals.at(1)->name == second_control->name))
+			if (!(cvals.at(1)->type == second_control->myType()))
 			{
 				innerLayout->removeWidget(second_control->myWidget());
 				second_control.clear();
 			}
 		case 1:
-			if (!(cvals.at(1)->name == first_control->name))
+			if (!(cvals.at(1)->type == first_control->myType()))
 			{
 				innerLayout->removeWidget(first_control->myWidget());
 				first_control.clear();
@@ -84,7 +83,7 @@ void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEnt
 		case 0:
 			if (first_control.isNull())
 			{
-                first_control = Control(fabricateControl(cvals.at(0)->name, innerLayout, innerWidget));
+                first_control = Control(fabricateControl(cvals.at(0), innerLayout, innerWidget));
 			}
 			else
 			{
@@ -92,7 +91,7 @@ void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEnt
 			}
 			if (second_control.isNull())
 			{
-                second_control = Control(fabricateControl(cvals.at(1)->name, innerLayout, innerWidget));
+                second_control = Control(fabricateControl(cvals.at(1), innerLayout, innerWidget));
 			}
 			else
 			{
@@ -103,7 +102,6 @@ void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEnt
 	}
 	controlsRequired = true;
 	submitButton->setDisabled(false);
-	this->setFocus();
 	first_control->show();
 	second_control->show();
 }
@@ -218,15 +216,12 @@ void AbstractScaningWidget::setModeName(QString& name)
 
 void AbstractScaningWidget::was_timeout()
 {
-	userInfo->setText("scaning_timeout:" + QString::number(awaiter->getInterval()));
+	userInfo->setText(tr("scaning_timeout:") + QString::number(awaiter->getInterval()));
     hideProcessingOverlay();
 }
 
 void AbstractScaningWidget::quitNoSave()
 {
-#ifdef DEBUG
-    detrace_METHCALL("quitNoSave");
-#endif
 	QMessageBox::StandardButton response =  QMessageBox::question(this, tr("QuitWithoutSave?"), tr("quit_without_save_info?"),
         QMessageBox::Ok| QMessageBox::Cancel);
     if (response == QMessageBox::Ok)

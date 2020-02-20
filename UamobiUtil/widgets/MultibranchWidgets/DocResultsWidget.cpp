@@ -178,11 +178,6 @@ void DocResultsWidget::refresh()
 	}
 }
 
-void DocResultsWidget::show()
-{
-	pagenumber = 0;
-	inframedWidget::show();
-}
 
 
 void DocResultsWidget::previousPage()

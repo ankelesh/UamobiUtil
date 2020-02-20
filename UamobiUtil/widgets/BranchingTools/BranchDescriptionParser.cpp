@@ -22,6 +22,12 @@ QHash<QString, independent_nodes::nodelist> _initBinding()
 	h["PrintingScaning"] = PrintingScaning;
 	h["Switch"] = Switch;
 	h["Sender"] = Sender;
+	h["MulticontrolScaning"] = MulticontrolScaning;
+	h["StaticSubbranch"] = StaticSubbranch;
+	h["ObservedScaning"] = ObservedScaning;
+	h["ListPickObserver"] = ListPickObs;
+	h["Skip"] = SkipNode;
+	h["Default"] = DefaultNode;
 	return h;
 }
 
@@ -47,6 +53,7 @@ QHash<QString, UniformXmlObject::ThingsIds> bindEntities()
 	h["LesserDocument"] = UniformXmlObject::LesserDocument;
 	h["Richtext"] = UniformXmlObject::Richtext;
 	h["Control"] = UniformXmlObject::Control;
+	h["Barcode"] = UniformXmlObject::Barcode;
 	return h;
 }
 QHash<QString, UniformXmlObject::ThingsIds> entityBinding(bindEntities());

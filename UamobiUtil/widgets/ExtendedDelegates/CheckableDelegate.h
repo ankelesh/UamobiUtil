@@ -10,7 +10,8 @@
 #include <QtGui/QPainter>
 
 /*
-	Uses int value obtained from entity as checked flag
+	Uses int value obtained from entity as checked flag. Hashes scaled icon to avoid
+	unnecessary resizes
 */
 
 class CheckableDelegate : public QStyledItemDelegate

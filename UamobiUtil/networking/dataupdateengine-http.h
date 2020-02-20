@@ -50,6 +50,8 @@ private:
 };
 
 extern const QString DATE_ENCODING_FORMAT;
+extern const QString DATETIME_ENCODING_FORMAT;
+
 QString makeParamsFromList(QVector<QPair<QString, QString> >& vect);
 QString makeParamsFromList(QString& paramName, QString& paramVal);
 #endif // DATAUPDATEENGINEHTTP_H

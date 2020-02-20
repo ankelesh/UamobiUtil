@@ -26,7 +26,7 @@ namespace embeddedBranches
 		"[IdDependentSelect]\n"
 		"%Order%\n"
 		"[ReceiptParameters]\n"
-		"[NormalScaning]\n"
+		"[MulticontrolScaning]\n"
 		"<>\n"
 		"*-6*\n"
 	);

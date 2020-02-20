@@ -156,15 +156,11 @@ void IdDependentSelectWidget::parse_select_response()
 
 void IdDependentSelectWidget::was_timeout()
 {
-	setTimeoutMessage();
+	userInfo->setText(tr("timeout: ") + QString::number(awaiter->getInterval()));
 	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();
 }
 
-void IdDependentSelectWidget::setTimeoutMessage()
-{
-    userInfo->setText(tr("timeout: ") + QString::number(awaiter->getInterval()));
-}
 
 void IdDependentSelectWidget::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads)
 {

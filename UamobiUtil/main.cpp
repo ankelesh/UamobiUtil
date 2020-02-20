@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 	QApplication a(argc, argv);
 	AppSettings->timeoutInt = 10000;					//	while not actual version - timeout is maximized to avoid testing delays
 	AppSettings->setTranslator();
-	AppSettings->HttpUrl = "http://92.115.237.226:60080/um/unitest.php";
+	AppSettings->HttpUrl = "una.md:3323/um/sammy0520181.php";
 #ifdef Q_OS_WINCE
     UamobiUtil w;
 	w.move(0, 0);

@@ -20,8 +20,6 @@
 /*
 	This widget is used for checking inventory document before starting completing it. 
 	It has no additional functions except changing document credintials.
-
-
 	TODO: dateedit is unused now. Make it usefull.
 
 
@@ -54,9 +52,12 @@ protected:
 public:
 	InventoryParamsWidget(QWidget* parent = Q_NULLPTR);
 
+	// renundant -> sets inner data to correspond provided document
 	void setDocument(FullDocument);
 private slots:
+	// emits backRequired - now in dynamicBranches is not possible to go to special one
 	void selectDocPressed();
+	// emits done and fills it with FullDocument created from provided data
 	void okPressed();
 
 };

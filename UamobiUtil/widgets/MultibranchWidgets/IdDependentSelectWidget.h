@@ -15,15 +15,12 @@
 #include "networking/RequestAwaiter.h"
 
 /*
-	This widget is oriented at allowing user to select order he needs.
-
-	Warning: this widget requires supplier.
-
-	Generally this widget is simplified version of SupplierSelect - no search.
-
-	__ASSOCIATED_DATABASE_FUNCTION__   :  P'ordersResponse' list_orders(supplier_code)
-	__ASSOCIATED_DATABASE_FUNCTION__   :  P'TypicalResponse' rec_get_order_info(order_code ,supplier_code)
-
+	This widget is joining two polymorthic entities to use them for new selection.
+	This widget can not work without valid dependency entity from _handleRecord.
+	It uses dependency id and get-query of prototype to get list of prototyped type, then
+	uses post-query to get richdata to fill text parameter of Order entity. This is
+	rude behaviuor, it will be fixed later to ensure that any dependency and any prototype 
+	can be used in it.
 */
 using QueryTemplates::QueryCache;
 class IdDependentSelectWidget : public IndependentBranchNode
@@ -55,14 +52,16 @@ public:
 	IdDependentSelectWidget(RecEntity proto, QWidget* = Q_NULLPTR);
 
 	virtual bool isExpectingControl(int) override;
-
-private slots:
+	// same as _handleRecord, renundant
+	void loadData(RecEntity dependency);
+protected slots:
+	// sends associated post request of prototype using it's id
 	void pickClicked();
-	void itemSelected(RecEntity);
+	// same as pick clicked, but reacts on model click instead of current
+	virtual void itemSelected(RecEntity);
+	// parses response as list, extracting polyentities of type prototype
 	void parse_get_response();
+	// parses select response as it was richtext. !! HARD BIND TO OrderEntity !!
 	void parse_select_response();
 	void was_timeout();
-public slots:
-	void loadData(RecEntity dependency);
-	void setTimeoutMessage();
 };

@@ -75,7 +75,7 @@ Records downcastRecords(const QVector<T>& v)
 	QVector<T>::const_iterator b = v.begin();
 	while (b != v.end())
 	{
-		r << b->staticCast<AbsRecEntity>();
+		r << b++->staticCast<AbsRecEntity>();
 	}
 	return r;
 }
@@ -233,26 +233,33 @@ public:
 		additionalObjects.clear();
 		bool ok;
 		for (int i = 0; i < objs.count(); ++i)
+			// for each object
 		{
 			try
+				//initialization may throw InitializationError
 			{
 				if (objs.at(i)->myOID() == prototype->myType())
+					// compatibility check
 				{
 					ok = prototype->fromXmlObject(objs.at(i));
+					// if initialization was correct, ok == true
 					if (!ok)
 					{
 						isError = true;
 						errtext = "initialization non-throwing error";
 						return false;
 					}
+					// upcasting clone of prototype
 					objects.push_back(QSharedPointer<NetObject>(static_cast<NetObject*>(prototype->clone())));
 				}
 				else
+					// if check failed = push object to unparsed vector
 				{
 					additionalObjects.push_back(objs.at(i));
 				}
 			}
 			catch (InitializationError & ie)
+				// stop initialization
 			{
 				isError = true;
 				errtext = ie.what();
@@ -305,6 +312,7 @@ bool NetRequestResponse<AbsRecEntity>::fromHomogenicXmlObjects(const XmlObjects&
 			{
 				return false;
 			}
+			// only difference between non-specialized and specialized versions
 			objects.push_back(RecEntity(prototype->clone()));
 		}
 		catch (InitializationError & ie)
@@ -337,6 +345,7 @@ bool NetRequestResponse<AbsRecEntity>::fromHeterogenicXmlObjects(const XmlObject
 					errtext = "initialization non-throwing error";
 					return false;
 				}
+				// only difference between non-specialized and specialized versions
 				objects.push_back(QSharedPointer<AbsRecEntity>(prototype->clone()));
 			}
 			else

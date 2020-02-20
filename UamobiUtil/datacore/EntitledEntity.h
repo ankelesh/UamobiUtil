@@ -8,6 +8,7 @@
 
 
 class EntitledEntity : public AbsRecEntity
+	// provides fields and getter with comparation to more specialized children
 {
 public:
 	QString code;
@@ -25,6 +26,7 @@ protected:
 
 
 class SupplierEntity : public EntitledEntity
+	// represents supplier with order list
 {
 public:
 	SupplierEntity(QString c = QString(), QString t = QString(), QString tx = QString());
@@ -40,6 +42,7 @@ typedef QSharedPointer<SupplierEntity> Supplier;
 typedef QVector< QSharedPointer<SupplierEntity> > SupplierList;
 
 class OrderEntity : public EntitledEntity
+	// represents order with order description as text
 {
 public:
 	OrderEntity(QString c = QString(), QString t = QString(), QString tx = QString());
@@ -54,9 +57,11 @@ typedef QSharedPointer<OrderEntity> Order;
 typedef QVector< QSharedPointer<OrderEntity> > OrderList;
 
 class LesserDocumentEntity : public EntitledEntity
+	// represents document without vast description
 {
 public:
-	QString doctype;
+	QString doctype; // represents type of this document
+
 	LesserDocumentEntity(QString c = QString(), QString t = QString(), QString tx = QString(), QString doctype = QString());
 protected:
 	virtual bool fromUniXml(const UniformXmlObject& o) override;

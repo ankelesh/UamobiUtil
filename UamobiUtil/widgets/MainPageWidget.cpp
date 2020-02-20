@@ -1,4 +1,6 @@
 #include "MainPageWidget.h"
+#include "networking/Parsers/RequestParser.h"
+#include "widgets/ElementWidgets/ProcessingOverlay.h"
 #ifdef QT_VERSION5X
 #include <QtWidgets/QScroller>
 #else
@@ -8,7 +10,7 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
-
+#include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
 void MainPageWidget::show_login_widget(User u)
 {
 	manualLogin->set_user(u);
@@ -88,7 +90,8 @@ MainPageWidget::MainPageWidget(QWidget* parent)
 	userid->setFont(scf);
 
 	innerWidget->installEventFilter(keyfilter);
-
+	loginsView->setModel(innerModel);
+	loginsView->setItemDelegate(new ZebraItemDelegate(this));
 #ifdef QT_VERSION5X
 	QObject::connect(settingsButton, &QPushButton::clicked, this, &MainPageWidget::settinsPressed);
 	QObject::connect(exitButton, &QPushButton::clicked, qApp, &QApplication::quit);

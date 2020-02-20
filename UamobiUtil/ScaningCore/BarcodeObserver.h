@@ -26,6 +26,7 @@ public:
 	void resetCapture(QChar pref, QChar suff);
 	void activate();
 	void deactivate();
+	bool activated();
 	static BarcodeObserver* instanse();
 signals:
 	void barcodeCaught(QString);

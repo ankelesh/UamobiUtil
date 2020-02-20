@@ -132,6 +132,10 @@ void BarcodeObserver::deactivate()
 	active = false;
 	qApp->removeEventFilter(instanse());
 }
+bool BarcodeObserver::activated()
+{
+	return active;
+}
 BarcodeObserver* BarcodeObserver::_instanse = Q_NULLPTR;
 BarcodeObserver* BarcodeObserver::instanse()
 {

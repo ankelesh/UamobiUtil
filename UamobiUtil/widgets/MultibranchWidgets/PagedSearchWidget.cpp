@@ -153,13 +153,7 @@ void PagedSearchWidget::loadResults()
 	showProcessingOverlay();
 }
 
-void PagedSearchWidget::clear()
-{
-	searchInput->setText("");
-	entityModel->reset();
-	toSearch = "";
-	currentpage = 0;
-}
+
 
 void PagedSearchWidget::nextPage()
 {

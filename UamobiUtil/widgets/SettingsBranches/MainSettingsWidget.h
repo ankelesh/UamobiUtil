@@ -22,11 +22,12 @@
 #include <QSpinBox>
 // widgets imports
 #include "widgets/parents/inframedWidget.h"
-#include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
+
 /*
 	This widgets is used to alter GlobalAppSettings object. Generally it allows to change
-	any variable in app settings, but separates them into different tabs
+	any variable in app settings, but separates them into different tabs. Dumps settings after
+	pressing ok.
 
 */
 
@@ -74,15 +75,14 @@ private:
 
 public:
 	MainSettingsWidget(QWidget* parent = Q_NULLPTR);
-	virtual void show() override;
 private slots:
-	void saveClicked();			//	saves data to GlobalAppSettings widget
+	void saveClicked();			//	saves data to settings.ini
 	void langSelected(const QString&);	//	alters GAS, then retranslates this widget
 	void langChanged();				//	retranslates this widget
-	void AddressSelected(const QString& activated);
-	void setPSLabels(int);
-	void applyFonts();
+	void AddressSelected(const QString& activated); // changes url without reconnection
+	void setPSLabels(int);			//	updates prefix and suffix
+	void applyFonts();				//	applies fonts to FontAdapter. but results will be only after reboot
 signals:
 	void languageChanged();			//	is emitted when language is changed
-	void saveConfirmed();
+	void saveConfirmed();			//	emitted when user confirms data
 };

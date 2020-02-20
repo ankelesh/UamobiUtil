@@ -53,13 +53,19 @@ public:
 	LoginWidget(QWidget* parent);
 
 	virtual void show() override;
+	// reacts to language change by retranslating all strings
 	void langCh();
 private slots:
+	// reacts to confirmation, sends request to server with provided query
 	void login_confirmed();
+	// reacts to timeouts
 	void was_timeout();
+	// checks response to carry normal 200. If yes, loginConfirmed emitted
 	void checkResponse();
 public slots:
+	// sets up user data
 	void set_user(const User);
 signals:
+	// emitted when this receives response from server with 200.
 	void loginConfirmed(const QString, const QString);
 };

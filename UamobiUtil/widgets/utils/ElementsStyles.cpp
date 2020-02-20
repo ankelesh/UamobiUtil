@@ -62,7 +62,10 @@ const QString DELETE_BUTTONS_STYLESHEET(QStringLiteral("QPushButton {"
 const QString CHANGE_BUTTONS_STYLESHEET(QStringLiteral("QPushButton {"
 	"background-color: #dfe687;"
 	"border: 1px solid gray"
-	";}"));
+	";}"
+	" QPushButton:disabled {"
+	"background-color:#999373;}"
+));
 
 const QString CHECKED_BUTTONS_STYLESHEET(QStringLiteral("QPushButton:checked {"
 	"background-color: #797d42;"
@@ -215,6 +218,26 @@ const QString FOCUSED_SPINBOX_STYLESHEET(
 	)
 );
 
+const QString FOCUSED_DATETIMEEDIT_STYLESHEET(
+	QStringLiteral(
+		"QAbstractSpinBox:focus"
+		" {"
+		"background-color: #d7effa;"
+		"border: 2px solid #7ec0de; } "
+		"QDateEdit::drop-down {"
+		"subcontrol-origin: padding;"
+		"subcontrol-position: center right;"
+		"width: %1 px;"
+		"}"
+	)
+);
+const QString FOCUSED_LINEEDIT_STYLESHEET(
+	QStringLiteral(
+		"QLineEdit:focus {"
+		"background-color: #d7effa;"
+		"border: 2px solid #7ec0de; } "
+	)
+);
 
 const QFont & makeFont(double /*perc*/)
 {

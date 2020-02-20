@@ -9,7 +9,6 @@ ZebraItemDelegate::ZebraItemDelegate(QObject* parent)
 
 void ZebraItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
-	QRect rct = option.rect;
 	painter->save();
 	if (!index.isValid())
 		return;
@@ -21,8 +20,15 @@ void ZebraItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 	{
 		painter->setBrush(QBrush(Qt::white));
 	}
-	painter->drawRect(rct);
-	painter->drawText(rct, Qt::AlignCenter | Qt::TextWordWrap, index.data(Qt::DisplayRole).toString());
+	painter->drawRect(option.rect); 
+	if (option.state.testFlag(QStyle::State_Selected))
+	{
+		painter->setBrush(option.palette.highlight());
+		painter->setOpacity(0.4);
+		painter->drawRect(option.rect);
+		painter->setOpacity(1);
+	}
+	painter->drawText(option.rect, Qt::AlignCenter | Qt::TextWordWrap, index.data(Qt::DisplayRole).toString());
 	painter->restore();
 	
 }
@@ -30,7 +36,12 @@ void ZebraItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 QSize ZebraItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
 	if (index.isValid())
-		return QSize(option.rect.width(),
-			option.fontMetrics.height() * index.data(Qt::SizeHintRole).toInt());
-	return QSize(option.rect.width(), option.fontMetrics.height() * 2);
+	{
+		bool ok;
+		int temp = index.data(Qt::SizeHintRole).toInt(&ok);
+		if (ok)
+			return QSize(option.rect.width(),
+					option.fontMetrics.height()* temp);
+	}
+		return QSize(option.rect.width(), option.fontMetrics.height() * 2);
 }

@@ -18,11 +18,9 @@
 #include "widgets/ElementWidgets/MegaIconButton.h"
 
 /*
-	This widget is concentrated on forming list widget around response.
-	It provides input line for user and trigger-button. On selection is emitted signal
-	containing parsedItem.
-
-	__ASSOCIATED_DATABASE_FUNCTION__  :  P'searchResponse' doc_search_items()
+	This widget is created to wrap lists with paging navigation.
+	It sends associated get request of entity with supplied page number,
+	then awaits for request. On select this does not calls netrequest.
 
 */
 using QueryTemplates::OverloadableQuery;
@@ -30,6 +28,7 @@ class PagedSearchWidget : public IndependentBranchNode
 {
 	Q_OBJECT
 protected:
+	
 	DataEntityListModel * entityModel;
 	RecEntity prototype;
 
@@ -54,16 +53,19 @@ protected:
 	virtual void _handleRecord(RecEntity) override;
 	virtual void _sendDataRequest() override;
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
+	// fills indexation labels and enables navigation buttons
 	void setIndexation(XmlObjects items);
 public:
 	PagedSearchWidget(RecEntity proto, QWidget* parent);
+	// parses response and fills entity model
 	void refresh();
+	
 public slots:
-	void doSearch();		//	triggerSlot
-	void loadResults();		//	inner slot for direct calling
-	void clear();			//	clears field and list
-	void nextPage();		//	sends request for next page
-	void previousPage();	//	sends request for prev page
-	void search_response();	//	netresponse functions
-	void was_timeout();
+	// wraps loadResult to drop counter before load
+	void doSearch();		
+	void nextPage();		//	sends request for currentpage++;
+	void previousPage();	//	sends request for currentpage--;
+	void loadResults();		//	unwrapped slot for loading data
+	void search_response();
+	void was_timeout();   
 };

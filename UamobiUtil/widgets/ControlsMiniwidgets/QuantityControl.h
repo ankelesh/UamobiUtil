@@ -20,11 +20,11 @@ protected:
 	virtual bool parseAndSetValue(QString) override;
 	virtual void clear() override;
 	virtual bool valueAvailable() const override;
-	virtual void show() override;
-	virtual void hide() override;
 	virtual QWidget* getInnerWidget() const override;
-	virtual void setFocus() const override;
 public:
 	explicit QuantityControl(bool isInt, QString& cname, QWidget* parent);
+	virtual void show() override;
+	virtual void hide() override;
+	virtual void setFocus() const override;
     virtual ~QuantityControl();
 };

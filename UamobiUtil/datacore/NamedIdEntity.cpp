@@ -274,3 +274,28 @@ bool DocTypeEntity::useAssociatedNetworkGetMethod(QStringList& /*arguments*/, Re
 	sendGetRequest(awaiter);
 	return true;
 }
+
+BarcodeEntity::BarcodeEntity(QString code, QString name)
+	: NamedIdEntity(UniformXmlObject::Barcode, code, name)
+{
+}
+
+bool BarcodeEntity::fromUniXml(const UniformXmlObject& o)
+{
+	if (o.myOID() == UniformXmlObject::Barcode)
+	{
+		id = o.value("code");
+		name = o.value("name");
+		if (id.isEmpty())
+			throw InitializationError("id", " empty ");
+		if (name.isEmpty())
+			name = id;
+		return true;
+	}
+	return false;
+}
+
+AbsRecEntity* BarcodeEntity::fabricate() const
+{
+	return new BarcodeEntity(*this);
+}

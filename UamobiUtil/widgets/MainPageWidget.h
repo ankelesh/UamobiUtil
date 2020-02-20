@@ -15,23 +15,17 @@
 #endif
 // include here version-independents
 #include <QtCore/QVector>
-#include <QtCore/QPointer>
-
-// fixed includes
 #include "networking/things.h"
 #include "widgets/LoginBranch/LoginWidget.h"
 #include "widgets/SettingsBranches/MainSettingsWidget.h"
 #include "widgets/parents/abstractNodeInterface.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
 #include "networking/RequestAwaiter.h"
-#include "networking/Parsers/RequestParser.h"
-#include "widgets/ElementWidgets/ProcessingOverlay.h"
 /*
 	This widget is shown on application launch. It's main functional is to allow user profile selection if
 	server returns any user profiles. In worst case, this widget automatically shows manual login widget.
 	Also this widget contains Settings widget, which is affecting GlobalAppSettings.
 
-	__ASSOCIATED_DATABASE_FUNCTION__   : P'UserProfilesResult' list_users(void)
 
 	This widget can not be created via node factory, it is remaining from old app.
 */
@@ -75,10 +69,10 @@ private slots:
 	void userPicked(RecEntity);					//	activated when item was selected on LoginSelectWidget
 	void hideCurrent();							//	hides current
 	void languageChanged();						//	activated when language changed - retranslates text
-	void userIdSearch();
-	void parseUsers();
-	void wasTimeout();
-	void settingsSaved();
+	void userIdSearch();						//	searches and activates item in model by name or id
+	void parseUsers();							// receives response and inserts it in the model
+	void wasTimeout();							
+	void settingsSaved();						// reloads user and refreshes labels
 public slots:
 	void loadUsers();							//	sends request to server, fills LoginSelectWidget
 signals:

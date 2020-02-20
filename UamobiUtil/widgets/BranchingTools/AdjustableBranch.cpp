@@ -33,7 +33,7 @@ void AdjustableBranch::backtrack()
 	}
 	else if (currentNode < root->count())
 	{
-		int next = currentNode + _upCO<IndependentBranchNode>()->backtracking();
+		int next = currentNode + _upCO<IndependentBranchNode>()->backtracking() - 1;
 		if (next < 0 || next > root->count())
 			emit backRequired();
 		else
@@ -52,10 +52,16 @@ void AdjustableBranch::backtrack()
 
 void AdjustableBranch::_emplaceNodeToCurrent(BranchDescription nextNode)
 {
-	_hideAnyWithDelete( BranchNodeFactory::createNode(
+	IndependentBranchNode* node = BranchNodeFactory::createNode(
 		nextNode,
 		this
-	));
+	);
+	if (node == Q_NULLPTR)
+	{
+		raiseThisBranch(RecEntity());
+		return;
+	}
+	_hideAnyWithDelete(node);
 #ifdef QT_VERSION5X
 	QObject::connect(currentlyOpened, &inframedWidget::backRequired, this, &AdjustableBranch::backCalled);
 	QObject::connect(_upCO<IndependentBranchNode>(), &IndependentBranchNode::done, this, &AdjustableBranch::currentNodeDone);

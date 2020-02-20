@@ -23,6 +23,7 @@
 #include "widgets/ControlsMiniwidgets/ControlManager.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
 #include "networking/things.h"
+#include "widgets/ControlsMiniwidgets/abs_control.h"
 
 class AbstractScaningWidget : public IndependentBranchNode
 {

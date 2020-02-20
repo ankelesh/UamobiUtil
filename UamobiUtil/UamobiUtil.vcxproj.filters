@@ -64,9 +64,6 @@
     <Filter Include="Header Files\ElementWidgets">
       <UniqueIdentifier>{d8b99fa7-72ef-4ff3-a958-a18ed8258393}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\ElementWidgets\ControlsWidgets">
-      <UniqueIdentifier>{a3b60990-a679-483c-85af-d9282ce09968}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\ScaningRelated">
       <UniqueIdentifier>{d57287c2-f07a-4353-b4c8-0790bc340398}</UniqueIdentifier>
     </Filter>
@@ -114,6 +111,21 @@
     </Filter>
     <Filter Include="Source Files\parents">
       <UniqueIdentifier>{66e87836-e183-4cec-bd76-3ccd90930cc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ControlsWidgets">
+      <UniqueIdentifier>{a3b60990-a679-483c-85af-d9282ce09968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MultibranchWidgets\Selectors">
+      <UniqueIdentifier>{610d2c6c-01a8-4505-ab26-2a7969c5adfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MultibranchWidgets\ScaningRelated">
+      <UniqueIdentifier>{dc1327f6-6e17-4094-a64f-283a3f1337d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MultibranchWidgets\ScaningRelated">
+      <UniqueIdentifier>{6f883067-1e9a-4dd2-b0e2-d1f5ada55fa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\MultibranchWidgets\Observers">
+      <UniqueIdentifier>{3b1ce35a-6932-40d2-8c9d-63d1d57fbb0f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -213,9 +225,6 @@
     <ClCompile Include="widgets\ControlsMiniwidgets\ControlTranslator.cpp">
       <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\ControlListWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="ScaningCore\BarcodeObserver.cpp">
       <Filter>Source Files\ScaningRelated</Filter>
     </ClCompile>
@@ -273,9 +282,6 @@
     <ClCompile Include="datacore\NamedIdEntity.cpp">
       <Filter>Source Files\Datacore</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\NormalScaningWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\MultibranchWidgets\ParentDocumentWidget.cpp">
       <Filter>Source Files\MultibranchWidgets</Filter>
     </ClCompile>
@@ -312,8 +318,38 @@
     <ClCompile Include="widgets\Branches\SenderNode.cpp">
       <Filter>Source Files\Branches</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\PrintingScaningWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
+    <ClCompile Include="widgets\ControlsMiniwidgets\DateTimeControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ControlsMiniwidgets\BarcodeControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ControlsMiniwidgets\LabelControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ControlsMiniwidgets\StringControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\ScaningRelated\ControlListWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\ScaningRelated</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\ScaningRelated\MulticontrolScaningWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\ScaningRelated</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\ScaningRelated\PrintingScaningWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\ScaningRelated</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\ScaningRelated\NormalScaningWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\ScaningRelated</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\ScaningRelated\ObservedScaningWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\Observers\ListPickObserver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\Observers\SkippedNode.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -354,10 +390,7 @@
       <Filter>Header Files\ElementWidgets</Filter>
     </QtMoc>
     <QtMoc Include="widgets\ControlsMiniwidgets\ControlTranslator.h">
-      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\MultibranchWidgets\ControlListWidget.h">
-      <Filter>Header Files\MultibranchWidgets</Filter>
+      <Filter>Header Files\ControlsWidgets</Filter>
     </QtMoc>
     <QtMoc Include="ScaningCore\BarcodeObserver.h">
       <Filter>Header Files\ScaningRelated</Filter>
@@ -375,7 +408,7 @@
       <Filter>Header Files\BranchingTools</Filter>
     </QtMoc>
     <QtMoc Include="widgets\ControlsMiniwidgets\abs_control.h">
-      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
+      <Filter>Header Files\ControlsWidgets</Filter>
     </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\BarcodeFilterSelectionSubbranch.h">
       <Filter>Header Files\Branches</Filter>
@@ -383,25 +416,7 @@
     <QtMoc Include="widgets\ModeSelectionBranch\ModeSelectionWidget.h">
       <Filter>Header Files\Branches</Filter>
     </QtMoc>
-    <QtMoc Include="widgets\MultibranchWidgets\DocResultsWidget.h">
-      <Filter>Header Files\MultibranchWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\MultibranchWidgets\FilterSelectWidget.h">
-      <Filter>Header Files\MultibranchWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\MultibranchWidgets\IdDependentSelectWidget.h">
-      <Filter>Header Files\MultibranchWidgets</Filter>
-    </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\InventoryParamsWidget.h">
-      <Filter>Header Files\MultibranchWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\MultibranchWidgets\NormalScaningWidget.h">
-      <Filter>Header Files\MultibranchWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\MultibranchWidgets\PagedSearchWidget.h">
-      <Filter>Header Files\MultibranchWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\MultibranchWidgets\ParentDocumentWidget.h">
       <Filter>Header Files\MultibranchWidgets</Filter>
     </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\PlaceSelectionWidget.h">
@@ -413,13 +428,58 @@
     <QtMoc Include="widgets\parents\AbstractScaningWidget.h">
       <Filter>Header Files\parents</Filter>
     </QtMoc>
-    <QtMoc Include="widgets\MultibranchWidgets\SelectItemFromListWidget.h">
-      <Filter>Header Files\MultibranchWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\MultibranchWidgets\PrintingScaningWidget.h">
-      <Filter>Header Files\MultibranchWidgets</Filter>
-    </QtMoc>
     <QtMoc Include="widgets\BranchingTools\StaticBranch.h">
+      <Filter>Header Files\BranchingTools</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ControlsMiniwidgets\DateTimeControl.h">
+      <Filter>Header Files\ControlsWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ControlsMiniwidgets\LabelControl.h">
+      <Filter>Header Files\ControlsWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ControlsMiniwidgets\BarcodeControl.h">
+      <Filter>Header Files\ControlsWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ControlsMiniwidgets\StringControl.h">
+      <Filter>Header Files\ControlsWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\DocResultsWidget.h">
+      <Filter>Header Files\MultibranchWidgets\Selectors</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\FilterSelectWidget.h">
+      <Filter>Header Files\MultibranchWidgets\Selectors</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\IdDependentSelectWidget.h">
+      <Filter>Header Files\MultibranchWidgets\Selectors</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\PagedSearchWidget.h">
+      <Filter>Header Files\MultibranchWidgets\Selectors</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\SelectItemFromListWidget.h">
+      <Filter>Header Files\MultibranchWidgets\Selectors</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\ParentDocumentWidget.h">
+      <Filter>Header Files\MultibranchWidgets\Selectors</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\ScaningRelated\ControlListWidget.h">
+      <Filter>Header Files\MultibranchWidgets\ScaningRelated</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\ScaningRelated\NormalScaningWidget.h">
+      <Filter>Header Files\MultibranchWidgets\ScaningRelated</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\ScaningRelated\PrintingScaningWidget.h">
+      <Filter>Header Files\MultibranchWidgets\ScaningRelated</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\ScaningRelated\MulticontrolScaningWidget.h">
+      <Filter>Header Files\MultibranchWidgets\ScaningRelated</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\ScaningRelated\ObservedScaningWidget.h">
+      <Filter>Header Files\MultibranchWidgets\ScaningRelated</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\Observers\ListPickObserver.h">
+      <Filter>Header Files\MultibranchWidgets\Observers</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\Observers\SkippedNode.h">
       <Filter>Header Files\BranchingTools</Filter>
     </QtMoc>
   </ItemGroup>
@@ -460,10 +520,10 @@
       <Filter>Header Files\Network\Parsing</Filter>
     </ClInclude>
     <ClInclude Include="widgets\ControlsMiniwidgets\QuantityControl.h">
-      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
+      <Filter>Header Files\ControlsWidgets</Filter>
     </ClInclude>
     <ClInclude Include="widgets\ControlsMiniwidgets\ControlManager.h">
-      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
+      <Filter>Header Files\ControlsWidgets</Filter>
     </ClInclude>
     <ClInclude Include="networking\QueryTemplates.h">
       <Filter>Header Files\Network</Filter>

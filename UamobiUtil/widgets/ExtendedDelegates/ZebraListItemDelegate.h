@@ -10,8 +10,8 @@
 /*
 	This class is realization of simple zebra-like delegate which is coloring odd rows in
 	gray color. Use it as any other delegate.
-	Now this can not be used for non-DataEntityModel because it is expecting height of object 
-	via SizeHint
+	This uses scaling with obtaining height through Qt::SizeHintRole. If no such role, then
+	2*font height is used.
 */
 
 class ZebraItemDelegate : public QItemDelegate

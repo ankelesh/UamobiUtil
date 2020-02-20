@@ -4,18 +4,21 @@
 #include "widgets/MultibranchWidgets/FilterSelectWidget.h"
 #include "widgets/MultibranchWidgets/SelectItemFromListWidget.h"
 #include "widgets/MultibranchWidgets/PlaceSelectionWidget.h"
-#include "widgets/MultibranchWidgets/NormalScaningWidget.h"
+#include "widgets/MultibranchWidgets/ScaningRelated/NormalScaningWidget.h"
 #include "widgets/MultibranchWidgets/ParentDocumentWidget.h"
 #include "widgets/MultibranchWidgets/ReceiptParametersWidget.h"
 #include "widgets/MultibranchWidgets/IdDependentSelectWidget.h"
 #include "widgets/MultibranchWidgets/DocResultsWidget.h"
 #include "widgets/MultibranchWidgets/InventoryParamsWidget.h"
-#include "widgets/MultibranchWidgets/PrintingScaningWidget.h"
+#include "widgets/MultibranchWidgets/ScaningRelated/PrintingScaningWidget.h"
+#include "widgets/MultibranchWidgets/ScaningRelated/MulticontrolScaningWidget.h"
+#include "widgets/MultibranchWidgets/ScaningRelated/ObservedScaningWidget.h"
+#include "widgets/MultibranchWidgets/Observers/ListPickObserver.h"
 #include "AdjustableBranch.h"
 #include "StaticBranch.h"
 #include "widgets/Branches/SwitchSubbranch.h"
 #include "widgets/Branches/SenderNode.h"
-
+#include "widgets/MultibranchWidgets/Observers/SkippedNode.h"
 
 AbsBranch* BranchFactory::createNWBranch(QString description, QWidget* parent, independent_nodes::nodelist branchType)
 {
@@ -70,7 +73,10 @@ namespace BranchNodeFactory {
 			element = new InventoryParamsWidget(parent);
 			break;
 		case NormalScaning:
-			element = new NormalScaningWidget(parent);
+			element = new NormalScaningWidget(parent,
+				((e->count() > 0) ? createNode(e->first(), Q_NULLPTR) : Q_NULLPTR),
+				((e->count() > 1) ? createNode(e->at(1), Q_NULLPTR) : Q_NULLPTR)
+				);
 			break;
 		case PagedSearch:
 			element = new PagedSearchWidget(
@@ -100,7 +106,7 @@ namespace BranchNodeFactory {
 			);
 			break;
 		case independent_nodes::Subbranch:
-			element = BranchFactory::createAdjustableBranchAsNode(e, parent);
+			element = new AdjustableBranch(e, parent);
 			break;
 		case PrintingScaning:
 			element = new PrintingScaningWidget(parent, 
@@ -115,6 +121,29 @@ namespace BranchNodeFactory {
 		case StaticSubbranch:
 			element = new StaticBranch(e, parent);
 			break;
+		case MulticontrolScaning:
+			element = new MulticontrolScaningWidget(parent,
+				((e->count() > 0) ? createNode(e->first(), Q_NULLPTR) : Q_NULLPTR),
+				((e->count() > 1) ? createNode(e->at(1), Q_NULLPTR) : Q_NULLPTR)
+			);
+			break;
+		case ObservedScaning:
+			element = new ObservedScaningWidget(
+				parent,
+				((e->count() > 0) ? createNode(e->first(), Q_NULLPTR) : Q_NULLPTR),
+				((e->count() > 1) ? createNode(e->at(1), Q_NULLPTR) : Q_NULLPTR),
+				((e->count() > 2) ? createNode(e->at(2), Q_NULLPTR) : Q_NULLPTR)
+			);
+			break;
+		case ListPickObs:
+			element = new ListPickObserver(
+				((e->entity.isNull()) ? RecEntity(new BarcodeEntity()) : e->entity),
+				parent
+			);
+			break;
+		case SkipNode:
+			return new SkippedNode(parent);
+		case DefaultNode:
 		default:
 			return Q_NULLPTR;
 		}

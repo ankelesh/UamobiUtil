@@ -15,6 +15,7 @@ namespace independent_nodes
 		ReceiptParameters,
 		NormalScaning,
 		PrintingScaning,
+		MulticontrolScaning,
 		IdDependentSelect,
 		SelectItemFromList,
 		PlaceSelect,
@@ -24,7 +25,11 @@ namespace independent_nodes
 		Subbranch,
 		StaticSubbranch,
 		Switch,
-		Sender
+		Sender,
+		ObservedScaning,
+		ListPickObs,
+		SkipNode,
+		DefaultNode
 	};
 
 	

@@ -253,7 +253,7 @@ void BarcodeFilterSelectionSubbranch::_makeOverloads(const QVector<QueryTemplate
 		((overloads.count() > 2) ? 2 : overloads.count())
 		)
 	{
-	case 1:
+	case 2:
     {
         QStringList t;
         t << "type" << "param" ;
@@ -261,7 +261,7 @@ void BarcodeFilterSelectionSubbranch::_makeOverloads(const QVector<QueryTemplate
             applyBarcodeFilter,t,t
 		);
     }
-	case 0:
+	case 1:
     {
         QStringList t;
         t << "nrdoc";

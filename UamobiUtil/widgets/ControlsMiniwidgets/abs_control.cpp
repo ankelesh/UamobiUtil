@@ -8,7 +8,7 @@
 
 
 
-abs_control::abs_control(QWidget* parent, controlType Type, QString cname)
+abs_control::abs_control(QWidget* parent, InputControlEntity::ControlTypes Type, QString cname)
 	: QObject(parent), type(Type), parent(parent),name(cname), label(makeControlTranslation(cname))
 {
 }
@@ -23,7 +23,7 @@ QWidget* abs_control::myWidget() const
 	return getInnerWidget();
 }
 
-abs_control::controlType abs_control::myType()
+InputControlEntity::ControlTypes abs_control::myType()
 {
 	return type;
 }
@@ -40,6 +40,24 @@ void abs_control::reset()
 
 abs_control::~abs_control()
 {
+}
+
+bool abs_control::canGiveValue() const
+{
+	return valueAvailable();
+}
+
+void abs_control::connectAsNext(abs_control* ctrl)
+{
+	if (ctrl != Q_NULLPTR)
+	{
+#ifdef QT_VERSION5X
+		QObject::connect(ctrl, &abs_control::editingFinished, this, &abs_control::setFocus);
+#else
+		QObject::connect(ctrl, SIGNAL(editingFinished()), this, SLOT(setFocus()));
+#endif
+	}
+
 }
 
 void abs_control::subcontrolEditingFinished()

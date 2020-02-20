@@ -14,7 +14,7 @@ private:
 	QVector<IndependentBranchNode*> createdNodesStack;
 	QVBoxLayout* mainLayout;
 	
-	// creates new node
+	// creates new node if it does not exists in stack
 	void _allocateNode(BranchDescription);
 	// Inherited via AbsBranch
 	virtual void toNext(RecEntity) override;

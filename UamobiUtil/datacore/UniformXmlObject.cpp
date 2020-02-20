@@ -23,6 +23,7 @@ QHash<QString, UniformXmlObject::ThingsIds> _initiateObjectIdHash()
 	t["control"] = UniformXmlObject::Control;
 	t["user"] = UniformXmlObject::User;
 	t["parentdoc"] = UniformXmlObject::LesserDocument;
+	t["barcodes"] = UniformXmlObject::Barcode;
 	return t;
 }
 QHash<QString, UniformXmlObject::ThingsIds> objectIdLinking(_initiateObjectIdHash());

@@ -107,3 +107,13 @@ protected:
 
 typedef QSharedPointer<DocTypeEntity> DocType;
 typedef QVector<DocType> DocTypeList;
+
+class BarcodeEntity : public NamedIdEntity
+{
+public:
+	BarcodeEntity(QString code = QString(), QString name = QString());
+protected:
+	// Inherited via NamedIdEntity
+	virtual bool fromUniXml(const UniformXmlObject& o) override;
+	virtual AbsRecEntity* fabricate() const override;
+};

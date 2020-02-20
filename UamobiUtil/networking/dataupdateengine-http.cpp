@@ -16,7 +16,9 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
+#ifndef QStringLiteral
 #define QStringLiteral(A) QString::fromUtf8("" A "", sizeof(A) - 1)
+#endif
 using namespace QueryTemplates;
 
 
@@ -182,7 +184,7 @@ HttpUpdateEngine* HttpUpdateEngine::instanse()
 #ifdef DEBUG
 	if (_instanse == Q_NULLPTR)
 	{
-		QString defaultUrl = "http://92.115.237.226:60080/um/unitest.php";
+		QString defaultUrl = "una.md:3323/um/sammy0520181.php";
 		_instanse = new HttpUpdateEngine(defaultUrl, Q_NULLPTR);
 	}
 #else
@@ -233,5 +235,8 @@ QString makeParamsFromList(QString& paramName, QString& paramVal)
 	return  paramName + "-" + paramVal + "-";
 }
 const QString DATE_ENCODING_FORMAT(
-	"dd.MM.yyyy"
+	QStringLiteral("dd.MM.yyyy")
 );
+const QString DATETIME_ENCODING_FORMAT(
+	QStringLiteral("dd.MM.yyyy_HH:mm")
+	);
