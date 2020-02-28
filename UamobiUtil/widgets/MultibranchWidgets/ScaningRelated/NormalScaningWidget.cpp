@@ -1,13 +1,6 @@
 #include "NormalScaningWidget.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 // Qt 5 only imports
-#ifdef QT_VERSION5X
-#include <QtWidgets/QScroller>
-#else
- // Qt 4 only imports
-#include "legacy/qtCompatibility/scrollgrabber.h"
-#endif
-#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -17,7 +10,12 @@
 void NormalScaningWidget::_handleRecord(RecEntity e)
 {
 	if (e.isNull())
+	{
+#ifdef DEBUG
+		detrace_METHPERROR("_handleRecord", "Null record given");
+#endif
 		return;
+	}
 	if (e->myType() == UniformXmlObject::Order)
 	{
 		setDocument(upcastRecord<OrderEntity>(e));
@@ -36,6 +34,10 @@ NormalScaningWidget::NormalScaningWidget(QWidget* parent, IndependentBranchNode*
 	searchScreen(searchScr),
 	localCache()
 {
+#ifdef DEBUG
+	detrace_DCONSTR("NormalScaning");
+#endif
+
 	if (resultScreen == Q_NULLPTR)
 		resultScreen = new DocResultsWidget(this);
 	else
@@ -53,7 +55,6 @@ NormalScaningWidget::NormalScaningWidget(QWidget* parent, IndependentBranchNode*
 	untouchable = innerWidget;
 	main = this;
 	submitButton->setDisabled(true);
-	QScroller::grabGesture(mainTextView, QScroller::LeftMouseButtonGesture);
 
 #ifdef Q_OS_ANDROID
 	barcodeField->installEventFilter(new filters::LineEditHelper(this));
@@ -64,14 +65,19 @@ NormalScaningWidget::NormalScaningWidget(QWidget* parent, IndependentBranchNode*
 	QObject::connect(searchScreen, &IndependentBranchNode::done, this, &NormalScaningWidget::itemObtained);
 	QObject::connect(resultScreen, &IndependentBranchNode::done, this, &NormalScaningWidget::saveSuccesfull);
 	QObject::connect(BarcodeObs, &BarcodeObserver::barcodeCaught, this, &NormalScaningWidget::barcodeCaught);
+	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &NormalScaningWidget::item_confirmed_response);
+	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &NormalScaningWidget::item_scaned_response);
+	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &NormalScaningWidget::document_confirmed_response);
 #else
 	QObject::connect(resultScreen, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
 	QObject::connect(searchScreen, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
     QObject::connect(searchScreen, SIGNAL(done(RecEntity)), this, SLOT(itemObtained(RecEntity)));
     QObject::connect(resultScreen, SIGNAL(done(RecEntity)), this, SLOT(saveSuccesfull(RecEntity)));
     QObject::connect(BarcodeObs, SIGNAL(barcodeCaught(QString)), this, SLOT(barcodeCaught(QString)));
+	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(item_confirmed_response()));
+	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(item_scaned_response()));
+	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(document_confirmed_response()));
 #endif
-    detrace_METHCALL("BarcodeObs::activate");
 	BarcodeObs->activate();
 }
 
@@ -81,12 +87,8 @@ void NormalScaningWidget::submitPressed()
 	{
 		return;
 	}
-	showProcessingOverlay();
-#ifdef QT_VERSION5X
-	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &NormalScaningWidget::item_confirmed_response);
-#else
-	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(item_confirmed_response()));
-#endif
+    showProcessingOverlay();
+	userInfo->clear();
 	QStringList buffer;
 	buffer << barcodeField->text();
 	buffer << ((first_control.isNull()) ? "" : first_control->getValue());
@@ -94,6 +96,7 @@ void NormalScaningWidget::submitPressed()
 	buffer << "";
 	buffer << "";
 	AppNetwork->execQueryByTemplate(localCache[receiptAddItem], 5, buffer, awaiter);
+    awaiter->deliverResultTo(receiptAddItem);
 	wipe();
 }
 
@@ -101,13 +104,10 @@ void NormalScaningWidget::barcodeConfirmed()
 {
 	if (awaiter->isAwaiting())
 		return;
-	showProcessingOverlay();
-#ifdef QT_VERSION5X
-	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &NormalScaningWidget::item_scaned_response);
-#else
-	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(item_scaned_response()));
-#endif
+    showProcessingOverlay();
+	userInfo->clear();
 	AppNetwork->execQueryByTemplate(localCache[getItemInfo], barcodeField->text(), "", awaiter);
+    awaiter->deliverResultTo(getItemInfo);
 }
 
 void NormalScaningWidget::barcodeCaught(QString bc)
@@ -159,12 +159,16 @@ void NormalScaningWidget::useControls(IControlList & cvals)
 
 void NormalScaningWidget::item_scaned_response()
 {
+    if (!awaiter->deliverHere(getItemInfo))return;
 	ResponseParser  parser(new LinearListWithSublistParser(awaiter->restext, awaiter->errtext));
 	NetRequestResponse<InputControlEntity> response = 
 		RequestParser::parseResponse<InputControlEntity>(parser);
 	if (response.isError || response.additionalObjects.isEmpty())
 	{
 		userInfo->setText(response.errtext);
+#ifdef DEBUG
+		detrace_NRESPERR(response.errtext);
+#endif
 	}
 	else
 	{
@@ -172,19 +176,22 @@ void NormalScaningWidget::item_scaned_response()
 		itemSuppliedValues.clear();
 		itemSuppliedValues = response.additionalObjects.first()->directFieldsAccess();
 	}
-	useControls(response.objects);
-	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
+    useControls(response.objects);
 	hideProcessingOverlay();
 }
 
 void NormalScaningWidget::item_confirmed_response()
 {
+    if (!awaiter->deliverHere(receiptAddItem)) return;
 	ResponseParser  parser(new LinearListWithSublistParser(awaiter->restext, awaiter->errtext));
 	NetRequestResponse<InputControlEntity> response =
 		RequestParser::parseResponse<InputControlEntity>(parser);
 	if (response.isError || response.additionalObjects.isEmpty())
 	{
 		userInfo->setText(response.errtext);
+#ifdef DEBUG
+		detrace_NRESPERR(response.errtext);
+#endif
 	}
 	else
 	{
@@ -192,8 +199,7 @@ void NormalScaningWidget::item_confirmed_response()
 		itemSuppliedValues.clear();
 		itemSuppliedValues = response.additionalObjects.first()->directFieldsAccess();
 	}
-	useControls(response.objects);
-	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
+    useControls(response.objects);
 	hideProcessingOverlay();
 	if (!barcodeField->text().isEmpty())
 	{
@@ -204,12 +210,16 @@ void NormalScaningWidget::item_confirmed_response()
 
 void NormalScaningWidget::document_confirmed_response()
 {
+    if(!awaiter->deliverHere(receiptNewDocument)) return;
 	ResponseParser parser(new LinearListParser(awaiter->restext, awaiter->errtext));
 	NetRequestResponse<FullDocumentEntity> response =
 		RequestParser::parseResponse<FullDocumentEntity>(parser);
 	if (response.isError)
 	{
 		userInfo->setText(response.errtext);
+#ifdef DEBUG
+		detrace_NRESPERR(response.errtext);
+#endif
 	}
 	else
 	{
@@ -223,8 +233,7 @@ void NormalScaningWidget::document_confirmed_response()
 			userInfo->setText(modename + " (" + document->docId + ")\n" + document->supplier);
 			mainTextView->setHtml(document->comment);
 		}
-	}
-	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
+    }
 	hideProcessingOverlay();
 }
 
@@ -324,29 +333,21 @@ void NormalScaningWidget::setDocument(Order o)
 {
 	if (awaiter->isAwaiting())
 		return;
-	showProcessingOverlay();
-#ifdef QT_VERSION5X
-	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &NormalScaningWidget::document_confirmed_response);
-#else
-	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(document_confirmed_response()));
-#endif
+    showProcessingOverlay();
 	AppNetwork->execQueryByTemplate(localCache[receiptNewDocument],
 		QDate::currentDate().toString(DATE_ENCODING_FORMAT), o->code, "", awaiter);
+    awaiter->deliverResultTo(receiptNewDocument);
 }
 
 void NormalScaningWidget::setDocument(FullDocument doc)
 {
 	if (awaiter->isAwaiting())
 		return;
-	showProcessingOverlay();
-#ifdef QT_VERSION5X
-	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &NormalScaningWidget::document_confirmed_response);
-#else
-	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(document_confirmed_response()));
-#endif
+    showProcessingOverlay();
     document = FullDocument(static_cast<FullDocumentEntity*>(doc->clone()));
 	AppNetwork->execQueryByTemplate(localCache[receiptNewDocument],
 		QDate::currentDate().toString(DATE_ENCODING_FORMAT), document->docId, document->comment, awaiter);
+    awaiter->deliverResultTo(receiptNewDocument);
 }
 
 

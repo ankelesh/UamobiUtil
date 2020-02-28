@@ -37,9 +37,6 @@ class UamobiUtil : public QWidget, abstractDynamicNode
 	Q_OBJECT
 private:		
 	ProcessingOverlay* overlay;
-	void gotoReceiptBranch(QHash<QString, QString>, Mode);
-	void gotoInventoryBranch(QHash<QString, QString>, Mode);
-	void gotoPrintingBranch(QHash<QString, QString>, Mode);
 	void resizeEvent(QResizeEvent* rev) override;
 public:
 

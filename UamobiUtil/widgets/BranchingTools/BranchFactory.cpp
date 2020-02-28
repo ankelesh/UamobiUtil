@@ -19,7 +19,9 @@
 #include "widgets/Branches/SwitchSubbranch.h"
 #include "widgets/Branches/SenderNode.h"
 #include "widgets/MultibranchWidgets/Observers/SkippedNode.h"
-
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
 AbsBranch* BranchFactory::createNWBranch(QString description, QWidget* parent, independent_nodes::nodelist branchType)
 {
 	using namespace independent_nodes;
@@ -55,6 +57,7 @@ namespace BranchNodeFactory {
 	IndependentBranchNode* createNode(const BranchDescription e, QWidget* parent)
 	{
 		IndependentBranchNode* element;
+		detrace_NODECREATED(e->type, e->describe());
 		switch (e->type)
 		{
 		case DocResults:

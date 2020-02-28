@@ -17,6 +17,7 @@
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/ElementWidgets/MegaIconButton.h"
 #include "widgets/parents/abstractNodeInterface.h"
+#include "widgets/MultibranchWidgets/ScaningRelated/ControlListWidget.h"
 #include "networking/things.h"
 /*
 	This widget provides realization of list containing all items included in current document.
@@ -57,6 +58,8 @@ protected:
 
 	QueryCache localCache;
 
+	ControlListWidget* attachedControls;
+
 	void _handleRecord(RecEntity) override;
 	// fills indexation label and enables navigation buttons
 	void setIndexation(XmlObjects& settings);
@@ -75,13 +78,22 @@ protected slots:
 	void nextPage();
 	// sends save request
 	void saveDocument();
+
+	void getAttachedControls();
+
 	// receives response and hides overlay. Renundant now.
 	void items_response();			
 	// checks response to be only one character - '_'. If true, done is emitted
 	void save_response();
+
+	void get_attached_response();
+
+	void attachedControlsDone();
+
 	void was_timeout();
 	// sends delete all query
 	void deleteAll();
 	// sends delete by barcode query using current selected item's id
-	void deleteCurrent();
+
+	void hideCurrent();
 };

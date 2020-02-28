@@ -1,9 +1,20 @@
 #include "InventoryParamsWidget.h"
 #include "widgets/utils/ElementsStyles.h"
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
+
+
+
 void InventoryParamsWidget::_handleRecord(RecEntity e)
 {
 	if (e.isNull())
+	{
+#ifdef DEBUG
+		detrace_METHPERROR("_handleRecord", "null item provided");
+#endif
 		return;
+	}
 	if (e->myType() == UniformXmlObject::Document)
 		setDocument(upcastRecord<FullDocumentEntity>(e));
 	if (e->myType() == UniformXmlObject::LesserDocument)
@@ -27,6 +38,9 @@ InventoryParamsWidget::InventoryParamsWidget(QWidget* parent)
 	footerLayout(new QHBoxLayout(this)), backButton(new MegaIconButton(this)),
 	okButton(new MegaIconButton(this))
 {
+#ifdef DEBUG
+	detrace_DCONSTR("InventotyParams");
+#endif
 	this->setLayout(mainLayout);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 	mainLayout->setSpacing(0);
@@ -46,23 +60,22 @@ InventoryParamsWidget::InventoryParamsWidget(QWidget* parent)
 	footerLayout->addWidget(backButton);
 	footerLayout->addWidget(okButton);
 
-	QFont scf = makeFont(0.04);
 	title->setText(tr("inventory_params_title"));
-	title->setFont(scf);
+	title->setFont(GENERAL_FONT);
 
 	dateInfo->setText(tr("inventory_params_date_info"));
-	dateInfo->setFont(scf);
+	dateInfo->setFont(GENERAL_FONT);
 
-	dateField->setFont(scf);
+	dateField->setFont(GENERAL_FONT);
 	selectDocumentButton->setText(tr("inventory_select_doc"));
 	selectDocumentButton->setStyleSheet(NAVIGATE_BUTTONS_STYLESHEET);
 	selectDocumentButton->setIcon(QIcon(":/res/invz.png"));
 
 	commentInfo->setText(tr("inventory_comment_info"));
-	commentInfo->setFont(scf);
-	commentField->setFont(scf);
+	commentInfo->setFont(GENERAL_FONT);
+	commentField->setFont(GENERAL_FONT);
 	statusInfo->setText(tr("inventory_status_info"));
-	statusInfo->setFont(scf);
+	statusInfo->setFont(GENERAL_FONT);
 	backButton->setText(tr("back"));
 	backButton->setIcon(QIcon(":/res/back.png"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);

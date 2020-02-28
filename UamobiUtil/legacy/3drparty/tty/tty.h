@@ -1,14 +1,8 @@
 #ifndef TTY_H
 #define TTY_H
-#ifdef FTR_COM
+
 #include <QString>
 #include <qt_windows.h>
-
-/*
-	This class contains all required to use TTY interfaces for 
-	sending data via comports.
-*/
-
 
 class TTY {
 	HANDLE Handle;
@@ -28,5 +22,4 @@ public:
 	~TTY();
 };
 
-#endif
 #endif

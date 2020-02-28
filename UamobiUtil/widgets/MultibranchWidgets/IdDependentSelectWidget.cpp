@@ -4,7 +4,7 @@
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "networking/Parsers/RequestParser.h"
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
-#define DEBUG
+
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -12,10 +12,13 @@
 void IdDependentSelectWidget::_handleRecord(RecEntity e)
 {
 	if (e.isNull())
+	{
 #ifdef DEBUG
 		detrace_METHPERROR("IdDependentSelectWidget::_handleRecord",
-			"GIVEN WRONG ENTITY: EMPTY POINTER" );
+			"GIVEN WRONG ENTITY: EMPTY POINTER");
 #endif
+		return;
+	}
 	loadData(e);
 }
 
@@ -28,6 +31,9 @@ IdDependentSelectWidget::IdDependentSelectWidget(RecEntity proto, QWidget* paren
 	pickButton(new MegaIconButton(this)), awaiter(new RequestAwaiter(AppSettings->timeoutInt, this)),
 	awaitsConfirmation(), localCache()
 {
+#ifdef DEBUG
+	detrace_DCONSTR("IdDependentSelect");
+#endif
 	this->setLayout(mainLayout);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 	mainLayout->setSpacing(0);
@@ -46,7 +52,7 @@ IdDependentSelectWidget::IdDependentSelectWidget(RecEntity proto, QWidget* paren
 	pickButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
-	this->setFont(makeFont(0.04));
+	this->setFont(GENERAL_FONT);
 	selectionView->setModel(entityModel);
 	selectionView->setItemDelegate(new ZebraItemDelegate(this));
 #ifdef QT_VERSION5X
@@ -68,9 +74,6 @@ bool IdDependentSelectWidget::isExpectingControl(int val)
 {
 	if (awaiter->isAwaiting())
 		return false;
-#ifdef DEBUG
-	//detrace_METHCALL("isExpectingControl(" << val);
-#endif
 	if (val >= -1 && val <= entityModel->rowCount() - 1)
 	{
 		if (val == -1)
@@ -95,9 +98,6 @@ bool IdDependentSelectWidget::isExpectingControl(int val)
 
 void IdDependentSelectWidget::itemSelected(RecEntity item)
 {
-#ifdef DEBUG
-	//detrace_METHCALL("orderSelected(" << Po.text );
-#endif
 	if (awaiter->isAwaiting())
 		return;
 	showProcessingOverlay();
@@ -122,7 +122,10 @@ void IdDependentSelectWidget::parse_get_response()
 	PolyResponse response = RequestParser::parseResponse(parser , prototype);
 	if (response.isError)
 	{
-		userInfo->setText(response.errtext);
+		userInfo->setText(response.errtext); 
+#ifdef DEBUG
+			detrace_NRESPERR(response.errtext);
+#endif
 	}
 	else if (response.objects.isEmpty())
 	{
@@ -149,6 +152,9 @@ void IdDependentSelectWidget::parse_select_response()
 	else
 	{
 		userInfo->setText(parser.getErrors());
+#ifdef DEBUG
+		detrace_NRESPERR(parser.getErrors());
+#endif
 	}
 	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();

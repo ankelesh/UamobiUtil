@@ -4,24 +4,29 @@
 #include <QtNetwork/QNetworkReply>
 #include "QueryTemplates.h"
 /*
-	This file contains Awaiter class - a simple solution to await request. It has dataupdateengine-compatible interface and
-	can wait until response will arrive - or timeout happens. method isAwaiting provides simple interface - when it returns
-	true, you must wait. Then you can check timeout flag to determine if it was succesfull. Also, this class
-	has normal signal-slot interface to work like standard Qt object
-
-	Update: new signal added - is emitted when request is received, but without arguments
-
+	This file contains Awaiter class - wrapper for network replies, which guaranties sequenced 
+	requests to be synchronized. Also it tracks timeouts, parses response and can deliver results via 
+	flag defining which method sent request. Use it as second wrapper in chain 
+	DataEngine -> awaiter -> handler. Generally it is better to use qt interfaces without wrappers,
+	but this object is uniting all actions required in one class. Possible replacements:
+	connect directly your handler method to network reply, upcast it via sender(), then use common
+	function for determining if it was timeout and to extract data strings. 
 */
 
-extern const char* RECEIVER_SLOT_NAME; // char string used in dataupdeng to call slot using Qmetacall
+
 class RequestAwaiter : public QObject	//	This class is awaiting sent request
 {
 	Q_OBJECT
 private:
+	//	tracks timeouts
 	QTimer* timer;
+	// determines if awaiter is busy.
 	bool awaiting;
+	// true when timeout happened
 	bool wastimeout;
+	// interval for timer
 	int timeoutinterval;
+	// pointer to awaited reply, used for correct deleting
 	QNetworkReply* awaitedReply;
 	long long int deliverTo;
 public:
@@ -35,11 +40,11 @@ public:
 	bool isAwaiting();		//	true if there was no timeout and no response
 	bool wasTimeout();		//	true if there was timeout
 	int getInterval();		//	returns interval
-	void setReplyToAwait(QNetworkReply* toAwait);
+	void setReplyToAwait(QNetworkReply* toAwait); 
 	void stopAwaiting();
 public slots:
 	void timeout();			//	sets wastimeout flag, stops awaiting
-	void requestIncoming();	//	receives data strings
+	void requestIncoming();	//	receives data strings, parses them and fills restext and errtext
 	void replyError(QNetworkReply::NetworkError);
 signals:
 	void requestSuccess(QString, QString);	//	emitted when response arrived with results

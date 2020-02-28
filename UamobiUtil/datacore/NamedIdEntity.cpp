@@ -103,7 +103,7 @@ bool GroupEntity::useAssociatedNetworkGetMethod(QStringList& arguments, RequestA
 {
 	if (arguments.count() < 2) return false;
 	AppNetwork->execQueryByTemplate(QueryTemplates::recListTemplated, "groups", 
-		arguments.first(), arguments.at(1), awaiter);
+		arguments.first(), awaiter);
 	return true;
 }
 AbsRecEntity* GroupEntity::fabricate() const
@@ -137,7 +137,7 @@ bool StillageEntity::useAssociatedNetworkGetMethod(QStringList& arguments, Reque
 {
 	if (arguments.count() < 2) return false;
 	AppNetwork->execQueryByTemplate(QueryTemplates::recListTemplated, "stillages",
-		arguments.first(), arguments.at(1), awaiter);
+		arguments.first(), awaiter);
 	return true;
 }
 
@@ -298,4 +298,29 @@ bool BarcodeEntity::fromUniXml(const UniformXmlObject& o)
 AbsRecEntity* BarcodeEntity::fabricate() const
 {
 	return new BarcodeEntity(*this);
+}
+
+InvoiceEntity::InvoiceEntity(QString code, QString name)
+	: NamedIdEntity(UniformXmlObject::Invoice, code, name)
+{
+}
+
+bool InvoiceEntity::fromUniXml(const UniformXmlObject& o)
+{
+	if (o.myOID() == UniformXmlObject::Invoice)
+	{
+		id = o.value("code");
+		name = o.value("title");
+		if (id.isEmpty())
+			throw InitializationError("id", " empty ");
+		if (name.isEmpty())
+			name = id;
+		return true;
+	}
+	return false;
+}
+
+AbsRecEntity* InvoiceEntity::fabricate() const
+{
+	return new InvoiceEntity(*this);
 }

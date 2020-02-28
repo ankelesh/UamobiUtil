@@ -4,14 +4,19 @@
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "widgets/MultibranchWidgets/DocResultsWidget.h"
 #include "widgets/MultibranchWidgets/PagedSearchWidget.h"
-#ifdef QT_VERSION5X
-#include <QScroller>
-#else
+#ifdef DEBUG
+#include "debugtrace.h"
 #endif
+
 void MulticontrolScaningWidget::_handleRecord(RecEntity e)
 {
 	if (e.isNull())
+	{
+#ifdef DEBUG
+		detrace_METHPERROR("_handleRecord", "No entity provided");
+#endif
 		return;
+	}
 	if (e->myType() == UniformXmlObject::Order)
 	{
 		setDocument(upcastRecord<OrderEntity>(e));
@@ -19,6 +24,11 @@ void MulticontrolScaningWidget::_handleRecord(RecEntity e)
 	else if (e->myType() == UniformXmlObject::Document)
 	{
 		setDocument(upcastRecord<FullDocumentEntity>(e));
+	}
+	else if (e->myType() == UniformXmlObject::LesserDocument)
+	{
+		setDocument(FullDocument(new FullDocumentEntity(e->getId(), 
+			QString(), QDate::currentDate().toString(DATE_ENCODING_FORMAT))));
 	}
 }
 
@@ -121,7 +131,6 @@ MulticontrolScaningWidget::MulticontrolScaningWidget(QWidget* parent,
 	untouchable = innerWidget;
 	main = this;
 	submitButton->setDisabled(true);
-	QScroller::grabGesture(mainTextView, QScroller::LeftMouseButtonGesture);
 	innerLayout->insertWidget(innerLayout->count() - 1, toControls);
 	toControls->setStyleSheet(CHANGE_BUTTONS_STYLESHEET);
 	toControls->setText(tr("Enter data"));
@@ -206,6 +215,7 @@ void MulticontrolScaningWidget::submitPressed()
 		return;
 	}
 	showProcessingOverlay();
+	userInfo->clear();
 	QStringList buffer;
 	buffer << barcodeField->text();
 	buffer << ((first_control.isNull()) ? "" : first_control->getValue());
@@ -234,6 +244,7 @@ void MulticontrolScaningWidget::barcodeConfirmed()
 {
 	if (awaiter->isAwaiting())
 		return;
+	userInfo->clear();
 	showProcessingOverlay();
 	AppNetwork->execQueryByTemplate(localCache[getItemInfo], barcodeField->text(), "", awaiter);
 	awaiter->deliverResultTo(getItemInfo);
@@ -249,6 +260,9 @@ void MulticontrolScaningWidget::item_scaned_response()
 	if (response.isError || response.additionalObjects.isEmpty())
 	{
 		userInfo->setText(response.errtext);
+#ifdef DEBUG
+		detrace_NRESPERR(response.errtext);
+#endif
 	}
 	else
 	{
@@ -270,6 +284,9 @@ void MulticontrolScaningWidget::item_confirmed_response()
 	if (response.isError || response.additionalObjects.isEmpty())
 	{
 		userInfo->setText(response.errtext);
+#ifdef DEBUG
+		detrace_NRESPERR(response.errtext);
+#endif
 	}
 	else
 	{
@@ -302,6 +319,9 @@ void MulticontrolScaningWidget::document_confirmed_response()
 		if (response.isEmpty())
 		{
 			userInfo->setText(tr("document creation error"));
+#ifdef DEBUG
+			detrace_NRESPERR("document creation error");
+#endif
 		}
 		else
 		{

@@ -78,6 +78,12 @@ const BranchDescription& BranchElementDescription::at(int index) const
 	return subElements.at(index);
 }
 
+QString BranchElementDescription::describe()
+{
+	return " children: " + QString::number(subElements.count()) + " oqs: " + 
+		QString::number(oqs.count());
+}
+
 BranchDescription BranchElementDescription::clone() const
 {
 	BranchDescription desc(

@@ -35,6 +35,9 @@ void LoginWidget::checkResponse()
 	else
 	{
 		info->setText(result);
+#ifdef DEBUG
+		detrace_NRESPERR(result);
+#endif
 	}
 	hideProcessingOverlay();
 }
@@ -52,6 +55,11 @@ LoginWidget::LoginWidget( QWidget* parent)
 	passwordField(new QLineEdit(this)), buttonPanel(new QHBoxLayout(this)), backButton(new MegaIconButton(this)),
 	okButton(new MegaIconButton(this)), awaiter(AppSettings->timeoutInt, this), userToSend(new UserEntity())
 {
+
+#ifdef DEBUG
+	detrace_DCONSTR("LoginWidget");
+#endif
+
 	this->setLayout(mainLayout);
 	mainLayout->setSpacing(0);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -67,16 +75,12 @@ LoginWidget::LoginWidget( QWidget* parent)
 	buttonPanel->addWidget(okButton);
 	buttonPanel->addWidget(backButton);
 
-#ifdef DEBUG
-	detrace_DCONSTR("LoginWidget");
-	detrace_METHEXPL("size: " << this->size().height());
-#endif
+
 	this->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding));
 	loginInfo->setText(tr("login_widget_login_tip"));
 
-	QFont scf = makeFont(0.04);
-	loginInfo->setFont(scf);
-	passwordInfo->setFont(scf);
+	loginInfo->setFont(GENERAL_FONT);
+	passwordInfo->setFont(GENERAL_FONT);
 	passwordInfo->setText(tr("login_widget_password_tip"));
 	okButton->setText(tr("login_widget_ok_button"));
 	backButton->setText(tr("login_widget_back_button"));
@@ -84,8 +88,8 @@ LoginWidget::LoginWidget( QWidget* parent)
 	info->setAlignment(Qt::AlignCenter);
 	info->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum));
 	passwordField->setEchoMode(QLineEdit::Password);
-	loginField->setFont(scf);
-	passwordField->setFont(scf);
+	loginField->setFont(GENERAL_FONT);
+	passwordField->setFont(GENERAL_FONT);
 	okButton->setIcon(QIcon(":/res/submit.png"));
 	backButton->setIcon(QIcon(":/res/back.png"));
 	okButton->setStyleSheet(OK_BUTTONS_STYLESHEET);

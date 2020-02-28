@@ -7,12 +7,12 @@ int AbsRecEntity::extractEnumerable() const
 
 bool AbsRecEntity::useAssociatedNetworkSendMethod(QStringList& arguments, RequestAwaiter* awaiter) const
 {
-	return useAssociatedNetworkSendMethod(arguments, awaiter);
+	return false;
 }
 
 bool AbsRecEntity::useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const
 {
-	return useAssociatedNetworkGetMethod(arguments, awaiter);
+	return false;
 }
 
 AbsRecEntity::AbsRecEntity(const int cl_id)

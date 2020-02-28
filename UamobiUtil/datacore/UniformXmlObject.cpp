@@ -23,7 +23,8 @@ QHash<QString, UniformXmlObject::ThingsIds> _initiateObjectIdHash()
 	t["control"] = UniformXmlObject::Control;
 	t["user"] = UniformXmlObject::User;
 	t["parentdoc"] = UniformXmlObject::LesserDocument;
-	t["barcodes"] = UniformXmlObject::Barcode;
+	t["barcode"] = UniformXmlObject::Barcode;
+	t["invoice"] = UniformXmlObject::Invoice;
 	return t;
 }
 QHash<QString, UniformXmlObject::ThingsIds> objectIdLinking(_initiateObjectIdHash());
@@ -157,6 +158,15 @@ bool UniformXmlObject::hasField(const QString field)
 bool UniformXmlObject::hasField(const char* field)
 {
 	return values.contains(QLatin1String(field));
+}
+
+void UniformXmlObject::renameField(const QString oldname, const QString newName)
+{
+	if (values.contains(oldname))
+	{
+		values[newName] = values[oldname];
+		values.remove(oldname);
+	}
 }
 
 UniformXmlObject::ThingsIds guessObjectId(QString& oname, int fcount, UniformXmlObject::ThingsIds desired)

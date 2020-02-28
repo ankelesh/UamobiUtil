@@ -31,8 +31,6 @@ namespace independent_nodes
 		SkipNode,
 		DefaultNode
 	};
-
-	
 }
 
 

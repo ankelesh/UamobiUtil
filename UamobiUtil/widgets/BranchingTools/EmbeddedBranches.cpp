@@ -26,7 +26,7 @@ namespace embeddedBranches
 		"[IdDependentSelect]\n"
 		"%Order%\n"
 		"[ReceiptParameters]\n"
-		"[MulticontrolScaning]\n"
+        "[NormalScaning]\n"
 		"<>\n"
 		"*-6*\n"
 	);
@@ -36,10 +36,15 @@ namespace embeddedBranches
 			"[ParentDocument]\n"
 			"[InventoryParameters]\n"
 			"[BarcodeFilterSelect]\n"
+            "{\n"
+            "[SelectItemFromList]\n"
+            "%Supplier%\n"
+            "<rec_list_suppliers&session=%1&text=%2&hasorders=false : text>\n"
+            "}\n"
 			"[NormalScaning]\n"
 			"<>\n"
 			"<inv_add_item&session=%1&code=%2&qty=%3&show_code=%4 : barcode , control1 , show_code>\n"
-			"*-5*"
+            "*-5*\n"
 		);
 	const QString warehouseReceiptDesc
 	(

@@ -15,6 +15,9 @@ TTY::~TTY() {
 
 void TTY::connect(const QString &port, int baudrate)
 {
+#ifdef DEBUG
+	detrace_METHCALL("connect");
+#endif
 	disconnect();
 
 	wchar_t *buff = new wchar_t[port.length()+1];

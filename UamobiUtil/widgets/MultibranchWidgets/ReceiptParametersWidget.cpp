@@ -1,17 +1,19 @@
 #include "ReceiptParametersWidget.h"
 #include "widgets/utils/ElementsStyles.h"
-#ifdef QT_VERSION5X
-#include <QtWidgets/qscroller.h>
-#else
-#include "legacy/qtCompatibility/scrollgrabber.h"
+#ifdef DEBUG
+#include "debugtrace.h"
 #endif
+
 void ReceiptParametersWidget::_handleRecord(RecEntity e)
 {
-	dependency = RecEntity(e->clone());
 	if (e.isNull())
 	{
+#ifdef DEBUG
+		detrace_METHPERROR("_handleRecord", "null entity provided");
+#endif
 		return;
 	}
+	dependency = RecEntity(e->clone());
 	if (e->myType() == UniformXmlObject::Order)
 	{
 		setMainView(upcastRecord<OrderEntity>(e)->text);
@@ -37,6 +39,9 @@ ReceiptParametersWidget::ReceiptParametersWidget(QWidget* parent)
 	inspectButton(new MegaIconButton(innerFrame)), continueLayout(new QHBoxLayout(innerFrame)),
 	continueButton(new MegaIconButton(innerFrame)), backButton(new MegaIconButton(innerFrame))
 {
+#ifdef DEBUG
+	detrace_DCONSTR("ReceiptParametersWidget");
+#endif
 	this->setLayout(new QVBoxLayout(this));
 	mainLayout->addWidget(innerWidget);
 	innerWidget->setLayout(innerLayout);
@@ -76,11 +81,10 @@ ReceiptParametersWidget::ReceiptParametersWidget(QWidget* parent)
 	backButton->setText(tr("receipt_parameters_back"));
 
 	userInfo->setAlignment(Qt::AlignCenter);
-	userInfo->setFont(makeFont(0.04));
-	stateInfo->setFont(makeFont(0.04));
-	mainTextView->setFont(makeFont(0.04));
+	userInfo->setFont(GENERAL_FONT);
+	stateInfo->setFont(GENERAL_FONT);
+	mainTextView->setFont(GENERAL_FONT);
 	mainTextView->setReadOnly(true);
-	QScroller::grabGesture(mainTextView, QScroller::LeftMouseButtonGesture);
 
 	continueButton->setIcon(QIcon(":/res/forward.png"));
 	backButton->setIcon(QIcon(":/res/back.png"));

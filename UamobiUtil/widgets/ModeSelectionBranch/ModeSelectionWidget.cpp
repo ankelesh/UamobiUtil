@@ -4,12 +4,6 @@
 #endif
 #include "legacy/legacy.h"
 // Qt 5 only imports
-#ifdef QT_VERSION5X
-#include <QtWidgets/QScroller>
-#else
- // Qt 4 only imports
-#include "legacy/qtCompatibility/scrollgrabber.h"
-#endif
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
@@ -33,13 +27,12 @@ ModeSelectionWidget::ModeSelectionWidget( QWidget* parent)
 	buttonLayout->addWidget(logoutButton);
 	//buttonLayout->addStretch();
 
-	QFont scf = makeFont(0.04);
 	userTip->setText(tr("mode_selection_user_tip!"));
 	userTip->setAlignment(Qt::AlignCenter);
-	userTip->setFont(scf);
+	userTip->setFont(GENERAL_FONT);
 	modesTip->setText(tr("mode_selection_modes_tip:"));
 	modesTip->setAlignment(Qt::AlignCenter);
-	modesTip->setFont(scf);
+	modesTip->setFont(GENERAL_FONT);
 
 	logoutButton->setIcon(QIcon(":/res/back.png"));
 	logoutButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
@@ -135,6 +128,9 @@ void ModeSelectionWidget::parse_modes()
 	if (result.isError)
 	{
 		userTip->setText(result.errtext);
+#ifdef DEBUG
+		detrace_NRESPERR(result.errtext);
+#endif
 	}
 	else
 	{
@@ -146,11 +142,18 @@ void ModeSelectionWidget::parse_modes()
 
 void ModeSelectionWidget::mode_select_response()
 {
-	SimpliestResponceParser parser(awaiter.restext, awaiter.errtext);
+	RichtextResponseParser parser(awaiter.restext, awaiter.errtext);
 	if (!parser.isSuccessfull())
 	{
 		userTip->setText(parser.getErrors());
 		selected->drop();
+#ifdef DEBUG
+		detrace_NRESPERR(parser.getErrors());
+#endif
+	}
+	else
+	{
+		selected->submode = parser.getRichtext();
 	}
 	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();

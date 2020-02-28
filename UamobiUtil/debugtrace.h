@@ -1,7 +1,4 @@
 #pragma once
-
-#include <iostream>
-#include <sstream>
 #include <QTextStream>
 #include <QFile>
 #include <QString>
@@ -32,84 +29,105 @@
 #define FOUTPATH "/storage/emulated/0/log.txt"
 #endif
 #ifdef Q_OS_WIN32
-#define FOUTPATH "log.txt"
+#define FOUTPATH "UNALogs/log.txt"
+#define ERROPATH "UNALogs/errlog.txt"
+#define NETOPATH "UNALogs/netlog.txt"
 #endif
 #ifdef Q_OS_WINCE
-#define FOUTPATH "log.txt"
+#define FOUTPATH "UNALogs/log.txt"
+#define ERROPATH "UNALogs/errlog.txt"
+#define NETOPATH "UNALogs/netlog.txt"
 #endif
 
   // print message about creating an object within specified method or function
-#define detrace_OCREATED(OBJECT, AROUND) detrace << detr_supply::objectConstruction \
-    << "][Created object " << OBJECT << " around " << AROUND << '\n'
+#define detrace_OCREATED(OBJECT, AROUND) debugtrace::getObject() << detr_supply::objectConstruction \
+    << " ][ Created object " << OBJECT << " around " << AROUND << '\n'
 
   // print message about triggered default constructor
-#define detrace_DCONSTR(OBJECT) detrace << detr_supply::defaultConstructor << \
-    "\n][Created object " << OBJECT << " by his default constructor" << '\n'
+#define detrace_DCONSTR(OBJECT) debugtrace::getObject() << detr_supply::defaultConstructor << \
+    "\n][Created object " << OBJECT << " on address " << ((unsigned long long int)this) <<  '\n'
 
 // pring message about something happening in method
-#define detrace_METHEXPL(HAPPENED) detrace << detr_supply::methodExplanation << HAPPENED << '\n'
+#define detrace_METHEXPL(HAPPENED) debugtrace::getObject() << detr_supply::methodExplanation << HAPPENED << '\n'
 
 // print message about something not important
-#define detrace_SIMPLMSG(MESSAGE) detrace << detr_supply::notImportantMessage << MESSAGE << '\n'
+#define detrace_SIMPLMSG(MESSAGE) debugtrace::getObject() << detr_supply::notImportantMessage << MESSAGE << '\n'
 
 // print message about called method
-#define detrace_METHCALL(_METHOD_) detrace << detr_supply::methodCalled << \
-    "\n\n->Method called: "  << _METHOD_ << '\n'
+#define detrace_METHCALL(_METHOD_) debugtrace::getObject() << detr_supply::methodCalled << \
+    "\n\n->Method called: "  << _METHOD_ << " in object " <<  ((unsigned long long int )this) << '\n'
 
 // print message about slot activation
-#define detrace_SLOTCALL(_SLOT_, OBJECT) detrace << detr_supply::methodCalled << "\n\n-->Slot " \
-    << _SLOT_ << " of object "  << OBJECT << " called" << '\n'
+#define detrace_SLOTCALL(_SLOT_) debugtrace::getObject() << detr_supply::methodCalled << "\n\n-->Slot " \
+    << _SLOT_ << " of object "  << ((unsigned long long int )this) << " called" << '\n'
 
 // print message about invocation of any method by any method of any class
-#define detrace_METHINVOK(INVOCATED_METHOD,INVOCATED_OBJECT,_METHOD_ ,OBJECT) detrace << detr_supply::methodInvocation \
-    << "\n\n-)Method " << INVOCATED_METHOD << " of object " << INVOCATED_OBJECT << \
-	" invocated in method " << _METHOD_ << " of object " << OBJECT << '\n'
+#define detrace_METHINVOK(INVOCATED_METHOD, _METHOD_ ,_OBJECT_PTR_) debugtrace::getObject() << detr_supply::methodInvocation \
+    << "\n\n-)Method " << INVOCATED_METHOD << " of object " << ((unsigned long long int) _OBJECT_PTR_) << \
+	" invocated in method " << _METHOD_ << " of object " << ((unsigned long long int )this) << '\n'
 
 // print message about emitting signal
-#define detrace_SIGNALINV(_SIGNAL_, OBJECT) detrace << detr_supply::signalInvocation\
+#define detrace_SIGNALINV(_SIGNAL_, OBJECT) debugtrace::getObject() << detr_supply::signalInvocation\
     << "\n\n-! Signal " << _SIGNAL_ << " is emitted from " << OBJECT << '\n'
 
 // print message containig snapshot of current data. Variables to dump must be provided using <<
-#define detrace_METHDATAS(_METHOD_, _VARIABLES_, _STATE_) detrace << detr_supply::methodDataSnapshot\
+#define detrace_METHDATAS(_METHOD_, _VARIABLES_, _STATE_) debugtrace::getObject() << detr_supply::methodDataSnapshot\
     << "in method " << _METHOD_ << " state of variables "<< _VARIABLES_  << " was " _STATE_ << '\n'
 
 // print message containing one text variable and its value in separated place
-#define detrace_METHTEXTS(_METHOD_,_VARIABLE_,_TEXT_) detrace << detr_supply::methodDataSnapshot\
+#define detrace_METHTEXTS(_METHOD_,_VARIABLE_,_TEXT_) debugtrace::getObject() << detr_supply::methodDataSnapshot\
     << "in method " << _METHOD_ << " state of text variable " << _VARIABLE_ << " was: " << '\n'\
     << "________________________________________" << '\n' << _TEXT_ << '\n'
 
 // print message about received arguments in method
-#define detrace_METHDRECEIVE(_METHOD_, _ARGUMENTS_ , _VALUES_) detrace << detr_supply::methodDataSnapshot\
+#define detrace_METHDRECEIVE(_METHOD_, _ARGUMENTS_ , _VALUES_) debugtrace::getObject() << detr_supply::methodDataSnapshot\
     << "method " << _METHOD_ << " received data: arguments " << _ARGUMENTS_ << " were filled with values"\
     << '\n' << "|" << _VALUES_ << "|" << '\n'
 
 // print message about sent request
-#define detrace_NETREQSENT(_METHOD_,_REQUEST_, _SUPPLIED_) detrace << detr_supply::netrequestSent << \
-    "method " << _METHOD_ << " sent request " << _REQUEST_ << " supplied with " << _SUPPLIED_ << '\n'
+#define detrace_NETREQSENT(_METHOD_,_REQUEST_, _SUPPLIED_) debugtrace::getObject() << detr_supply::netrequestSent << \
+    " >> " << makeMsgId() << " method " << _METHOD_ << " sent request " << _REQUEST_ << " supplied with " << _SUPPLIED_ << '\n'
+
+#define detrace_NETREQUEST(_URL_) debugtrace::getObject() <<detr_supply::netrequestSent << \
+    " >> " << makeMsgId() << " sent request: " << _URL_ << '\n'
+
+#define detrace_NETRESPARR(_DATA_, _ERR_, _DELIVER_) debugtrace::getObject() << detr_supply::netresponseReceived << \
+	" <<  " << makeMsgId() << " received response going to" << _DELIVER_ << " containing text:|" << '\n' << \
+    _DATA_ << '\n' << "and error text |" << _ERR_ << '\n'
+
+#define detrace_NETERROR(_ERROR_, _INFO_) debugtrace::getObject() << detr_supply::netErrorPossible \
+    << " > ! < " << makeMsgId() << " error making request " <<  _INFO_  << " : " << _ERROR_ << '\n'
+
+#define detrace_NRESPERR(_ERROR_) debugtrace::getObject() << detr_supply::netErrorPossible\
+    << " > ! < " << makeMsgId() << " error receiving response: " << _ERROR_ << '\n'
 
 // prints message using high priority
-#define detrace_MSGIMP(_MESSAGE_) detrace << detr_supply::importantMessage << '\n' <<\
+#define detrace_MSGIMP(_MESSAGE_) debugtrace::getObject() << detr_supply::importantMessage << '\n' <<\
     "!" <<  '\n'<< _MESSAGE_ <<"!" << '\n' << '\n'
 
 // prints low priority message that frequent method was invoked
-#define detrace_METHFRECALL(_METHOD_) detrace << detr_supply::frequentMethodCalled <<\
+#define detrace_METHFRECALL(_METHOD_) debugtrace::getObject() << detr_supply::frequentMethodCalled <<\
     "method " << _METHOD_ << "called" << '\n'
 
 // prints low priority message about cycle
-#define detrace_CYCLEEXPL(_EXPLANATION_) detrace << detr_supply::cycleExplanation << \
+#define detrace_CYCLEEXPL(_EXPLANATION_) debugtrace::getObject() << detr_supply::cycleExplanation << \
     ">>cycling: " << _EXPLANATION_ << '\n'
 
 // prints status of connecting with high priority to avoid disconnection errors
-#define detrace_CONNECTSTAT(_SIGNAL_TO_SLOT_, _STATE_) detrace << detr_supply::errorPossible << \
+#define detrace_CONNECTSTAT(_SIGNAL_TO_SLOT_, _STATE_) debugtrace::getObject() << detr_supply::errorPossible << \
 	"after connecting " << _SIGNAL_TO_SLOT_ << " state was " << _STATE_ << '\n'
 
 //print message about possible error during flow of method X
-#define detrace_METHPERROR(_METHOD_, _CONTEXT_) detrace << detr_supply::errorPossible << \
-	"Error possible in method " << _METHOD_ << "with context: " << _CONTEXT_ << '\n'
+#define detrace_METHPERROR(_METHOD_, _CONTEXT_) debugtrace::getObject() << detr_supply::errorPossible << \
+	"Error possible in object " << ((unsigned long long int ) this ) << \
+	" in method " << _METHOD_ << "with context: " << _CONTEXT_ << '\n'
 
-#define detrace_SUCCESS detrace << detr_supply::methodDataSnapshot << "Operation success!" << '\n'
+#define detrace_SUCCESS debugtrace::getObject() << detr_supply::methodDataSnapshot << "Operation success!" << '\n'
 
-#define detrace_FAIL detrace << detr_supply::methodDataSnapshot << "Operation failed!" << '\n'
+#define detrace_FAIL debugtrace::getObject() << detr_supply::methodDataSnapshot << "Operation failed!" << '\n'
+
+#define detrace_NODECREATED(_TYPE_, _DESCRIPTION_) debugtrace::getObject() << detr_supply::objectConstruction \
+    << "Node of type " << _TYPE_ << " fabricated using description: " << _DESCRIPTION_ << '\n'
 
 
 namespace detr_supply { // Holds enums for defining output method and priorities
@@ -117,11 +135,11 @@ namespace detr_supply { // Holds enums for defining output method and priorities
 	// Defines output mode: file-> prints to log.txt, qDeb-> prints to console,
 	// qStr-> prints to inner string, Cons -> prints to std::cout
 	enum DebugPriority {
-		all, errorPossible, importantMessage,
+		all, errorPossible, netErrorPossible, importantMessage,
 		objectConstruction, methodInvocation,
 		signalInvocation,
 		methodCalled, methodDataSnapshot, methodExplanation,
-		netrequestSent, defaultConstructor, frequentMethodCalled,
+		netrequestSent, netresponseReceived, defaultConstructor, frequentMethodCalled,
 		cycleExplanation, notImportantMessage
 	};
 	// Defines priority level: everything that is lower than detrace starting priority
@@ -142,22 +160,10 @@ class debugtrace
 	// output
 {
 private:
-	QFile outfile; // log.txt
-	QTextStream fout; // stream for file output
-	DebugPriority priorityLvl; // main priority
-	DebugPriority msgPriorityLvl; // priority of incoming message
-	OutputMode omode; // mode of output, check enum
-	QString outstring; // string holding output
-	std::ostringstream buffer;
-	QTextStream sout;  // stream for string output
-	QString qDebugFullMessageHolder; // string to avoid new lines in qDebug()
-	void (debugtrace::* outmethod)(const QString& str); // pointer to current
-	DebugPriority* blacklist;           // blacklist of messages by priority
-	int bllen;
-	bool blackaswhite;
-	bool nospaces;
+	struct impl* pimpl;
 
-	QVector<void(debugtrace::*)(const QString & str)> omode_united;           //  holds modes for printToSome
+	static debugtrace* _instanse;
+	         //  holds modes for printToSome
 	// output method
 	void printToFile(const QString& str); // Output methods
 	void printToQDebug(const QString& str);
@@ -172,8 +178,7 @@ private:
 
 public:
 	debugtrace(DebugPriority priority, OutputMode mode,
-		OutputMode  onlyOutputTo[], int oolen,
-		DebugPriority  Blacklist[], int bllen, bool blackAsWhite, bool nospaces); // no default values
+		QVector<OutputMode> OutputTo = QVector<OutputMode>(), bool notMixing = true); // no default values
 	debugtrace& operator<<(const DebugPriority); // sets priority for all next
 	// messages
 	debugtrace& operator<<(const int); // wrappers for normalizing the message
@@ -184,21 +189,26 @@ public:
 	debugtrace& operator<<(const double);
 	debugtrace& operator<<(const std::exception&);
 	debugtrace& operator<<(const char);
-	void changeOutputMode(const OutputMode, OutputMode[], int); // changes outmethod to corresponding
+	debugtrace& operator<<(quint64);
+	void changeOutputMode(const OutputMode, QVector<OutputMode>); // changes outmethod to corresponding
 	QString getCurrentString(); // returns outstring
-	~debugtrace() { fout.flush(); }
+
+	static debugtrace* instanse();
+	static debugtrace& getObject();
+	static void init(DebugPriority priority, OutputMode mode,
+		QVector<OutputMode> OutputTo = QVector<OutputMode>(), bool notMixing = true);
 };
 // This is main static object of this module. You should not create more
 // instances of it, instead use macroses.
 
 // this whitelist defines which streams to use
-extern debugtrace detrace;//(all,file,  onlyOutputTo, ootolen,blacklist, blackllen);
 
 static bool debugtraceTestModule() // unit test
 {
 	detrace_SIMPLMSG("Test started");
 	detrace_OCREATED("detrace", "detraceTest");
 	detrace_METHEXPL("inmethdescr");
-	detrace_DCONSTR("detrace");
 	return true;
 }
+
+unsigned long long int makeMsgId();

@@ -312,24 +312,6 @@
     <ClCompile Include="widgets\BranchingTools\StaticBranch.cpp">
       <Filter>Source Files\BranchingTools</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\Branches\SwitchSubbranch.cpp">
-      <Filter>Source Files\Branches</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\Branches\SenderNode.cpp">
-      <Filter>Source Files\Branches</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ControlsMiniwidgets\DateTimeControl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ControlsMiniwidgets\BarcodeControl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ControlsMiniwidgets\LabelControl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ControlsMiniwidgets\StringControl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\MultibranchWidgets\ScaningRelated\ControlListWidget.cpp">
       <Filter>Source Files\MultibranchWidgets\ScaningRelated</Filter>
     </ClCompile>
@@ -343,12 +325,33 @@
       <Filter>Source Files\MultibranchWidgets\ScaningRelated</Filter>
     </ClCompile>
     <ClCompile Include="widgets\MultibranchWidgets\ScaningRelated\ObservedScaningWidget.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\MultibranchWidgets\ScaningRelated</Filter>
     </ClCompile>
     <ClCompile Include="widgets\MultibranchWidgets\Observers\ListPickObserver.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\MultibranchWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ControlsMiniwidgets\LabelControl.cpp">
+      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ControlsMiniwidgets\BarcodeControl.cpp">
+      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ControlsMiniwidgets\DateTimeControl.cpp">
+      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
     </ClCompile>
     <ClCompile Include="widgets\MultibranchWidgets\Observers\SkippedNode.cpp">
+      <Filter>Source Files\MultibranchWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ControlsMiniwidgets\StringControl.cpp">
+      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\Branches\SenderNode.cpp">
+      <Filter>Source Files\MultibranchWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\Branches\SwitchSubbranch.cpp">
+      <Filter>Source Files\MultibranchWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\Selectors\EditableDocResultsWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -481,6 +484,9 @@
     </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\Observers\SkippedNode.h">
       <Filter>Header Files\BranchingTools</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\Selectors\EditableDocResultsWidget.h">
+      <Filter>Header Files\MultibranchWidgets\Selectors</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

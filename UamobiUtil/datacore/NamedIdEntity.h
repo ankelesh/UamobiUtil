@@ -117,3 +117,16 @@ protected:
 	virtual bool fromUniXml(const UniformXmlObject& o) override;
 	virtual AbsRecEntity* fabricate() const override;
 };
+
+typedef QSharedPointer<BarcodeEntity> Barcode;
+
+class InvoiceEntity : public NamedIdEntity
+{
+public:
+	InvoiceEntity(QString code = QString(), QString name = QString());
+protected:
+	virtual bool fromUniXml(const UniformXmlObject& o) override;
+	virtual AbsRecEntity* fabricate() const override;
+};
+
+typedef QSharedPointer<InvoiceEntity> Invoice;

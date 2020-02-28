@@ -3,7 +3,7 @@
 #include <QtXml/QDomDocument>
 
 /*
-	This class contains parsers, which one_position_entries_quantity is different
+	This class contains parsers, which are holding non homogenic results
 */
 
 

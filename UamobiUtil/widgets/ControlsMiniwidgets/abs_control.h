@@ -10,9 +10,11 @@
 #include <QObject>
 #endif
 #include <QString>
+#include <QTime>
 #include "widgets/ElementWidgets/BigButtonsSpinbox.h"
 #include "qsharedpointer.h"
 #include "datacore/InputControlEntity.h"
+
 /*
 	This file provides interfaces and common features to control widgets. Main idea is to 
 	incapsulate control type behind universal interfaces based on strings.
@@ -28,6 +30,7 @@ protected:
 	InputControlEntity::ControlTypes type;	//	default None
 	QWidget* parent;    // stored like this because inner widgets need QWidget parent, not QObject
 	QString label;      // translated name
+
 
 	virtual QString prepareAndReturnValue() const = 0;	//	inner function, used to return normalized value for using it into web queries
 	virtual bool parseAndSetValue(QString) = 0;			//	uses normalized value to set up control

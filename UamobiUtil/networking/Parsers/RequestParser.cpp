@@ -4,7 +4,6 @@
 #include "networking/Parsers/DynamicLinearParsers.h"
 #include "legacy/legacy.h"
 #include <QtXml/QDomDocument>
-#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -22,5 +21,14 @@ namespace RequestParser
 		}
 		else
 			return NetRequestResponse<AbsRecEntity>(parser->getErrors());
+	}
+	PolyResponse parseResponse(PolyResponse resp, RecEntity prototype)
+	{
+		if (resp.isError)
+			return PolyResponse();
+		XmlObjects objects = resp.takeObjects();
+		PolyResponse finalRes;
+		finalRes.fromHeterogenicXmlObjects(objects, prototype, resp.alternative_result);
+		return finalRes;
 	}
 }

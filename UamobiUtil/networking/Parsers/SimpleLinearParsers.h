@@ -1,7 +1,6 @@
 #pragma once
 #include "abs_parsed_request.h"
 #include <QtXml/QDomDocument>
-#include "debugtrace.h"
 
 /*
 	This file contains all requests that does not have any named components and can be represented as long list of

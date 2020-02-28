@@ -3,13 +3,10 @@
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "networking/Parsers/RequestParser.h"
 // Qt 5 only imports
-#ifdef QT_VERSION5X
-#include <QtWidgets/QScroller>
-#else
- // Qt 4 only imports
-#include "legacy/qtCompatibility/scrollgrabber.h"
-#endif
 #include "widgets/ExtendedDelegates/CheckableDelegate.h"
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
 
 void FilterSelectWidget::_handleRecord(RecEntity)
 {
@@ -27,6 +24,9 @@ FilterSelectWidget::FilterSelectWidget(QWidget* parent)
 	okButton(new MegaIconButton(this)), awaiter(new RequestAwaiter(AppSettings->timeoutInt, this)),
 	localCache()
 {
+#ifdef DEBUG
+	detrace_DCONSTR("FilterSelectWidget");
+#endif
 	this->setLayout(mainLayout);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 	mainLayout->setSpacing(0);
@@ -43,8 +43,7 @@ FilterSelectWidget::FilterSelectWidget(QWidget* parent)
 	footerLayout->setSpacing(0);
 	footerLayout->addWidget(backButton);
 	footerLayout->addWidget(okButton);
-	QFont scf = makeFont(0.04);
-	title->setFont(scf);
+	title->setFont(GENERAL_FONT);
 	title->setAlignment(Qt::AlignCenter);
 	title->setText(tr("filter_widget_title"));
 	allonButton->setText(tr("all_on_button"));
@@ -201,7 +200,10 @@ void FilterSelectWidget::parse_doctype_list_response()
 	PolyResponse response = RequestParser::parseResponse(parser, RecEntity(new DocTypeEntity()));
 	if (response.isError)
 	{
-		title->setText(response.errtext);
+		title->setText(response.errtext); 
+#ifdef DEBUG
+			detrace_NRESPERR(response.errtext);
+#endif
 	}
 	else
 	{
@@ -220,7 +222,10 @@ void FilterSelectWidget::parse_doctype_selection_response()
 	}
 	else
 	{
-		title->setText(parser->getErrors());
+		title->setText(parser->getErrors()); 
+#ifdef DEBUG
+			detrace_NRESPERR(parser->getErrors());
+#endif
 	}
 	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
 	hideProcessingOverlay();

@@ -3,7 +3,6 @@
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "networking/Parsers/RequestParser.h"
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
-//#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -22,6 +21,10 @@ ParentDocumentWidget::ParentDocumentWidget(RecEntity proto, QWidget* parent
 	awaiter( new RequestAwaiter(AppSettings->timeoutInt, this)),
 	loadDocumentQuery(-2, ping)
 {
+
+#ifdef DEBUG
+	detrace_DCONSTR("ParentDocumentWidget");
+#endif
 	if (filterSelect == Q_NULLPTR)
 		filterSelect = new FilterSelectWidget(this);
 	else
@@ -47,9 +50,8 @@ ParentDocumentWidget::ParentDocumentWidget(RecEntity proto, QWidget* parent
 
 	mainLayout->addWidget(filterSelect);
 	filterSelect->hide();
-	QFont scf = makeFont(0.04);
 	userInfo->setText(tr("parent_doc_search_info"));
-	userInfo->setFont(scf);
+	userInfo->setFont(GENERAL_FONT);
 
 	filterButton->setIcon(QIcon(":/res/filter.png"));
 	filterButton->setText(tr("parent_doc_filter"));
@@ -107,6 +109,9 @@ void ParentDocumentWidget::load_documents_response()
 	if (response.isError)
 	{
 		userInfo->setText(response.errtext);
+#ifdef DEBUG
+		detrace_NRESPERR(response.errtext);
+#endif
 	}
 	else
 	{

@@ -83,9 +83,6 @@
         <file>res/viaTcp.png</file>
         <file>res/video.png</file>
         <file>res/wifi.png</file>
-        <file>translations/uamobi_en.qm</file>
-        <file>translations/uamobi_ro.qm</file>
-        <file>translations/uamobi_ru.qm</file>
         <file>res/search.png</file>
         <file>res/with.png</file>
         <file>res/without.png</file>
@@ -98,5 +95,8 @@
         <file>res/uamobiU.ico</file>
         <file>res/uamobiU.png</file>
         <file>res/UamobiUtillowres.ico</file>
+        <file>translations/uamobiutil_en.qm</file>
+        <file>translations/uamobiutil_ro.qm</file>
+        <file>translations/uamobiutil_ru.qm</file>
     </qresource>
 </RCC>

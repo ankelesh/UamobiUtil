@@ -24,6 +24,11 @@ bool RichtextResponseParser::_doParsing()
 	parseResult << XmlObject(new UniformXmlObject(UniformXmlObject::Richtext, listNode));
 	if (!(parseResult.first()->hasField("richdata") || parseResult.first()->hasField("code")))
 	{
+		if (parseResult.first()->hasField("desc"))
+		{
+			parseResult.first()->renameField("desc", "richdata");
+			return true;
+		}
 		errtext += " No richdata field found in main object!";
 		return false;
 	}
@@ -34,4 +39,9 @@ RichtextResponseParser::RichtextResponseParser(QString& res, QString& err)
 	: AbsResponseParser(res,err)
 {
 	success = run();
+}
+
+QString RichtextResponseParser::getRichtext()
+{
+	return parseResult.first()->value("richdata");
 }

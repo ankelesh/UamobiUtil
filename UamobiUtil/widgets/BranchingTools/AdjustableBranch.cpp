@@ -1,6 +1,10 @@
 #include "AdjustableBranch.h"
 #include "BranchFactory.h"
 
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
+
 void AdjustableBranch::toNext(RecEntity given)
 {
 	
@@ -62,6 +66,7 @@ void AdjustableBranch::_emplaceNodeToCurrent(BranchDescription nextNode)
 		return;
 	}
 	_hideAnyWithDelete(node);
+	
 #ifdef QT_VERSION5X
 	QObject::connect(currentlyOpened, &inframedWidget::backRequired, this, &AdjustableBranch::backCalled);
 	QObject::connect(_upCO<IndependentBranchNode>(), &IndependentBranchNode::done, this, &AdjustableBranch::currentNodeDone);
@@ -81,6 +86,9 @@ AdjustableBranch::AdjustableBranch(BranchDescription root, QWidget* parent)
 : AbsBranch(root, parent), 
 abstractDynamicNode(Q_NULLPTR, new QVBoxLayout(this)) 
 {
+#ifdef DEBUG
+	detrace_DCONSTR("Adjustable branch with " << root->count() << " children");
+#endif
 	setLayout(mainLayout);
 };
 

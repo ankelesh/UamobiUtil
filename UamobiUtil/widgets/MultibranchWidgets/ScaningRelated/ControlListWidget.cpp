@@ -1,12 +1,19 @@
 #include "ControlListWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #include <QTextStream>
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
 
 ControlListWidget::ControlListWidget(QWidget* parent)
 	: inframedWidget(parent), mainLayout(new QVBoxLayout(this)),
 	controls(), footerLayout(new QHBoxLayout(this)),
 	okButton(new MegaIconButton(this)), backButton(new MegaIconButton(this))
 {
+#ifdef DEBUG
+	detrace_DCONSTR("ControlListWidget");
+#endif
+
 	this->setLayout(mainLayout);
 	mainLayout->addStretch(1);
 	mainLayout->addLayout(footerLayout);
@@ -14,7 +21,6 @@ ControlListWidget::ControlListWidget(QWidget* parent)
 	footerLayout->addWidget(backButton);
 	footerLayout->addWidget(okButton);
 	
-	QFont scf = makeFont(0.04);
 	okButton->setIcon(QIcon(":/res/submit.png"));
 	okButton->setText(tr("submit"));
 	okButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
@@ -61,7 +67,11 @@ void ControlListWidget::useControls(IControlList& clist)
 	}
 	if (newcontrol != Q_NULLPTR)
 	{
+#ifdef QT_VERSION5X
 		QObject::connect(newcontrol, &abs_control::editingFinished, this, &ControlListWidget::checkAndConfirmControls);
+#else
+        QObject::connect(newcontrol, SIGNAL(editingFinished()), this, SLOT(checkAndConfirmControls()));
+#endif
 	}
 }
 
@@ -93,6 +103,7 @@ void ControlListWidget::emplaceControl(InputControl c)
 	{
 		newcontrol->connectAsNext(controls.last());
 	}
+	newcontrol->setValue(c->defaultValue);
 	controls.push_back(newcontrol);
 	newcontrol->show();
 }

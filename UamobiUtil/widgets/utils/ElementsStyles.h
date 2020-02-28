@@ -11,6 +11,9 @@
 #include <QtGui/QScreen>
 #include <QString>
 
+#define GENERAL_FONT *FontAdapter::general()
+#define AppFonts FontAdapter::instanse()
+
 /*
 	This file contains constants which are defining buttons stylesheets as a C-strings. all
 	new styles must be added ONLY here to allow quick change if necessary.
@@ -105,7 +108,6 @@ public:
 QString& normalizeLine(QString& line);
 QString normalizeLine(const QString line);
 
-extern const QFont& makeFont(double perc);
 
 extern const QString OK_BUTTONS_STYLESHEET;
 // All buttons which are made for confirmation (commit button is separated from simple confirm)

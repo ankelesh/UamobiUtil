@@ -12,12 +12,14 @@ void PrintingScaningWidget::_print(QString text)
 	}
 	if (!printerSocket.isConnected())
 	{
-		userInfo->setText(tr("Connection to printer failed! Check your port settings."));
+        userInfo->setText(tr("Connection to printer failed! Check your port settings.") + printerSocket.getErrors());
+        detrace_METHEXPL("fail: " << printerSocket.getErrors());
 		return;
 	}
 	if (!printerSocket.write(encoder.fromUnicode(text)))
 	{
 		userInfo->setText(tr("printing failed: ") + printerSocket.getErrors());
+        detrace_METHEXPL("fail: " << printerSocket.getErrors());
 	}
 #else
 #ifdef DEBUG
@@ -102,17 +104,14 @@ void PrintingScaningWidget::submitPressed()
 	{
 		return;
 	}
-	showProcessingOverlay();
-#ifdef QT_VERSION5X
-	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &PrintingScaningWidget::item_confirmed_response);
-#else
-	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(item_confirmed_response()));
-#endif
+    showProcessingOverlay();
+	userInfo->clear();
 	QStringList buffer;
 	buffer << barcodeField->text();
 	buffer << ((first_control.isNull()) ? "" : first_control->getValue());
 	buffer << AppSettings->printerType;
 	AppNetwork->execQueryByTemplate(localCache[docGetItemLabel], 3, buffer, awaiter);
+    awaiter->deliverResultTo(docGetItemLabel);
 	wipe();
 }
 
@@ -123,16 +122,20 @@ void PrintingScaningWidget::backNeeded()
 
 void PrintingScaningWidget::item_confirmed_response()
 {
+    if (!awaiter->deliverHere(docGetItemLabel))
+        return;
 	ResponseParser  parser(new RichtextResponseParser(awaiter->restext, awaiter->errtext));
 	if (!parser->isSuccessfull())
 	{
 		userInfo->setText(parser->getErrors());
+#ifdef DEBUG
+		detrace_NRESPERR(parser->getErrors());
+#endif
 	}
 	else
 	{
 		_print(parser->read().first()->value("code"));
-	}
-	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
+    }
     hideProcessingOverlay();
 }
 
@@ -141,12 +144,9 @@ void PrintingScaningWidget::barcodeConfirmed()
     if (awaiter->isAwaiting())
         return;
     showProcessingOverlay();
-#ifdef QT_VERSION5X
-    QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &PrintingScaningWidget::item_scaned_response);
-#else
-    QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(item_scaned_response()));
-#endif
+	userInfo->clear();
     AppNetwork->execQueryByTemplate(localCache[getItemInfo], barcodeField->text(), awaiter);
+    awaiter->deliverResultTo(getItemInfo);
 }
 
 void PrintingScaningWidget::wipe()
@@ -159,6 +159,9 @@ PrintingScaningWidget::PrintingScaningWidget(QWidget* parent, IndependentBranchN
     , printerSocket(), encoder(QTextCodec::codecForName("CP1251"))
 #endif
 {
+#ifdef DEBUG
+	detrace_DCONSTR("PrintingScaning");
+#endif
 #ifdef FTR_COM
 #ifdef DEBUG
 	detrace_METHEXPL("connecting to printer: " << AppSettings->printerPortDesignation << AppSettings->printerPort);
@@ -167,7 +170,7 @@ PrintingScaningWidget::PrintingScaningWidget(QWidget* parent, IndependentBranchN
 #endif
 	quitButton->hide();
 	userInfo->setMaximumHeight(calculateAdaptiveButtonHeight());
-	quitButton->setMaximumHeight(calculateAdaptiveButtonHeight());
+    quitButton->setMaximumHeight(calculateAdaptiveButtonHeight());
 }
 
 PrintingScaningWidget::~PrintingScaningWidget()

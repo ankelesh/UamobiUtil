@@ -1,13 +1,6 @@
 #include "PlaceSelectionWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 // Qt 5 only imports
-#ifdef QT_VERSION5X
-#include <QtWidgets/QScroller>
-
-#else
- // Qt 4 only imports
-#include "legacy/qtCompatibility/scrollgrabber.h"
-#endif
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #ifdef DEBUG
 #include "debugtrace.h"
@@ -21,6 +14,9 @@ void PlaceSelectionWidget::_handleRecord(RecEntity e)
 	loadPlaces();
 	if (e.isNull())
 	{
+#ifdef DEBUG
+		detrace_METHPERROR("_handleRecord", "null entity provided");
+#endif
 		return;
 	}
 	if (e->myType() == UniformXmlObject::Mode)
@@ -39,6 +35,9 @@ PlaceSelectionWidget::PlaceSelectionWidget(QWidget* parent)
 	backButton(new MegaIconButton(this)), awaiter(new RequestAwaiter(AppSettings->timeoutInt, this)),
 	place(new PlaceEntity()), loadPlacesQuery(), selectPlaceQuery()
 {
+#ifdef DEBUG
+	detrace_DCONSTR("PlaceSelection");
+#endif
 	this->setLayout(mainLayout);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 	mainLayout->setSpacing(0);
@@ -49,9 +48,8 @@ PlaceSelectionWidget::PlaceSelectionWidget(QWidget* parent)
 	mainLayout->addLayout(buttonLayout);
 	buttonLayout->addWidget(backButton);
 	//buttonLayout->addStretch();
-	QFont scf = makeFont(0.04);
     userTip->setText(tr("please select place for mode: "));
-	userTip->setFont(scf);
+	userTip->setFont(GENERAL_FONT);
     userTip->setAlignment(Qt::AlignCenter);
     userTip->setWordWrap(true);
 	backButton->setText(tr("place_selection_back"));
@@ -133,6 +131,9 @@ void PlaceSelectionWidget::parse_loaded_places()
 	if (result.isError)
 	{
 		userTip->setText(result.errtext);
+#ifdef DEBUG
+		detrace_NRESPERR(result.errtext);
+#endif
 	}
 	else
 	{
@@ -148,6 +149,9 @@ void PlaceSelectionWidget::place_select_response()
 	if (!parser.isSuccessfull())
 	{
 		userTip->setText(parser.getErrors());
+#ifdef DEBUG
+		detrace_NRESPERR(parser.getErrors());
+#endif
 	}
 	else
 	{

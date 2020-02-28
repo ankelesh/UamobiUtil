@@ -1,11 +1,6 @@
 #include "MainPageWidget.h"
 #include "networking/Parsers/RequestParser.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
-#ifdef QT_VERSION5X
-#include <QtWidgets/QScroller>
-#else
-#include "legacy/qtCompatibility/scrollgrabber.h"
-#endif
 #include "widgets/utils/ElementsStyles.h"
 #ifdef DEBUG
 #include "debugtrace.h"
@@ -28,6 +23,9 @@ MainPageWidget::MainPageWidget(QWidget* parent)
 	userid(new QLineEdit(innerWidget)), manualLogin(new LoginWidget( this)),
 	settingsScreen(new MainSettingsWidget( this)), awaiter(AppSettings->timeoutInt, this)
 {
+#ifdef DEBUG
+	detrace_DCONSTR("MainPageWidget");
+#endif
 	current = innerWidget;
 	untouchable = innerWidget;
 	main = this;
@@ -62,32 +60,31 @@ MainPageWidget::MainPageWidget(QWidget* parent)
 	bottomPanelLayout->addWidget(settingsButton);
 	bottomPanelLayout->addWidget(refreshButton);
 
-	QFont scf = makeFont(0.04);
 	versionLabel->setText(QString::number(VERSION) + " " + SUFFIX);
-	versionLabel->setFont(scf);
+	versionLabel->setFont(GENERAL_FONT);
 	hostLabel->setText(AppSettings->HttpUrl.section("/", 4, 4));
-	hostLabel->setFont(scf);
+	hostLabel->setFont(GENERAL_FONT);
 
 	userHelpLabel->setText(tr("main_page_select_profile_tip"));
-	userHelpLabel->setFont(scf);
+	userHelpLabel->setFont(GENERAL_FONT);
 	userIdInfo->setText(tr("main_page_enter_profile_id_tip"));
-	userIdInfo->setFont(scf);
+	userIdInfo->setFont(GENERAL_FONT);
 	userHelpLabel->setAlignment(Qt::AlignCenter);
 	userIdInfo->setAlignment(Qt::AlignCenter);
 
 	exitButton->setText(tr("main_page_exit_button"));
 	exitButton->setIcon(QIcon(":/res/exit.png"));
 	exitButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
-	exitButton->setFont(scf);
+	exitButton->setFont(GENERAL_FONT);
 	settingsButton->setText(tr("main_page_settings_button"));
 	settingsButton->setIcon(QIcon(":/res/settings.png"));
 	settingsButton->setStyleSheet(SETTINGS_BUTTONS_STYLESHEET);
-	settingsButton->setFont(scf);
+	settingsButton->setFont(GENERAL_FONT);
 	refreshButton->setIcon(QIcon(":/res/refresh.png"));
 	refreshButton->setText(tr("refresh"));
 	refreshButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
-	refreshButton->setFont(scf);
-	userid->setFont(scf);
+	refreshButton->setFont(GENERAL_FONT);
+	userid->setFont(GENERAL_FONT);
 
 	innerWidget->installEventFilter(keyfilter);
 	loginsView->setModel(innerModel);
@@ -127,9 +124,6 @@ MainPageWidget::MainPageWidget(QWidget* parent)
 
 bool MainPageWidget::isExpectingControl(int val)
 {
-#ifdef DEBUG
-	detrace_METHEXPL("control! " << val << " aw: ");
-#endif
 	if (val < 9 && val >= -1)
 	{
 		if (val == -1)
@@ -203,6 +197,9 @@ void MainPageWidget::parseUsers()
 	if (result.isError)
 	{
 		userHelpLabel->setText(result.errtext);
+#ifdef DEBUG
+		detrace_NRESPERR(result.errtext);
+#endif
 		return;
 	}
 	switch (result.alternative_result)

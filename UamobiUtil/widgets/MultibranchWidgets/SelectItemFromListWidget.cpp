@@ -4,6 +4,9 @@
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
 
 bool requiresOrd(int id)
 {
@@ -41,6 +44,9 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 	backButton(new MegaIconButton(innerWidget)), withOrd(":/res/with.png"), withoutOrd(":/res/without.png"),
 	awaiter(new RequestAwaiter(AppSettings->timeoutInt, this))
 {
+#ifdef DEBUG
+	detrace_DCONSTR("SelectItemFromList");
+#endif
 	this->setLayout(mainLayout);
 	mainLayout->addWidget(innerWidget);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -56,10 +62,8 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 	headerLayout->addWidget(searchButton);
 	headerLayout->addWidget(ordfilterButton);
 	footerLayout->addWidget(backButton);
-	//footerLayout->addStretch();
-	QFont scf = makeFont(0.04);
     userHelp->setText(tr("Please select item from list!"));
-	userHelp->setFont(scf);
+	userHelp->setFont(GENERAL_FONT);
 	userHelp->setAlignment(Qt::AlignCenter);
 
 	searchButton->setIcon(QIcon(":/res/search.png"));
@@ -70,7 +74,7 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 	ordfilterButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
     ordfilterButton->setMaximumWidth(calculateAdaptiveWidth(0.2));
 
-	userinputField->setFont(scf);
+	userinputField->setFont(GENERAL_FONT);
 	userinputField->setMaximumWidth(calculateAdaptiveWidth(0.6));
 	userinputField->setMinimumWidth(calculateAdaptiveWidth(0.4));
 	userinputField->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
@@ -82,6 +86,7 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 
 	ordfilterButton->setText(tr("W\\O"));
 	ordfilterButton->setCheckable(true);
+	ordfilterButton->setStyleSheet(CHECKBOX_BUTTON_STYLESHEET);
 	ordFilterSwitched(true);
 	innerWidget->installEventFilter(keyfilter);
 	if (!requiresOrd(prototype->myType()))
@@ -104,6 +109,8 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 	QObject::connect(awaiter, &RequestAwaiter::requestTimeout, this, &SelectItemFromListWidget::was_timeout);
 	QObject::connect(entityModel, &DataEntityListModel::dataEntityClicked, this, &SelectItemFromListWidget::itemPicked);
 	QObject::connect(itemSelection, &QListView::clicked, entityModel, &DataEntityListModel::mapClickToEntity);
+	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &SelectItemFromListWidget::parse_pick_response);
+	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &SelectItemFromListWidget::parse_response);
 #else
 	QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(searchPrimed()));
 	QObject::connect(ordfilterButton, SIGNAL(toggled(bool)), this, SLOT(ordFilterSwitched(bool)));
@@ -111,17 +118,8 @@ SelectItemFromListWidget::SelectItemFromListWidget(
     QObject::connect( userinputField, SIGNAL(returnPressed()), this, SLOT(searchPrimed()), Qt::QueuedConnection);
 	QObject::connect(awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 	QObject::connect(entityModel, SIGNAL(dataEntityClicked(RecEntity)), this, SLOT(itemPicked(RecEntity)));
-    if (!QObject::connect(itemSelection, SIGNAL(clicked(QModelIndex)), entityModel, SLOT(mapClickToEntity(QModelIndex)))) throw;
-#endif
-
-#ifdef QT_VERSION5X
-	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &SelectItemFromListWidget::parse_response);
-#else
+	QObject::connect(itemSelection, SIGNAL(clicked(QModelIndex)), entityModel, SLOT(mapClickToEntity(QModelIndex)));
 	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(parse_response()));
-#endif
-#ifdef QT_VERSION5X
-	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &SelectItemFromListWidget::parse_pick_response);
-#else
 	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(parse_pick_response()));
 #endif
 }
@@ -159,12 +157,10 @@ void SelectItemFromListWidget::ordFilterSwitched(bool)
 	if (ordfilterButton->isChecked())
 	{
 		ordfilterButton->setIcon(withOrd);
-		ordfilterButton->setStyleSheet(CHECKED_BUTTONS_STYLESHEET);
 	}
 	else
 	{
 		ordfilterButton->setIcon(withoutOrd);
-		ordfilterButton->setStyleSheet(UNCHECKED_BUTTONS_STYLESHEET);
 	}
 }
 
@@ -178,6 +174,9 @@ void SelectItemFromListWidget::parse_response()
 	if (response.isError)
 	{
 		userHelp->setText(response.errtext);
+#ifdef DEBUG
+		detrace_NRESPERR(response.errtext);
+#endif
 	}
 	else if (response.isEmpty())
 	{
@@ -188,6 +187,32 @@ void SelectItemFromListWidget::parse_response()
 		entityModel->setData(response.objects);
 	}
 	hideProcessingOverlay();
+}
+
+bool SelectItemFromListWidget::isExpectingControl(int val)
+{
+	if (awaiter->isAwaiting())
+		return false;
+	if (val >= -1 && val <= entityModel->rowCount() - 1)
+	{
+		if (val == -1)
+		{
+			if (entityModel->rowCount() > 10)
+				val = 9;
+			else
+			{
+				emit backRequired();
+				return false;
+			}
+		}
+		QModelIndex index = entityModel->index(val);
+		if (index.isValid())
+		{
+			entityModel->mapClickToEntity(index);
+			return true;
+		}
+	}
+	return false;
 }
 
 void SelectItemFromListWidget::parse_pick_response()
@@ -202,6 +227,9 @@ void SelectItemFromListWidget::parse_pick_response()
 	else
 	{
 		userHelp->setText(parser.getErrors());
+#ifdef DEBUG
+		detrace_NRESPERR(parser.getErrors());
+#endif
 	}
 	hideProcessingOverlay();
 }
@@ -251,9 +279,12 @@ void SelectItemFromListWidget::_makeOverloads(const QVector<QueryTemplates::Over
     {
         QStringList t;
         t << "text" << "has_orders";
+		QStringList t2;
+		t2 << "text";
+
 		loadQuery = overloads.first().assertedAndMappedCopy(
 			QueryTemplates::receiptListSuppliers,
-            t,t
+            t,t2
 		);
     }
 	default:

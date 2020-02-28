@@ -1,7 +1,6 @@
 #pragma once
 #include "networking/Parsers/abs_parsed_request.h"
 #include <QtXml/QDomDocument>
-#include "debugtrace.h"
 /*
 	These parsers are made to work over simpliest responces, which are only holding success\insuccess value.
 */
@@ -21,4 +20,5 @@ protected:
 	virtual bool _doParsing() override;
 public:
 	RichtextResponseParser(QString& res, QString& err);
+	QString getRichtext();
 };

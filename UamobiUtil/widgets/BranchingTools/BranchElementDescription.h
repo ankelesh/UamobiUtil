@@ -59,6 +59,7 @@ public:
 	bool isEmpty() const;
 	int count() const;
 	const BranchDescription& at(int index) const;
+	QString describe();
 	// returns new description with full copy of it's children
 	BranchDescription clone() const;
 };

@@ -4,6 +4,9 @@
 #include "widgets/utils/GlobalAppSettings.h"
 #include "networking/Parsers/RequestParser.h"
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
 
 
 void PagedSearchWidget::_handleRecord(RecEntity)
@@ -38,6 +41,9 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 	currentpage(0), toSearch(), awaiter(new RequestAwaiter(AppSettings->timeoutInt, this)),
 	loadDataQuery(-2, ping)
 {
+#ifdef DEBUG
+	detrace_DCONSTR("PagedSearchWidget");
+#endif
 	this->setLayout(mainLayout);
 	mainLayout->addLayout(searchPanel);
 	searchPanel->addWidget(searchInput);
@@ -51,7 +57,6 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 	footerLayout->addWidget(backButton);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 	mainLayout->setSpacing(0);
-	QFont scf = makeFont(0.04);
 
 	searchButton->setText(tr("item_search_search"));
 	searchButton->setStyleSheet(CHANGE_BUTTONS_STYLESHEET);
@@ -60,7 +65,7 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 	searchButton->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum));
 
 	indexationInfo->setText("0 " + QString(QChar(0x2014)) + " 0");
-	indexationInfo->setFont(scf);
+	indexationInfo->setFont(GENERAL_FONT);
 	indexationInfo->setAlignment(Qt::AlignCenter);
 
 	backButton->setText(tr("item_search_back"));
@@ -75,13 +80,13 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 	previousButton->setStyleSheet(NAVIGATE_BUTTONS_STYLESHEET);
 	previousButton->setDisabled(true);
 
-	searchInput->setFont(scf);
+	searchInput->setFont(GENERAL_FONT);
 	searchInput->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	searchInput->setMinimumWidth(calculateAdaptiveWidth(0.6));
 	searchInput->setMaximumWidth(calculateAdaptiveWidth(0.8));
 	searchInput->setMaximumHeight(calculateAdaptiveButtonHeight());
 
-	itemList->setFont(scf);
+	itemList->setFont(GENERAL_FONT);
 
 	itemList->setModel(entityModel);
 	itemList->setItemDelegate(new ZebraItemDelegate(this));
@@ -113,7 +118,10 @@ void PagedSearchWidget::refresh()
 	PolyResponse response(RequestParser::parseResponse(parser, prototype));
 	if (response.isError)
 	{
-		indexationInfo->setText(response.errtext);
+		indexationInfo->setText(response.errtext); 
+#ifdef DEBUG
+			detrace_NRESPERR(response.errtext);
+#endif
 	}
 	else
 	{

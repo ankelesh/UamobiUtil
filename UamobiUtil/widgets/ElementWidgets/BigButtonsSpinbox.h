@@ -46,7 +46,9 @@ private:
 	QAbstractSpinBox* coreSpinbox;	//	Abstract spinbox allows to place here any spinbox
 	filters::CaptureBackFilter* keyFilter;		//	Captures back press
 
-	spintype sptype;				//	Stores type for correct usage of inner functions
+	spintype sptype;				//	Stores type for correct usage of inner functions,
+
+	QTime lastEmit;
 
 	virtual void showEvent(QShowEvent*) override;
 public:
@@ -79,6 +81,7 @@ private slots:
 	void doubleValueChanged(double);
 	void editingDone();
 	void backRequire();
+
 
 public slots:
 	void setFocus() const;			//	Sets focus to spinbox

@@ -16,6 +16,8 @@
 
 class ZebraItemDelegate : public QItemDelegate
 {
+private:
+	QFontMetrics fm;
 public:
 	ZebraItemDelegate(QObject* parent);
 	void paint(QPainter* painter, const QStyleOptionViewItem& option,

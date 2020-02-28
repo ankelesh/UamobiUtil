@@ -1,6 +1,5 @@
 #include "RequestAwaiter.h"
 #include <QTextDecoder>
-#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -10,17 +9,9 @@ RequestAwaiter::RequestAwaiter(int interval, QObject* parent)
 	: QObject(parent), timer(new QTimer(this)), awaiting(false), timeoutinterval(interval),
 	awaitedReply(Q_NULLPTR), deliverTo(0)
 {
-#ifdef DEBUG
-	//detrace_METHEXPL("interval was:" << interval );
-#endif
 	timer->setInterval(interval);
 	timer->setSingleShot(true);
 
-#ifdef DEBUG
-#ifdef QT_VERSION5X
-	//detrace_METHEXPL("Timer in inner measures: " << timer->intervalAsDuration().count());
-#endif
-#endif
 #ifdef QT_VERSION5X
 	QObject::connect(timer, &QTimer::timeout, this, &RequestAwaiter::timeout);
 #else
@@ -92,8 +83,7 @@ void RequestAwaiter::stopAwaiting()
 void RequestAwaiter::timeout()
 {
 #ifdef DEBUG
-	// detrace_METHCALL("RequestAwaiter::timeout");
-	 //detrace_METHEXPL(timer->remainingTime() << " msecs remaining");
+	detrace_NETERROR(awaitedReply->url().toString(), "request timeout ");
 #endif
 	awaiting = false;
 	wastimeout = true;
@@ -125,7 +115,7 @@ void RequestAwaiter::requestIncoming()
         awaitedReply = Q_NULLPTR;
 	}
 #ifdef DEBUG
-    detrace_METHEXPL("received packet: " << restext << " | " << errtext);
+	detrace_NETRESPARR(restext, errtext, deliverTo);
 #endif
 	emit requestSuccess(restext, errtext);
 	emit requestReceived(deliverTo);
@@ -134,6 +124,6 @@ void RequestAwaiter::requestIncoming()
 void RequestAwaiter::replyError(QNetworkReply::NetworkError error)
 {
 #ifdef DEBUG
-	detrace_METHEXPL("Reply error! " << (int) error);
+	detrace_NETERROR(awaitedReply->url().toString(),   "Reply error! " << (int) error);
 #endif
 }

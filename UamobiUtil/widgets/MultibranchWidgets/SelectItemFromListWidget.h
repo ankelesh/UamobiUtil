@@ -55,6 +55,7 @@ protected:
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
 	virtual void _handleRecord(RecEntity) override;
 	virtual void _sendDataRequest() override;
+	virtual bool isExpectingControl(int) override;
 public:
 	SelectItemFromListWidget(QWidget* parent,
 		RecEntity proto);

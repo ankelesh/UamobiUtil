@@ -31,7 +31,7 @@ public:
 	int fontMaxHeight;
 	double fontPercent;
 
-	explicit GlobalAppSettings();
+    explicit GlobalAppSettings();
 	
 	void setTranslator();
 	void dump();

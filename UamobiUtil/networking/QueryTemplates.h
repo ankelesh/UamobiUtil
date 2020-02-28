@@ -2,8 +2,17 @@
 #include <QHash>
 #include <QVector>
 #include <QStringList>
+
+/*
+	This file is containing templating mechanism for extern query binding. Main purpose of this
+	file is to avoid hardcoded default queries. It performs binding via hash, extracted from ini file.
+	Also this file contains OverloadableQuery class - main tool for overloading queries through 
+	mode constructor. It tracks provided arguments and required arguments.
+
+*/
 namespace QueryTemplates
 {
+	// This enum is used for enhancing performance of query binding
 	enum QueryId
 	{
 		ping,						// no arguments required 
@@ -46,23 +55,37 @@ namespace QueryTemplates
 		recListTemplated,			// 1 arguments required 
 		applyBarcodeFilter,			// 2 arguments required 
 		receiptAddItemExpanded,		// 3 arguments required 
-		docGetItemLabel
+		docGetItemLabel,
+		setVersionForBarcode
 	};
 
+	// this function is used for initializing cache in old compilers
 	QHash<QueryId, QString> _initCache();
+	// this function performs binding to quantity of arguments. Deprecated because of overloadable query
 	int getQueryArguments(const QueryId);
+	// performs argument quantity check to correspond required
 	bool assertArgQuantity(int argc, QueryId id);
+	// this cache contains bound queries
 	extern QHash<QueryId, QString> queryCache;
+
 	class OverloadableQuery
+		// wraps query and it's arguments to allow overloading
 	{
 	private:
+		// this id is used for extracting query url from cache if no url provided
 		QueryId expectedQuery;
+		// this url is used as template for inserting arguments
 		QString overloadedQuery;
+		// this variable contains maximum arguments this query can handle
 		int argumentListLength;
+		// this vector holds positioning of arguments, which can differ from provided list's args
 		QVector<int> emplaceValues;
+		// this vector holds list of names required to insert into query. Debug use only
 		QStringList valuesForUnpacking;
 		
+		// obtains argument index from valuesForUnpacking
 		inline int _argNameToInt(const QString arg) const;
+		// finds query to use in templating - or from cache, or from url
 		inline const QString& assertRightQuery() const;
 	public:
 		OverloadableQuery();
@@ -76,20 +99,33 @@ namespace QueryTemplates
 		OverloadableQuery(QString oq, QStringList unpacked);
 		OverloadableQuery(QStringRef oq, QVector<QStringRef>& unpacked);
 
+		// post-constructor can replace query url 
 		void setExpected(QueryId);
+		// uses default id and argument lists to prepare query for work
 		void assertAndSetMapping(QueryId defId, QStringList allArgs, QStringList defMap);
+		// returns copy of this with applied assertAndSetMapping
 		OverloadableQuery assertedAndMappedCopy(QueryId defId, QStringList allArgs = QStringList(), QStringList defMap = QStringList()) const;
+		// post constructor which used in case if query has no mapping or wrong one
 		void setFieldMapping(QStringList normal, QStringList unpacked);
+		// post constructor uses all arguments list to reset
 		void setAllArgsFilter(QStringList allArgs);
+		// checks if this query is mapped for this quantity of arguments
 		bool assertArgQuantity(int argc) const;
+		// default flag is -2 in argumentListLength
 		bool isDefault() const;
+		// true if mapping was not finished
 		bool requiresAllArgs() const;
+		// true if only url provided
 		bool requiresRemapping() const { 
 			return !overloadedQuery.isEmpty() && argumentListLength == 0 && valuesForUnpacking.isEmpty();
 		}
+		// returns query id
 		QueryId getQID() const { return expectedQuery; };
+		// returns static default query which can be used as null
 		static const OverloadableQuery& defaultQuery();
+		// main interface function, applies arguments and returns url ready to be sent
 		QString filterAndApply(QStringList arguments, QString ssid) const;
 	};
+	// typedef for local caches
 	typedef QHash<QueryTemplates::QueryId, QueryTemplates::OverloadableQuery> QueryCache;
 }

@@ -60,7 +60,7 @@ protected slots:
 	// same as pick clicked, but reacts on model click instead of current
 	virtual void itemSelected(RecEntity);
 	// parses response as list, extracting polyentities of type prototype
-	void parse_get_response();
+	virtual void parse_get_response();
 	// parses select response as it was richtext. !! HARD BIND TO OrderEntity !!
 	void parse_select_response();
 	void was_timeout();

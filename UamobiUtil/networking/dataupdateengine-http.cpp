@@ -12,7 +12,6 @@
 #include <qmetatype.h>
 #include "QueryTemplates.h"
 #include "widgets/utils/GlobalAppSettings.h"
-#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -96,6 +95,12 @@ void HttpUpdateEngine::execQueryByTemplate(QueryTemplates::QueryId id, QString a
 void HttpUpdateEngine::execQueryByTemplate(QueryTemplates::QueryId id, QString arg1, QString arg2, QString arg3, RequestAwaiter* awaiter)
 {
 	if (!assertArgQuantity(3, id)) return;
+    QString v = queryCache.value(id);
+    v = v.arg(sessionId);
+    v = v.arg(arg1);
+    v = v.arg(arg2);
+    v = v.arg(arg3);
+    v = queryCache.value(id).arg(sessionId).arg(arg1).arg(arg2).arg(arg3);
 	sendQuery(queryCache.value(id).arg(sessionId).arg(arg1).arg(arg2).arg(arg3), awaiter);
 }
 
@@ -103,7 +108,7 @@ void HttpUpdateEngine::execQueryByTemplate(QueryTemplates::QueryId id, int argc,
 {
 	if (!assertArgQuantity(argc, id)) return;
 	QString result = queryCache.value(id);
-	result = result.arg(nextQueryId++).arg(sessionId);
+    result = result.arg(nextQueryId++).arg(sessionId);
 	for (int i = 0; i < argc; ++i)
 	{
 		result = result.arg(argv.at(i));
@@ -181,16 +186,8 @@ QString HttpUpdateEngine::getUrl()
 HttpUpdateEngine* HttpUpdateEngine::_instanse = Q_NULLPTR;
 HttpUpdateEngine* HttpUpdateEngine::instanse()
 {
-#ifdef DEBUG
-	if (_instanse == Q_NULLPTR)
-	{
-		QString defaultUrl = "una.md:3323/um/sammy0520181.php";
-		_instanse = new HttpUpdateEngine(defaultUrl, Q_NULLPTR);
-	}
-#else
 	if (_instanse == Q_NULLPTR)
 		_instanse = new HttpUpdateEngine(AppSettings->HttpUrl, Q_NULLPTR);
-#endif
 	return _instanse;
 }
 
@@ -204,7 +201,7 @@ void HttpUpdateEngine::sendQuery(const QString& urlpath, RequestAwaiter* awaiter
 	QString currUrl = url + "?delay=" + QString::number(delay) + "&cmd=" + urlpath;
 	++delay;
 #ifdef DEBUG
-	detrace_NETREQSENT("sendQuery", currUrl, "");
+	detrace_NETREQUEST(currUrl);
 #endif
 	QNetworkRequest r;
 	r.setRawHeader("Puller", "UamobiUtil");

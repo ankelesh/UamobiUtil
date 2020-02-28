@@ -9,6 +9,13 @@
 
 void BarcodeFilterSelectionSubbranch::_handleRecord(RecEntity e)
 {
+	if (e.isNull())
+	{
+#ifdef DEBUG
+		detrace_METHPERROR("_handleRecord", "empty entity given");
+#endif
+		return;
+	}
 	if (e->myType() == UniformXmlObject::Document)
 	{
 		assertAndShow(e->getId());
@@ -17,6 +24,9 @@ void BarcodeFilterSelectionSubbranch::_handleRecord(RecEntity e)
 	else
 	{
 		currentFilterInfo->setText(tr("Wrong document type"));
+#ifdef DEBUG
+		detrace_METHPERROR("_handleRecord", "no document provided");
+#endif
 	}
 }
 
@@ -32,6 +42,9 @@ BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(QWidget* parent
 	groupWidget(group),
 	awaiter(new RequestAwaiter(AppSettings->timeoutInt, this)), applyFilterQuery(), getFiltersQuery()
 {
+#ifdef DEBUG
+	detrace_DCONSTR("BarcodeFilterSelection");
+#endif
 	if (supplierWidget == Q_NULLPTR)
 		supplierWidget = new SelectItemFromListWidget(this, RecEntity(new SupplierEntity()));
 	else
@@ -98,7 +111,7 @@ BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(QWidget* parent
 	passButton->setSizePolicy(qsp);
 	passButton->hide();
 	currentFilterInfo->setAlignment(Qt::AlignCenter);
-	currentFilterInfo->setFont(makeFont(0.04));
+	currentFilterInfo->setFont(AppFonts->makeFont(1.1));
 #ifdef QT_VERSION5X
 	QObject::connect(stillageButton, &MegaIconButton::clicked, this, &BarcodeFilterSelectionSubbranch::stillageSelectRequired);
 	QObject::connect(groupButton, &MegaIconButton::clicked, this, &BarcodeFilterSelectionSubbranch::groupSelectRequired);
@@ -115,7 +128,6 @@ BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(QWidget* parent
 	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &BarcodeFilterSelectionSubbranch::got_response);
 
 #else
-	//NONFIXED
     QObject::connect(stillageButton, SIGNAL(clicked()), this, SLOT(stillageSelectRequired()));
     QObject::connect(groupButton, SIGNAL(clicked()), this, SLOT(groupSelectRequired()));
     QObject::connect(suppliersButton, SIGNAL(clicked()), this, SLOT(supplierSelectRequired()));
@@ -127,7 +139,7 @@ BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(QWidget* parent
     QObject::connect(groupWidget, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
     QObject::connect(stillageWidget, SIGNAL(done(RecEntity)), this, SLOT(filterSelected(RecEntity)));
     QObject::connect(stillageWidget, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
-    QObject::connect(passButton, SIGNAL(clicked()), this, SIGNAL(noFilterRequired()));
+    QObject::connect(passButton, SIGNAL(clicked()), this, SLOT(noFilterRequired()));
 	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(got_response()));
 #endif
 }
@@ -170,6 +182,13 @@ void BarcodeFilterSelectionSubbranch::noFilterRequired()
 
 void BarcodeFilterSelectionSubbranch::filterSelected(RecEntity e)
 {
+	if (e.isNull())
+	{
+#ifdef DEBUG
+		detrace_METHPERROR("filterSelected", "empty entity given");
+#endif
+		return;
+	}
 	switch (e->myType())
 	{
 	case UniformXmlObject::Group:

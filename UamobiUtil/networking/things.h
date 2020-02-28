@@ -1,5 +1,4 @@
-#ifndef USER_H
-#define USER_H
+#pragma once
 #include <QtCore/QStringList>
 #include <QtCore/QDate>
 #include <QtCore/QObject>
@@ -11,8 +10,8 @@
 #include "datacore/InputControlEntity.h"
 #include <QtCore/qabstractitemmodel.h>
 /*
-		This file contains definitions for structures used in the application. It is kinda too functional
-		approach, but this legacy thing is needed. Later these structures will be morphed into classes, except legacy ones.
+	this file includes all entities used in application and common data model for representation
+	polymorthic lists. If you dont need all this - use entities home files.
 
 */
 class DataEntityListModel : public QAbstractListModel
@@ -65,6 +64,3 @@ signals:
 	// delivers pointer to data entity. Warning - changing this entity by pointer will affect model.
 	void dataEntityClicked(RecEntity);
 };
-
-
-#endif // USER_H

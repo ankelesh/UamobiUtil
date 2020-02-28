@@ -1,5 +1,9 @@
 #include "StaticBranch.h"
 #include "BranchFactory.h"
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
+
 void StaticBranch::_allocateNode(BranchDescription desc)
 {
 	IndependentBranchNode* node = BranchNodeFactory::createNode(desc, this);
@@ -83,6 +87,9 @@ IndependentBranchNode* StaticBranch::getCurrentNode()
 StaticBranch::StaticBranch(BranchDescription root, QWidget* parent)
 	: AbsBranch(root, parent), createdNodesStack(), mainLayout(new QVBoxLayout(this))
 {
+#ifdef DEBUG
+	detrace_DCONSTR("StaticBranch");
+#endif
 	createdNodesStack.reserve(root->count());
 	setLayout(mainLayout);
 	mainLayout->setContentsMargins(0, 0, 0, 0);

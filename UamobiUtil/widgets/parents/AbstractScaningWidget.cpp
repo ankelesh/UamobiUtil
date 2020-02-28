@@ -6,11 +6,11 @@
 #else
 #include <QtGui/QMessageBox>
 #endif
-#define DEBUG
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
 #include "ScaningCore/BarcodeObserver.h"
+
 void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEntity> >& cvals)
 {
     switch (cvals.count())
@@ -132,10 +132,11 @@ AbstractScaningWidget::AbstractScaningWidget(int id, QWidget* parent)
 	mainLayout->addWidget(innerWidget);
 	innerWidget->setLayout(innerLayout);
 	innerLayout->addLayout(topPanelLayout);
-	topPanelLayout->addWidget(quitButton);
+	
 	topPanelLayout->addWidget(userInfo);
 	innerLayout->addWidget(barcodeField);
 	innerLayout->addWidget(mainTextView);
+	topPanelLayout->addWidget(quitButton);
 	innerLayout->addLayout(buttonPanel);
 	buttonPanel->addWidget(backButton);
 	buttonPanel->addWidget(searchButton);
@@ -147,17 +148,14 @@ AbstractScaningWidget::AbstractScaningWidget(int id, QWidget* parent)
 	topPanelLayout->setContentsMargins(0, 0, 0, 0);
 	topPanelLayout->setSpacing(0);
 
-	QFont scaledFont = makeFont(0.04);
 	userInfo->setText(tr("scaning_widget_user_info"));
 	userInfo->setAlignment(Qt::AlignCenter);
-	userInfo->setFont(scaledFont);
+	userInfo->setFont(GENERAL_FONT);
 	userInfo->setWordWrap(true);
-    userInfo->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
-    userInfo->setMinimumWidth(calculateAdaptiveWidth(0.75));
-    userInfo->setMaximumHeight(calculateAdaptiveButtonHeight(0.2));
+    userInfo->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
 
 	mainTextView->setText(tr("scaning_widget_filler_text"));
-	mainTextView->setFont(scaledFont);
+	mainTextView->setFont(FontAdapter::makeFont(0.5));
 	mainTextView->setAcceptRichText(true);
 	mainTextView->setReadOnly(true);
     mainTextView->setTextInteractionFlags(Qt::NoTextInteraction);
@@ -180,13 +178,13 @@ AbstractScaningWidget::AbstractScaningWidget(int id, QWidget* parent)
 	quitButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
     quitButton->setMaximumWidth(calculateAdaptiveWidth(0.25));
     quitButton->setMinimumWidth(calculateAdaptiveWidth(0.25));
-    quitButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.2));
-    quitButton->setMinimumHeight(calculateAdaptiveButtonHeight(0.2));
+    quitButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
+    quitButton->setMinimumHeight(calculateAdaptiveButtonHeight(0.08));
 
 	barcodeField->setFocus();
-
+	barcodeField->setMinimumHeight(calculateAdaptiveButtonHeight(0.08));
+	barcodeField->setFont(AppFonts->makeFont(1.5));
 #ifdef QT_VERSION5X
-
 	QObject::connect(backButton, &QPushButton::clicked, this, &AbstractScaningWidget::backNeeded);
 	QObject::connect(submitButton, &QPushButton::clicked, this, &AbstractScaningWidget::submitPressed);
 	QObject::connect(barcodeField, &QLineEdit::returnPressed, this, &AbstractScaningWidget::barcodeConfirmed);
@@ -226,7 +224,7 @@ void AbstractScaningWidget::quitNoSave()
         QMessageBox::Ok| QMessageBox::Cancel);
     if (response == QMessageBox::Ok)
 	{
-		AppNetwork->execQueryByTemplate(QueryTemplates::unlockDocument, false, awaiter); 
+		AppNetwork->execQueryByTemplate(QueryTemplates::unlockDocument, false, Q_NULLPTR); 
 		BarcodeObs->deactivate();
 		emit backRequired();
 	}

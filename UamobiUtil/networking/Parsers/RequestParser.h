@@ -9,17 +9,7 @@
 #include "SimpleLinearParsers.h"
 #include "SimpleResponseParsers.h"
 /*
-		This file contains parsers that are concentrated on already parsed results, which are stored in
-		uniform container. main idea of this uniform container is to allow user to define which parser will be used for primary
-		parsing and how to parse results, i.e. there is no hard binding to representation, raw results can be processed
-		without these functions. Main goal of these functions is to transform result into particular form.
-
-		Ideal usage:
-		You use interprets when you are sure what result is here
-		You use makeParser when you not sure what result came
-		You manually create parser and then use it's result when you don't want to waste time on deducing
-		You check packet with simpliestresponse parser to be sure this IS a right packet and then use it's
-		string representation to parse it on your own.
+		this file contains not parsers, but interpretation functions, which are conver
 
 */
 
@@ -41,7 +31,13 @@ namespace RequestParser
 		else
 			return NetRequestResponse<NetResp>(parser->getErrors());
 	};
+	template<>
+	inline NetRequestResponse<AbsRecEntity> parseResponse<AbsRecEntity>(QSharedPointer<AbsResponseParser>& parser)
+	{
+		return PolyResponse(parser->getErrors() + " USING WRONG PARSING TEMPLATE!!!!!!");
+	}
 	NetRequestResponse<AbsRecEntity> parseResponse(QSharedPointer<AbsResponseParser>& parser, RecEntity prototype);
+	PolyResponse parseResponse(PolyResponse resp, RecEntity prototype);
 }
 
 

@@ -1,5 +1,7 @@
 #include "SkippedNode.h"
-
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
 void SkippedNode::_handleRecord(RecEntity e)
 {
 	emit done(e);
@@ -16,4 +18,7 @@ void SkippedNode::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery
 SkippedNode::SkippedNode(QWidget* parent) : IndependentBranchNode(independent_nodes::SkipNode,
 	parent)
 {
+#ifdef DEBUG
+	detrace_DCONSTR("SkippedNode");
+#endif
 }

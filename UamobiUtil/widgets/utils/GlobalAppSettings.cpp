@@ -4,22 +4,22 @@
 // utility
 
 
-const float VERSION = 0.03f;
+const float VERSION = 0.05f;
 const char* SUFFIX = "nightly";
 
 void GlobalAppSettings::setTranslator()
 {
 	if (this->language == "Russian")
 	{
-		this->translator.load(":/translations/uamobi_ru.qm");
+		this->translator.load(":/translations/uamobiutil_ru.qm");
 	}
 	else if (this->language == "Romanian")
 	{
-		this->translator.load(":/translations/uamobi_ro.qm");
+		this->translator.load(":/translations/uamobiutil_ro.qm");
 	}
 	else
 	{
-		this->translator.load(":/translations/uamobi_en.qm");
+		this->translator.load(":/translations/uamobiutil_en.qm");
 	}
 	qApp->installTranslator(&translator);
 }
@@ -33,6 +33,9 @@ void GlobalAppSettings::dump()
 	setting.setValue("alt_hosts", AlternativeAdresses);
 	setting.setValue("scan_prefix", scanPrefix);
 	setting.setValue("scan_suffix", scanSuffix);
+	setting.setValue("font_min_height", fontMinHeight);
+	setting.setValue("font_max_height", fontMaxHeight);
+	setting.setValue("font_scale_percent", fontPercent);
     setting.setValue("printer_designation", printerPortDesignation);
     setting.setValue("printer_port", printerPort);
     setting.setValue("printer_type", printerType);

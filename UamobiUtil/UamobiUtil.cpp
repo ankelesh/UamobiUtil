@@ -49,93 +49,6 @@ void UamobiUtil::gotoModeSelection()
 	_hideAndDeleteCurrent(mb);
 }
 
-void UamobiUtil::gotoReceiptBranch(QHash<QString, QString> opts, Mode mode)
-{
-#ifdef DEBUG
-	detrace_METHCALL("goto Receipt");
-#endif
-	using namespace independent_nodes;
-	AbsBranch* mainBranch;
-	if (mode->submode.isEmpty())
-	{
-		mainBranch = BranchFactory::createNWBranch(
-			embeddedBranches::receiptDesc,
-			this
-		);
-	}
-	else if (mode->submode.contains("warehouse", Qt::CaseInsensitive))
-	{
-		mainBranch = BranchFactory::createNWBranch(
-			embeddedBranches::warehouseReceiptDesc,
-			this
-		);
-	}
-	else
-	{
-		mainBranch = BranchFactory::createNWBranch(
-			embeddedBranches::correctionReceiptDesc,
-			this
-		);
-	}
-#ifdef QT_VERSION5X
-	QObject::connect(mainBranch, &AbsBranch::backRequired, this, &UamobiUtil::gotoModeSelection);
-	QObject::connect(mainBranch, &AbsBranch::done, this, &UamobiUtil::closeBranch);
-#else
-    QObject::connect(mainBranch, SIGNAL(backRequired()), this, SLOT(gotoModeSelection()));
-    QObject::connect(mainBranch, SIGNAL(done(RecEntity)), this, SLOT(closeBranch(RecEntity)));
-#endif
-	_hideAndDeleteCurrent(mainBranch);
-	mainBranch->raiseThisBranch(mode.staticCast<AbsRecEntity>());
-}
-
-void UamobiUtil::gotoInventoryBranch(QHash<QString, QString> opts, Mode mode)
-{
-	using namespace independent_nodes;
-	AbsBranch* mainBranch;
-	if (mode->submode.isEmpty())
-	{
-		mainBranch = BranchFactory::createNWBranch(
-			embeddedBranches::inventoryDesc,
-			this
-		);
-	}
-	else 
-	{
-		mainBranch = BranchFactory::createNWBranch(
-			embeddedBranches::partInventoryDesc,
-			this
-		);
-	}
-#ifdef QT_VERSION5X
-	QObject::connect(mainBranch, &AbsBranch::backRequired, this, &UamobiUtil::gotoModeSelection);
-    QObject::connect(mainBranch, &AbsBranch::done, this, &UamobiUtil::closeBranch);
-#else
-    QObject::connect(mainBranch, SIGNAL(backRequired()), this, SLOT(gotoModeSelection()));
-    QObject::connect(mainBranch, SIGNAL(done(RecEntity)), this, SLOT(closeBranch(RecEntity)));
-#endif
-	_hideAndDeleteCurrent(mainBranch);
-	mainBranch->raiseThisBranch(mode.staticCast<AbsRecEntity>());
-}
-
-void UamobiUtil::gotoPrintingBranch(QHash<QString, QString>, Mode mode)
-{
-	using namespace independent_nodes;
-	AbsBranch* mainBranch;
-	
-	mainBranch = BranchFactory::createNWBranch(
-			embeddedBranches::printingDesc,
-		this
-		);
-#ifdef QT_VERSION5X
-	QObject::connect(mainBranch, &AbsBranch::backRequired, this, &UamobiUtil::gotoModeSelection);
-	QObject::connect(mainBranch, &AbsBranch::done, this, &UamobiUtil::closeBranch);
-#else
-	QObject::connect(mainBranch, SIGNAL(backRequired()), this, SLOT(gotoModeSelection()));
-	QObject::connect(mainBranch, SIGNAL(done(RecEntity)), this, SLOT(closeBranch(RecEntity)));
-#endif
-	_hideAndDeleteCurrent(mainBranch);
-	mainBranch->raiseThisBranch(mode.staticCast<AbsRecEntity>());
-}
 
 void UamobiUtil::resizeEvent(QResizeEvent* rev)
 {
@@ -145,19 +58,24 @@ void UamobiUtil::resizeEvent(QResizeEvent* rev)
 
 void UamobiUtil::interpretMode(QHash<QString, QString> sets, Mode mode)
 {
+	using namespace independent_nodes;
+	AbsBranch* mainBranch;
 
-	if (mode->mode == "receipt")
-	{
-		gotoReceiptBranch(sets, mode);
-	}
-	else if (mode->mode == "inventory")
-	{
-		gotoInventoryBranch(sets, mode);
-	}
-	else if (mode->mode == "printing")
-	{
-		gotoPrintingBranch(sets, mode);
-	}
+	if (mode->submode.isEmpty())
+		return;
+	mainBranch = BranchFactory::createNWBranch(
+		mode->submode,
+		this
+	);
+#ifdef QT_VERSION5X
+	QObject::connect(mainBranch, &AbsBranch::backRequired, this, &UamobiUtil::gotoModeSelection);
+	QObject::connect(mainBranch, &AbsBranch::done, this, &UamobiUtil::closeBranch);
+#else
+	QObject::connect(mainBranch, SIGNAL(backRequired()), this, SLOT(gotoModeSelection()));
+	QObject::connect(mainBranch, SIGNAL(done(RecEntity)), this, SLOT(closeBranch(RecEntity)));
+#endif
+	_hideAndDeleteCurrent(mainBranch);
+	mainBranch->raiseThisBranch(mode.staticCast<AbsRecEntity>());
 }
 
 

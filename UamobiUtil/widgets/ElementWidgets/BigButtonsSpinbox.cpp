@@ -7,6 +7,11 @@
 #endif
 #include <cmath>
 #include <qcalendarwidget.h>
+
+#ifndef QStringLiteral
+#define QStringLiteral(A) QString::fromUtf8("" A "" , sizeof(A)-1)
+#endif
+
 void BigButtonsSpinbox::showEvent(QShowEvent* ev)
 {
 	QWidget::showEvent(ev);
@@ -35,7 +40,8 @@ BigButtonsSpinbox::BigButtonsSpinbox(spintype type, QWidget* parent, double adap
 	buttonUp(new QPushButton(this)), buttonDown(new QPushButton(this)),
 	infoLabel(new QLabel(this)),
 	keyFilter(new filters::CaptureBackFilter(this)),
-	coreSpinbox()
+	coreSpinbox(),
+	lastEmit(QTime::currentTime())
 {
 	switch (type)
 	{
@@ -93,16 +99,12 @@ BigButtonsSpinbox::BigButtonsSpinbox(spintype type, QWidget* parent, double adap
 #ifdef QT_VERSION5X
 	QObject::connect(buttonUp, &QPushButton::pressed, coreSpinbox, &QAbstractSpinBox::stepUp);
 	QObject::connect(buttonDown, &QPushButton::pressed, coreSpinbox, &QAbstractSpinBox::stepDown);
-
-		QObject::connect(coreSpinbox, &QAbstractSpinBox::editingFinished, this, &BigButtonsSpinbox::editingDone);
-
+	QObject::connect(coreSpinbox, &QAbstractSpinBox::editingFinished, this, &BigButtonsSpinbox::editingDone);
 	QObject::connect(keyFilter, &filters::CaptureBackFilter::backRequired, this, &BigButtonsSpinbox::backRequire);
 #else
 	QObject::connect(buttonUp, SIGNAL(pressed()), coreSpinbox, SLOT(stepUp()));
 	QObject::connect(buttonDown, SIGNAL(pressed()), coreSpinbox, SLOT(stepDown()));
-
-		QObject::connect(coreSpinbox, SIGNAL(editingFinished()), this, SLOT(editingDone()));
-
+	QObject::connect(coreSpinbox, SIGNAL(editingFinished()), this, SLOT(editingDone()));
 	QObject::connect(keyFilter, SIGNAL(backRequired()), this, SLOT(backRequire()));
 #endif
 
@@ -153,7 +155,7 @@ BigButtonsSpinbox::BigButtonsSpinbox(spintype type, QWidget* parent, double adap
 #ifdef QT_VERSION5X
 				QObject::connect(dsp, &QDateEdit::dateChanged, this, &BigButtonsSpinbox::dateChanged);
 #else
-				QObject::connect(dsp, SIGNAL(dateChanged(const QDate&)), this, SIGNAL(dateChanged(const QDate&))));
+                QObject::connect(dsp, SIGNAL(dateChanged(const QDate&)), this, SIGNAL(dateChanged(const QDate&)));
 #endif
 			}
 		}
@@ -172,7 +174,7 @@ BigButtonsSpinbox::BigButtonsSpinbox(spintype type, QWidget* parent, double adap
 #ifdef QT_VERSION5X
 				QObject::connect(tsp, &QTimeEdit::timeChanged, this, &BigButtonsSpinbox::timeChanged);
 #else
-				QObject::connect(tsp, SIGNAL(timeChanged(const QTime&)), this, SIGNAL(timeChanged(const QTime&))));
+                QObject::connect(tsp, SIGNAL(timeChanged(const QTime&)), this, SIGNAL(timeChanged(const QTime&)));
 #endif
 			}
 		}
@@ -191,7 +193,7 @@ BigButtonsSpinbox::BigButtonsSpinbox(spintype type, QWidget* parent, double adap
 #ifdef QT_VERSION5X
 				QObject::connect(dtp, &QDateTimeEdit::dateTimeChanged, this, &BigButtonsSpinbox::dateTimeChanged);
 #else
-				QObject::connect(dtp, SIGNAL(dateTimeChanged(const QDateTime&)), this, SIGNAL(dateTimeChanged(const QDateTime&))));
+                QObject::connect(dtp, SIGNAL(dateTimeChanged(const QDateTime&)), this, SIGNAL(dateTimeChanged(const QDateTime&)));
 #endif
 			}
 		}
@@ -457,6 +459,7 @@ void BigButtonsSpinbox::setStyleSheet(const QString& st)
 	coreSpinbox->setStyleSheet(st);
 }
 
+
 void BigButtonsSpinbox::timeValueChanged(const QTime& t)
 {
 	emit timeChanged(t);
@@ -481,7 +484,11 @@ void BigButtonsSpinbox::editingDone()
 		}
 		
 	}
-	emit returnPressed();
+	if (lastEmit.msecsTo(QTime::currentTime()) > 50)
+	{
+		emit returnPressed();
+		lastEmit = QTime::currentTime();
+	}
 }
 
 void BigButtonsSpinbox::backRequire()

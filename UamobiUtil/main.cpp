@@ -10,17 +10,11 @@
 #include "networking/Parsers/DynamicLinearParsers.h"
 #include "debugtrace.h"
 #include <QProxyStyle>
-//#define TESTING
 
 /*
 		This is uamobiUtil app, which is suited to replace old one. Main idea is the same.
 		This realisation is Qt5-based, with guarding macros to allow legacy-compatibility with qt4.
 		All new elements must be ready to compile under qt4\CE, so try to provide legacy versions.
-
-		Legenda:
-			P'%s' ->encloses any data structure that is parsed from net response. They are stored at RequestParser file;
-			__ASSOCIATED_DATABASE_FUNCTION__  -> this means that this function is used by provided code
-			__OPTIONAL_REPLACEMENT_DBFUNCTION__ -> this means that this fuction can replace upper database function in some cases
 
 */
 //#define TESTING
@@ -46,9 +40,8 @@ class WinCEProxyStyle : public QProxyStyle
 int main(int argc, char* argv[])
 {
 	QApplication a(argc, argv);
-	AppSettings->timeoutInt = 10000;					//	while not actual version - timeout is maximized to avoid testing delays
+	debugtrace::init(detr_supply::all, detr_supply::file);
 	AppSettings->setTranslator();
-	AppSettings->HttpUrl = "una.md:3323/um/sammy0520181.php";
 #ifdef Q_OS_WINCE
     UamobiUtil w;
 	w.move(0, 0);
@@ -57,8 +50,8 @@ int main(int argc, char* argv[])
     w.raise();
     w.move(0, -24);
     w.setWindowFlags((w.windowFlags() | Qt::FramelessWindowHint | Qt::CustomizeWindowHint)
-                                  & ~(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowMinMaxButtonsHint
-                                       | Qt::WindowCloseButtonHint | Qt::Dialog | Qt::WindowContextHelpButtonHint));
+        & ~(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowMinMaxButtonsHint
+       | Qt::WindowCloseButtonHint | Qt::Dialog | Qt::WindowContextHelpButtonHint));
     w.setFixedHeight(calculateAdaptiveButtonHeight(1));
 	w.setFixedWidth(calculateAdaptiveWidth(1));
     QTimer::singleShot(1, &w, SLOT(showMaximized()));

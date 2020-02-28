@@ -3,7 +3,6 @@
 #ifdef Q_OS_ANDROID
 #include <QInputMethod>
 #endif
-#define DEBUG
 #ifdef DEBUG
 #include <debugtrace.h>
 #endif

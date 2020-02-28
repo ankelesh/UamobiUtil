@@ -1,21 +1,8 @@
 #include "DynamicLinearParsers.h"
-#define DEBUG
-
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
-static QVector<QString> _initOpts()
-{
-	QVector<QString> temp;
-	temp.push_back("cmid");
-	temp.push_back("qty");
-	temp.push_back("box");
-	temp.push_back("highlight");
-	return temp;
-}
 
-static const QVector<QString> itemOptionals(_initOpts());
-static const int IOLEN = 4;
 
 bool TwoStateListParser::_doParsing()
 {

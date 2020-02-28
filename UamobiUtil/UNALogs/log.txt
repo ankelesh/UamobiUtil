@@ -1,0 +1,34 @@
+
+][Created object LoginWidget on address 1028048
+
+][Created object MainPageWidget on address 533480
+
+][Created object Adjustable branch with 5 children on address 80096824
+Node of type 10 fabricated using description:  children: 0 oqs: 0
+
+][Created object PlaceSelection on address 1169296
+Node of type 9 fabricated using description:  children: 0 oqs: 0
+
+][Created object SelectItemFromList on address 691768
+Node of type 8 fabricated using description:  children: 0 oqs: 0
+
+][Created object IdDependentSelect on address 79793744
+Node of type 4 fabricated using description:  children: 0 oqs: 0
+
+][Created object ReceiptParametersWidget on address 1169296
+Node of type 5 fabricated using description:  children: 0 oqs: 1
+
+][Created object NormalScaning on address 693368
+
+][Created object ControlListWidget on address 83290864
+
+][Created object DocResults on address 83184912
+
+][Created object PagedSearchWidget on address 462136
+activated observer with p\s pair $ Return|
+
+
+->Method called: translate control qty3 | in object 15052556
+returningÊîë-âî
+
+][Created object control-like of type 1 on address 83275176

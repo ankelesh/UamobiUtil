@@ -1,8 +1,19 @@
 #include "SwitchSubbranch.h"
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/BranchingTools/BranchFactory.h"
+
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
+
 void SwitchSubbranch::_handleRecord(RecEntity e)
 {
+	if (e.isNull())
+	{
+#ifdef DEBUG
+		detrace_METHPERROR("_handleRecord", "null entity provided");
+#endif
+	}
 	toGive = RecEntity( e->clone());
 }
 

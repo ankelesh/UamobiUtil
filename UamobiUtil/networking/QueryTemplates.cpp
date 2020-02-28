@@ -50,10 +50,11 @@ namespace QueryTemplates
 		c[getFilterItem] = queryTemplates.value(QStringLiteral("getFilterItem"), QStringLiteral("get_filter_item&session=%1&parent=%2")).toString();
 		c[documentDeleteAll] = queryTemplates.value(QStringLiteral("DocumentDeleteAll"), QStringLiteral("	")).toString();
 		c[docDeleteByBarcode] = queryTemplates.value(QStringLiteral("docDeleteByBarcode"), QStringLiteral("doc_result_delete_by_bc&session=%1&barcode=%2%3")).toString();
-		c[recListTemplated] = queryTemplates.value(QStringLiteral("recListTemplated"), QStringLiteral("rec_list_%2&session=%1&text=%3%4")).toString();
+        c[recListTemplated] = queryTemplates.value(QStringLiteral("recListTemplated"), QStringLiteral("rec_list_%2&session=%1&text=%3%4")).toString();
 		c[applyBarcodeFilter] = queryTemplates.value(QStringLiteral("applyBarcodeFilter"), QStringLiteral("select_filter_item&session=%1&filter=%2&value=%3")).toString();
 		c[receiptAddItemExpanded] = queryTemplates.value(QStringLiteral("receiptAddItemExpanded"), QStringLiteral("rec_add_item&session=%1&barcode=%2&qty=%3&price=0&prs=%4")).toString();
 		c[docGetItemLabel] = queryTemplates.value(QStringLiteral("docGetItemLabel"), QStringLiteral("doc_get_item_label&session=%1&barcode=%2&qty=%3&printer=%4")).toString();
+		c[setVersionForBarcode] = queryTemplates.value(QStringLiteral("setVersionForBarcode"), QStringLiteral("set_version_for_barcode&session=%1&barcode=%2&version=%3")).toString();
 		if (!ok)
 		{
 			int i = 0;
@@ -182,13 +183,15 @@ int QueryTemplates::getQueryArguments(const QueryId id)
 	case docDeleteByBarcode:
 		return   2;
 	case recListTemplated:
-		return   3;
+		return   2;
 	case applyBarcodeFilter:
 		return   2;
 	case receiptAddItemExpanded:
 		return   3;
 	case docGetItemLabel:
 		return   3;
+	case setVersionForBarcode:
+		return 2;
 	default:
 		return 0;
 	}
@@ -196,6 +199,10 @@ int QueryTemplates::getQueryArguments(const QueryId id)
 bool QueryTemplates::assertArgQuantity(int argc, QueryTemplates::QueryId id)
 {
 	using namespace QueryTemplates;
+#ifdef DEBUG
+	if (!(getQueryArguments(id)== argc))
+		detrace_NETERROR("error sending query with a/a: ", argc << " / " << getQueryArguments(id));
+#endif
 	return argc == getQueryArguments(id);
 }
 
@@ -373,6 +380,10 @@ void QueryTemplates::OverloadableQuery::setAllArgsFilter(QStringList allArgs)
 
 bool QueryTemplates::OverloadableQuery::assertArgQuantity(int argc) const
 {
+#ifdef DEBUG
+	if (!(argumentListLength == argc))
+		detrace_NETERROR("error sending query with a/a: ", argc << " / " << argumentListLength);
+#endif
 	return argumentListLength == argc;
 }
 

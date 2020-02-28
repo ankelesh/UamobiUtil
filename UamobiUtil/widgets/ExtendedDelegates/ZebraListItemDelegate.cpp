@@ -1,9 +1,10 @@
 #include "ZebraListItemDelegate.h"
+#include "widgets/utils/ElementsStyles.h"
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
 ZebraItemDelegate::ZebraItemDelegate(QObject* parent)
-	: QItemDelegate(parent)
+	: QItemDelegate(parent), fm(*AppFonts->general())
 {
 }
 
@@ -24,7 +25,7 @@ void ZebraItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 	if (option.state.testFlag(QStyle::State_Selected))
 	{
 		painter->setBrush(option.palette.highlight());
-		painter->setOpacity(0.4);
+        painter->setOpacity(0.4f);
 		painter->drawRect(option.rect);
 		painter->setOpacity(1);
 	}
@@ -37,11 +38,14 @@ QSize ZebraItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QMod
 {
 	if (index.isValid())
 	{
-		bool ok;
-		int temp = index.data(Qt::SizeHintRole).toInt(&ok);
-		if (ok)
-			return QSize(option.rect.width(),
-					option.fontMetrics.height()* temp);
+		if (index.data(Qt::SizeHintRole).toInt() == 2)
+		{
+			QSize rct = fm.boundingRect(option.rect, Qt::TextWordWrap, index.data(Qt::DisplayRole).toString()).size();
+			return QSize(
+				rct.width(),
+				rct.height() * 2);
+		}
+		return fm.boundingRect(option.rect, Qt::TextWordWrap, index.data(Qt::DisplayRole).toString()).size();
 	}
-		return QSize(option.rect.width(), option.fontMetrics.height() * 2);
+	return QItemDelegate::sizeHint(option, index);
 }

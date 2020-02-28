@@ -294,6 +294,7 @@ public:
 		return true;
 	}
 	
+	XmlObjects takeObjects();
 };
 
 typedef NetRequestResponse<AbsRecEntity> PolyResponse;
@@ -361,4 +362,14 @@ bool NetRequestResponse<AbsRecEntity>::fromHeterogenicXmlObjects(const XmlObject
 		}
 	}
 	return true;
+}
+
+template<class NetObject>
+inline XmlObjects NetRequestResponse<NetObject>::takeObjects()
+{
+	
+	XmlObjects temp(additionalObjects);
+	objects.clear();
+	return temp;
+	
 }

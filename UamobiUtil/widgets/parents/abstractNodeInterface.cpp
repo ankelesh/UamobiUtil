@@ -34,10 +34,6 @@ void abstractNode::_hideAny(inframedWidget* replacement)
 		main->setFocus();
 	}
 	replacement->show();
-
-#ifdef DEBUG
-	detrace_METHEXPL("replacement " << (long long int) replacement << " untch: " << (long long int) untouchable);
-#endif
 }
 
 
