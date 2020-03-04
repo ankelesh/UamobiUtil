@@ -24,7 +24,7 @@ void IdDependentSelectWidget::_handleRecord(RecEntity e)
 
 IdDependentSelectWidget::IdDependentSelectWidget(RecEntity proto, QWidget* parent)
 	: IndependentBranchNode(independent_nodes::IdDependentSelect, parent),
-	prototype(proto), dependency(), entityModel(new DataEntityListModel(this)),
+     dependency(),prototype(proto), entityModel(new DataEntityListModel(this)),
 	mainLayout(new QVBoxLayout(this)), userInfo(new QLabel(this)),
 	selectionView(new QListView(this)),
 	buttonLayout(new QHBoxLayout(this)), backButton(new MegaIconButton(this)),
@@ -133,9 +133,9 @@ void IdDependentSelectWidget::parse_get_response()
 	}
 	else
 	{
-		entityModel->setData(response.objects);
+        entityModel->insertData(response.objects);
 	}
-	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
+    QObject::disconnect(awaiter, SIGNAL(requestReceived()), Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
 }
 
@@ -156,14 +156,14 @@ void IdDependentSelectWidget::parse_select_response()
 		detrace_NRESPERR(parser.getErrors());
 #endif
 	}
-	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
+    QObject::disconnect(awaiter, SIGNAL(requestReceived()), Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
 }
 
 void IdDependentSelectWidget::was_timeout()
 {
 	userInfo->setText(tr("timeout: ") + QString::number(awaiter->getInterval()));
-	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
+    QObject::disconnect(awaiter, SIGNAL(requestReceived()), Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
 }
 
@@ -181,6 +181,7 @@ void IdDependentSelectWidget::_makeOverloads(const QVector<QueryTemplates::Overl
         localCache.insert(receiptListOrders, overloads.at(1).assertedAndMappedCopy(
             receiptListOrders, t,t
 		));
+        Q_FALLTHROUGH();
     }
 	case 1:
     {
@@ -188,6 +189,7 @@ void IdDependentSelectWidget::_makeOverloads(const QVector<QueryTemplates::Overl
         t << "itemId" << "depId";
         localCache.insert(receiptGetOrderInfo, overloads.at(0).assertedAndMappedCopy(
             receiptGetOrderInfo, t,t));
+        break;
     }
 	default:
 		return;

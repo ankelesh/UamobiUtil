@@ -59,7 +59,7 @@ QString ModeEntity::makeTitle() const
 
 QString ModeEntity::extractId() const
 {
-	return 0;
+    return QString();
 }
 
 bool ModeEntity::deepCompare(const AbsRecEntity* another) const
@@ -85,13 +85,13 @@ bool ModeEntity::sortingCompare(const QSharedPointer<AbsRecEntity> another) cons
 	return this > &(*( another));
 }
 
-bool ModeEntity::useAssociatedNetworkSendMethod(QStringList& /*arguments*/, RequestAwaiter* awaiter) const
+bool ModeEntity::useAssociatedNetworkSendMethod(const QStringList& /*arguments*/, RequestAwaiter* awaiter) const
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::selectMode, mode, submode, awaiter);
 	return true;
 }
 
-bool ModeEntity::useAssociatedNetworkGetMethod(QStringList& /*arguments*/, RequestAwaiter* awaiter) const
+bool ModeEntity::useAssociatedNetworkGetMethod(const QStringList& /*arguments*/, RequestAwaiter* awaiter) const
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::modeList, AppSettings->language, awaiter);
 	return true;

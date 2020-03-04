@@ -184,7 +184,7 @@ void SelectItemFromListWidget::parse_response()
 	}
 	else
 	{
-		entityModel->setData(response.objects);
+        entityModel->insertData(response.objects);
 	}
 	hideProcessingOverlay();
 }
@@ -275,6 +275,7 @@ void SelectItemFromListWidget::_makeOverloads(const QVector<QueryTemplates::Over
             QueryTemplates::applyBarcodeFilter,t,t
         );
     }
+        Q_FALLTHROUGH();
 	case 1:
     {
         QStringList t;
@@ -287,6 +288,7 @@ void SelectItemFromListWidget::_makeOverloads(const QVector<QueryTemplates::Over
             t,t2
 		);
     }
+        Q_FALLTHROUGH();
 	default:
 		return;
 	}

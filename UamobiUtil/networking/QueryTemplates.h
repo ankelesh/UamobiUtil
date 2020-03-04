@@ -120,7 +120,7 @@ namespace QueryTemplates
 			return !overloadedQuery.isEmpty() && argumentListLength == 0 && valuesForUnpacking.isEmpty();
 		}
 		// returns query id
-		QueryId getQID() const { return expectedQuery; };
+        QueryId getQID() const { return expectedQuery; }
 		// returns static default query which can be used as null
 		static const OverloadableQuery& defaultQuery();
 		// main interface function, applies arguments and returns url ready to be sent

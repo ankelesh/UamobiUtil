@@ -22,9 +22,13 @@ protected:
 	virtual bool valueAvailable() const override;
 	virtual QWidget* getInnerWidget() const override;
 public:
-	explicit QuantityControl(bool isInt, QString& cname, QWidget* parent);
+    explicit QuantityControl(bool isInt, const QString& cname, QWidget* parent);
 	virtual void show() override;
 	virtual void hide() override;
 	virtual void setFocus() const override;
-    virtual ~QuantityControl();
+    virtual ~QuantityControl()
+#ifdef QT_VERSION5X
+    override
+#endif
+    ;
 };

@@ -25,7 +25,7 @@ void ZebraItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 	if (option.state.testFlag(QStyle::State_Selected))
 	{
 		painter->setBrush(option.palette.highlight());
-        painter->setOpacity(0.4f);
+        painter->setOpacity(0.4);
 		painter->drawRect(option.rect);
 		painter->setOpacity(1);
 	}
@@ -38,14 +38,7 @@ QSize ZebraItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QMod
 {
 	if (index.isValid())
 	{
-		if (index.data(Qt::SizeHintRole).toInt() == 2)
-		{
-			QSize rct = fm.boundingRect(option.rect, Qt::TextWordWrap, index.data(Qt::DisplayRole).toString()).size();
-			return QSize(
-				rct.width(),
-				rct.height() * 2);
-		}
-		return fm.boundingRect(option.rect, Qt::TextWordWrap, index.data(Qt::DisplayRole).toString()).size();
+		return  QSize(option.rect.width(), index.data(Qt::SizeHintRole).toSize().height() * option.fontMetrics.height());
 	}
 	return QItemDelegate::sizeHint(option, index);
 }

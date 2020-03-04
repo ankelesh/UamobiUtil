@@ -1,6 +1,6 @@
 #ifndef TTY_H
 #define TTY_H
-
+#ifdef FTR_COM
 #include <QString>
 #include <qt_windows.h>
 
@@ -15,11 +15,12 @@ public:
 	void disconnect();
 	bool write(const QByteArray &data);
 	void read(QByteArray data);
-	bool isConnected() { return isReady; };
+    bool isConnected() { return isReady; }
 	QString getErrors() {
-		return errorBuffer;
-	};
+        return errorBuffer;
+    }
 	~TTY();
 };
 
+#endif
 #endif

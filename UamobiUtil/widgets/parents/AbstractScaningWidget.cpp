@@ -11,7 +11,7 @@
 #endif
 #include "ScaningCore/BarcodeObserver.h"
 
-void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEntity> >& cvals)
+void AbstractScaningWidget::useControls(const QVector<QSharedPointer < InputControlEntity> >& cvals)
 {
     switch (cvals.count())
 	{
@@ -21,9 +21,11 @@ void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEnt
 		case 2:
 			innerLayout->removeWidget(second_control->myWidget());
 			second_control.clear();
+            Q_FALLTHROUGH();
 		case 1:
 			innerLayout->removeWidget(first_control->myWidget());
 			first_control.clear();
+            Q_FALLTHROUGH();
 		case 0:
 			setFocus();
 			controlsRequired = false;
@@ -74,12 +76,14 @@ void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEnt
 				innerLayout->removeWidget(second_control->myWidget());
 				second_control.clear();
 			}
+            Q_FALLTHROUGH();
 		case 1:
 			if (!(cvals.at(1)->type == first_control->myType()))
 			{
 				innerLayout->removeWidget(first_control->myWidget());
 				first_control.clear();
 			}
+            Q_FALLTHROUGH();
 		case 0:
 			if (first_control.isNull())
 			{
@@ -109,12 +113,13 @@ void AbstractScaningWidget::useControls(QVector<QSharedPointer < InputControlEnt
 void AbstractScaningWidget::wipe()
 {
 	barcodeField->clear();
+	
 }
 
 
 
-AbstractScaningWidget::AbstractScaningWidget(int id, QWidget* parent)
-	: IndependentBranchNode(id, parent), document(new FullDocumentEntity()),
+AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)
+    : IndependentBranchNode(Id, parent), document(new FullDocumentEntity()),
 	mainLayout(new QVBoxLayout(this)), innerWidget(new inframedWidget(this)),
 	innerLayout(new QVBoxLayout(innerWidget)), topPanelLayout(new QHBoxLayout(innerWidget)),
 	userInfo(new QLabel(innerWidget)),
@@ -224,7 +229,7 @@ void AbstractScaningWidget::quitNoSave()
         QMessageBox::Ok| QMessageBox::Cancel);
     if (response == QMessageBox::Ok)
 	{
-		AppNetwork->execQueryByTemplate(QueryTemplates::unlockDocument, false, Q_NULLPTR); 
+        AppNetwork->execQueryByTemplate(QueryTemplates::unlockDocument, "false", Q_NULLPTR);
 		BarcodeObs->deactivate();
 		emit backRequired();
 	}

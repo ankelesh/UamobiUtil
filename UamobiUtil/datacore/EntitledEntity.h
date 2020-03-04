@@ -34,8 +34,8 @@ protected:
 	// Inherited via EntitledEntity
 	virtual bool fromUniXml(const UniformXmlObject& o) override;
 	virtual AbsRecEntity* fabricate() const override;
-	virtual bool useAssociatedNetworkSendMethod(QStringList& arguments, RequestAwaiter* awaiter) const override;
-	virtual bool useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const override;
+    virtual bool useAssociatedNetworkSendMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
+    virtual bool useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
 };
 
 typedef QSharedPointer<SupplierEntity> Supplier;
@@ -48,8 +48,8 @@ public:
 	OrderEntity(QString c = QString(), QString t = QString(), QString tx = QString());
 protected:
 	// Inherited via EntitledEntity
-	virtual bool useAssociatedNetworkSendMethod(QStringList& arguments, RequestAwaiter* awaiter) const override;
-	virtual bool useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const override;
+    virtual bool useAssociatedNetworkSendMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
+    virtual bool useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
 	virtual bool fromUniXml(const UniformXmlObject& o) override;
 	virtual AbsRecEntity* fabricate() const override;
 };
@@ -66,6 +66,6 @@ public:
 protected:
 	virtual bool fromUniXml(const UniformXmlObject& o) override;
 	virtual AbsRecEntity* fabricate() const override;
-	virtual bool useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const override;
+    virtual bool useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
 
 };

@@ -4,8 +4,8 @@
 // utility
 
 
-const float VERSION = 0.05f;
-const char* SUFFIX = "nightly";
+const float VERSION = 0.06f;
+const char* SUFFIX = "alpha";
 
 void GlobalAppSettings::setTranslator()
 {
@@ -56,7 +56,7 @@ GlobalAppSettings::GlobalAppSettings()
 	QSettings settings("settings.ini", QSettings::IniFormat);
 	HttpUrl = settings.value("http_host", "http://una.md:3323/").toString();
 	language = settings.value("app_lang", "English").toString();
-	timeoutInt = settings.value("timeout", 200000000).toInt();
+	timeoutInt = settings.value("timeout", 20000).toInt();
 	AlternativeAdresses = settings.value("alt_hosts", QVariant(QStringList())).toStringList();
 	scanPrefix = settings.value("scan_prefix", 36).toInt();
 	scanSuffix = settings.value("scan_suffix", 10).toInt();
@@ -68,4 +68,5 @@ GlobalAppSettings::GlobalAppSettings()
 	printerType = settings.value("printer_type", "zebra").toString();
 	alternativePrinters = settings.value("alternative_printers", QVariant(QStringList())).toStringList();
 	setTranslator();
+
 }

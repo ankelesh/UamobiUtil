@@ -111,5 +111,10 @@ void AbsResponseParser::reset(QString& res, QString& err)
 
 XmlObjects& AbsResponseParser::read()
 {
-	return parseResult;
+    return parseResult;
+}
+
+AbsResponseParser::~AbsResponseParser()
+{
+
 }

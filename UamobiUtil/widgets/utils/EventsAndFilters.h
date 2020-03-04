@@ -29,7 +29,7 @@ namespace filters
 		bool eventFilter(QObject* object, QEvent* ev);
 
 	public:
-		NoKeyEvents(QObject* ob) : QObject(ob) {};
+        NoKeyEvents(QObject* ob) : QObject(ob) {}
 	signals:
 		void numberObtained(QString);	//	holds number ready to be appended
 		void returnObtained();			//	return was pressed
@@ -44,7 +44,7 @@ namespace filters
 	protected:
 		bool eventFilter(QObject* object, QEvent* ev);
 	public:
-		CaptureBackFilter(QObject* ob) : QObject(ob) {};
+        CaptureBackFilter(QObject* ob) : QObject(ob) {}
 	signals:
 		void backRequired();
 	};
@@ -54,7 +54,7 @@ namespace filters
 	protected:
 		bool eventFilter(QObject* watched, QEvent* event) override;
 	public:
-		LineEditHelper(QObject* ob) : QObject(ob) {};
+        LineEditHelper(QObject* ob) : QObject(ob) {}
 	};
 	class GeneralPurposeFilter : public QObject
 	{

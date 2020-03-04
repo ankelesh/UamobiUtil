@@ -22,6 +22,7 @@ void ObservedScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloa
 				QueryTemplates::setVersionForBarcode, t, t
 			));
 	}
+        Q_FALLTHROUGH();
 	case 3:
 	{
 		QStringList t;
@@ -31,6 +32,7 @@ void ObservedScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloa
 			t, t
 		));
 	}
+        Q_FALLTHROUGH();
 	case 2:
 	{
 		QStringList t;
@@ -41,6 +43,7 @@ void ObservedScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloa
 			receiptAddItemExpDate,
 			t, t2));
 	}
+        Q_FALLTHROUGH();
 	case 1:
 	{
 		QStringList t;
@@ -49,6 +52,7 @@ void ObservedScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloa
 			QueryTemplates::getItemInfo,
 			t, t));
 	}
+        Q_FALLTHROUGH();
 	default:
 		break;
 	}
@@ -62,6 +66,7 @@ void ObservedScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloa
 			OverloadableQuery(QueryTemplates::setVersionForBarcode, t, t
 			));
 	}
+        Q_FALLTHROUGH();
 	case 3:
 	{
 		QStringList t;
@@ -72,6 +77,7 @@ void ObservedScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloa
 			QueryTemplates::getItemInfo,
 			t, t2));
 	}
+        Q_FALLTHROUGH();
 	case 2:
 	{
 		QStringList t;
@@ -81,6 +87,7 @@ void ObservedScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloa
 		localCache.insert(receiptAddItemExpDate, OverloadableQuery(receiptAddItemExpDate,
 			t, t2));
 	}
+        Q_FALLTHROUGH();
 	case 1:
 	{
 		QStringList t;
@@ -90,6 +97,7 @@ void ObservedScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloa
 			t,
 			t));
 	}
+        Q_FALLTHROUGH();
 	default:
 		return;
 	}

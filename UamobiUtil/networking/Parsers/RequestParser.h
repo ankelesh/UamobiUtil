@@ -17,7 +17,7 @@
 namespace RequestParser
 {
 	template <class NetResp>
-	NetRequestResponse<NetResp> parseResponse(QSharedPointer<AbsResponseParser>& parser)
+    NetRequestResponse<NetResp> parseResponse(QSharedPointer<AbsResponseParser> parser)
 	{
 		
 		if (parser->isSuccessfull())
@@ -32,11 +32,11 @@ namespace RequestParser
 			return NetRequestResponse<NetResp>(parser->getErrors());
 	};
 	template<>
-	inline NetRequestResponse<AbsRecEntity> parseResponse<AbsRecEntity>(QSharedPointer<AbsResponseParser>& parser)
+    inline NetRequestResponse<AbsRecEntity> parseResponse<AbsRecEntity>(QSharedPointer<AbsResponseParser> parser)
 	{
 		return PolyResponse(parser->getErrors() + " USING WRONG PARSING TEMPLATE!!!!!!");
 	}
-	NetRequestResponse<AbsRecEntity> parseResponse(QSharedPointer<AbsResponseParser>& parser, RecEntity prototype);
+    NetRequestResponse<AbsRecEntity> parseResponse(QSharedPointer<AbsResponseParser> parser, RecEntity prototype);
 	PolyResponse parseResponse(PolyResponse resp, RecEntity prototype);
 }
 

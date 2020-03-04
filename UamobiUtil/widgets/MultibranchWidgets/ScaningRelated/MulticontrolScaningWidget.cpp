@@ -51,6 +51,7 @@ void MulticontrolScaningWidget::_makeOverloads(const QVector<QueryTemplates::Ove
 			t, t
 		));
 	}
+        Q_FALLTHROUGH();
 	case 2:
 	{
 		QStringList t;
@@ -61,6 +62,7 @@ void MulticontrolScaningWidget::_makeOverloads(const QVector<QueryTemplates::Ove
 			receiptAddItemExpDate,
 			t, t2));
 	}
+        Q_FALLTHROUGH();
 	case 1:
 	{
 		QStringList t;
@@ -69,6 +71,7 @@ void MulticontrolScaningWidget::_makeOverloads(const QVector<QueryTemplates::Ove
 			QueryTemplates::getItemInfo,
 			t, t));
 	}
+        Q_FALLTHROUGH();
 	default:
 		break;
 	}
@@ -82,6 +85,7 @@ void MulticontrolScaningWidget::_makeOverloads(const QVector<QueryTemplates::Ove
 			QueryTemplates::getItemInfo,
 			t, t));
 	}
+        Q_FALLTHROUGH();
 	case 2:
 	{
 		QStringList t;
@@ -91,6 +95,7 @@ void MulticontrolScaningWidget::_makeOverloads(const QVector<QueryTemplates::Ove
 		localCache.insert(receiptAddItemExpDate, OverloadableQuery(receiptAddItemExpDate,
 			t, t2));
 	}
+        Q_FALLTHROUGH();
 	case 1:
 	{
 		QStringList t;
@@ -100,6 +105,7 @@ void MulticontrolScaningWidget::_makeOverloads(const QVector<QueryTemplates::Ove
 			t,
 			t));
 	}
+        Q_FALLTHROUGH();
 	default:
 		return;
 	}
@@ -134,6 +140,7 @@ MulticontrolScaningWidget::MulticontrolScaningWidget(QWidget* parent,
 	innerLayout->insertWidget(innerLayout->count() - 1, toControls);
 	toControls->setStyleSheet(CHANGE_BUTTONS_STYLESHEET);
 	toControls->setText(tr("Enter data"));
+	toControls->setIcon(QIcon(":/res/pencil.png"));
 	controlList->hide();
 	toControls->setDisabled(true);
 
@@ -193,19 +200,28 @@ void MulticontrolScaningWidget::setDocument(Order o)
 	awaiter->deliverResultTo(receiptNewDocument);
 }
 
-void MulticontrolScaningWidget::useControls(IControlList& clist)
+void MulticontrolScaningWidget::useControls(const IControlList& clist)
 {
 	if (clist.isEmpty())
 	{
 		controlList->clearControls();
 		toControls->setDisabled(true);
+		submitButton->setDisabled(true);
 	}
 	else
 	{
 		controlList->useControls(clist);
 		toControls->setDisabled(false);
 		toControls->setFocus();
+		toControls->setText(controlList->joinedControls());
+		submitButton->setDisabled(false);
 	}
+}
+
+void MulticontrolScaningWidget::wipe()
+{
+	AbstractScaningWidget::wipe();
+	toControls->setText(tr("EnterData"));
 }
 
 void MulticontrolScaningWidget::submitPressed()
@@ -335,7 +351,10 @@ void MulticontrolScaningWidget::document_confirmed_response()
 
 void MulticontrolScaningWidget::hideCurrent()
 {
-
+	if (sender() == controlList)
+	{
+		toControls->setText(controlList->joinedControls());
+	}
 	_hideCurrent(innerWidget);
 }
 

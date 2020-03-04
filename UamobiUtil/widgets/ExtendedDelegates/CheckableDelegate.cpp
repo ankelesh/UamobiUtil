@@ -2,8 +2,8 @@
 #include "networking/things.h"
 
 
-QPixmap* cachedChI;
-QPixmap* cachedUchI;
+static QPixmap* cachedChI;
+static QPixmap* cachedUchI;
 
 void CheckableDelegate::cacheImages(QRect& newRect) const
 {
@@ -48,9 +48,9 @@ void CheckableDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 		painter->setBrush(QBrush(uncheckedColor));
 	}
 	painter->drawRect(option.rect);
-	QRect imgRect(option.rect.topLeft().x() + option.rect.height() * 0.1, 
-		option.rect.topLeft().y() + option.rect.height() * 0.1, option.rect.height() * 0.9,
-		option.rect.height() * 0.9);
+    QRect imgRect(option.rect.topLeft().x() + int(option.rect.height() * 0.1),
+        option.rect.topLeft().y() + int(option.rect.height() * 0.1), int(option.rect.height() * 0.9),
+        int(option.rect.height() * 0.9));
 	cacheImages(imgRect);
 	if (item->getAttachedNumber() == 1)
 	{
@@ -61,7 +61,7 @@ void CheckableDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 		painter->drawPixmap(imgRect, *cachedUchI);
 	}
 	imgRect.setTopLeft(QPoint(
-		option.rect.topLeft().x() + option.rect.height() * 0.9, 
+        option.rect.topLeft().x() + int(option.rect.height() * 0.9),
 		option.rect.topLeft().y()));
 	imgRect.setBottomRight(option.rect.bottomRight());
 	

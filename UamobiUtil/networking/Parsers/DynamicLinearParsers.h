@@ -12,6 +12,5 @@ class TwoStateListParser : public AbsResponseParser
 protected:
 	virtual bool _doParsing() override;
 public:
-	TwoStateListParser(QString res, QString err) : AbsResponseParser(res, err) { success = run(); };
-
+    TwoStateListParser(QString res, QString err) : AbsResponseParser(res, err) { success = run(); }
 };

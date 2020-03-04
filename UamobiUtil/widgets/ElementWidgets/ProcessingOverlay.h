@@ -36,6 +36,7 @@ protected:
 	QPolygon lowerTriangle;	//	inner polygon representing remaining time
 	QPoint centralPoint;	//	center of widget, used as starting point for drawing polygons
 	QPoint textPoint;		//	point where text is drawn
+	QLinearGradient gradient;
 	void paintEvent(QPaintEvent*);
 	void resizeEvent(QResizeEvent*);
 public:

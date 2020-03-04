@@ -3,11 +3,10 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
-const char* RECEIVER_SLOT_NAME = "requestIncoming";
 
 RequestAwaiter::RequestAwaiter(int interval, QObject* parent)
 	: QObject(parent), timer(new QTimer(this)), awaiting(false), timeoutinterval(interval),
-	awaitedReply(Q_NULLPTR), deliverTo(0)
+	awaitedReply(Q_NULLPTR), deliverTo(0), wastimeout(false)
 {
 	timer->setInterval(interval);
 	timer->setSingleShot(true);
@@ -125,5 +124,7 @@ void RequestAwaiter::replyError(QNetworkReply::NetworkError error)
 {
 #ifdef DEBUG
 	detrace_NETERROR(awaitedReply->url().toString(),   "Reply error! " << (int) error);
+#else
+    Q_UNUSED(error)
 #endif
 }

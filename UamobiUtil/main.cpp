@@ -23,7 +23,7 @@ class WinCEProxyStyle : public QProxyStyle
     virtual int pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const
     {
         if (metric == QStyle::PM_ButtonMargin)
-            return baseStyle()->pixelMetric(metric, option, widget)*2.5;
+            return int(baseStyle()->pixelMetric(metric, option, widget)*2.5);
         /*else if (metric == QStyle::PM_LayoutLeftMargin
                           || metric == QStyle::PM_LayoutTopMargin
                           || metric == QStyle::PM_LayoutRightMargin
@@ -40,7 +40,8 @@ class WinCEProxyStyle : public QProxyStyle
 int main(int argc, char* argv[])
 {
 	QApplication a(argc, argv);
-	debugtrace::init(detr_supply::all, detr_supply::file);
+	debugtrace::init(detr_supply::all, detr_supply::file, QVector<OutputMode>(), 120, false);
+    detrace_APPSTART(VERSION, SUFFIX);
 	AppSettings->setTranslator();
 #ifdef Q_OS_WINCE
     UamobiUtil w;

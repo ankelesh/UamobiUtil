@@ -5,12 +5,12 @@ int AbsRecEntity::extractEnumerable() const
 	return 0;
 }
 
-bool AbsRecEntity::useAssociatedNetworkSendMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool AbsRecEntity::useAssociatedNetworkSendMethod(const QStringList& /*arguments*/, RequestAwaiter* /*awaiter*/) const
 {
 	return false;
 }
 
-bool AbsRecEntity::useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool AbsRecEntity::useAssociatedNetworkGetMethod(const QStringList& /*arguments*/, RequestAwaiter* /*awaiter*/) const
 {
 	return false;
 }
@@ -45,12 +45,12 @@ int AbsRecEntity::myType() const
 	return class_id;
 }
 
-bool AbsRecEntity::sendAssociatedGetRequest(QStringList& arguments, RequestAwaiter* awaiter) const
+bool AbsRecEntity::sendAssociatedGetRequest(const QStringList& arguments, RequestAwaiter* awaiter) const
 {
 	return useAssociatedNetworkGetMethod(arguments, awaiter);
 }
 
-bool AbsRecEntity::sendAssociatedPostRequest(QStringList& arguments, RequestAwaiter* awaiter) const
+bool AbsRecEntity::sendAssociatedPostRequest(const QStringList& arguments, RequestAwaiter* awaiter) const
 {
 	return useAssociatedNetworkSendMethod(arguments, awaiter);
 }
@@ -78,4 +78,81 @@ bool AbsRecEntity::isHigher(AbsRecEntity* another) const
 bool AbsRecEntity::isHigher(QSharedPointer<AbsRecEntity> another) const
 {
 	return sortingCompare(another);
+}
+
+template<>
+bool NetRequestResponse<AbsRecEntity>::fromHeterogenicXmlObjects(const XmlObjects &objs, RecEntity prototype, int ares)
+{
+    alternative_result = ares;
+    objects.clear();
+    additionalObjects.clear();
+    bool ok;
+    for (int i = 0; i < objs.count(); ++i)
+    {
+        try
+        {
+            if (objs.at(i)->myOID() == prototype->myType())
+            {
+                ok = prototype->fromXmlObject(objs.at(i));
+                if (!ok)
+                {
+                    isError = true;
+                    errtext = "initialization non-throwing error";
+                    return false;
+                }
+                // only difference between non-specialized and specialized versions
+                objects.push_back(QSharedPointer<AbsRecEntity>(prototype->clone()));
+            }
+            else
+            {
+                additionalObjects.push_back(objs.at(i));
+            }
+        }
+        catch (InitializationError & ie)
+        {
+            isError = true;
+            errtext = ie.what();
+            return false;
+        }
+    }
+    return true;
+}
+
+template<>
+bool NetRequestResponse<AbsRecEntity>::fromHomogenicXmlObjects(const XmlObjects &objs, RecEntity prototype, int ares)
+{
+    alternative_result = ares;
+    bool ok = true;
+    for (int i = 0; i < objs.count(); ++i)
+    {
+        try
+        {
+            ok = prototype->fromXmlObject(objs.at(i));
+            if (!ok)
+            {
+                return false;
+            }
+            // only difference between non-specialized and specialized versions
+            objects.push_back(RecEntity(prototype->clone()));
+        }
+        catch (InitializationError & ie)
+        {
+            isError = true;
+            errtext = ie.what();
+            return false;
+        }
+    }
+    return true;
+}
+
+const char * InitializationError::what() const
+#ifdef QT_VERSION5X
+    noexcept
+#endif
+{
+#ifdef Q_OS_WINCE
+    return "init error of record";
+#else
+    return msg.c_str();
+#endif
 }

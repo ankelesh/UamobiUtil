@@ -82,8 +82,8 @@ IndependentBranchNode* AdjustableBranch::getCurrentNode()
 	return _upCO<IndependentBranchNode>();
 }
 
-AdjustableBranch::AdjustableBranch(BranchDescription root, QWidget* parent)
-: AbsBranch(root, parent), 
+AdjustableBranch::AdjustableBranch(BranchDescription Root, QWidget* parent)
+: AbsBranch(Root, parent),
 abstractDynamicNode(Q_NULLPTR, new QVBoxLayout(this)) 
 {
 #ifdef DEBUG

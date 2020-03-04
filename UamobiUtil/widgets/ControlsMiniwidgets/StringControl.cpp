@@ -26,8 +26,8 @@ QWidget* StringControl::getInnerWidget() const
 	return innerWidget;
 }
 
-StringControl::StringControl(QString name, QWidget* parent)
-	: abs_control(parent, InputControlEntity::String, name),
+StringControl::StringControl(QString Name, QWidget* Parent)
+    : abs_control(Parent, InputControlEntity::String, Name),
 	innerWidget(new QWidget(parent)),
 	innerLayout(new QVBoxLayout(innerWidget)),
 	about(new QLabel(innerWidget)),

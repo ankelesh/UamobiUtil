@@ -20,7 +20,11 @@ private:
 public:
 	explicit DateTimeControl();
 	explicit DateTimeControl(bool needsTime, QString cname=QString(), QWidget* parent = Q_NULLPTR);
-	virtual ~DateTimeControl();
+    virtual ~DateTimeControl()
+#ifdef QT_VERSION5X
+    override
+#endif
+    ;
 	virtual void setFocus() const override;
 	virtual void show() override;
 	virtual void hide() override;

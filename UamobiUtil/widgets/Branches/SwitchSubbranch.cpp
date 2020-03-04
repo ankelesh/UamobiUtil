@@ -21,7 +21,7 @@ void SwitchSubbranch::_sendDataRequest()
 {
 }
 
-void SwitchSubbranch::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads)
+void SwitchSubbranch::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& /*overloads*/)
 {
 }
 

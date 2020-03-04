@@ -57,7 +57,7 @@ protected:
 	RequestAwaiter* awaiter;
 
 
-	virtual void useControls(QVector<QSharedPointer<InputControlEntity> > &);
+    virtual void useControls(const QVector<QSharedPointer<InputControlEntity> > &);
 	virtual void wipe();
 public:
 	AbstractScaningWidget(int id, QWidget* parent);

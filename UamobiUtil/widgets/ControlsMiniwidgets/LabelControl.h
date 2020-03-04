@@ -21,7 +21,7 @@ namespace specwidgets
 		}
 	public:
 		explicit unfocusableLabel(QString& rext, QWidget* parent)
-			: QLabel(rext, parent) {};
+            : QLabel(rext, parent) {}
 	signals:
 		void returnPressed();
 	};
@@ -42,7 +42,11 @@ private:
 	virtual QWidget* getInnerWidget() const override;
 public:
 	explicit LabelControl(QString str, QWidget* parent);
-	virtual ~LabelControl();
+    virtual ~LabelControl()
+#ifdef QT_VERSION5X
+    override
+#endif
+    ;
 	virtual void setFocus() const override;
 	virtual void show() override;
 	virtual void hide() override;

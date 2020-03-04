@@ -13,7 +13,7 @@ public:
 	QString id;
 	QString name;
 	
-	NamedIdEntity(int subclass_id, QString i = 0, QString nm = QString());
+    NamedIdEntity(int subclass_id, QString i = QString(), QString nm = QString());
 protected:
 	//Inherited via AbsRecEntity
 	virtual QString makeTitle() const override;
@@ -26,13 +26,13 @@ protected:
 class PlaceEntity : public NamedIdEntity
 {
 public:
-	PlaceEntity(QString id = 0, QString nm = QString());
+    PlaceEntity(QString id = QString(), QString nm = QString());
 
 	void adjustQueryAndUseGet(QueryTemplates::QueryId quid, RequestAwaiter* awaiter);
 protected:
 	virtual bool fromUniXml(const UniformXmlObject& o) override;
-	virtual bool useAssociatedNetworkSendMethod(QStringList& arguments,RequestAwaiter* awaiter) const override;
-	virtual bool useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const override;
+    virtual bool useAssociatedNetworkSendMethod(const QStringList& arguments,RequestAwaiter* awaiter) const override;
+    virtual bool useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
 	virtual AbsRecEntity* fabricate() const override;
 };
 
@@ -42,11 +42,11 @@ typedef QVector< QSharedPointer<PlaceEntity> > PlaceList;
 class GroupEntity : public NamedIdEntity
 {
 public:
-	GroupEntity(QString id = 0, QString nm = QString());
+    GroupEntity(QString id = QString(), QString nm = QString());
 protected:
 	virtual bool fromUniXml(const UniformXmlObject& o) override;
-	virtual bool useAssociatedNetworkSendMethod(QStringList& arguments, RequestAwaiter* awaiter) const override;
-	virtual bool useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const override;
+    virtual bool useAssociatedNetworkSendMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
+    virtual bool useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
 	virtual AbsRecEntity* fabricate() const override;
 };
 
@@ -56,11 +56,11 @@ typedef QVector< QSharedPointer<GroupEntity> > GroupList;
 class StillageEntity : public NamedIdEntity
 {
 public:
-	StillageEntity(QString id = 0, QString nm = QString());
+    StillageEntity(QString id = QString(), QString nm = QString());
 protected:
 	virtual bool fromUniXml(const UniformXmlObject& o) override;
-	virtual bool useAssociatedNetworkSendMethod(QStringList& arguments, RequestAwaiter* awaiter) const override;
-	virtual bool useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const override;
+    virtual bool useAssociatedNetworkSendMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
+    virtual bool useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
 	virtual AbsRecEntity* fabricate() const override;
 };
 typedef QSharedPointer<StillageEntity> Stillage;
@@ -83,8 +83,8 @@ protected:
 	virtual AbsRecEntity* fabricate() const override;
 	virtual bool sortingCompare(const AbsRecEntity* another) const override;
 	virtual bool sortingCompare(const QSharedPointer<AbsRecEntity> another) const override;
-	virtual bool useAssociatedNetworkSendMethod(QStringList& arguments, RequestAwaiter* awaiter) const override;
-	virtual bool useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const override;
+    virtual bool useAssociatedNetworkSendMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
+    virtual bool useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
 };
 
 typedef QSharedPointer<UserEntity> User;
@@ -94,7 +94,7 @@ class DocTypeEntity : public NamedIdEntity
 {
 public:
 	bool isSelected;
-	DocTypeEntity(QString Id = 0, QString Name = QString(),bool selected = false);
+    DocTypeEntity(QString Id = QString(), QString Name = QString(),bool selected = false);
 	static void sendGetRequest(RequestAwaiter* awaiter);
 	static void sendFilterList(QString ids, RequestAwaiter* awaiter);
 protected:
@@ -102,7 +102,7 @@ protected:
 	virtual bool fromUniXml(const UniformXmlObject& o) override;
 	virtual AbsRecEntity* fabricate() const override;
 	virtual int extractEnumerable() const override;
-	virtual bool useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const override;
+    virtual bool useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
 };
 
 typedef QSharedPointer<DocTypeEntity> DocType;

@@ -244,6 +244,15 @@ const QFont & makeFont(double /*perc*/)
 	return *(FontAdapter::general());
 }
 
+void FontAdapter::_setCharPerWidth()
+{
+	QFontMetrics fm(*general());
+	int width = calculateAdaptiveWidth(0.95);
+	if (fm.averageCharWidth() == 0 || width == 0)
+		averageCharPerWidth = 10;
+	averageCharPerWidth = int(width / fm.averageCharWidth());
+}
+
 FontAdapter::FontAdapter(int mh, int mah, double mfp)
 	: minheight(mh), maxheight(mah), minimumFontPercent(mfp)
 {
@@ -257,6 +266,10 @@ void FontAdapter::reset(int mh, int Mh, double mfp)
 	maxheight = Mh;
 	minimumFontPercent = mfp;
 	*_generalFont = QFont(makeFont(1.0));
+}
+int FontAdapter::howMuchCharacterFitsIntoScreen()
+{
+	return averageCharPerWidth;
 }
 FontAdapter* FontAdapter::_instanse = Q_NULLPTR;
 QFont* FontAdapter::_generalFont = Q_NULLPTR;
@@ -275,19 +288,20 @@ const QFont* FontAdapter::general()
 	if (_generalFont == Q_NULLPTR)
 	{
 		_generalFont = new QFont(FontAdapter::makeFont(1.0));
+		FontAdapter::instanse()->_setCharPerWidth();
 	}
 	return _generalFont;
 }
 
 QFont FontAdapter::makeFont(double extrapercents)
 {
-	int currentHeight = GEOMETRY_SOURCE->availableGeometry().height();
-	currentHeight *= FontAdapter::instanse()->minimumFontPercent;
+    double currentHeight = GEOMETRY_SOURCE->availableGeometry().height();
+    currentHeight *= FontAdapter::instanse()->minimumFontPercent;
 	currentHeight *= extrapercents;
 	if (currentHeight < _instanse->minheight)
 		currentHeight = _instanse->minheight;
 	else
 		if (currentHeight > _instanse->maxheight)
 			currentHeight = _instanse->maxheight;
-	return QFont("Times new Roman", currentHeight);
+    return QFont("Times new Roman", int(currentHeight));
 }

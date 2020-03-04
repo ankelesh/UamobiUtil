@@ -2,7 +2,7 @@
 #include "widgets/parents/IndependentBranchNode.h"
 #include "widgets/parents/abstractNodeInterface.h"
 #include <QSharedPointer>
-#include <Qobject>
+#include <QObject>
 #include "networking/dataupdateengine-http.h"
 #include "BranchElementDescription.h"
 

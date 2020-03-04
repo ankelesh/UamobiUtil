@@ -54,8 +54,8 @@ DateTimeControl::DateTimeControl()
 {
 }
 
-DateTimeControl::DateTimeControl(bool needsTime, QString cname, QWidget * parent)
-	: abs_control(parent, InputControlEntity::Date, cname),
+DateTimeControl::DateTimeControl(bool /*needsTime*/, QString cname, QWidget * Parent)
+    : abs_control(Parent, InputControlEntity::Date, cname),
 	innerSpinbox(new BigButtonsSpinbox(BigButtonsSpinbox::datespin, parent))
 {
 	innerSpinbox->setInfo(label);

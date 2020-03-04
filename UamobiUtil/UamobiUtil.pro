@@ -4,16 +4,16 @@
 
 TEMPLATE = app
 TARGET = UamobiUtil
-DESTDIR = ../Win32/Debug
+DESTDIR = ../Win32/Release
 QT += core xml network gui widgets
-CONFIG += debug
+CONFIG += release
 DEFINES += _UNICODE _ENABLE_EXTENDED_ALIGNED_STORAGE WIN64 QT_VERSION5X QT_NETWORK_LIB QT_WIDGETS_LIB QT_XML_LIB
 INCLUDEPATH += ./GeneratedFiles \
     . \
     ./GeneratedFiles/$(ConfigurationName)
 DEPENDPATH += .
 MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
-OBJECTS_DIR += debug
+OBJECTS_DIR += release
 UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles
 win32:RC_FILE = UamobiUtil.rc
@@ -51,6 +51,7 @@ HEADERS += ./UamobiUtil.h \
     ./widgets/MultibranchWidgets/PagedSearchWidget.h \
     ./widgets/MultibranchWidgets/ParentDocumentWidget.h \
     ./widgets/MultibranchWidgets/SelectItemFromListWidget.h \
+    ./widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.h \
     ./widgets/MultibranchWidgets/ScaningRelated/ControlListWidget.h \
     ./widgets/MultibranchWidgets/ScaningRelated/MulticontrolScaningWidget.h \
     ./widgets/MultibranchWidgets/ScaningRelated/NormalScaningWidget.h \
@@ -92,13 +93,7 @@ HEADERS += ./UamobiUtil.h \
     ./widgets/ControlsMiniwidgets/StringControl.h
 SOURCES += ./main.cpp \
     ./UamobiUtil.cpp \
-    ./widgets/ControlsMiniwidgets/BarcodeControl.cpp \
-    ./widgets/ControlsMiniwidgets/DateTimeControl.cpp \
-    ./widgets/ControlsMiniwidgets/LabelControl.cpp \
-    ./widgets/ControlsMiniwidgets/StringControl.cpp \
-    ./widgets/MultibranchWidgets/Observers/ListPickObserver.cpp \
-    ./widgets/MultibranchWidgets/Observers/SkippedNode.cpp \
-    ./widgets/MultibranchWidgets/ScaningRelated/ObservedScaningWidget.cpp \
+    ./widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.cpp \
     ./networking/dataupdateengine-http.cpp \
     ./networking/QueryTemplates.cpp \
     ./networking/RequestAwaiter.cpp \
@@ -123,15 +118,23 @@ SOURCES += ./main.cpp \
     ./widgets/ElementWidgets/MegaIconButton.cpp \
     ./widgets/ElementWidgets/ProcessingOverlay.cpp \
     ./widgets/ControlsMiniwidgets/abs_control.cpp \
+    ./widgets/ControlsMiniwidgets/BarcodeControl.cpp \
     ./widgets/ControlsMiniwidgets/ControlManager.cpp \
     ./widgets/ControlsMiniwidgets/ControlTranslator.cpp \
+    ./widgets/ControlsMiniwidgets/DateTimeControl.cpp \
+    ./widgets/ControlsMiniwidgets/LabelControl.cpp \
     ./widgets/ControlsMiniwidgets/QuantityControl.cpp \
+    ./widgets/ControlsMiniwidgets/StringControl.cpp \
     ./ScaningCore/BarcodeObserver.cpp \
+    ./widgets/Branches/SenderNode.cpp \
+    ./widgets/Branches/SwitchSubbranch.cpp \
     ./widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.cpp \
     ./widgets/MultibranchWidgets/DocResultsWidget.cpp \
     ./widgets/MultibranchWidgets/FilterSelectWidget.cpp \
     ./widgets/MultibranchWidgets/IdDependentSelectWidget.cpp \
     ./widgets/MultibranchWidgets/InventoryParamsWidget.cpp \
+    ./widgets/MultibranchWidgets/Observers/ListPickObserver.cpp \
+    ./widgets/MultibranchWidgets/Observers/SkippedNode.cpp \
     ./widgets/MultibranchWidgets/PagedSearchWidget.cpp \
     ./widgets/MultibranchWidgets/ParentDocumentWidget.cpp \
     ./widgets/MultibranchWidgets/PlaceSelectionWidget.cpp \
@@ -140,6 +143,7 @@ SOURCES += ./main.cpp \
     ./widgets/MultibranchWidgets/ScaningRelated/ControlListWidget.cpp \
     ./widgets/MultibranchWidgets/ScaningRelated/MulticontrolScaningWidget.cpp \
     ./widgets/MultibranchWidgets/ScaningRelated/NormalScaningWidget.cpp \
+    ./widgets/MultibranchWidgets/ScaningRelated/ObservedScaningWidget.cpp \
     ./widgets/MultibranchWidgets/ScaningRelated/PrintingScaningWidget.cpp \
     ./widgets/BranchingTools/AbsBranch.cpp \
     ./widgets/BranchingTools/AdjustableBranch.cpp \
@@ -147,8 +151,6 @@ SOURCES += ./main.cpp \
     ./widgets/BranchingTools/BranchElementDescription.cpp \
     ./widgets/BranchingTools/BranchFactory.cpp \
     ./widgets/BranchingTools/StaticBranch.cpp \
-    ./widgets/Branches/SenderNode.cpp \
-    ./widgets/Branches/SwitchSubbranch.cpp \
     ./widgets/BranchingTools/EmbeddedBranches.cpp \
     ./widgets/ExtendedDelegates/CheckableDelegate.cpp \
     ./widgets/ExtendedDelegates/ZebraListItemDelegate.cpp \
@@ -165,6 +167,3 @@ SOURCES += ./main.cpp \
     ./widgets/parents/IndependentBranchNode.cpp \
     ./widgets/parents/inframedWidget.cpp
 RESOURCES += UamobiUtil.qrc
-TRANSLATIONS += translations/uamobiutil_ru.ts \
-               translations/uamobiutil_ro.ts \
-			   translations/uamobiutil_en.ts

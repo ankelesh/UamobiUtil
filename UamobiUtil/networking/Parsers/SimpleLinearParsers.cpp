@@ -41,7 +41,7 @@ UniformXmlObject::ThingsIds LinearListParser::assertAndSwitchToNewStyle(QDomNode
 			list.at(0).childNodes().at(3).toElement().text()
 		);
 		node = list.at(1);
-		list= node.childNodes();
+        list = node.childNodes();
 		return type;
 	}
 	return UniformXmlObject::NotAThing;

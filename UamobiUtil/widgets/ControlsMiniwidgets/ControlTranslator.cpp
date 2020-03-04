@@ -39,7 +39,7 @@ QString ControlTranslator::translate(QString& str)
 
 
 
-ControlTranslator translator;
+static ControlTranslator translator;
 
 QString makeControlTranslation(QString& str)
 {

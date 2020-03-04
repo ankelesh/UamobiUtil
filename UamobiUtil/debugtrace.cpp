@@ -5,6 +5,7 @@
 #include <QDateTime>
 
 
+
 struct detracestream
 {
 	QFile ofile;
@@ -16,29 +17,41 @@ struct detracestream
 	detracestream(const char* path)
 		: ofile(path), ostream(&ofile), outstring("detrace:\r\n"),
 		sout(&outstring) {
-		ofile.open(QIODevice::WriteOnly | QIODevice::Text);
-		if (!ofile.isOpen())
-			throw std::exception("file not open!");
+        ofile.open(QIODevice::WriteOnly | QIODevice::Text);
 		ostream.setDevice(&ofile);
-	};
+    }
 	detracestream(const detracestream& s)
 		: ofile(s.ofile.fileName()), ostream(&ofile), outstring(s.outstring), sout(&outstring)
 	{
-		ofile.open(QIODevice::WriteOnly | QIODevice::Text);
-		if (!ofile.isOpen())
-			throw std::exception("file not open!");
+        ofile.open(QIODevice::WriteOnly | QIODevice::Text);
 		ostream.setDevice(&ofile);
 	}
 	detracestream& operator=(const detracestream& other)
 	{
 		ofile.setFileName(other.ofile.fileName());
-		ofile.open(QIODevice::WriteOnly | QIODevice::Text);
-		if (!ofile.isOpen())
-			throw std::exception("file not open!");
+        ofile.open(QIODevice::WriteOnly | QIODevice::Text);
 		ostream.setDevice(&ofile);
 		outstring = other.outstring;
 		sout.setString(&outstring);
 		return *this;
+	}
+	void flush(detr_supply::OutputMode mode)
+	{
+		switch (mode)
+		{
+		case detr_supply::all:
+			ostream << endl;
+			sout << endl;
+			break;
+		case detr_supply::file:
+			ostream << endl;
+			break;
+		case detr_supply::qStr:
+			sout << endl;
+			break;
+		default:
+			return;
+		}
 	}
 };
 
@@ -54,15 +67,18 @@ struct impl
 	OutputMode omode; // mode of output, check enum
 	void (debugtrace::* outmethod)(const QString& str); // pointer to current
 	QVector<void(debugtrace::*)(const QString & str)> omode_united;
-	QString qDebugFullMessageHolder; // string to avoid new lines in qDebug()
-	bool notMixing;
+    QString qDebugFullMessageHolder; // string to avoid new lines in qDebug()
 
+    bool notMixing;
+	int maxMsgLength;
+	bool nolimit;
 	impl(DebugPriority priority, OutputMode mode,
-		void (debugtrace::* ometh)(const QString& str), bool notMix)
+		void (debugtrace::* ometh)(const QString& str), int maxMsgLen, bool notMix)
 		:
 		streams(),
 		priorityLvl(priority), msgPriorityLvl(detr_supply::notImportantMessage),
-		omode(mode), outmethod(ometh), omode_united(), qDebugFullMessageHolder(), notMixing(notMix)
+		omode(mode), outmethod(ometh), omode_united(), qDebugFullMessageHolder(), notMixing(notMix),
+		maxMsgLength(maxMsgLen), nolimit(false)
 	{
 		streams[0] = detracestream(FOUTPATH);
 		streams[1] = detracestream(ERROPATH);
@@ -85,15 +101,16 @@ void debugtrace::printToFile(const QString& str)
 		case netresponseReceived:
 			if (!pimpl->notMixing)
 			{
-				pimpl->streams[impl::everything].ostream << str.left(60);
+				pimpl->streams[impl::everything].ostream << str.left(pimpl->maxMsgLength);
 				pimpl->streams[impl::everything].ostream.flush();
 			}
 			pimpl->streams[impl::netrequests].ostream << str;
 			pimpl->streams[impl::netrequests].ostream.flush();
 			break;
 		case netErrorPossible:
-			pimpl->streams[impl::netrequests].ostream << str.left(60);
+			pimpl->streams[impl::netrequests].ostream << str.left(pimpl->maxMsgLength);
 			pimpl->streams[impl::netrequests].ostream.flush();
+            Q_FALLTHROUGH();
 		case errorPossible:
 			if (!pimpl->notMixing)
 			{
@@ -102,6 +119,7 @@ void debugtrace::printToFile(const QString& str)
 			}
 			pimpl->streams[impl::error].ostream << str;
 			pimpl->streams[impl::error].ostream.flush();
+			break;
 		default:
 			pimpl->streams[impl::everything].ostream << str;
 			pimpl->streams[impl::everything].ostream.flush();
@@ -116,19 +134,20 @@ void debugtrace::printToQDebug(const QString& str)
 		{
 		case netrequestSent:
 		case netresponseReceived:
-			pimpl->qDebugFullMessageHolder += str.left(60);
+			pimpl->qDebugFullMessageHolder += str.left(pimpl->maxMsgLength);
 			if (!pimpl->notMixing)
-				pimpl->qDebugFullMessageHolder += str.left(60);
+				pimpl->qDebugFullMessageHolder += str.left(pimpl->maxMsgLength);
 			break;
 		case netErrorPossible:
-			pimpl->qDebugFullMessageHolder += str.left(60);
+			pimpl->qDebugFullMessageHolder += str.left(pimpl->maxMsgLength);
+            Q_FALLTHROUGH();
 		case errorPossible:
-			pimpl->qDebugFullMessageHolder += str.left(60);
+			pimpl->qDebugFullMessageHolder += str.left(pimpl->maxMsgLength);
 			if (!pimpl->notMixing)
-				pimpl->qDebugFullMessageHolder += str.left(60);
+				pimpl->qDebugFullMessageHolder += str.left(pimpl->maxMsgLength);
 			break;
 		default:
-			pimpl->qDebugFullMessageHolder += str.left(60);
+			pimpl->qDebugFullMessageHolder += str.left(pimpl->maxMsgLength);
 		}
 	}
 }
@@ -143,14 +162,15 @@ void debugtrace::printToString(const QString& str)
 		case netresponseReceived:
 			pimpl->streams[impl::netrequests].outstring += str;
 			if (!pimpl->notMixing)
-				pimpl->streams[impl::everything].outstring += str.left(60);
+				pimpl->streams[impl::everything].outstring += str.left(pimpl->maxMsgLength);
 			break;
 		case netErrorPossible:
 			pimpl->streams[impl::netrequests].outstring += str;
+            Q_FALLTHROUGH();
 		case errorPossible:
 			pimpl->streams[impl::error].outstring += str;
 			if (!pimpl->notMixing)
-				pimpl->streams[impl::everything].outstring += str.left(60);
+				pimpl->streams[impl::everything].outstring += str.left(pimpl->maxMsgLength);
 			break;
 		default:
 			pimpl->streams[impl::everything].outstring += str;
@@ -162,9 +182,9 @@ void debugtrace::printToAll(const QString& str)
 {
 	if (isValid())
 	{
-		pimpl->streams[impl::everything].outstring += str.left(60);
-		pimpl->qDebugFullMessageHolder += str.left(60);
-		pimpl->streams[impl::everything].ostream << str.left(60);
+		pimpl->streams[impl::everything].outstring += str.left(pimpl->maxMsgLength);
+		pimpl->qDebugFullMessageHolder += str.left(pimpl->maxMsgLength);
+		pimpl->streams[impl::everything].ostream << str.left(pimpl->maxMsgLength);
 		pimpl->streams[impl::everything].ostream.flush();
 		switch (pimpl->msgPriorityLvl)
 		{
@@ -181,6 +201,8 @@ void debugtrace::printToAll(const QString& str)
 			pimpl->streams[impl::error].ostream << str;
 			pimpl->streams[impl::error].ostream.flush();
 			break;
+        default:
+            break;
 		}
 		qDebug() << str;
 	}
@@ -230,11 +252,28 @@ void debugtrace::flushQDebug()
 
 void debugtrace::flushBuffer()
 {
+	flushQDebug();
+	switch (pimpl->msgPriorityLvl)
+	{
+	case netrequestSent:
+	case netresponseReceived:
+		pimpl->streams[impl::netrequests].flush(pimpl->omode);
+		break;
+	case netErrorPossible:
+		pimpl->streams[impl::netrequests].flush(pimpl->omode);
+		Q_FALLTHROUGH();
+	case errorPossible:
+		pimpl->streams[impl::error].flush(pimpl->omode);
+		break;
+	default:
+		break;
+	}
+	pimpl->streams[impl::everything].flush(pimpl->omode);
 }
 
 debugtrace::debugtrace(DebugPriority priority, OutputMode mode,
-	QVector<OutputMode> OutputTo, bool notMixing)
-	: pimpl(new impl(priority, mode, &debugtrace::printToAll, notMixing))
+	QVector<OutputMode> OutputTo, int maxMsgLen, bool notMixing)
+	: pimpl(new impl(priority, mode, &debugtrace::printToAll, maxMsgLen, notMixing))
 {
 	changeOutputMode(mode, OutputTo);
 }
@@ -266,6 +305,15 @@ debugtrace& debugtrace::operator<<(const char* msg)
 
 debugtrace& debugtrace::operator<<(const QString& msg)
 {
+	if (pimpl->nolimit)
+	{
+		int oldlen = pimpl->maxMsgLength;
+		pimpl->maxMsgLength = msg.length();
+		(*this.*pimpl->outmethod)(msg);
+		pimpl->maxMsgLength = oldlen;
+		pimpl->nolimit = false;
+		return *this;
+	}
 	(*this.*pimpl->outmethod)(msg);
 	return *this;
 }
@@ -289,14 +337,6 @@ debugtrace& debugtrace::operator<<(const std::exception& ex)
 }
 debugtrace& debugtrace::operator <<(const char c)
 {
-	if (pimpl->omode == qDeb || pimpl->omode == toall)
-	{
-		if (c == '\n')
-		{
-			flushQDebug();
-			return *this;
-		}
-	}
 	(*this.*pimpl->outmethod)(QString() + c);
 	return *this;
 }
@@ -304,6 +344,23 @@ debugtrace& debugtrace::operator <<(const char c)
 debugtrace& debugtrace::operator<<(quint64 num)
 {
 	(*this.*pimpl->outmethod)(QString::number(num));
+	return *this;
+}
+
+debugtrace& debugtrace::operator<<(Actions act)
+{
+	using detr_supply::Actions;
+	switch (act)
+	{
+	case Actions::endl:
+		flushBuffer();
+		break;
+	case Actions::nolimit:
+		pimpl->nolimit = true;
+		break;
+	default:
+		break;
+	}
 	return *this;
 }
 
@@ -354,9 +411,7 @@ void debugtrace::changeOutputMode(const OutputMode mode, QVector<OutputMode>v)
 				break;
 			}
 		}
-		break;
-	default:
-		break;
+        break;
 	}
 }
 QString debugtrace::getCurrentString()
@@ -379,7 +434,7 @@ debugtrace& debugtrace::getObject()
 	return *(instanse());
 }
 
-void debugtrace::init(DebugPriority priority, OutputMode mode, QVector<OutputMode> OutputTo, bool nM)
+void debugtrace::init(DebugPriority priority, OutputMode mode, QVector<OutputMode> OutputTo, int maxMsgLen, bool nM)
 {
 
 #ifdef Q_OS_WINCE
@@ -397,14 +452,28 @@ void debugtrace::init(DebugPriority priority, OutputMode mode, QVector<OutputMod
 	{
 		delete _instanse;
 	}
-	_instanse = new debugtrace(priority, mode, OutputTo, nM);
+	_instanse = new debugtrace(priority, mode, OutputTo,maxMsgLen, nM);
+}
+
+QString debugtrace::compressNetMsg(QString str)
+{
+#ifdef Q_OS_WIN
+	return str.replace("\r\n", " ");
+#else
+	return str.replace('\n', ' ');
+#endif
+}
+
+QString debugtrace::shiftRight(QString str)
+{
+	return str.replace("\n", "\n\t");
 }
 
 unsigned long long int makeMsgId()
 {
-	quint64 id = QDateTime::currentMSecsSinceEpoch();
+    quint64 id = quint64(QDateTime::currentMSecsSinceEpoch());
 	id <<= 8;
-	quint8 randomnum(rand());
+    quint8 randomnum(static_cast<quint8>(rand()));
 	id += randomnum;
 	return id;
 }

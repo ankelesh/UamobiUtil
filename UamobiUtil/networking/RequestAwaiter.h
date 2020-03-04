@@ -48,6 +48,6 @@ public slots:
 	void replyError(QNetworkReply::NetworkError);
 signals:
 	void requestSuccess(QString, QString);	//	emitted when response arrived with results
-	void requestReceived(int mnum = 0);					//	emitted when response arrived
+    void requestReceived(long long int mnum = 0);					//	emitted when response arrived
 	void requestTimeout();					//	emitted when timeout appeared
 };

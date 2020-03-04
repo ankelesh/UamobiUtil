@@ -76,8 +76,3 @@ public:
 // these formats are used to encode dates to avoid server incompatibility
 extern const QString DATE_ENCODING_FORMAT;
 extern const QString DATETIME_ENCODING_FORMAT;
-
-// deprecated
-QString makeParamsFromList(QVector<QPair<QString, QString> >& vect);
-QString makeParamsFromList(QString& paramName, QString& paramVal);
-

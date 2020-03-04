@@ -29,8 +29,8 @@ protected:
 	void setDocument(FullDocument);
 	virtual void setDocument(Order) override;
 	// creates controls and connects them
-	virtual void useControls(IControlList&) override;
-
+    virtual void useControls(const IControlList&) override;
+	virtual void wipe() override;
 protected slots:
 	// sends query to add item using data from controls
 	virtual void submitPressed() override;

@@ -17,7 +17,7 @@ protected:
 	// switch to new style serialization if possible
 	UniformXmlObject::ThingsIds assertAndSwitchToNewStyle(QDomNode& node, QDomNodeList& list);
 public:
-	LinearListParser(QString res, QString err) : AbsResponseParser(res, err) { success = run(); };
+    LinearListParser(QString res, QString err) : AbsResponseParser(res, err) { success = run(); }
 	static XmlObjects parseLinearList(QString & r, QString& e);
 };
 
@@ -27,7 +27,7 @@ protected:
 	// Inherited via AbsResponseParser
 	virtual bool _doParsing() override;
 public:
-	LinearListWithSublistParser(QString res, QString err) : AbsResponseParser(res, err) { success = run(); };
+    LinearListWithSublistParser(QString res, QString err) : AbsResponseParser(res, err) { success = run(); }
 
 };
 

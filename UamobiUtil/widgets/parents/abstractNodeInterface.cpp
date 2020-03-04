@@ -103,3 +103,15 @@ void abstractDynamicNode::_hideAnyWithDelete(inframedWidget* replacement)
 		currentlyOpened->setFocus();
 	}
 }
+
+const char *CastFailedException::what() const
+#ifdef QT_VERSION5X
+    noexcept
+#endif
+{
+#ifdef Q_OS_WINCE
+    return "Error upcasting inframed pointer";
+#else
+     return msg.c_str();
+#endif
+}

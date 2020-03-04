@@ -19,7 +19,11 @@ private:
 	virtual QWidget* getInnerWidget() const override;
 public:
 	BarcodeControl( QString name, QWidget * parent );
-	virtual ~BarcodeControl();
+    virtual ~BarcodeControl()
+#ifdef QT_VERSION5X
+    override
+#endif
+    ;
 	virtual void setFocus() const override;
 	virtual void show() override;
 	virtual void hide() override;

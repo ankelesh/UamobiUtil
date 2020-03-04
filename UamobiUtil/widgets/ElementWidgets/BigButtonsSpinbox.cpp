@@ -28,7 +28,7 @@ void BigButtonsSpinbox::showEvent(QShowEvent* ev)
 				"QDateEdit::drop-down {"
 				"subcontrol-origin: padding;"
 				"subcontrol-position: center right;"
-				"width: " + QString::number((int)(coreSpinbox->width() / 3)) + " px;"
+                "width: " + QString::number(int(coreSpinbox->width() / 3)) + " px;"
 				"}"
 				;
 			tsp->setStyleSheet(tmp);
@@ -38,9 +38,9 @@ void BigButtonsSpinbox::showEvent(QShowEvent* ev)
 BigButtonsSpinbox::BigButtonsSpinbox(spintype type, QWidget* parent, double adaptH)
 	: QWidget(parent), mainLayout(new QGridLayout(this)),
 	buttonUp(new QPushButton(this)), buttonDown(new QPushButton(this)),
-	infoLabel(new QLabel(this)),
-	keyFilter(new filters::CaptureBackFilter(this)),
+    infoLabel(new QLabel(this)),
 	coreSpinbox(),
+    keyFilter(new filters::CaptureBackFilter(this)),
 	lastEmit(QTime::currentTime())
 {
 	switch (type)
@@ -197,8 +197,7 @@ BigButtonsSpinbox::BigButtonsSpinbox(spintype type, QWidget* parent, double adap
 #endif
 			}
 		}
-	default:
-		break;
+        break;
 	}
 
 }
@@ -225,6 +224,8 @@ void BigButtonsSpinbox::setMinimum(int min)
 		}
 		break;
 	}
+    default:
+        break;
 	}
 }
 
@@ -250,6 +251,7 @@ void BigButtonsSpinbox::setMaximum(int max)
 		}
 		break;
 	}
+    default:break;
 	}
 }
 
@@ -275,6 +277,8 @@ void BigButtonsSpinbox::setValue(int val)
 		}
 		break;
 	}
+    default:
+        break;
 	}
 }
 
@@ -295,11 +299,13 @@ void BigButtonsSpinbox::setDValue(double val)
 		QSpinBox* isp = qobject_cast<QSpinBox*> (coreSpinbox);
 		if (isp != Q_NULLPTR)
 		{
-			int floored = (int)std::ceilf(val);
+            int floored = int(std::ceil(val));
 			isp->setValue(floored);
 		}
 		break;
 	}
+    default:
+        break;
 	}
 }
 
@@ -308,7 +314,7 @@ void BigButtonsSpinbox::setTime(const QTime& tm)
 	if (sptype == timespin)
 	{
 		QTimeEdit* tsp = qobject_cast<QTimeEdit*> (coreSpinbox);
-		if (tsp != 0)
+        if (tsp != Q_NULLPTR)
 		{
 			tsp->setTime(tm);
 		}
@@ -331,7 +337,7 @@ int BigButtonsSpinbox::value() const
 	{	QDoubleSpinBox* dsp = qobject_cast<QDoubleSpinBox*> (coreSpinbox);
 	if (dsp != Q_NULLPTR)
 	{
-		return (int)dsp->value();
+        return int(dsp->value());
 	}
 	break;
 	}
@@ -357,10 +363,12 @@ double BigButtonsSpinbox::dvalue() const
 		QSpinBox* isp = qobject_cast<QSpinBox*>(coreSpinbox);
 		if (isp != Q_NULLPTR)
 		{
-			return (double)isp->value();
+            return double(isp->value());
 		}
 		break;
 	}
+    default:
+        break;
 	}
 	return 0.0;
 }
@@ -463,7 +471,7 @@ void BigButtonsSpinbox::setStyleSheet(const QString& st)
 void BigButtonsSpinbox::timeValueChanged(const QTime& t)
 {
 	emit timeChanged(t);
-	emit valueChanged(coreSpinbox->text());
+    emit valueChanged(coreSpinbox->text());
 }
 
 void BigButtonsSpinbox::doubleValueChanged(double v)

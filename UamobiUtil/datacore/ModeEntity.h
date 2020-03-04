@@ -21,8 +21,8 @@ protected:
 	virtual AbsRecEntity* fabricate() const override;
 	virtual bool sortingCompare(const AbsRecEntity* another) const override;
 	virtual bool sortingCompare(const QSharedPointer<AbsRecEntity> another) const override;
-	virtual bool useAssociatedNetworkSendMethod(QStringList& arguments, RequestAwaiter* awaiter) const override;
-	virtual bool useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const override;
+    virtual bool useAssociatedNetworkSendMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
+    virtual bool useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
 };
 typedef QSharedPointer<ModeEntity> Mode;
 typedef QVector<Mode> ModeList;

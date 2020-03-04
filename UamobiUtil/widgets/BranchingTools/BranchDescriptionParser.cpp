@@ -10,6 +10,7 @@ QHash<QString, independent_nodes::nodelist> _initBinding()
 	h["PagedSearch"] = PagedSearch;
 	h["FilterSelect"] = FilterSelect;
 	h["DocResults"] = DocResults;
+	h["EditableDocResults"] = EditableDocResults;
 	h["ReceiptParameters"] = ReceiptParameters;
 	h["NormalScaning"] = NormalScaning;
 	h["IdDependentSelect"] = IdDependentSelect;
@@ -31,7 +32,7 @@ QHash<QString, independent_nodes::nodelist> _initBinding()
 	return h;
 }
 
-QHash<QString, independent_nodes::nodelist> widgetBinding(_initBinding());
+static QHash<QString, independent_nodes::nodelist> widgetBinding(_initBinding());
 
 QHash<QString, UniformXmlObject::ThingsIds> bindEntities()
 {
@@ -56,7 +57,7 @@ QHash<QString, UniformXmlObject::ThingsIds> bindEntities()
 	h["Barcode"] = UniformXmlObject::Barcode;
 	return h;
 }
-QHash<QString, UniformXmlObject::ThingsIds> entityBinding(bindEntities());
+static QHash<QString, UniformXmlObject::ThingsIds> entityBinding(bindEntities());
 
 
 void BranchDescriptionParser::_prepareString(QString& buffer)

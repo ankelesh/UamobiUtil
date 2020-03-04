@@ -9,7 +9,7 @@
 
 
 abs_control::abs_control(QWidget* parent, InputControlEntity::ControlTypes Type, QString cname)
-	: QObject(parent), type(Type), parent(parent),name(cname), label(makeControlTranslation(cname))
+    : QObject(parent), type(Type), parent(parent), label(makeControlTranslation(cname)),name(cname)
 {
 #ifdef DEBUG
 	detrace_DCONSTR("control-like of type " << type);

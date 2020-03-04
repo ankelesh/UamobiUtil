@@ -89,7 +89,7 @@ public slots:
 signals:
 	void ivalueChanged(int);			//	emitted only when SpinBox is wrapped
 	void timeChanged(const QTime& t);	//	emitted only when TimeEdit is wrapped
-	void valueChanged(QString &);
+    void valueChanged(QString);
 	void dvalueChanged(double);
 	void dateChanged(const QDate& d);
 	void dateTimeChanged(const QDateTime& dtt);

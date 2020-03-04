@@ -30,8 +30,8 @@ QWidget* LabelControl::getInnerWidget() const
 	return innerLabel;
 }
 
-LabelControl::LabelControl(QString str, QWidget* parent)
-	: abs_control(parent, InputControlEntity::Label, str),
+LabelControl::LabelControl(QString str, QWidget* Parent)
+    : abs_control(Parent, InputControlEntity::Label, str),
 	innerLabel(new unfocusableLabel(str, parent))
 {
 	innerLabel->setAlignment(Qt::AlignCenter);

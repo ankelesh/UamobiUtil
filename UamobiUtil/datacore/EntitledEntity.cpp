@@ -60,12 +60,12 @@ AbsRecEntity* SupplierEntity::fabricate() const
 	return new SupplierEntity(*this);
 }
 
-bool SupplierEntity::useAssociatedNetworkSendMethod(QStringList& /*arguments*/, RequestAwaiter* /*awaiter*/) const
+bool SupplierEntity::useAssociatedNetworkSendMethod(const QStringList& /*arguments*/, RequestAwaiter* /*awaiter*/) const
 {
 	return false;
 }
 
-bool SupplierEntity::useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool SupplierEntity::useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const
 {
 	if (arguments.count() < 2)
 		return false;
@@ -79,14 +79,14 @@ OrderEntity::OrderEntity(QString c, QString t, QString tx)
 {
 }
 
-bool OrderEntity::useAssociatedNetworkSendMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool OrderEntity::useAssociatedNetworkSendMethod(const QStringList& arguments, RequestAwaiter* awaiter) const
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::receiptGetOrderInfo, code, arguments.at(0),
 		awaiter);
 	return true;
 }
 
-bool OrderEntity::useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool OrderEntity::useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const
 {
 	if (arguments.isEmpty())
 		return false;
@@ -139,7 +139,7 @@ AbsRecEntity* LesserDocumentEntity::fabricate() const
 	return new LesserDocumentEntity(*this);
 }
 
-bool LesserDocumentEntity::useAssociatedNetworkGetMethod(QStringList& /*arguments*/, RequestAwaiter* awaiter) const
+bool LesserDocumentEntity::useAssociatedNetworkGetMethod(const QStringList& /*arguments*/, RequestAwaiter* awaiter) const
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::inventoryListParentDocs, awaiter);
 	return true;

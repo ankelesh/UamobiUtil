@@ -8,7 +8,7 @@ namespace QueryTemplates
 {
 	QHash<QueryId, QString> queryCache(_initCache());
 
-	QHash<QueryId, QString> QueryTemplates::_initCache()
+    QHash<QueryId, QString> _initCache()
 	{
 		QHash<QueryId, QString>c;
 		QSettings queryTemplates("querytemplates.ini", QSettings::IniFormat);
@@ -106,7 +106,7 @@ namespace QueryTemplates
 
 	OverloadableQuery nullQuery(-2, ping);
 
-int QueryTemplates::getQueryArguments(const QueryId id)
+int getQueryArguments(const QueryId id)
 {
 	switch (id)
 	{
@@ -196,7 +196,7 @@ int QueryTemplates::getQueryArguments(const QueryId id)
 		return 0;
 	}
 }
-bool QueryTemplates::assertArgQuantity(int argc, QueryTemplates::QueryId id)
+bool assertArgQuantity(int argc, QueryTemplates::QueryId id)
 {
 	using namespace QueryTemplates;
 #ifdef DEBUG

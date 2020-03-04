@@ -23,7 +23,7 @@ public:
 	inframedWidget(QWidget* parent);
 	inframedWidget(bool installFilter, QWidget * parent);
 	virtual bool isExpectingControl(int);	//	Enhanced: now false is returned if value was not used
-	filters::GeneralPurposeFilter* getFilter() { return keyfilter; };
+    filters::GeneralPurposeFilter* getFilter() { return keyfilter; }
 	virtual void show();
 	void installEventFilter(QObject*);
 protected slots:

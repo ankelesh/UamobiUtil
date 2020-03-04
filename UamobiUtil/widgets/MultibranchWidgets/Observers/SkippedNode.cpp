@@ -11,7 +11,7 @@ void SkippedNode::_sendDataRequest()
 {
 }
 
-void SkippedNode::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads)
+void SkippedNode::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& /*overloads*/)
 {
 }
 

@@ -57,7 +57,7 @@ QString InputControlEntity::makeTitle() const
 
 QString InputControlEntity::extractId() const
 {
-	return QString::number((long long int)this);
+    return QString::number(reinterpret_cast<long long int>(this));
 }
 
 bool InputControlEntity::deepCompare(const AbsRecEntity* another) const

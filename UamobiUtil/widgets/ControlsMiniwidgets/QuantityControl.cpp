@@ -33,9 +33,9 @@ bool QuantityControl::valueAvailable() const
 }
 
 
-QuantityControl::QuantityControl(bool isInt, QString& cname, QWidget* parent)
-	:
-	abs_control(parent, ((isInt)?    InputControlEntity::Int : InputControlEntity::Float), cname),
+QuantityControl::QuantityControl(bool isInt, const QString& cname, QWidget* Parent)
+    :
+    abs_control(Parent, ((isInt)?    InputControlEntity::Int : InputControlEntity::Float), cname),
 	innerSpinbox(new BigButtonsSpinbox(
 	((isInt)? BigButtonsSpinbox::intspin : BigButtonsSpinbox::floatspin), parent))
 {

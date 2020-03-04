@@ -56,9 +56,10 @@ void UamobiUtil::resizeEvent(QResizeEvent* rev)
 	QWidget::resizeEvent(rev);
 }
 
-void UamobiUtil::interpretMode(QHash<QString, QString> sets, Mode mode)
+void UamobiUtil::interpretMode(QHash<QString, QString> /*sets*/, Mode mode)
 {
 	using namespace independent_nodes;
+	detrace_MODEINTERPRET(mode->name, mode->mode, mode->submode);
 	AbsBranch* mainBranch;
 
 	if (mode->submode.isEmpty())
@@ -80,7 +81,7 @@ void UamobiUtil::interpretMode(QHash<QString, QString> sets, Mode mode)
 
 
 
-void UamobiUtil::closeBranch(RecEntity e)
+void UamobiUtil::closeBranch(RecEntity /*e*/)
 {
 	gotoModeSelection();
 }

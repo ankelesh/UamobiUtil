@@ -1,16 +1,38 @@
 #include "things.h"
+#include "widgets/utils/ElementsStyles.h"
+#include <QFontMetrics>
+
+
+
+int countNormalizedHeights(QString& line, QChar breaker = '\n')
+{
+	int heights = 1;
+	QString::iterator point = std::find(line.begin(), line.end(), breaker);;
+	QString::iterator previousPoint = line.begin();
+	while (point != line.end())
+	{
+		if (FontAdapter::instanse()->howMuchCharacterFitsIntoScreen()
+			< point - previousPoint)
+		{
+			++heights;
+		}
+		++heights;
+		previousPoint = point;
+		++point;
+		point = std::find(point, line.end(), breaker);
+	}
+	return (heights == 1) ? 2 : heights;
+}
+
+
 
 DataEntityListModel::DataEntityListModel(const Records& data, QObject* parent)
 	: QAbstractListModel(parent), innerList(data), heights()
 {
 	heights.reserve(data.count());
-	int ct = 0;
 	for (int i = 0; i < data.count(); ++i)
 	{
-		ct = data.at(i)->getTitle().count('\n') + 1;
-		if (ct == 1)
-			++ct;
-		heights.push_back(ct);
+		heights.push_back(countNormalizedHeights(data.at(i)->getTitle()));
 	}
 }
 
@@ -48,7 +70,7 @@ QVariant DataEntityListModel::data(const QModelIndex& index, int role) const
 		return temp;
 	}
 	case Qt::SizeHintRole:
-		return QVariant(heights.at(index.row()));
+		return QVariant(QSize(1 ,heights.at(index.row())));
 	}
 	return QVariant();
 }
@@ -58,19 +80,15 @@ QVariant DataEntityListModel::headerData(int /*section*/, Qt::Orientation /*orie
 	return QVariant();
 }
 
-void DataEntityListModel::setData(const Records& data)
+void DataEntityListModel::insertData(const Records& data)
 {
 	beginResetModel();
 	innerList.clear();
 	innerList << data;
 	heights.reserve(data.count());
-	int ct = 0;
 	for (int i = 0; i < data.count(); ++i)
 	{
-		ct = data.at(i)->getTitle().count('\n') + 1;
-		if (ct == 1)
-			++ct;
-		heights.push_back(ct);
+		heights.push_back(countNormalizedHeights(data.at(i)->getTitle()));
 	}
 	endResetModel();
 }
@@ -106,9 +124,7 @@ void DataEntityListModel::replaceDataEntity(RecEntity e)
 		if (innerList.at(i)->isSame(&(*(e))))
 		{
 			innerList[i] = e;
-			int ct = e->getTitle().count('\n') + 1;
-			if (ct == 1) ++ct;
-			heights[i] = ct;
+			heights[i] = countNormalizedHeights(e->getTitle());
 		}
 	}
 }

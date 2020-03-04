@@ -65,8 +65,8 @@ public:
 	// extracts object from node with possibility to override oid
 	void fromNode(const QDomNode& dnode, int oid = -1);
 	// getters
-	int mySize() const { return values.count(); };
-	int myOID() const { return object_id; };
+    int mySize() const { return values.count(); }
+    int myOID() const { return object_id; }
 	// checks full compatibility - both objects must has same size, fields and object ids
 	bool assertCompatibility(int sz, int oid, bool strict_sizing = true, int minsz = 0) const;
 	// key check
@@ -78,7 +78,7 @@ public:
 
 
 // guesses object id using name extracted from node.
-UniformXmlObject::ThingsIds guessObjectId(QString& oname, 
+UniformXmlObject::ThingsIds guessObjectId(QString oname,
 	int fcount = 0, UniformXmlObject::ThingsIds desired = UniformXmlObject::NotAThing);
 
 

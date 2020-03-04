@@ -28,18 +28,18 @@ FilterSelectWidget::FilterSelectWidget(QWidget* parent)
 	detrace_DCONSTR("FilterSelectWidget");
 #endif
 	this->setLayout(mainLayout);
-	mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setContentsMargins(0,0,0,0);
 	mainLayout->setSpacing(0);
 	mainLayout->addWidget(title);
 	mainLayout->addLayout(topPanelLayout);
-	topPanelLayout->setContentsMargins(0, 0, 0, 0);
+    topPanelLayout->setContentsMargins(0,0,0,0);
 	topPanelLayout->setSpacing(0);
 	topPanelLayout->addWidget(allonButton);
 	topPanelLayout->addWidget(alloffButton);
 	mainLayout->addWidget(typesel);
 	typesel->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
 	mainLayout->addLayout(footerLayout);
-	footerLayout->setContentsMargins(0, 0, 0, 0);
+    footerLayout->setContentsMargins(0,0,0,0);
 	footerLayout->setSpacing(0);
 	footerLayout->addWidget(backButton);
 	footerLayout->addWidget(okButton);
@@ -190,7 +190,7 @@ void FilterSelectWidget::okPressed()
 void FilterSelectWidget::was_timeout()
 {
 	title->setText(tr("timeout:") + QString::number(awaiter->getInterval()));
-	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
+    QObject::disconnect(awaiter, SIGNAL(requestReceived()), Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
 }
 
@@ -207,9 +207,9 @@ void FilterSelectWidget::parse_doctype_list_response()
 	}
 	else
 	{
-		doctypes->setData(response.objects);
+        doctypes->insertData(response.objects);
 	}
-	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
+    QObject::disconnect(awaiter, SIGNAL(requestReceived()), Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
 }
 
@@ -227,7 +227,7 @@ void FilterSelectWidget::parse_doctype_selection_response()
 			detrace_NRESPERR(parser->getErrors());
 #endif
 	}
-	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
+    QObject::disconnect(awaiter, SIGNAL(requestReceived()), Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
 }
 
@@ -243,6 +243,7 @@ void FilterSelectWidget::_makeOverloads(const QVector<QueryTemplates::Overloadab
 			documentGetAllowedTypes
 		));
     }
+        Q_FALLTHROUGH();
 	case 1:
     {
         QStringList t;
@@ -251,6 +252,7 @@ void FilterSelectWidget::_makeOverloads(const QVector<QueryTemplates::Overloadab
             documentGetAllowedTypes, t,t
 		));
     }
+        Q_FALLTHROUGH();
 	default:
 		return;
 	}

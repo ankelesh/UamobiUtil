@@ -25,7 +25,8 @@ void PrintingScaningWidget::_print(QString text)
 #ifdef DEBUG
 	detrace_METHPERROR("_print", "seems here is no printer connection, data to print: " << text);
 #endif
-	userInfo->setText(tr("This build does not supports printing!"));
+    userInfo->setText(tr("This build does not supports printing!"));
+    Q_UNUSED(text)
 #endif
 }
 void PrintingScaningWidget::_handleRecord(RecEntity)
@@ -47,6 +48,7 @@ void PrintingScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloa
 			QueryTemplates::receiptNewDocument,
 			t, t
 		));
+        Q_FALLTHROUGH();
 	}
 	case 2:
 	{
@@ -55,6 +57,7 @@ void PrintingScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloa
 		localCache.insert(docGetItemLabel, overloads.at(1).assertedAndMappedCopy(docGetItemLabel,
 			t,
 			t));
+        Q_FALLTHROUGH();
 	}
 	case 1:
 	{
@@ -63,6 +66,7 @@ void PrintingScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloa
 		localCache.insert(getItemInfo, overloads.at(0).assertedAndMappedCopy(
 			QueryTemplates::getItemInfo,
 			t, t));
+        Q_FALLTHROUGH();
 	}
 	default:
 		break;
@@ -77,6 +81,7 @@ void PrintingScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloa
             "doc_get_item_info&session=%1&barcode=%2",
 			t, t));
 	}
+        Q_FALLTHROUGH();
 	case 2:
 	{
 		QStringList t;
@@ -84,6 +89,7 @@ void PrintingScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloa
 		localCache.insert(docGetItemLabel, OverloadableQuery(docGetItemLabel,
 			t, t));
 	}
+        Q_FALLTHROUGH();
 	case 1:
 	{
 		QStringList t;
@@ -93,6 +99,7 @@ void PrintingScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloa
 			t,
 			t));
 	}
+        Q_FALLTHROUGH();
 	default:
 		return;
 	}

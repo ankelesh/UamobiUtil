@@ -34,5 +34,9 @@ protected:
 	virtual void wipe() override;
 public:
 	explicit PrintingScaningWidget(QWidget* parent = Q_NULLPTR, IndependentBranchNode* searchScr = Q_NULLPTR);
-	~PrintingScaningWidget();
+    virtual ~PrintingScaningWidget()
+#ifdef QT_VERSION5X
+    override
+#endif
+    ;
 };

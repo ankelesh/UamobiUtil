@@ -8,7 +8,7 @@ AbsBranch::AbsBranch(QWidget* parent)
 
 AbsBranch::AbsBranch(BranchDescription Root, QWidget* parent)
 	: IndependentBranchNode(independent_nodes::Subbranch, parent),
-	root(Root), currentNode(0), dependencyTrack(Root->count())
+    root(Root), dependencyTrack(Root->count()),currentNode(0)
 {
 }
 

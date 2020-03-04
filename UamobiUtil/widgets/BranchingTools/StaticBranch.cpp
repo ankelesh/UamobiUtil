@@ -84,8 +84,8 @@ IndependentBranchNode* StaticBranch::getCurrentNode()
 	return qobject_cast<IndependentBranchNode*>(current);
 }
 
-StaticBranch::StaticBranch(BranchDescription root, QWidget* parent)
-	: AbsBranch(root, parent), createdNodesStack(), mainLayout(new QVBoxLayout(this))
+StaticBranch::StaticBranch(BranchDescription Root, QWidget* parent)
+    : AbsBranch(Root, parent), createdNodesStack(), mainLayout(new QVBoxLayout(this))
 {
 #ifdef DEBUG
 	detrace_DCONSTR("StaticBranch");

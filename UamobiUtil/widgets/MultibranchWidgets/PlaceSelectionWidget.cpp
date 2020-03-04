@@ -137,9 +137,9 @@ void PlaceSelectionWidget::parse_loaded_places()
 	}
 	else
 	{
-		allplaces->setData(result.objects);
+        allplaces->insertData(result.objects);
 	}
-	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
+    QObject::disconnect(awaiter, SIGNAL(requestReceived()),Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
 }
 
@@ -164,7 +164,7 @@ void PlaceSelectionWidget::place_select_response()
 void PlaceSelectionWidget::was_timeout()
 {
 	userTip->setText(tr("mode_selection_timeout!") + QString::number(AppSettings->timeoutInt));
-	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
+    QObject::disconnect(awaiter, SIGNAL(requestReceived()),Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
 }
 
@@ -181,9 +181,11 @@ void PlaceSelectionWidget::_makeOverloads(const QVector<QueryTemplates::Overload
 		selectPlaceQuery = overloads.at(1).assertedAndMappedCopy(
             selectPlace, t,t);
     }
+        Q_FALLTHROUGH();
 	case 1:
 		loadPlacesQuery = overloads.at(0).assertedAndMappedCopy(
 			placeList);
+        Q_FALLTHROUGH();
 	default:
 		break;
 	}

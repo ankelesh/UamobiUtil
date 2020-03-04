@@ -7,7 +7,7 @@ FullItemEntity::FullItemEntity(QString Title, QString Code, QString Cmid,
 {
 }
 
-void FullItemEntity::sendGetRequest(int pagenumber, RequestAwaiter* awaiter, QString doc)
+void FullItemEntity::sendGetRequest(int pagenumber, RequestAwaiter* awaiter, QString /*doc*/)
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::documentGetResults,
 		"&page=" + QString::number(pagenumber), "", awaiter
@@ -49,8 +49,8 @@ QStringList _initFullItemEntityDefaults()
     return t;
 };
 
-QStringList FullItemEntityFields(_initFullItemEntityFields());
-QStringList FullItemEntityDefaults(_initFullItemEntityDefaults());
+static QStringList FullItemEntityFields(_initFullItemEntityFields());
+static QStringList FullItemEntityDefaults(_initFullItemEntityDefaults());
 
 bool FullItemEntity::fromUniXml(const UniformXmlObject& o)
 {
@@ -107,11 +107,11 @@ bool FullItemEntity::sortingCompare(const QSharedPointer<AbsRecEntity> another) 
 
 int FullItemEntity::extractEnumerable() const
 {
-	return qty;
+    return static_cast<int>(qty);
 }
 
 
-bool FullItemEntity::useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool FullItemEntity::useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const
 {
 	if (arguments.count() < 2)
 		return false;
@@ -144,7 +144,7 @@ QString ShortItemEntity::makeTitle() const
 
 QString ShortItemEntity::extractId() const
 {
-	return  QString::number((long long int)this);
+    return  QString::number(reinterpret_cast<long long int>(this));
 }
 
 bool ShortItemEntity::deepCompare(const AbsRecEntity* another) const
@@ -171,7 +171,7 @@ bool ShortItemEntity::sortingCompare(const QSharedPointer<AbsRecEntity> another)
 }
 
 
-bool ShortItemEntity::useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool ShortItemEntity::useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const
 {
 	if (arguments.count() < 2)
 		return false;

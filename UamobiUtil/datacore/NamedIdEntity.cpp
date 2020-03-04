@@ -32,8 +32,8 @@ bool NamedIdEntity::sortingCompare(const QSharedPointer<AbsRecEntity> another) c
 		return getId() > another->getId();
 }
 
-PlaceEntity::PlaceEntity(QString id, QString nm)
-	: NamedIdEntity(UniformXmlObject::Place, id, nm)
+PlaceEntity::PlaceEntity(QString Id, QString nm)
+    : NamedIdEntity(UniformXmlObject::Place, Id, nm)
 {
 }
 
@@ -59,13 +59,13 @@ bool PlaceEntity::fromUniXml(const UniformXmlObject& o)
 	return false;
 }
 
-bool PlaceEntity::useAssociatedNetworkSendMethod(QStringList& /*arguments*/, RequestAwaiter* awaiter) const
+bool PlaceEntity::useAssociatedNetworkSendMethod(const QStringList& /*arguments*/, RequestAwaiter* awaiter) const
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::selectPlace, id, awaiter);
 	return true;
 }
 
-bool PlaceEntity::useAssociatedNetworkGetMethod(QStringList& /*arguments*/, RequestAwaiter* awaiter) const
+bool PlaceEntity::useAssociatedNetworkGetMethod(const QStringList& /*arguments*/, RequestAwaiter* awaiter) const
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::placeList, awaiter);
 	return true;
@@ -77,8 +77,8 @@ AbsRecEntity* PlaceEntity::fabricate() const
 }
 
 
-GroupEntity::GroupEntity(QString id, QString nm)
-	: NamedIdEntity(UniformXmlObject::Group, id, nm)
+GroupEntity::GroupEntity(QString Id, QString nm)
+    : NamedIdEntity(UniformXmlObject::Group, Id, nm)
 {
 }
 
@@ -94,12 +94,12 @@ bool GroupEntity::fromUniXml(const UniformXmlObject& o)
 	}
 	return false;
 }
-bool GroupEntity::useAssociatedNetworkSendMethod(QStringList& /*arguments*/, RequestAwaiter* awaiter) const
+bool GroupEntity::useAssociatedNetworkSendMethod(const QStringList& /*arguments*/, RequestAwaiter* awaiter) const
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::applyBarcodeFilter, "groups", id, awaiter);
 	return true;
 }
-bool GroupEntity::useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool GroupEntity::useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const
 {
 	if (arguments.count() < 2) return false;
 	AppNetwork->execQueryByTemplate(QueryTemplates::recListTemplated, "groups", 
@@ -110,8 +110,8 @@ AbsRecEntity* GroupEntity::fabricate() const
 {
 	return new GroupEntity(id, name);
 }
-StillageEntity::StillageEntity(QString id, QString nm)
-	: NamedIdEntity(UniformXmlObject::Stillage, id, nm)
+StillageEntity::StillageEntity(QString Id, QString nm)
+    : NamedIdEntity(UniformXmlObject::Stillage, Id, nm)
 {
 }
 bool StillageEntity::fromUniXml(const UniformXmlObject& o)
@@ -127,13 +127,13 @@ bool StillageEntity::fromUniXml(const UniformXmlObject& o)
 	return false;
 }
 
-bool StillageEntity::useAssociatedNetworkSendMethod(QStringList& /*arguments*/, RequestAwaiter* awaiter) const
+bool StillageEntity::useAssociatedNetworkSendMethod(const QStringList& /*arguments*/, RequestAwaiter* awaiter) const
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::applyBarcodeFilter, "stillages", id, awaiter);
 	return true;
 }
 
-bool StillageEntity::useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool StillageEntity::useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const
 {
 	if (arguments.count() < 2) return false;
 	AppNetwork->execQueryByTemplate(QueryTemplates::recListTemplated, "stillages",
@@ -178,7 +178,7 @@ QString UserEntity::makeTitle() const
 
 QString UserEntity::extractId() const
 {
-	return QString::number((long long int)this);
+    return QString::number(reinterpret_cast<long long int>(this));
 }
 
 bool UserEntity::deepCompare(const AbsRecEntity* another) const
@@ -204,16 +204,16 @@ bool UserEntity::sortingCompare(const QSharedPointer<AbsRecEntity> another) cons
 	return this > &(*another);
 }
 
-bool UserEntity::useAssociatedNetworkSendMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool UserEntity::useAssociatedNetworkSendMethod(const QStringList& arguments, RequestAwaiter* awaiter) const
 {
 	if (arguments.isEmpty())
 		return false;
 	AppNetwork->execQueryOutsideSession(QueryTemplates::Login, login, arguments.first(),
-		QString::number(VERSION), awaiter);
+        QString::number(double(VERSION)), awaiter);
 	return true;
 }
 
-bool UserEntity::useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const
+bool UserEntity::useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const
 {
 	if (arguments.isEmpty())
 	{
@@ -269,14 +269,14 @@ int DocTypeEntity::extractEnumerable() const
 	return 0;
 }
 
-bool DocTypeEntity::useAssociatedNetworkGetMethod(QStringList& /*arguments*/, RequestAwaiter* awaiter) const
+bool DocTypeEntity::useAssociatedNetworkGetMethod(const QStringList& /*arguments*/, RequestAwaiter* awaiter) const
 {
 	sendGetRequest(awaiter);
 	return true;
 }
 
-BarcodeEntity::BarcodeEntity(QString code, QString name)
-	: NamedIdEntity(UniformXmlObject::Barcode, code, name)
+BarcodeEntity::BarcodeEntity(QString code, QString Name)
+    : NamedIdEntity(UniformXmlObject::Barcode, code, Name)
 {
 }
 
@@ -300,8 +300,8 @@ AbsRecEntity* BarcodeEntity::fabricate() const
 	return new BarcodeEntity(*this);
 }
 
-InvoiceEntity::InvoiceEntity(QString code, QString name)
-	: NamedIdEntity(UniformXmlObject::Invoice, code, name)
+InvoiceEntity::InvoiceEntity(QString code, QString Name)
+    : NamedIdEntity(UniformXmlObject::Invoice, code, Name)
 {
 }
 

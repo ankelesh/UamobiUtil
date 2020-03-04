@@ -25,7 +25,7 @@ protected:
 public:
 	ControlListWidget(QWidget* parent);
 	void clearControls();
-	void useControls(IControlList & controls);
+    void useControls(const IControlList & controls);
 	QStringList getControlsValues();
 	QString getValueAt(int index);
 	void emplaceControl(InputControl);

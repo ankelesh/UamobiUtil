@@ -40,7 +40,7 @@ protected:
 	virtual void setDocument(Order) override;
 
 	// creates controls and connects them
-	virtual void useControls(IControlList &) override;
+    virtual void useControls(const IControlList &) override;
 
 protected slots:
 	// sends query to add item using data from controls

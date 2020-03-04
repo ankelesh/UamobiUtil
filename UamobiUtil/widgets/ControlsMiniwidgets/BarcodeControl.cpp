@@ -1,7 +1,7 @@
 #include "BarcodeControl.h"
 #include "widgets/utils/ElementsStyles.h"
-BarcodeControl::BarcodeControl(QString name, QWidget* parent)
-	: abs_control(parent, InputControlEntity::Barcode, name),
+BarcodeControl::BarcodeControl(QString Name, QWidget* Parent)
+    : abs_control(Parent, InputControlEntity::Barcode, Name),
 	innerLineEdit(new QLineEdit(parent)), requiresDeactivation(false)
 {
 	if (!BarcodeObs->activated())

@@ -28,7 +28,7 @@
 
 //These functions are used to calculate size in percent of all window
 
-inline static int calculateAdaptiveButtonHeight(double percent = 0.125)
+inline int calculateAdaptiveButtonHeight(double percent = 0.125)
 //Calculates height for buttons, by default is giving 12.5% of screen height
 {
 #ifdef Q_OS_WIN
@@ -36,10 +36,10 @@ inline static int calculateAdaptiveButtonHeight(double percent = 0.125)
 	percent /= 2;
 #endif
 #endif
-	return GEOMETRY_SOURCE->availableGeometry().height() * percent;
+    return int(GEOMETRY_SOURCE->availableGeometry().height() * percent);
 }
 
-inline static int calculateAdaptiveWidth(double percent = 0.5)
+inline int calculateAdaptiveWidth(double percent = 0.5)
 //Calculates width, by default is giving 50% of screen width
 {
 #ifdef Q_OS_WIN
@@ -47,9 +47,9 @@ inline static int calculateAdaptiveWidth(double percent = 0.5)
 	percent /= 4;
 #endif
 #endif
-	return GEOMETRY_SOURCE->availableGeometry().width() * percent;
+    return int(GEOMETRY_SOURCE->availableGeometry().width() * percent);
 }
-inline static QSize calculateAdaptiveSize(double percent = 0.3)
+inline QSize calculateAdaptiveSize(double percent = 0.3)
 //Calculates square size, by default is giving 30% of screen dimensions
 {
 #ifdef Q_OS_WIN
@@ -58,11 +58,11 @@ inline static QSize calculateAdaptiveSize(double percent = 0.3)
 #endif
 #endif
 	return QSize(
-		GEOMETRY_SOURCE->availableGeometry().width() * percent,
-		GEOMETRY_SOURCE->availableGeometry().height() * percent
+        int(GEOMETRY_SOURCE->availableGeometry().width() * percent),
+        int(GEOMETRY_SOURCE->availableGeometry().height() * percent)
 	);
 }
-inline static QSize calculateAdaptiveSize(double Hpercent, double Wpercent)
+inline QSize calculateAdaptiveSize(double Hpercent, double Wpercent)
 //Calculates more adaptive size, allowing to scale both dimensions. No defaults.
 {
 #ifdef Q_OS_WIN
@@ -72,17 +72,17 @@ inline static QSize calculateAdaptiveSize(double Hpercent, double Wpercent)
 #endif
 #endif
 	return QSize(
-		GEOMETRY_SOURCE->availableGeometry().width() * Wpercent,
-		GEOMETRY_SOURCE->availableGeometry().height() * Hpercent
+        int(GEOMETRY_SOURCE->availableGeometry().width() * Wpercent),
+        int(GEOMETRY_SOURCE->availableGeometry().height() * Hpercent)
 	);
 }
 
-inline static QSize imitatePhoneSize(double HPercent)
+inline QSize imitatePhoneSize(double HPercent)
 // sets window size in vertical projection using screen height
 {
 	return QSize(
-		GEOMETRY_SOURCE->availableGeometry().height() * (HPercent * 0.66),
-		GEOMETRY_SOURCE->availableGeometry().height() * HPercent
+        int(GEOMETRY_SOURCE->availableGeometry().height() * (HPercent * 0.66)),
+        int(GEOMETRY_SOURCE->availableGeometry().height() * HPercent)
 	);
 }
 
@@ -92,11 +92,16 @@ class FontAdapter
 	int minheight;		//	minimum height of letter
 	int maxheight;		//	maximum height of letter
 	double minimumFontPercent;	// default font percent, which used to create original scaling
+	int averageCharPerWidth;
 	static FontAdapter* _instanse;
 	static QFont* _generalFont;
+
+	void _setCharPerWidth();
 public:
 	FontAdapter(int minheight, int maxheight, double minimumFontPercent);
 	void reset(int mh, int Mh, double mfp);
+	int howMuchCharacterFitsIntoScreen();
+
 	static FontAdapter* instanse();
 	static const QFont* general();
 	// creates scaled font by using adapter. Extra percents are relational to calculated minheight

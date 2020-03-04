@@ -211,26 +211,6 @@ void HttpUpdateEngine::sendQuery(const QString& urlpath, RequestAwaiter* awaiter
 		awaiter->setReplyToAwait(reply);
 }
 
-
-
-QString makeParamsFromList(QVector<QPair<QString, QString>>& vect)
-{
-	QString buffer;
-	QTextStream stream(&buffer);
-	QVector<QPair<QString, QString> >::iterator start = vect.begin();
-	while (start != vect.end())
-	{
-		stream << makeParamsFromList(start->first, start->second);
-		++start;
-	}
-	stream.flush();
-	return buffer;
-}
-
-QString makeParamsFromList(QString& paramName, QString& paramVal)
-{
-	return  paramName + "-" + paramVal + "-";
-}
 const QString DATE_ENCODING_FORMAT(
 	QStringLiteral("dd.MM.yyyy")
 );

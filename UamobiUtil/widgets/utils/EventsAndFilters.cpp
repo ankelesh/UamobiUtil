@@ -10,8 +10,6 @@
 bool filters::NoKeyEvents::eventFilter(QObject* object, QEvent* ev)
 {
 	// Captures key press events
-
-
 	switch (ev->type())
 	{
 	case QEvent::KeyRelease:
@@ -41,6 +39,7 @@ bool filters::NoKeyEvents::eventFilter(QObject* object, QEvent* ev)
 			return true;
 		}
 	}
+        Q_FALLTHROUGH();
 	case QEvent::KeyPress:
 	{
 		QKeyEvent* keyptr = static_cast<QKeyEvent*>(ev);
@@ -50,6 +49,7 @@ bool filters::NoKeyEvents::eventFilter(QObject* object, QEvent* ev)
 			return true;
 		}
 	}
+        Q_FALLTHROUGH();
 	default:
 		return QObject::eventFilter(object, ev);
 	}
@@ -87,27 +87,23 @@ filters::GeneralPurposeFilter::CaptureFunction filters::GeneralPurposeFilter::ma
 	switch (type)
 	{
 	case (All):
-		return &GeneralPurposeFilter::captAll;
-		break;
+        return &GeneralPurposeFilter::captAll;
 	case (Symbol):
-		return &GeneralPurposeFilter::captSymbol;
-		break;
+        return &GeneralPurposeFilter::captSymbol;
 	case (Number):
-		return &GeneralPurposeFilter::captNumber;
-		break;
+        return &GeneralPurposeFilter::captNumber;
 	case (Return):
-		return &GeneralPurposeFilter::captReturn;
-		break;
+        return &GeneralPurposeFilter::captReturn;
 	case (Back):
-		return &GeneralPurposeFilter::captBack;
-		break;
+        return &GeneralPurposeFilter::captBack;
 	case (Scan):
-		return &GeneralPurposeFilter::captScan;
-		break;
+        return &GeneralPurposeFilter::captScan;
 	case (infPack):
-		return &GeneralPurposeFilter::captInf;
-	default:
-		return &GeneralPurposeFilter::captAll;
+        return &GeneralPurposeFilter::captInf;
+#ifdef Q_OS_WIN
+    default:
+        return &GeneralPurposeFilter::captAll;
+#endif
 	}
 }
 
@@ -238,6 +234,8 @@ filters::GeneralPurposeFilter::GeneralPurposeFilter(captureTypes type, QObject* 
 }
 
 filters::GeneralPurposeFilter::GeneralPurposeFilter(captureTypes type1, captureTypes type2, QObject* /*parent*/, captureTypes type3, captureTypes type4, captureTypes type5)
+	: mytypes(), typeLen(0), captureFunction(&GeneralPurposeFilter::captAll),
+	someCaptureFunctions()
 {
 	if (type1 == All) {
 		captureFunction = &GeneralPurposeFilter::captAll;

@@ -127,7 +127,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	fontMin->setMaximum(500);
 	fontMax->setValue(AppSettings->fontMaxHeight);
 	fontMax->setMaximum(500);
-	fontDec->setValue(AppSettings->fontPercent * 100);
+    fontDec->setValue(int(AppSettings->fontPercent * 100));
 	fontDec->setMaximum(100);
 
 #ifdef FTR_COM

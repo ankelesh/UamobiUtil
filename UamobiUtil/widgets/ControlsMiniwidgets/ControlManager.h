@@ -1,6 +1,4 @@
 #pragma once
-#include <QObject>
-#include <QHash>
 #include "legacy/legacy.h"
 
 /*

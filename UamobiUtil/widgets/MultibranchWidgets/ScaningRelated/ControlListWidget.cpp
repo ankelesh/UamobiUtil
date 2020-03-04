@@ -48,10 +48,10 @@ void ControlListWidget::clearControls()
 	controls.clear();
 }
 
-void ControlListWidget::useControls(IControlList& clist)
+void ControlListWidget::useControls(const IControlList& clist)
 {
 	clearControls();
-	IControlList::iterator begin = clist.begin();
+    IControlList::const_iterator begin = clist.begin();
 	abs_control* newcontrol(Q_NULLPTR);
 	while (begin != clist.end())
 	{

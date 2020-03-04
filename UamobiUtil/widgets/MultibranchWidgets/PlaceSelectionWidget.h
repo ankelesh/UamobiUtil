@@ -59,7 +59,7 @@ protected:
 public:
 	PlaceSelectionWidget( QWidget* parent = Q_NULLPTR);
 	virtual void show() override;
-	virtual bool isExpectingControl(int);
+    virtual bool isExpectingControl(int) override;
 	void loadPlaces();
 private slots:
 	void placeSelected(RecEntity);	//	sends place_select request, then emits parsedPlace

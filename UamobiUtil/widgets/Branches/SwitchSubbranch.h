@@ -17,8 +17,7 @@ private:
 	// description of this branch and subbranch. 
 	BranchDescription root;
 
-	// interface for picking
-	inframedWidget* innerWidget;
+    // interface for picking
 	QVBoxLayout* innerLayout;
 	QListWidget* namePicking;
 	MegaIconButton* backButton;

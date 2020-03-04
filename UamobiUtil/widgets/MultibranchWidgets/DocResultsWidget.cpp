@@ -51,11 +51,14 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	previousButton(new MegaIconButton(innerWidget)), indexationInfo(new QLabel(innerWidget)),
 	nextButton(new MegaIconButton(innerWidget)), itemInfoStorage(new QListView(innerWidget)),
 	footerLayout(new QHBoxLayout(innerWidget)), backButton(new MegaIconButton(innerWidget)),
-	saveButton(new MegaIconButton(innerWidget)), items(new DataEntityListModel(this)), pagenumber(0), 
+	saveButton(new MegaIconButton(innerWidget)), quitButton(new MegaIconButton(innerWidget)),
+	items(new DataEntityListModel(this)), pagenumber(0), 
 	awaiter(new RequestAwaiter(AppSettings->timeoutInt + 20000, this)), localCache(),
 	attachedControls(new ControlListWidget(this))
 {
+#ifdef DEBUG
 	detrace_DCONSTR("DocResults");
+#endif
 	untouchable = innerWidget;
 	main = this;
 	current = innerWidget;
@@ -74,6 +77,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	innerLayout->addLayout(footerLayout);
 	footerLayout->addWidget(backButton);
 	footerLayout->addWidget(saveButton);
+	footerLayout->addWidget(quitButton);
 	innerLayout->setContentsMargins(0, 0, 0, 0);
 	innerLayout->setSpacing(0);
     mainLayout->setContentsMargins(0,0,0,0);
@@ -125,6 +129,11 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	saveButton->setIcon(QIcon(":/res/netUpload.png"));
 	saveButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 
+
+	quitButton->setText(tr("quit"));
+	quitButton->setIcon(QIcon(":/res/data.png"));
+	quitButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
+
 	userInfo->setText(tr("doc_results_userinfo"));
 	userInfo->setFont(GENERAL_FONT);
 	userInfo->setAlignment(Qt::AlignCenter);
@@ -135,10 +144,11 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	itemInfoStorage->setItemDelegate(new ZebraItemDelegate(this));
 #ifdef QT_VERSION5X
 	QObject::connect(deleteAllButton, &MegaIconButton::clicked, this, &DocResultsWidget::deleteAll);
-	QObject::connect(deleteSelectedButton, &MegaIconButton::clicked, this, &DocResultsWidget::getAttachedControls);
+	QObject::connect(deleteSelectedButton, &MegaIconButton::clicked, this, &DocResultsWidget::handleDelete);
 	QObject::connect(backButton, &MegaIconButton::clicked, this, &DocResultsWidget::backRequired);
 	QObject::connect(saveButton, &MegaIconButton::clicked, this, &DocResultsWidget::saveDocument);
 	QObject::connect(nextButton, &MegaIconButton::clicked, this, &DocResultsWidget::nextPage);
+	QObject::connect(quitButton, &MegaIconButton::clicked, this, &DocResultsWidget::saveDocument);
 	QObject::connect(attachedControls, &ControlListWidget::controlsConfirmed, this, &DocResultsWidget::attachedControlsDone);
 	QObject::connect(attachedControls, &ControlListWidget::backRequired, this, &DocResultsWidget::hideCurrent);
 	QObject::connect(previousButton, &MegaIconButton::clicked, this, &DocResultsWidget::previousPage);
@@ -148,7 +158,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &DocResultsWidget::get_attached_response);
 #else
     QObject::connect(deleteAllButton, SIGNAL(clicked()), this, SLOT(deleteAll()));
-    QObject::connect(deleteSelectedButton, SIGNAL(clicked()), this, SLOT(getAttachedControls()));
+    QObject::connect(deleteSelectedButton, SIGNAL(clicked()), this, SLOT(handleDelete()));
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 	QObject::connect(saveButton, SIGNAL(clicked()), this, SLOT(saveDocument()));
 	QObject::connect(nextButton, SIGNAL(clicked()), this, SLOT(nextPage()));
@@ -195,7 +205,7 @@ void DocResultsWidget::refresh()
 		PolyResponse invoices = RequestParser::parseResponse(response, RecEntity(new InvoiceEntity()));
 		setIndexation(invoices.additionalObjects);
 		saveButton->setDisabled(response.objects.isEmpty());
-		items->setData(invoices.objects + response.objects);
+        items->insertData(invoices.objects + response.objects);
 	}
 }
 
@@ -219,6 +229,16 @@ void DocResultsWidget::nextPage()
 
 void DocResultsWidget::saveDocument()
 {
+	if (sender() == quitButton)
+	{
+		QMessageBox::StandardButton response = QMessageBox::question(this, tr("QuitWithoutSave?"), 
+			tr("quit_without_save_info?"),
+			QMessageBox::Ok | QMessageBox::Cancel);
+		if (response == QMessageBox::Ok)
+			emit done(RecEntity());
+		else
+			return;
+	}
 	if (awaiter->isAwaiting())
 		return;
 
@@ -244,7 +264,7 @@ void DocResultsWidget::getAttachedControls()
 		attachedControls->emplaceControl(
 			InputControl(
 				new InputControlEntity(
-					"qty", "Int", "0"))));
+					"qty", "Int", "0")));
 		_hideAny(attachedControls);
 	}
 	else
@@ -360,6 +380,11 @@ void DocResultsWidget::deleteAll()
 	showProcessingOverlay();
 }
 
+void DocResultsWidget::handleDelete()
+{
+	getAttachedControls();
+}
+
 
 
 void DocResultsWidget::hideCurrent()
@@ -377,8 +402,10 @@ void DocResultsWidget::_makeOverloads(const QVector<QueryTemplates::Overloadable
 	case 5:
 		localCache.insert(documentDeleteAll, overloads.at(4).assertedAndMappedCopy(
 		documentDeleteAll));
+        Q_FALLTHROUGH();
 	case 4:
 		localCache.insert(documentResultGetBox, overloads.at(3));
+        Q_FALLTHROUGH();
 	case 3:
     {
         QStringList t;
@@ -386,6 +413,7 @@ void DocResultsWidget::_makeOverloads(const QVector<QueryTemplates::Overloadable
 		localCache.insert(docDeleteByBarcode, overloads.at(2).assertedAndMappedCopy(
             docDeleteByBarcode,t,t
 		));
+        Q_FALLTHROUGH();
     }
 	case 2:
     {
@@ -394,6 +422,7 @@ void DocResultsWidget::_makeOverloads(const QVector<QueryTemplates::Overloadable
         localCache.insert(unlockDocument, overloads.at(1).assertedAndMappedCopy(
             unlockDocument, t,t
 		));
+        Q_FALLTHROUGH();
     }
 	case 1:
     {
@@ -402,6 +431,7 @@ void DocResultsWidget::_makeOverloads(const QVector<QueryTemplates::Overloadable
         localCache.insert(documentGetResults, overloads.at(1).assertedAndMappedCopy(
             documentGetResults,t,t
 		));
+        Q_FALLTHROUGH();
     }
 	default:
 		break;

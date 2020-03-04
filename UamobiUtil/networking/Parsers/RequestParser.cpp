@@ -10,7 +10,7 @@
 
 namespace RequestParser
 {
-	NetRequestResponse<AbsRecEntity> parseResponse(QSharedPointer<AbsResponseParser>& parser, RecEntity prototype)
+    NetRequestResponse<AbsRecEntity> parseResponse(QSharedPointer<AbsResponseParser> parser, RecEntity prototype)
 	{
 		if (parser->isSuccessfull())
 		{
@@ -22,7 +22,7 @@ namespace RequestParser
 		else
 			return NetRequestResponse<AbsRecEntity>(parser->getErrors());
 	}
-	PolyResponse parseResponse(PolyResponse resp, RecEntity prototype)
+    PolyResponse parseResponse(PolyResponse resp, RecEntity prototype)
 	{
 		if (resp.isError)
 			return PolyResponse();

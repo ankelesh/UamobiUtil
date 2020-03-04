@@ -1,34 +1,17 @@
-
-][Created object LoginWidget on address 1028048
-
-][Created object MainPageWidget on address 533480
-
-][Created object Adjustable branch with 5 children on address 80096824
-Node of type 10 fabricated using description:  children: 0 oqs: 0
-
-][Created object PlaceSelection on address 1169296
-Node of type 9 fabricated using description:  children: 0 oqs: 0
-
-][Created object SelectItemFromList on address 691768
-Node of type 8 fabricated using description:  children: 0 oqs: 0
-
-][Created object IdDependentSelect on address 79793744
-Node of type 4 fabricated using description:  children: 0 oqs: 0
-
-][Created object ReceiptParametersWidget on address 1169296
-Node of type 5 fabricated using description:  children: 0 oqs: 1
-
-][Created object NormalScaning on address 693368
-
-][Created object ControlListWidget on address 83290864
-
-][Created object DocResults on address 83184912
-
-][Created object PagedSearchWidget on address 462136
-activated observer with p\s pair $ Return|
-
-
-->Method called: translate control qty3 | in object 15052556
-returningÊîë-âî
-
-][Created object control-like of type 1 on address 83275176
+Application start begins: version 0.06 alpha
+][	Created object LoginWidget on address 21879368
+][	Created object MainPageWidget on address 22107696
+>>	405334271424297 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
+>>	405334271428387 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
+<<	405334271451582 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket<
+	and error text |
+>>	405334273846404 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.06
+<<	405334273903329 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>1850</session>
+</login>
+	and error text |
+>>	405334273904236 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=1850&lang=Russian
+<<	405334273935062 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>
+	and error text |

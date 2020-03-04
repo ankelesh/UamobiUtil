@@ -12,6 +12,7 @@ namespace independent_nodes
 		PagedSearch,
 		FilterSelect,
 		DocResults,
+		EditableDocResults,
 		ReceiptParameters,
 		NormalScaning,
 		PrintingScaning,
@@ -46,11 +47,11 @@ protected:
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) = 0;
 public:
 	IndependentBranchNode(int Id, QWidget* parent = Q_NULLPTR) 
-		: inframedWidget(parent), id(Id), backtracksTo(0) {};
+        : inframedWidget(parent), id(Id), backtracksTo(0) {}
 	IndependentBranchNode(int Id, bool iFilter, QWidget* parent = Q_NULLPTR) 
-		: inframedWidget(iFilter, parent), id(Id), backtracksTo(0) {};
-	int getId() { return id; };
-	int& backtracking() {	return backtracksTo;	};
+        : inframedWidget(iFilter, parent), id(Id), backtracksTo(0) {}
+    int getId() { return id; }
+    int& backtracking() {	return backtracksTo;	}
 	void processRecord(RecEntity);
 	void loadData();
 	void setOverloads(const QVector<QueryTemplates::OverloadableQuery>& oqs);

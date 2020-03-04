@@ -18,8 +18,7 @@ ParentDocumentWidget::ParentDocumentWidget(RecEntity proto, QWidget* parent
 	docSelection(new QListView(this)),
 	footerLayout(new QHBoxLayout(innerWidget)), backButton(new MegaIconButton(innerWidget)),
 	selectButton(new MegaIconButton(innerWidget)), filterSelect(filterSelection),
-	awaiter( new RequestAwaiter(AppSettings->timeoutInt, this)),
-	loadDocumentQuery(-2, ping)
+    loadDocumentQuery(-2, ping),awaiter( new RequestAwaiter(AppSettings->timeoutInt, this))
 {
 
 #ifdef DEBUG
@@ -117,7 +116,7 @@ void ParentDocumentWidget::load_documents_response()
 	{
 		if (response.objects.isEmpty())
 			userInfo->setText(tr("no data received during request"));
-		entityModel->setData(response.objects);
+        entityModel->insertData(response.objects);
 	}
 	hideProcessingOverlay();
 }

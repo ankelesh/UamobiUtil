@@ -59,7 +59,7 @@ public:
 		IndependentBranchNode* still = Q_NULLPTR, IndependentBranchNode* group = Q_NULLPTR
 		);
 	// sends getFilters to define what to show user
-	void assertAndShow(QString& pdoc);
+    void assertAndShow(const QString& pdoc);
 	// applies filter, not requires record
 	void applyFilter(QString param, QString type);
 protected slots:

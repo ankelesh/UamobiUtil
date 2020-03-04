@@ -60,7 +60,7 @@ MainPageWidget::MainPageWidget(QWidget* parent)
 	bottomPanelLayout->addWidget(settingsButton);
 	bottomPanelLayout->addWidget(refreshButton);
 
-	versionLabel->setText(QString::number(VERSION) + " " + SUFFIX);
+    versionLabel->setText(QString::number(double(VERSION)) + " " + SUFFIX);
 	versionLabel->setFont(GENERAL_FONT);
 	hostLabel->setText(AppSettings->HttpUrl.section("/", 4, 4));
 	hostLabel->setFont(GENERAL_FONT);
@@ -149,7 +149,7 @@ void MainPageWidget::settinsPressed()
 	_hideAny(settingsScreen);
 }
 
-void MainPageWidget::userIdOk(const QString log, const  QString pass)
+void MainPageWidget::userIdOk(const QString /*log*/, const  QString /*pass*/)
 {
 	hideCurrent();
 	emit loggedIn();
@@ -205,7 +205,7 @@ void MainPageWidget::parseUsers()
 	switch (result.alternative_result)
 	{
 	case 0:
-		innerModel->setData(downcastRecords(result.objects));
+        innerModel->insertData(downcastRecords(result.objects));
 		if (!result.additionalObjects.isEmpty())
 			hostLabel->setText(result.additionalObjects.first()->value("servicename"));
 		break;

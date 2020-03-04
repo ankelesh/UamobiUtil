@@ -20,6 +20,7 @@ void inframedWidget::keyReleaseEvent(QKeyEvent* kev)
 		case Qt::Key_Escape:
 		case Qt::Key_Back:
 			backReaction();
+            Q_FALLTHROUGH();
 		default:
 			break;
 	}

@@ -83,11 +83,13 @@ NormalScaningWidget::NormalScaningWidget(QWidget* parent, IndependentBranchNode*
 
 void NormalScaningWidget::submitPressed()
 {
-	if (awaiter->isAwaiting())
+	if (awaiter->isAwaiting() || barcodeField->text().isEmpty())
 	{
 		return;
 	}
     showProcessingOverlay();
+	if (!first_control.isNull()) first_control->blockSignals(true);
+	if (!second_control.isNull()) second_control->blockSignals(true);
 	userInfo->clear();
 	QStringList buffer;
 	buffer << barcodeField->text();
@@ -98,11 +100,14 @@ void NormalScaningWidget::submitPressed()
 	AppNetwork->execQueryByTemplate(localCache[receiptAddItem], 5, buffer, awaiter);
     awaiter->deliverResultTo(receiptAddItem);
 	wipe();
+	if (!first_control.isNull()) first_control->blockSignals(false);
+	if (!second_control.isNull()) second_control->blockSignals(false);
+
 }
 
 void NormalScaningWidget::barcodeConfirmed()
 {
-	if (awaiter->isAwaiting())
+	if (awaiter->isAwaiting() || barcodeField->text().isEmpty())
 		return;
     showProcessingOverlay();
 	userInfo->clear();
@@ -128,7 +133,7 @@ void NormalScaningWidget::backNeeded()
 	_hideAny(resultScreen);
 }
 
-void NormalScaningWidget::useControls(IControlList & cvals)
+void NormalScaningWidget::useControls(const IControlList & cvals)
 {
 	AbstractScaningWidget::useControls(cvals);
 	switch (controlsAvailable)
@@ -271,6 +276,7 @@ void NormalScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloada
             t,t
 		));
     }
+        Q_FALLTHROUGH();
 	case 2:
     {
         QStringList t;
@@ -281,6 +287,7 @@ void NormalScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloada
             t,
             t2));
     }
+        Q_FALLTHROUGH();
 	case 1:
     {
         QStringList t;
@@ -289,6 +296,7 @@ void NormalScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloada
 			QueryTemplates::getItemInfo,
             t,t));
     }
+        Q_FALLTHROUGH();
 	default:
 		break;
 	}
@@ -302,6 +310,7 @@ void NormalScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloada
 			QueryTemplates::getItemInfo,
             t,t));
     }
+        Q_FALLTHROUGH();
 	case 2:
     {
         QStringList t;
@@ -311,6 +320,7 @@ void NormalScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloada
 		localCache.insert(receiptAddItem, OverloadableQuery(receiptAddItem,
             t, t2));
     }
+        Q_FALLTHROUGH();
 	case 1:
     {
         QStringList t;
@@ -320,6 +330,7 @@ void NormalScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloada
             t,
             t));
     }
+        Q_FALLTHROUGH();
 	default:
 		return;
 	}

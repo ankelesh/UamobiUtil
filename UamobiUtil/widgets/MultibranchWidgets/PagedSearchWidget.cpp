@@ -55,7 +55,7 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 	mainLayout->addWidget(itemList);
 	mainLayout->addLayout(footerLayout);
 	footerLayout->addWidget(backButton);
-	mainLayout->setContentsMargins(0, 0, 0, 0);
+    mainLayout->setContentsMargins(0,0,0, 0);
 	mainLayout->setSpacing(0);
 
 	searchButton->setText(tr("item_search_search"));
@@ -126,7 +126,7 @@ void PagedSearchWidget::refresh()
 	else
 	{
 		setIndexation(response.additionalObjects);
-		entityModel->setData(response.objects);
+        entityModel->insertData(response.objects);
 	}
 }
 
@@ -184,14 +184,14 @@ void PagedSearchWidget::previousPage()
 void PagedSearchWidget::search_response()
 {
 	refresh();
-	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
+    QObject::disconnect(awaiter, SIGNAL(requestReceived()),Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
 }
 
 void PagedSearchWidget::was_timeout()
 {
 	indexationInfo->setText(tr("item_search_timeout: ") + QString::number(awaiter->getInterval()));
-	QObject::disconnect(awaiter, SIGNAL(requestReceived()), 0, 0);
+    QObject::disconnect(awaiter, SIGNAL(requestReceived()),Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
 }
 

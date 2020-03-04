@@ -4,6 +4,7 @@
 #include <QtCore/qmetatype.h>
 #include <exception>
 #include "networking/RequestAwaiter.h"
+#include <QVector>
 
 /*
 	This file contains abstract class for all entities used in application. 
@@ -35,9 +36,9 @@ protected:
 	// extracts value that can be used in counting models. Not required for normal functioning.
 	virtual int extractEnumerable() const;
 	// sends request that is associated with default sending operation. Arguments are usually ignored
-	virtual bool useAssociatedNetworkSendMethod(QStringList& arguments, RequestAwaiter* awaiter) const;
+    virtual bool useAssociatedNetworkSendMethod(const QStringList& arguments, RequestAwaiter* awaiter) const;
 	// sends request that is associated with acquiring list of corresponding objects.
-	virtual bool useAssociatedNetworkGetMethod(QStringList& arguments, RequestAwaiter* awaiter) const;
+    virtual bool useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const;
 public:
 	explicit AbsRecEntity(const int class_id = 0);
 
@@ -48,13 +49,14 @@ public:
 	QString getTitle() const;
 	QString getId() const;
 	int myType() const;
-	bool sendAssociatedGetRequest(QStringList& arguments, RequestAwaiter* awaiter) const;
-	bool sendAssociatedPostRequest(QStringList& arguments, RequestAwaiter* awaiter) const;
+    bool sendAssociatedGetRequest(const QStringList& arguments, RequestAwaiter* awaiter) const;
+    bool sendAssociatedPostRequest(const QStringList& arguments, RequestAwaiter* awaiter) const;
 	int getAttachedNumber() const;
 	bool isSame(AbsRecEntity* another) const;
 	AbsRecEntity* clone() const;
 	bool isHigher(AbsRecEntity* another) const;
 	bool isHigher(QSharedPointer<AbsRecEntity> another) const;
+    virtual ~AbsRecEntity(){}
 };
 typedef QSharedPointer<AbsRecEntity> RecEntity;
 typedef QVector<QSharedPointer<AbsRecEntity> > Records;
@@ -72,10 +74,10 @@ Records downcastRecords(const QVector<T>& v)
 // casts records vector into basic class to allow inserting this vector in data model
 {
 	Records r;
-	QVector<T>::const_iterator b = v.begin();
+    typename QVector<T>::const_iterator b = v.begin();
 	while (b != v.end())
 	{
-		r << b++->staticCast<AbsRecEntity>();
+        r << b++->template staticCast<AbsRecEntity>();
 	}
 	return r;
 }
@@ -153,8 +155,8 @@ class InitializationError : public std::exception
 #ifdef Q_OS_WINCE
 public:
     InitializationError(QString field_name, QString value)
-    {};
-    virtual const char* what() const override { return "init error of record"; };
+    {}
+    virtual const char* what() const override;
 #else
 private:
 	std::string msg;
@@ -163,8 +165,12 @@ public:
 		: msg("Error initializing entity with provided values ")
 	{
 		msg += (field_name + " : " + value).toStdString();
-	};
-    virtual const char* what() const override { return msg.c_str(); };
+    }
+   virtual const char* what() const
+#ifdef QT_VERSION5X
+    noexcept
+#endif
+    override;
 #endif
 };
 
@@ -194,9 +200,9 @@ public:
 	XmlObjects additionalObjects;
 
 	explicit NetRequestResponse()
-		: isError(false), alternative_result(0), errtext(), objects(), additionalObjects() {};
+        : isError(false), alternative_result(0), errtext(), objects(), additionalObjects() {}
 	explicit NetRequestResponse(QString etext)
-		: isError(true), alternative_result(0), errtext(etext), objects(), additionalObjects() {};
+        : isError(true), alternative_result(0), errtext(etext), objects(), additionalObjects() {}
 	explicit NetRequestResponse(QVector<QSharedPointer<NetObject>>& o)
 		: isError(false), alternative_result(0), errtext(), objects(o), additionalObjects()
 	{
@@ -223,8 +229,8 @@ public:
 	}
 	bool isNormalAndNotEmpty() const {
 		return isNormal() && !isEmpty();
-	}
-	bool fromHeterogenicXmlObjects(const XmlObjects& objs, RecEntity prototype, int ares = 0)
+    }
+    bool fromHeterogenicXmlObjects(const XmlObjects& objs, RecEntity prototype, int ares)
 		// treats list as unknown objects and performs type checking. All non compatible objects
 		// are moved into additional objects
 	{
@@ -299,70 +305,7 @@ public:
 
 typedef NetRequestResponse<AbsRecEntity> PolyResponse;
 // This specialization stops polymorthic response from casting parsing results
-template <>
-bool NetRequestResponse<AbsRecEntity>::fromHomogenicXmlObjects(const XmlObjects& objs, RecEntity prototype, int ares)
-{
-	alternative_result = ares;
-	bool ok = true;
-	for (int i = 0; i < objs.count(); ++i)
-	{
-		try
-		{
-			ok = prototype->fromXmlObject(objs.at(i));
-			if (!ok)
-			{
-				return false;
-			}
-			// only difference between non-specialized and specialized versions
-			objects.push_back(RecEntity(prototype->clone()));
-		}
-		catch (InitializationError & ie)
-		{
-			isError = true;
-			errtext = ie.what();
-			return false;
-		}
-	}
-	return true;
-}
-// This specialization stops polymorthic response from casting parsing results
-template<>
-bool NetRequestResponse<AbsRecEntity>::fromHeterogenicXmlObjects(const XmlObjects& objs, RecEntity prototype, int ares)
-{
-	alternative_result = ares;
-	objects.clear();
-	additionalObjects.clear();
-	bool ok;
-	for (int i = 0; i < objs.count(); ++i)
-	{
-		try
-		{
-			if (objs.at(i)->myOID() == prototype->myType())
-			{
-				ok = prototype->fromXmlObject(objs.at(i));
-				if (!ok)
-				{
-					isError = true;
-					errtext = "initialization non-throwing error";
-					return false;
-				}
-				// only difference between non-specialized and specialized versions
-				objects.push_back(QSharedPointer<AbsRecEntity>(prototype->clone()));
-			}
-			else
-			{
-				additionalObjects.push_back(objs.at(i));
-			}
-		}
-		catch (InitializationError & ie)
-		{
-			isError = true;
-			errtext = ie.what();
-			return false;
-		}
-	}
-	return true;
-}
+
 
 template<class NetObject>
 inline XmlObjects NetRequestResponse<NetObject>::takeObjects()

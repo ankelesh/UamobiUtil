@@ -14,15 +14,19 @@ class CastFailedException : public std::exception
 {
 #ifdef Q_OS_WINCE
 public:
-    CastFailedException(QString str) { };
-    virtual const char* what() const override { return "Error upcasting inframed pointer"; };
+    CastFailedException(QString str) { }
+    virtual const char* what() const override;
 
 #else
 private:
     std::string msg;
 public:
-    CastFailedException(QString str) { msg =  "Error upcasting inframed pointer with from type " + str.toStdString(); };
-    virtual const char* what() const override { return msg.c_str(); };
+    CastFailedException(QString str) { msg =  "Error upcasting inframed pointer with from type " + str.toStdString(); }
+    virtual const char* what() const
+#ifdef QT_VERSION5X
+    noexcept
+#endif
+    override;
 #endif
 };
 class abstractNode
@@ -32,8 +36,10 @@ protected:
 	inframedWidget* untouchable;
 	inframedWidget* main;
 
-	abstractNode() : current(Q_NULLPTR), untouchable(Q_NULLPTR), main(Q_NULLPTR) {};
-	abstractNode(inframedWidget* c, inframedWidget* u, inframedWidget* m) : current(c), untouchable(u), main(m) {};
+    abstractNode() : current(Q_NULLPTR), untouchable(Q_NULLPTR), main(Q_NULLPTR) {}
+    abstractNode(inframedWidget* c, inframedWidget* u, inframedWidget* m) : current(c), untouchable(u), main(m) {}
+public:
+    virtual ~abstractNode(){}
 public slots:
 	virtual bool _hideCurrent(inframedWidget* replacement);
 	virtual void _hideAny(inframedWidget* replacement);
@@ -67,4 +73,5 @@ public:
 		}
 		return temp;
 	}
+    virtual ~abstractDynamicNode(){}
 };

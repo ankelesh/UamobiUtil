@@ -39,6 +39,7 @@ public:
 	int isAlternative();        // returns altres
 	void reset(QString& res, QString& err);  // postconstructor
 	XmlObjects& read();	//	returns parsed result
+    virtual ~AbsResponseParser();
 };
 
 typedef QSharedPointer<AbsResponseParser> ResponseParser;

@@ -51,6 +51,7 @@ protected:
 	QHBoxLayout* footerLayout;
 	MegaIconButton* backButton;
 	MegaIconButton* saveButton;
+	MegaIconButton* quitButton;
 
 	DataEntityListModel* items;
 	int pagenumber;
@@ -65,6 +66,7 @@ protected:
 	void setIndexation(XmlObjects& settings);
 	virtual void _sendDataRequest() override;
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
+	void getAttachedControls();
 public:
 	DocResultsWidget(QWidget* parent);
 	// sends request for full item list
@@ -79,7 +81,6 @@ protected slots:
 	// sends save request
 	void saveDocument();
 
-	void getAttachedControls();
 
 	// receives response and hides overlay. Renundant now.
 	void items_response();			
@@ -88,12 +89,13 @@ protected slots:
 
 	void get_attached_response();
 
-	void attachedControlsDone();
+	virtual void attachedControlsDone();
 
 	void was_timeout();
 	// sends delete all query
 	void deleteAll();
 	// sends delete by barcode query using current selected item's id
+	virtual void handleDelete();
 
 	void hideCurrent();
 };

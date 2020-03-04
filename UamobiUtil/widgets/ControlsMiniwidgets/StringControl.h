@@ -22,7 +22,11 @@ private:
 	
 public:
 	StringControl(QString name, QWidget* parent);
-	virtual ~StringControl();
+    virtual ~StringControl()
+#ifdef QT_VERSION5X
+    override
+#endif
+    ;
 	virtual void setFocus() const override;
 	virtual void show() override;
 	virtual void hide() override;

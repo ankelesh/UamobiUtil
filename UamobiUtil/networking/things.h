@@ -44,7 +44,7 @@ public:
 	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 	// dataoperation methods
 	//post-constructor
-	void setData(const Records& data);
+    void insertData(const Records& data);
 	// deletes data entity in the model by it's index or pointer
 	void removeDataEntity(const QModelIndex&);
 	void removeDataEntity(RecEntity);

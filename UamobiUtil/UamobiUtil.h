@@ -40,7 +40,7 @@ private:
 	void resizeEvent(QResizeEvent* rev) override;
 public:
 
-	UamobiUtil( QWidget* parent = 0);	//	Constructor is similar to most other constructors
+    UamobiUtil( QWidget* parent = Q_NULLPTR);	//	Constructor is similar to most other constructors
 
 private slots:
 	void gotoModeSelection();			//	Switch to modeSelectionBranch

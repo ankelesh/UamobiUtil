@@ -27,7 +27,7 @@ QHash<QString, UniformXmlObject::ThingsIds> _initiateObjectIdHash()
 	t["invoice"] = UniformXmlObject::Invoice;
 	return t;
 }
-QHash<QString, UniformXmlObject::ThingsIds> objectIdLinking(_initiateObjectIdHash());
+static QHash<QString, UniformXmlObject::ThingsIds> objectIdLinking(_initiateObjectIdHash());
 
 
 
@@ -169,7 +169,7 @@ void UniformXmlObject::renameField(const QString oldname, const QString newName)
 	}
 }
 
-UniformXmlObject::ThingsIds guessObjectId(QString& oname, int fcount, UniformXmlObject::ThingsIds desired)
+UniformXmlObject::ThingsIds guessObjectId(QString oname, int fcount, UniformXmlObject::ThingsIds desired)
 {
 	UniformXmlObject::ThingsIds temp = objectIdLinking[oname.toLower()];
 	switch (temp)
@@ -181,8 +181,7 @@ UniformXmlObject::ThingsIds guessObjectId(QString& oname, int fcount, UniformXml
 			if (fcount > 2)
 				return UniformXmlObject::Item;
 			else
-				return UniformXmlObject::SimpleItem;
-		break;
+                return UniformXmlObject::SimpleItem;
 	default:
 		return temp;
 	}

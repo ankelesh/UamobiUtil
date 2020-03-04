@@ -9,6 +9,7 @@
 #include "widgets/MultibranchWidgets/ReceiptParametersWidget.h"
 #include "widgets/MultibranchWidgets/IdDependentSelectWidget.h"
 #include "widgets/MultibranchWidgets/DocResultsWidget.h"
+#include "widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.h"
 #include "widgets/MultibranchWidgets/InventoryParamsWidget.h"
 #include "widgets/MultibranchWidgets/ScaningRelated/PrintingScaningWidget.h"
 #include "widgets/MultibranchWidgets/ScaningRelated/MulticontrolScaningWidget.h"
@@ -57,7 +58,9 @@ namespace BranchNodeFactory {
 	IndependentBranchNode* createNode(const BranchDescription e, QWidget* parent)
 	{
 		IndependentBranchNode* element;
+#ifdef DEBUG
 		detrace_NODECREATED(e->type, e->describe());
+#endif
 		switch (e->type)
 		{
 		case DocResults:
@@ -146,6 +149,9 @@ namespace BranchNodeFactory {
 			break;
 		case SkipNode:
 			return new SkippedNode(parent);
+		case EditableDocResults:
+			element = new EditableDocResultsWidget(parent);
+			break;
 		case DefaultNode:
 		default:
 			return Q_NULLPTR;

@@ -144,7 +144,7 @@ BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(QWidget* parent
 #endif
 }
 
-void BarcodeFilterSelectionSubbranch::assertAndShow(QString &pdoc)
+void BarcodeFilterSelectionSubbranch::assertAndShow(const QString &pdoc)
 {
 	showProcessingOverlay();
 	if (getFiltersQuery.isDefault())
@@ -280,6 +280,7 @@ void BarcodeFilterSelectionSubbranch::_makeOverloads(const QVector<QueryTemplate
             applyBarcodeFilter,t,t
 		);
     }
+        Q_FALLTHROUGH();
 	case 1:
     {
         QStringList t;
@@ -288,6 +289,7 @@ void BarcodeFilterSelectionSubbranch::_makeOverloads(const QVector<QueryTemplate
             getFilterItem, t,t
 		);
     }
+        Q_FALLTHROUGH();
 	default:
 		break;
 	}

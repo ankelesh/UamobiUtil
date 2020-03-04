@@ -134,9 +134,9 @@ void ModeSelectionWidget::parse_modes()
 	}
 	else
 	{
-		innerModel->setData(result.objects);
+        innerModel->insertData(result.objects);
 	}
-	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+    QObject::disconnect(&awaiter, SIGNAL(requestReceived()), Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
 }
 
@@ -153,9 +153,10 @@ void ModeSelectionWidget::mode_select_response()
 	}
 	else
 	{
+		selected->mode += " " + selected->submode;
 		selected->submode = parser.getRichtext();
 	}
-	QObject::disconnect(&awaiter, SIGNAL(requestReceived()), 0, 0);
+    QObject::disconnect(&awaiter, SIGNAL(requestReceived()), Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
 	emit modeAcquired(QHash<QString, QString>(), Mode(new ModeEntity(*selected)));
 }
@@ -163,6 +164,6 @@ void ModeSelectionWidget::mode_select_response()
 void ModeSelectionWidget::was_timeout()
 {
 	userTip->setText(tr("mode_selection_timeout!") + QString::number(AppSettings->timeoutInt));
-	QObject::disconnect(&awaiter, SIGNAL(requestReceived), 0, 0);
+    QObject::disconnect(&awaiter, SIGNAL(requestReceived), Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
 }
