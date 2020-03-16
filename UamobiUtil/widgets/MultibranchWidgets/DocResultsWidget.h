@@ -51,7 +51,6 @@ protected:
 	QHBoxLayout* footerLayout;
 	MegaIconButton* backButton;
 	MegaIconButton* saveButton;
-	MegaIconButton* quitButton;
 
 	DataEntityListModel* items;
 	int pagenumber;

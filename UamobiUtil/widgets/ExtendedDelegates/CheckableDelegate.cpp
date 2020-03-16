@@ -72,3 +72,11 @@ void CheckableDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 CheckableDelegate::~CheckableDelegate()
 {
 }
+QSize CheckableDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+	if (index.isValid())
+	{
+		return  QSize(option.rect.width(), index.data(Qt::SizeHintRole).toSize().height() * option.fontMetrics.height());
+	}
+	return QStyledItemDelegate::sizeHint(option, index);
+}

@@ -1,17 +1,8 @@
 Application start begins: version 0.06 alpha
-][	Created object LoginWidget on address 21879368
-][	Created object MainPageWidget on address 22107696
->>	405334271424297 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
->>	405334271428387 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
-<<	405334271451582 received response going to 0 containing text:|
+][	Created object LoginWidget on address 12627200
+][	Created object MainPageWidget on address 12791232
+>>	405527772219945 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
+>>	405527772229667 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
+<<	405527772282046 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket<
-	and error text |
->>	405334273846404 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.06
-<<	405334273903329 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>1850</session>
-</login>
-	and error text |
->>	405334273904236 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=1850&lang=Russian
-<<	405334273935062 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>
 	and error text |

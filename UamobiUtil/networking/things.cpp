@@ -70,7 +70,7 @@ QVariant DataEntityListModel::data(const QModelIndex& index, int role) const
 		return temp;
 	}
 	case Qt::SizeHintRole:
-		return QVariant(QSize(1 ,heights.at(index.row())));
+		return QVariant(QSize(FontAdapter::instanse()->howMuchCharacterFitsIntoScreen(), heights.at(index.row())));
 	}
 	return QVariant();
 }

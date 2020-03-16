@@ -51,7 +51,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	previousButton(new MegaIconButton(innerWidget)), indexationInfo(new QLabel(innerWidget)),
 	nextButton(new MegaIconButton(innerWidget)), itemInfoStorage(new QListView(innerWidget)),
 	footerLayout(new QHBoxLayout(innerWidget)), backButton(new MegaIconButton(innerWidget)),
-	saveButton(new MegaIconButton(innerWidget)), quitButton(new MegaIconButton(innerWidget)),
+	saveButton(new MegaIconButton(innerWidget)), 
 	items(new DataEntityListModel(this)), pagenumber(0), 
 	awaiter(new RequestAwaiter(AppSettings->timeoutInt + 20000, this)), localCache(),
 	attachedControls(new ControlListWidget(this))
@@ -77,7 +77,6 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	innerLayout->addLayout(footerLayout);
 	footerLayout->addWidget(backButton);
 	footerLayout->addWidget(saveButton);
-	footerLayout->addWidget(quitButton);
 	innerLayout->setContentsMargins(0, 0, 0, 0);
 	innerLayout->setSpacing(0);
     mainLayout->setContentsMargins(0,0,0,0);
@@ -130,9 +129,6 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	saveButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 
 
-	quitButton->setText(tr("quit"));
-	quitButton->setIcon(QIcon(":/res/data.png"));
-	quitButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
 
 	userInfo->setText(tr("doc_results_userinfo"));
 	userInfo->setFont(GENERAL_FONT);
@@ -148,7 +144,6 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	QObject::connect(backButton, &MegaIconButton::clicked, this, &DocResultsWidget::backRequired);
 	QObject::connect(saveButton, &MegaIconButton::clicked, this, &DocResultsWidget::saveDocument);
 	QObject::connect(nextButton, &MegaIconButton::clicked, this, &DocResultsWidget::nextPage);
-	QObject::connect(quitButton, &MegaIconButton::clicked, this, &DocResultsWidget::saveDocument);
 	QObject::connect(attachedControls, &ControlListWidget::controlsConfirmed, this, &DocResultsWidget::attachedControlsDone);
 	QObject::connect(attachedControls, &ControlListWidget::backRequired, this, &DocResultsWidget::hideCurrent);
 	QObject::connect(previousButton, &MegaIconButton::clicked, this, &DocResultsWidget::previousPage);
@@ -229,16 +224,6 @@ void DocResultsWidget::nextPage()
 
 void DocResultsWidget::saveDocument()
 {
-	if (sender() == quitButton)
-	{
-		QMessageBox::StandardButton response = QMessageBox::question(this, tr("QuitWithoutSave?"), 
-			tr("quit_without_save_info?"),
-			QMessageBox::Ok | QMessageBox::Cancel);
-		if (response == QMessageBox::Ok)
-			emit done(RecEntity());
-		else
-			return;
-	}
 	if (awaiter->isAwaiting())
 		return;
 

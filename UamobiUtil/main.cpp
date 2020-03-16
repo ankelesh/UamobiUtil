@@ -10,7 +10,6 @@
 #include "networking/Parsers/DynamicLinearParsers.h"
 #include "debugtrace.h"
 #include <QProxyStyle>
-
 /*
 		This is uamobiUtil app, which is suited to replace old one. Main idea is the same.
 		This realisation is Qt5-based, with guarding macros to allow legacy-compatibility with qt4.
@@ -20,6 +19,7 @@
 //#define TESTING
 class WinCEProxyStyle : public QProxyStyle
 {
+    
     virtual int pixelMetric(PixelMetric metric, const QStyleOption *option, const QWidget *widget) const
     {
         if (metric == QStyle::PM_ButtonMargin)
