@@ -352,7 +352,7 @@ debugtrace& debugtrace::operator<<(Actions act)
 	using detr_supply::Actions;
 	switch (act)
 	{
-	case Actions::endl:
+    case Actions::endL:
 		flushBuffer();
 		break;
 	case Actions::nolimit:

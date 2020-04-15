@@ -354,6 +354,12 @@
     <ClCompile Include="widgets\MultibranchWidgets\Selectors\EditableDocResultsWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="datacore\PseudotableEntityModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ExtendedDelegates\CountingDelegate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -487,6 +493,12 @@
     </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\Selectors\EditableDocResultsWidget.h">
       <Filter>Header Files\MultibranchWidgets\Selectors</Filter>
+    </QtMoc>
+    <QtMoc Include="datacore\PseudotableEntityModel.h">
+      <Filter>Header Files\Datacore</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ExtendedDelegates\CountingDelegate.h">
+      <Filter>Header Files\Delegates</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

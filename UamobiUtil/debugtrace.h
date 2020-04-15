@@ -45,101 +45,101 @@
 
   // print message about creating an object within specified method or function
 #define detrace_OCREATED(OBJECT, AROUND) debugtrace::getObject() << detr_supply::objectConstruction \
-    << "][\tCreated object " << OBJECT << " around " << AROUND << detr_supply::Actions::endl
+    << "][\tCreated object " << OBJECT << " around " << AROUND << detr_supply::Actions::endL
 
   // print message about triggered default constructor
 #define detrace_DCONSTR(OBJECT) debugtrace::getObject() << detr_supply::defaultConstructor << \
-    "][\tCreated object " << OBJECT << " on address " << ((unsigned long long int)this) <<  detr_supply::Actions::endl
+    "][\tCreated object " << OBJECT << " on address " << ((unsigned long long int)this) <<  detr_supply::Actions::endL
 
 // pring message about something happening in method
-#define detrace_METHEXPL(HAPPENED) debugtrace::getObject() << detr_supply::methodExplanation << HAPPENED << detr_supply::Actions::endl
+#define detrace_METHEXPL(HAPPENED) debugtrace::getObject() << detr_supply::methodExplanation << HAPPENED << detr_supply::Actions::endL
 
 // print message about something not important
-#define detrace_SIMPLMSG(MESSAGE) debugtrace::getObject() << detr_supply::notImportantMessage << MESSAGE << detr_supply::Actions::endl
+#define detrace_SIMPLMSG(MESSAGE) debugtrace::getObject() << detr_supply::notImportantMessage << MESSAGE << detr_supply::Actions::endL
 
 // print message about called method
 #define detrace_METHCALL(_METHOD_) debugtrace::getObject() << detr_supply::methodCalled << \
-    "-->\tMethod called: "  << _METHOD_ << " in object " <<  ((unsigned long long int )this) << detr_supply::Actions::endl
+    "-->\tMethod called: "  << _METHOD_ << " in object " <<  ((unsigned long long int )this) << detr_supply::Actions::endL
 
 // print message about slot activation
 #define detrace_SLOTCALL(_SLOT_) debugtrace::getObject() << detr_supply::methodCalled << "-->\tSlot " \
-    << _SLOT_ << " of object "  << ((unsigned long long int )this) << " called" << detr_supply::Actions::endl
+    << _SLOT_ << " of object "  << ((unsigned long long int )this) << " called" << detr_supply::Actions::endL
 
 // print message about invocation of any method by any method of any class
 #define detrace_METHINVOK(INVOCATED_METHOD, _METHOD_ ,_OBJECT_PTR_) debugtrace::getObject() << detr_supply::methodInvocation \
     << "-->\tMethod " << INVOCATED_METHOD << " of object " << ((unsigned long long int) _OBJECT_PTR_) << \
-	" invocated in method " << _METHOD_ << " of object " << ((unsigned long long int )this) << detr_supply::Actions::endl
+    " invocated in method " << _METHOD_ << " of object " << ((unsigned long long int )this) << detr_supply::Actions::endL
 
 // print message about emitting signal
 #define detrace_SIGNALINV(_SIGNAL_, OBJECT) debugtrace::getObject() << detr_supply::signalInvocation\
-    << "--!\tSignal " << _SIGNAL_ << " is emitted from " << OBJECT << detr_supply::Actions::endl
+    << "--!\tSignal " << _SIGNAL_ << " is emitted from " << OBJECT << detr_supply::Actions::endL
 
 // print message containig snapshot of current data. Variables to dump must be provided using <<
 #define detrace_METHDATAS(_METHOD_, _VARIABLES_, _STATE_) debugtrace::getObject() << detr_supply::methodDataSnapshot\
-    << "[&&&]\tin method " << _METHOD_ << " state of variables "<< _VARIABLES_  << " was " _STATE_ << detr_supply::Actions::endl
+    << "[&&&]\tin method " << _METHOD_ << " state of variables "<< _VARIABLES_  << " was " _STATE_ << detr_supply::Actions::endL
 
 // print message containing one text variable and its value in separated place
 #define detrace_METHTEXTS(_METHOD_,_VARIABLE_,_TEXT_) debugtrace::getObject() << detr_supply::methodDataSnapshot\
-    << "[&&&]\tin method " << _METHOD_ << " state of text variable " << _VARIABLE_ << " was: " << detr_supply::Actions::endl\
-    << "\t________________________________________" << detr_supply::Actions::endl << "\t" << debugtrace::shiftRight(_TEXT_)<< detr_supply::Actions::endl
+    << "[&&&]\tin method " << _METHOD_ << " state of text variable " << _VARIABLE_ << " was: " << detr_supply::Actions::endL\
+    << "\t________________________________________" << detr_supply::Actions::endL << "\t" << debugtrace::shiftRight(_TEXT_)<< detr_supply::Actions::endL
 
 // print message about received arguments in method
 #define detrace_METHDRECEIVE(_METHOD_, _ARGUMENTS_ , _VALUES_) debugtrace::getObject() << detr_supply::methodDataSnapshot\
     << "-->[&&&]\tmethod " << _METHOD_ << " received data: arguments " << _ARGUMENTS_ << " were filled with values"\
-    << detr_supply::Actions::endl << "\t|" << _VALUES_ << "|" << detr_supply::Actions::endl
+    << detr_supply::Actions::endL << "\t|" << _VALUES_ << "|" << detr_supply::Actions::endL
 
 // print message about sent request
 #define detrace_NETREQSENT(_METHOD_,_REQUEST_, _SUPPLIED_) debugtrace::getObject() << detr_supply::netrequestSent << \
-    ">>\t" << makeMsgId() << " method " << _METHOD_ << " sent request " << _REQUEST_ << " supplied with " << _SUPPLIED_ << detr_supply::Actions::endl
+    ">>\t" << makeMsgId() << " method " << _METHOD_ << " sent request " << _REQUEST_ << " supplied with " << _SUPPLIED_ << detr_supply::Actions::endL
 
 #define detrace_NETREQUEST(_URL_) debugtrace::getObject() <<detr_supply::netrequestSent << \
-    ">>\t" << makeMsgId() << " sent request: " << _URL_ << detr_supply::Actions::endl
+    ">>\t" << makeMsgId() << " sent request: " << _URL_ << detr_supply::Actions::endL
 
 #define detrace_NETRESPARR(_DATA_, _ERR_, _DELIVER_) debugtrace::getObject() << detr_supply::netresponseReceived << \
-	"<<\t" << makeMsgId() << " received response going to " << _DELIVER_ << " containing text:|" << detr_supply::Actions::endl << \
-     '\t' << debugtrace::compressNetMsg(_DATA_) << detr_supply::Actions::endl << "\tand error text |" \
-	<< debugtrace::compressNetMsg(_ERR_) << detr_supply::Actions::endl
+    "<<\t" << makeMsgId() << " received response going to " << _DELIVER_ << " containing text:|" << detr_supply::Actions::endL << \
+     '\t' << debugtrace::compressNetMsg(_DATA_) << detr_supply::Actions::endL << "\tand error text |" \
+    << debugtrace::compressNetMsg(_ERR_) << detr_supply::Actions::endL
 
 #define detrace_NETERROR(_ERROR_, _INFO_) debugtrace::getObject() << detr_supply::netErrorPossible \
-    << "> ! <\t" << makeMsgId() << " error making request " <<  _INFO_  << " : " << _ERROR_ << detr_supply::Actions::endl
+    << "> ! <\t" << makeMsgId() << " error making request " <<  _INFO_  << " : " << _ERROR_ << detr_supply::Actions::endL
 
 #define detrace_NRESPERR(_ERROR_) debugtrace::getObject() << detr_supply::netErrorPossible\
-    << "> ! <\t" << makeMsgId() << " error receiving response: " << _ERROR_ << detr_supply::Actions::endl
+    << "> ! <\t" << makeMsgId() << " error receiving response: " << _ERROR_ << detr_supply::Actions::endL
 
 // prints message using high priority
-#define detrace_MSGIMP(_MESSAGE_) debugtrace::getObject() << detr_supply::importantMessage << detr_supply::Actions::endl <<\
-    "!\t" <<  detr_supply::Actions::endl<< _MESSAGE_ <<"!" << detr_supply::Actions::endl << detr_supply::Actions::endl
+#define detrace_MSGIMP(_MESSAGE_) debugtrace::getObject() << detr_supply::importantMessage << detr_supply::Actions::endL <<\
+    "!\t" <<  detr_supply::Actions::endL<< _MESSAGE_ <<"!" << detr_supply::Actions::endL << detr_supply::Actions::endL
 
 // prints low priority message that frequent method was invoked
 #define detrace_METHFRECALL(_METHOD_) debugtrace::getObject() << detr_supply::frequentMethodCalled <<\
-    "***\tmethod " << _METHOD_ << "called" << detr_supply::Actions::endl
+    "***\tmethod " << _METHOD_ << "called" << detr_supply::Actions::endL
 
 // prints low priority message about cycle
 #define detrace_CYCLEEXPL(_EXPLANATION_) debugtrace::getObject() << detr_supply::cycleExplanation << \
-    "***\tcycling: " << _EXPLANATION_ << detr_supply::Actions::endl
+    "***\tcycling: " << _EXPLANATION_ << detr_supply::Actions::endL
 
 // prints status of connecting with high priority to avoid disconnection errors
 #define detrace_CONNECTSTAT(_SIGNAL_TO_SLOT_, _STATE_) debugtrace::getObject() << detr_supply::errorPossible << \
-	"-][-\tafter connecting " << _SIGNAL_TO_SLOT_ << " state was " << _STATE_ << detr_supply::Actions::endl
+    "-][-\tafter connecting " << _SIGNAL_TO_SLOT_ << " state was " << _STATE_ << detr_supply::Actions::endL
 
 //print message about possible error during flow of method X
 #define detrace_METHPERROR(_METHOD_, _CONTEXT_) debugtrace::getObject() << detr_supply::errorPossible << \
 	"-->!<--\tError possible in object " << ((unsigned long long int ) this ) << \
-	" in method " << _METHOD_ << "with context: " << _CONTEXT_ << detr_supply::Actions::endl
+    " in method " << _METHOD_ << "with context: " << _CONTEXT_ << detr_supply::Actions::endL
 
-#define detrace_SUCCESS debugtrace::getObject() << detr_supply::methodDataSnapshot << " (V) Operation success!" << detr_supply::Actions::endl
+#define detrace_SUCCESS debugtrace::getObject() << detr_supply::methodDataSnapshot << " (V) Operation success!" << detr_supply::Actions::endL
 
-#define detrace_FAIL debugtrace::getObject() << detr_supply::methodDataSnapshot << " (X) Operation failed!" << detr_supply::Actions::endl
+#define detrace_FAIL debugtrace::getObject() << detr_supply::methodDataSnapshot << " (X) Operation failed!" << detr_supply::Actions::endL
 
 #define detrace_NODECREATED(_TYPE_, _DESCRIPTION_) debugtrace::getObject() << detr_supply::objectConstruction \
-    << "]N[\tNode of type " << _TYPE_ << " fabricated using description: " << _DESCRIPTION_ << detr_supply::Actions::endl
+    << "]N[\tNode of type " << _TYPE_ << " fabricated using description: " << _DESCRIPTION_ << detr_supply::Actions::endL
 
 #define detrace_APPSTART(_VERSION_, _SUFFIX_) debugtrace::getObject() << detr_supply::netErrorPossible \
-	<< "Application start begins: version " << _VERSION_  << " " << _SUFFIX_ << detr_supply::Actions::endl
+    << "Application start begins: version " << _VERSION_  << " " << _SUFFIX_ << detr_supply::Actions::endL
 
 #define detrace_MODEINTERPRET(_NAME_,_MODE_, _DESCRIPTION_) debugtrace::getObject() << detr_supply::importantMessage \
 	<< "[!!!]\tMode named " << _NAME_ << " signed as " << _MODE_ << " received, interpreting: " << detr_supply::Actions::nolimit \
-	<<  debugtrace::shiftRight(_DESCRIPTION_) << detr_supply::Actions::endl
+    <<  debugtrace::shiftRight(_DESCRIPTION_) << detr_supply::Actions::endL
 
 
 namespace detr_supply { // Holds enums for defining output method and priorities
@@ -156,7 +156,11 @@ namespace detr_supply { // Holds enums for defining output method and priorities
 	};
 	// Defines priority level: everything that is lower than detrace starting priority
 	// will be printed.
-	enum class Actions { Flush, endl, ignore, nolimit};
+    enum
+        #ifdef QT_VERSION5X
+            class
+        #endif
+            Actions { Flush, endL, ignore, nolimit};
 }
 
 using namespace detr_supply;

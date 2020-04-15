@@ -31,6 +31,10 @@ QString ControlTranslator::translate(QString& str)
 			return tr("control_addqty");
 		}
 		break;
+    case 8:
+        if (str == "sold_qty")
+            return tr("control_sold");
+        break;
 	default:
 		break;
 	}

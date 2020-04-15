@@ -2,6 +2,7 @@
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
+#include "widgets/ExtendedDelegates/CountingDelegate.h"
 #include <QMessageBox>
 #ifdef DEBUG
 #include "debugtrace.h"
@@ -92,18 +93,26 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	previousButton->setDisabled(true);
 	previousButton->setStyleSheet(NAVIGATE_BUTTONS_STYLESHEET);
 	previousButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
+#ifdef Q_OS_WINCE
+	previousButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
+#endif
 
 	nextButton->setSizePolicy(mi);
 	nextButton->setIcon(QIcon(":/res/nextpage.png"));
 	nextButton->setDisabled(true);
 	nextButton->setStyleSheet(NAVIGATE_BUTTONS_STYLESHEET);
 	nextButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
-
+#ifdef Q_OS_WINCE
+	nextButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
+#endif
 
 
 	indexationInfo->setSizePolicy(ma);
 	indexationInfo->setFont(GENERAL_FONT);
 	indexationInfo->setAlignment(Qt::AlignCenter);
+#ifdef Q_OS_WINCE
+	indexationInfo->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
+#endif
     itemInfoStorage->setWordWrap(true);
     itemInfoStorage->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	//TODO: icons
@@ -112,6 +121,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	deleteAllButton->setText(tr("delete all"));
 	deleteAllButton->setIcon(QIcon(":/res/data.png"));
 	deleteAllButton->setStyleSheet(DELETE_BUTTONS_STYLESHEET);
+	deleteAllButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
 	deleteAllButton->hide();
 	
 	deleteSelectedButton->setFont(GENERAL_FONT);
@@ -119,6 +129,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	deleteSelectedButton->setIcon(QIcon(":/res/deleteData.png"));
 	deleteSelectedButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
 	deleteSelectedButton->hide();
+	deleteSelectedButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
 
 	backButton->setText(tr("doc_results_back"));
 	backButton->setIcon(QIcon(":/res/back.png"));
@@ -134,10 +145,9 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	userInfo->setFont(GENERAL_FONT);
 	userInfo->setAlignment(Qt::AlignCenter);
 
-	itemInfoStorage->setFont(GENERAL_FONT);
-
+	itemInfoStorage->setFont(AppFonts->makeCustomFont(0.03));
 	itemInfoStorage->setModel(items);
-	itemInfoStorage->setItemDelegate(new ZebraItemDelegate(this));
+	itemInfoStorage->setItemDelegate(new CountingItemDelegate(this));
 #ifdef QT_VERSION5X
 	QObject::connect(deleteAllButton, &MegaIconButton::clicked, this, &DocResultsWidget::deleteAll);
 	QObject::connect(deleteSelectedButton, &MegaIconButton::clicked, this, &DocResultsWidget::handleDelete);
@@ -200,7 +210,47 @@ void DocResultsWidget::refresh()
 		PolyResponse invoices = RequestParser::parseResponse(response, RecEntity(new InvoiceEntity()));
 		setIndexation(invoices.additionalObjects);
 		saveButton->setDisabled(response.objects.isEmpty());
-        items->insertData(invoices.objects + response.objects);
+		QVector<int> heights;
+		heights.reserve(invoices.objects.count() + response.objects.count());
+		QVector<RecEntity> total;
+		total.reserve(invoices.objects.count() + response.objects.count());
+		int height  = 0;
+		QFontMetrics fm = itemInfoStorage->fontMetrics();
+		{
+			QVector<RecEntity>::iterator pos = invoices.objects.begin();
+			Invoice fitem;
+			Invoice prototype(new InvoiceEntity());
+			while (pos != invoices.objects.end())
+			{
+				fitem = upcastRecord(*pos, prototype);
+				if (!fitem.isNull())
+				{
+					fitem->name = FontAdapter::breakStringToFitScreen(
+						fitem->name.replace("\n", " "),fm,  0.75, &height);
+					total << *pos;
+					heights << height;
+				}
+				++pos;
+			}
+		}
+		{
+			QVector<RecEntity>::iterator pos = response.objects.begin();
+			FullItem fitem;
+			FullItem prototype(new FullItemEntity());
+			while (pos != response.objects.end())
+			{
+				fitem = upcastRecord(*pos, prototype);
+				if (!fitem.isNull())
+				{
+					fitem->title = FontAdapter::breakStringToFitScreen(
+						fitem->title.replace("\n", " "),fm,  0.75, &height);
+					total << *pos;
+					heights << height;
+				}
+				++pos;
+			}
+		}
+        items->insertData(total, heights);
 	}
 }
 
@@ -246,6 +296,10 @@ void DocResultsWidget::getAttachedControls()
 	if (!localCache.contains(documentResultGetBox))
 	{
 		attachedControls->clearControls();
+		attachedControls->emplaceControl(
+			InputControl(
+				new InputControlEntity(
+					currentItem->getTitle(), "Label", currentItem->getTitle())));
 		attachedControls->emplaceControl(
 			InputControl(
 				new InputControlEntity(

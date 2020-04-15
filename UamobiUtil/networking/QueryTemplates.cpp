@@ -48,7 +48,7 @@ namespace QueryTemplates
 		c[receiptAddItem] = queryTemplates.value(QStringLiteral("receiptAddItem"), QStringLiteral("rec_add_item&session=%1&barcode=%2&qty=%3")).toString();
 		c[receiptAddItemExpDate] = queryTemplates.value(QStringLiteral("receiptAddItemExpDate"), QStringLiteral("rec_add_item_w_ed&session=%1&code=%2&expdates=%3")).toString();
 		c[getFilterItem] = queryTemplates.value(QStringLiteral("getFilterItem"), QStringLiteral("get_filter_item&session=%1&parent=%2")).toString();
-		c[documentDeleteAll] = queryTemplates.value(QStringLiteral("DocumentDeleteAll"), QStringLiteral("	")).toString();
+		c[documentDeleteAll] = queryTemplates.value(QStringLiteral("DocumentDeleteAll"), QStringLiteral("doc_result_delete_all&session=%1")).toString();
 		c[docDeleteByBarcode] = queryTemplates.value(QStringLiteral("docDeleteByBarcode"), QStringLiteral("doc_result_delete_by_bc&session=%1&barcode=%2%3")).toString();
         c[recListTemplated] = queryTemplates.value(QStringLiteral("recListTemplated"), QStringLiteral("rec_list_%2&session=%1&text=%3%4")).toString();
 		c[applyBarcodeFilter] = queryTemplates.value(QStringLiteral("applyBarcodeFilter"), QStringLiteral("select_filter_item&session=%1&filter=%2&value=%3")).toString();

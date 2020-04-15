@@ -1,13 +1,13 @@
 #include "things.h"
 #include "widgets/utils/ElementsStyles.h"
 #include <QFontMetrics>
-
+#include <algorithm>
 
 
 int countNormalizedHeights(QString& line, QChar breaker = '\n')
 {
 	int heights = 1;
-	QString::iterator point = std::find(line.begin(), line.end(), breaker);;
+    QString::iterator point = std::find(line.begin(), line.end(), breaker);;
 	QString::iterator previousPoint = line.begin();
 	while (point != line.end())
 	{
@@ -90,6 +90,16 @@ void DataEntityListModel::insertData(const Records& data)
 	{
 		heights.push_back(countNormalizedHeights(data.at(i)->getTitle()));
 	}
+	endResetModel();
+}
+
+void DataEntityListModel::insertData(const Records& data, const QVector<int>& hts)
+{
+	beginResetModel();
+	innerList.clear();
+	innerList << data;
+	heights.clear();
+	heights << hts;
 	endResetModel();
 }
 

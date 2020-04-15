@@ -1,1 +1,1 @@
-Application start begins: version 0.06 alpha
+Application start begins: version 0.09 alpha

@@ -7,29 +7,25 @@
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
-
+#include <qmessagebox.h>
 
 
 ModeSelectionWidget::ModeSelectionWidget( QWidget* parent)
-	: inframedWidget(true, parent), innerModel(new DataEntityListModel(this)), mainLayout(new QVBoxLayout(this)),
-	buttonLayout(new QHBoxLayout(this)), userTip(new QLabel(this)),
-	modesTip(new QLabel(this)), modeSelection(new QListView(this)),
+	: inframedWidget(true, parent), innerModel(new PseudotableEntityModel(2,this)), mainLayout(new QVBoxLayout(this)),
+	buttonLayout(new QHBoxLayout(this)),
+	modesTip(new QLabel(this)), modeSelection(new QTableView(this)),
 	logoutButton(new MegaIconButton(this)),settings(), 
 	selected(new ModeEntity()), awaiter(AppSettings->timeoutInt, this)
 {
 	this->setLayout(mainLayout);
 	mainLayout->setSpacing(0);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
-	mainLayout->addWidget(userTip);
 	mainLayout->addWidget(modesTip);
 	mainLayout->addWidget(modeSelection);
 	mainLayout->addLayout(buttonLayout);
 	buttonLayout->addWidget(logoutButton);
 	//buttonLayout->addStretch();
 
-	userTip->setText(tr("mode_selection_user_tip!"));
-	userTip->setAlignment(Qt::AlignCenter);
-	userTip->setFont(GENERAL_FONT);
 	modesTip->setText(tr("mode_selection_modes_tip:"));
 	modesTip->setAlignment(Qt::AlignCenter);
 	modesTip->setFont(GENERAL_FONT);
@@ -39,7 +35,19 @@ ModeSelectionWidget::ModeSelectionWidget( QWidget* parent)
 	logoutButton->setText(tr("mode_selection_logout_tip"));
 
 	modeSelection->setModel(innerModel);
-	modeSelection->setItemDelegate(new ZebraItemDelegate(this));
+	modeSelection->setItemDelegate(new CheckmateBoardDelegate(this));
+	modeSelection->verticalHeader()->hide();
+	modeSelection->horizontalHeader()->hide();
+
+
+#ifdef QT_VERSION5X
+    modeSelection->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
+	modeSelection->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+#else
+    modeSelection->verticalHeader()->setResizeMode(QHeaderView::ResizeMode::ResizeToContents);
+    modeSelection->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+#endif
+	modeSelection->setShowGrid(false);
 #ifdef QT_VERSION5X
 	QObject::connect(logoutButton, &QPushButton::clicked, this, &ModeSelectionWidget::logoutPressed);
 	QObject::connect(modeSelection, &QListView::clicked, innerModel, &DataEntityListModel::mapClickToEntity);
@@ -127,7 +135,7 @@ void ModeSelectionWidget::parse_modes()
 	PolyResponse result = RequestParser::parseResponse(parser, RecEntity(selected->clone()));
 	if (result.isError)
 	{
-		userTip->setText(result.errtext);
+		QMessageBox::critical(this, tr("Error!"), result.errtext);
 #ifdef DEBUG
 		detrace_NRESPERR(result.errtext);
 #endif
@@ -145,7 +153,7 @@ void ModeSelectionWidget::mode_select_response()
 	RichtextResponseParser parser(awaiter.restext, awaiter.errtext);
 	if (!parser.isSuccessfull())
 	{
-		userTip->setText(parser.getErrors());
+		QMessageBox::critical(this, tr("Error!"), parser.getErrors());
 		selected->drop();
 #ifdef DEBUG
 		detrace_NRESPERR(parser.getErrors());
@@ -163,7 +171,7 @@ void ModeSelectionWidget::mode_select_response()
 
 void ModeSelectionWidget::was_timeout()
 {
-	userTip->setText(tr("mode_selection_timeout!") + QString::number(AppSettings->timeoutInt));
+	modesTip->setText(tr("mode_selection_timeout!") + QString::number(AppSettings->timeoutInt));
     QObject::disconnect(&awaiter, SIGNAL(requestReceived), Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
 }

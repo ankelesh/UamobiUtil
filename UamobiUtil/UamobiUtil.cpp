@@ -14,7 +14,7 @@ UamobiUtil::UamobiUtil( QWidget* parent)
 	bindProcessingOverlay(overlay);
 	overlay->hide();
 	this->setLayout(mainLayout);
-
+	setFont(*(AppFonts->general()));
 #ifdef Q_OS_WINCE
 	this->setBaseSize(calculateAdaptiveSize(0.8));
 	this->setMaximumSize(calculateAdaptiveSize(1));

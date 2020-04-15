@@ -4,7 +4,7 @@
 // utility
 
 
-const float VERSION = 0.06f;
+const float VERSION = 0.09f;
 const char* SUFFIX = "alpha";
 
 void GlobalAppSettings::setTranslator()

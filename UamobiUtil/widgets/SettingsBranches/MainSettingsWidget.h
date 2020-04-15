@@ -57,6 +57,10 @@ private:
 
 	// group of language changes
 	QComboBox* langField;
+	MegaIconButton* createSTableButton;
+
+	QWidget* scaningTab;
+	QFormLayout* scaninnlayout;
 
 	QSpinBox* prefix;
 	QSpinBox* suffix;
@@ -82,6 +86,7 @@ private slots:
 	void AddressSelected(const QString& activated); // changes url without reconnection
 	void setPSLabels(int);			//	updates prefix and suffix
 	void applyFonts();				//	applies fonts to FontAdapter. but results will be only after reboot
+	void createStyleTable();
 signals:
 	void languageChanged();			//	is emitted when language is changed
 	void saveConfirmed();			//	emitted when user confirms data

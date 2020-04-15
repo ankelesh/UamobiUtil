@@ -62,10 +62,20 @@ BigButtonsSpinbox::BigButtonsSpinbox(spintype type, QWidget* parent, double adap
 	}
 	sptype = type;
 	this->setLayout(mainLayout);
+#ifdef Q_OS_WINCE
+    mainLayout->addWidget(buttonUp, 0, 0);
+	mainLayout->addWidget(coreSpinbox, 0, 1);
+	mainLayout->addWidget(buttonDown, 0, 2);
+	setMaximumHeight(calculateAdaptiveButtonHeight(0.09));
+    infoLabel->hide();
+#else
 	mainLayout->addWidget(buttonUp, 0, 0, 3, 1);
 	mainLayout->addWidget(infoLabel, 0, 1);
 	mainLayout->addWidget(coreSpinbox, 1, 1, 2, 1);
 	mainLayout->addWidget(buttonDown, 0, 2, 3, 1);
+    buttonUp->setIcon(QIcon(":/res/uparrow.png"));
+    buttonDown->setIcon(QIcon(":/res/downarrow.png"));
+#endif
 	mainLayout->setSpacing(0);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 
@@ -81,9 +91,7 @@ BigButtonsSpinbox::BigButtonsSpinbox(spintype type, QWidget* parent, double adap
 		buttonDown->hide();
 	}
 	else
-	{
-		buttonUp->setIcon(QIcon(":/res/uparrow.png"));
-		buttonDown->setIcon(QIcon(":/res/downarrow.png"));
+    {
 		buttonUp->setMinimumHeight(calculateAdaptiveButtonHeight(adaptH));
 		buttonDown->setMinimumHeight(calculateAdaptiveButtonHeight(adaptH));
 		buttonDown->setFocusPolicy(Qt::NoFocus);
@@ -447,7 +455,12 @@ bool BigButtonsSpinbox::hasFocus() const
 
 void BigButtonsSpinbox::setInfo(QString& str)
 {
+#ifdef Q_OS_WINCE
+    buttonUp->setText(str + "+");
+    buttonDown->setText(str + "-");
+#else
 	infoLabel->setText(str);
+#endif
 }
 
 void BigButtonsSpinbox::selectAll()

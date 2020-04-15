@@ -12,7 +12,9 @@
 #include <QtGui/QLabel>
 #include <QtGui/QListView>
 #endif
-
+#include <qtableview.h>
+#include <qheaderview.h>
+#include "datacore/PseudotableEntityModel.h"
 // widgets imports
 #include "widgets/parents/inframedWidget.h"
 #include "widgets/MultibranchWidgets/PlaceSelectionWidget.h"
@@ -36,13 +38,12 @@ class ModeSelectionWidget : public inframedWidget	//	root of modeSelection branc
 	Q_OBJECT
 protected:
 	// modes list
-	DataEntityListModel* innerModel;
+	PseudotableEntityModel* innerModel;
 
 	QVBoxLayout* mainLayout;
 	QHBoxLayout* buttonLayout;
-	QLabel* userTip;
 	QLabel* modesTip;
-	QListView* modeSelection;
+	QTableView* modeSelection;
 	MegaIconButton* logoutButton;
 
 	// this list is used to store data obtained after select_mode web request. it will be usefull later

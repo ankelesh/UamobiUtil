@@ -9,7 +9,7 @@ EntitledEntity::EntitledEntity(int subclassId, QString c, QString t, QString tx)
 
 QString EntitledEntity::makeTitle() const
 {
-	return title;
+	return title + "\n" + text;
 }
 
 QString EntitledEntity::extractId() const

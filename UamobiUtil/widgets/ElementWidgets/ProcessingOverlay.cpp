@@ -57,7 +57,7 @@ void ProcessingOverlay::paintEvent(QPaintEvent* /*pev*/)
 	gradient.setFinalStop(qreal(width()) - 1, 0);
 	p.setBrush(QBrush(Qt::white));
 	p.drawRect(bg);
-    p.drawText(10, 10, QString::number(int(currentState / 2.0f)));
+    p.drawText(10, bg.height()/10, QString::number(int(currentState / 2.0f)));
 	p.setRenderHint(QPainter::Antialiasing);
 	p.setRenderHint(QPainter::TextAntialiasing);
 	p.drawPolygon(TopTriangle);
@@ -117,6 +117,11 @@ ProcessingOverlay::ProcessingOverlay(int interval, QWidget* parent)
 	QObject::connect(redrawTimer, &QTimer::timeout, this, &ProcessingOverlay::step,Qt::DirectConnection);
 #else
 	QObject::connect(redrawTimer, SIGNAL(timeout()), this, SLOT(step()), Qt::DirectConnection);
+#endif
+#ifdef Q_OS_WINCE
+	setFont(AppFonts->makeFont(0.7));
+#else
+	setFont(AppFonts->makeFont(0.06));
 #endif
 }
 

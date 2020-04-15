@@ -107,7 +107,7 @@ bool FullItemEntity::sortingCompare(const QSharedPointer<AbsRecEntity> another) 
 
 int FullItemEntity::extractEnumerable() const
 {
-    return static_cast<int>(qty);
+    return int(qty);
 }
 
 

@@ -30,11 +30,10 @@ void ReceiptParametersWidget::_sendDataRequest()
 ReceiptParametersWidget::ReceiptParametersWidget(QWidget* parent)
 	: IndependentBranchNode(independent_nodes::ReceiptParameters, parent),
 	mainLayout(new QVBoxLayout(this)), innerWidget(new inframedWidget(this)),
-	innerLayout(new QVBoxLayout(innerWidget)), userInfo(new QLabel(innerWidget)),
+	innerLayout(new QVBoxLayout(innerWidget)), 
 	innerFrame(new QFrame(innerWidget)), frameLayout(new QVBoxLayout(innerFrame)),
 	stateInfo(new QLabel(innerFrame)), closedButton(new MegaIconButton(innerFrame)),
 	cancelledButton(new MegaIconButton(innerFrame)), dateField(new QDateEdit(innerFrame)),
-	selectOrderLayout(new QHBoxLayout(innerFrame)), selectOrderButton(new MegaIconButton(innerFrame)),
 	mainTextView(new QTextEdit(innerFrame)), inspectLayout(new QHBoxLayout(innerFrame)),
 	inspectButton(new MegaIconButton(innerFrame)), continueLayout(new QHBoxLayout(innerFrame)),
 	continueButton(new MegaIconButton(innerFrame)), backButton(new MegaIconButton(innerFrame))
@@ -51,19 +50,14 @@ ReceiptParametersWidget::ReceiptParametersWidget(QWidget* parent)
 	innerLayout->setSpacing(0);
 	frameLayout->setContentsMargins(0, 0, 0, 0);
 	frameLayout->setSpacing(0);
-	selectOrderLayout->setContentsMargins(0, 0, 0, 0);
-	selectOrderLayout->setSpacing(0);
 	continueLayout->setContentsMargins(0, 0, 0, 0);
 	continueLayout->setSpacing(0);
-	innerLayout->addWidget(userInfo);
 	innerLayout->addWidget(innerFrame);
 	innerFrame->setLayout(frameLayout);
 	frameLayout->addWidget(stateInfo);
 	frameLayout->addWidget(closedButton);
 	frameLayout->addWidget(cancelledButton);
 	frameLayout->addWidget(dateField);
-	frameLayout->addLayout(selectOrderLayout);
-	selectOrderLayout->addWidget(selectOrderButton);
 	frameLayout->addWidget(mainTextView);
 	frameLayout->addLayout(inspectLayout);
 	inspectLayout->addStretch();
@@ -71,27 +65,21 @@ ReceiptParametersWidget::ReceiptParametersWidget(QWidget* parent)
 	frameLayout->addLayout(continueLayout);
 	continueLayout->addWidget(backButton);
 	continueLayout->addWidget(continueButton);
-	userInfo->setText(tr("receipt_parameters_announce"));
 	stateInfo->setText(tr("receipt_parameters_status"));
 	closedButton->setText(tr("receipt_parameters_closed_button"));
 	cancelledButton->setText(tr("receipt_parameters_cancelled_button"));
-	selectOrderButton->setText(tr("receipt_parameters_select_order"));
 	inspectButton->setText(tr("receipt_parameters_inspect"));
 	continueButton->setText(tr("receipt_parameters_continue"));
 	backButton->setText(tr("receipt_parameters_back"));
 
-	userInfo->setAlignment(Qt::AlignCenter);
-	userInfo->setFont(GENERAL_FONT);
 	stateInfo->setFont(GENERAL_FONT);
-	mainTextView->setFont(GENERAL_FONT);
+	mainTextView->setFont(AppFonts->makeCustomFont(0.03));
 	mainTextView->setReadOnly(true);
 
 	continueButton->setIcon(QIcon(":/res/forward.png"));
 	backButton->setIcon(QIcon(":/res/back.png"));
-	selectOrderButton->setIcon(QIcon(":/res/upload.png"));
 	continueButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
-	selectOrderButton->setStyleSheet(SETTINGS_BUTTONS_STYLESHEET);
 	// hidings dependent
 	mainTextView->installEventFilter(keyfilter);
 	innerWidget->installEventFilter(keyfilter);
@@ -107,14 +95,12 @@ ReceiptParametersWidget::ReceiptParametersWidget(QWidget* parent)
 	QObject::connect(inspectButton, &MegaIconButton::clicked, this, &ReceiptParametersWidget::inspectClicked);
 	QObject::connect(continueButton, &MegaIconButton::clicked, this, &ReceiptParametersWidget::continueClicked);
 	QObject::connect(backButton, &MegaIconButton::clicked, this, &ReceiptParametersWidget::backRequired);
-	QObject::connect(selectOrderButton, &MegaIconButton::clicked, this, &ReceiptParametersWidget::backToSupplier);
 #else
 	QObject::connect(closedButton, SIGNAL(clicked()), this, SLOT(closedClicked()));
 	QObject::connect(cancelledButton, SIGNAL(clicked()), this, SLOT(cancelledClicked()));
 	QObject::connect(inspectButton, SIGNAL(clicked()), this, SLOT(inspectClicked()));
 	QObject::connect(continueButton, SIGNAL(clicked()), this, SLOT(continueClicked()));
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
-	QObject::connect(selectOrderButton, SIGNAL(clicked()), this, SLOT(backToSupplier()));
 #endif
 }
 
@@ -135,10 +121,6 @@ void ReceiptParametersWidget::continueClicked()
 	emit done(dependency);
 }
 
-void ReceiptParametersWidget::backToSupplier()
-{
-	emit backRequired();
-}
 
 void ReceiptParametersWidget::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& /*overloads*/)
 {

@@ -14,6 +14,7 @@
 	polymorthic lists. If you dont need all this - use entities home files.
 
 */
+
 class DataEntityListModel : public QAbstractListModel
 	// This data model is used for fully dynamical data entity model. Use right delegate to show data in view.
 	// You can place in this model even polymorthic data, just install suitable delegate for it.
@@ -45,6 +46,7 @@ public:
 	// dataoperation methods
 	//post-constructor
     void insertData(const Records& data);
+	void insertData(const Records& data, const QVector<int>& heights);
 	// deletes data entity in the model by it's index or pointer
 	void removeDataEntity(const QModelIndex&);
 	void removeDataEntity(RecEntity);
@@ -55,9 +57,9 @@ public:
 public slots:
 	//If index was valid - emits signal with pointer to clicked entity.
 #ifdef QT_VERSION5X
-    void mapClickToEntity(const QModelIndex& index);
+    virtual void mapClickToEntity(const QModelIndex& index);
 #else
-    void mapClickToEntity(QModelIndex index);
+    virtual void mapClickToEntity(QModelIndex index);
 #endif
 	void lookForEntity(const RecEntity);
 signals:

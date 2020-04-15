@@ -41,15 +41,12 @@ protected:
 	QVBoxLayout* mainLayout;
 	inframedWidget* innerWidget;
 	QVBoxLayout* innerLayout;
-	QLabel* userInfo;
 	QFrame* innerFrame;
 	QVBoxLayout* frameLayout;
 	QLabel* stateInfo;
 	MegaIconButton* closedButton;
 	MegaIconButton* cancelledButton;
 	QDateEdit* dateField;
-	QHBoxLayout* selectOrderLayout;
-	MegaIconButton* selectOrderButton;
 	QTextEdit* mainTextView;
 	QHBoxLayout* inspectLayout;
 	MegaIconButton* inspectButton;
@@ -73,6 +70,5 @@ protected slots:
 	void cancelledClicked();
 	void inspectClicked();
 	void continueClicked();
-	void backToSupplier();
 
 };

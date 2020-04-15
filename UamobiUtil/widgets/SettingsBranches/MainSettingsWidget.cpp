@@ -19,6 +19,9 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	topExplLabel(new QLabel(sysTab)),
 	addressField(new QComboBox(sysTab)),
 	langField(new QComboBox(sysTab)),
+	createSTableButton(new MegaIconButton(sysTab)),
+	scaningTab(new QWidget(innerWidget)),
+	scaninnlayout(new QFormLayout(scaningTab)),
 	prefix(new QSpinBox(sysTab)),
 	suffix(new QSpinBox(sysTab)),
 	printTab(new QWidget(innerWidget)),
@@ -42,26 +45,33 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	innerWidget->addTab(sysTab, tr("system"));
 	innerWidget->addTab(wrkflTab, tr("workflow"));
 	innerWidget->addTab(printTab, tr("printer"));
+	innerWidget->addTab(scaningTab, tr("Scan"));
 
 	sysTab->setLayout(sysinnLayout);
 	sysinnLayout->addRow(topExplLabel);
 	sysinnLayout->addRow(tr("HTTP address"), addressField);
 	sysinnLayout->addRow(tr("language"), langField);
-	sysinnLayout->addRow(tr("prefix ") + QChar(AppSettings->scanPrefix), prefix);
-	sysinnLayout->addRow(tr("suffix ") + QChar(AppSettings->scanSuffix), suffix);
-	
+	sysinnLayout->addRow(tr("create style table"), createSTableButton);
+	sysinnLayout->setRowWrapPolicy(QFormLayout::WrapAllRows);
+
+
+	scaninnlayout->setRowWrapPolicy(QFormLayout::WrapAllRows);
+	scaninnlayout->addRow(tr("prefix ") + QChar(AppSettings->scanPrefix), prefix);
+	scaninnlayout->addRow(tr("suffix ") + QChar(AppSettings->scanSuffix), suffix);
+
 	wrkflTab->setLayout(wrkflinnLayout);
 	wrkflinnLayout->addRow(tr("scanMode"), scanModeSelector);
 	wrkflinnLayout->addRow(tr("font min"), fontMin);
 	wrkflinnLayout->addRow(tr("font max"), fontMax);
 	wrkflinnLayout->addRow(tr("font dec"), fontDec);
-
+	wrkflinnLayout->setRowWrapPolicy(QFormLayout::WrapAllRows);
 	printTab->setLayout(printinnLayout);
 	printinnLayout->addRow(tr("Printer support"), buildState);
 	printinnLayout->addRow(tr("Port name"), portDesignation);
 	printinnLayout->addRow(tr("Port"), portNumber);
 	printinnLayout->addRow(tr("Printer"), portType);
-
+	
+	printinnLayout->setRowWrapPolicy(QFormLayout::WrapAllRows);
 	mainLayout->setSpacing(0);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 
@@ -129,6 +139,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	fontMax->setMaximum(500);
     fontDec->setValue(int(AppSettings->fontPercent * 100));
 	fontDec->setMaximum(100);
+	createSTableButton->setIcon(QIcon(":/res/add.png"));
 
 #ifdef FTR_COM
 	buildState->setPixmap(QIcon(":/res/with.png").pixmap(calculateAdaptiveSize(0.15, 0.2)));
@@ -158,6 +169,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	QObject::connect(fontMin, &QSpinBox::editingFinished, this, &MainSettingsWidget::applyFonts);
 	QObject::connect(fontMax, &QSpinBox::editingFinished, this, &MainSettingsWidget::applyFonts);
 	QObject::connect(fontDec, &QSpinBox::editingFinished, this, &MainSettingsWidget::applyFonts);
+	QObject::connect(createSTableButton, &MegaIconButton::clicked, this, &MainSettingsWidget::createStyleTable);
 #else
     QObject::connect(saveButton, SIGNAL(clicked()), this, SLOT(saveClicked()));
     QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
@@ -168,6 +180,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
     QObject::connect(fontMin, SIGNAL(editingFinished()), this, SLOT(applyFonts()));
     QObject::connect(fontMax, SIGNAL(editingFinished()), this, SLOT(applyFonts()));
     QObject::connect(fontDec, SIGNAL(editingFinished()), this, SLOT(applyFonts()));
+    QObject::connect(createSTableButton, SIGNAL(clicked()), this, SLOT(createStyleTable()));
 #endif
 }
 
@@ -224,12 +237,17 @@ void MainSettingsWidget::AddressSelected(const QString& activated)
 
 void MainSettingsWidget::setPSLabels(int /*val*/)
 {
-	qobject_cast<QLabel*>(sysinnLayout->labelForField(prefix))->setText(tr("prefix ") + QChar(prefix->value()));
-	qobject_cast<QLabel*>(sysinnLayout->labelForField(suffix))->setText(tr("suffix ") + QChar(suffix->value()));
+    qobject_cast<QLabel*>(scaninnlayout->labelForField(prefix))->setText(tr("prefix ") + QChar(prefix->value()));
+    qobject_cast<QLabel*>(scaninnlayout->labelForField(suffix))->setText(tr("suffix ") + QChar(suffix->value()));
 }
 
 void MainSettingsWidget::applyFonts()
 {
 	FontAdapter::instanse()->reset(fontMin->value(), fontMax->value(), 
 		(((fontDec->value()>0)? fontDec->value() : 1) / 100));
+}
+
+void MainSettingsWidget::createStyleTable()
+{
+	StyleManager::pushCurrentStylesheets();
 }

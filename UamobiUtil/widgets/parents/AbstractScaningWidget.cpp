@@ -155,7 +155,16 @@ AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)
 
 	userInfo->setText(tr("scaning_widget_user_info"));
 	userInfo->setAlignment(Qt::AlignCenter);
-	userInfo->setFont(GENERAL_FONT);
+#ifdef Q_OS_WINCE
+	userInfo->setFont(QFont("Arial", 7,7));
+#else
+#ifdef Q_OS_WIN
+	userInfo->setFont(QFont("Arial", 9, 9));
+#else
+	userInfo->setFont(QFont("Arial", 8, 8));
+#endif
+#endif
+
 	userInfo->setWordWrap(true);
     userInfo->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
 

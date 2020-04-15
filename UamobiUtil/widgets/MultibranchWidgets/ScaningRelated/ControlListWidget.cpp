@@ -117,6 +117,11 @@ QString ControlListWidget::joinedControls()
 	QVector<abs_control*>::iterator begin = controls.begin();
 	while (begin != controls.end())
 	{
+		if ((*begin)->myType() == InputControlEntity::Label)
+		{
+			++begin;
+			continue;
+		}
 		out << (*begin++)->getValue() << ",";
 	}
 	out.flush();
@@ -132,6 +137,11 @@ QString ControlListWidget::mappedControls()
 	QVector<abs_control*>::iterator begin = controls.begin();
 	while (begin != controls.end())
 	{
+		if ((*begin)->myType() == InputControlEntity::Label)
+		{
+			++begin;
+			continue;
+		}
 		out << "&" << (*begin)->name  << "=" << (*begin)->getValue();
 		++begin;
 	}

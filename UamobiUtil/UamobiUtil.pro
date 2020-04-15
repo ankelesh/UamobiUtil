@@ -4,16 +4,16 @@
 
 TEMPLATE = app
 TARGET = UamobiUtil
-DESTDIR = ../Win32/Release
-QT += core xml network gui widgets
-CONFIG += release
-DEFINES += _UNICODE _ENABLE_EXTENDED_ALIGNED_STORAGE WIN64 QT_VERSION5X QT_NETWORK_LIB QT_WIDGETS_LIB QT_XML_LIB
+DESTDIR = ../Win32/Debug
+QT += core xml sql network gui widgets
+CONFIG += debug
+DEFINES += _UNICODE _ENABLE_EXTENDED_ALIGNED_STORAGE WIN64 QT_VERSION5X QT_NETWORK_LIB QT_SQL_LIB QT_WIDGETS_LIB QT_XML_LIB
 INCLUDEPATH += ./GeneratedFiles \
     . \
     ./GeneratedFiles/$(ConfigurationName)
 DEPENDPATH += .
 MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
-OBJECTS_DIR += release
+OBJECTS_DIR += debug
 UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles
 win32:RC_FILE = UamobiUtil.rc
@@ -60,6 +60,7 @@ HEADERS += ./UamobiUtil.h \
     ./widgets/MultibranchWidgets/Observers/ListPickObserver.h \
     ./widgets/ExtendedDelegates/CheckableDelegate.h \
     ./widgets/ExtendedDelegates/ZebraListItemDelegate.h \
+    ./widgets/ExtendedDelegates/CountingDelegate.h \
     ./widgets/BranchingTools/BranchDescriptionParser.h \
     ./widgets/BranchingTools/BranchElementDescription.h \
     ./widgets/BranchingTools/BranchFactory.h \
@@ -79,6 +80,7 @@ HEADERS += ./UamobiUtil.h \
     ./datacore/ModeEntity.h \
     ./datacore/NamedIdEntity.h \
     ./datacore/AbsEntityPrototype.h \
+    ./datacore/PseudotableEntityModel.h \
     ./widgets/parents/abstractNodeInterface.h \
     ./widgets/parents/AbstractScaningWidget.h \
     ./widgets/parents/IndependentBranchNode.h \
@@ -91,8 +93,10 @@ HEADERS += ./UamobiUtil.h \
     ./widgets/ControlsMiniwidgets/DateTimeControl.h \
     ./widgets/ControlsMiniwidgets/LabelControl.h \
     ./widgets/ControlsMiniwidgets/StringControl.h
-SOURCES += ./main.cpp \
+SOURCES += ./datacore/PseudotableEntityModel.cpp \
+    ./main.cpp \
     ./UamobiUtil.cpp \
+    ./widgets/ExtendedDelegates/CountingDelegate.cpp \
     ./widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.cpp \
     ./networking/dataupdateengine-http.cpp \
     ./networking/QueryTemplates.cpp \
@@ -167,3 +171,7 @@ SOURCES += ./main.cpp \
     ./widgets/parents/IndependentBranchNode.cpp \
     ./widgets/parents/inframedWidget.cpp
 RESOURCES += UamobiUtil.qrc
+
+TRANSLATIONS += translations/uamobiutil_ru.ts \
+    translations/uamobiutil_ro.ts \
+    translations/uamobiutil_en.ts
