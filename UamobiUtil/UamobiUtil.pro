@@ -4,19 +4,21 @@
 
 TEMPLATE = app
 TARGET = UamobiUtil
-DESTDIR = ../Win32/Debug
-QT += core xml sql network gui widgets
+QT += core xml network gui
 CONFIG += debug
-DEFINES += _UNICODE _ENABLE_EXTENDED_ALIGNED_STORAGE WIN64 QT_VERSION5X QT_NETWORK_LIB QT_SQL_LIB QT_WIDGETS_LIB QT_XML_LIB
-INCLUDEPATH += ./GeneratedFiles \
-    . \
-    ./GeneratedFiles/$(ConfigurationName)
-DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
-OBJECTS_DIR += debug
-UI_DIR += ./GeneratedFiles
-RCC_DIR += ./GeneratedFiles
-win32:RC_FILE = UamobiUtil.rc
+INCLUDEPATH += C:/Qt/4.8.3-CE6-static/include
+DEFINES += "Q_NULLPTR=0" "Q_FALLTHROUGH=(void)0" DEBUG LINELLA
+win32: DEFINES += "Q_FALLTHROUGH=__noop"
+win32: RC_FILE += uamobiutil.rc
+wince* {
+        CONFIG -= debug
+        CONFIG += release
+        DEFINES += FTR_COM
+        QMAKE_CXX += -Ox -GL
+        QMAKE_LFLAGS += /LTCG
+        RC_FILE = uamobiutilwince.rc
+        DEFINES += "Q_FALLTHROUGH=__noop"
+}
 HEADERS += ./UamobiUtil.h \
     ./networking/QueryTemplates.h \
     ./networking/dataupdateengine-http.h \
@@ -51,7 +53,6 @@ HEADERS += ./UamobiUtil.h \
     ./widgets/MultibranchWidgets/PagedSearchWidget.h \
     ./widgets/MultibranchWidgets/ParentDocumentWidget.h \
     ./widgets/MultibranchWidgets/SelectItemFromListWidget.h \
-    ./widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.h \
     ./widgets/MultibranchWidgets/ScaningRelated/ControlListWidget.h \
     ./widgets/MultibranchWidgets/ScaningRelated/MulticontrolScaningWidget.h \
     ./widgets/MultibranchWidgets/ScaningRelated/NormalScaningWidget.h \
@@ -60,7 +61,6 @@ HEADERS += ./UamobiUtil.h \
     ./widgets/MultibranchWidgets/Observers/ListPickObserver.h \
     ./widgets/ExtendedDelegates/CheckableDelegate.h \
     ./widgets/ExtendedDelegates/ZebraListItemDelegate.h \
-    ./widgets/ExtendedDelegates/CountingDelegate.h \
     ./widgets/BranchingTools/BranchDescriptionParser.h \
     ./widgets/BranchingTools/BranchElementDescription.h \
     ./widgets/BranchingTools/BranchFactory.h \
@@ -80,7 +80,6 @@ HEADERS += ./UamobiUtil.h \
     ./datacore/ModeEntity.h \
     ./datacore/NamedIdEntity.h \
     ./datacore/AbsEntityPrototype.h \
-    ./datacore/PseudotableEntityModel.h \
     ./widgets/parents/abstractNodeInterface.h \
     ./widgets/parents/AbstractScaningWidget.h \
     ./widgets/parents/IndependentBranchNode.h \
@@ -92,12 +91,20 @@ HEADERS += ./UamobiUtil.h \
     ./widgets/ControlsMiniwidgets/ControlTranslator.h \
     ./widgets/ControlsMiniwidgets/DateTimeControl.h \
     ./widgets/ControlsMiniwidgets/LabelControl.h \
-    ./widgets/ControlsMiniwidgets/StringControl.h
-SOURCES += ./datacore/PseudotableEntityModel.cpp \
-    ./main.cpp \
+    ./widgets/ControlsMiniwidgets/StringControl.h \
+    widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.h \
+    widgets/ExtendedDelegates/CountingDelegate.h \
+    datacore/PseudotableEntityModel.h \
+    widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.h
+SOURCES += ./main.cpp \
     ./UamobiUtil.cpp \
-    ./widgets/ExtendedDelegates/CountingDelegate.cpp \
-    ./widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.cpp \
+    ./widgets/ControlsMiniwidgets/BarcodeControl.cpp \
+    ./widgets/ControlsMiniwidgets/DateTimeControl.cpp \
+    ./widgets/ControlsMiniwidgets/LabelControl.cpp \
+    ./widgets/ControlsMiniwidgets/StringControl.cpp \
+    ./widgets/MultibranchWidgets/Observers/ListPickObserver.cpp \
+    ./widgets/MultibranchWidgets/Observers/SkippedNode.cpp \
+    ./widgets/MultibranchWidgets/ScaningRelated/ObservedScaningWidget.cpp \
     ./networking/dataupdateengine-http.cpp \
     ./networking/QueryTemplates.cpp \
     ./networking/RequestAwaiter.cpp \
@@ -122,23 +129,15 @@ SOURCES += ./datacore/PseudotableEntityModel.cpp \
     ./widgets/ElementWidgets/MegaIconButton.cpp \
     ./widgets/ElementWidgets/ProcessingOverlay.cpp \
     ./widgets/ControlsMiniwidgets/abs_control.cpp \
-    ./widgets/ControlsMiniwidgets/BarcodeControl.cpp \
     ./widgets/ControlsMiniwidgets/ControlManager.cpp \
     ./widgets/ControlsMiniwidgets/ControlTranslator.cpp \
-    ./widgets/ControlsMiniwidgets/DateTimeControl.cpp \
-    ./widgets/ControlsMiniwidgets/LabelControl.cpp \
     ./widgets/ControlsMiniwidgets/QuantityControl.cpp \
-    ./widgets/ControlsMiniwidgets/StringControl.cpp \
     ./ScaningCore/BarcodeObserver.cpp \
-    ./widgets/Branches/SenderNode.cpp \
-    ./widgets/Branches/SwitchSubbranch.cpp \
     ./widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.cpp \
     ./widgets/MultibranchWidgets/DocResultsWidget.cpp \
     ./widgets/MultibranchWidgets/FilterSelectWidget.cpp \
     ./widgets/MultibranchWidgets/IdDependentSelectWidget.cpp \
     ./widgets/MultibranchWidgets/InventoryParamsWidget.cpp \
-    ./widgets/MultibranchWidgets/Observers/ListPickObserver.cpp \
-    ./widgets/MultibranchWidgets/Observers/SkippedNode.cpp \
     ./widgets/MultibranchWidgets/PagedSearchWidget.cpp \
     ./widgets/MultibranchWidgets/ParentDocumentWidget.cpp \
     ./widgets/MultibranchWidgets/PlaceSelectionWidget.cpp \
@@ -147,7 +146,6 @@ SOURCES += ./datacore/PseudotableEntityModel.cpp \
     ./widgets/MultibranchWidgets/ScaningRelated/ControlListWidget.cpp \
     ./widgets/MultibranchWidgets/ScaningRelated/MulticontrolScaningWidget.cpp \
     ./widgets/MultibranchWidgets/ScaningRelated/NormalScaningWidget.cpp \
-    ./widgets/MultibranchWidgets/ScaningRelated/ObservedScaningWidget.cpp \
     ./widgets/MultibranchWidgets/ScaningRelated/PrintingScaningWidget.cpp \
     ./widgets/BranchingTools/AbsBranch.cpp \
     ./widgets/BranchingTools/AdjustableBranch.cpp \
@@ -155,6 +153,8 @@ SOURCES += ./datacore/PseudotableEntityModel.cpp \
     ./widgets/BranchingTools/BranchElementDescription.cpp \
     ./widgets/BranchingTools/BranchFactory.cpp \
     ./widgets/BranchingTools/StaticBranch.cpp \
+    ./widgets/Branches/SenderNode.cpp \
+    ./widgets/Branches/SwitchSubbranch.cpp \
     ./widgets/BranchingTools/EmbeddedBranches.cpp \
     ./widgets/ExtendedDelegates/CheckableDelegate.cpp \
     ./widgets/ExtendedDelegates/ZebraListItemDelegate.cpp \
@@ -169,9 +169,10 @@ SOURCES += ./datacore/PseudotableEntityModel.cpp \
     ./widgets/parents/abstractNodeInterface.cpp \
     ./widgets/parents/AbstractScaningWidget.cpp \
     ./widgets/parents/IndependentBranchNode.cpp \
-    ./widgets/parents/inframedWidget.cpp
+    ./widgets/parents/inframedWidget.cpp \
+    widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.cpp \
+    widgets/ExtendedDelegates/CountingDelegate.cpp \
+    datacore/PseudotableEntityModel.cpp \
+    widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp
 RESOURCES += UamobiUtil.qrc
-
-TRANSLATIONS += translations/uamobiutil_ru.ts \
-    translations/uamobiutil_ro.ts \
-    translations/uamobiutil_en.ts
+TRANSLATIONS += translations/uamobiutil_ru.ts translations/uamobiutil_ro.ts translations/uamobiutil_en.ts

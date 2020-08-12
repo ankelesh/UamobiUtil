@@ -20,6 +20,7 @@
 #include "widgets/Branches/SwitchSubbranch.h"
 #include "widgets/Branches/SenderNode.h"
 #include "widgets/MultibranchWidgets/Observers/SkippedNode.h"
+#include "widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.h"
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -90,7 +91,7 @@ namespace BranchNodeFactory {
 				parent
 			); break;
 		case independent_nodes::PlaceSelect:
-			element = new PlaceSelectionWidget(parent);
+			element = new PlaceSelectionWidget(((e->entity.isNull())? RecEntity(new PlaceEntity()) : e->entity), parent);
 			break;
 		case independent_nodes::ReceiptParameters:
 			element = new ReceiptParametersWidget(parent);
@@ -151,6 +152,9 @@ namespace BranchNodeFactory {
 			return new SkippedNode(parent);
 		case EditableDocResults:
 			element = new EditableDocResultsWidget(parent);
+			break;
+		case SwitchByScanBc:
+			element = new SwitchByScannedCodeWidget(e, parent);
 			break;
 		case DefaultNode:
 		default:

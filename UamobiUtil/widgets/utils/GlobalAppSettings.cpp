@@ -2,11 +2,14 @@
 #include <QtCore/QSettings>
 #include <QApplication>
 // utility
+#include "client_defaults.h"
 
-
-const float VERSION = 0.09f;
+const float VERSION = 0.13f;
+#ifdef LINELLA
+const char* SUFFIX = "lin-alpha";
+#else
 const char* SUFFIX = "alpha";
-
+#endif
 void GlobalAppSettings::setTranslator()
 {
 	if (this->language == "Russian")
@@ -54,6 +57,7 @@ GlobalAppSettings* GlobalAppSettings::instanse()
 GlobalAppSettings::GlobalAppSettings()
 {
 	QSettings settings("settings.ini", QSettings::IniFormat);
+	initialize_default_file(settings);
 	HttpUrl = settings.value("http_host", "http://una.md:3323/").toString();
 	language = settings.value("app_lang", "English").toString();
 	timeoutInt = settings.value("timeout", 20000).toInt();

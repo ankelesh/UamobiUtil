@@ -7,7 +7,7 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
-
+#include "widgets/ElementWidgets/ExtendedDialogs.h"
 void DocResultsWidget::_handleRecord(RecEntity)
 {
 }
@@ -198,14 +198,7 @@ void DocResultsWidget::refresh()
 {
 	ResponseParser parser(new LinearListParser(awaiter->restext, awaiter->errtext));
 	PolyResponse response = RequestParser::parseResponse(parser, RecEntity(new FullItemEntity()));
-	if (response.isError)
-	{
-		QMessageBox::critical(this, tr("Error!"), response.errtext, QMessageBox::Ok);
-#ifdef DEBUG
-		detrace_NRESPERR(response.errtext);
-#endif
-	}
-	else
+	if (!assertAndShowError(parser, tr("Error!")))
 	{
 		PolyResponse invoices = RequestParser::parseResponse(response, RecEntity(new InvoiceEntity()));
 		setIndexation(invoices.additionalObjects);
@@ -278,7 +271,14 @@ void DocResultsWidget::saveDocument()
 		return;
 
 	if (localCache.contains(unlockDocument))
-		AppNetwork->execQueryByTemplate(localCache[unlockDocument],"true", awaiter);
+	{
+		if (localCache[unlockDocument].isNull())
+		{
+			emit done(RecEntity());
+			return;
+		}
+		AppNetwork->execQueryByTemplate(localCache[unlockDocument], "true", awaiter);
+	}
 	else
 		AppNetwork->execQueryByTemplate(QueryTemplates::unlockDocument, "true", awaiter);
 	awaiter->deliverResultTo(unlockDocument);
@@ -340,11 +340,15 @@ void DocResultsWidget::save_response()
 		}
 		emit done(RecEntity());
 	}
-	QDomDocument doc;
-	doc.setContent(awaiter->restext);
-	if (isError(doc))
+	else
 	{
-		userInfo->setText(makeError(doc));
+		QDomDocument doc;
+		doc.setContent(awaiter->restext);
+		if (isError(doc))
+		{
+			QPair<QString, QString> edata = makeError(doc);
+			ErrorMessageDialog::showErrorInfo(tr("Error!"), edata.first, false, edata.second);
+		}
 	}
 	hideProcessingOverlay();
 }
@@ -356,14 +360,7 @@ void DocResultsWidget::get_attached_response()
 	ResponseParser parser(new LinearListParser(awaiter->restext, awaiter->errtext));
 	NetRequestResponse<InputControlEntity> response 
 		= RequestParser::parseResponse<InputControlEntity>(parser);
-	if (response.isError)
-	{
-		QMessageBox::critical(this, tr("Error!"), response.errtext, QMessageBox::Ok);
-#ifdef DEBUG
-		detrace_NRESPERR(response.errtext);
-#endif
-	}
-	else
+	if (!assertAndShowError(parser, tr("Error!")))
 	{
 		attachedControls->clearControls();
 		attachedControls->useControls(response.objects);

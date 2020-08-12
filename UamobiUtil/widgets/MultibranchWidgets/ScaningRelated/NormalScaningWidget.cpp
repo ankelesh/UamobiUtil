@@ -24,6 +24,10 @@ void NormalScaningWidget::_handleRecord(RecEntity e)
 	{
 		setDocument(upcastRecord<FullDocumentEntity>(e));
 	}
+	else
+	{
+		setDocument(e);
+	}
 }
 
 NormalScaningWidget::NormalScaningWidget(QWidget* parent, IndependentBranchNode* resScreen,
@@ -168,14 +172,7 @@ void NormalScaningWidget::item_scaned_response()
 	ResponseParser  parser(new LinearListWithSublistParser(awaiter->restext, awaiter->errtext));
 	NetRequestResponse<InputControlEntity> response = 
 		RequestParser::parseResponse<InputControlEntity>(parser);
-	if (response.isError || response.additionalObjects.isEmpty())
-	{
-		userInfo->setText(response.errtext);
-#ifdef DEBUG
-		detrace_NRESPERR(response.errtext);
-#endif
-	}
-	else
+	if (!assertAndShowError(parser, tr("Error!"), response.additionalObjects.isEmpty()))
 	{
 		mainTextView->setText(response.additionalObjects.first()->value("richdata"));
 		itemSuppliedValues.clear();
@@ -191,14 +188,7 @@ void NormalScaningWidget::item_confirmed_response()
 	ResponseParser  parser(new LinearListWithSublistParser(awaiter->restext, awaiter->errtext));
 	NetRequestResponse<InputControlEntity> response =
 		RequestParser::parseResponse<InputControlEntity>(parser);
-	if (response.isError || response.additionalObjects.isEmpty())
-	{
-		userInfo->setText(response.errtext);
-#ifdef DEBUG
-		detrace_NRESPERR(response.errtext);
-#endif
-	}
-	else
+	if (!assertAndShowError(parser, tr("Error!"), response.additionalObjects.isEmpty()))
 	{
 		mainTextView->setText(response.additionalObjects.first()->value("richdata"));
 		itemSuppliedValues.clear();
@@ -219,14 +209,7 @@ void NormalScaningWidget::document_confirmed_response()
 	ResponseParser parser(new LinearListParser(awaiter->restext, awaiter->errtext));
 	NetRequestResponse<FullDocumentEntity> response =
 		RequestParser::parseResponse<FullDocumentEntity>(parser);
-	if (response.isError)
-	{
-		userInfo->setText(response.errtext);
-#ifdef DEBUG
-		detrace_NRESPERR(response.errtext);
-#endif
-	}
-	else
+	if (!assertAndShowError(parser, tr("Error!")))
 	{
 		if (response.isEmpty())
 		{
@@ -348,6 +331,16 @@ void NormalScaningWidget::setDocument(Order o)
 	AppNetwork->execQueryByTemplate(localCache[receiptNewDocument],
 		QDate::currentDate().toString(DATE_ENCODING_FORMAT), o->code, "", awaiter);
     awaiter->deliverResultTo(receiptNewDocument);
+}
+
+void NormalScaningWidget::setDocument(RecEntity e)
+{
+	if (awaiter->isAwaiting())
+		return;
+	showProcessingOverlay();
+	AppNetwork->execQueryByTemplate(localCache[receiptNewDocument],
+		QDate::currentDate().toString(DATE_ENCODING_FORMAT), e->getId(), "", awaiter);
+	awaiter->deliverResultTo(receiptNewDocument);
 }
 
 void NormalScaningWidget::setDocument(FullDocument doc)

@@ -68,6 +68,7 @@ void UamobiUtil::interpretMode(QHash<QString, QString> /*sets*/, Mode mode)
 		mode->submode,
 		this
 	);
+	mainLayout->addWidget(mainBranch);
 #ifdef QT_VERSION5X
 	QObject::connect(mainBranch, &AbsBranch::backRequired, this, &UamobiUtil::gotoModeSelection);
 	QObject::connect(mainBranch, &AbsBranch::done, this, &UamobiUtil::closeBranch);

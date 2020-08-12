@@ -29,7 +29,7 @@ protected:
 	virtual AbsRecEntity* fabricate() const override;
 	virtual bool sortingCompare(const AbsRecEntity* another) const override;
 	virtual bool sortingCompare(const QSharedPointer<AbsRecEntity> another) const override;
-	virtual int extractEnumerable() const override;
+	virtual double extractEnumerable() const override;
     virtual bool useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
 };
 typedef QSharedPointer<FullItemEntity> FullItem;

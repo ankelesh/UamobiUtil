@@ -262,7 +262,7 @@ AbsRecEntity* DocTypeEntity::fabricate() const
 	return new DocTypeEntity(*this);
 }
 
-int DocTypeEntity::extractEnumerable() const
+double DocTypeEntity::extractEnumerable() const
 {
 	if (isSelected)
 		return 1;

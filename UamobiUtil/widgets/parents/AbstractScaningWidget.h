@@ -59,6 +59,7 @@ protected:
 
     virtual void useControls(const QVector<QSharedPointer<InputControlEntity> > &);
 	virtual void wipe();
+	virtual void setDocument(RecEntity e);
 public:
 	AbstractScaningWidget(int id, QWidget* parent);
 	void clear();
@@ -71,7 +72,5 @@ protected slots:
 	virtual void backNeeded() = 0;
 	virtual void was_timeout();
     virtual void quitNoSave();
-public slots:
-	virtual void setDocument(Order) = 0;
 };
 QVector<QPair<QString, QString> > make_control_list(QHash<QString, QString>&);

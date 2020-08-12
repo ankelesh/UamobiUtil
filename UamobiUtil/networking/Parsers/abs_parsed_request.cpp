@@ -1,15 +1,17 @@
 #include "abs_parsed_request.h"
 #include <QtCore/QString>
 #include <QtCore/QDataStream>
-
-
-QString makeError(QDomDocument& xmldoc)
+#include "widgets/ElementWidgets/ExtendedDialogs.h"
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
+QPair<QString, QString> makeError(QDomDocument& xmldoc)
 {
 	QDomNodeList tlist = xmldoc.elementsByTagName("status");
 	QString errtext;
 	if (tlist.count() < 1)
 	{
-		return "No status code";
+		return qMakePair(QStringLiteral("No status code"), QString());
 	}
 	else
 	{
@@ -36,8 +38,11 @@ QString makeError(QDomDocument& xmldoc)
 	}
 	tlist = xmldoc.elementsByTagName("message");
 	if (tlist.count() > 0)
-		errtext += tlist.at(0).toElement().text();
-	return errtext;
+		errtext = tlist.at(0).toElement().text();
+	tlist = xmldoc.elementsByTagName("stack");
+	if (tlist.count() > 0)
+		return qMakePair(errtext, tlist.at(0).toElement().text());
+	return qMakePair(errtext,QString());
 }
 bool isError(QDomDocument& xmldoc)
 {
@@ -48,6 +53,28 @@ bool isError(QDomDocument& xmldoc)
 	}
 	if (tlist.at(0).toElement().text().toInt() != 200)
 	{
+		return true;
+	}
+	return false;
+}
+
+bool assertAndShowError(ResponseParser p, QString header, bool extraConditions, QString extraMsg, QString extraStack)
+{
+	if (p.isNull())
+		return false;
+	if (!p->isSuccessfull() && extraConditions)
+	{
+#ifdef DEBUG
+		detrace_NRESPERR(p->getErrors());
+#endif
+		if (extraMsg.isEmpty())
+		{
+			ErrorMessageDialog::showErrorInfo(header, p->getErrors(), false, p->getStack());
+		}
+		else
+		{
+			ErrorMessageDialog::showErrorInfo(header, extraMsg, false, (extraStack.isEmpty())?  p->getStack(): extraStack);
+		}
 		return true;
 	}
 	return false;
@@ -76,7 +103,7 @@ AbsResponseParser::AbsResponseParser(QString& res, QString& err)
 	xmldoc.setContent(res);
 	if (isError(xmldoc))
 	{
-		errtext = makeError(xmldoc);
+		QPair<QString, QString> res = makeError(xmldoc);
 	}	
 }
 
@@ -90,6 +117,11 @@ QString AbsResponseParser::getErrors()
 	return errtext;
 }
 
+QString AbsResponseParser::getStack()
+{
+	return errstack;
+}
+
 int AbsResponseParser::isAlternative()
 {
 	return alternativeResult;
@@ -101,7 +133,9 @@ void AbsResponseParser::reset(QString& res, QString& err)
 	errtext = err;
 	if (isError(xmldoc))
 	{
-		errtext += makeError(xmldoc);
+		QPair<QString, QString> pres = makeError(xmldoc);
+		errtext += pres.first;
+		errstack += pres.second;
 	}
 	else
 	{

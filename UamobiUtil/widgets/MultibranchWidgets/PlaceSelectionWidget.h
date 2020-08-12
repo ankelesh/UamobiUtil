@@ -51,13 +51,13 @@ protected:
 
 	OverloadableQuery loadPlacesQuery;
 	OverloadableQuery selectPlaceQuery;
-
+	RecEntity entityToExtract;
 	// Inherited via IndependentBranchNode
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
 	void _handleRecord(RecEntity) override;
 	virtual void _sendDataRequest() override;
 public:
-	PlaceSelectionWidget( QWidget* parent = Q_NULLPTR);
+	PlaceSelectionWidget(RecEntity toExtract, QWidget* parent = Q_NULLPTR);
 	virtual void show() override;
     virtual bool isExpectingControl(int) override;
 	void loadPlaces();

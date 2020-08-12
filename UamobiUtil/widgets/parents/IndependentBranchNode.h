@@ -30,6 +30,7 @@ namespace independent_nodes
 		ObservedScaning,
 		ListPickObs,
 		SkipNode,
+		SwitchByScanBc,
 		DefaultNode
 	};
 }

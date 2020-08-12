@@ -56,7 +56,8 @@ namespace QueryTemplates
 		applyBarcodeFilter,			// 2 arguments required 
 		receiptAddItemExpanded,		// 3 arguments required 
 		docGetItemLabel,
-		setVersionForBarcode
+		setVersionForBarcode,
+		receiptOrderByBC
 	};
 
 	// this function is used for initializing cache in old compilers
@@ -76,7 +77,7 @@ namespace QueryTemplates
 		QueryId expectedQuery;
 		// this url is used as template for inserting arguments
 		QString overloadedQuery;
-		// this variable contains maximum arguments this query can handle
+		// this variable contains maximum arguments this query can handle and uses it's negative values as flags
 		int argumentListLength;
 		// this vector holds positioning of arguments, which can differ from provided list's args
 		QVector<int> emplaceValues;
@@ -99,6 +100,8 @@ namespace QueryTemplates
 		OverloadableQuery(QString oq, QStringList unpacked);
 		OverloadableQuery(QStringRef oq, QVector<QStringRef>& unpacked);
 
+		enum useFlags { DefaultQ = -2, NullQ = -4 };
+
 		// post-constructor can replace query url 
 		void setExpected(QueryId);
 		// uses default id and argument lists to prepare query for work
@@ -113,6 +116,7 @@ namespace QueryTemplates
 		bool assertArgQuantity(int argc) const;
 		// default flag is -2 in argumentListLength
 		bool isDefault() const;
+		bool isNull() const;
 		// true if mapping was not finished
 		bool requiresAllArgs() const;
 		// true if only url provided
@@ -123,6 +127,7 @@ namespace QueryTemplates
         QueryId getQID() const { return expectedQuery; }
 		// returns static default query which can be used as null
 		static const OverloadableQuery& defaultQuery();
+		static const OverloadableQuery& nullQuery();
 		// main interface function, applies arguments and returns url ready to be sent
 		QString filterAndApply(QStringList arguments, QString ssid) const;
 	};

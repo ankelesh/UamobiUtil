@@ -24,7 +24,7 @@ bool LinearListParser::_doParsing()
 	}
 	else
 	{
-		for (int i = 1; i < listedObjects.count(); ++i)
+		for (int i = 0; i < listedObjects.count(); ++i)
 		{
 			parseResult << XmlObject(new UniformXmlObject(type,
 				listedObjects.at(i)));

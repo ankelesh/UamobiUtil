@@ -1,87 +1,140 @@
-Application start begins: version 0.09 alpha
-][	Created object LoginWidget on address 19165264
-][	Created object MainPageWidget on address 19554344
->>	406261541676585 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
->>	406261541682979 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
-<<	406261541767358 received response going to 0 containing text:|
+Application start begins: version 0.13 lin-alpha
+][	Created object LoginWidget on address 19438992
+][	Created object MainPageWidget on address 18941160
+>>	408738674222889 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
+>>	408738674225443 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
+<<	408738674288574 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket<
 	and error text |
->>	406261542295428 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.09
-<<	406261542348769 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2023</session>
+>>	408738736816516 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.13
+<<	408738736883169 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2288</session>
 </login>
 	and error text |
->>	406261542355052 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2023&lang=Russian
-<<	406261542390486 received response going to 0 containing text:|
+>>	408738736889452 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2288&lang=Russian
+<<	408738736922070 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>
 	and error text |
->>	406261543538862 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=2023&mode=receipt&submode=
-<<	406261543559250 received response going to 0 containing text:|
+>>	408738737177774 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=2288&mode=inventory&submode=univscanact
+<<	408738737208914 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status>  <desc> <![CDATA[ [PlaceSelect]
-[SelectItemFromList
+[NormalScaning]
+<>
+
 	and error text |
-[!!!]	Mode named Прием товаров signed as receipt  received, interpreting: 
+[!!!]	Mode named Универсальный акт сканирования signed as inventory univscanact received, interpreting: 
 	[PlaceSelect]
-	[SelectItemFromList]
-	%Supplier%
-	[IdDependentSelect]
-	%Order%
-	[ReceiptParameters]
 	[NormalScaning]
 	<>
-	*-6*
-	 
-][	Created object Adjustable branch with 5 children on address 110878208
+	<inv_add_item&session=%1&code=%2&qty=%3&show_code=%4 : barcode , control1 , show_code>
+	<inv_new_doc&session=%1&date=%2&parent=0&comment=%4 : date , comment>
+	*-1* 
+][	Created object Adjustable branch with 2 children on address 64609104
 ]N[	Node of type 11 fabricated using description:  children: 0 oqs: 0
-][	Created object PlaceSelection on address 111159504
->>	406261543561616 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=list_places&session=2023
-<<	406261543582281 received response going to 0 containing text:|
+][	Created object PlaceSelection on address 65515752
+>>	408738737212560 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=list_places&session=2288
+<<	408738737234761 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <places>  <status>200</status>  <place>   <code>249504</code>   <name>Cantina MR
 	and error text |
->>	406261543928305 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=select_place&session=2023&place=205
-<<	406261543933937 received response going to 0 containing text:|
+>>	408738738857457 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=select_place&session=2288&place=205
+<<	408738738891505 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <place>  <status>200</status> </place>
 	and error text |
-]N[	Node of type 10 fabricated using description:  children: 0 oqs: 0
-][	Created object SelectItemFromList on address 19585632
->>	406261543942331 sent request: http://92.115.237.226:60080/um/unitest.php?delay=7&cmd=rec_list_suppliers&session=2023&text=&hasorders=true
-<<	406261543947241 received response going to 5 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <suppliers>  <status>200</status>  <supplier>   <code>155942</code>   <name>Coma
+]N[	Node of type 6 fabricated using description:  children: 0 oqs: 3
+][	Created object NormalScaning on address 19103376
+][	Created object ControlListWidget on address 62647240
+][	Created object DocResults on address 62860248
+][	Created object PagedSearchWidget on address 65516592
+>>	408738738937275 sent request: http://92.115.237.226:60080/um/unitest.php?delay=7&cmd=inv_new_doc&session=2288&date=05.08.2020&parent=0&comment=
+<<	408738738959849 received response going to 31 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <newdoc>  <status>200</status>  <doc>   <code>3752652</code>   <parentnr>1885678
 	and error text |
-]N[	Node of type 9 fabricated using description:  children: 0 oqs: 0
-][	Created object IdDependentSelect on address 108826160
->>	406261544184555 sent request: http://92.115.237.226:60080/um/unitest.php?delay=8&cmd=rec_list_orders&session=2023&supplier=252188
-<<	406261544189107 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <orders>  <status>200</status>  <order>   <code>18848748</code>   <title>№ заявк
+>>	408738740558571 sent request: http://92.115.237.226:60080/um/unitest.php?delay=8&cmd=doc_search_items&session=2288&text=f&page=0
+<<	408738740648627 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <searchresult>  <status>200</status>  <page>   <from>1</from>   <to>25</to>  </p
 	and error text |
->>	406261544446630 sent request: http://92.115.237.226:60080/um/unitest.php?delay=9&cmd=rec_get_order_info&session=2023&order=18848748&supplier=252188
-<<	406261544452059 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <order>  <status>200</status> <richdata> <![CDATA[  <div><b> Cos Trans Logistic<
+>>	408738740792742 sent request: http://92.115.237.226:60080/um/unitest.php?delay=9&cmd=doc_get_item_info&session=2288&barcode=5029053005714&printer=
+<<	408738740809691 received response going to 15 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <richdata>  <![CDATA[ <div style="background: #d0ff
 	and error text |
-]N[	Node of type 5 fabricated using description:  children: 0 oqs: 0
-][	Created object ReceiptParametersWidget on address 111321720
-]N[	Node of type 6 fabricated using description:  children: 0 oqs: 1
-][	Created object NormalScaning on address 111802480
-][	Created object ControlListWidget on address 111143896
-][	Created object DocResults on address 109308008
-][	Created object PagedSearchWidget on address 19455176
->>	406261544763964 sent request: http://92.115.237.226:60080/um/unitest.php?delay=10&cmd=rec_new_doc&session=2023&date=15.04.2020&parent=18848748&comment
-<<	406261544773255 received response going to 31 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <newdoc>  <status>200</status>  <doc>   <code>3752410</code>   <parentnr>1884875
-	and error text |
->>	406261544915980 sent request: http://92.115.237.226:60080/um/unitest.php?delay=11&cmd=doc_list_items&session=2023&page=0&document=
-<<	406261545112894 received response going to 16 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <searchresult>  <status>200</status>  <page>   <from>1</from>   <to>4</to>   <la
-	and error text |
--->	Method called: translate control problemnii tovar 15
-98741236958  В зая
-вке: 10  
-49 | in object 18591644
-][	Created object control-like of type 3 on address 109911528
--->	Method called: translate control qty3 | in object 18591644
+-->	Method called: translate control qty3 | in object 11495156
 returningКол-во
-][	Created object control-like of type 1 on address 109912392
->>	406261546912921 sent request: http://92.115.237.226:60080/um/unitest.php?delay=12&cmd=doc_result_delete_by_bc&session=2023&barcode=1598741236958&qty=0
-<<	406261547131172 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <searchresult>  <status>200</status>  <page>   <from>1</from>   <to>4</to>   <la
+][	Created object control-like of type 4 on address 63639888
+>>	408738741224508 sent request: http://92.115.237.226:60080/um/unitest.php?delay=10&cmd=inv_add_item&session=2288&code=5029053005714&qty=4&show_code=
+<<	408738741232007 received response going to 32 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <richdata>  <![CDATA[ <div style="background: #d0ff
 	and error text |
+>>	408738741397516 sent request: http://92.115.237.226:60080/um/unitest.php?delay=11&cmd=doc_list_items&session=2288&page=0&document=
+<<	408738741414206 received response going to 16 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <searchresult>  <status>200</status>  <page>   <from>1</from>   <to>1</to>   <la
+	and error text |
+>>	408738741652889 sent request: http://92.115.237.226:60080/um/unitest.php?delay=12&cmd=doc_exit&session=2288&save=true
+<<	408738741682724 received response going to 9 containing text:|
+	_
+	and error text |
+>>	408738741684574 sent request: http://92.115.237.226:60080/um/unitest.php?delay=13&cmd=list_modes&session=2288&lang=Russian
+<<	408738741698829 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>
+	and error text |
+>>	408738748065820 sent request: http://92.115.237.226:60080/um/unitest.php?delay=14&cmd=select_mode&session=2288&mode=inventory&submode=univscanact
+<<	408738748122886 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status>  <desc> <![CDATA[ [PlaceSelect]
+[NormalScaning]
+<>
+
+	and error text |
+[!!!]	Mode named Универсальный акт сканирования signed as inventory univscanact received, interpreting: 
+	[PlaceSelect]
+	[NormalScaning]
+	<>
+	<inv_add_item&session=%1&code=%2&qty=%3&show_code=%4 : barcode , control1 , show_code>
+	<inv_new_doc&session=%1&date=%2&parent=0&comment=%4 : date , comment>
+	*-1* 
+][	Created object Adjustable branch with 2 children on address 64648304
+]N[	Node of type 11 fabricated using description:  children: 0 oqs: 0
+][	Created object PlaceSelection on address 65516424
+>>	408738748124855 sent request: http://92.115.237.226:60080/um/unitest.php?delay=15&cmd=list_places&session=2288
+<<	408738748154951 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <places>  <status>200</status>  <place>   <code>249504</code>   <name>Cantina MR
+	and error text |
+>>	408738748319198 sent request: http://92.115.237.226:60080/um/unitest.php?delay=16&cmd=select_place&session=2288&place=205
+<<	408738748323251 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <place>  <status>200</status> </place>
+	and error text |
+]N[	Node of type 6 fabricated using description:  children: 0 oqs: 3
+][	Created object NormalScaning on address 67315928
+][	Created object ControlListWidget on address 139545440
+][	Created object DocResults on address 62909704
+][	Created object PagedSearchWidget on address 65516256
+>>	408738748348178 sent request: http://92.115.237.226:60080/um/unitest.php?delay=17&cmd=inv_new_doc&session=2288&date=05.08.2020&parent=0&comment=
+<<	408738748366669 received response going to 31 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <newdoc>  <status>200</status>  <doc>   <code>3752653</code>   <parentnr>1885678
+	and error text |
+>>	408738749225672 sent request: http://92.115.237.226:60080/um/unitest.php?delay=18&cmd=doc_search_items&session=2288&text=а&page=0
+<<	408738749273411 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <searchresult>  <status>200</status>  <page>   <from>1</from>   <to>25</to>  </p
+	and error text |
+>>	408738749419707 sent request: http://92.115.237.226:60080/um/unitest.php?delay=19&cmd=doc_get_item_info&session=2288&barcode=2450163000191&printer=
+<<	408738749437323 received response going to 15 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <richdata>  <![CDATA[ <div style="background: #d0ff
+	and error text |
+-->	Method called: translate control qty3 | in object 11495156
+returningКол-во
+][	Created object control-like of type 4 on address 63643344
+>>	408738749707174 sent request: http://92.115.237.226:60080/um/unitest.php?delay=20&cmd=inv_add_item&session=2288&code=2450163000191&qty=4&show_code=
+<<	408738749715743 received response going to 32 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <richdata>  <![CDATA[ <div style="background: #d0ff
+	and error text |
+>>	408738749853443 sent request: http://92.115.237.226:60080/um/unitest.php?delay=21&cmd=doc_list_items&session=2288&page=0&document=
+<<	408738749869402 received response going to 16 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <searchresult>  <status>200</status>  <page>   <from>1</from>   <to>1</to>   <la
+	and error text |
+>>	408738749979005 sent request: http://92.115.237.226:60080/um/unitest.php?delay=22&cmd=doc_exit&session=2288&save=true
+<<	408738749986825 received response going to 9 containing text:|
+	_
+	and error text |
+>>	408738749988408 sent request: http://92.115.237.226:60080/um/unitest.php?delay=23&cmd=list_modes&session=2288&lang=Russian
+<<	408738750001701 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>
+	and error text |
+>>	408738750413087 sent request: http://92.115.237.226:60080/um/unitest.php?delay=24&cmd=log_out&session=2288

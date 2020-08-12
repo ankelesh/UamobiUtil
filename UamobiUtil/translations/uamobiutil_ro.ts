@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ro_RO">
+<TS version="2.0" language="ro_RO">
 <context>
     <name>AbstractScaningWidget</name>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="156"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="164"/>
         <source>scaning_widget_user_info</source>
-        <translation></translation>
+        <translation>Nu trebuie fi afisat</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="171"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="179"/>
         <source>scaning_widget_filler_text</source>
         <translation>Apasati butonul SCAN</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="178"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="186"/>
         <source>scaning_widget_back</source>
         <translation>Inapoi</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="182"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="190"/>
         <source>scaining_widget_submit</source>
         <translation>Expediere</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="186"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="194"/>
         <source>scaning_widget_search</source>
         <translation>Cautare</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="190"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="198"/>
         <source>quit</source>
         <translation>Iesire</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="231"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="239"/>
         <source>scaning_timeout:</source>
         <translation>Timpul de asteptare a expirat:</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="237"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="245"/>
         <source>QuitWithoutSave?</source>
         <translation>Iesire fara salvare?</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="237"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="245"/>
         <source>quit_without_save_info?</source>
         <translation>Iesire fara salvarea informatiei?</translation>
     </message>
@@ -122,48 +122,48 @@
 <context>
     <name>DocResultsWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="113"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="121"/>
         <source>delete all</source>
         <translation>Sterge tot</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="119"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="128"/>
         <source>delete selected</source>
         <translation>Sterge pozitia</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="124"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="134"/>
         <source>doc_results_back</source>
         <translation>Inapoi</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="128"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="138"/>
         <source>doc_results_text</source>
         <translation>Salvare</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="134"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="144"/>
         <source>doc_results_userinfo</source>
         <translation>Rezultatul scanarii</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="194"/>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="308"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="203"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="361"/>
         <source>Error!</source>
         <translation>Eroare!</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="348"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="401"/>
         <source>doc_results_timeout</source>
         <translation>Timpul de asteptare a expirat</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="356"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="409"/>
         <source>Delete all</source>
         <translation>Sterge tot</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="356"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="409"/>
         <source>Delete all data?</source>
         <translation>Stergeti toate datele?</translation>
     </message>
@@ -519,7 +519,7 @@
     <message>
         <location filename="../widgets/MultibranchWidgets/ScaningRelated/MulticontrolScaningWidget.cpp" line="224"/>
         <source>EnterData</source>
-        <translation type="unfinished"></translation>
+        <translation>Introduceti datele</translation>
     </message>
     <message>
         <location filename="../widgets/MultibranchWidgets/ScaningRelated/MulticontrolScaningWidget.cpp" line="337"/>
@@ -530,7 +530,7 @@
 <context>
     <name>NormalScaningWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ScaningRelated/NormalScaningWidget.cpp" line="233"/>
+        <location filename="../widgets/MultibranchWidgets/ScaningRelated/NormalScaningWidget.cpp" line="237"/>
         <source>document creation error</source>
         <translation>Eroare la crearea documentului</translation>
     </message>
@@ -595,7 +595,7 @@
         <translation>Inapoi</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/PlaceSelectionWidget.cpp" line="166"/>
+        <location filename="../widgets/MultibranchWidgets/PlaceSelectionWidget.cpp" line="194"/>
         <source>mode_selection_timeout!</source>
         <translation>Timpul de asteptare a expirat!</translation>
     </message>
@@ -629,42 +629,40 @@
 <context>
     <name>ReceiptParametersWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="74"/>
         <source>receipt_parameters_announce</source>
         <translation>Parametrii</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="75"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="70"/>
         <source>receipt_parameters_status</source>
         <translation>Statut</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="76"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="71"/>
         <source>receipt_parameters_closed_button</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="77"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="72"/>
         <source>receipt_parameters_cancelled_button</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="78"/>
         <source>receipt_parameters_select_order</source>
         <translation>Selectati comanda</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="79"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="73"/>
         <source>receipt_parameters_inspect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="80"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="74"/>
         <source>receipt_parameters_continue</source>
         <translation>Continua</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="81"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="75"/>
         <source>receipt_parameters_back</source>
         <translation>Inapoi</translation>
     </message>
@@ -700,6 +698,39 @@
         <location filename="../widgets/MultibranchWidgets/SelectItemFromListWidget.cpp" line="239"/>
         <source>timeout: </source>
         <translation>Timpul de asteptare a expirat:</translation>
+    </message>
+</context>
+<context>
+    <name>SwitchByScannedCodeWidget</name>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp" line="61"/>
+        <source>Please scan code</source>
+        <translation>Scanati codul</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp" line="64"/>
+        <source>back</source>
+        <translation>Inapoi</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp" line="65"/>
+        <source>skip</source>
+        <translation>Sariti</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp" line="129"/>
+        <source>you must scan code!</source>
+        <translation>Nu puteti sari scanarea codului!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp" line="135"/>
+        <source>Timeout!</source>
+        <translation>Timpul asteptarii serverului a expirat!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp" line="153"/>
+        <source>No such code!</source>
+        <translation>Codul nu e gasit ori&apos;text&apos;raspunsului ii gol!</translation>
     </message>
 </context>
 <context>

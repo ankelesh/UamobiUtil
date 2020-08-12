@@ -31,7 +31,7 @@ protected:
 	virtual AbsRecEntity* fabricate() const override;
 	virtual bool sortingCompare(const AbsRecEntity* another) const override;
 	virtual bool sortingCompare(const QSharedPointer<AbsRecEntity> another) const override;
-	virtual int extractEnumerable() const override;
+	virtual double extractEnumerable() const override;
 };
 typedef QSharedPointer<InputControlEntity> InputControl;
 typedef QVector<InputControl> IControlList;

@@ -37,8 +37,8 @@ public:
 	// locks old or creates new document
 protected:
 	void setDocument(FullDocument);
-	virtual void setDocument(Order) override;
-
+	void setDocument(Order);
+	virtual void setDocument(RecEntity) override;
 	// creates controls and connects them
     virtual void useControls(const IControlList &) override;
 

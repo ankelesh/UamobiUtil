@@ -3,7 +3,7 @@
 FullItemEntity::FullItemEntity(QString Title, QString Code, QString Cmid, 
 	QString Box, QString Qty, QString Highlight)
 	: AbsRecEntity(UniformXmlObject::Item), title(Title), code(Code), cmid(Cmid),
-	box(Box), qty(Qty.toInt()), highlight(Highlight.contains("true"))
+	box(Box), qty(Qty.toDouble()), highlight(Highlight.contains("true"))
 {
 }
 
@@ -105,9 +105,9 @@ bool FullItemEntity::sortingCompare(const QSharedPointer<AbsRecEntity> another) 
 	return this > &(*another);
 }
 
-int FullItemEntity::extractEnumerable() const
+double FullItemEntity::extractEnumerable() const
 {
-    return int(qty);
+    return qty;
 }
 
 
@@ -144,7 +144,7 @@ QString ShortItemEntity::makeTitle() const
 
 QString ShortItemEntity::extractId() const
 {
-    return  QString::number(reinterpret_cast<long long int>(this));
+    return  code;
 }
 
 bool ShortItemEntity::deepCompare(const AbsRecEntity* another) const

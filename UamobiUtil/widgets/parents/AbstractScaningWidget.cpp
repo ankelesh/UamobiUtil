@@ -116,6 +116,14 @@ void AbstractScaningWidget::wipe()
 	
 }
 
+void AbstractScaningWidget::setDocument(RecEntity e)
+{
+#ifdef DEBUG
+	detrace_METHCALL("abstract method setDocument called with downcasted entity " << e->myType() << " " << e->getId());
+#endif
+}
+
+
 
 
 AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)

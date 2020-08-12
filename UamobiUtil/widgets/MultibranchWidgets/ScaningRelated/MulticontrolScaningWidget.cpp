@@ -273,14 +273,7 @@ void MulticontrolScaningWidget::item_scaned_response()
 	ResponseParser  parser(new LinearListWithSublistParser(awaiter->restext, awaiter->errtext));
 	NetRequestResponse<InputControlEntity> response =
 		RequestParser::parseResponse<InputControlEntity>(parser);
-	if (response.isError || response.additionalObjects.isEmpty())
-	{
-		userInfo->setText(response.errtext);
-#ifdef DEBUG
-		detrace_NRESPERR(response.errtext);
-#endif
-	}
-	else
+	if (!assertAndShowError(parser, tr("Error!")), response.additionalObjects.isEmpty())
 	{
 		mainTextView->setText(response.additionalObjects.first()->value("richdata"));
 		itemSuppliedValues.clear();
@@ -297,14 +290,7 @@ void MulticontrolScaningWidget::item_confirmed_response()
 	ResponseParser  parser(new LinearListWithSublistParser(awaiter->restext, awaiter->errtext));
 	NetRequestResponse<InputControlEntity> response =
 		RequestParser::parseResponse<InputControlEntity>(parser);
-	if (response.isError || response.additionalObjects.isEmpty())
-	{
-		userInfo->setText(response.errtext);
-#ifdef DEBUG
-		detrace_NRESPERR(response.errtext);
-#endif
-	}
-	else
+	if (!assertAndShowError(parser, tr("Error!")), response.additionalObjects.isEmpty())
 	{
 		mainTextView->setText(response.additionalObjects.first()->value("richdata"));
 		itemSuppliedValues.clear();
@@ -326,11 +312,7 @@ void MulticontrolScaningWidget::document_confirmed_response()
 	ResponseParser parser(new LinearListParser(awaiter->restext, awaiter->errtext));
 	NetRequestResponse<FullDocumentEntity> response =
 		RequestParser::parseResponse<FullDocumentEntity>(parser);
-	if (response.isError)
-	{
-		userInfo->setText(response.errtext);
-	}
-	else
+	if (!assertAndShowError(parser, tr("Error!")))
 	{
 		if (response.isEmpty())
 		{

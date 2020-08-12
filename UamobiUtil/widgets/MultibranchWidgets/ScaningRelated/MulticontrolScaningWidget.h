@@ -27,7 +27,7 @@ public:
 	// locks old or creates new document
 protected:
 	void setDocument(FullDocument);
-	virtual void setDocument(Order) override;
+	void setDocument(Order);
 	// creates controls and connects them
     virtual void useControls(const IControlList&) override;
 	virtual void wipe() override;

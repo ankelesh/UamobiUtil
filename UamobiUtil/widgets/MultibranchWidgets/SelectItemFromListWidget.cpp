@@ -171,20 +171,16 @@ void SelectItemFromListWidget::parse_response()
 		return;
 	ResponseParser parser(new LinearListParser(awaiter->restext, awaiter->errtext));
 	PolyResponse response = RequestParser::parseResponse(parser, prototype);
-	if (response.isError)
+	if (!assertAndShowError(parser, tr("Error!")))
 	{
-		userHelp->setText(response.errtext);
-#ifdef DEBUG
-		detrace_NRESPERR(response.errtext);
-#endif
-	}
-	else if (response.isEmpty())
-	{
-		userHelp->setText(tr("no data received!"));
-	}
-	else
-	{
-        entityModel->insertData(response.objects);
+		if (response.isEmpty())
+		{
+			userHelp->setText(tr("no data received!"));
+		}
+		else
+		{
+			entityModel->insertData(response.objects);
+		}
 	}
 	hideProcessingOverlay();
 }
@@ -219,17 +215,10 @@ void SelectItemFromListWidget::parse_pick_response()
 {
 	if (!awaiter->deliverHere(Pick))
 		return;
-	SimpliestResponceParser parser(awaiter->restext, awaiter->errtext);
-	if (parser.isSuccessfull())
+	ResponseParser parser(new SimpliestResponceParser(awaiter->restext, awaiter->errtext));
+	if (!assertAndShowError(parser, tr("Error!")))
 	{
 		emit done(RecEntity(awaitedEntity->clone()));
-	}
-	else
-	{
-		userHelp->setText(parser.getErrors());
-#ifdef DEBUG
-		detrace_NRESPERR(parser.getErrors());
-#endif
 	}
 	hideProcessingOverlay();
 }
@@ -254,6 +243,11 @@ void SelectItemFromListWidget::itemPicked(RecEntity e)
 	}
 	else
 	{
+		if (selectQuery.isNull())
+		{
+			emit done(e);
+			return;
+		}
 		AppNetwork->execQueryByTemplate(selectQuery, e->getId(), awaiter);
 	}
 	awaiter->deliverResultTo(Pick);

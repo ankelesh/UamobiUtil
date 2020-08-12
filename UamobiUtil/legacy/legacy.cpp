@@ -91,6 +91,9 @@ namespace legacy {
 	QPair<QString, QString> splitLegacyMode(QString& mode)
 	{
 		modecut m = legacymodes.value(mode.at(0)).value(mode);
+		if (m.modename.isEmpty())
+			return QPair<QString, QString>(mode, QString::null);
+
 		return QPair<QString, QString>(m.modename, m.submodename);
 	}
 

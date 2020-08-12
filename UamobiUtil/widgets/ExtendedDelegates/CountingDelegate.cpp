@@ -2,13 +2,30 @@
 #include "networking/things.h"
 #include "widgets/utils/ElementsStyles.h"
 
-
+QString& normalizeFloatString(QString& fs)
+{
+	QString::reverse_iterator ch = fs.rbegin();
+	
+	int nullsToAppend = 0;
+	while (ch != fs.rend())
+	{
+		if (*ch == '.')
+		{
+			nullsToAppend = 3 - (ch - fs.rbegin());
+			break;
+		}
+		++ch;
+	}
+	if (nullsToAppend > 0)
+		fs = fs.leftJustified(fs.count() + nullsToAppend, '0');
+	return fs;
+}
 static QColor shadeOfGray(225, 226, 227);
 void CountingItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
 	painter->save();
 	// drawing rectangle for first date
-	int qty = index.data(DataEntityListModel::DirectAccess).value<RecEntity >()->getAttachedNumber();
+	double qty = index.data(DataEntityListModel::DirectAccess).value<RecEntity >()->getAttachedNumber();
 
 
 	// painting begins
@@ -32,9 +49,10 @@ void CountingItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& 
 		index.data(DataEntityListModel::DirectAccess).value<RecEntity>()->getTitle());
 	textbox.setTopLeft(textbox.topRight());
 		textbox.setBottomRight(option.rect.bottomRight());
-		painter->setBrush(StyleManager::instanse()->EnumerablesFieldsColor);
-		painter->drawRect(textbox);
-		painter->drawText(textbox, Qt::AlignCenter, QString::number(qty));
+	painter->setBrush(StyleManager::instanse()->EnumerablesFieldsColor);
+	painter->drawRect(textbox);
+	painter->setFont(quantityFont);
+	painter->drawText(textbox, Qt::AlignCenter | Qt::TextWrapAnywhere, normalizeFloatString(QString::number(qty)));
 	
 	// draw selection
 	if (option.state.testFlag(QStyle::State_Selected))
@@ -44,4 +62,19 @@ void CountingItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& 
 		painter->drawRect(option.rect);
 	}
 	painter->restore();
+}
+
+CountingItemDelegate::CountingItemDelegate(QObject* parent)
+	: ZebraItemDelegate(parent), quantityFont(AppFonts->makeCustomFont(0.03))
+{
+}
+QSize CountingItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+	if (index.isValid())
+	{
+		int hght = (index.data(Qt::SizeHintRole).toSize().height());
+
+		return  QSize(option.rect.width(), ((hght> 3)? hght : 3) * option.fontMetrics.height());
+	}
+	return QItemDelegate::sizeHint(option, index);
 }

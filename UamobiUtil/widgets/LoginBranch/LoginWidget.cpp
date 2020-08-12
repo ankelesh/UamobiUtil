@@ -4,6 +4,7 @@
 #endif
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
+#include "widgets/ElementWidgets/ExtendedDialogs.h"
 void LoginWidget::login_confirmed()
 {
 	if (awaiter.isAwaiting()) return;
@@ -34,7 +35,7 @@ void LoginWidget::checkResponse()
 	}
 	else
 	{
-		info->setText(result);
+		ErrorMessageDialog::showErrorInfo(tr("Error!"), result);
 #ifdef DEBUG
 		detrace_NRESPERR(result);
 #endif

@@ -55,6 +55,7 @@ namespace QueryTemplates
 		c[receiptAddItemExpanded] = queryTemplates.value(QStringLiteral("receiptAddItemExpanded"), QStringLiteral("rec_add_item&session=%1&barcode=%2&qty=%3&price=0&prs=%4")).toString();
 		c[docGetItemLabel] = queryTemplates.value(QStringLiteral("docGetItemLabel"), QStringLiteral("doc_get_item_label&session=%1&barcode=%2&qty=%3&printer=%4")).toString();
 		c[setVersionForBarcode] = queryTemplates.value(QStringLiteral("setVersionForBarcode"), QStringLiteral("set_version_for_barcode&session=%1&barcode=%2&version=%3")).toString();
+		c[receiptOrderByBC] = queryTemplates.value(QStringLiteral("receiptOrderByBC"), QStringLiteral("rec_get_order_by_barcode&session=%1&barcode=%2")).toString();
 		if (!ok)
 		{
 			int i = 0;
@@ -99,12 +100,14 @@ namespace QueryTemplates
 			queryTemplates.setValue(QStringLiteral("applyBarcodeFilter"), c[static_cast<QueryId>(i++)]);
 			queryTemplates.setValue(QStringLiteral("receiptAddItemExpanded"), c[static_cast<QueryId>(i++)]);
 			queryTemplates.setValue(QStringLiteral("docGetItemLabel"), c[static_cast<QueryId>(i++)]);
+			queryTemplates.setValue(QStringLiteral("receiptOrderByBC"), c[static_cast<QueryId>(i++)]);
 		}
 		return c;
 	}
 
 
-	OverloadableQuery nullQuery(-2, ping);
+	OverloadableQuery nullquery(OverloadableQuery::NullQ, ping);
+	OverloadableQuery defQuery(OverloadableQuery::DefaultQ, ping);
 
 int getQueryArguments(const QueryId id)
 {
@@ -192,6 +195,8 @@ int getQueryArguments(const QueryId id)
 		return   3;
 	case setVersionForBarcode:
 		return 2;
+	case receiptOrderByBC:
+		return 1;
 	default:
 		return 0;
 	}
@@ -338,7 +343,7 @@ void QueryTemplates::OverloadableQuery::assertAndSetMapping(QueryId defId, QStri
 OverloadableQuery OverloadableQuery::assertedAndMappedCopy(QueryId defId, QStringList allArgs, QStringList defMap) const
 {
 	OverloadableQuery oq(*this);
-	if (allArgs.isEmpty() && defMap.isEmpty())
+	if ((allArgs.isEmpty() && defMap.isEmpty() )|| oq.isNull())
 		return oq;
 	oq.assertAndSetMapping(defId, allArgs, defMap);
 	return oq;
@@ -389,7 +394,12 @@ bool QueryTemplates::OverloadableQuery::assertArgQuantity(int argc) const
 
 bool QueryTemplates::OverloadableQuery::isDefault() const
 {
-	return argumentListLength == -2;
+	return argumentListLength == DefaultQ;
+}
+
+bool OverloadableQuery::isNull() const
+{
+	return argumentListLength  == NullQ;
 }
 
 bool QueryTemplates::OverloadableQuery::requiresAllArgs() const
@@ -401,7 +411,12 @@ bool QueryTemplates::OverloadableQuery::requiresAllArgs() const
 
 const QueryTemplates::OverloadableQuery& QueryTemplates::OverloadableQuery::defaultQuery()
 {
-	return nullQuery;
+	return defQuery;
+}
+
+const OverloadableQuery& OverloadableQuery::nullQuery()
+{
+	return nullquery;
 }
 
 QString QueryTemplates::OverloadableQuery::filterAndApply(QStringList arguments, QString ssid) const

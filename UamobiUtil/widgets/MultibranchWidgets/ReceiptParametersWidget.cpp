@@ -3,6 +3,11 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
+#include <QStringBuilder>
+
+#ifndef QStringLiteral
+#define QStringLiteral(A) QString::fromUtf8("" A "" , sizeof(A)-1)
+#endif
 
 void ReceiptParametersWidget::_handleRecord(RecEntity e)
 {
@@ -16,7 +21,9 @@ void ReceiptParametersWidget::_handleRecord(RecEntity e)
 	dependency = RecEntity(e->clone());
 	if (e->myType() == UniformXmlObject::Order)
 	{
-		setMainView(upcastRecord<OrderEntity>(e)->text);
+		Order o = upcastRecord<OrderEntity>(e);
+		QString formatedOrder = QStringLiteral("<div><b>") % o->title % QStringLiteral("</div></b>") % o->text;
+		setMainView(formatedOrder);
 	}
 	else
 	{

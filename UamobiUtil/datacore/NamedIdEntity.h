@@ -101,7 +101,7 @@ protected:
 	// Inherited via NamedIdEntity
 	virtual bool fromUniXml(const UniformXmlObject& o) override;
 	virtual AbsRecEntity* fabricate() const override;
-	virtual int extractEnumerable() const override;
+	virtual double extractEnumerable() const override;
     virtual bool useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
 };
 

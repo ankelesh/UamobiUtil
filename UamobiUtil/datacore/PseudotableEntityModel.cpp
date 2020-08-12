@@ -4,7 +4,7 @@
 
 inline int PseudotableEntityModel::_flatIndex(int col, int row) const
 {
-	return col * (columns + 1) + row;
+	return col + row * columns;
 }
 
 int PseudotableEntityModel::rowCount(const QModelIndex& parent) const

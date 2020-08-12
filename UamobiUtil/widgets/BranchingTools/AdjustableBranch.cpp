@@ -18,6 +18,11 @@ void AdjustableBranch::toNext(RecEntity given)
 	}
 	else
 	{
+		if (currentlyOpened == Q_NULLPTR && !root->hasSubElements())
+		{
+			emit done(given);
+			return;
+		}
 		int backtrack = getCurrentNode()->backtracking();
 		if (abs(backtrack) > 0)
 		{

@@ -360,6 +360,15 @@
     <ClCompile Include="widgets\ExtendedDelegates\CountingDelegate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\FlowControls\SwitchByScannedCodeNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ElementWidgets\ExtendedDialogs.cpp">
+      <Filter>Header Files\ElementWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ElementWidgets\ExtendedLabels.cpp">
+      <Filter>Header Files\ElementWidgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -500,6 +509,15 @@
     <QtMoc Include="widgets\ExtendedDelegates\CountingDelegate.h">
       <Filter>Header Files\Delegates</Filter>
     </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\FlowControls\SwitchByScannedCodeNode.h">
+      <Filter>Header Files\MultibranchWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ElementWidgets\ExtendedDialogs.h">
+      <Filter>Header Files\ElementWidgets</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\ElementWidgets\ExtendedLabels.h">
+      <Filter>Header Files\ElementWidgets</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="UamobiUtil.qrc">
@@ -596,6 +614,9 @@
     </ClInclude>
     <ClInclude Include="widgets\Branches\SenderNode.h">
       <Filter>Header Files\Branches</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\utils\client_defaults.h">
+      <Filter>Header Files\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

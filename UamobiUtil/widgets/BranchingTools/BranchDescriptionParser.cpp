@@ -29,6 +29,7 @@ QHash<QString, independent_nodes::nodelist> _initBinding()
 	h["ListPickObserver"] = ListPickObs;
 	h["Skip"] = SkipNode;
 	h["Default"] = DefaultNode;
+	h["SwitchByScanCode"] = SwitchByScanBc;
 	return h;
 }
 
@@ -135,6 +136,11 @@ void BranchDescriptionParser::_extractOverload(QString buffer)
 		currentToAdd->oqs.push_back(OverloadableQuery::defaultQuery());
 		return;
 	}
+	if (buffer.count() == 1 && buffer.startsWith(':'))
+	{
+		currentToAdd->oqs.push_back(OverloadableQuery(OverloadableQuery::NullQ, ping));
+		return;
+	}
     QStringList temp = buffer.split(" : ");
 	if (temp.count() != 2)
 	{
@@ -142,6 +148,7 @@ void BranchDescriptionParser::_extractOverload(QString buffer)
             currentToAdd->oqs.push_back(OverloadableQuery(temp.at(0)));
 		return;
 	}
+	
     QStringList args(temp.at(1).split(" , "));
 	currentToAdd->oqs.push_back(OverloadableQuery(temp.first(), args));
 }
@@ -158,8 +165,8 @@ void BranchDescriptionParser::_extractBacktrack(QString buffer)
 
 void BranchDescriptionParser::_openSubbranchCapture()
 {
-	if (currentNode->isEmpty())
-		return;
+	/*if (currentNode->isEmpty())
+		return;*/
 	if (currentToAdd->type != independent_nodes::NotANode)
 	{
 		currentNode->emplaceNode(currentToAdd);

@@ -4,47 +4,47 @@
 <context>
     <name>AbstractScaningWidget</name>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="156"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="164"/>
         <source>scaning_widget_user_info</source>
         <translation>Не должно выводиться</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="171"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="179"/>
         <source>scaning_widget_filler_text</source>
         <translation>Нажмите кнопку SCAN</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="178"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="186"/>
         <source>scaning_widget_back</source>
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="182"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="190"/>
         <source>scaining_widget_submit</source>
         <translation>Отправить</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="186"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="194"/>
         <source>scaning_widget_search</source>
         <translation>Поиск</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="190"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="198"/>
         <source>quit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="231"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="239"/>
         <source>scaning_timeout:</source>
         <translation>Время ожидания истекло:</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="237"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="245"/>
         <source>QuitWithoutSave?</source>
         <translation>Выйти без сохранения?</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="237"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="245"/>
         <source>quit_without_save_info?</source>
         <translation>Выйти без сохранения информации?</translation>
     </message>
@@ -122,48 +122,48 @@
 <context>
     <name>DocResultsWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="113"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="121"/>
         <source>delete all</source>
         <translation>Очистка</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="119"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="128"/>
         <source>delete selected</source>
         <translation>Удалить</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="124"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="134"/>
         <source>doc_results_back</source>
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="128"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="138"/>
         <source>doc_results_text</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="134"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="144"/>
         <source>doc_results_userinfo</source>
         <translation>Результаты сканирования</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="194"/>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="308"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="203"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="361"/>
         <source>Error!</source>
         <translation>Ошибка!</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="348"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="401"/>
         <source>doc_results_timeout</source>
         <translation>Время ожидания истекло</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="356"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="409"/>
         <source>Delete all</source>
         <translation>Удалить все</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="356"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="409"/>
         <source>Delete all data?</source>
         <translation>Желаете удалить все?</translation>
     </message>
@@ -215,7 +215,7 @@
         <location filename="../widgets/MultibranchWidgets/IdDependentSelectWidget.cpp" line="46"/>
         <location filename="../widgets/MultibranchWidgets/IdDependentSelectWidget.cpp" line="213"/>
         <source>Please select item selected by: </source>
-        <translation>Выберите пункт из списка:</translation>
+        <translation>Выберите пункт из списка: </translation>
     </message>
     <message>
         <location filename="../widgets/MultibranchWidgets/IdDependentSelectWidget.cpp" line="48"/>
@@ -230,12 +230,12 @@
     <message>
         <location filename="../widgets/MultibranchWidgets/IdDependentSelectWidget.cpp" line="132"/>
         <source>Request received, but no data provided: </source>
-        <translation>Операция завершена успешно, но безрезультатно:</translation>
+        <translation>Операция завершена успешно, но безрезультатно: </translation>
     </message>
     <message>
         <location filename="../widgets/MultibranchWidgets/IdDependentSelectWidget.cpp" line="165"/>
         <source>timeout: </source>
-        <translation>Время ожидания истекло:</translation>
+        <translation>Время ожидания истекло: </translation>
     </message>
 </context>
 <context>
@@ -396,13 +396,13 @@
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="59"/>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="240"/>
         <source>prefix </source>
-        <translation>Префикс</translation>
+        <translation>Префикс </translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="60"/>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="241"/>
         <source>suffix </source>
-        <translation>Суффикс</translation>
+        <translation>Суффикс </translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="63"/>
@@ -530,7 +530,7 @@
 <context>
     <name>NormalScaningWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ScaningRelated/NormalScaningWidget.cpp" line="233"/>
+        <location filename="../widgets/MultibranchWidgets/ScaningRelated/NormalScaningWidget.cpp" line="237"/>
         <source>document creation error</source>
         <translation>Ошибка при создании документа</translation>
     </message>
@@ -550,7 +550,7 @@
     <message>
         <location filename="../widgets/MultibranchWidgets/PagedSearchWidget.cpp" line="193"/>
         <source>item_search_timeout: </source>
-        <translation>Время ожидания истекло:</translation>
+        <translation>Время ожидания истекло: </translation>
     </message>
 </context>
 <context>
@@ -587,7 +587,7 @@
         <location filename="../widgets/MultibranchWidgets/PlaceSelectionWidget.cpp" line="25"/>
         <location filename="../widgets/MultibranchWidgets/PlaceSelectionWidget.cpp" line="51"/>
         <source>please select place for mode: </source>
-        <translation>Выберите подразделение:</translation>
+        <translation>Выберите подразделение: </translation>
     </message>
     <message>
         <location filename="../widgets/MultibranchWidgets/PlaceSelectionWidget.cpp" line="55"/>
@@ -595,7 +595,7 @@
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/PlaceSelectionWidget.cpp" line="166"/>
+        <location filename="../widgets/MultibranchWidgets/PlaceSelectionWidget.cpp" line="194"/>
         <source>mode_selection_timeout!</source>
         <translation>Время ожидания истекло!</translation>
     </message>
@@ -610,7 +610,7 @@
     <message>
         <location filename="../widgets/MultibranchWidgets/ScaningRelated/PrintingScaningWidget.cpp" line="21"/>
         <source>printing failed: </source>
-        <translation>печать не удалась:</translation>
+        <translation>печать не удалась: </translation>
     </message>
     <message>
         <location filename="../widgets/MultibranchWidgets/ScaningRelated/PrintingScaningWidget.cpp" line="28"/>
@@ -629,42 +629,40 @@
 <context>
     <name>ReceiptParametersWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="74"/>
         <source>receipt_parameters_announce</source>
         <translation>Параметры</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="75"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="70"/>
         <source>receipt_parameters_status</source>
         <translation>Статус</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="76"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="71"/>
         <source>receipt_parameters_closed_button</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="77"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="72"/>
         <source>receipt_parameters_cancelled_button</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="78"/>
         <source>receipt_parameters_select_order</source>
         <translation>Выбор заявки</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="79"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="73"/>
         <source>receipt_parameters_inspect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="80"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="74"/>
         <source>receipt_parameters_continue</source>
         <translation>Далее</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="81"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="75"/>
         <source>receipt_parameters_back</source>
         <translation>Назад</translation>
     </message>
@@ -699,7 +697,40 @@
     <message>
         <location filename="../widgets/MultibranchWidgets/SelectItemFromListWidget.cpp" line="239"/>
         <source>timeout: </source>
-        <translation>Время ожидания истекло:</translation>
+        <translation>Время ожидания истекло: </translation>
+    </message>
+</context>
+<context>
+    <name>SwitchByScannedCodeWidget</name>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp" line="61"/>
+        <source>Please scan code</source>
+        <translation>Пожалуйста отсканируйте код</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp" line="64"/>
+        <source>back</source>
+        <translation>Назад</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp" line="65"/>
+        <source>skip</source>
+        <translation>Пропустить</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp" line="129"/>
+        <source>you must scan code!</source>
+        <translation>Вы не можете пропустить сканирование кода!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp" line="135"/>
+        <source>Timeout!</source>
+        <translation>Время ожидания сервера вышло!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp" line="153"/>
+        <source>No such code!</source>
+        <translation>Код не найден или текст ответа был пуст!</translation>
     </message>
 </context>
 <context>

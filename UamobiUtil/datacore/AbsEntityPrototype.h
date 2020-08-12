@@ -34,7 +34,7 @@ protected:
 	virtual bool sortingCompare(const AbsRecEntity* another) const = 0;
 	virtual bool sortingCompare(const QSharedPointer<AbsRecEntity> another) const = 0;
 	// extracts value that can be used in counting models. Not required for normal functioning.
-	virtual int extractEnumerable() const;
+	virtual double extractEnumerable() const;
 	// sends request that is associated with default sending operation. Arguments are usually ignored
     virtual bool useAssociatedNetworkSendMethod(const QStringList& arguments, RequestAwaiter* awaiter) const;
 	// sends request that is associated with acquiring list of corresponding objects.
@@ -51,7 +51,7 @@ public:
 	int myType() const;
     bool sendAssociatedGetRequest(const QStringList& arguments, RequestAwaiter* awaiter) const;
     bool sendAssociatedPostRequest(const QStringList& arguments, RequestAwaiter* awaiter) const;
-	int getAttachedNumber() const;
+	double getAttachedNumber() const;
 	bool isSame(AbsRecEntity* another) const;
 	AbsRecEntity* clone() const;
 	bool isHigher(AbsRecEntity* another) const;

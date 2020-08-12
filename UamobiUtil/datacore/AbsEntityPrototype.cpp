@@ -1,6 +1,6 @@
 #include "AbsEntityPrototype.h"
 
-int AbsRecEntity::extractEnumerable() const
+double AbsRecEntity::extractEnumerable() const
 {
 	return 0;
 }
@@ -55,7 +55,7 @@ bool AbsRecEntity::sendAssociatedPostRequest(const QStringList& arguments, Reque
 	return useAssociatedNetworkSendMethod(arguments, awaiter);
 }
 
-int AbsRecEntity::getAttachedNumber() const
+double AbsRecEntity::getAttachedNumber() const
 {
 	return extractEnumerable();
 }

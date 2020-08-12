@@ -84,7 +84,7 @@ bool InputControlEntity::sortingCompare(const QSharedPointer<AbsRecEntity> anoth
 	return this > another.data();
 }
 
-int InputControlEntity::extractEnumerable() const
+double InputControlEntity::extractEnumerable() const
 {
 	return type;
 }

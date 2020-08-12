@@ -10,7 +10,7 @@
 
 
 // extracts error from document. Usually it is described with <message><stack> tags
-QString makeError(QDomDocument&);
+QPair<QString, QString> makeError(QDomDocument&);
 // checks if document contains common error descriptions via status codes
 bool isError(QDomDocument&);
 
@@ -20,6 +20,7 @@ protected:
 	// document used to extract data
 	QDomDocument xmldoc;
 	QString errtext;		//	raw error log
+	QString errstack;
 	bool success;			//	defines if parser was successfull.
 	// uniform objects represent data like json ones
 	XmlObjects parseResult;
@@ -36,6 +37,7 @@ public:
 	AbsResponseParser(QString& res, QString& err);	//	Parsing happens in constructor
 	bool isSuccessfull();		//	wraps couldRead && noRequestErrors
 	QString getErrors();		//	returns errtext
+	QString getStack();
 	int isAlternative();        // returns altres
 	void reset(QString& res, QString& err);  // postconstructor
 	XmlObjects& read();	//	returns parsed result
@@ -43,3 +45,6 @@ public:
 };
 
 typedef QSharedPointer<AbsResponseParser> ResponseParser;
+
+
+bool assertAndShowError(ResponseParser p, QString header, bool extraConditions = true, QString extraMsg = QString(), QString extraStack = QString());

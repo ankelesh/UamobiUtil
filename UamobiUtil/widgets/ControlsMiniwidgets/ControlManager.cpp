@@ -9,7 +9,7 @@
 
 abs_control* fabricateControl(InputControl control, QBoxLayout* layout, QWidget* parent)
 {
-	switch (control->getAttachedNumber())
+	switch (int(control->getAttachedNumber()))
 	{
 	case InputControlEntity::Float:
 	{

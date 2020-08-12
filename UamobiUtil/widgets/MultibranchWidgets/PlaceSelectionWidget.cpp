@@ -26,14 +26,14 @@ void PlaceSelectionWidget::_handleRecord(RecEntity e)
 	}
 }
 
-PlaceSelectionWidget::PlaceSelectionWidget(QWidget* parent)
+PlaceSelectionWidget::PlaceSelectionWidget(RecEntity toExtract, QWidget* parent)
 	: IndependentBranchNode(independent_nodes::PlaceSelect, true, parent),
 	allplaces(new DataEntityListModel(this)),
 	mainLayout(new QVBoxLayout(this)), buttonLayout(new QHBoxLayout(this)),
      userTip(new QLabel(this)),
 	placeSelection(new QListView(this)),
 	backButton(new MegaIconButton(this)), awaiter(new RequestAwaiter(AppSettings->timeoutInt, this)),
-	place(new PlaceEntity()), loadPlacesQuery(), selectPlaceQuery()
+	place(new PlaceEntity()), loadPlacesQuery(), selectPlaceQuery(), entityToExtract(toExtract)
 {
 #ifdef DEBUG
 	detrace_DCONSTR("PlaceSelection");
@@ -56,6 +56,10 @@ PlaceSelectionWidget::PlaceSelectionWidget(QWidget* parent)
 	backButton->setIcon(QIcon(":/res/back.png"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
+	if (entityToExtract == Q_NULLPTR)
+	{
+		entityToExtract = RecEntity(new PlaceEntity());
+	}
 	placeSelection->setModel(allplaces);
 	placeSelection->setItemDelegate(new ZebraItemDelegate(this));
 #ifdef QT_VERSION5X
@@ -65,7 +69,7 @@ PlaceSelectionWidget::PlaceSelectionWidget(QWidget* parent)
 	QObject::connect(awaiter, &RequestAwaiter::requestTimeout, this, &PlaceSelectionWidget::was_timeout);
 #else
 	QObject::connect(allplaces, SIGNAL(dataEntityClicked(RecEntity)), this, SLOT(placeSelected(RecEntity)));
-   if (!QObject::connect(placeSelection, SIGNAL(clicked(QModelIndex)), allplaces, SLOT(mapClickToEntity(QModelIndex))))throw;
+	QObject::connect(placeSelection, SIGNAL(clicked(QModelIndex)), allplaces, SLOT(mapClickToEntity(QModelIndex)));
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 	QObject::connect(awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
@@ -145,20 +149,44 @@ void PlaceSelectionWidget::parse_loaded_places()
 
 void PlaceSelectionWidget::place_select_response()
 {
-	SimpliestResponceParser parser(awaiter->restext, awaiter->errtext);
-	if (!parser.isSuccessfull())
+
+
+	if (entityToExtract->myType() == UniformXmlObject::Place)
 	{
-		userTip->setText(parser.getErrors());
+		SimpliestResponceParser parser(awaiter->restext, awaiter->errtext);
+		if (!parser.isSuccessfull())
+		{
+			userTip->setText(parser.getErrors());
 #ifdef DEBUG
-		detrace_NRESPERR(parser.getErrors());
+			detrace_NRESPERR(parser.getErrors());
 #endif
+		}
+		else
+		{
+			emit done(RecEntity(place.staticCast<AbsRecEntity>()));
+		}
+		hideProcessingOverlay();
+		QObject::disconnect(awaiter, SIGNAL(requestReceived()), this, SLOT(place_select_response()));
 	}
 	else
 	{
-		emit done(RecEntity(place.staticCast<AbsRecEntity>()));
+		ResponseParser parser(new LinearListParser(awaiter->restext, awaiter->errtext));
+		PolyResponse result = RequestParser::parseResponse(parser, entityToExtract);
+		if (result.isEmpty())
+		{
+#ifdef DEBUG
+			detrace_NRESPERR(parser->getErrors());
+#endif
+			userTip->setText(parser->getErrors());
+		}
+		else
+		{
+			emit done(result.objects.first());
+		}
+		hideProcessingOverlay();
+		QObject::disconnect(awaiter, SIGNAL(requestReceived()), this, SLOT(place_select_response()));
+		
 	}
-	hideProcessingOverlay();
-	QObject::disconnect(awaiter, SIGNAL(requestReceived()), this, SLOT(place_select_response()));
 }
 
 void PlaceSelectionWidget::was_timeout()
@@ -170,10 +198,9 @@ void PlaceSelectionWidget::was_timeout()
 
 void PlaceSelectionWidget::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads)
 {
-	switch (
-		((overloads.count() > 2) ? 2 : overloads.count())
-		)
+	switch (overloads.count())
 	{
+	default:
 	case 2:
     {
         QStringList t;
@@ -186,7 +213,7 @@ void PlaceSelectionWidget::_makeOverloads(const QVector<QueryTemplates::Overload
 		loadPlacesQuery = overloads.at(0).assertedAndMappedCopy(
 			placeList);
         Q_FALLTHROUGH();
-	default:
+	case 0:
 		break;
 	}
 }
