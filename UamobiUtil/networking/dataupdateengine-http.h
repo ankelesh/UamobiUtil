@@ -63,6 +63,7 @@ public:
 
 	// resets connection and sends ping to new server destination
 	void setUrl(QString url) ;
+	void clearSession();
 	// obtains session id from login response
 	QString setSession(QString& requestResult);
 	// simply returns url 

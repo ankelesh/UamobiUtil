@@ -132,7 +132,7 @@ void PrintingScaningWidget::item_confirmed_response()
     if (!awaiter->deliverHere(docGetItemLabel))
         return;
 	ResponseParser  parser(new RichtextResponseParser(awaiter->restext, awaiter->errtext));
-	if (!assertAndShowError(parser, tr("Error!")))
+	if (!assertAndShowError(this, parser, tr("Error!")))
 	{
 		_print(parser->read().first()->value("code"));
     }

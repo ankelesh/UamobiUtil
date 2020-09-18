@@ -1,7 +1,7 @@
 #pragma once
 #include <QLabel>
 #include <cmath>
-
+#include <qnumeric.h>
 namespace labels_private {
 	class abs_counter_label : public QLabel
 	{
@@ -40,7 +40,7 @@ protected:
 	virtual void _clearValue() override;
 	virtual double _getValue() const override;
 public:
-    TwoLevelCounterLabel(QString explanation = QString(), double value = std::nan(""), QWidget* parent = Q_NULLPTR);
+    TwoLevelCounterLabel(QString explanation = QString(), double value = qQNaN(), QWidget* parent = Q_NULLPTR);
 
 
 

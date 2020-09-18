@@ -8,6 +8,7 @@
 void LoginWidget::login_confirmed()
 {
 	if (awaiter.isAwaiting()) return;
+
 	if (loginField->text().isEmpty() || passwordField->text().isEmpty())
 	{
 		info->setText(tr("login_widget_no_password!"));
@@ -35,7 +36,7 @@ void LoginWidget::checkResponse()
 	}
 	else
 	{
-		ErrorMessageDialog::showErrorInfo(tr("Error!"), result);
+		ErrorMessageDialog::showErrorInfo(this, tr("Error!"), result);
 #ifdef DEBUG
 		detrace_NRESPERR(result);
 #endif

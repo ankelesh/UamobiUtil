@@ -50,7 +50,7 @@ protected:
 	QLabel* stackTrace;
 public:
 	explicit ErrorMessageDialog(const QString header = QString(), const QString text = QString(), const QString stack = QString(), QWidget* parent = Q_NULLPTR,const QIcon icon  = QIcon());
-	static void showErrorInfo(const QString& header, const QString& message,
+	static void showErrorInfo(QWidget* parent, const QString& header, const QString& message,
 		bool showStack = false,
 		const QString stack = QString(),
 		const QIcon& errorIcon = QIcon());

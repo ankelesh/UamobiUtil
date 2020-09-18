@@ -8,12 +8,13 @@
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
 #include <qmessagebox.h>
-
+#include "widgets/ElementWidgets/ExtendedDialogs.h"
 
 ModeSelectionWidget::ModeSelectionWidget( QWidget* parent)
 	: inframedWidget(true, parent), innerModel(new PseudotableEntityModel(2,this)), mainLayout(new QVBoxLayout(this)),
 	buttonLayout(new QHBoxLayout(this)),
 	modesTip(new QLabel(this)), modeSelection(new QTableView(this)),
+	placeTip(new QLabel(this)),
 	logoutButton(new MegaIconButton(this)),settings(), 
 	selected(new ModeEntity()), awaiter(AppSettings->timeoutInt, this)
 {
@@ -22,8 +23,10 @@ ModeSelectionWidget::ModeSelectionWidget( QWidget* parent)
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 	mainLayout->addWidget(modesTip);
 	mainLayout->addWidget(modeSelection);
+	mainLayout->addWidget(placeTip);
 	mainLayout->addLayout(buttonLayout);
 	buttonLayout->addWidget(logoutButton);
+
 	//buttonLayout->addStretch();
 
 	modesTip->setText(tr("mode_selection_modes_tip:"));
@@ -39,6 +42,9 @@ ModeSelectionWidget::ModeSelectionWidget( QWidget* parent)
 	modeSelection->verticalHeader()->hide();
 	modeSelection->horizontalHeader()->hide();
 
+	placeTip->setAlignment(Qt::AlignRight);
+	placeTip->setFont(GENERAL_FONT);
+	placeTip->hide();
 
 #ifdef QT_VERSION5X
     modeSelection->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
@@ -105,6 +111,7 @@ void ModeSelectionWidget::loadModes()
 void ModeSelectionWidget::logoutPressed()
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::LogOut, Q_NULLPTR);
+	AppNetwork->setSession(QString());
 	emit backRequired();
 }
 
@@ -143,6 +150,20 @@ void ModeSelectionWidget::parse_modes()
 	else
 	{
         innerModel->insertData(result.objects);
+		if (!result.additionalObjects.isEmpty())
+		{
+			RecEntity temp(new PlaceEntity());
+			PolyResponse placeResp = RequestParser::parseResponse(result, temp);
+			if (placeResp.isNormalAndNotEmpty())
+			{
+				Place p(upcastRecord<PlaceEntity>(placeResp.objects.at(0)));
+				if (!p.isNull())
+				{
+					placeTip->setText(p->name);
+					placeTip->show();
+				}
+			}
+		}
 	}
     QObject::disconnect(&awaiter, SIGNAL(requestReceived()), Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
@@ -153,7 +174,7 @@ void ModeSelectionWidget::mode_select_response()
 	RichtextResponseParser parser(awaiter.restext, awaiter.errtext);
 	if (!parser.isSuccessfull())
 	{
-		QMessageBox::critical(this, tr("Error!"), parser.getErrors());
+		ErrorMessageDialog::showErrorInfo(this, tr("Error"), parser.getErrors());
 		selected->drop();
 #ifdef DEBUG
 		detrace_NRESPERR(parser.getErrors());
@@ -171,7 +192,7 @@ void ModeSelectionWidget::mode_select_response()
 
 void ModeSelectionWidget::was_timeout()
 {
-	modesTip->setText(tr("mode_selection_timeout!") + QString::number(AppSettings->timeoutInt));
+	ErrorMessageDialog::showErrorInfo(this, tr("Error"),tr("mode_selection_timeout!") + QString::number(AppSettings->timeoutInt));
     QObject::disconnect(&awaiter, SIGNAL(requestReceived), Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
 }

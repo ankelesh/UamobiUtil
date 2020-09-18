@@ -13,10 +13,10 @@ public:
 	QString box;
     double qty;
 	bool highlight;
-
+	int controlType;
 	FullItemEntity(QString Title = QString(), QString Code = QString(),
 		QString Cmid = QString(), QString Box = QString(),
-		QString Qty = QString(), QString Highlight = QString());
+		QString Qty = QString(), QString Highlight = QString(), QString controlType = QString());
 	static void sendGetRequest(int pagenumber, RequestAwaiter* awaiter, QString doc = QString());
 	void sendDeleteThisRequest(RequestAwaiter* awaiter);
 	void sendDeleteThisRequest(const QueryTemplates::OverloadableQuery& oq, RequestAwaiter* awaiter);

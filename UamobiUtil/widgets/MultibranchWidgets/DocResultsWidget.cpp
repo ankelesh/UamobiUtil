@@ -39,7 +39,7 @@ void DocResultsWidget::setIndexation(XmlObjects& settings)
 		{
 			pagenumber = 0;
 		}
-		previousButton->setDisabled(pagenumber >= 0);
+		previousButton->setDisabled(pagenumber <= 0);
 	}
 }
 
@@ -198,7 +198,7 @@ void DocResultsWidget::refresh()
 {
 	ResponseParser parser(new LinearListParser(awaiter->restext, awaiter->errtext));
 	PolyResponse response = RequestParser::parseResponse(parser, RecEntity(new FullItemEntity()));
-	if (!assertAndShowError(parser, tr("Error!")))
+	if (!assertAndShowError(this, parser, tr("Error!")))
 	{
 		PolyResponse invoices = RequestParser::parseResponse(response, RecEntity(new InvoiceEntity()));
 		setIndexation(invoices.additionalObjects);
@@ -296,6 +296,12 @@ void DocResultsWidget::getAttachedControls()
 	if (!localCache.contains(documentResultGetBox))
 	{
 		attachedControls->clearControls();
+		FullItem castedItem = upcastRecord<FullItemEntity>(currentItem);
+		int type;
+		if (castedItem.isNull())
+			type = InputControlEntity::Int;
+		else
+			type = castedItem->controlType;
 		attachedControls->emplaceControl(
 			InputControl(
 				new InputControlEntity(
@@ -303,7 +309,7 @@ void DocResultsWidget::getAttachedControls()
 		attachedControls->emplaceControl(
 			InputControl(
 				new InputControlEntity(
-					"qty", "Int", "0")));
+					"qty", type, "0")));
 		_hideAny(attachedControls);
 	}
 	else
@@ -347,7 +353,7 @@ void DocResultsWidget::save_response()
 		if (isError(doc))
 		{
 			QPair<QString, QString> edata = makeError(doc);
-			ErrorMessageDialog::showErrorInfo(tr("Error!"), edata.first, false, edata.second);
+			ErrorMessageDialog::showErrorInfo(this, tr("Error!"), edata.first, false, edata.second);
 		}
 	}
 	hideProcessingOverlay();
@@ -360,7 +366,7 @@ void DocResultsWidget::get_attached_response()
 	ResponseParser parser(new LinearListParser(awaiter->restext, awaiter->errtext));
 	NetRequestResponse<InputControlEntity> response 
 		= RequestParser::parseResponse<InputControlEntity>(parser);
-	if (!assertAndShowError(parser, tr("Error!")))
+	if (!assertAndShowError(this, parser, tr("Error!")))
 	{
 		attachedControls->clearControls();
 		attachedControls->useControls(response.objects);
@@ -403,7 +409,7 @@ void DocResultsWidget::deleteAll()
 {
 	if (awaiter->isAwaiting())
 		return;
-	int result =  QMessageBox::question(this, tr("Delete all"), tr("Delete all data?"), QMessageBox::Ok, QMessageBox::Cancel);
+	int result =  QMessageBox::question(this, tr("Delete all"), tr("Delete all data?"), QMessageBox::Ok | QMessageBox::Cancel);
 	if (result != QMessageBox::Ok)
 		return;
 	if (localCache.contains(documentDeleteAll))

@@ -4,14 +4,14 @@
 
 QString& normalizeFloatString(QString& fs)
 {
-	QString::reverse_iterator ch = fs.rbegin();
+    QString::iterator ch = fs.begin();
 	
 	int nullsToAppend = 0;
-	while (ch != fs.rend())
+    while (ch != fs.end())
 	{
 		if (*ch == '.')
 		{
-			nullsToAppend = 3 - (ch - fs.rbegin());
+            nullsToAppend = 4 - (fs.end() - ch);
 			break;
 		}
 		++ch;

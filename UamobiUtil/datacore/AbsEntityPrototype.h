@@ -312,7 +312,7 @@ inline XmlObjects NetRequestResponse<NetObject>::takeObjects()
 {
 	
 	XmlObjects temp(additionalObjects);
-	objects.clear();
+	additionalObjects.clear();
 	return temp;
 	
 }

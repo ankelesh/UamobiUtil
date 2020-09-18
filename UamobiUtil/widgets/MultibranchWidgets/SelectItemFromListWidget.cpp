@@ -171,7 +171,7 @@ void SelectItemFromListWidget::parse_response()
 		return;
 	ResponseParser parser(new LinearListParser(awaiter->restext, awaiter->errtext));
 	PolyResponse response = RequestParser::parseResponse(parser, prototype);
-	if (!assertAndShowError(parser, tr("Error!")))
+	if (!assertAndShowError(this, parser, tr("Error!")))
 	{
 		if (response.isEmpty())
 		{
@@ -216,7 +216,7 @@ void SelectItemFromListWidget::parse_pick_response()
 	if (!awaiter->deliverHere(Pick))
 		return;
 	ResponseParser parser(new SimpliestResponceParser(awaiter->restext, awaiter->errtext));
-	if (!assertAndShowError(parser, tr("Error!")))
+	if (!assertAndShowError(this, parser, tr("Error!")))
 	{
 		emit done(RecEntity(awaitedEntity->clone()));
 	}
@@ -257,10 +257,9 @@ void SelectItemFromListWidget::itemPicked(RecEntity e)
 
 void SelectItemFromListWidget::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads)
 {
-	switch (
-		((overloads.count() > 2) ? 2 : overloads.count())
-		)
+	switch (overloads.count())
 	{
+	default:
 	case 2:
     {
         QStringList t;
@@ -283,7 +282,7 @@ void SelectItemFromListWidget::_makeOverloads(const QVector<QueryTemplates::Over
 		);
     }
         Q_FALLTHROUGH();
-	default:
+	case 0:
 		return;
 	}
 }

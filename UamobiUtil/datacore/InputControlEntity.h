@@ -21,7 +21,10 @@ public:
 	ControlTypes type;
 	QString defaultValue;
 	InputControlEntity(QString nm = QString(), QString Ctype = QString(), QString dv = QString());
+	InputControlEntity(QString nm, int Ctype, QString dv);
 	static ControlTypes intToType(const int cval);
+	static ControlTypes guessType(const QString&);
+	static QString foldType(const int);
 protected:
 	// Inherited via AbsRecEntity
 	virtual bool fromUniXml(const UniformXmlObject& o) override;

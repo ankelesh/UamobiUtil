@@ -29,12 +29,22 @@ InputControlEntity::InputControlEntity(QString nm,QString ctype, QString dv)
 	type = _initCType(ctype);
 }
 
+InputControlEntity::InputControlEntity(QString nm, int Ctype, QString dv)
+	: AbsRecEntity(UniformXmlObject::Control), name(nm), type(intToType(Ctype)), defaultValue(dv)
+{
+}
+
 InputControlEntity::ControlTypes InputControlEntity::intToType(const int cval)
 {
 	if (cval >= None && cval <= Barcode)
 		return static_cast<ControlTypes>(cval);
 	return None;
 }
+InputControlEntity::ControlTypes InputControlEntity::guessType(const QString& s)
+{
+	return _initCType(s);
+}
+
 
 bool InputControlEntity::fromUniXml(const UniformXmlObject& o)
 {

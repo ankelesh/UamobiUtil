@@ -44,6 +44,7 @@ protected:
 	QHBoxLayout* buttonLayout;
 	QLabel* modesTip;
 	QTableView* modeSelection;
+	QLabel* placeTip;
 	MegaIconButton* logoutButton;
 
 	// this list is used to store data obtained after select_mode web request. it will be usefull later

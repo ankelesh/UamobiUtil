@@ -5,6 +5,10 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
+#ifndef QStringLiteral
+#define QStringLiteral(A) QString::fromLatin1(A, sizeof(A)-1)
+#endif
+
 QPair<QString, QString> makeError(QDomDocument& xmldoc)
 {
 	QDomNodeList tlist = xmldoc.elementsByTagName("status");
@@ -58,7 +62,7 @@ bool isError(QDomDocument& xmldoc)
 	return false;
 }
 
-bool assertAndShowError(ResponseParser p, QString header, bool extraConditions, QString extraMsg, QString extraStack)
+bool assertAndShowError(QWidget* parent, ResponseParser p, QString header, bool extraConditions, QString extraMsg, QString extraStack)
 {
 	if (p.isNull())
 		return false;
@@ -69,11 +73,11 @@ bool assertAndShowError(ResponseParser p, QString header, bool extraConditions, 
 #endif
 		if (extraMsg.isEmpty())
 		{
-			ErrorMessageDialog::showErrorInfo(header, p->getErrors(), false, p->getStack());
+			ErrorMessageDialog::showErrorInfo(parent, header, p->getErrors(), false, p->getStack());
 		}
 		else
 		{
-			ErrorMessageDialog::showErrorInfo(header, extraMsg, false, (extraStack.isEmpty())?  p->getStack(): extraStack);
+			ErrorMessageDialog::showErrorInfo(parent, header, extraMsg, false, (extraStack.isEmpty())?  p->getStack(): extraStack);
 		}
 		return true;
 	}
@@ -104,6 +108,8 @@ AbsResponseParser::AbsResponseParser(QString& res, QString& err)
 	if (isError(xmldoc))
 	{
 		QPair<QString, QString> res = makeError(xmldoc);
+		errtext = res.first;
+		errstack = res.second;
 	}	
 }
 

@@ -20,16 +20,6 @@
 // networking imports
 #include "networking/RequestAwaiter.h"
 
-/*
-	This widget is used to select place. Generally it's behaviour is similar with ModeSelectionWidget, but this widget
-	is top one of its branch.
-	update:
-	fixed minor bugs, added chaining to ordersSelect (! possible this is renundant, think about adding another subclass particulary for
-	branch node version
-
-	__ASSOCIATED_DATABASE_FUNCTION__  :   P'placesResponse'  list_places()
-	__ASSOCIATED_DATABASE_FUNCTION__  :   P'simpliestResponse'   select_place(place_code)
-*/
 
 using QueryTemplates::OverloadableQuery;
 class PlaceSelectionWidget : public IndependentBranchNode // This widget is top of ModeSelection and allows place selection from obtained list

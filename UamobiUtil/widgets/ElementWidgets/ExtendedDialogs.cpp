@@ -13,6 +13,33 @@
 #include <QPaintEvent>
 #include <QPainter>
 
+QString _normalizeLongLine(const QString& line)
+{
+	if (line.count() <= AppFonts->howMuchCharacterFitsIntoScreen())
+		return line;
+	QString temp;
+	temp.reserve(line.count() + (int(line.count() / AppFonts->howMuchCharacterFitsIntoScreen())));
+	QString::const_iterator sym = line.begin();
+	QString::const_iterator last_occurence = line.begin();
+	while (sym < line.end())
+	{
+		switch (sym->toLatin1())
+		{
+		case '\n':
+			last_occurence = sym;
+			break;
+		default:
+			if ((sym - last_occurence) == AppFonts->howMuchCharacterFitsIntoScreen())
+			{
+				temp.push_back('\n');
+				last_occurence = sym;
+			}
+			break;
+		}
+		temp.push_back(*(sym++));
+	}
+	return temp;
+}
 
 LoginPassDialog::LoginPassDialog(QString& logbuff, QString& passbuff, QWidget* parent)
 	:QDialog(parent, Qt::FramelessWindowHint), mainLayout(new QFormLayout(this)),
@@ -110,7 +137,14 @@ ErrorMessageDialog::ErrorMessageDialog(const QString header,
 	stackTrace(new QLabel(this))
 {
 	setFixedWidth(calculateAdaptiveWidth(0.9));
+	setMinimumHeight(calculateAdaptiveButtonHeight(0.2));
+	setMaximumHeight(calculateAdaptiveButtonHeight(0.9));
 	setWindowTitle(header);
+#ifdef Q_OS_WINCE
+	setWindowFlags((Qt::FramelessWindowHint | Qt::CustomizeWindowHint)
+		& ~(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowMinMaxButtonsHint
+			| Qt::WindowCloseButtonHint | Qt::Dialog | Qt::WindowContextHelpButtonHint));
+#endif
     mainLayout->addLayout(topLayout);
     mainLayout->addLayout(middleLayout);
     mainLayout->addLayout(bottomLayout);
@@ -147,8 +181,12 @@ ErrorMessageDialog::ErrorMessageDialog(const QString header,
     quitButton->setFixedSize(calculateAdaptiveSize(0.06, 0.2));
 	topic->setFixedHeight(quitButton->height());
 
-	errorMessage->setText(text);
+
+	errorMessage->setText(_normalizeLongLine(text));
+	errorMessage->setWordWrap(true);
 	
+	
+	errorMessage->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
 	if (icon.isNull())
 	{
         errorImage->setPixmap(style()->standardIcon(
@@ -191,9 +229,9 @@ ErrorMessageDialog::ErrorMessageDialog(const QString header,
 
 }
 
-void ErrorMessageDialog::showErrorInfo(const QString& header, const QString& message, bool showStack, const QString stack, const QIcon& errorIcon)
+void ErrorMessageDialog::showErrorInfo(QWidget* parent, const QString& header, const QString& message, bool showStack, const QString stack, const QIcon& errorIcon)
 {
-	ErrorMessageDialog* lpd = new ErrorMessageDialog(header, message, stack, Q_NULLPTR, errorIcon);
+	ErrorMessageDialog* lpd = new ErrorMessageDialog(header, message, stack, parent, errorIcon);
 	if (showStack)
 	{
 		lpd->infoToggled();

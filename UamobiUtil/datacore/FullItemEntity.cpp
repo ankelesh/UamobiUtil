@@ -1,10 +1,17 @@
 #include "FullItemEntity.h"
 #include "networking/dataupdateengine-http.h"
+#include "InputControlEntity.h"
+#ifndef QStringLiteral
+#define QStringLiteral(A) QString::fromLatin1(A, sizeof(A) - 1)
+#endif
+
+
 FullItemEntity::FullItemEntity(QString Title, QString Code, QString Cmid, 
-	QString Box, QString Qty, QString Highlight)
+	QString Box, QString Qty, QString Highlight, QString ctype)
 	: AbsRecEntity(UniformXmlObject::Item), title(Title), code(Code), cmid(Cmid),
-	box(Box), qty(Qty.toDouble()), highlight(Highlight.contains("true"))
+	box(Box), qty(Qty.toDouble()), highlight(Highlight.contains("true")), controlType(InputControlEntity::guessType(ctype))
 {
+
 }
 
 void FullItemEntity::sendGetRequest(int pagenumber, RequestAwaiter* awaiter, QString /*doc*/)
@@ -34,7 +41,8 @@ QStringList _initFullItemEntityFields()
     "title" <<
     "cmid" <<
     "box" <<
-    "highlight";
+    "highlight" <<
+	"type";
     return t;
 }
 QStringList _initFullItemEntityDefaults()
@@ -45,7 +53,8 @@ QStringList _initFullItemEntityDefaults()
     QString() <<
     QString() <<
     QString() <<
-    QString();
+    QString() <<
+	QStringLiteral("Int");
     return t;
 };
 
@@ -64,6 +73,7 @@ bool FullItemEntity::fromUniXml(const UniformXmlObject& o)
 		cmid = temp.at(3);
 		box = temp.at(4);
 		highlight = temp.at(5) == "true";
+		controlType = InputControlEntity::guessType(temp.at(6));
 		if (title.isEmpty() || !ok)
 			throw InitializationError("title is empty or qty conv failed", " ");
 		return true;

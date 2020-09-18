@@ -161,6 +161,11 @@ void HttpUpdateEngine::setUrl(QString Url)
 	sendQuery(queryCache.value(ping), Q_NULLPTR);
 }
 
+void HttpUpdateEngine::clearSession()
+{
+	sessionId.clear();
+}
+
 QString HttpUpdateEngine::setSession(QString& requestResult)
 {
 	QPair<QString, bool> logRes = parseLogInResult(requestResult);
@@ -170,7 +175,10 @@ QString HttpUpdateEngine::setSession(QString& requestResult)
 		return QString();
 	}
 	else
+	{
+		sessionId.clear();
 		return logRes.first;
+	}
 }
 
 bool HttpUpdateEngine::sessionReady()

@@ -47,4 +47,4 @@ public:
 typedef QSharedPointer<AbsResponseParser> ResponseParser;
 
 
-bool assertAndShowError(ResponseParser p, QString header, bool extraConditions = true, QString extraMsg = QString(), QString extraStack = QString());
+bool assertAndShowError(QWidget* parent,ResponseParser p, QString header, bool extraConditions = true, QString extraMsg = QString(), QString extraStack = QString());
