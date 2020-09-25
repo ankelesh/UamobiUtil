@@ -4,16 +4,18 @@
 
 TEMPLATE = app
 TARGET = UamobiUtil
-QT += core xml network gui
-CONFIG += debug
-INCLUDEPATH += C:/Qt/4.8.3-CE6-static/include
-DEFINES += "Q_NULLPTR=0" "Q_FALLTHROUGH=(void)0" DEBUG LINELLA
+QT += core xml network gui widgets
+CONFIG += release
+DEFINES += "Q_NULLPTR=0" "Q_FALLTHROUGH=(void)0" DEBUG LINELLA QT_VERSION5X
 win32: DEFINES += "Q_FALLTHROUGH=__noop"
 win32: RC_FILE += uamobiutil.rc
 wince* {
+        INCLUDEPATH += C:/Qt/4.8.3-CE6-static/include
         CONFIG -= debug
         CONFIG += release
+        QT -= widgets
         DEFINES += FTR_COM
+        DEFINES -= QT_VERSION5X
         QMAKE_CXX += -Ox -GL
         QMAKE_LFLAGS += /LTCG
         RC_FILE = uamobiutilwince.rc
@@ -92,10 +94,13 @@ HEADERS += ./UamobiUtil.h \
     ./widgets/ControlsMiniwidgets/DateTimeControl.h \
     ./widgets/ControlsMiniwidgets/LabelControl.h \
     ./widgets/ControlsMiniwidgets/StringControl.h \
+    widgets/ElementWidgets/ExtendedDialogs.h \
+    widgets/ElementWidgets/ExtendedLabels.h \
     widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.h \
     widgets/ExtendedDelegates/CountingDelegate.h \
     datacore/PseudotableEntityModel.h \
-    widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.h
+    widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.h \
+    widgets/utils/client_defaults.h
 SOURCES += ./main.cpp \
     ./UamobiUtil.cpp \
     ./widgets/ControlsMiniwidgets/BarcodeControl.cpp \
@@ -170,9 +175,25 @@ SOURCES += ./main.cpp \
     ./widgets/parents/AbstractScaningWidget.cpp \
     ./widgets/parents/IndependentBranchNode.cpp \
     ./widgets/parents/inframedWidget.cpp \
+    widgets/ElementWidgets/ExtendedDialogs.cpp \
+    widgets/ElementWidgets/ExtendedLabels.cpp \
     widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.cpp \
     widgets/ExtendedDelegates/CountingDelegate.cpp \
     datacore/PseudotableEntityModel.cpp \
     widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp
 RESOURCES += UamobiUtil.qrc
 TRANSLATIONS += translations/uamobiutil_ru.ts translations/uamobiutil_ro.ts translations/uamobiutil_en.ts
+
+DISTFILES += \
+    android/AndroidManifest.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew \
+    android/gradlew.bat \
+    android/res/values/libs.xml
+
+contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
+    ANDROID_PACKAGE_SOURCE_DIR = \
+        $$PWD/android
+}

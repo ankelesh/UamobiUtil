@@ -5,7 +5,7 @@
 #endif
 #include <QStringBuilder>
 #if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
-QScroller::grabGesture(itemInfoStorage, QScroller::TouchGesture);
+#include <QScroller>
 #endif
 #ifndef QStringLiteral
 #define QStringLiteral(A) QString::fromUtf8("" A "" , sizeof(A)-1)

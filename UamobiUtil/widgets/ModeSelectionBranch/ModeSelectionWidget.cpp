@@ -113,7 +113,8 @@ void ModeSelectionWidget::loadModes()
 void ModeSelectionWidget::logoutPressed()
 {
 	AppNetwork->execQueryByTemplate(QueryTemplates::LogOut, Q_NULLPTR);
-	AppNetwork->setSession(QString());
+    QString t;
+    AppNetwork->setSession(t);
 	emit backRequired();
 }
 

@@ -4,7 +4,7 @@
 #include <algorithm>
 
 
-int countNormalizedHeights(QString& line, QChar breaker = '\n')
+int countNormalizedHeights(QString line, QChar breaker = '\n')
 {
 	int heights = 1;
     QString::iterator point = std::find(line.begin(), line.end(), breaker);;

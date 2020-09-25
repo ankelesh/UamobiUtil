@@ -106,7 +106,7 @@ SelectItemFromListWidget::SelectItemFromListWidget(
     userinputField->disconnect();
 
 #if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
-	QScroller::grabGesture(itemInfoStorage, QScroller::TouchGesture);
+    QScroller::grabGesture(itemSelection, QScroller::TouchGesture);
 #endif
 #ifdef QT_VERSION5X
 	QObject::connect(searchButton, &QPushButton::clicked, this, &SelectItemFromListWidget::searchPrimed);

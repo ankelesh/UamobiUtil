@@ -2,7 +2,7 @@
 #include "networking/things.h"
 #include "widgets/utils/ElementsStyles.h"
 
-QString& normalizeFloatString(QString& fs)
+QString normalizeFloatString(QString fs)
 {
     QString::iterator ch = fs.begin();
 	

@@ -86,7 +86,7 @@ ProcessingOverlay::ProcessingOverlay(int interval, QWidget* parent)
 #ifdef Q_OS_WIN
 	QSize parentG = imitatePhoneSize(0.66);
 #else
-	QSize parentG = calculateAdaptiveButtonHeight(1.0);
+    QSize parentG = calculateAdaptiveSize(1.0);
 #endif
     this->setFixedSize(QSize(int(parentG.width() * 0.4), int(parentG.height() * 0.4)));
     QSize partial = QSize(int(parentG.width() * 0.3), int(parentG.height() * 0.3));
