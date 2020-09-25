@@ -7,6 +7,9 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
+#if defined(Q_OS_ANDROID) and defined(QT_VERSION5X)
+#include <qscroller.h>
+#endif
 #include "widgets/ElementWidgets/ExtendedDialogs.h"
 void DocResultsWidget::_handleRecord(RecEntity)
 {
@@ -93,7 +96,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	previousButton->setDisabled(true);
 	previousButton->setStyleSheet(NAVIGATE_BUTTONS_STYLESHEET);
 	previousButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
-#ifdef Q_OS_WINCE
+#if defined(Q_OS_WINCE) || defined(Q_OS_ANDROID)
 	previousButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
 #endif
 
@@ -102,7 +105,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	nextButton->setDisabled(true);
 	nextButton->setStyleSheet(NAVIGATE_BUTTONS_STYLESHEET);
 	nextButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
-#ifdef Q_OS_WINCE
+#if defined(Q_OS_WINCE) || defined(Q_OS_ANDROID)
 	nextButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
 #endif
 
@@ -110,7 +113,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	indexationInfo->setSizePolicy(ma);
 	indexationInfo->setFont(GENERAL_FONT);
 	indexationInfo->setAlignment(Qt::AlignCenter);
-#ifdef Q_OS_WINCE
+#if defined(Q_OS_WINCE) || defined(Q_OS_ANDROID)
 	indexationInfo->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
 #endif
     itemInfoStorage->setWordWrap(true);
@@ -148,6 +151,9 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	itemInfoStorage->setFont(AppFonts->makeCustomFont(0.03));
 	itemInfoStorage->setModel(items);
 	itemInfoStorage->setItemDelegate(new CountingItemDelegate(this));
+#if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
+	QScroller::grabGesture(itemInfoStorage, QScroller::TouchGesture);
+#endif
 #ifdef QT_VERSION5X
 	QObject::connect(deleteAllButton, &MegaIconButton::clicked, this, &DocResultsWidget::deleteAll);
 	QObject::connect(deleteSelectedButton, &MegaIconButton::clicked, this, &DocResultsWidget::handleDelete);

@@ -4,7 +4,9 @@
 #include "debugtrace.h"
 #endif
 #include <QStringBuilder>
-
+#if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
+QScroller::grabGesture(itemInfoStorage, QScroller::TouchGesture);
+#endif
 #ifndef QStringLiteral
 #define QStringLiteral(A) QString::fromUtf8("" A "" , sizeof(A)-1)
 #endif
@@ -95,7 +97,9 @@ ReceiptParametersWidget::ReceiptParametersWidget(QWidget* parent)
 	cancelledButton->hide();
 	dateField->hide();
 	inspectButton->hide();
-
+#if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
+	QScroller::grabGesture(mainTextView, QScroller::TouchGesture);
+#endif
 #ifdef QT_VERSION5X
 	QObject::connect(closedButton, &MegaIconButton::clicked, this, &ReceiptParametersWidget::closedClicked);
 	QObject::connect(cancelledButton, &MegaIconButton::clicked, this, &ReceiptParametersWidget::cancelledClicked);

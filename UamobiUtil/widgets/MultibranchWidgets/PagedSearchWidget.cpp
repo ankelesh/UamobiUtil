@@ -7,7 +7,9 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
-
+#if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
+#include <QScroller>
+#endif
 
 void PagedSearchWidget::_handleRecord(RecEntity)
 {
@@ -90,6 +92,9 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 
 	itemList->setModel(entityModel);
 	itemList->setItemDelegate(new ZebraItemDelegate(this));
+#if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
+	QScroller::grabGesture(itemList, QScroller::TouchGesture);
+#endif
 #ifdef QT_VERSION5X
 
 	QObject::connect(searchButton, &MegaIconButton::clicked, this, &PagedSearchWidget::doSearch);

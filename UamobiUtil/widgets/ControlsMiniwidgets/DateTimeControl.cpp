@@ -1,6 +1,10 @@
 #include "DateTimeControl.h"
 #include "networking/dataupdateengine-http.h"
 #include "widgets/utils/ElementsStyles.h"
+#if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
+#include <QApplication>
+#include <qinputmethod.h>
+#endif
 QString DateTimeControl::prepareAndReturnValue() const
 {
 	if (type == InputControlEntity::Date)
@@ -37,6 +41,9 @@ void DateTimeControl::setFocus() const
 {
 	innerSpinbox->setFocus();
 	innerSpinbox->selectAll();
+#if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
+	qApp->inputMethod()->show();
+#endif
 }
 
 void DateTimeControl::show()

@@ -80,6 +80,7 @@ void CheckmateBoardDelegate::paint(QPainter* painter, const QStyleOptionViewItem
 		painter->drawRect(option.rect);
 		painter->setOpacity(1);
 	}
+	painter->setFont(option.font);
 	painter->drawText(option.rect, Qt::AlignCenter | Qt::TextWordWrap, index.data(Qt::DisplayRole).toString());
 	painter->restore();
 }

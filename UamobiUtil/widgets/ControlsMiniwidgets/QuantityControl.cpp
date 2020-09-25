@@ -4,7 +4,10 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
-
+#if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
+#include <QApplication>
+#include <qinputmethod.h>
+#endif
 QString QuantityControl::prepareAndReturnValue() const
 {
     return QString::number(innerSpinbox->dvalue());
@@ -70,6 +73,9 @@ void QuantityControl::setFocus() const
 {
 	innerSpinbox->setFocus();
 	innerSpinbox->selectAll();
+#if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
+	qApp->inputMethod()->show();
+#endif
 }
 
 void QuantityControl::show()

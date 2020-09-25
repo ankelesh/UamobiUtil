@@ -1,17 +1,23 @@
 Application start begins: version 0.13 lin-alpha
-][	Created object LoginWidget on address 22168248
-][	Created object MainPageWidget on address 22189456
->>	409712435807785 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
->>	409712435811107 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
-<<	409712435867326 received response going to 0 containing text:|
+][	Created object LoginWidget on address 16839504
+][	Created object MainPageWidget on address 16296688
+>>	409714703572777 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
+>>	409714703577635 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
+<<	409714703671742 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket<
 	and error text |
->>	409712571919236 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=dc&password=1&version=0.13
-<<	409712571973857 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2437</session>
+>>	409714704851588 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.13
+<<	409714704906721 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2442</session>
 </login>
 	and error text |
->>	409712571975532 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2437&lang=Russian
-<<	409712572030422 received response going to 0 containing text:|
+>>	409714704910700 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2442&lang=Russian
+<<	409714704955350 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>
 	and error text |
+>>	409714705183150 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=2442&mode=inventory&submode=partialinventory
+<<	409714705227858 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status>  <desc> <![CDATA[  ]]> </desc></mode>
+	and error text |
+[!!!]	Mode named Корректировка остатков signed as inventory partialinventory received, interpreting: 
+	 

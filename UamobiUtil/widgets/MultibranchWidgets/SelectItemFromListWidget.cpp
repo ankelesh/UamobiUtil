@@ -8,6 +8,9 @@
 #include "debugtrace.h"
 #endif
 
+#if defined(Q_OS_ANDROID) && defined(QT_VERSION5X)
+#include <qscroller.h>
+#endif
 bool requiresOrd(int id)
 {
 	switch (id) 
@@ -101,6 +104,10 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 	itemSelection->setModel(entityModel);
 	itemSelection->setItemDelegate(new ZebraItemDelegate(this));
     userinputField->disconnect();
+
+#if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
+	QScroller::grabGesture(itemInfoStorage, QScroller::TouchGesture);
+#endif
 #ifdef QT_VERSION5X
 	QObject::connect(searchButton, &QPushButton::clicked, this, &SelectItemFromListWidget::searchPrimed);
 	QObject::connect(ordfilterButton, &QPushButton::toggled, this, &SelectItemFromListWidget::ordFilterSwitched);

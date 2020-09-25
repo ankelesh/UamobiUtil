@@ -45,7 +45,9 @@ ModeSelectionWidget::ModeSelectionWidget( QWidget* parent)
 	placeTip->setAlignment(Qt::AlignRight);
 	placeTip->setFont(GENERAL_FONT);
 	placeTip->hide();
-
+#if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
+	modeSelection->setFont(GENERAL_FONT);
+#endif
 #ifdef QT_VERSION5X
     modeSelection->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
 	modeSelection->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);

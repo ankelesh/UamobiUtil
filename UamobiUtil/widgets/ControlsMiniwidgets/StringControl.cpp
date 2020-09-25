@@ -1,5 +1,9 @@
 #include "StringControl.h"
 #include "widgets/utils/ElementsStyles.h"
+#if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
+#include <qapplication.h>
+#include <qinputmethod.h>
+#endif
 QString StringControl::prepareAndReturnValue() const
 {
 	return input->text();
@@ -58,6 +62,9 @@ StringControl::~StringControl()
 void StringControl::setFocus() const
 {
 	input->setFocus();
+#if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
+	qApp->inputMethod()->show();
+#endif
 }
 
 void StringControl::show()
