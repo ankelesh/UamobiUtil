@@ -66,6 +66,7 @@ PlaceSelectionWidget::PlaceSelectionWidget(RecEntity toExtract, QWidget* parent)
 	placeSelection->setItemDelegate(new ZebraItemDelegate(this));
 #if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
 	QScroller::grabGesture(placeSelection, QScroller::TouchGesture);
+	placeSelection->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 #endif
 #ifdef QT_VERSION5X
 	QObject::connect(allplaces, &DataEntityListModel::dataEntityClicked, this, &PlaceSelectionWidget::placeSelected);

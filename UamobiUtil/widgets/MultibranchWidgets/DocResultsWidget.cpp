@@ -153,6 +153,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	itemInfoStorage->setItemDelegate(new CountingItemDelegate(this));
 #if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
 	QScroller::grabGesture(itemInfoStorage, QScroller::TouchGesture);
+	itemInfoStorage->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 #endif
 #ifdef QT_VERSION5X
 	QObject::connect(deleteAllButton, &MegaIconButton::clicked, this, &DocResultsWidget::deleteAll);

@@ -26,6 +26,9 @@ UamobiUtil::UamobiUtil( QWidget* parent)
 	setFixedSize(imitatePhoneSize(0.66));
 #endif
 #endif
+#ifdef Q_OS_ANDROID
+	setMaximumSize(calculateAdaptiveSize(1));
+#endif
 #ifdef QT_VERSION5X
 	QObject::connect(_upCO<MainPageWidget>(), &MainPageWidget::loggedIn, 
 		this, &UamobiUtil::gotoModeSelection);
