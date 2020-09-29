@@ -9,6 +9,8 @@
 #endif
 #if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
 #include <QScroller>
+#include <QApplication>
+#include <QInputEvent>
 #endif
 
 void PagedSearchWidget::_handleRecord(RecEntity)
@@ -100,8 +102,12 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 
 	QObject::connect(searchButton, &MegaIconButton::clicked, this, &PagedSearchWidget::doSearch);
 	QObject::connect(nextButton, &MegaIconButton::clicked, this, &PagedSearchWidget::nextPage);
-	QObject::connect(previousButton, &MegaIconButton::clicked, this, &PagedSearchWidget::previousPage);
+	QObject::connect(previousButton, &MegaIconButton::clicked, this, &PagedSearchWidget::previousPage); 
+#ifdef Q_OS_ANDROID
+		QObject::connect(itemList, &QListView::doubleClicked, entityModel, &DataEntityListModel::mapClickToEntity);
+#else
 	QObject::connect(itemList, &QListView::clicked, entityModel, &DataEntityListModel::mapClickToEntity);
+#endif
 	QObject::connect(entityModel, &DataEntityListModel::dataEntityClicked, this, &PagedSearchWidget::done);
 	QObject::connect(backButton, &MegaIconButton::clicked, this, &PagedSearchWidget::backRequired);
 	QObject::connect(searchInput, &QLineEdit::editingFinished, this, &PagedSearchWidget::doSearch);
@@ -211,6 +217,15 @@ void PagedSearchWidget::_makeOverloads(const QVector<QueryTemplates::Overloadabl
 		documentSearchItems,
         t,t
 	);
+}
+
+void PagedSearchWidget::focusInEvent(QFocusEvent* f)
+{
+	inframedWidget::focusInEvent(f);
+	searchInput->setFocus();
+#ifdef Q_OS_ANDROID
+	qApp->inputMethod()->show();
+#endif
 }
 
 void PagedSearchWidget::_sendDataRequest()

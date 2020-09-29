@@ -116,7 +116,11 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 	QObject::connect(userinputField, &QLineEdit::returnPressed, this, &SelectItemFromListWidget::searchPrimed);
 	QObject::connect(awaiter, &RequestAwaiter::requestTimeout, this, &SelectItemFromListWidget::was_timeout);
 	QObject::connect(entityModel, &DataEntityListModel::dataEntityClicked, this, &SelectItemFromListWidget::itemPicked);
+#ifdef Q_OS_ANDROID
+	QObject::connect(itemSelection, &QListView::doubleClicked, entityModel, &DataEntityListModel::mapClickToEntity);
+#else
 	QObject::connect(itemSelection, &QListView::clicked, entityModel, &DataEntityListModel::mapClickToEntity);
+#endif
 	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &SelectItemFromListWidget::parse_pick_response);
 	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &SelectItemFromListWidget::parse_response);
 #else

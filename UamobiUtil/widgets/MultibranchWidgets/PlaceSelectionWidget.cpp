@@ -70,7 +70,11 @@ PlaceSelectionWidget::PlaceSelectionWidget(RecEntity toExtract, QWidget* parent)
 #endif
 #ifdef QT_VERSION5X
 	QObject::connect(allplaces, &DataEntityListModel::dataEntityClicked, this, &PlaceSelectionWidget::placeSelected);
+#ifdef Q_OS_ANDROID
+	QObject::connect(placeSelection, &QListView::doubleClicked, allplaces, &DataEntityListModel::mapClickToEntity);
+#else
 	QObject::connect(placeSelection, &QListView::clicked, allplaces, &DataEntityListModel::mapClickToEntity);
+#endif
 	QObject::connect(backButton, &QPushButton::clicked, this, &PlaceSelectionWidget::backRequired);
 	QObject::connect(awaiter, &RequestAwaiter::requestTimeout, this, &PlaceSelectionWidget::was_timeout);
 #else

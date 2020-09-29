@@ -53,6 +53,7 @@ protected:
 	virtual void _handleRecord(RecEntity) override;
 	virtual void _sendDataRequest() override;
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
+	virtual void focusInEvent(QFocusEvent*) override;
 	// fills indexation labels and enables navigation buttons
 	void setIndexation(XmlObjects items);
 public:

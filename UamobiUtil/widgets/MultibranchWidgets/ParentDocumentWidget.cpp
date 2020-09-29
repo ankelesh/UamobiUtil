@@ -6,7 +6,9 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
-
+#if defined(Q_OS_ANDROID) && defined QT_VERSION5X
+#include <QScroller>
+#endif
 
 ParentDocumentWidget::ParentDocumentWidget(RecEntity proto, QWidget* parent
 	, IndependentBranchNode* filterSelection)
@@ -63,12 +65,20 @@ ParentDocumentWidget::ParentDocumentWidget(RecEntity proto, QWidget* parent
 	selectButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 	docSelection->setModel(entityModel);
 	docSelection->setItemDelegate(new ZebraItemDelegate(this));
+#if defined(Q_OS_ANDROID) && defined(QT_VERSION5X)
+	QScroller::grabGesture(docSelection, QScroller::TouchGesture);
+#endif
+	docSelection->setFont(AppFonts->makeFont(0.7));
 #ifdef QT_VERSION5X
 	QObject::connect(filterButton, &MegaIconButton::clicked, this, &ParentDocumentWidget::filterDocuments);
 	QObject::connect(backButton, &QPushButton::clicked, this, &ParentDocumentWidget::backRequired);
 	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &ParentDocumentWidget::load_documents_response);
 	QObject::connect(awaiter, &RequestAwaiter::requestTimeout, this, &ParentDocumentWidget::was_timeout);
+#ifdef Q_OS_ANDROID
+	QObject::connect(docSelection, &QListView::doubleClicked, entityModel, &DataEntityListModel::mapClickToEntity);
+#else
 	QObject::connect(docSelection, &QListView::clicked, entityModel, &DataEntityListModel::mapClickToEntity);
+#endif
 	QObject::connect(entityModel, &DataEntityListModel::dataEntityClicked, this, &IndependentBranchNode::done);
 	QObject::connect(filterSelect, &IndependentBranchNode::backRequired, this, &ParentDocumentWidget::hideCurrent);
 	QObject::connect(filterSelect, &IndependentBranchNode::done, this, &ParentDocumentWidget::filterReady);

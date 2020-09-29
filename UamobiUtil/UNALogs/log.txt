@@ -1,23 +1,125 @@
 Application start begins: version 0.13 lin-alpha
-][	Created object LoginWidget on address 16839504
-][	Created object MainPageWidget on address 16296688
->>	409714703572777 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
->>	409714703577635 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
-<<	409714703671742 received response going to 0 containing text:|
+][	Created object LoginWidget on address 15593208
+][	Created object MainPageWidget on address 15635984
+>>	409931120299817 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
+>>	409931120305443 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
+<<	409931120399294 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket<
 	and error text |
->>	409714704851588 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.13
-<<	409714704906721 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2442</session>
+>>	409931121542788 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.13
+<<	409931121667809 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2468</session>
 </login>
 	and error text |
->>	409714704910700 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2442&lang=Russian
-<<	409714704955350 received response going to 0 containing text:|
+>>	409931121679724 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2468&lang=Russian
+<<	409931121743318 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>
 	and error text |
->>	409714705183150 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=2442&mode=inventory&submode=partialinventory
-<<	409714705227858 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status>  <desc> <![CDATA[  ]]> </desc></mode>
+>>	409931124210862 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=2468&mode=receipt&submode=
+<<	409931124252754 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status>  <desc> <![CDATA[ 
+[SwitchByScanCode]
+%Order%
+<rec_
 	and error text |
-[!!!]	Mode named Корректировка остатков signed as inventory partialinventory received, interpreting: 
-	 
+[!!!]	Mode named Прием товаров signed as receipt  received, interpreting: 
+	
+	[SwitchByScanCode]
+	%Order%
+	<rec_get_order_by_barcode&session=%1&barcode=%2>
+	{
+	[Subbranch]
+	{
+	[SelectItemFromList]
+	%Supplier%
+	[IdDependentSelect]
+	%Order%
+	}
+	}
+	[ReceiptParameters]
+	[NormalScaning]
+	<>
+	*-6* 
+][	Created object Adjustable branch with 3 children on address 109513944
+]N[	Node of type 22 fabricated using description:  children: 1 oqs: 1
+]N[	Node of type 15 fabricated using description:  children: 2 oqs: 0
+][	Created object Adjustable branch with 2 children on address 109506776
+]N[	Node of type 10 fabricated using description:  children: 0 oqs: 0
+][	Created object SelectItemFromList on address 15822248
+>>	409931124602768 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=rec_list_suppliers&session=2468&text=&hasorders=true
+<<	409931124609353 received response going to 5 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <suppliers>  <status>200</status>  <supplier>   <code>20041</code>   <name>Insta
+	and error text |
+]N[	Node of type 9 fabricated using description:  children: 0 oqs: 0
+][	Created object IdDependentSelect on address 99569840
+>>	409931125201649 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=rec_list_orders&session=2468&supplier=20041
+<<	409931125208305 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <orders>  <status>200</status>  <order>   <code>18857036</code>   <title>№ заявк
+	and error text |
+]N[	Node of type 10 fabricated using description:  children: 0 oqs: 0
+][	Created object SelectItemFromList on address 15822448
+>>	409931126001595 sent request: http://92.115.237.226:60080/um/unitest.php?delay=7&cmd=rec_list_suppliers&session=2468&text=&hasorders=true
+<<	409931126009577 received response going to 5 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <suppliers>  <status>200</status>  <supplier>   <code>20041</code>   <name>Insta
+	and error text |
+]N[	Node of type 9 fabricated using description:  children: 0 oqs: 0
+][	Created object IdDependentSelect on address 15335680
+>>	409931126200043 sent request: http://92.115.237.226:60080/um/unitest.php?delay=8&cmd=rec_list_orders&session=2468&supplier=130897
+<<	409931126205363 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <orders>  <status>200</status>  <order>   <code>18856997</code>   <title>№ заявк
+	and error text |
+>>	409931126682278 sent request: http://92.115.237.226:60080/um/unitest.php?delay=9&cmd=rec_get_order_info&session=2468&order=18856997&supplier=130897
+<<	409931126686683 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <order>  <status>200</status> <richdata> <![CDATA[  <div><b> Moldretail Culinari
+	and error text |
+]N[	Node of type 5 fabricated using description:  children: 0 oqs: 0
+][	Created object ReceiptParametersWidget on address 111506432
+]N[	Node of type 6 fabricated using description:  children: 0 oqs: 1
+][	Created object NormalScaning on address 111181664
+][	Created object ControlListWidget on address 111034000
+][	Created object DocResults on address 107939952
+][	Created object PagedSearchWidget on address 110931776
+>>	409931127170108 sent request: http://92.115.237.226:60080/um/unitest.php?delay=10&cmd=rec_new_doc&session=2468&date=28.09.2020&parent=18856997&comment
+<<	409931127198855 received response going to 31 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <newdoc>  <status>200</status>  <doc>   <code>3752779</code>   <parentnr>1885699
+	and error text |
+>>	409931131491596 sent request: http://92.115.237.226:60080/um/unitest.php?delay=11&cmd=doc_get_item_info&session=2468&barcode=2000001172025&printer=
+<<	409931131526462 received response going to 15 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn></nn> <richdata>  <![CDATA[   <center><b>Проска
+	and error text |
+>>	409931132521881 sent request: http://92.115.237.226:60080/um/unitest.php?delay=12&cmd=doc_get_item_info&session=2468&barcode=A2000001172025&printer=
+<<	409931132526884 received response going to 15 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn></nn> <richdata>  <![CDATA[   <center><b>Проска
+	and error text |
+>>	409931133274462 sent request: http://92.115.237.226:60080/um/unitest.php?delay=13&cmd=doc_get_item_info&session=2468&barcode=AA2000001172025&printer=
+<<	409931133295373 received response going to 15 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn>AA2000001172025</nn> <richdata>  <![CDATA[ <div
+	and error text |
+>>	409931134167836 sent request: http://92.115.237.226:60080/um/unitest.php?delay=14&cmd=doc_get_item_info&session=2468&barcode=2000001172025&printer=
+<<	409931134175238 received response going to 15 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn>AA2000001172025</nn> <richdata>  <![CDATA[   <d
+	and error text |
+-->	Method called: translate control qty3 | in object 5347060
+returningКол-во
+][	Created object control-like of type 4 on address 108589328
+>>	409931135228343 sent request: http://92.115.237.226:60080/um/unitest.php?delay=15&cmd=rec_add_item&session=2468&barcode=2000001172025&qty=18
+<<	409931135246663 received response going to 32 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn>AA2000001172025</nn> <richdata>  <![CDATA[   <d
+	and error text |
+>>	409931141200862 sent request: http://92.115.237.226:60080/um/unitest.php?delay=16&cmd=doc_get_item_info&session=2468&barcode=2000001848814&printer=
+<<	409931141246643 received response going to 15 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn>AA2000001172025</nn> <richdata>  <![CDATA[   <d
+	and error text |
+-->	Method called: translate control qty3 | in object 5347060
+returningКол-во
+][	Created object control-like of type 4 on address 108589616
+>>	409931141696274 sent request: http://92.115.237.226:60080/um/unitest.php?delay=17&cmd=rec_add_item&session=2468&barcode=2000001848814&qty=30
+<<	409931141702733 received response going to 32 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <item>  <status>404</status>  <message>ORA-20000: Товар BURGHER DELICIOS 170gr К
+	and error text |
+> ! <	409931141703112 error receiving response: ORA-20000: Товар BURGHER DELICIOS 170gr
+Кол-во факт всего в документе: 60.
+Kол-во факт (30) больше, 
+чем кол-во в заявке (30).
+Номер заявки: 18856997.
+Приходный документ: 18856998.

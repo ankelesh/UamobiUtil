@@ -99,7 +99,6 @@ ReceiptParametersWidget::ReceiptParametersWidget(QWidget* parent)
 	inspectButton->hide();
 #if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
 	QScroller::grabGesture(mainTextView, QScroller::TouchGesture);
-	mainTextView->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 #endif
 #ifdef QT_VERSION5X
 	QObject::connect(closedButton, &MegaIconButton::clicked, this, &ReceiptParametersWidget::closedClicked);
