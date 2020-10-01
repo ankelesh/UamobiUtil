@@ -9,13 +9,25 @@ void ControlListWidget::focusInEvent(QFocusEvent* fev)
 {
 	inframedWidget::focusInEvent(fev);
 	if (!controls.isEmpty())
-		controls.first()->setFocus();
+        for (QVector<abs_control*>::iterator contr = controls.begin(); contr != controls.end(); ++contr)
+        {
+            switch((*contr)->myType())
+            {
+            case InputControlEntity::Label:
+            case InputControlEntity::None:
+                break;
+            default:
+                (*contr)->setFocus();
+                return;
+            }
+        }
 }
 
 ControlListWidget::ControlListWidget(QWidget* parent)
 	: inframedWidget(parent), mainLayout(new QVBoxLayout(this)),
 	controls(), footerLayout(new QHBoxLayout(this)),
-	okButton(new MegaIconButton(this)), backButton(new MegaIconButton(this))
+    okButton(new MegaIconButton(this)), backButton(new MegaIconButton(this)),
+    sealed(false)
 {
 #ifdef DEBUG
 	detrace_DCONSTR("ControlListWidget");
@@ -53,6 +65,7 @@ void ControlListWidget::clearControls()
 		(*(begin++))->deleteLater();
 	}
 	controls.clear();
+    sealed = false;
 }
 
 void ControlListWidget::useControls(const IControlList& clist)
@@ -73,12 +86,8 @@ void ControlListWidget::useControls(const IControlList& clist)
 		newcontrol->show();
 	}
 	if (newcontrol != Q_NULLPTR)
-	{
-#ifdef QT_VERSION5X
-		QObject::connect(newcontrol, &abs_control::editingFinished, this, &ControlListWidget::checkAndConfirmControls);
-#else
-        QObject::connect(newcontrol, SIGNAL(editingFinished()), this, SLOT(checkAndConfirmControls()));
-#endif
+    {
+        sealControls();
 	}
 }
 
@@ -103,6 +112,7 @@ QString ControlListWidget::getValueAt(int index)
 
 void ControlListWidget::emplaceControl(InputControl c)
 {
+    if (sealed) return;
 	abs_control* newcontrol = fabricateControl(c, mainLayout, this);
 	if (newcontrol == Q_NULLPTR)
 		return;
@@ -112,7 +122,21 @@ void ControlListWidget::emplaceControl(InputControl c)
 	}
 	newcontrol->setValue(c->defaultValue);
 	controls.push_back(newcontrol);
-	newcontrol->show();
+    newcontrol->show();
+}
+
+void ControlListWidget::sealControls()
+{
+    if (sealed)
+        return;
+    if (controls.isEmpty())
+        return;
+#ifdef QT_VERSION5X
+        QObject::connect(controls.last(), &abs_control::editingFinished, this, &ControlListWidget::checkAndConfirmControls);
+#else
+        QObject::connect(controls.last(), SIGNAL(editingFinished()), this, SLOT(checkAndConfirmControls()));
+#endif
+        sealed = true;
 }
 
 

@@ -26,14 +26,14 @@ bool abstractNode::_hideCurrent(inframedWidget* replacement)
 void abstractNode::_hideAny(inframedWidget* replacement)
 {
 	current->hide();
-	current = replacement;
-	replacement->setFocus();
+    current = replacement;
 
 	if (replacement == untouchable)
 	{
 		main->setFocus();
 	}
 	replacement->show();
+    replacement->setFocus();
 }
 
 

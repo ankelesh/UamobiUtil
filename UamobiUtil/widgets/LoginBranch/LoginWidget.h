@@ -49,6 +49,8 @@ private:
 	RequestAwaiter awaiter;
 	
 	User userToSend;
+
+    virtual void focusInEvent(QFocusEvent* ev) override;
 public:
 	LoginWidget(QWidget* parent);
 

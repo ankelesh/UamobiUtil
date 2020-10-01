@@ -53,7 +53,7 @@ LabelControl::~LabelControl()
 
 void LabelControl::setFocus() const
 {
-	innerLabel->setFocus();
+
 }
 
 void LabelControl::show()

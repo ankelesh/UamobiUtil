@@ -51,6 +51,15 @@ void LoginWidget::set_user(const User u)
 	passwordField->clear();
 }
 
+void LoginWidget::focusInEvent(QFocusEvent *ev)
+{
+    inframedWidget::focusInEvent(ev);
+    loginField->setFocus();
+#ifdef Q_OS_ANDROID
+    qApp->inputMethod()->show();
+#endif
+}
+
 LoginWidget::LoginWidget( QWidget* parent)
 	: inframedWidget(parent), mainLayout(new QVBoxLayout(this)), loginInfo(new QLabel(this)),
 	passwordInfo(new QLabel(this)), info(new QLabel(this)), loginField(new QLineEdit(this)),

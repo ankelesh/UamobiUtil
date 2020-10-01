@@ -21,6 +21,8 @@ protected:
 	QHBoxLayout* footerLayout;
 	MegaIconButton* okButton;
 	MegaIconButton* backButton;
+
+    bool sealed;
 	virtual void focusInEvent(QFocusEvent* fev) override;
 public:
 	ControlListWidget(QWidget* parent);
@@ -29,6 +31,7 @@ public:
 	QStringList getControlsValues();
 	QString getValueAt(int index);
 	void emplaceControl(InputControl);
+    void sealControls();
 	QString joinedControls();
 	QString mappedControls();
 	~ControlListWidget();

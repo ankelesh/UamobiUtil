@@ -317,6 +317,7 @@ void DocResultsWidget::getAttachedControls()
 			InputControl(
 				new InputControlEntity(
 					"qty", type, "0")));
+        attachedControls->sealControls();
 		_hideAny(attachedControls);
 	}
 	else
