@@ -169,7 +169,7 @@ AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)
 #ifdef Q_OS_WIN
 	userInfo->setFont(QFont("Arial", 9, 9));
 #else
-	userInfo->setFont(AppFonts->general());
+    userInfo->setFont(*AppFonts->general());
 #endif
 #endif
 

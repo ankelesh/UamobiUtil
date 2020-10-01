@@ -40,6 +40,9 @@ class WinCEProxyStyle : public QProxyStyle
 
 int main(int argc, char* argv[])
 {
+#ifdef Q_OS_ANDROID
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
 	QApplication a(argc, argv);
 	debugtrace::init(detr_supply::all, detr_supply::file, QVector<OutputMode>(), 120, false);
     detrace_APPSTART(VERSION, SUFFIX);
@@ -61,5 +64,10 @@ int main(int argc, char* argv[])
 	UamobiUtil w;
 	w.show();
 #endif
+#ifdef Q_OS_ANDROID
+    a.setDoubleClickInterval(900);
+    w.setFixedSize(calculateAdaptiveSize(1.0));
+#endif
+
 	return a.exec();
 }
