@@ -100,6 +100,7 @@ LoginWidget::LoginWidget( QWidget* parent)
 	QObject::connect(okButton, &QPushButton::clicked, this, &LoginWidget::login_confirmed);
 	QObject::connect(backButton, &QPushButton::clicked, this, &LoginWidget::backRequired);
 	QObject::connect(loginField, &QLineEdit::returnPressed, passwordField, QOverload<>::of(&QLineEdit::setFocus));
+	QObject::connect(loginField, &QLineEdit::returnPressed, qApp->inputMethod(), &QInputMethod::show);
 	QObject::connect(passwordField, &QLineEdit::returnPressed, this, &LoginWidget::login_confirmed);
 	QObject::connect(&awaiter, &RequestAwaiter::requestReceived, this, &LoginWidget::checkResponse);
 	QObject::connect(&awaiter, &RequestAwaiter::requestTimeout, this, &LoginWidget::was_timeout);

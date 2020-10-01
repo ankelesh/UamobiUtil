@@ -95,7 +95,7 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 	itemList->setModel(entityModel);
 	itemList->setItemDelegate(new ZebraItemDelegate(this));
 #if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
-	QScroller::grabGesture(itemList, QScroller::TouchGesture);
+	QScroller::grabGesture(itemList, QScroller::LeftMouseButtonGesture);
 	itemList->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 #endif
 #ifdef QT_VERSION5X

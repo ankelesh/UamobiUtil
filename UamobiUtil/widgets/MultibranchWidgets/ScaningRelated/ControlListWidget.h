@@ -21,7 +21,7 @@ protected:
 	QHBoxLayout* footerLayout;
 	MegaIconButton* okButton;
 	MegaIconButton* backButton;
-
+	virtual void focusInEvent(QFocusEvent* fev) override;
 public:
 	ControlListWidget(QWidget* parent);
 	void clearControls();

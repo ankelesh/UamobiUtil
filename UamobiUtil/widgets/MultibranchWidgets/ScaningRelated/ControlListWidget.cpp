@@ -5,6 +5,13 @@
 #include "debugtrace.h"
 #endif
 
+void ControlListWidget::focusInEvent(QFocusEvent* fev)
+{
+	inframedWidget::focusInEvent(fev);
+	if (!controls.isEmpty())
+		controls.first()->setFocus();
+}
+
 ControlListWidget::ControlListWidget(QWidget* parent)
 	: inframedWidget(parent), mainLayout(new QVBoxLayout(this)),
 	controls(), footerLayout(new QHBoxLayout(this)),
