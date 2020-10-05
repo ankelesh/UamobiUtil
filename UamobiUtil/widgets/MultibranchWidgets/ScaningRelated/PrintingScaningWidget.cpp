@@ -2,32 +2,20 @@
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "debugtrace.h"
 #include "widgets/utils/ElementsStyles.h"
-
+#include "widgets/ElementWidgets/ExtendedLabels.h"
+#include "widgets/ElementWidgets/ExtendedDialogs.h"
+#include "PrinterWrappers/AbsPrinterWrapper.h"
+#include "PrinterWrappers/PrinterWrapperFactory.h"
 void PrintingScaningWidget::_print(QString text)
 {
-#ifdef FTR_COM
-	if (!printerSocket.isConnected())
+	if (printerWrapper->isValid() && printerWrapper->isReady())
 	{
-		printerSocket.connect(AppSettings->printerPortDesignation, AppSettings->printerPort);
+		printerWrapper->print(text);
 	}
-	if (!printerSocket.isConnected())
+	else
 	{
-        userInfo->setText(tr("Connection to printer failed! Check your port settings.") + printerSocket.getErrors());
-        detrace_METHEXPL("fail: " << printerSocket.getErrors());
-		return;
+		printerWrapper->retryOpeningConnection();
 	}
-	if (!printerSocket.write(encoder.fromUnicode(text)))
-	{
-		userInfo->setText(tr("printing failed: ") + printerSocket.getErrors());
-        detrace_METHEXPL("fail: " << printerSocket.getErrors());
-	}
-#else
-#ifdef DEBUG
-	detrace_METHPERROR("_print", "seems here is no printer connection, data to print: " << text);
-#endif
-    userInfo->setText(tr("This build does not supports printing!"));
-    Q_UNUSED(text)
-#endif
 }
 void PrintingScaningWidget::_handleRecord(RecEntity)
 {
@@ -36,10 +24,9 @@ void PrintingScaningWidget::_handleRecord(RecEntity)
 
 void PrintingScaningWidget::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads)
 {
-	switch (
-		((overloads.count() > 3) ? 3 : overloads.count())
-		)
+	switch (overloads.count())
 	{
+	default:
 	case 3:
 	{
 		QStringList t;
@@ -68,7 +55,7 @@ void PrintingScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloa
 			t, t));
         Q_FALLTHROUGH();
 	}
-	default:
+	case 0:
 		break;
 	}
 	switch (3 - overloads.count())
@@ -154,28 +141,35 @@ void PrintingScaningWidget::wipe()
 }
 
 PrintingScaningWidget::PrintingScaningWidget(QWidget* parent, IndependentBranchNode* searchScr)
-	: NormalScaningWidget(parent, Q_NULLPTR, searchScr)
-#ifdef FTR_COM
-    , printerSocket(), encoder(QTextCodec::codecForName("CP1251"))
-#endif
+	: NormalScaningWidget(parent, Q_NULLPTR, searchScr), printerWrapper(PrinterWrapperFactory::fabricate(this)),
+	connectionState(new SemaphorLabel(this))
+
 {
 #ifdef DEBUG
 	detrace_DCONSTR("PrintingScaning");
 #endif
-#ifdef FTR_COM
-#ifdef DEBUG
-	detrace_METHEXPL("connecting to printer: " << AppSettings->printerPortDesignation << AppSettings->printerPort);
-#endif
-	printerSocket.connect(AppSettings->printerPortDesignation, AppSettings->printerPort);
-#endif
+	topPanelLayout->addWidget(connectionState);
+	connectionState->setState(SemaphorLabel::opfail);
+	connectionState->setText(tr("printer"));
 	quitButton->hide();
 	userInfo->setMaximumHeight(calculateAdaptiveButtonHeight());
     quitButton->setMaximumHeight(calculateAdaptiveButtonHeight());
+	QObject::connect(printerWrapper, &AbsPrinterWrapper::error, this, &PrintingScaningWidget::wrapperError);
+	QObject::connect(printerWrapper, &AbsPrinterWrapper::connected, this, &PrintingScaningWidget::wrapperOk);
+	printerWrapper->establishConnection();
 }
 
 PrintingScaningWidget::~PrintingScaningWidget()
 {
-#ifdef FTR_COM
-	printerSocket.disconnect();
-#endif
+}
+
+void PrintingScaningWidget::wrapperOk()
+{
+	connectionState->setState(SemaphorLabel::SemaStates::opsuccess);
+}
+
+void PrintingScaningWidget::wrapperError(QString errtext)
+{
+	connectionState->setState(SemaphorLabel::opfail);
+	ErrorMessageDialog::showErrorInfo(this, tr("Printer error"), errtext);
 }

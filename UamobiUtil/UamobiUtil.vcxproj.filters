@@ -127,6 +127,9 @@
     <Filter Include="Header Files\MultibranchWidgets\Observers">
       <UniqueIdentifier>{3b1ce35a-6932-40d2-8c9d-63d1d57fbb0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\PrinterWrappers">
+      <UniqueIdentifier>{937ed6c8-f1f8-431a-9d90-b412f99d652d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -369,6 +372,21 @@
     <ClCompile Include="widgets\ElementWidgets\ExtendedLabels.cpp">
       <Filter>Header Files\ElementWidgets</Filter>
     </ClCompile>
+    <ClCompile Include="PrinterWrappers\AbsPrinterWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PrinterWrappers\FTRCOMPrinterWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PrinterWrappers\AndroidBluetoothPrinterWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PrinterWrappers\NullPrinterWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PrinterWrappers\PrinterWrapperFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -518,6 +536,18 @@
     <QtMoc Include="widgets\ElementWidgets\ExtendedLabels.h">
       <Filter>Header Files\ElementWidgets</Filter>
     </QtMoc>
+    <QtMoc Include="PrinterWrappers\AbsPrinterWrapper.h">
+      <Filter>Header Files\PrinterWrappers</Filter>
+    </QtMoc>
+    <QtMoc Include="PrinterWrappers\FTRCOMPrinterWrapper.h">
+      <Filter>Header Files\PrinterWrappers</Filter>
+    </QtMoc>
+    <QtMoc Include="PrinterWrappers\AndroidBluetoothPrinterWrapper.h">
+      <Filter>Header Files\PrinterWrappers</Filter>
+    </QtMoc>
+    <QtMoc Include="PrinterWrappers\NullPrinterWrapper.h">
+      <Filter>Header Files\PrinterWrappers</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="UamobiUtil.qrc">
@@ -617,6 +647,9 @@
     </ClInclude>
     <ClInclude Include="widgets\utils\client_defaults.h">
       <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="PrinterWrappers\PrinterWrapperFactory.h">
+      <Filter>Header Files\PrinterWrappers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

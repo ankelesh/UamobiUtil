@@ -100,8 +100,8 @@ protected:
 	static QColor statedColors[opfail + 1];
 	void _recolor();
 public:
-	SemaphorLabel(int defaultState = passive, QWidget* parent = Q_NULLPTR);
-	SemaphorLabel(QWidget* parent = Q_NULLPTR);
+	explicit SemaphorLabel(int defaultState = passive, QWidget* parent = Q_NULLPTR);
+	explicit SemaphorLabel(QWidget* parent = Q_NULLPTR);
 
 public slots:
 	void setState(int newState);

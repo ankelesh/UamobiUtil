@@ -8,21 +8,17 @@
 #include <QTextEdit>
 #include "widgets/ElementWidgets/MegaIconButton.h"
 #include "widgets/ControlsMiniwidgets/ControlManager.h"
-#ifdef FTR_COM
-#include "legacy/3drparty/tty/tty.h"
-#include <QTextEncoder>
-#endif
 
 
+class AbsPrinterWrapper;
+class SemaphorLabel;
 class PrintingScaningWidget : public NormalScaningWidget
 {
 	Q_OBJECT
 protected:
-#ifdef FTR_COM
-	TTY printerSocket;
-    QTextEncoder encoder;
-#endif
 
+	AbsPrinterWrapper* printerWrapper;
+	SemaphorLabel* connectionState;
 	void _print(QString text);
 
 	virtual void _handleRecord(RecEntity) override;
@@ -39,4 +35,7 @@ public:
     override
 #endif
     ;
+protected slots:
+	void wrapperOk();
+	void wrapperError(QString errtext);
 };
