@@ -5,8 +5,10 @@
 TEMPLATE = app
 TARGET = UamobiUtil
 QT += core xml network gui widgets
-CONFIG += release
+CONFIG += debug
 DEFINES += "Q_NULLPTR=0" "Q_FALLTHROUGH=(void)0" DEBUG LINELLA QT_VERSION5X
+
+android: QT += bluetooth
 win32: DEFINES += "Q_FALLTHROUGH=__noop"
 win32: RC_FILE += uamobiutil.rc
 wince* {
@@ -94,6 +96,11 @@ HEADERS += ./UamobiUtil.h \
     ./widgets/ControlsMiniwidgets/DateTimeControl.h \
     ./widgets/ControlsMiniwidgets/LabelControl.h \
     ./widgets/ControlsMiniwidgets/StringControl.h \
+    PrinterWrappers/AbsPrinterWrapper.h \
+    PrinterWrappers/AndroidBluetoothPrinterWrapper.h \
+    PrinterWrappers/FTRCOMPrinterWrapper.h \
+    PrinterWrappers/NullPrinterWrapper.h \
+    PrinterWrappers/PrinterWrapperFactory.h \
     widgets/ElementWidgets/ExtendedDialogs.h \
     widgets/ElementWidgets/ExtendedLabels.h \
     widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.h \
@@ -175,6 +182,11 @@ SOURCES += ./main.cpp \
     ./widgets/parents/AbstractScaningWidget.cpp \
     ./widgets/parents/IndependentBranchNode.cpp \
     ./widgets/parents/inframedWidget.cpp \
+    PrinterWrappers/AbsPrinterWrapper.cpp \
+    PrinterWrappers/AndroidBluetoothPrinterWrapper.cpp \
+    PrinterWrappers/FTRCOMPrinterWrapper.cpp \
+    PrinterWrappers/NullPrinterWrapper.cpp \
+    PrinterWrappers/PrinterWrapperFactory.cpp \
     widgets/ElementWidgets/ExtendedDialogs.cpp \
     widgets/ElementWidgets/ExtendedLabels.cpp \
     widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.cpp \

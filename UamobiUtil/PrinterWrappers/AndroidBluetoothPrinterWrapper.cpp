@@ -61,7 +61,9 @@ void AndroidBluetoothPrinterWrapper::_clearAndLaunchDiscovery()
     QObject::connect(mainSocket, &QBluetoothSocket::connected, this, &AndroidBluetoothPrinterWrapper::socketReady);
     QObject::connect(mainSocket, QOverload<QBluetoothSocket::SocketError>::of(&QBluetoothSocket::error), 
         this, &AndroidBluetoothPrinterWrapper::connectionError);
+
     serviceDiscAgent->clear();
+    blocker = false;
     serviceDiscAgent->start();
 #endif
 }
@@ -91,7 +93,8 @@ AndroidBluetoothPrinterWrapper::AndroidBluetoothPrinterWrapper(QString device_na
 	serviceDiscAgent(new QBluetoothServiceDiscoveryAgent(this)),
 	mainSocket(new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol, this)),
 #endif
-	targetDeviceName(device_name)
+    targetDeviceName(device_name),
+    blocker(false)
 {
 }
 
@@ -105,11 +108,12 @@ AndroidBluetoothPrinterWrapper::~AndroidBluetoothPrinterWrapper()
 #ifdef Q_OS_ANDROID
 void AndroidBluetoothPrinterWrapper::serviceFound(const QBluetoothServiceInfo& svc)
 {
-
+    if (blocker)
+        return;
     if (svc.device().name().contains(targetDeviceName))
     {
         targetService = svc;
-        serviceDiscAgent->stop();
+        blocker = true;
 #ifdef DEBUG
         detrace_METHEXPL("FOUND SERVICE: " << svc.serviceName() <<
             " name " << svc.device().name() << " " << svc.serviceUuid().toString());

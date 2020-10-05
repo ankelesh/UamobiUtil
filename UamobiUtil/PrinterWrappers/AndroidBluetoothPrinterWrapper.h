@@ -2,6 +2,7 @@
 #include "AbsPrinterWrapper.h"
 #ifdef Q_OS_ANDROID
 #include <QBluetoothServiceInfo>
+#include <QBluetoothSocket>
 #endif
 
 class QBluetoothSocket;
@@ -19,6 +20,7 @@ protected:
 	QBluetoothSocket* mainSocket;
 #endif
 	QString targetDeviceName;
+    bool blocker;
 	// Inherited via AbsPrinterWrapper
 	virtual bool _isValid() const override;
 	virtual bool _isReady() const override;
