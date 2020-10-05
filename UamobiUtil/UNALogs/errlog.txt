@@ -1,7 +1,1 @@
 Application start begins: version 0.13 lin-alpha
-> ! <	409931141703112 error receiving response: ORA-20000: Товар BURGHER DELICIOS 170gr
-Кол-во факт всего в документе: 60.
-Kол-во факт (30) больше, 
-чем кол-во в заявке (30).
-Номер заявки: 18856997.
-Приходный документ: 18856998.
