@@ -5,8 +5,8 @@
 TEMPLATE = app
 TARGET = UamobiUtil
 QT += core xml network gui widgets
-CONFIG += debug
-DEFINES += "Q_NULLPTR=0" "Q_FALLTHROUGH=(void)0" DEBUG LINELLA QT_VERSION5X
+CONFIG += release
+DEFINES += "Q_NULLPTR=0" DEBUG LINELLA QT_VERSION5X
 
 android: QT += bluetooth
 win32: DEFINES += "Q_FALLTHROUGH=__noop"
