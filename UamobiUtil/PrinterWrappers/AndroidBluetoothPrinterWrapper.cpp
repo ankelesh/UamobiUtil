@@ -9,6 +9,7 @@
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
+#include "widgets/utils/GlobalAppSettings.h"
 bool AndroidBluetoothPrinterWrapper::_isValid() const
 {
 #ifdef Q_OS_ANDROID
@@ -94,13 +95,43 @@ AndroidBluetoothPrinterWrapper::AndroidBluetoothPrinterWrapper(QString device_na
 	mainSocket(new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol, this)),
 #endif
     targetDeviceName(device_name),
-    blocker(false)
+    blocker(false),
+    connectionMode(NEWCONN)
+#ifdef Q_OS_ANDROID
+    , lastMAC(),
+    lastUUID()
+#endif
 {
+
+}
+
+AndroidBluetoothPrinterWrapper::AndroidBluetoothPrinterWrapper(QString device_name, QString lmac, QString luuid, QObject* parent, QString encoding)
+    : AbsPrinterWrapper(AndroidBluetooth, parent, encoding),
+#ifdef Q_OS_ANDROID
+    localDevice(new QBluetoothLocalDevice(this)),
+    targetService(),
+    serviceDiscAgent(new QBluetoothServiceDiscoveryAgent(this)),
+    mainSocket(new QBluetoothSocket(QBluetoothServiceInfo::RfcommProtocol, this)),
+#endif
+    targetDeviceName(device_name),
+    blocker(false),
+    connectionMode(LAST)
+#ifdef Q_OS_ANDROID
+    ,lastMAC(lmac),
+    lastUUID(luuid)
+#endif
+{
+
 }
 
 AndroidBluetoothPrinterWrapper::~AndroidBluetoothPrinterWrapper()
 {
 #ifdef Q_OS_ANDROID
+    if (mainSocket->state() == QBluetoothSocket::ConnectedState)
+    {
+        AppSettings->lastPrinterBTMAC = targetService.device().address().toString();
+        AppSettings->lastPrinterBTUUID = targetService.serviceUuid().toString();
+    }
     mainSocket->close();
     mainSocket->disconnectFromService();
 #endif
@@ -137,6 +168,12 @@ void AndroidBluetoothPrinterWrapper::connectionError(QBluetoothSocket::SocketErr
 #endif
     errorOutput = tr("error opening connection with code:") + QString::number(err);
     emit error(errorOutput);
+    if (connectionMode == LAST)
+    {
+        connectionMode = NEWCONN;
+        _clearAndLaunchDiscovery();
+
+    }
 }
 
 #endif
@@ -154,7 +191,19 @@ void AndroidBluetoothPrinterWrapper::_establishConnection()
             this, &AndroidBluetoothPrinterWrapper::serviceFound);
         QObject::connect(mainSocket, &QBluetoothSocket::connected, this, &AndroidBluetoothPrinterWrapper::socketReady);
         QObject::connect(mainSocket, QOverload<QBluetoothSocket::SocketError>::of(&QBluetoothSocket::error), this, &AndroidBluetoothPrinterWrapper::connectionError);
-        serviceDiscAgent->start();
+        switch (connectionMode)
+        {
+        case LAST:
+            targetService.setDevice(QBluetoothDeviceInfo(lastMAC, targetDeviceName, QBluetoothDeviceInfo::ServiceClass::ObjectTransferService));
+            targetService.setServiceUuid(lastUUID);
+            _openConnection();
+            break;
+        case NEWCONN:
+            serviceDiscAgent->start();
+            break;
+        default: break;
+        }
+        
     }
     else
     {

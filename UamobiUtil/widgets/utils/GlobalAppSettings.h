@@ -31,6 +31,10 @@ public:
 	int fontMaxHeight;
 	double fontPercent;
 
+	QString lastPrinterBTMAC;
+	QString lastPrinterBTUUID;
+	QString bluetoothDeviceNameMask;
+
     explicit GlobalAppSettings();
 	
 	void setTranslator();

@@ -27,7 +27,7 @@ public:
 	void establishConnection();
 	QString errors() const;
 	virtual ~AbsPrinterWrapper();
-
+	
 public slots:
 	void print(QString data);
 signals:
