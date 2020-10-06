@@ -2,7 +2,7 @@
 #include "widgets/utils/ElementsStyles.h"
 #include "ScaningCore/BarcodeObserver.h"
 #include "widgets/utils/GlobalAppSettings.h"
-
+#include <QLineEdit>
 
 MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	:inframedWidget(parent),
@@ -30,6 +30,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	portDesignation(new QComboBox(printTab)),
 	portNumber(new QSpinBox(printTab)),
 	portType(new QComboBox(printTab)),
+	btDeviceName(new QLineEdit(printTab)),
 	footerLayout(new QHBoxLayout(this)),
 	saveButton(new MegaIconButton(this)), backButton(new MegaIconButton(this))
 {
@@ -70,6 +71,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	printinnLayout->addRow(tr("Port name"), portDesignation);
 	printinnLayout->addRow(tr("Port"), portNumber);
 	printinnLayout->addRow(tr("Printer"), portType);
+	printinnLayout->addRow(tr("Printer name"), btDeviceName);
 	
 	printinnLayout->setRowWrapPolicy(QFormLayout::WrapAllRows);
 	mainLayout->setSpacing(0);
@@ -155,7 +157,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	portType->addItem(AppSettings->printerType);
 	portType->addItems(AppSettings->alternativePrinters);
 	portType->setEditable(true);
-	
+	btDeviceName->setText(AppSettings->bluetoothDeviceNameMask);
 	
 
 
@@ -206,6 +208,7 @@ void MainSettingsWidget::saveClicked()
 	AppSettings->printerType = portType->currentText();
 	AppSettings->printerPort = portNumber->value();
 	AppSettings->printerPortDesignation = portDesignation->currentText();
+	AppSettings->bluetoothDeviceNameMask = btDeviceName->text();
 	BarcodeObs->resetCapture(AppSettings->scanPrefix, AppSettings->scanSuffix);
 	AppSettings->dump();
 	emit saveConfirmed();

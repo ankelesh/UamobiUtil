@@ -43,6 +43,11 @@ void GlobalAppSettings::dump()
     setting.setValue("printer_port", printerPort);
     setting.setValue("printer_type", printerType);
 	setting.setValue("printer_alternatives", alternativePrinters);
+	setting.beginGroup("bluetooth");
+	setting.setValue("lastMAC", lastPrinterBTMAC);
+	setting.setValue("lastUUID", lastPrinterBTUUID);
+	setting.setValue("deviceNameMask", bluetoothDeviceNameMask);
+	setting.endGroup();
 }
 
 GlobalAppSettings* GlobalAppSettings::_instanse = Q_NULLPTR;
@@ -71,6 +76,11 @@ GlobalAppSettings::GlobalAppSettings()
 	printerPort = settings.value("printer_port", 19200).toInt();
 	printerType = settings.value("printer_type", "zebra").toString();
 	alternativePrinters = settings.value("alternative_printers", QVariant(QStringList())).toStringList();
+	settings.beginGroup("bluetooth");
+	lastPrinterBTMAC = settings.value("lastMAC", QString()).toString();
+	lastPrinterBTUUID = settings.value("lastUUID", QString()).toString();
+	bluetoothDeviceNameMask = settings.value("deviceNameMask", QString("zebra")).toString();
+	settings.endGroup();
 	setTranslator();
 
 }

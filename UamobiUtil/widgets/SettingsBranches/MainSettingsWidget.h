@@ -72,6 +72,7 @@ private:
 	QComboBox* portDesignation;
 	QSpinBox* portNumber;
 	QComboBox* portType;
+	QLineEdit* btDeviceName;
 	// buttons in widget footer
 	QHBoxLayout* footerLayout;
 	MegaIconButton* saveButton;
