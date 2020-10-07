@@ -146,7 +146,11 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 #ifdef FTR_COM
 	buildState->setPixmap(QIcon(":/res/with.png").pixmap(calculateAdaptiveSize(0.15, 0.2)));
 #else
+#ifdef Q_OS_ANDROID
+	buildState->setPixmap(QIcon(":/res/with.png").pixmap(calculateAdaptiveSize(0.15, 0.2)));
+#else
 	buildState->setPixmap(QIcon(":/res/without.png").pixmap(calculateAdaptiveSize(0.15, 0.2)));
+#endif
 #endif
 	temp.clear();
 	temp << AppSettings->printerPortDesignation << "COM4:" << "COM2:" << "COM6:" << "BSP2:";

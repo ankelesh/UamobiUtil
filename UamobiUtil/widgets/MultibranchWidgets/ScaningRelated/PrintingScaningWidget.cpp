@@ -140,11 +140,11 @@ void PrintingScaningWidget::wipe()
 {
     if (!first_control.isNull())
     {
-        first_control->setValue("0");
+        first_control->setValue("1");
     }
     if (!second_control.isNull())
     {
-        second_control->setValue("0");
+        second_control->setValue("1");
     }
 }
 

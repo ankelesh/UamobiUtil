@@ -1,6 +1,65 @@
 Application start begins: version 0.13 lin-alpha
->>	410090019020841 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
->>	410090019026211 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
-<<	410090019148478 received response going to 0 containing text:|
+>>	410127440290857 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
+>>	410127440293667 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
+<<	410127440346046 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket</servicename></users>
+	and error text |
+>>	410127448732548 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.13
+<<	410127448795873 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2544</session>
+</login>
+	and error text |
+>>	410127448797804 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2544&lang=Russian
+<<	410127448853462 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>Инв - ция</captionMode><mode>inventory</mode><submode></submode></mode> <mode><modeName>ordersandsldcorrection</modeName><captionMode>Кор - ка заказа</captionMode><mode>receipt</mode><submode>ordersandsldcorrection</submode></mode> <mode><modeName>partialinventory</modeName><captionMode>Корректировка остатков</captionMode><mode>inventory</mode><submode>partialinventory</submode></mode> <mode><modeName>printing</modeName><captionMode>Печать этикеток</captionMode><mode>printing</mode><submode></submode></mode> <mode><modeName>receipt</modeName><captionMode>Прием товаров</captionMode><mode>receipt</mode><submode></submode></mode> <mode><modeName>receiptfromwarehouses</modeName><captionMode>Приемка от склада</captionMode><mode>receipt</mode><submode>receiptfromwarehouses</submode></mode> <mode><modeName>univscanact</modeName><captionMode>Универсальный акт сканирования</captionMode><mode>inventory</mode><submode>univscanact</submode></mode>  <place>   <code>205</code>   <name>L-05 str. Onisifor Ghibu 7/2</name>  </place> </modes>
+	and error text |
+>>	410127449063342 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=2544&mode=printing&submode=
+<<	410127449104978 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status>  <desc> <![CDATA[ 
+[PrintingScaning]
+*-6*
+ ]]> </desc></mode>
+	and error text |
+>>	410127449847952 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=doc_search_items&session=2544&text=&page=0
+<<	410127449950025 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <searchresult>  <status>200</status>  <page>   <from>1</from>   <to>25</to>  </page>  <result>   <code>8595564510017</code>   <title>  Pesmeti BONA VITA minitoast 250g</title>  </result>  <result>   <code>2000000662978</code>   <title> / PROD.UNI</title>  </result>  <result>   <code>2000000662985</code>   <title> / PROD.UNI</title>  </result>  <result>   <code>2187413000009</code>   <title> / PROD.UNI</title>  </result>  <result>   <code>2187484000009</code>   <title> / PROD.UNI</title>  </result>  <result>   <code>2187586000009</code>   <title> / PROD.UNI</title>  </result>  <result>   <code>9002859074653</code>   <title>  umplut/capsuna 125g</title>  </result>  <result>   <code>9002859074639</code>   <title>  umplut/nuci 125g</title>  </result>  <result>   <code>4015400236061</code>   <title> Absorbante DISCREET air 100buc</title>  </result>  <result>   <code>4015400271154</code>   <title> Absorbante DISCREET normal 100buc</title>  </result>  <result>   <code>5029053540795</code>   <title> Absorbante KOTEX normal liners 40*16</title>  </result>  <result>   <code>5029053540771</code>   <title> Absorbante KOTEX string liner 40*12</title>  </result>  <result>   <code>5029053540818</code>   <title> Absorbante KOTEX string liner 40*12</title>  </result>  <result>   <code>5029053528434</code>   <title> Absorbante KOTEX super slim deo 20</title>  </result>  <result>   <code>5029053540788</code>   <title> Absorbante KOTEX super slim deo 40</title>  </result>  <result>   <code>5029053540658</code>   <title> Absorbante KOTEX ultra dry&amp;soft 10</title>  </result>  <result>   <code>9002859077678</code>   <title> alba 100g</title>  </result>  <result>   <code>9002859087455</code>   <title> alba 75g</title>  </result>  <result>   <code>5201137050134</code>   <title> apa rece 60g</title>  </result>  <result>   <code>3014260283254</code>   <title> Aparat d/ras GILETTE BLUE II+5buc</title>  </result>  <result>   <code>7702018844791</code>   <title> Aparat d/ras GILETTE BLUE II+5buc</title>  </result>  <result>   <code>2107678000009</code>   <title> Argentina cu cap. Congelata ,kg</title>  </result>  <result>   <code>8001090754837</code>   <title> ARIEL Detergent color Auto 8kg</title>  </result>  <result>   <code>5413149331198</code>   <title> ARIEL Detergent Mountain spring Auto 8kg</title>  </result>  <result>   <code>5413149644366</code>   <title> ARIEL Detergent Tool fresh Auto 8kg</title>  </result> </searchresult>
+	and error text |
+>>	410127450225137 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=doc_get_item_info&session=2544&barcode=4015400271154
+<<	410127450240241 received response going to 15 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <info>  <status>200</status> <richdata>  <![CDATA[
+<div style="background: #d0ffd0"><center>Товар/Объект</center></div><div><b>Наименование:</b><span style="font-weight: bold;">  Absorbante DISCREET normal 100buc </span>
+</div>
+<div><b>Цена:</b><span style=""> 0 </span>
+</div>
+<div><b>Код:</b><span style=""> 27865 </span>
+</div>
+<div><b>Ед. изм.:</b><span style=""> шт </span>
+</div>
+<div><b>Цена:</b><span style=""> 0 </span>
+</div>
+ ]]>
+</richdata>
+<controls>
+  <control>
+    <name>qty</name>     <type>int</type>     <default>1</default>   </control></controls></info>
+	and error text |
+>>	410127450790587 sent request: http://92.115.237.226:60080/um/unitest.php?delay=7&cmd=doc_get_item_label&session=2544&barcode=4015400271154&qty=1&printer=zebra20_70x33
+<<	410127450797289 received response going to 40 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <xml>  <status>200</status> <code>! 0 200 200 270 1 LABEL TONE 100 SPEED 5 PAGE-WIDTH 590 ENCODING ASCII BAR-SENSE L 420 0 420 232 1 T AriN14pt.cpf 0 10 0  T AriN14B.cpf 0 10 35  T AriN09pt.cpf 0 10 72  T AriN07B.cpf 0 10 94  T AriN07B.cpf 0 10 112  RIGHT 410  T Trap50pt.cpf 0 0 115 0.00 T AriN05B.cpf 0 435 50 07.10.2020 T AriN05B.cpf 0 440 85 27865 T AriN08pt.cpf 0 440 110 MDL  T AriN08B.cpf 0 435 148 Ln RIGHT 485  T AriN07B.cpf 0 0 150  LEFT BT AriN08pt.cpf 0 2 VB EAN13 1 1 25 520 190 4015400271154 FORM PRINT </code></xml>
+	and error text |
+>>	410127450806507 sent request: http://92.115.237.226:60080/um/unitest.php?delay=8&cmd=doc_get_item_label&session=2544&barcode=4015400271154&qty=1&printer=zebra20_70x33
+<<	410127450814899 received response going to 40 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <xml>  <status>200</status> <code>! 0 200 200 270 1 LABEL TONE 100 SPEED 5 PAGE-WIDTH 590 ENCODING ASCII BAR-SENSE L 420 0 420 232 1 T AriN14pt.cpf 0 10 0  T AriN14B.cpf 0 10 35  T AriN09pt.cpf 0 10 72  T AriN07B.cpf 0 10 94  T AriN07B.cpf 0 10 112  RIGHT 410  T Trap50pt.cpf 0 0 115 0.00 T AriN05B.cpf 0 435 50 07.10.2020 T AriN05B.cpf 0 440 85 27865 T AriN08pt.cpf 0 440 110 MDL  T AriN08B.cpf 0 435 148 Ln RIGHT 485  T AriN07B.cpf 0 0 150  LEFT BT AriN08pt.cpf 0 2 VB EAN13 1 1 25 520 190 4015400271154 FORM PRINT </code></xml>
+	and error text |
+>>	410127451302054 sent request: http://92.115.237.226:60080/um/unitest.php?delay=9&cmd=doc_get_item_label&session=2544&barcode=4015400271154&qty=1&printer=zebra20_70x33
+<<	410127451309787 received response going to 40 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <xml>  <status>200</status> <code>! 0 200 200 270 1 LABEL TONE 100 SPEED 5 PAGE-WIDTH 590 ENCODING ASCII BAR-SENSE L 420 0 420 232 1 T AriN14pt.cpf 0 10 0  T AriN14B.cpf 0 10 35  T AriN09pt.cpf 0 10 72  T AriN07B.cpf 0 10 94  T AriN07B.cpf 0 10 112  RIGHT 410  T Trap50pt.cpf 0 0 115 0.00 T AriN05B.cpf 0 435 50 07.10.2020 T AriN05B.cpf 0 440 85 27865 T AriN08pt.cpf 0 440 110 MDL  T AriN08B.cpf 0 435 148 Ln RIGHT 485  T AriN07B.cpf 0 0 150  LEFT BT AriN08pt.cpf 0 2 VB EAN13 1 1 25 520 190 4015400271154 FORM PRINT </code></xml>
+	and error text |
+>>	410127451639100 sent request: http://92.115.237.226:60080/um/unitest.php?delay=10&cmd=doc_get_item_label&session=2544&barcode=4015400271154&qty=1&printer=zebra20_70x33
+<<	410127451645575 received response going to 40 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <xml>  <status>200</status> <code>! 0 200 200 270 1 LABEL TONE 100 SPEED 5 PAGE-WIDTH 590 ENCODING ASCII BAR-SENSE L 420 0 420 232 1 T AriN14pt.cpf 0 10 0  T AriN14B.cpf 0 10 35  T AriN09pt.cpf 0 10 72  T AriN07B.cpf 0 10 94  T AriN07B.cpf 0 10 112  RIGHT 410  T Trap50pt.cpf 0 0 115 0.00 T AriN05B.cpf 0 435 50 07.10.2020 T AriN05B.cpf 0 440 85 27865 T AriN08pt.cpf 0 440 110 MDL  T AriN08B.cpf 0 435 148 Ln RIGHT 485  T AriN07B.cpf 0 0 150  LEFT BT AriN08pt.cpf 0 2 VB EAN13 1 1 25 520 190 4015400271154 FORM PRINT </code></xml>
+	and error text |
+>>	410127451653388 sent request: http://92.115.237.226:60080/um/unitest.php?delay=11&cmd=doc_get_item_label&session=2544&barcode=4015400271154&qty=1&printer=zebra20_70x33
+<<	410127451658558 received response going to 40 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <xml>  <status>200</status> <code>! 0 200 200 270 1 LABEL TONE 100 SPEED 5 PAGE-WIDTH 590 ENCODING ASCII BAR-SENSE L 420 0 420 232 1 T AriN14pt.cpf 0 10 0  T AriN14B.cpf 0 10 35  T AriN09pt.cpf 0 10 72  T AriN07B.cpf 0 10 94  T AriN07B.cpf 0 10 112  RIGHT 410  T Trap50pt.cpf 0 0 115 0.00 T AriN05B.cpf 0 435 50 07.10.2020 T AriN05B.cpf 0 440 85 27865 T AriN08pt.cpf 0 440 110 MDL  T AriN08B.cpf 0 435 148 Ln RIGHT 485  T AriN07B.cpf 0 0 150  LEFT BT AriN08pt.cpf 0 2 VB EAN13 1 1 25 520 190 4015400271154 FORM PRINT </code></xml>
 	and error text |
