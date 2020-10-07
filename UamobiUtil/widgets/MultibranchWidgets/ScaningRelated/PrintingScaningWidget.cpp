@@ -138,6 +138,14 @@ void PrintingScaningWidget::barcodeConfirmed()
 
 void PrintingScaningWidget::wipe()
 {
+    if (!first_control.isNull())
+    {
+        first_control->setValue("0");
+    }
+    if (!second_control.isNull())
+    {
+        second_control->setValue("0");
+    }
 }
 
 PrintingScaningWidget::PrintingScaningWidget(QWidget* parent, IndependentBranchNode* searchScr)

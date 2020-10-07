@@ -41,7 +41,7 @@ private:
 public:
 
     UamobiUtil( QWidget* parent = Q_NULLPTR);	//	Constructor is similar to most other constructors
-
+    ~UamobiUtil();
 private slots:
 	void gotoModeSelection();			//	Switch to modeSelectionBranch
 	void interpretMode(QHash<QString, QString>, Mode mode);	

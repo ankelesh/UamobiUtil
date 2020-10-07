@@ -19,11 +19,11 @@ void AbstractScaningWidget::useControls(const QVector<QSharedPointer < InputCont
 		switch (controlsAvailable)
 		{
 		case 2:
-			innerLayout->removeWidget(second_control->myWidget());
+            controlPanel->removeWidget(second_control->myWidget());
 			second_control.clear();
             Q_FALLTHROUGH();
 		case 1:
-			innerLayout->removeWidget(first_control->myWidget());
+            controlPanel->removeWidget(first_control->myWidget());
 			first_control.clear();
             Q_FALLTHROUGH();
 		case 0:
@@ -45,20 +45,20 @@ void AbstractScaningWidget::useControls(const QVector<QSharedPointer < InputCont
 			}
 			else
 			{
-				innerLayout->removeWidget(first_control->myWidget());
+                controlPanel->removeWidget(first_control->myWidget());
 				first_control.clear();
-                first_control = Control(fabricateControl(cvals.at(0), innerLayout, innerWidget));
+                first_control = Control(fabricateControl(cvals.at(0), controlPanel, innerWidget));
 			}
 			if (!second_control.isNull())
 			{
-				innerLayout->removeWidget(second_control->myWidget());
+                controlPanel->removeWidget(second_control->myWidget());
 				second_control.clear();
 				--controlsAvailable;
 			}
 		}
 		else
 		{
-            first_control = Control(fabricateControl(cvals.at(0), innerLayout, innerWidget));
+            first_control = Control(fabricateControl(cvals.at(0), controlPanel, innerWidget));
 			++controlsAvailable;
 		}
 		first_control->show();
@@ -73,14 +73,14 @@ void AbstractScaningWidget::useControls(const QVector<QSharedPointer < InputCont
 		case 2:
 			if (!(cvals.at(1)->type == second_control->myType()))
 			{
-				innerLayout->removeWidget(second_control->myWidget());
+                controlPanel->removeWidget(second_control->myWidget());
 				second_control.clear();
 			}
             Q_FALLTHROUGH();
 		case 1:
 			if (!(cvals.at(1)->type == first_control->myType()))
 			{
-				innerLayout->removeWidget(first_control->myWidget());
+                controlPanel->removeWidget(first_control->myWidget());
 				first_control.clear();
 			}
             Q_FALLTHROUGH();
@@ -133,6 +133,7 @@ AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)
 	userInfo(new QLabel(innerWidget)),
 	barcodeField(new QLineEdit(innerWidget)),
 	mainTextView(new QTextEdit(innerWidget)),
+    controlPanel(new QVBoxLayout(innerWidget)),
 	buttonPanel(new QHBoxLayout(innerWidget)),
 	quitButton(new MegaIconButton(innerWidget)),
 	backButton(new MegaIconButton(innerWidget)),
@@ -148,7 +149,15 @@ AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)
 	
 	topPanelLayout->addWidget(userInfo);
 	innerLayout->addWidget(barcodeField);
+
+#ifdef Q_OS_ANDROID
+    innerLayout->addLayout(controlPanel);
 	innerLayout->addWidget(mainTextView);
+#else
+    innerLayout->addWidget(mainTextView);
+    innerLayout->addLayout(controlPanel);
+#endif
+
 	topPanelLayout->addWidget(quitButton);
 	innerLayout->addLayout(buttonPanel);
 	buttonPanel->addWidget(backButton);

@@ -39,6 +39,7 @@ protected:
 	QLabel* userInfo;
 	QLineEdit* barcodeField;
 	QTextEdit* mainTextView;
+    QVBoxLayout* controlPanel;
 	QHBoxLayout* buttonPanel;
 	MegaIconButton* quitButton;
 	MegaIconButton* backButton;

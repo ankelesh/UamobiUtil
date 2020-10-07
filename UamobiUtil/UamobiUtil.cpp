@@ -35,7 +35,12 @@ UamobiUtil::UamobiUtil( QWidget* parent)
 #else
     QObject::connect(_upCO<MainPageWidget>(), SIGNAL(loggedIn()), this, SLOT(gotoModeSelection()));
 #endif
-	_upCO<MainPageWidget>()->loadUsers();
+    _upCO<MainPageWidget>()->loadUsers();
+}
+
+UamobiUtil::~UamobiUtil()
+{
+    AppSettings->dump();
 }
 
 void UamobiUtil::gotoModeSelection()

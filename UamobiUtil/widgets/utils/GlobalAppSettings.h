@@ -2,7 +2,6 @@
 
 #include "networking/dataupdateengine-http.h"
 #include <QtCore/QTranslator>
-
 extern const float VERSION;
 extern const char * SUFFIX;
 
@@ -40,5 +39,5 @@ public:
 	void setTranslator();
 	void dump();
 
-	static GlobalAppSettings * instanse();
+    static GlobalAppSettings * instanse();
 };

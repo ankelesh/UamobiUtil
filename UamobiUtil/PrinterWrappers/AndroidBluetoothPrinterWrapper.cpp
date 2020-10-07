@@ -77,6 +77,11 @@ void AndroidBluetoothPrinterWrapper::_openConnection()
     {
         errorOutput = tr("Device not paired!");
         emit error(errorOutput);
+        if (connectionMode == LAST)
+        {
+            connectionMode = NEWCONN;
+            _clearAndLaunchDiscovery();
+        }
         return;
     }
 #ifdef DEBUG
@@ -121,7 +126,10 @@ AndroidBluetoothPrinterWrapper::AndroidBluetoothPrinterWrapper(QString device_na
     lastUUID(luuid)
 #endif
 {
-
+#ifdef Q_OS_ANDROID
+    if (lmac.isEmpty() || luuid.isEmpty())
+        connectionMode = NEWCONN;
+#endif
 }
 
 AndroidBluetoothPrinterWrapper::~AndroidBluetoothPrinterWrapper()
