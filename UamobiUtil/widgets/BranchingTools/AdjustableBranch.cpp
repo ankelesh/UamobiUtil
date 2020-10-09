@@ -75,7 +75,7 @@ void AdjustableBranch::_emplaceNodeToCurrent(BranchDescription nextNode)
 #ifdef QT_VERSION5X
 	QObject::connect(currentlyOpened, &inframedWidget::backRequired, this, &AdjustableBranch::backCalled);
 	QObject::connect(_upCO<IndependentBranchNode>(), &IndependentBranchNode::done, this, &AdjustableBranch::currentNodeDone);
-    QObject::connect(_upCO<IndependentBranchNode>(), &IndependentBranchNode::throwException, this, &AbsBranch::handleException);
+    bool a = QObject::connect(_upCO<IndependentBranchNode>(), &IndependentBranchNode::exceptionThrown, this, &AbsBranch::handleException);
 #else
     QObject::connect(currentlyOpened, SIGNAL(backRequired()), this, SLOT(backCalled()));
     QObject::connect(_upCO<IndependentBranchNode>(), SIGNAL(done(RecEntity)), this, SLOT(currentNodeDone(RecEntity)));

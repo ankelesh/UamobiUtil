@@ -149,6 +149,7 @@
     <ClCompile Include="widgets\BranchingTools\AdjustableBranch.cpp" />
     <ClCompile Include="widgets\BranchingTools\BranchDescriptionParser.cpp" />
     <ClCompile Include="widgets\BranchingTools\BranchElementDescription.cpp" />
+    <ClCompile Include="widgets\BranchingTools\BranchException.cpp" />
     <ClCompile Include="widgets\BranchingTools\BranchFactory.cpp" />
     <ClCompile Include="widgets\BranchingTools\EmbeddedBranches.cpp" />
     <ClCompile Include="widgets\BranchingTools\StaticBranch.cpp" />
@@ -275,6 +276,7 @@
     <ClInclude Include="widgets\Branches\SwitchSubbranch.h" />
     <ClInclude Include="widgets\BranchingTools\BranchDescriptionParser.h" />
     <ClInclude Include="widgets\BranchingTools\BranchElementDescription.h" />
+    <ClInclude Include="widgets\BranchingTools\BranchException.h" />
     <ClInclude Include="widgets\BranchingTools\BranchFactory.h" />
     <ClInclude Include="widgets\BranchingTools\EmbeddedBranches.h" />
     <QtMoc Include="widgets\BranchingTools\StaticBranch.h" />

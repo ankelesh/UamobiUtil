@@ -19,11 +19,11 @@ void StaticBranch::_allocateNode(BranchDescription desc)
 #ifdef QT_VERSION5X
 	QObject::connect(createdNodesStack.last(), &inframedWidget::backRequired, this, &StaticBranch::backCalled);
 	QObject::connect(createdNodesStack.last(), &IndependentBranchNode::done, this, &StaticBranch::currentNodeDone);
-    QObject::connect(createdNodesStack.last(), &IndependentBranchNode::throwException, this, &StaticBranch::handleException);
+    QObject::connect(createdNodesStack.last(), &IndependentBranchNode::exceptionThrown, this, &StaticBranch::handleException);
 #else
 	QObject::connect(createdNodesStack.last(), SIGNAL(backRequired()), this, SLOT(backCalled()));
 	QObject::connect(createdNodesStack.last(), SIGNAL(done(RecEntity)), this, SLOT(currentNodeDone(RecEntity)));
-    QObject::connect(createdNodesStack.last(), SIGNAL(throwException(BranchException*)), this, SLOT(handleException(BranchException*)));
+    QObject::connect(createdNodesStack.last(), SIGNAL(exceptionThrown(BranchException*)), this, SLOT(handleException(BranchException*)));
 #endif
 }
 

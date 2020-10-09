@@ -387,6 +387,9 @@
     <ClCompile Include="PrinterWrappers\PrinterWrapperFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="widgets\BranchingTools\BranchException.cpp">
+      <Filter>Source Files\BranchingTools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -650,6 +653,9 @@
     </ClInclude>
     <ClInclude Include="PrinterWrappers\PrinterWrapperFactory.h">
       <Filter>Header Files\PrinterWrappers</Filter>
+    </ClInclude>
+    <ClInclude Include="widgets\BranchingTools\BranchException.h">
+      <Filter>Header Files\BranchingTools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

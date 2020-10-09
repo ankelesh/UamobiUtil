@@ -101,11 +101,17 @@ void UamobiUtil::handleUnhandledBranchException(BranchException *ex)
 {
     if (ex != Q_NULLPTR)
     {
-        switch (ex->whereToReturn())
+        switch (ex->specialDestination())
         {
         case BranchException::ToLogin:
-            hideCurrent();
-            break;
+		{
+			hideCurrent();
+			AppNetwork->execQueryByTemplate(QueryTemplates::LogOut, Q_NULLPTR);
+			QString t;
+			AppNetwork->setSession(t);
+			_upCO<MainPageWidget>()->loadUsers();
+			break;
+		}
         case BranchException::ToModeSelection:
         default:
             gotoModeSelection();

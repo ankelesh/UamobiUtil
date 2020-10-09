@@ -16,6 +16,7 @@ public:
     bool isDirectioned() {return toWhichIndexReturn >= 0;};
     bool isDirectionedOutside() {return toWhichIndexReturn < 0;}
     int whereToReturn() {return (toWhichIndexReturn > 0) ? toWhichIndexReturn : 0;};
+    int specialDestination() { return toWhichIndexReturn; };
     bool canReturnHere(independent_nodes::nodelist);
     BranchException();
     explicit BranchException(int);

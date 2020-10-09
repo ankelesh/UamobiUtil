@@ -1,68 +1,77 @@
 Application start begins: version 0.13 lin-alpha
-][	Created object LoginWidget on address 11752600
-][	Created object MainPageWidget on address 11791712
->>	410127440290857 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
->>	410127440293667 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
-<<	410127440346046 received response going to 0 containing text:|
+][	Created object LoginWidget on address 21104264
+][	Created object MainPageWidget on address 21292160
+>>	410175535972393 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
+>>	410175535978019 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
+<<	410175536076990 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket<
 	and error text |
->>	410127448732548 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.13
-<<	410127448795873 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2544</session>
+>>	410175538132612 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.13
+<<	410175538192097 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2597</session>
 </login>
 	and error text |
->>	410127448797804 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2544&lang=Russian
-<<	410127448853462 received response going to 0 containing text:|
+>>	410175538194796 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2597&lang=Russian
+<<	410175538249174 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>
 	and error text |
->>	410127449063342 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=2544&mode=printing&submode=
-<<	410127449104978 received response going to 0 containing text:|
+>>	410175538759342 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=2597&mode=receipt&submode=
+<<	410175538802002 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status>  <desc> <![CDATA[ 
-[PrintingScaning]
-*-6*
- ]]> </de
+[SwitchByScanCode]
+%Order%
+<rec_
 	and error text |
-[!!!]	Mode named Печать этикеток signed as printing  received, interpreting: 
+[!!!]	Mode named Прием товаров signed as receipt  received, interpreting: 
 	
-	[PrintingScaning]
-	*-6*
-	 
-][	Created object Adjustable branch with 1 children on address 102441528
-]N[	Node of type 7 fabricated using description:  children: 0 oqs: 0
-][	Created object NormalScaning on address 103458168
-][	Created object ControlListWidget on address 103375360
-][	Created object DocResults on address 100835648
-][	Created object PagedSearchWidget on address 103749960
-][	Created object PrintingScaning on address 103458168
->>	410127449847952 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=doc_search_items&session=2544&text=&page=0
-<<	410127449950025 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <searchresult>  <status>200</status>  <page>   <from>1</from>   <to>25</to>  </p
+	[SwitchByScanCode]
+	%Order%
+	<rec_get_order_by_barcode&session=%1&barcode=%2>
+	{
+	[Subbranch]
+	{
+	[SelectItemFromList]
+	%Supplier%
+	[IdDependentSelect]
+	%Order%
+	}
+	}
+	[ReceiptParameters]
+	[NormalScaning]
+	<>
+	*-6* 
+][	Created object Adjustable branch with 3 children on address 62032592
+]N[	Node of type 22 fabricated using description:  children: 1 oqs: 1
+]N[	Node of type 15 fabricated using description:  children: 2 oqs: 0
+][	Created object Adjustable branch with 2 children on address 62024192
+]N[	Node of type 10 fabricated using description:  children: 0 oqs: 0
+][	Created object SelectItemFromList on address 21617984
+>>	410175539090576 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=rec_list_suppliers&session=2597&text=&hasorders=true
+<<	410175539097673 received response going to 5 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <suppliers>  <status>200</status>  <supplier>   <code>162104</code>   <name>Serv
 	and error text |
->>	410127450225137 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=doc_get_item_info&session=2544&barcode=4015400271154
-<<	410127450240241 received response going to 15 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <info>  <status>200</status> <richdata>  <![CDATA[
-<div style="background: #d0ff
+]N[	Node of type 9 fabricated using description:  children: 0 oqs: 0
+][	Created object IdDependentSelect on address 98529720
+>>	410175539314161 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=rec_list_orders&session=2597&supplier=162104
+<<	410175539320305 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <orders>  <status>200</status>  <order>   <code>18858076</code>   <title>№ заявк
 	and error text |
--->	Method called: translate control qty3 | in object 18290684
-returningКол-во
-][	Created object control-like of type 1 on address 101460632
->>	410127450790587 sent request: http://92.115.237.226:60080/um/unitest.php?delay=7&cmd=doc_get_item_label&session=2544&barcode=4015400271154&qty=1&print
-<<	410127450797289 received response going to 40 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <xml>  <status>200</status> <code>! 0 200 200 270 1 LABEL TONE 100 SPEED 5 PAGE-
+>>	410175539491515 sent request: http://92.115.237.226:60080/um/unitest.php?delay=7&cmd=rec_get_order_info&session=2597&order=18858076&supplier=162104
+<<	410175539495401 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <order>  <status>200</status> <richdata> <![CDATA[  <div><b> Serviabil SRL</b></
 	and error text |
->>	410127450806507 sent request: http://92.115.237.226:60080/um/unitest.php?delay=8&cmd=doc_get_item_label&session=2544&barcode=4015400271154&qty=1&print
-<<	410127450814899 received response going to 40 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <xml>  <status>200</status> <code>! 0 200 200 270 1 LABEL TONE 100 SPEED 5 PAGE-
+]N[	Node of type 5 fabricated using description:  children: 0 oqs: 0
+][	Created object ReceiptParametersWidget on address 64094672
+]N[	Node of type 6 fabricated using description:  children: 0 oqs: 1
+][	Created object NormalScaning on address 65834304
+][	Created object ControlListWidget on address 63960232
+][	Created object DocResults on address 61258856
+][	Created object PagedSearchWidget on address 63855904
+>>	410175539801835 sent request: http://92.115.237.226:60080/um/unitest.php?delay=8&cmd=rec_new_doc&session=2597&date=09.10.2020&parent=18858076&comment=
+<<	410175539814835 received response going to 31 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <newdoc>  <status>200</status>  <doc>   <code>3752848</code>   <parentnr>1885808
 	and error text |
->>	410127451302054 sent request: http://92.115.237.226:60080/um/unitest.php?delay=9&cmd=doc_get_item_label&session=2544&barcode=4015400271154&qty=1&print
-<<	410127451309787 received response going to 40 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <xml>  <status>200</status> <code>! 0 200 200 270 1 LABEL TONE 100 SPEED 5 PAGE-
-	and error text |
->>	410127451639100 sent request: http://92.115.237.226:60080/um/unitest.php?delay=10&cmd=doc_get_item_label&session=2544&barcode=4015400271154&qty=1&prin
-<<	410127451645575 received response going to 40 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <xml>  <status>200</status> <code>! 0 200 200 270 1 LABEL TONE 100 SPEED 5 PAGE-
-	and error text |
->>	410127451653388 sent request: http://92.115.237.226:60080/um/unitest.php?delay=11&cmd=doc_get_item_label&session=2544&barcode=4015400271154&qty=1&prin
-<<	410127451658558 received response going to 40 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <xml>  <status>200</status> <code>! 0 200 200 270 1 LABEL TONE 100 SPEED 5 PAGE-
+>>	410175540496038 sent request: http://92.115.237.226:60080/um/unitest.php?delay=9&cmd=list_users
+<<	410175540509659 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket<
 	and error text |
