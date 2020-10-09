@@ -6,7 +6,7 @@
 #endif
 #include "widgets/utils/ElementsStyles.h"
 #include "ScaningCore/BarcodeObserver.h"
-
+#include "widgets/BranchingTools/BranchException.h"
 void NormalScaningWidget::_handleRecord(RecEntity e)
 {
 	if (e.isNull())
@@ -206,6 +206,10 @@ void NormalScaningWidget::item_confirmed_response()
 void NormalScaningWidget::document_confirmed_response()
 {
     if(!awaiter->deliverHere(receiptNewDocument)) return;
+
+    throwException(new BranchException(BranchException::ToModeSelection));
+    hideProcessingOverlay();
+    return;
 	ResponseParser parser(new LinearListParser(awaiter->restext, awaiter->errtext));
 	NetRequestResponse<FullDocumentEntity> response =
 		RequestParser::parseResponse<FullDocumentEntity>(parser);
@@ -221,6 +225,10 @@ void NormalScaningWidget::document_confirmed_response()
 			userInfo->setText(modename + " (" + document->docId + ")\n" + document->supplier);
 			mainTextView->setHtml(document->comment);
 		}
+    }
+    else
+    {
+        throwException(new BranchException(BranchException::ToModeSelection));
     }
 	hideProcessingOverlay();
 }

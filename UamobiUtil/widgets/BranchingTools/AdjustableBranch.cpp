@@ -1,6 +1,6 @@
 #include "AdjustableBranch.h"
 #include "BranchFactory.h"
-
+#include "widgets/BranchingTools/BranchException.h"
 #ifdef DEBUG
 #include "debugtrace.h"
 #endif
@@ -75,9 +75,11 @@ void AdjustableBranch::_emplaceNodeToCurrent(BranchDescription nextNode)
 #ifdef QT_VERSION5X
 	QObject::connect(currentlyOpened, &inframedWidget::backRequired, this, &AdjustableBranch::backCalled);
 	QObject::connect(_upCO<IndependentBranchNode>(), &IndependentBranchNode::done, this, &AdjustableBranch::currentNodeDone);
+    QObject::connect(_upCO<IndependentBranchNode>(), &IndependentBranchNode::throwException, this, &AbsBranch::handleException);
 #else
     QObject::connect(currentlyOpened, SIGNAL(backRequired()), this, SLOT(backCalled()));
     QObject::connect(_upCO<IndependentBranchNode>(), SIGNAL(done(RecEntity)), this, SLOT(currentNodeDone(RecEntity)));
+    QObject::connect(_upCO<IndependentBranchNode>(), SIGNAL(exceptionThrown(BranchException*)), this, SLOT(handleException(BranchException*)));
 #endif
 }
 
@@ -97,3 +99,47 @@ abstractDynamicNode(Q_NULLPTR, new QVBoxLayout(this))
 	setLayout(mainLayout);
 };
 
+
+
+void AdjustableBranch::_handleException(BranchException * ex)
+{
+    if (ex == Q_NULLPTR)
+    {
+        return;
+    }
+    if (ex->isDirectionedOutside())
+    {
+        throwException(ex);
+        return;
+    }
+    if (ex->isDirectioned())
+    {
+        if (ex->whereToReturn() >= 0 && ex->whereToReturn() < root->count())
+        {
+            currentNode = ex->whereToReturn();
+            _emplaceNodeToCurrent(root->getNode(ex->whereToReturn()));
+            getCurrentNode()->processRecord(dependencyTrack.at(currentNode));
+            getCurrentNode()->loadData();
+            delete ex;
+            return;
+        }
+        else
+            throwException(ex);
+    }
+    else
+    {
+        for (int i = currentNode; i >= 0; --i)
+        {
+            if (ex->canReturnHere(root->at(i)->type))
+            {
+                currentNode = i;
+                _emplaceNodeToCurrent(root->getNode(currentNode));
+                getCurrentNode()->processRecord(dependencyTrack.at(currentNode));
+                getCurrentNode()->loadData();
+                delete ex;
+                return;
+            }
+        }
+        throwException(ex);
+    }
+}

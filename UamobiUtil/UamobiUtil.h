@@ -48,6 +48,7 @@ private slots:
 public slots:
 	void hideCurrent();					//	hides current branch if it is not main page
 	void closeBranch(RecEntity e);
+    void handleUnhandledBranchException(BranchException* ex);
 signals:
 	void requestSettings();				//	Deprecated, but may be usefull if app will be reassembled
 };

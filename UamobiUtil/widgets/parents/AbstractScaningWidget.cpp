@@ -10,7 +10,9 @@
 #include "debugtrace.h"
 #endif
 #include "ScaningCore/BarcodeObserver.h"
+#include "widgets/ElementWidgets/ExtendedDialogs.h"
 
+#include "widgets/BranchingTools/BranchException.h"
 void AbstractScaningWidget::useControls(const QVector<QSharedPointer < InputControlEntity> >& cvals)
 {
     switch (cvals.count())
@@ -40,7 +42,7 @@ void AbstractScaningWidget::useControls(const QVector<QSharedPointer < InputCont
 		{
 			if (first_control->myType() == cvals.at(0)->type)
 			{
-				first_control->reset();
+                first_control->setValue(cvals.at(0)->defaultValue);
 				first_control->show();
 			}
 			else
@@ -99,7 +101,7 @@ void AbstractScaningWidget::useControls(const QVector<QSharedPointer < InputCont
 			}
 			else
 			{
-				second_control->reset();
+                second_control->setValue(cvals.at(1)->defaultValue);
 			}
 		}
 		controlsAvailable = 2;
@@ -245,8 +247,10 @@ void AbstractScaningWidget::setModeName(QString& name)
 
 void AbstractScaningWidget::was_timeout()
 {
-	userInfo->setText(tr("scaning_timeout:") + QString::number(awaiter->getInterval()));
+    ErrorMessageDialog::showErrorInfo(this, tr("Timeout"), tr("Critical timeout, can not continue"));
     hideProcessingOverlay();
+    if (awaiter->deliverHere(receiptNewDocument))
+        throwException(new BranchException(BranchException::ToModeSelection));
 }
 
 void AbstractScaningWidget::quitNoSave()

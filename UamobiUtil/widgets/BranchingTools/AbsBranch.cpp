@@ -55,7 +55,12 @@ void AbsBranch::backCalled()
 
 void AbsBranch::currentNodeDone(RecEntity given)
 {
-	toNext(given);
+    toNext(given);
+}
+
+void AbsBranch::handleException(BranchException *ex)
+{
+    _handleException(ex);
 }
 
 void AbsBranch::_handleRecord(RecEntity e)

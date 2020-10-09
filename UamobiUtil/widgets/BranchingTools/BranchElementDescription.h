@@ -3,7 +3,7 @@
 #include "datacore/AbsEntityPrototype.h"
 #include "networking/QueryTemplates.h"
 #include "widgets/parents/IndependentBranchNode.h"
-
+#include "widgets/BranchingTools/BranchException.h"
 
 /*
 	This class represents node in widget tree. It DOES NOT contains widget itself,

@@ -149,14 +149,15 @@ void AndroidBluetoothPrinterWrapper::serviceFound(const QBluetoothServiceInfo& s
 {
     if (blocker)
         return;
-    if (svc.device().name().contains(targetDeviceName))
-    {
-        targetService = svc;
-        blocker = true;
 #ifdef DEBUG
         detrace_METHEXPL("FOUND SERVICE: " << svc.serviceName() <<
             " name " << svc.device().name() << " " << svc.serviceUuid().toString());
 #endif
+    if (svc.device().name().contains(targetDeviceName))
+    {
+        targetService = svc;
+        blocker = true;
+
         _openConnection();
     }
 }

@@ -446,8 +446,15 @@ void debugtrace::init(DebugPriority priority, OutputMode mode, QVector<OutputMod
 	QDir outdir(QDir::currentPath());
 	if (!outdir.exists("UNALogs"))
 		outdir.mkdir("UNALogs");
+#else
+#ifdef Q_OS_ANDROID
+    QDir outdir("/storage/emulated/0/");
+    if (!outdir.exists("UNALogs"))
+        outdir.mkdir("UNALogs");
 #endif
 #endif
+#endif
+
 	if (_instanse != Q_NULLPTR)
 	{
 		delete _instanse;

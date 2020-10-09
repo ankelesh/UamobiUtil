@@ -17,5 +17,10 @@ void IndependentBranchNode::loadData()
 
 void IndependentBranchNode::setOverloads(const QVector<QueryTemplates::OverloadableQuery>& oqs)
 {
-	_makeOverloads(oqs);
+    _makeOverloads(oqs);
+}
+
+void IndependentBranchNode::throwException(BranchException * ex)
+{
+    emit exceptionThrown(ex);
 }

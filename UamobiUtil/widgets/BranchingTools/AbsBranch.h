@@ -44,6 +44,7 @@ protected:
 	virtual void _handleRecord(RecEntity) override;
 	// does nothing
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
+    virtual void _handleException(BranchException*) = 0;
 public:
 	// constructs empty branch
 	explicit AbsBranch(QWidget* parent = Q_NULLPTR);
@@ -58,10 +59,12 @@ public:
 	void setOverload(int toWhich, int index, QueryTemplates::OverloadableQuery oq);
 	// restarts branch
 	void raiseThisBranch(RecEntity e);
+
 public slots:
 	// these slots are wrapping toNext and backtracking interfaces
 	void backCalled();
 	void currentNodeDone(RecEntity given);
+    void handleException(BranchException* ex);
 
 };
 typedef QSharedPointer<AbsBranch> Branch;

@@ -4,7 +4,7 @@
 #include "debugtrace.h"
 #endif
 #include "widgets/BranchingTools/EmbeddedBranches.h"
-
+#include "widgets/BranchingTools/BranchException.h"
 UamobiUtil::UamobiUtil( QWidget* parent)
 	: QWidget(parent), abstractDynamicNode(
 		new MainPageWidget(this),
@@ -80,9 +80,11 @@ void UamobiUtil::interpretMode(QHash<QString, QString> /*sets*/, Mode mode)
 #ifdef QT_VERSION5X
 	QObject::connect(mainBranch, &AbsBranch::backRequired, this, &UamobiUtil::gotoModeSelection);
 	QObject::connect(mainBranch, &AbsBranch::done, this, &UamobiUtil::closeBranch);
+    QObject::connect(mainBranch, &AbsBranch::exceptionThrown, this, &UamobiUtil::handleUnhandledBranchException);
 #else
 	QObject::connect(mainBranch, SIGNAL(backRequired()), this, SLOT(gotoModeSelection()));
 	QObject::connect(mainBranch, SIGNAL(done(RecEntity)), this, SLOT(closeBranch(RecEntity)));
+    QObject::connect(mainBranch, SIGNAL(exceptionThrown(BranchException*)), this, SLOT(handleUnhandledBranchException(BranchException*)));
 #endif
 	_hideAndDeleteCurrent(mainBranch);
 	mainBranch->raiseThisBranch(mode.staticCast<AbsRecEntity>());
@@ -92,7 +94,25 @@ void UamobiUtil::interpretMode(QHash<QString, QString> /*sets*/, Mode mode)
 
 void UamobiUtil::closeBranch(RecEntity /*e*/)
 {
-	gotoModeSelection();
+    gotoModeSelection();
+}
+
+void UamobiUtil::handleUnhandledBranchException(BranchException *ex)
+{
+    if (ex != Q_NULLPTR)
+    {
+        switch (ex->whereToReturn())
+        {
+        case BranchException::ToLogin:
+            hideCurrent();
+            break;
+        case BranchException::ToModeSelection:
+        default:
+            gotoModeSelection();
+            break;
+        }
+    delete ex;
+    }
 }
 
 void UamobiUtil::hideCurrent()

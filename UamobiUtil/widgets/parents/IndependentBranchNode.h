@@ -3,7 +3,6 @@
 #include "networking/things.h"
 
 
-
 namespace independent_nodes
 {
 	enum nodelist
@@ -35,7 +34,7 @@ namespace independent_nodes
 	};
 }
 
-
+class BranchException;
 class IndependentBranchNode : public inframedWidget
 {
 	Q_OBJECT	
@@ -56,6 +55,8 @@ public:
 	void processRecord(RecEntity);
 	void loadData();
 	void setOverloads(const QVector<QueryTemplates::OverloadableQuery>& oqs);
+    void throwException(BranchException*);
 signals:
 	void done(RecEntity);
+    void exceptionThrown(BranchException*);
 };

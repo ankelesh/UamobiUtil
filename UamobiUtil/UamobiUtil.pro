@@ -101,6 +101,7 @@ HEADERS += ./UamobiUtil.h \
     PrinterWrappers/FTRCOMPrinterWrapper.h \
     PrinterWrappers/NullPrinterWrapper.h \
     PrinterWrappers/PrinterWrapperFactory.h \
+    widgets/BranchingTools/BranchException.h \
     widgets/ElementWidgets/ExtendedDialogs.h \
     widgets/ElementWidgets/ExtendedLabels.h \
     widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.h \
@@ -187,6 +188,7 @@ SOURCES += ./main.cpp \
     PrinterWrappers/FTRCOMPrinterWrapper.cpp \
     PrinterWrappers/NullPrinterWrapper.cpp \
     PrinterWrappers/PrinterWrapperFactory.cpp \
+    widgets/BranchingTools/BranchException.cpp \
     widgets/ElementWidgets/ExtendedDialogs.cpp \
     widgets/ElementWidgets/ExtendedLabels.cpp \
     widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.cpp \

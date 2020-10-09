@@ -20,7 +20,9 @@ private:
 	virtual void toNext(RecEntity) override;
 	virtual void backtrack() override;
 	virtual void _emplaceNodeToCurrent(BranchDescription) override;
-	virtual IndependentBranchNode* getCurrentNode() override;
+    virtual IndependentBranchNode* getCurrentNode() override;
+    virtual void _handleException(BranchException *) override;
 public:
 	explicit StaticBranch(BranchDescription root, QWidget* parent = Q_NULLPTR);
+
 };

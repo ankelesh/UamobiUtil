@@ -17,7 +17,9 @@ protected:
 	virtual void toNext(RecEntity) override;
 	virtual void backtrack() override;
 	virtual void _emplaceNodeToCurrent(BranchDescription id) override;
-	virtual IndependentBranchNode* getCurrentNode() override;
+    virtual IndependentBranchNode* getCurrentNode() override;
+    virtual void _handleException(BranchException *) override;
 public:
 	explicit AdjustableBranch(BranchDescription root, QWidget* parent = Q_NULLPTR);
+
 };
