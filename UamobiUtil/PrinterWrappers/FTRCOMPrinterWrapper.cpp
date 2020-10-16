@@ -30,8 +30,7 @@ void FTRCOMPrinterWrapper::_retryOpeningConnection()
 		emit connected();
 	else
 	{
-		errorOutput += printerSocket->getErrors();
-		sendErrorLater();
+        errorOutput += printerSocket->getErrors();emit error(errorOutput);
 	}
 #endif
 }

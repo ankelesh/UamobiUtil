@@ -1,7 +1,9 @@
 #pragma once
 #include <QObject>
 #include <QTextEncoder>
-
+#ifndef QStringLiteral
+#define QStringLiteral(A) QString::fromLatin1(""A"",sizeof(A)-1)
+#endif
 
 class AbsPrinterWrapper : public QObject
 {

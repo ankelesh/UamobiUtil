@@ -1,5 +1,7 @@
 #include "IndependentBranchNode.h"
-
+#ifdef DEBUG
+#include "debugtrace.h"
+#endif
 
 using namespace QueryTemplates;
 
@@ -22,5 +24,8 @@ void IndependentBranchNode::setOverloads(const QVector<QueryTemplates::Overloada
 
 void IndependentBranchNode::throwException(BranchException * ex)
 {
+#ifdef DEBUG
+    detrace_METHCALL("IndependentBranchNode::throw");
+#endif
     emit exceptionThrown(ex);
 }

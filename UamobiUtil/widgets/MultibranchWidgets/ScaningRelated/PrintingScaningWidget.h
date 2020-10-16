@@ -38,4 +38,5 @@ public:
 protected slots:
 	void wrapperOk();
 	void wrapperError(QString errtext);
+    void reshowError();
 };

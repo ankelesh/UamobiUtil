@@ -15,19 +15,38 @@ bool BranchException::canReturnHere(independent_nodes::nodelist currentType)
 }
 
 BranchException::BranchException()
-    :QException(), toWhichIndexReturn(ToModeSelection), acceptableToReturn()
+    :
+      #ifdef QT_VERSION5X
+      QException(),
+      #else
+      std::exception(),
+      #endif
+
+      toWhichIndexReturn(ToModeSelection), acceptableToReturn()
 {
 
 }
 
 BranchException::BranchException(int toWhereReturn):
-    QException(), toWhichIndexReturn(toWhereReturn), acceptableToReturn()
+
+    #ifdef QT_VERSION5X
+    QException(),
+    #else
+    std::exception(),
+    #endif
+    toWhichIndexReturn(toWhereReturn), acceptableToReturn()
 {
 
 }
 
 BranchException::BranchException(const QList<independent_nodes::nodelist> & list)
-    : QException(), toWhichIndexReturn(Filtered), acceptableToReturn(list)
+    :
+      #ifdef QT_VERSION5X
+      QException(),
+      #else
+      std::exception(),
+      #endif
+      toWhichIndexReturn(Filtered), acceptableToReturn(list)
 {
 
 }

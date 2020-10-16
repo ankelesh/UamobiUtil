@@ -6,18 +6,19 @@ TEMPLATE = app
 TARGET = UamobiUtil
 QT += core xml network gui widgets
 CONFIG += release
-DEFINES += "Q_NULLPTR=0" DEBUG LINELLA QT_VERSION5X
-
+DEFINES += DEBUG LINELLA
+greaterThan(QT_MAJOR_VERSION, 4): DEFINES += QT_VERSION5X
+lessThan(QT_MAJOR_VERSION, 5) : DEFINES += "Q_NULLPTR=0"
 android: QT += bluetooth
 win32: DEFINES += "Q_FALLTHROUGH=__noop"
 win32: RC_FILE += uamobiutil.rc
+
 wince* {
         INCLUDEPATH += C:/Qt/4.8.3-CE6-static/include
         CONFIG -= debug
         CONFIG += release
         QT -= widgets
         DEFINES += FTR_COM
-        DEFINES -= QT_VERSION5X
         QMAKE_CXX += -Ox -GL
         QMAKE_LFLAGS += /LTCG
         RC_FILE = uamobiutilwince.rc
@@ -108,7 +109,9 @@ HEADERS += ./UamobiUtil.h \
     widgets/ExtendedDelegates/CountingDelegate.h \
     datacore/PseudotableEntityModel.h \
     widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.h \
-    widgets/utils/client_defaults.h
+    widgets/utils/client_defaults.h \
+    SoundWrappers/AbsSoundWrapper.h \
+    SoundWrappers/PhononSoundWrapper.h
 SOURCES += ./main.cpp \
     ./UamobiUtil.cpp \
     ./widgets/ControlsMiniwidgets/BarcodeControl.cpp \
@@ -194,7 +197,8 @@ SOURCES += ./main.cpp \
     widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.cpp \
     widgets/ExtendedDelegates/CountingDelegate.cpp \
     datacore/PseudotableEntityModel.cpp \
-    widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp
+    widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp \
+    SoundWrappers/AbsSoundWrapper.cpp
 RESOURCES += UamobiUtil.qrc
 TRANSLATIONS += translations/uamobiutil_ru.ts translations/uamobiutil_ro.ts translations/uamobiutil_en.ts
 

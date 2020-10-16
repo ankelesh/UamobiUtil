@@ -101,7 +101,7 @@ protected:
 	void _recolor();
 public:
 	explicit SemaphorLabel(int defaultState = passive, QWidget* parent = Q_NULLPTR);
-	explicit SemaphorLabel(QWidget* parent = Q_NULLPTR);
+    explicit SemaphorLabel(QWidget* parent);
 
 public slots:
 	void setState(int newState);

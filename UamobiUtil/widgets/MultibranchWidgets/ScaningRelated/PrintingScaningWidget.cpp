@@ -162,8 +162,13 @@ PrintingScaningWidget::PrintingScaningWidget(QWidget* parent, IndependentBranchN
 	quitButton->hide();
 	userInfo->setMaximumHeight(calculateAdaptiveButtonHeight());
     quitButton->setMaximumHeight(calculateAdaptiveButtonHeight());
+#ifdef QT_VERSION5X
 	QObject::connect(printerWrapper, &AbsPrinterWrapper::error, this, &PrintingScaningWidget::wrapperError);
 	QObject::connect(printerWrapper, &AbsPrinterWrapper::connected, this, &PrintingScaningWidget::wrapperOk);
+#else
+    QObject::connect(printerWrapper, SIGNAL(error(QString)), this, SLOT(wrapperError(QString)));
+    QObject::connect(printerWrapper, SIGNAL(connected()), this, SLOT(wrapperOk()));
+#endif
 	printerWrapper->establishConnection();
 }
 
@@ -173,11 +178,19 @@ PrintingScaningWidget::~PrintingScaningWidget()
 
 void PrintingScaningWidget::wrapperOk()
 {
-	connectionState->setState(SemaphorLabel::SemaStates::opsuccess);
+    connectionState->setState(SemaphorLabel::opsuccess);
 }
 
 void PrintingScaningWidget::wrapperError(QString errtext)
 {
 	connectionState->setState(SemaphorLabel::opfail);
-	ErrorMessageDialog::showErrorInfo(this, tr("Printer error"), errtext);
+    if (!isVisible())
+        QTimer::singleShot(100, this, SLOT(reshowError()));
+    else
+        ErrorMessageDialog::showErrorInfo(this, tr("Printer error"), errtext);
+}
+
+void PrintingScaningWidget::reshowError()
+{
+    ErrorMessageDialog::showErrorInfo(this, tr("Printer error"), printerWrapper->errors());
 }
