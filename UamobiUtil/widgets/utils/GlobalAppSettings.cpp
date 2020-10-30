@@ -4,7 +4,7 @@
 // utility
 #include "client_defaults.h"
 
-const float VERSION = 0.13f;
+const float VERSION = 0.14f;
 #ifdef LINELLA
 const char* SUFFIX = "lin-alpha";
 #else

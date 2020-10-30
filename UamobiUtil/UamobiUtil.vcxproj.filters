@@ -390,6 +390,9 @@
     <ClCompile Include="widgets\BranchingTools\BranchException.cpp">
       <Filter>Source Files\BranchingTools</Filter>
     </ClCompile>
+    <ClCompile Include="SoundWrappers\AbsSoundWrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -550,6 +553,12 @@
     </QtMoc>
     <QtMoc Include="PrinterWrappers\NullPrinterWrapper.h">
       <Filter>Header Files\PrinterWrappers</Filter>
+    </QtMoc>
+    <QtMoc Include="SoundWrappers\AbsSoundWrapper.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="SoundWrappers\PhononSoundWrapper.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

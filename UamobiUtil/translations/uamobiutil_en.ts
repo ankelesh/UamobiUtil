@@ -4,49 +4,86 @@
 <context>
     <name>AbstractScaningWidget</name>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="164"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="175"/>
         <source>scaning_widget_user_info</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="179"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="190"/>
         <source>scaning_widget_filler_text</source>
         <translation>Widget filler text</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="186"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="197"/>
         <source>scaning_widget_back</source>
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="190"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="201"/>
         <source>scaining_widget_submit</source>
         <translation>Submit</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="194"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="205"/>
         <source>scaning_widget_search</source>
         <translation>Search</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="198"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="209"/>
         <source>quit</source>
         <translation>Quit</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="239"/>
-        <source>scaning_timeout:</source>
-        <translation>timeout:</translation>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="250"/>
+        <source>Timeout</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="245"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="250"/>
+        <source>Critical timeout, can not continue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>scaning_timeout:</source>
+        <translation type="vanished">timeout:</translation>
+    </message>
+    <message>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="258"/>
         <source>QuitWithoutSave?</source>
         <translation>Quit without save?</translation>
     </message>
     <message>
-        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="245"/>
+        <location filename="../widgets/parents/AbstractScaningWidget.cpp" line="258"/>
         <source>quit_without_save_info?</source>
         <translation>Quit without save info?</translation>
+    </message>
+</context>
+<context>
+    <name>AndroidBluetoothPrinterWrapper</name>
+    <message>
+        <location filename="../PrinterWrappers/AndroidBluetoothPrinterWrapper.cpp" line="46"/>
+        <source>connection not ready</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PrinterWrappers/AndroidBluetoothPrinterWrapper.cpp" line="78"/>
+        <source>Device not paired!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PrinterWrappers/AndroidBluetoothPrinterWrapper.cpp" line="178"/>
+        <source>error opening connection with code:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PrinterWrappers/AndroidBluetoothPrinterWrapper.cpp" line="219"/>
+        <source>device error - no bluetooth support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PrinterWrappers/AndroidBluetoothPrinterWrapper.cpp" line="226"/>
+        <source>no a/bluetooth support on this os</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -90,12 +127,12 @@
 <context>
     <name>ControlListWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ScaningRelated/ControlListWidget.cpp" line="25"/>
+        <location filename="../widgets/MultibranchWidgets/ScaningRelated/ControlListWidget.cpp" line="44"/>
         <source>submit</source>
         <translation>Submit</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ScaningRelated/ControlListWidget.cpp" line="29"/>
+        <location filename="../widgets/MultibranchWidgets/ScaningRelated/ControlListWidget.cpp" line="48"/>
         <source>back</source>
         <translation>Back</translation>
     </message>
@@ -122,48 +159,49 @@
 <context>
     <name>DocResultsWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="121"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="124"/>
         <source>delete all</source>
         <translation>Delete all</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="128"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="131"/>
         <source>delete selected</source>
         <translation>Delete selected</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="134"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="137"/>
         <source>doc_results_back</source>
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="138"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="141"/>
         <source>doc_results_text</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="144"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="147"/>
         <source>doc_results_userinfo</source>
         <translation>Results doc</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="203"/>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="361"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="208"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="364"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="377"/>
         <source>Error!</source>
         <translation>Error!</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="401"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="412"/>
         <source>doc_results_timeout</source>
         <translation>timeout</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="409"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="420"/>
         <source>Delete all</source>
         <translation>Delete all</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="409"/>
+        <location filename="../widgets/MultibranchWidgets/DocResultsWidget.cpp" line="420"/>
         <source>Delete all data?</source>
         <translation>Delete all data?</translation>
     </message>
@@ -174,6 +212,27 @@
         <location filename="../widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.cpp" line="32"/>
         <source>edit</source>
         <translation>Edit</translation>
+    </message>
+</context>
+<context>
+    <name>ErrorMessageDialog</name>
+    <message>
+        <location filename="../widgets/ElementWidgets/ExtendedDialogs.cpp" line="203"/>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <location filename="../widgets/ElementWidgets/ExtendedDialogs.cpp" line="208"/>
+        <source>info</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FTRCOMPrinterWrapper</name>
+    <message>
+        <location filename="../PrinterWrappers/FTRCOMPrinterWrapper.cpp" line="59"/>
+        <source>printing failed: </source>
+        <translation type="unfinished">printing failed:</translation>
     </message>
 </context>
 <context>
@@ -279,36 +338,41 @@
 <context>
     <name>LoginWidget</name>
     <message>
-        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="12"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="14"/>
         <source>login_widget_no_password!</source>
         <translation>No password!</translation>
     </message>
     <message>
-        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="23"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="25"/>
         <source>login_widget_connection_timeout:</source>
         <translation>timeout:</translation>
     </message>
     <message>
-        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="80"/>
-        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="129"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="39"/>
+        <source>Error!</source>
+        <translation type="unfinished">Error!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="91"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="141"/>
         <source>login_widget_login_tip</source>
         <translation>Login</translation>
     </message>
     <message>
-        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="84"/>
-        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="130"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="95"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="142"/>
         <source>login_widget_password_tip</source>
         <translation>Password</translation>
     </message>
     <message>
-        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="85"/>
-        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="131"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="96"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="143"/>
         <source>login_widget_ok_button</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="86"/>
-        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="132"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="97"/>
+        <location filename="../widgets/LoginBranch/LoginWidget.cpp" line="144"/>
         <source>login_widget_back_button</source>
         <translation>Back</translation>
     </message>
@@ -358,125 +422,130 @@
 <context>
     <name>MainSettingsWidget</name>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="45"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="46"/>
         <source>system</source>
         <translation>System</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="46"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="47"/>
         <source>workflow</source>
         <translation>Workflow</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="47"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="48"/>
         <source>printer</source>
         <translation>Printer</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="48"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="49"/>
         <source>Scan</source>
         <translation>Scan</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="52"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="53"/>
         <source>HTTP address</source>
         <translation>HTTP address</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="53"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="54"/>
         <source>language</source>
         <translation>language</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="54"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="55"/>
         <source>create style table</source>
         <translation>Create style table</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="59"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="240"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="60"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="247"/>
         <source>prefix </source>
         <translation>Prefix</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="60"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="241"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="61"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="248"/>
         <source>suffix </source>
         <translation>Suffix</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="63"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="64"/>
         <source>scanMode</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="64"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="65"/>
         <source>font min</source>
         <translation>Font min</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="65"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="66"/>
         <source>font max</source>
         <translation>Font max</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="66"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="67"/>
         <source>font dec</source>
         <translation>Font dec</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="69"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="70"/>
         <source>Printer support</source>
         <translation>Printer support</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="70"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="71"/>
         <source>Port name</source>
         <translation>Port name</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="71"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="72"/>
         <source>Port</source>
         <translation>Port</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="72"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="73"/>
         <source>Printer</source>
         <translation>Printer</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="83"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="226"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="74"/>
+        <source>Printer name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="85"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="233"/>
         <source>settings_scmode_one</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="83"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="226"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="85"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="233"/>
         <source>settings_scmode_autos</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="83"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="226"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="85"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="233"/>
         <source>settings_scmode_simple</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="89"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="228"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="91"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="235"/>
         <source>settings_system_title</source>
         <translation>Settings system</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="108"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="229"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="110"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="236"/>
         <source>settings_save_button</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="112"/>
-        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="230"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="114"/>
+        <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="237"/>
         <source>settings_back_button</source>
         <translation>Back</translation>
     </message>
@@ -488,23 +557,28 @@
         <translation type="obsolete">Selection user tip!</translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="29"/>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="32"/>
         <source>mode_selection_modes_tip:</source>
         <translation>Selection modes tip:</translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="35"/>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="38"/>
         <source>mode_selection_logout_tip</source>
         <translation>Logout</translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="138"/>
-        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="156"/>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="148"/>
         <source>Error!</source>
         <translation>Error!</translation>
     </message>
     <message>
-        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="174"/>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="180"/>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="198"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../widgets/ModeSelectionBranch/ModeSelectionWidget.cpp" line="198"/>
         <source>mode_selection_timeout!</source>
         <translation>timeout!</translation>
     </message>
@@ -522,7 +596,14 @@
         <translation>Enter data</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ScaningRelated/MulticontrolScaningWidget.cpp" line="337"/>
+        <location filename="../widgets/MultibranchWidgets/ScaningRelated/MulticontrolScaningWidget.cpp" line="276"/>
+        <location filename="../widgets/MultibranchWidgets/ScaningRelated/MulticontrolScaningWidget.cpp" line="293"/>
+        <location filename="../widgets/MultibranchWidgets/ScaningRelated/MulticontrolScaningWidget.cpp" line="315"/>
+        <source>Error!</source>
+        <translation type="unfinished">Error!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/ScaningRelated/MulticontrolScaningWidget.cpp" line="319"/>
         <source>document creation error</source>
         <translation>Document creation error</translation>
     </message>
@@ -530,25 +611,41 @@
 <context>
     <name>NormalScaningWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ScaningRelated/NormalScaningWidget.cpp" line="237"/>
+        <location filename="../widgets/MultibranchWidgets/ScaningRelated/NormalScaningWidget.cpp" line="175"/>
+        <location filename="../widgets/MultibranchWidgets/ScaningRelated/NormalScaningWidget.cpp" line="191"/>
+        <location filename="../widgets/MultibranchWidgets/ScaningRelated/NormalScaningWidget.cpp" line="212"/>
+        <source>Error!</source>
+        <translation type="unfinished">Error!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/ScaningRelated/NormalScaningWidget.cpp" line="216"/>
         <source>document creation error</source>
         <translation>Document creation error</translation>
     </message>
 </context>
 <context>
+    <name>NullPrinterWrapper</name>
+    <message>
+        <location filename="../PrinterWrappers/NullPrinterWrapper.cpp" line="18"/>
+        <location filename="../PrinterWrappers/NullPrinterWrapper.cpp" line="47"/>
+        <source>file invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PagedSearchWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/PagedSearchWidget.cpp" line="61"/>
+        <location filename="../widgets/MultibranchWidgets/PagedSearchWidget.cpp" line="65"/>
         <source>item_search_search</source>
         <translation>Search</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/PagedSearchWidget.cpp" line="71"/>
+        <location filename="../widgets/MultibranchWidgets/PagedSearchWidget.cpp" line="75"/>
         <source>item_search_back</source>
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/PagedSearchWidget.cpp" line="193"/>
+        <location filename="../widgets/MultibranchWidgets/PagedSearchWidget.cpp" line="205"/>
         <source>item_search_timeout: </source>
         <translation>timeout:</translation>
     </message>
@@ -556,27 +653,27 @@
 <context>
     <name>ParentDocumentWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ParentDocumentWidget.cpp" line="52"/>
+        <location filename="../widgets/MultibranchWidgets/ParentDocumentWidget.cpp" line="54"/>
         <source>parent_doc_search_info</source>
         <translation>Parent doc search</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ParentDocumentWidget.cpp" line="56"/>
+        <location filename="../widgets/MultibranchWidgets/ParentDocumentWidget.cpp" line="58"/>
         <source>parent_doc_filter</source>
         <translation>Filter</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ParentDocumentWidget.cpp" line="58"/>
+        <location filename="../widgets/MultibranchWidgets/ParentDocumentWidget.cpp" line="60"/>
         <source>back</source>
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ParentDocumentWidget.cpp" line="61"/>
+        <location filename="../widgets/MultibranchWidgets/ParentDocumentWidget.cpp" line="63"/>
         <source>ok</source>
         <translation>ok</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ParentDocumentWidget.cpp" line="118"/>
+        <location filename="../widgets/MultibranchWidgets/ParentDocumentWidget.cpp" line="128"/>
         <source>no data received during request</source>
         <translation>no data received during request</translation>
     </message>
@@ -584,18 +681,18 @@
 <context>
     <name>PlaceSelectionWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/PlaceSelectionWidget.cpp" line="25"/>
-        <location filename="../widgets/MultibranchWidgets/PlaceSelectionWidget.cpp" line="51"/>
+        <location filename="../widgets/MultibranchWidgets/PlaceSelectionWidget.cpp" line="27"/>
+        <location filename="../widgets/MultibranchWidgets/PlaceSelectionWidget.cpp" line="53"/>
         <source>please select place for mode: </source>
         <translation>Select place for mode:</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/PlaceSelectionWidget.cpp" line="55"/>
+        <location filename="../widgets/MultibranchWidgets/PlaceSelectionWidget.cpp" line="57"/>
         <source>place_selection_back</source>
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/PlaceSelectionWidget.cpp" line="194"/>
+        <location filename="../widgets/MultibranchWidgets/PlaceSelectionWidget.cpp" line="205"/>
         <source>mode_selection_timeout!</source>
         <translation>timeout!</translation>
     </message>
@@ -603,19 +700,32 @@
 <context>
     <name>PrintingScaningWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ScaningRelated/PrintingScaningWidget.cpp" line="15"/>
         <source>Connection to printer failed! Check your port settings.</source>
-        <translation>Connection to printer failed! Check your port settings.</translation>
+        <translation type="vanished">Connection to printer failed! Check your port settings.</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ScaningRelated/PrintingScaningWidget.cpp" line="21"/>
         <source>printing failed: </source>
-        <translation>printing failed:</translation>
+        <translation type="vanished">printing failed:</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ScaningRelated/PrintingScaningWidget.cpp" line="28"/>
         <source>This build does not supports printing!</source>
-        <translation>This build does not supports printing!</translation>
+        <translation type="vanished">This build does not supports printing!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/ScaningRelated/PrintingScaningWidget.cpp" line="122"/>
+        <source>Error!</source>
+        <translation type="unfinished">Error!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/ScaningRelated/PrintingScaningWidget.cpp" line="161"/>
+        <source>printer</source>
+        <translation type="unfinished">Printer</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/ScaningRelated/PrintingScaningWidget.cpp" line="190"/>
+        <location filename="../widgets/MultibranchWidgets/ScaningRelated/PrintingScaningWidget.cpp" line="195"/>
+        <source>Printer error</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -633,17 +743,17 @@
         <translation type="vanished">Parameters announce</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="70"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="77"/>
         <source>receipt_parameters_status</source>
         <translation>Parameters status</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="71"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="78"/>
         <source>receipt_parameters_closed_button</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="72"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="79"/>
         <source>receipt_parameters_cancelled_button</source>
         <translation></translation>
     </message>
@@ -652,17 +762,17 @@
         <translation type="vanished">select order</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="73"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="80"/>
         <source>receipt_parameters_inspect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="74"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="81"/>
         <source>receipt_parameters_continue</source>
         <translation>Parameters continue</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="75"/>
+        <location filename="../widgets/MultibranchWidgets/ReceiptParametersWidget.cpp" line="82"/>
         <source>receipt_parameters_back</source>
         <translation>receipt_parameters_back</translation>
     </message>
@@ -670,32 +780,38 @@
 <context>
     <name>SelectItemFromListWidget</name>
     <message>
-        <location filename="../widgets/MultibranchWidgets/SelectItemFromListWidget.cpp" line="65"/>
+        <location filename="../widgets/MultibranchWidgets/SelectItemFromListWidget.cpp" line="68"/>
         <source>Please select item from list!</source>
         <translation>Please select item from list!</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/SelectItemFromListWidget.cpp" line="70"/>
+        <location filename="../widgets/MultibranchWidgets/SelectItemFromListWidget.cpp" line="73"/>
         <source>Search</source>
         <translation>Search</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/SelectItemFromListWidget.cpp" line="83"/>
+        <location filename="../widgets/MultibranchWidgets/SelectItemFromListWidget.cpp" line="86"/>
         <source>back</source>
         <translation>back</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/SelectItemFromListWidget.cpp" line="87"/>
+        <location filename="../widgets/MultibranchWidgets/SelectItemFromListWidget.cpp" line="90"/>
         <source>W\O</source>
         <translation>W\O</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/SelectItemFromListWidget.cpp" line="183"/>
+        <location filename="../widgets/MultibranchWidgets/SelectItemFromListWidget.cpp" line="186"/>
+        <location filename="../widgets/MultibranchWidgets/SelectItemFromListWidget.cpp" line="231"/>
+        <source>Error!</source>
+        <translation type="unfinished">Error!</translation>
+    </message>
+    <message>
+        <location filename="../widgets/MultibranchWidgets/SelectItemFromListWidget.cpp" line="190"/>
         <source>no data received!</source>
         <translation>no data received!</translation>
     </message>
     <message>
-        <location filename="../widgets/MultibranchWidgets/SelectItemFromListWidget.cpp" line="239"/>
+        <location filename="../widgets/MultibranchWidgets/SelectItemFromListWidget.cpp" line="240"/>
         <source>timeout: </source>
         <translation>timeout:</translation>
     </message>
