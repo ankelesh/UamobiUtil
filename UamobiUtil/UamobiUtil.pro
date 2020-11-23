@@ -5,13 +5,15 @@
 TEMPLATE = app
 TARGET = UamobiUtil
 QT += core xml network gui widgets
-CONFIG += release
+CONFIG += debug
 DEFINES += DEBUG LINELLA
 greaterThan(QT_MAJOR_VERSION, 4): DEFINES += QT_VERSION5X
 lessThan(QT_MAJOR_VERSION, 5) : DEFINES += "Q_NULLPTR=0"
+lessThan(QT_MAJOR_VERSION, 5) : QT += phonon
 android: QT += bluetooth
 win32: DEFINES += "Q_FALLTHROUGH=__noop"
 win32: RC_FILE += uamobiutil.rc
+win32: LIBS += "C:\Program Files\Microsoft SDKs\Windows\v7.0\Lib\WinMM.lib"
 
 wince* {
         INCLUDEPATH += C:/Qt/4.8.3-CE6-static/include
@@ -23,6 +25,8 @@ wince* {
         QMAKE_LFLAGS += /LTCG
         RC_FILE = uamobiutilwince.rc
         DEFINES += "Q_FALLTHROUGH=__noop"
+        LIBS += "C:\Program Files\Windows CE Tools\wce600\CE600\Lib\ARMV4I\coredll.lib"
+
 }
 HEADERS += ./UamobiUtil.h \
     ./networking/QueryTemplates.h \
@@ -111,7 +115,10 @@ HEADERS += ./UamobiUtil.h \
     widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.h \
     widgets/utils/client_defaults.h \
     SoundWrappers/AbsSoundWrapper.h \
-    SoundWrappers/PhononSoundWrapper.h
+    SoundWrappers/PhononSoundWrapper.h \
+    SoundWrappers/ModernQtSoundWrapper.h \
+    SoundWrappers/SoundEffectPlayer.h \
+    SoundWrappers/WinCEUnpackWrapper.h
 SOURCES += ./main.cpp \
     ./UamobiUtil.cpp \
     ./widgets/ControlsMiniwidgets/BarcodeControl.cpp \
@@ -198,7 +205,11 @@ SOURCES += ./main.cpp \
     widgets/ExtendedDelegates/CountingDelegate.cpp \
     datacore/PseudotableEntityModel.cpp \
     widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp \
-    SoundWrappers/AbsSoundWrapper.cpp
+    SoundWrappers/AbsSoundWrapper.cpp \
+    SoundWrappers/ModernQtSoundWrapper.cpp \
+    SoundWrappers/PhononSoundWrapper.cpp \
+    SoundWrappers/SoundEffectPlayer.cpp \
+    SoundWrappers/WinCEUnpackWrapper.cpp
 RESOURCES += UamobiUtil.qrc
 TRANSLATIONS += translations/uamobiutil_ru.ts translations/uamobiutil_ro.ts translations/uamobiutil_en.ts
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "AbsSoundWrapper.h"
+#ifdef QT_VERSION5X
 #include <QSoundEffect>
 #include <qvector.h>
 
@@ -22,3 +23,5 @@ public:
 
 
 };
+
+#endif

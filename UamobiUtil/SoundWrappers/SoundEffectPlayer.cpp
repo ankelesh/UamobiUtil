@@ -2,15 +2,19 @@
 #ifdef QT_VERSION5X
 #include "ModernQtSoundWrapper.h"
 #else
+#ifndef Q_OS_WINCE
 #include "PhononSoundWrapper.h"
+#else
+#include "WinCEUnpackWrapper.h"
+#endif
 #endif
 
 
 QStringList _initDSF()
 {
 	QStringList temp;
-	temp << ":/res/sound/scan.wav";
-	temp << ":/res/sound/fail.wav";
+    temp << ":/res/sound/scan.wav";
+    temp << ":/res/sound/fail.wav";
 	return temp;
 }
 
@@ -22,7 +26,10 @@ SoundEffectPlayer::SoundEffectPlayer()
 #ifdef QT_VERSION5X
 	wrapper(new ModernQtSoundWrapper(_defaultSoundFiles, this))
 #else
-	wrapper(new PhononSoundWrapper(_defaultSoundFiles, this))
+#ifdef Q_OS_WINCE
+    wrapper(new WinCEUnpackWrapper(_defaultSoundFiles, this))
+#else
+    wrapper(new PhononSoundWrapper(_defaultSoundFiles, this))
 #endif
 {
 

@@ -1,25 +1,25 @@
 #pragma once
 #include "AbsSoundWrapper.h"
-#if lessThan(QT_VERSION,0x0300000)
-
+#ifndef QT_VERSION5X
+#ifndef Q_OS_WINCE
+#include <Phonon>
 
 class PhononSoundWrapper : public AbsSoundWrapper
 {
     Q_OBJECT
     // AbsSoundWrapper interface
 protected:
+    QVector<Phonon::MediaObject*> soundGraphs;
+    Phonon::MediaObject* singleShotBuffer;
+
     void _play(QString sourceName);
-    void _prepare(QString souceName);
+    int _prepare(QString souceName);
     void _play();
     void _clear();
     void _play(int which);
 public:
-    PhononSoundWrapper(QStringList list, QString s);
+    explicit PhononSoundWrapper(QStringList list, QObject* parent = Q_NULLPTR);
+
 };
-
-
-
-
-
 #endif
-
+#endif

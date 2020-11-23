@@ -1,5 +1,5 @@
 #include "ModernQtSoundWrapper.h"
-
+#ifdef QT_VERSION5X
 void ModernQtSoundWrapper::_play(QString sourceName)
 {
 	singleShotBuffer->setSource(sourceName);
@@ -51,3 +51,4 @@ ModernQtSoundWrapper::ModernQtSoundWrapper(QStringList fnames, QObject* parent)
 	}
 	singleShotBuffer->setVolume(0.25);
 }
+#endif

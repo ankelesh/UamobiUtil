@@ -5,6 +5,7 @@
 #endif
 #include "widgets/BranchingTools/EmbeddedBranches.h"
 #include "widgets/BranchingTools/BranchException.h"
+#include "SoundWrappers/SoundEffectPlayer.h"
 
 UamobiUtil::UamobiUtil( QWidget* parent)
 	: QWidget(parent), abstractDynamicNode(
@@ -47,6 +48,7 @@ UamobiUtil::~UamobiUtil()
 void UamobiUtil::gotoModeSelection()
 {
 	ModeSelectionWidget* mb = new ModeSelectionWidget(this);
+    AppSounds->play(SoundEffectPlayer::ItemScannedDSE);
 	mb->loadModes();
 #ifdef QT_VERSION5X
 	QObject::connect(mb, &ModeSelectionWidget::backRequired, this, &UamobiUtil::hideCurrent);
