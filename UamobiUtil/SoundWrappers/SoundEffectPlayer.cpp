@@ -31,6 +31,7 @@ SoundEffectPlayer::SoundEffectPlayer()
 #else
     wrapper(new PhononSoundWrapper(_defaultSoundFiles, this))
 #endif
+#endif
 {
 
 }

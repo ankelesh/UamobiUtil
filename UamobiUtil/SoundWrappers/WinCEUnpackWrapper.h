@@ -1,6 +1,5 @@
 #ifndef WINCEUNPACKWRAPPER_H
 #define WINCEUNPACKWRAPPER_H
-#define Q_OS_WINCE
 #ifdef Q_OS_WINCE
 #include "AbsSoundWrapper.h"
 #include "windows.h"

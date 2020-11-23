@@ -14,6 +14,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	fontMin(new QSpinBox(wrkflTab)),
 	fontMax(new QSpinBox(wrkflTab)),
 	fontDec(new QSpinBox(wrkflTab)),
+    notificationsVolume(new QDoubleSpinBox(wrkflTab)),
 	sysTab(new QWidget(innerWidget)),
 	sysinnLayout(new QFormLayout(sysTab)),
 	topExplLabel(new QLabel(sysTab)),
@@ -65,6 +66,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	wrkflinnLayout->addRow(tr("font min"), fontMin);
 	wrkflinnLayout->addRow(tr("font max"), fontMax);
 	wrkflinnLayout->addRow(tr("font dec"), fontDec);
+    wrkflinnLayout->addRow(tr("Notifications volume"), notificationsVolume);
 	wrkflinnLayout->setRowWrapPolicy(QFormLayout::WrapAllRows);
 	printTab->setLayout(printinnLayout);
 	printinnLayout->addRow(tr("Printer support"), buildState);
@@ -141,6 +143,8 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	fontMax->setMaximum(500);
     fontDec->setValue(int(AppSettings->fontPercent * 100));
 	fontDec->setMaximum(100);
+    notificationsVolume->setMaximum(1.0);
+    notificationsVolume->setValue(AppSettings->notificationsVolume);
 	createSTableButton->setIcon(QIcon(":/res/add.png"));
 
 #ifdef FTR_COM
@@ -163,6 +167,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	portType->setEditable(true);
 	btDeviceName->setText(AppSettings->bluetoothDeviceNameMask);
 	
+
 
 
 #ifdef QT_VERSION5X
@@ -213,6 +218,7 @@ void MainSettingsWidget::saveClicked()
 	AppSettings->printerPort = portNumber->value();
 	AppSettings->printerPortDesignation = portDesignation->currentText();
 	AppSettings->bluetoothDeviceNameMask = btDeviceName->text();
+    AppSettings->notificationsVolume = notificationsVolume->value();
 	BarcodeObs->resetCapture(AppSettings->scanPrefix, AppSettings->scanSuffix);
 	AppSettings->dump();
 	emit saveConfirmed();

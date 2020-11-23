@@ -34,6 +34,7 @@ public:
 	QString lastPrinterBTUUID;
 	QString bluetoothDeviceNameMask;
 
+    double notificationsVolume;
     explicit GlobalAppSettings();
 	
 	void setTranslator();

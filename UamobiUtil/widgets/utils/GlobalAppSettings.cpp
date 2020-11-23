@@ -43,6 +43,7 @@ void GlobalAppSettings::dump()
     setting.setValue("printer_port", printerPort);
     setting.setValue("printer_type", printerType);
 	setting.setValue("printer_alternatives", alternativePrinters);
+    setting.setValue("notifications_volume", notificationsVolume);
 	setting.beginGroup("bluetooth");
 	setting.setValue("lastMAC", lastPrinterBTMAC);
 	setting.setValue("lastUUID", lastPrinterBTUUID);
@@ -76,6 +77,7 @@ GlobalAppSettings::GlobalAppSettings()
 	printerPort = settings.value("printer_port", 19200).toInt();
 	printerType = settings.value("printer_type", "zebra").toString();
 	alternativePrinters = settings.value("alternative_printers", QVariant(QStringList())).toStringList();
+    notificationsVolume = settings.value("notifications_volume", QVariant(0.75)).toDouble();
 	settings.beginGroup("bluetooth");
 	lastPrinterBTMAC = settings.value("lastMAC", QString()).toString();
 	lastPrinterBTUUID = settings.value("lastUUID", QString()).toString();

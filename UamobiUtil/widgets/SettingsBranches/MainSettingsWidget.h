@@ -47,6 +47,7 @@ private:
 	QSpinBox* fontMin;
 	QSpinBox* fontMax;
 	QSpinBox* fontDec;
+    QDoubleSpinBox* notificationsVolume;
 	// systab without contents
 	QWidget* sysTab;
 	QFormLayout* sysinnLayout;

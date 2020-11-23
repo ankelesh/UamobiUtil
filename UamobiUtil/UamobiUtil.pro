@@ -10,7 +10,7 @@ DEFINES += DEBUG LINELLA
 greaterThan(QT_MAJOR_VERSION, 4): DEFINES += QT_VERSION5X
 lessThan(QT_MAJOR_VERSION, 5) : DEFINES += "Q_NULLPTR=0"
 lessThan(QT_MAJOR_VERSION, 5) : QT += phonon
-android: QT += bluetooth
+android: QT += bluetooth multimedia
 win32: DEFINES += "Q_FALLTHROUGH=__noop"
 win32: RC_FILE += uamobiutil.rc
 win32: LIBS += "C:\Program Files\Microsoft SDKs\Windows\v7.0\Lib\WinMM.lib"

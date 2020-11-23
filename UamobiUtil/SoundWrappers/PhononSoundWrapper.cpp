@@ -1,10 +1,13 @@
 #include "PhononSoundWrapper.h"
 #ifndef QT_VERSION5X
 #ifndef Q_OS_WINCE
+#include "widgets/utils/GlobalAppSettings.h"
 typedef QVector<Phonon::MediaObject*> PMOVector;
 
 void PhononSoundWrapper::_play(QString sourceName)
 {
+    if (AppSettings->notificationsVolume < 0.3)
+        return;
     if (singleShotBuffer != Q_NULLPTR)
     {
         singleShotBuffer->deleteLater();
@@ -37,7 +40,7 @@ void PhononSoundWrapper::_clear()
 
 void PhononSoundWrapper::_play(int which)
 {
-    if (which >= 0 && soundGraphs.count())
+    if (which >= 0 && soundGraphs.count() && AppSettings->notificationsVolume > 0.3)
     {
         soundGraphs.at(which)->play();
     }

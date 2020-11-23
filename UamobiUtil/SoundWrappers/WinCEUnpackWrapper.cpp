@@ -1,6 +1,6 @@
 #include "WinCEUnpackWrapper.h"
 #ifdef Q_OS_WINCE
-
+#include "widgets/utils/GlobalAppSettings.h"
 #include <QDir>
 #include <string>
 #include <vector>
@@ -37,7 +37,8 @@ void WinCEUnpackWrapper::_play(QString sourceName)
 {
     if (!sourceName.startsWith(':'))
     {
-        PlaySound(sourceName.utf16(), NULL, SND_FILENAME);
+        if (AppSettings->notificationsVolume > 0.3)
+            PlaySound(sourceName.utf16(), NULL, SND_FILENAME);
     }
 }
 
@@ -62,7 +63,7 @@ void WinCEUnpackWrapper::_clear()
 
 void WinCEUnpackWrapper::_play(int which)
 {
-    if (which >= 0 && sources.count())
+    if (which >= 0 && sources.count() && AppSettings->notificationsVolume > 0.3)
     {
         PlaySound(sources.at(which), NULL, SND_FILENAME);
     }
