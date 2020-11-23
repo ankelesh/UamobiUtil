@@ -5,6 +5,7 @@
 #endif
 #include "widgets/BranchingTools/EmbeddedBranches.h"
 #include "widgets/BranchingTools/BranchException.h"
+
 UamobiUtil::UamobiUtil( QWidget* parent)
 	: QWidget(parent), abstractDynamicNode(
 		new MainPageWidget(this),

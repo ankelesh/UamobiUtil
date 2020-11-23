@@ -12,9 +12,11 @@ AbsSoundWrapper::AbsSoundWrapper(QStringList names, QObject *parent) : QObject(p
 
 }
 
-void AbsSoundWrapper::prepare(QString sourceName)
+int AbsSoundWrapper::prepare(QString sourceName)
 {
-    _prepare(sourceName);
+    if (sourceFilenames.contains(sourceName))
+        return sourceFilenames.indexOf(sourceName);
+    return _prepare(sourceName);
 }
 
 void AbsSoundWrapper::play(QString sourceName)
@@ -27,11 +29,6 @@ void AbsSoundWrapper::play()
     _play();
 }
 
-void AbsSoundWrapper::stop()
-{
-    _stop();
-}
-
 void AbsSoundWrapper::play(int which)
 {
     _play(which);
@@ -42,8 +39,11 @@ void AbsSoundWrapper::clear()
     _clear();
 }
 
-void AbsSoundWrapper::prepare(QStringList sourceNames)
+QVector<int> AbsSoundWrapper::prepare(QStringList sourceNames)
 {
+    QVector<int> tmp;
+    tmp.reserve(sourceNames.count());
     for (QStringList::iterator i = sourceNames.begin(); i < sourceNames.end(); ++i )
-        _prepare(*i);
+        tmp.push_back(_prepare(*i));
+    return tmp;
 }

@@ -13,7 +13,6 @@ protected:
     void _play();
     void _clear();
     void _play(int which);
-    void _stop();
 public:
     PhononSoundWrapper(QStringList list, QString s);
 };
@@ -24,8 +23,3 @@ public:
 
 #endif
 
-
-PhononSoundWrapper::PhononSoundWrapper(QStringList list, QString s)
-{
-
-}

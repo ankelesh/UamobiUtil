@@ -98,5 +98,7 @@
         <file>translations/uamobiutil_en.qm</file>
         <file>translations/uamobiutil_ro.qm</file>
         <file>translations/uamobiutil_ru.qm</file>
+        <file>res/sound/fail.wav</file>
+        <file>res/sound/scan.wav</file>
     </qresource>
 </RCC>

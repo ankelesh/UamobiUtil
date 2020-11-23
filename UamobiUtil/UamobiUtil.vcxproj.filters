@@ -130,6 +130,12 @@
     <Filter Include="Header Files\PrinterWrappers">
       <UniqueIdentifier>{937ed6c8-f1f8-431a-9d90-b412f99d652d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\SoundWrappers">
+      <UniqueIdentifier>{882ec382-c7d0-4bc8-aef7-65e44dc9d16f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SoundWrappers">
+      <UniqueIdentifier>{b814a23e-696f-4d7a-a483-6f6a177e2b45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -391,6 +397,12 @@
       <Filter>Source Files\BranchingTools</Filter>
     </ClCompile>
     <ClCompile Include="SoundWrappers\AbsSoundWrapper.cpp">
+      <Filter>Source Files\SoundWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundWrappers\ModernQtSoundWrapper.cpp">
+      <Filter>Source Files\SoundWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundWrappers\SoundEffectPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -554,11 +566,17 @@
     <QtMoc Include="PrinterWrappers\NullPrinterWrapper.h">
       <Filter>Header Files\PrinterWrappers</Filter>
     </QtMoc>
-    <QtMoc Include="SoundWrappers\AbsSoundWrapper.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="SoundWrappers\PhononSoundWrapper.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\SoundWrappers</Filter>
+    </QtMoc>
+    <QtMoc Include="SoundWrappers\AbsSoundWrapper.h">
+      <Filter>Header Files\SoundWrappers</Filter>
+    </QtMoc>
+    <QtMoc Include="SoundWrappers\ModernQtSoundWrapper.h">
+      <Filter>Header Files\SoundWrappers</Filter>
+    </QtMoc>
+    <QtMoc Include="SoundWrappers\SoundEffectPlayer.h">
+      <Filter>Header Files\SoundWrappers</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

@@ -1,58 +1,15 @@
-Application start begins: version 0.13 lin-alpha
->>	410175535972393 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
->>	410175535978019 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
-<<	410175536076990 received response going to 0 containing text:|
+Application start begins: version 0.14 lin-alpha
+>>	411171449339945 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
+>>	411171449343779 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
+<<	411171449375166 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket</servicename></users>
 	and error text |
->>	410175538132612 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.13
-<<	410175538192097 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2597</session>
+>>	411171450339204 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.14
+<<	411171450395873 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2685</session>
 </login>
 	and error text |
->>	410175538194796 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2597&lang=Russian
-<<	410175538249174 received response going to 0 containing text:|
+>>	411171450400620 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2685&lang=Russian
+<<	411171450458326 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>Инв - ция</captionMode><mode>inventory</mode><submode></submode></mode> <mode><modeName>ordersandsldcorrection</modeName><captionMode>Кор - ка заказа</captionMode><mode>receipt</mode><submode>ordersandsldcorrection</submode></mode> <mode><modeName>partialinventory</modeName><captionMode>Корректировка остатков</captionMode><mode>inventory</mode><submode>partialinventory</submode></mode> <mode><modeName>printing</modeName><captionMode>Печать этикеток</captionMode><mode>printing</mode><submode></submode></mode> <mode><modeName>receipt</modeName><captionMode>Прием товаров</captionMode><mode>receipt</mode><submode></submode></mode> <mode><modeName>receiptfromwarehouses</modeName><captionMode>Приемка от склада</captionMode><mode>receipt</mode><submode>receiptfromwarehouses</submode></mode> <mode><modeName>univscanact</modeName><captionMode>Универсальный акт сканирования</captionMode><mode>inventory</mode><submode>univscanact</submode></mode>  <place>   <code>205</code>   <name>L-05 str. Onisifor Ghibu 7/2</name>  </place> </modes>
-	and error text |
->>	410175538759342 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=2597&mode=receipt&submode=
-<<	410175538802002 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status>  <desc> <![CDATA[ 
-[SwitchByScanCode]
-%Order%
-<rec_get_order_by_barcode&session=%1&barcode=%2>
-{
-[Subbranch]
-{
-[SelectItemFromList]
-%Supplier%
-[IdDependentSelect]
-%Order%
-}
-}
-[ReceiptParameters]
-[NormalScaning]
-<>
-*-6* ]]> </desc></mode>
-	and error text |
->>	410175539090576 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=rec_list_suppliers&session=2597&text=&hasorders=true
-<<	410175539097673 received response going to 5 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <suppliers>  <status>200</status>  <supplier>   <code>162104</code>   <name>Serviabil SRL</name>   <orders>1</orders>  </supplier> </suppliers>
-	and error text |
->>	410175539314161 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=rec_list_orders&session=2597&supplier=162104
-<<	410175539320305 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <orders>  <status>200</status>  <order>   <code>18858076</code>   <title>№ заявки: 18858076</title>
-  <text>07.10.20 - 08.10.20, 37  </text>  </order> 
-<supplier>Serviabil SRL</supplier>
-</orders>
-	and error text |
->>	410175539491515 sent request: http://92.115.237.226:60080/um/unitest.php?delay=7&cmd=rec_get_order_info&session=2597&order=18858076&supplier=162104
-<<	410175539495401 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <order>  <status>200</status> <richdata> <![CDATA[  <div><b> Serviabil SRL</b></div>  <div><b>Док. №:</b> 18858076</div> <hr><div>LACTIS Lapte 3.5% pol. 1l  - <b>5</b></div><hr> <div>FRUTINO Iaurt caise 3.5% 125g - <b>0</b></div><hr> <div>FRUTINO Iaurt capsune 3.5% 125g - <b>0</b></div><hr> <div>FRUTINO Iaurt piersic/fructul pasiunii 3.5% 125g - <b>0</b></div><hr> <div>FRUTINO Iaurt visina 3.5% 125g - <b>0</b></div><hr> <div>INLAC Iaurt natural 3.5% 125g - <b>3</b></div><hr> <div>INLAC Iaurt de baut caise pel.500g - <b>5</b></div><hr> <div>INLAC Iaurt de baut caps pel. 500g - <b>5</b></div><hr> <div>INLAC Iaurt de baut natural pel.500g - <b>3</b></div><hr> <div>INLAC Iaurt de baut visina pel. 500g - <b>5</b></div><hr> ]]> </richdata> </order>
-	and error text |
->>	410175539801835 sent request: http://92.115.237.226:60080/um/unitest.php?delay=8&cmd=rec_new_doc&session=2597&date=09.10.2020&parent=18858076&comment=
-<<	410175539814835 received response going to 31 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <newdoc>  <status>200</status>  <doc>   <code>3752848</code>   <parentnr>18858082</parentnr>   <supplier>Serviabil SRL</supplier>   <date>09.10.2020</date>   <comment></comment>   <closed>false</closed>   <canceled>false</canceled>   <locked>false</locked>   <scanmode>simple</scanmode>  </doc> </newdoc>
-	and error text |
->>	410175540496038 sent request: http://92.115.237.226:60080/um/unitest.php?delay=9&cmd=list_users
-<<	410175540509659 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket</servicename></users>
 	and error text |
