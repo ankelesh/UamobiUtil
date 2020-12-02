@@ -29,7 +29,7 @@ void PlaceSelectionWidget::_handleRecord(RecEntity e)
 }
 
 PlaceSelectionWidget::PlaceSelectionWidget(RecEntity toExtract, QWidget* parent)
-	: IndependentBranchNode(independent_nodes::PlaceSelect, true, parent),
+	: IndependentBranchNode(independent_nodes::PlaceSelect, parent),
 	allplaces(new DataEntityListModel(this)),
 	mainLayout(new QVBoxLayout(this)), buttonLayout(new QHBoxLayout(this)),
      userTip(new QLabel(this)),
@@ -68,6 +68,7 @@ PlaceSelectionWidget::PlaceSelectionWidget(RecEntity toExtract, QWidget* parent)
     QScroller::grabGesture(placeSelection, QScroller::LeftMouseButtonGesture);
 	placeSelection->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 #endif
+	_captureNumbers();
 #ifdef QT_VERSION5X
 	QObject::connect(allplaces, &DataEntityListModel::dataEntityClicked, this, &PlaceSelectionWidget::placeSelected);
 #ifdef Q_OS_ANDROID
@@ -92,7 +93,7 @@ void PlaceSelectionWidget::show()
 	inframedWidget::show();
 }
 
-bool PlaceSelectionWidget::isExpectingControl(int val)
+void PlaceSelectionWidget::_numberReaction(int val)
 {
 	if (val >= -1 && val <= allplaces->rowCount() - 1)
 	{
@@ -103,19 +104,15 @@ bool PlaceSelectionWidget::isExpectingControl(int val)
 			else
 			{
 				emit backRequired();
-				return false;
+				return;
 			}
 		}
 		QModelIndex index = allplaces->index(val);
 		if (index.isValid())
 		{
 			allplaces->mapClickToEntity(index);
-			return true;
 		}
-		return true;
 	}
-
-	return false;
 }
 
 

@@ -13,6 +13,13 @@
 #include "widgets/ElementWidgets/ExtendedDialogs.h"
 
 #include "widgets/BranchingTools/BranchException.h"
+
+void AbstractScaningWidget::_backReaction()
+{
+	auto t = sender();
+	backNeeded();
+}
+
 void AbstractScaningWidget::useControls(const QVector<QSharedPointer < InputControlEntity> >& cvals)
 {
     switch (cvals.count())

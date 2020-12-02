@@ -55,6 +55,7 @@ IdDependentSelectWidget::IdDependentSelectWidget(RecEntity proto, QWidget* paren
 	this->setFont(GENERAL_FONT);
 	selectionView->setModel(entityModel);
 	selectionView->setItemDelegate(new ZebraItemDelegate(this));
+	_captureNumbers();
 #ifdef QT_VERSION5X
 	QObject::connect(backButton, &QPushButton::clicked, this, &IdDependentSelectWidget::backRequired);
 	QObject::connect(pickButton, &QPushButton::clicked, this, &IdDependentSelectWidget::pickClicked);
@@ -70,10 +71,10 @@ IdDependentSelectWidget::IdDependentSelectWidget(RecEntity proto, QWidget* paren
 #endif
 }
 
-bool IdDependentSelectWidget::isExpectingControl(int val)
+void IdDependentSelectWidget::_numberReaction(int val)
 {
 	if (awaiter->isAwaiting())
-		return false;
+		return;
 	if (val >= -1 && val <= entityModel->rowCount() - 1)
 	{
 		if (val == -1)
@@ -83,17 +84,28 @@ bool IdDependentSelectWidget::isExpectingControl(int val)
 			else
 			{
 				emit backRequired();
-				return false;
+				return;
 			}
 		}
 		QModelIndex index = entityModel->index(val);
 		if (index.isValid())
 		{
 			entityModel->mapClickToEntity(index);
-			return true;
 		}
 	}
-	return false;
+}
+
+void IdDependentSelectWidget::_arrowReaction(int arrow)
+{
+	if (!selectionView->hasFocus())
+	{
+		selectionView->setCurrentIndex(entityModel->moveByArrow(arrow, selectionView->currentIndex()));
+	}
+}
+
+void IdDependentSelectWidget::_returnReaction()
+{
+	entityModel->mapClickToEntity(selectionView->currentIndex());
 }
 
 void IdDependentSelectWidget::itemSelected(RecEntity item)
@@ -134,6 +146,7 @@ void IdDependentSelectWidget::parse_get_response()
 	else
 	{
         entityModel->insertData(response.objects);
+		selectionView->setCurrentIndex(entityModel->index(0));
 	}
     QObject::disconnect(awaiter, SIGNAL(requestReceived()), Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();

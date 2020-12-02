@@ -6,7 +6,7 @@
 #include <vector>
 LPCWSTR copyFromQStr(QString & from)
 {
-    LPCWSTR unconverted = from.utf16();
+    LPCWSTR unconverted = static_cast<LPCWSTR>(from.utf16());
     WCHAR* converted = new WCHAR[from.count()+1];
     wcscpy_s(converted, from.count()+1, unconverted);
     return converted;
@@ -29,7 +29,10 @@ LPCWSTR WinCEUnpackWrapper::_makePhysicalCopy(QString path)
         cdir.cd("sounds");
     }
     QString pure_fname = _makePureFilename(path);
-    QFile::copy(path, cdir.absoluteFilePath(pure_fname));
+    if (!cdir.exists(pure_fname))
+    {
+        QFile::copy(path, cdir.absoluteFilePath(pure_fname));
+    }
     return copyFromQStr(cdir.absoluteFilePath(pure_fname));
 }
 
@@ -39,6 +42,7 @@ void WinCEUnpackWrapper::_play(QString sourceName)
     {
         if (AppSettings->notificationsVolume > 0.3)
             PlaySound(sourceName.utf16(), NULL, SND_FILENAME);
+        lastSound = sourceName;
     }
 }
 
@@ -53,7 +57,7 @@ int WinCEUnpackWrapper::_prepare(QString souceName)
 
 void WinCEUnpackWrapper::_play()
 {
-
+    _play(lastSound);
 }
 
 void WinCEUnpackWrapper::_clear()

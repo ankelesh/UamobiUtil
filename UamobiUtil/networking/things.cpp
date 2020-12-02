@@ -146,6 +146,26 @@ void DataEntityListModel::reset()
 	endResetModel();
 }
 
+QModelIndex DataEntityListModel::moveByArrow(int arrow, const QModelIndex& current) const
+{
+	if (!current.isValid())
+		return index(0);
+	int new_index = current.row();
+	switch (arrow)
+	{
+	case Qt::Key_Up:
+		--new_index;
+		break;
+	case Qt::Key_Down:
+		++new_index;
+		break;
+	}
+	if (new_index >= 0 && new_index < rowCount())
+		return index(new_index);
+	else
+		return current;
+}
+
 #ifdef QT_VERSION5X
 
 void DataEntityListModel::mapClickToEntity(const QModelIndex& index)

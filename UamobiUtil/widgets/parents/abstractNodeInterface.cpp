@@ -8,14 +8,17 @@ bool abstractNode::_hideCurrent(inframedWidget* replacement)
 	if (current != untouchable)
 	{
 		current->hide();
+		current->stopListeningKeyboard();
 		current = replacement;
 		if (replacement == untouchable)
 		{
 			main->setFocus();
+			main->listenKeyboard();
 		}
 		else
 		{
 			replacement->setFocus();
+			replacement->listenKeyboard();
 		}
 		replacement->show();
 		return true;
@@ -26,12 +29,19 @@ bool abstractNode::_hideCurrent(inframedWidget* replacement)
 void abstractNode::_hideAny(inframedWidget* replacement)
 {
 	current->hide();
+	if (current == untouchable)
+		main->stopListeningKeyboard();
+	else
+		current->stopListeningKeyboard();
     current = replacement;
 
 	if (replacement == untouchable)
 	{
 		main->setFocus();
+		main->listenKeyboard();
 	}
+	else
+		replacement->listenKeyboard();
 	replacement->show();
     replacement->setFocus();
 }
@@ -60,10 +70,12 @@ void abstractDynamicNode::_hideAndDeleteCurrent(inframedWidget* replacement)
 	{
 		mainLayout->removeWidget(currentlyOpened);
 		currentlyOpened->hide();
+		currentlyOpened->stopListeningKeyboard();
 		currentlyOpened->deleteLater();
 		if (replacement != untouchable)
 		{
 			mainLayout->addWidget(replacement);
+			replacement->listenKeyboard();
 		}
 		replacement->show();
 		currentlyOpened = replacement;
@@ -72,9 +84,11 @@ void abstractDynamicNode::_hideAndDeleteCurrent(inframedWidget* replacement)
 	else 
 	{
 		untouchable->hide();
+		untouchable->stopListeningKeyboard();
 		mainLayout->addWidget(replacement);
 		replacement->show();
 		currentlyOpened = replacement;
+		replacement->listenKeyboard();
 		currentlyOpened->setFocus();
 	}
 }
@@ -88,10 +102,12 @@ void abstractDynamicNode::_hideAnyWithDelete(inframedWidget* replacement)
 	{
 		mainLayout->removeWidget(currentlyOpened);
 		currentlyOpened->hide();
+		currentlyOpened->stopListeningKeyboard();
 		currentlyOpened->deleteLater();
-			mainLayout->addWidget(replacement);
+		mainLayout->addWidget(replacement);
 		replacement->show();
 		currentlyOpened = replacement;
+		replacement->listenKeyboard();
 		currentlyOpened->setFocus();
 		return;
 	}
@@ -100,6 +116,7 @@ void abstractDynamicNode::_hideAnyWithDelete(inframedWidget* replacement)
 		mainLayout->addWidget(replacement);
 		replacement->show();
 		currentlyOpened = replacement;
+		replacement->listenKeyboard();
 		currentlyOpened->setFocus();
 	}
 }

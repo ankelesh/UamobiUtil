@@ -53,6 +53,7 @@ public:
 	InventoryParamsWidget(QWidget* parent = Q_NULLPTR);
 
 	// renundant -> sets inner data to correspond provided document
+	virtual void setFocus() override;
 	void setDocument(FullDocument);
 private slots:
 	// emits backRequired - now in dynamicBranches is not possible to go to special one

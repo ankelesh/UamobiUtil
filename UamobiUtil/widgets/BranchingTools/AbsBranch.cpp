@@ -1,9 +1,11 @@
 #include "AbsBranch.h"
+#include "ScaningCore/BarcodeObserver.h"
 
 AbsBranch::AbsBranch(QWidget* parent)
 	: IndependentBranchNode(independent_nodes::Subbranch, parent),
 	 root(new BranchElementDescription()), currentNode(0)
 {
+	stopListeningKeyboard();
 }
 
 AbsBranch::AbsBranch(BranchDescription Root, QWidget* parent)
@@ -70,6 +72,11 @@ void AbsBranch::_handleRecord(RecEntity e)
 
 void AbsBranch::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& /*overloads*/)
 {
+}
+
+void AbsBranch::listenKeyboard()
+{
+
 }
 
 void AbsBranch::_sendDataRequest()

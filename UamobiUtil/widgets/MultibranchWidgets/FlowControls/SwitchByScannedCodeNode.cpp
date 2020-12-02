@@ -22,6 +22,12 @@ void SwitchByScannedCodeWidget::_sendDataRequest()
 
 }
 
+void SwitchByScannedCodeWidget::_backReaction()
+{
+	if (currentlyOpened == untouchable)
+		emit backRequired();
+}
+
 void SwitchByScannedCodeWidget::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads)
 {
 	if (!overloads.isEmpty())
@@ -30,6 +36,11 @@ void SwitchByScannedCodeWidget::_makeOverloads(const QVector<QueryTemplates::Ove
 		defs << "barcode";
 		barcodeChecker = overloads.first().assertedAndMappedCopy(inventoryListParentDocs,defs, defs);
 	}
+}
+
+void SwitchByScannedCodeWidget::setFocus()
+{
+	barcodeInput->setFocus();
 }
 
 SwitchByScannedCodeWidget::SwitchByScannedCodeWidget(BranchDescription branch, QWidget* parent)
@@ -75,7 +86,9 @@ SwitchByScannedCodeWidget::SwitchByScannedCodeWidget(BranchDescription branch, Q
 	{
 		prototype = branch->entity;
 	}
-
+	setTabOrder(barcodeInput, skipButton);
+	backButton->setFocusPolicy(Qt::NoFocus);
+	skipButton->setDefault(true);
 	
 #ifdef QT_VERSION5X
 	QObject::connect(backButton, &MegaIconButton::clicked, this, &SwitchByScannedCodeWidget::backRequired);

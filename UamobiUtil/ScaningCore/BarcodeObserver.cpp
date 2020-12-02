@@ -21,65 +21,161 @@ QKeySequence _initiateSequence(QChar ch)
 
 bool BarcodeObserver::eventFilter(QObject* object, QEvent* event)
 {
-	if (!active)
+	switch (event->type())
 	{
-		return QObject::eventFilter(object, event);
-	}
-	if (event->type() == QEvent::KeyPress)
+	case QEvent::KeyPress:
 	{
-        QKeyEvent* temp = static_cast<QKeyEvent*>(event);
-		if (prefixFound)
-		{
-			if (temp->text().count() > 0)
-			{
-				if (temp->key() == suffix[0])
-				{
-					prefixFound = false;
-					emit barcodeCaught(buffer);
-					emit suffixCaught();
-					event->accept();
-					buffer.clear();
-					return true;
-				}
-				else
-				{
-					buffer += temp->text();
-					event->accept();
-					return true;
-				}
-			}
-		}
-		else
-		{
-            if (temp->text().count() > 0)
-			{
-				if (temp->text().at(0) == prefix[0])
-				{
-					prefixFound = true;
-					event->accept();
-					emit prefixCaught();
-					return true;
-				}
-				else
-				{
-					return QObject::eventFilter(object, event);
-				}
-			}
-		}
-
-	}
-	else if (event->type() == QEvent::KeyRelease)
-	{
-		if (prefixFound)
-		{
-			event->accept();
+		QKeyEvent* temp = static_cast<QKeyEvent*>(event);
+		if (active)
+			if (_testPressureForBarcode(temp, object))
+				return true;
+		if (_testGlobalHotkeyPress(temp, object))
 			return true;
-		}
+	}
+	break;
+	case (QEvent::KeyRelease):
+	{
+		if (active)
+			if (_testReleaseForBarcode(event))
+				return true;
+		QKeyEvent* temp = static_cast<QKeyEvent*>(event);
+		if (_testGlobalHotkeyRelease(temp, object))
+			return true;
+		if (numberCatchingActive)
+			_testNumberReleased(temp);
+	}
+	break;
+	default:
+		break;
 	}
 	return QObject::eventFilter(object, event);
+	
 }
 
-BarcodeObserver::BarcodeObserver(QChar pref, QChar suff, QObject* parent)
+bool BarcodeObserver::_testPressureForBarcode(QKeyEvent * ev, QObject* target)
+{
+	if (prefixFound)
+	{
+		if (ev->text().count() > 0)
+		{
+			if (ev->key() == suffix[0])
+			{
+				prefixFound = false;
+				emit barcodeCaught(buffer);
+				emit suffixCaught();
+				ev->accept();
+				buffer.clear();
+				return true;
+			}
+			else
+			{
+				buffer += ev->text();
+				ev->accept();
+				return true;
+			}
+		}
+	}
+	else
+	{
+		if (ev->text().count() > 0)
+		{
+			if (ev->text().at(0) == prefix[0])
+			{
+				prefixFound = true;
+				ev->accept();
+				emit prefixCaught();
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool BarcodeObserver::_testReleaseForBarcode(QEvent* ev)
+{
+	if (prefixFound)
+	{
+		ev->accept();
+		return true;
+	}
+	else
+		return false;
+}
+
+bool BarcodeObserver::_testGlobalHotkeyPress(QKeyEvent* ev, QObject* target)
+{
+	switch (ev->key())
+	{
+
+	default:
+		return false;
+	}
+}
+
+bool BarcodeObserver::_testGlobalHotkeyRelease(QKeyEvent* ev, QObject* target)
+{
+	switch (ev->key())
+	{
+	case Qt::Key_Escape:
+	case Qt::Key_Back:
+		emit escapeCaught();
+		ev->accept();
+		return true;
+	case Qt::Key_Left:
+	case Qt::Key_Right:
+	case Qt::Key_Up:
+	case Qt::Key_Down:
+		emit arrowCaught(ev->key());
+		return true;
+	case Qt::Key_Return:
+		emit returnCaught();
+		return false;
+	default:
+		return false;
+	}
+}
+
+bool BarcodeObserver::_testNumberReleased(QKeyEvent* ev)
+{
+	switch (ev->key())
+	{
+	case Qt::Key_0:
+		emit numberPressed(0);
+		break;
+	case Qt::Key_1:
+		emit numberPressed(0);
+		break;
+	case Qt::Key_2:
+		emit numberPressed(0);
+		break;
+	case Qt::Key_3:
+		emit numberPressed(0);
+		break;
+	case Qt::Key_4:
+		emit numberPressed(0);
+		break;
+	case Qt::Key_5:
+		emit numberPressed(0);
+		break;
+	case Qt::Key_6:
+		emit numberPressed(0);
+		break;
+	case Qt::Key_7:
+		emit numberPressed(0);
+		break;
+	case Qt::Key_8:
+		emit numberPressed(0);
+		break;
+	case Qt::Key_9:
+		emit numberPressed(0);
+		break;
+	default:
+		return false;
+	}
+	return false;
+}
+
+	BarcodeObserver::BarcodeObserver(QChar pref, QChar suff, QObject* parent)
 	: QObject(parent), prefix(_initiateSequence(pref)), 
 	suffix(_initiateSequence(suff)), buffer(), prefixFound(false), active(false)
 {
@@ -96,13 +192,19 @@ void BarcodeObserver::resetCapture(QChar pref, QChar suff)
 void BarcodeObserver::activate()
 {
 	active = true;
-	qApp->installEventFilter(instanse());
 }
 
 void BarcodeObserver::deactivate()
 {
 	active = false;
-	qApp->removeEventFilter(instanse());
+}
+void BarcodeObserver::catchNumbers()
+{
+	++numberCatchingActive;
+}
+void BarcodeObserver::stopNumberCatching()
+{
+	--numberCatchingActive;
 }
 bool BarcodeObserver::activated()
 {
@@ -116,4 +218,9 @@ BarcodeObserver* BarcodeObserver::instanse()
 		_instanse = new BarcodeObserver(QChar(AppSettings->scanPrefix), QChar(AppSettings->scanSuffix) , Q_NULLPTR);
 	}
 	return _instanse;
+}
+
+void BarcodeObserver::init()
+{
+	qApp->installEventFilter(instanse());
 }

@@ -45,13 +45,16 @@ protected:
 
 	QueryCache localCache;
 
+
 	void _handleRecord(RecEntity) override;
 	virtual void _sendDataRequest() override;
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
 public:
 	IdDependentSelectWidget(RecEntity proto, QWidget* = Q_NULLPTR);
 
-	virtual bool isExpectingControl(int) override;
+	virtual void _numberReaction(int) override;
+	virtual void _arrowReaction(int) override;
+	virtual void _returnReaction() override;
 	// same as _handleRecord, renundant
 	void loadData(RecEntity dependency);
 protected slots:

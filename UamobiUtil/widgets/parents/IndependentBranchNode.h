@@ -42,14 +42,17 @@ protected:
 	int id;
 	int backtracksTo;
 	
+	using inframedWidget::_arrowReaction;
+	using inframedWidget::_backReaction;
+	using inframedWidget::_numberReaction;
+	using inframedWidget::_captureNumbers;
+
 	virtual void _handleRecord(RecEntity) = 0;
 	virtual void _sendDataRequest() = 0;
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) = 0;
 public:
 	IndependentBranchNode(int Id, QWidget* parent = Q_NULLPTR) 
         : inframedWidget(parent), id(Id), backtracksTo(0) {}
-	IndependentBranchNode(int Id, bool iFilter, QWidget* parent = Q_NULLPTR) 
-        : inframedWidget(iFilter, parent), id(Id), backtracksTo(0) {}
     int getId() { return id; }
     int& backtracking() {	return backtracksTo;	}
 	void processRecord(RecEntity);

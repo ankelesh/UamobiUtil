@@ -1,17 +1,87 @@
 Application start begins: version 0.14 lin-alpha
-][	Created object LoginWidget on address 10099512
-][	Created object MainPageWidget on address 9600248
->>	411171449339945 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
->>	411171449343779 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
-<<	411171449375166 received response going to 0 containing text:|
+][	Created object LoginWidget on address 13967856
+][	Created object MainPageWidget on address 14047464
+>>	411370380007721 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
+>>	411370380013603 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
+<<	411370380058558 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket<
 	and error text |
->>	411171450339204 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.14
-<<	411171450395873 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2685</session>
+>>	411370391647364 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.14
+<<	411370391706593 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2778</session>
 </login>
 	and error text |
->>	411171450400620 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2685&lang=Russian
-<<	411171450458326 received response going to 0 containing text:|
+>>	411370391710060 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2778&lang=Russian
+<<	411370391766998 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>
+	and error text |
+>>	411370393002670 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=2778&mode=inventory&submode=partialinventory
+<<	411370393061202 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status>  <desc> <![CDATA[ 
+[ParentDocument]
+[InventoryParam
+	and error text |
+[!!!]	Mode named Корректировка остатков signed as inventory partialinventory received, interpreting: 
+	
+	[ParentDocument]
+	[InventoryParameters]
+	[BarcodeFilterSelect]
+	{
+	[SelectItemFromList]
+	%Supplier%
+	<rec_list_suppliers&session=%1&text=%2&hasorders=false : text>
+	[SelectItemFromList]
+	%Stillage%
+	<rec_list_stillages&session=%1&text=%2 : text>
+	[Subbranch]
+	{
+	[SelectItemFromList]
+	%Group%
+	<rec_list_groups&session=%1&text=%2 : text>
+	<select_filter_item&session=%1&filter=group&value=%2>
+	[SelectItemFromList]
+	%Group%
+	<rec_list_subgroups&session=%1&text=%2 : text>
+	<:>
+	}
+	}
+	[NormalScaning]
+	<>
+	<inv_add_item&session=%1&code=%2&qty=%3&show_code=%4 : barcode , control1 , show_code>
+	<inv_new_doc&session=%1&date=%2&parent=%3&comment=%4 : date , parent , comment>
+	*-5* 
+][	Created object Adjustable branch with 4 children on address 101774264
+]N[	Node of type 13 fabricated using description:  children: 0 oqs: 0
+][	Created object ParentDocumentWidget on address 101611088
+][	Created object FilterSelectWidget on address 101933232
+>>	411370393090192 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=inv_list_parent_docs&session=2778
+<<	411370393098569 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <parentdocs>  <status>200</status> </parentdocs>
+	and error text |
+>>	411370393529329 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=list_modes&session=2778&lang=Russian
+<<	411370393677041 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>
+	and error text |
+>>	411370394019259 sent request: http://92.115.237.226:60080/um/unitest.php?delay=7&cmd=select_mode&session=2778&mode=printing&submode=
+<<	411370394064105 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status>  <desc> <![CDATA[ 
+[PrintingScaning]
+*-6*
+ ]]> </de
+	and error text |
+[!!!]	Mode named Печать этикеток signed as printing  received, interpreting: 
+	
+	[PrintingScaning]
+	*-6*
+	 
+][	Created object Adjustable branch with 1 children on address 102454664
+]N[	Node of type 7 fabricated using description:  children: 0 oqs: 0
+][	Created object NormalScaning on address 100724776
+][	Created object ControlListWidget on address 102404048
+][	Created object DocResults on address 101611272
+][	Created object PagedSearchWidget on address 99536096
+][	Created object PrintingScaning on address 100724776
+>>	411370394573547 sent request: http://92.115.237.226:60080/um/unitest.php?delay=8&cmd=list_modes&session=2778&lang=Russian
+<<	411370394610867 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>
 	and error text |

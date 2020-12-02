@@ -48,9 +48,12 @@ protected:
 	virtual void _sendDataRequest() override;
 	virtual void _handleRecord(RecEntity) override;
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
+	virtual void _returnReaction() override;
+	virtual void _arrowReaction(int) override;
 public:
 	ParentDocumentWidget(RecEntity proto, QWidget* parent = Q_NULLPTR, 
 		IndependentBranchNode * filterSel = Q_NULLPTR);
+	virtual void setFocus() override;
 public slots:
 	void loadDocuments();
 	void filterDocuments();

@@ -34,7 +34,7 @@ void PagedSearchWidget::setIndexation(XmlObjects settings)
 }
 
 PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
-	: IndependentBranchNode(independent_nodes::PagedSearch, true, parent),
+	: IndependentBranchNode(independent_nodes::PagedSearch, parent),
 	entityModel(new DataEntityListModel(this)),
 	prototype(proto), mainLayout(new QVBoxLayout(this)),
 	searchPanel(new QHBoxLayout(this)), searchInput(new QLineEdit(this)),
@@ -110,7 +110,7 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 #endif
 	QObject::connect(entityModel, &DataEntityListModel::dataEntityClicked, this, &PagedSearchWidget::done);
 	QObject::connect(backButton, &MegaIconButton::clicked, this, &PagedSearchWidget::backRequired);
-	QObject::connect(searchInput, &QLineEdit::editingFinished, this, &PagedSearchWidget::doSearch);
+	QObject::connect(searchInput, &QLineEdit::returnPressed, this, &PagedSearchWidget::doSearch);
 	QObject::connect(awaiter, &RequestAwaiter::requestTimeout, this, &PagedSearchWidget::was_timeout);
 #else
 	QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(doSearch()));
@@ -119,7 +119,7 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 	QObject::connect(entityModel, SIGNAL(dataEntityClicked(RecEntity)), this, SIGNAL(done(RecEntity)));
     QObject::connect(itemList, SIGNAL(clicked(QModelIndex)), entityModel, SLOT(mapClickToEntity(QModelIndex)));
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
-	QObject::connect(searchInput, SIGNAL(editingFinished()), this, SLOT(doSearch()));
+	QObject::connect(searchInput, SIGNAL(returnPressed()), this, SLOT(doSearch()));
 	QObject::connect(awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
 #endif
 }
@@ -139,6 +139,7 @@ void PagedSearchWidget::refresh()
 	{
 		setIndexation(response.additionalObjects);
         entityModel->insertData(response.objects);
+		itemList->setCurrentIndex(entityModel->index(0));
 	}
 }
 
@@ -226,6 +227,30 @@ void PagedSearchWidget::focusInEvent(QFocusEvent* f)
 #ifdef Q_OS_ANDROID
 	qApp->inputMethod()->show();
 #endif
+}
+
+void PagedSearchWidget::_numberReaction(int num)
+{
+	if (!searchInput->hasFocus())
+		entityModel->mapClickToEntity(entityModel->index(num));
+}
+
+void PagedSearchWidget::_arrowReaction(int arrow)
+{
+	itemList->setCurrentIndex(entityModel->moveByArrow(arrow, itemList->currentIndex()));
+}
+
+void PagedSearchWidget::_returnReaction()
+{
+	if (!searchInput->hasFocus())
+	{
+		entityModel->mapClickToEntity(itemList->currentIndex());
+	}
+}
+
+void PagedSearchWidget::setFocus()
+{
+	searchInput->setFocus();
 }
 
 void PagedSearchWidget::_sendDataRequest()

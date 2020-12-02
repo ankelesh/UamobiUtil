@@ -405,6 +405,12 @@
     <ClCompile Include="SoundWrappers\SoundEffectPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SoundWrappers\PhononSoundWrapper.cpp">
+      <Filter>Source Files\SoundWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundWrappers\WinCEUnpackWrapper.cpp">
+      <Filter>Source Files\SoundWrappers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -576,6 +582,9 @@
       <Filter>Header Files\SoundWrappers</Filter>
     </QtMoc>
     <QtMoc Include="SoundWrappers\SoundEffectPlayer.h">
+      <Filter>Header Files\SoundWrappers</Filter>
+    </QtMoc>
+    <QtMoc Include="SoundWrappers\WinCEUnpackWrapper.h">
       <Filter>Header Files\SoundWrappers</Filter>
     </QtMoc>
   </ItemGroup>

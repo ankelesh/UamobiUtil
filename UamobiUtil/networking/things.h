@@ -54,6 +54,7 @@ public:
 	void replaceDataEntity(RecEntity);
 	// empties model
 	void reset();
+	virtual QModelIndex moveByArrow(int arrow, const QModelIndex& current) const;
 public slots:
 	//If index was valid - emits signal with pointer to clicked entity.
 #ifdef QT_VERSION5X

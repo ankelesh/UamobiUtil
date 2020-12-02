@@ -63,8 +63,7 @@ protected:
 public:
 	ReceiptParametersWidget(QWidget* parent);
 	void setMainView(const QString&);		//	uses provided string for mainView content
-	virtual void returnReaction() override;		//	responds to return press
-
+	virtual void setFocus() override;
 protected slots:
 	void closedClicked();		//	button reactions
 	void cancelledClicked();

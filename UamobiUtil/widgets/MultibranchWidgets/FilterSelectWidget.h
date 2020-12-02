@@ -48,9 +48,12 @@ protected:
 	void _handleRecord(RecEntity) override;
 	virtual void _sendDataRequest() override;
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
+	virtual void _arrowReaction(int) override;
+	virtual void _returnReaction() override;
+
 public:
 	FilterSelectWidget(QWidget* parent = Q_NULLPTR);
-
+	virtual void setFocus() override;
 	// sends request to list all filters. Deprecated, used only for separation
 	void loadFilters();
 protected slots:

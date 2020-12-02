@@ -53,6 +53,7 @@ protected:
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
 	virtual void _handleRecord(RecEntity) override;
 	virtual void _sendDataRequest() override;
+	virtual void _numberReaction(int) override;
 public:
 	// uses default subbranches if no subbranch provided
 	BarcodeFilterSelectionSubbranch(QWidget* parent = Q_NULLPTR, IndependentBranchNode* supp = Q_NULLPTR,

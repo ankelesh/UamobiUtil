@@ -12,7 +12,7 @@
 
 ParentDocumentWidget::ParentDocumentWidget(RecEntity proto, QWidget* parent
 	, IndependentBranchNode* filterSelection)
-	: IndependentBranchNode(independent_nodes::ParentDocument, true,parent), abstractNode(),
+	: IndependentBranchNode(independent_nodes::ParentDocument, parent), abstractNode(),
 	entityModel(new DataEntityListModel(this)),
 	prototype(proto), mainLayout(new QVBoxLayout(this)),
 	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
@@ -69,6 +69,11 @@ ParentDocumentWidget::ParentDocumentWidget(RecEntity proto, QWidget* parent
 	QScroller::grabGesture(docSelection, QScroller::TouchGesture);
 #endif
 	docSelection->setFont(AppFonts->makeFont(0.7));
+	setTabOrder(docSelection, filterButton);
+	filterButton->setDefault(true);
+	backButton->setFocusPolicy(Qt::NoFocus);
+
+
 #ifdef QT_VERSION5X
 	QObject::connect(filterButton, &MegaIconButton::clicked, this, &ParentDocumentWidget::filterDocuments);
 	QObject::connect(backButton, &QPushButton::clicked, this, &ParentDocumentWidget::backRequired);
@@ -92,6 +97,11 @@ ParentDocumentWidget::ParentDocumentWidget(RecEntity proto, QWidget* parent
 	QObject::connect(filterSelect, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
     QObject::connect(filterSelect, SIGNAL(done(RecEntity)), this, SLOT(filterReady()));
 #endif
+}
+
+void ParentDocumentWidget::setFocus()
+{
+	docSelection->setFocus();
 }
 
 void ParentDocumentWidget::loadDocuments()
@@ -127,6 +137,7 @@ void ParentDocumentWidget::load_documents_response()
 		if (response.objects.isEmpty())
 			userInfo->setText(tr("no data received during request"));
         entityModel->insertData(response.objects);
+		docSelection->setCurrentIndex(entityModel->index(0));
 	}
 	hideProcessingOverlay();
 }
@@ -158,6 +169,19 @@ void ParentDocumentWidget::_makeOverloads(const QVector<QueryTemplates::Overload
 		return;
 	else
 		loadDocumentQuery = overloads.first().assertedAndMappedCopy(inventoryListParentDocs);
+}
+
+void ParentDocumentWidget::_returnReaction()
+{
+	entityModel->mapClickToEntity(docSelection->currentIndex());
+}
+
+void ParentDocumentWidget::_arrowReaction(int arrow)
+{
+	if (!docSelection->hasFocus())
+	{
+		docSelection->setCurrentIndex(entityModel->moveByArrow(arrow, docSelection->currentIndex()));
+	}
 }
 
 void ParentDocumentWidget::_sendDataRequest()

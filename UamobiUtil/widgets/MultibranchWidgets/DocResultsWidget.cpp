@@ -47,7 +47,7 @@ void DocResultsWidget::setIndexation(XmlObjects& settings)
 }
 
 DocResultsWidget::DocResultsWidget( QWidget* parent)
-	: IndependentBranchNode(independent_nodes::DocResults, true, parent), mainLayout(new QVBoxLayout(this)),
+	: IndependentBranchNode(independent_nodes::DocResults, parent), mainLayout(new QVBoxLayout(this)),
 	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
 	toolPanel(new QHBoxLayout(innerWidget)), deleteAllButton(new MegaIconButton(innerWidget)),
 	deleteSelectedButton(new MegaIconButton(innerWidget)),
@@ -445,10 +445,9 @@ void DocResultsWidget::hideCurrent()
 void DocResultsWidget::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads)
 {
 	using namespace QueryTemplates;
-	switch (
-		((overloads.count()>5) ? 5 : overloads.count())
-		)
+	switch (overloads.count())
 	{
+	default:
 	case 5:
 		localCache.insert(documentDeleteAll, overloads.at(4).assertedAndMappedCopy(
 		documentDeleteAll));
@@ -483,9 +482,24 @@ void DocResultsWidget::_makeOverloads(const QVector<QueryTemplates::Overloadable
 		));
         Q_FALLTHROUGH();
     }
-	default:
+	case 0:
 		break;
 	}
+}
+
+void DocResultsWidget::_returnReaction()
+{
+	saveDocument();
+}
+
+void DocResultsWidget::_arrowReaction(int arrow)
+{
+	itemInfoStorage->setCurrentIndex(items->moveByArrow(arrow, itemInfoStorage->currentIndex()));
+}
+
+void DocResultsWidget::setFocus()
+{
+	itemInfoStorage->setFocus();
 }
 
 void DocResultsWidget::_sendDataRequest()

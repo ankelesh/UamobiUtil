@@ -17,6 +17,7 @@ UamobiUtil::UamobiUtil( QWidget* parent)
 	overlay->hide();
 	this->setLayout(mainLayout);
 	setFont(*(AppFonts->general()));
+	untouchable->listenKeyboard();
 #ifdef Q_OS_WINCE
 	this->setBaseSize(calculateAdaptiveSize(0.8));
 	this->setMaximumSize(calculateAdaptiveSize(1));
@@ -48,7 +49,6 @@ UamobiUtil::~UamobiUtil()
 void UamobiUtil::gotoModeSelection()
 {
 	ModeSelectionWidget* mb = new ModeSelectionWidget(this);
-    AppSounds->play(SoundEffectPlayer::ItemScannedDSE);
 	mb->loadModes();
 #ifdef QT_VERSION5X
 	QObject::connect(mb, &ModeSelectionWidget::backRequired, this, &UamobiUtil::hideCurrent);

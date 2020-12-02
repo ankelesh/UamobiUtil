@@ -83,7 +83,8 @@ InventoryParamsWidget::InventoryParamsWidget(QWidget* parent)
 	okButton->setIcon(QIcon(":/res/submit.png"));
 	okButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 	okButton->setDisabled(true);
-
+	setTabOrder(okButton, commentField);
+	okButton->setDefault(true);
 #ifdef QT_VERSION5X
 	QObject::connect(backButton, &MegaIconButton::clicked, this, &InventoryParamsWidget::backRequired);
 	QObject::connect(selectDocumentButton, &MegaIconButton::clicked, this, &InventoryParamsWidget::selectDocPressed);
@@ -95,11 +96,17 @@ InventoryParamsWidget::InventoryParamsWidget(QWidget* parent)
 #endif
 }
 
+void InventoryParamsWidget::setFocus()
+{
+	okButton->setFocus();
+}
+
 void InventoryParamsWidget::setDocument(FullDocument doc)
 {
 	okButton->setDisabled(false);
 	commentField->setText(doc->comment);
 	document = doc;
+	okButton->setFocus();
 }
 
 

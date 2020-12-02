@@ -55,11 +55,14 @@ protected:
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
 	virtual void _handleRecord(RecEntity) override;
 	virtual void _sendDataRequest() override;
-	virtual bool isExpectingControl(int) override;
+	virtual void _numberReaction(int) override;
+	virtual void _arrowReaction(int) override;
+	virtual void _returnReaction() override;
 public:
 	SelectItemFromListWidget(QWidget* parent,
 		RecEntity proto);
-	virtual void show() override;
+	virtual void show();
+	virtual void setFocus() override;
 protected slots:
 	void searchPrimed();
 	void ordFilterSwitched(bool);

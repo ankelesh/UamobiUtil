@@ -12,6 +12,7 @@
 #include <QProxyStyle>
 #include "widgets/utils/ElementsStyles.h"
 #include "SoundWrappers/SoundEffectPlayer.h"
+#include "ScaningCore/BarcodeObserver.h"
 /*
 		This is uamobiUtil app, which is suited to replace old one. Main idea is the same.
 		This realisation is Qt5-based, with guarding macros to allow legacy-compatibility with qt4.
@@ -65,6 +66,7 @@ int main(int argc, char* argv[])
 	UamobiUtil w;
 	w.show();
     AppSounds;
+    BarcodeObserver::init();
 #endif
 #ifdef Q_OS_ANDROID
     a.setDoubleClickInterval(900);

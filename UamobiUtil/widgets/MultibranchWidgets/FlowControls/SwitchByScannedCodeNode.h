@@ -32,9 +32,9 @@ protected:
 	virtual void _handleRecord(RecEntity) override;
 
 	virtual void _sendDataRequest() override;
-
+	virtual void _backReaction() override;
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
-
+	virtual void setFocus() override;
 
 public:
 	SwitchByScannedCodeWidget(BranchDescription branch, QWidget* parent = Q_NULLPTR);

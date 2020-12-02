@@ -14,7 +14,7 @@ void FilterSelectWidget::_handleRecord(RecEntity)
 }
 
 FilterSelectWidget::FilterSelectWidget(QWidget* parent)
-	: IndependentBranchNode(independent_nodes::FilterSelect, true, parent),
+	: IndependentBranchNode(independent_nodes::FilterSelect, parent),
 	doctypes(new DataEntityListModel(this)),
 	mainLayout(new QVBoxLayout(this)),
 	title(new QLabel(this)), topPanelLayout(new QHBoxLayout(this)),
@@ -60,6 +60,8 @@ FilterSelectWidget::FilterSelectWidget(QWidget* parent)
 	okButton->setStyleSheet(CHANGE_BUTTONS_STYLESHEET);
 	typesel->setItemDelegate(new CheckableDelegate(QColor(210, 224, 146), QColor(245, 164, 188), this));
 	typesel->setModel(doctypes);
+	setTabOrder(typesel, okButton);
+	okButton->setDefault(true);
 #ifdef QT_VERSION5X
 	QObject::connect(allonButton, &MegaIconButton::clicked, this, &FilterSelectWidget::checkAll);
 	QObject::connect(alloffButton, &MegaIconButton::clicked, this, &FilterSelectWidget::uncheckAll);
@@ -76,6 +78,11 @@ FilterSelectWidget::FilterSelectWidget(QWidget* parent)
 	QObject::connect(awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
     QObject::connect(typesel, SIGNAL(clicked(QModelIndex)), this, SLOT(changeState(QModelIndex)));
 #endif
+}
+
+void FilterSelectWidget::setFocus()
+{
+	typesel->setFocus();
 }
 
 void FilterSelectWidget::loadFilters()
@@ -208,6 +215,7 @@ void FilterSelectWidget::parse_doctype_list_response()
 	else
 	{
         doctypes->insertData(response.objects);
+		typesel->setCurrentIndex(doctypes->index(0));
 	}
     QObject::disconnect(awaiter, SIGNAL(requestReceived()), Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
@@ -256,6 +264,19 @@ void FilterSelectWidget::_makeOverloads(const QVector<QueryTemplates::Overloadab
 	default:
 		return;
 	}
+}
+
+void FilterSelectWidget::_arrowReaction(int arrow)
+{
+	if (!typesel->hasFocus())
+	{
+		typesel->setCurrentIndex(doctypes->moveByArrow(arrow, typesel->currentIndex()));
+	}
+}
+
+void FilterSelectWidget::_returnReaction()
+{
+	changeState(typesel->currentIndex());
 }
 
 void FilterSelectWidget::_sendDataRequest()

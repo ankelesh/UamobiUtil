@@ -45,6 +45,7 @@ protected:
 	// does nothing
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
     virtual void _handleException(BranchException*) = 0;
+	virtual void listenKeyboard() override;
 public:
 	// constructs empty branch
 	explicit AbsBranch(QWidget* parent = Q_NULLPTR);

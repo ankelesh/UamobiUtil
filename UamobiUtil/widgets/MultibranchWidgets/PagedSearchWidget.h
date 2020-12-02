@@ -54,6 +54,10 @@ protected:
 	virtual void _sendDataRequest() override;
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
 	virtual void focusInEvent(QFocusEvent*) override;
+	virtual void _numberReaction(int) override;
+	virtual void _arrowReaction(int) override;
+	virtual void _returnReaction() override;
+	virtual void setFocus() override;
 	// fills indexation labels and enables navigation buttons
 	void setIndexation(XmlObjects items);
 public:

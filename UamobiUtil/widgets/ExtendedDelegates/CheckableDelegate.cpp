@@ -64,7 +64,13 @@ void CheckableDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
         option.rect.topLeft().x() + int(option.rect.height() * 0.9),
 		option.rect.topLeft().y()));
 	imgRect.setBottomRight(option.rect.bottomRight());
-	
+	if (option.state.testFlag(QStyle::State_Selected))
+	{
+		painter->setBrush(option.palette.highlight());
+		painter->setOpacity(0.4);
+		painter->drawRect(option.rect);
+		painter->setOpacity(1);
+	}
 	painter->drawText(imgRect,Qt::AlignRight | Qt::AlignVCenter | Qt::TextWordWrap, item->getTitle());
 	painter->restore();
 }

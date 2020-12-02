@@ -54,7 +54,7 @@ private:
 public:
 	LoginWidget(QWidget* parent);
 
-	virtual void show() override;
+	virtual void show();
 	// reacts to language change by retranslating all strings
 	void langCh();
 private slots:

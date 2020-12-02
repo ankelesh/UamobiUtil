@@ -3,74 +3,127 @@
 #ifdef DEBUG
 #include <debugtrace.h>
 #endif
-
+#include "ScaningCore/BarcodeObserver.h"
+#include <QTime>
 using namespace filters;
-bool inframedWidget::isExpectingControl(int val)
-{
-#ifdef DEBUG
-	detrace_METHCALL(":isExpectingControl(" << val << " wadress: " << (long long int) this);
-#endif
-
-    return val == 0;
-}
-void inframedWidget::keyReleaseEvent(QKeyEvent* kev)
-{
-	switch (kev->key())
-	{
-		case Qt::Key_Escape:
-		case Qt::Key_Back:
-			backReaction();
-            Q_FALLTHROUGH();
-		default:
-			break;
-	}
-}
 inframedWidget::inframedWidget(QWidget* parent)
-	: QWidget(parent), keyfilter()
+	: QWidget(parent), lastEventMark(QTime::currentTime()), ltype(0), listeningKeyboard(false)
 {
-}
-inframedWidget::inframedWidget(bool installFilter, QWidget* parent) 
-	: QWidget(parent), keyfilter(new filters::GeneralPurposeFilter(filters::GeneralPurposeFilter::infPack, this))
-{
-    if (installFilter)	QObject::installEventFilter(keyfilter);
-#ifdef QT_VERSION5X
-	QObject::connect(keyfilter, &GeneralPurposeFilter::backPressed, this, &inframedWidget::backReaction);
-	QObject::connect(keyfilter, &GeneralPurposeFilter::returnPressed, this, &inframedWidget::returnReaction);
-	QObject::connect(keyfilter, &GeneralPurposeFilter::numberPressed, this, &inframedWidget::controlReaction);
-#else
-	QObject::connect(keyfilter, SIGNAL(backPressed()), this, SLOT(backReaction()));
-	QObject::connect(keyfilter, SIGNAL(returnPressed()), this, SLOT(returnReaction()));
-	QObject::connect(keyfilter, SIGNAL(numberPressed(int)), this, SLOT(controlReaction(int)));
-#endif
+
 }
 
-void inframedWidget::show()
+void inframedWidget::hide()
 {
-	
-	QWidget::show();
+	QWidget::hide();
 }
 
-void inframedWidget::installEventFilter(QObject* obj)
+void inframedWidget::listenKeyboard()
 {
-	if (obj != keyfilter)
+	if (!listeningKeyboard)
 	{
-		removeEventFilter(keyfilter);
-		keyfilter->deleteLater();
-		QWidget::installEventFilter(obj);
-		return;
+#ifdef QT_VERSION5X
+		QObject::connect(BarcodeObs, &BarcodeObserver::escapeCaught, this, &inframedWidget::backReaction);
+		QObject::connect(BarcodeObs, &BarcodeObserver::numberPressed, this, &inframedWidget::numberReaction);
+		QObject::connect(BarcodeObs, &BarcodeObserver::arrowCaught, this, &inframedWidget::arrowReaction);
+		QObject::connect(BarcodeObs, &BarcodeObserver::returnCaught, this, &inframedWidget::returnReaction);
+#else
+		QObject::connect(BarcodeObs, SIGNAL(escapeCaught()), this, SLOT(backReaction()));
+		QObject::connect(BarcodeObs, SIGNAL(numberPressed(int)), this, SLOT(numberReaction(int)));
+		QObject::connect(BarcodeObs, SIGNAL(arrowCaught(int)), this, SLOT(arrowReaction(int)));
+		QObject::connect(BarcodeObs, SIGNAL(returnCaught()), this, SLOT(returnReaction()));
+#endif
+		listeningKeyboard = true;
 	}
 }
 
-void inframedWidget::returnReaction()
+void inframedWidget::stopListeningKeyboard()
+{
+	if (listeningKeyboard)
+	{
+		this;
+		bool a = BarcodeObs->disconnect(this);
+		listeningKeyboard = false;
+		BarcodeObs->stopNumberCatching();
+	}
+}
+
+void inframedWidget::setFocus()
+{
+	QWidget::setFocus();
+}
+
+void inframedWidget::_captureNumbers()
+{
+	BarcodeObs->catchNumbers();
+}
+
+void inframedWidget::_backReaction()
+{
+	emit backRequired();
+}
+
+void inframedWidget::_numberReaction(int)
+{
+}
+
+void inframedWidget::_arrowReaction(int)
+{
+
+}
+
+void inframedWidget::_returnReaction()
 {
 }
 
 void inframedWidget::backReaction()
 {
-	emit backRequired();
+	if (ltype == 1)
+		if (lastEventMark.msecsTo(QTime::currentTime()) < 50)
+			return;
+	if (!isHidden())
+	{
+		_backReaction();
+		ltype = 1;
+		lastEventMark = QTime::currentTime();
+	};
+
 }
 
-void inframedWidget::controlReaction(int val)
+void inframedWidget::numberReaction(int num)
 {
-	isExpectingControl(val - 1);
+	if (ltype == 2)
+		if (lastEventMark.msecsTo(QTime::currentTime()) < 50)
+			return;
+	if (!isHidden())
+	{
+		_numberReaction(num);
+		ltype = 2;
+		lastEventMark = QTime::currentTime();
+	};
+}
+
+void inframedWidget::arrowReaction(int arr)
+{
+	if (ltype == 3)
+		if (lastEventMark.msecsTo(QTime::currentTime()) < 50)
+			return;
+	if (!isHidden())
+	{
+		_arrowReaction(arr);
+		ltype = 3;
+		lastEventMark = QTime::currentTime();
+	};
+}
+
+void inframedWidget::returnReaction()
+{
+	if (ltype == 4)
+		if (lastEventMark.msecsTo(QTime::currentTime()) < 50)
+			return;
+	if (!isHidden())
+	{
+		_returnReaction();
+		ltype = 4;
+		lastEventMark = QTime::currentTime();
+	};
 }

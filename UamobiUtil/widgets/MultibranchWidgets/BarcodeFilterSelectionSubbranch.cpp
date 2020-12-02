@@ -112,6 +112,15 @@ BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(QWidget* parent
 	passButton->hide();
 	currentFilterInfo->setAlignment(Qt::AlignCenter);
 	currentFilterInfo->setFont(AppFonts->makeFont(1.1));
+
+	setTabOrder(stillageButton, groupButton);
+	setTabOrder(groupButton, suppliersButton);
+	setTabOrder(suppliersButton, nofilterButton);
+	backButton->setFocusPolicy(Qt::NoFocus);
+	stillageButton->setDefault(true);
+	groupButton->setDefault(true);
+	suppliersButton->setDefault(true);
+	nofilterButton->setDefault(true);
 #ifdef QT_VERSION5X
 	QObject::connect(stillageButton, &MegaIconButton::clicked, this, &BarcodeFilterSelectionSubbranch::stillageSelectRequired);
 	QObject::connect(groupButton, &MegaIconButton::clicked, this, &BarcodeFilterSelectionSubbranch::groupSelectRequired);
@@ -268,10 +277,9 @@ void BarcodeFilterSelectionSubbranch::hideCurrent()
 
 void BarcodeFilterSelectionSubbranch::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads)
 {
-	switch (
-		((overloads.count() > 2) ? 2 : overloads.count())
-		)
+	switch (overloads.count())
 	{
+	default:
 	case 2:
     {
         QStringList t;
@@ -290,12 +298,35 @@ void BarcodeFilterSelectionSubbranch::_makeOverloads(const QVector<QueryTemplate
 		);
     }
         Q_FALLTHROUGH();
-	default:
+	case 0:
 		break;
 	}
 }
 
 void BarcodeFilterSelectionSubbranch::_sendDataRequest()
 {
+}
+
+void BarcodeFilterSelectionSubbranch::_numberReaction(int num)
+{
+	switch (num)
+	{
+	case 4:
+		if (nofilterButton->isEnabled())
+			noFilterRequired();
+		break;
+	case 3:
+		if (suppliersButton->isEnabled())
+			supplierSelectRequired();
+		break;
+	case 2:
+		if (groupButton->isEnabled())
+			groupSelectRequired();
+		break;
+	case 1:
+		if (stillageButton->isEnabled())
+			stillageSelectRequired();
+		break;
+	}
 }
 

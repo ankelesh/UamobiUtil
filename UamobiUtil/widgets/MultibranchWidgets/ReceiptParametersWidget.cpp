@@ -90,13 +90,15 @@ ReceiptParametersWidget::ReceiptParametersWidget(QWidget* parent)
 	continueButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 	// hidings dependent
-	mainTextView->installEventFilter(keyfilter);
-	innerWidget->installEventFilter(keyfilter);
 	stateInfo->hide();
 	closedButton->hide();
 	cancelledButton->hide();
 	dateField->hide();
 	inspectButton->hide();
+	continueButton->setDefault(true);
+	setTabOrder(mainTextView, continueButton);
+	backButton->setFocusPolicy(Qt::NoFocus);
+
 #if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
 	QScroller::grabGesture(mainTextView, QScroller::TouchGesture);
 #endif
@@ -137,13 +139,13 @@ void ReceiptParametersWidget::_makeOverloads(const QVector<QueryTemplates::Overl
 {
 }
 
-void ReceiptParametersWidget::returnReaction()
-{
-	continueClicked();
-}
-
 void ReceiptParametersWidget::setMainView(const QString& rtxt)
 {
 	mainTextView->setAcceptRichText(true);
 	mainTextView->insertHtml(rtxt);
+}
+
+void ReceiptParametersWidget::setFocus()
+{
+	continueButton->setFocus();
 }

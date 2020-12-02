@@ -61,7 +61,7 @@ private:
 	void show_login_widget(User user); // Utility: hides inner, shows login widget, sets it up.
 public:
 	MainPageWidget( QWidget* parent);
-	virtual bool isExpectingControl(int) override;
+	virtual void _numberReaction(int) override;
 
 private slots:
 	void settinsPressed();					//	activated on button press

@@ -48,8 +48,8 @@ protected:
 	virtual void _sendDataRequest() override;
 public:
 	PlaceSelectionWidget(RecEntity toExtract, QWidget* parent = Q_NULLPTR);
-	virtual void show() override;
-    virtual bool isExpectingControl(int) override;
+	virtual void show();
+    virtual void _numberReaction(int) override;
 	void loadPlaces();
 private slots:
 	void placeSelected(RecEntity);	//	sends place_select request, then emits parsedPlace

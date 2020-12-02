@@ -21,5 +21,5 @@ public:
 #else
 	virtual void mapClickToEntity(QModelIndex index) override;
 #endif
-
+	virtual QModelIndex moveByArrow(int arrow, const QModelIndex& current) const override;
 };

@@ -133,8 +133,11 @@ void NormalScaningWidget::searchRequired()
 
 void NormalScaningWidget::backNeeded()
 {
-	resultScreen->loadData();
-	_hideAny(resultScreen);
+	if (current == untouchable)
+	{
+		resultScreen->loadData();
+		_hideAny(resultScreen);
+	}
 }
 
 void NormalScaningWidget::useControls(const IControlList & cvals)
@@ -250,10 +253,9 @@ void NormalScaningWidget::itemObtained(RecEntity item)
 
 void NormalScaningWidget::_makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads)
 {
-	switch (
-		((overloads.count() > 3) ? 3 : overloads.count())
-		)
+	switch (overloads.count())
 	{
+	default:
 	case 3:
     {
         QStringList t;
@@ -284,7 +286,7 @@ void NormalScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloada
             t,t));
     }
         Q_FALLTHROUGH();
-	default:
+	case 0:
 		break;
 	}
 	switch (3 - overloads.count())

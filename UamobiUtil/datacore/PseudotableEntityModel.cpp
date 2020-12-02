@@ -74,3 +74,29 @@ void PseudotableEntityModel::mapClickToEntity(QModelIndex index)
 	emit dataEntityClicked(innerList.at(_flatIndex(index.column(), index.row())));
 }
 #endif
+QModelIndex PseudotableEntityModel::moveByArrow(int arrow, const QModelIndex& current) const
+{
+	if (!current.isValid())
+		return current;
+	int new_indexX = current.row();
+	int new_indexY = current.column();
+	switch (arrow)
+	{
+	case Qt::Key_Up:
+		--new_indexX;
+		break;
+	case Qt::Key_Down:
+		++new_indexX;
+		break;
+	case Qt::Key_Left:
+		--new_indexY;
+		break;
+	case Qt::Key_Right:
+		++new_indexY;
+		break;
+	}
+	if (new_indexX >= 0 && new_indexX < rowCount())
+		if (new_indexY >= 0 && new_indexY < columnCount())
+			return index(new_indexX, new_indexY);
+	return current;
+}

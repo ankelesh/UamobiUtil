@@ -34,7 +34,7 @@ void SelectItemFromListWidget::_handleRecord(RecEntity)
 
 SelectItemFromListWidget::SelectItemFromListWidget(
 	QWidget* parent, RecEntity proto)
-	: IndependentBranchNode(independent_nodes::SelectItemFromList, true,parent), 
+	: IndependentBranchNode(independent_nodes::SelectItemFromList, parent), 
 	prototype(proto),
 	entityModel(new DataEntityListModel(this)),  
 	loadQuery(QueryTemplates::OverloadableQuery::defaultQuery()),
@@ -91,7 +91,6 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 	ordfilterButton->setCheckable(true);
 	ordfilterButton->setStyleSheet(CHECKBOX_BUTTON_STYLESHEET);
 	ordFilterSwitched(true);
-	innerWidget->installEventFilter(keyfilter);
 	if (!requiresOrd(prototype->myType()))
 	{
 		ordfilterButton->setChecked(false);
@@ -104,11 +103,16 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 	itemSelection->setModel(entityModel);
 	itemSelection->setItemDelegate(new ZebraItemDelegate(this));
     userinputField->disconnect();
-	
+	itemSelection->setFocusPolicy(Qt::TabFocus);
+	backButton->setFocusPolicy(Qt::NoFocus);
+	ordfilterButton->setFocusPolicy(Qt::NoFocus);
+	searchButton->setFocusPolicy(Qt::NoFocus);
+	setTabOrder(userinputField, itemSelection);
 #if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
     QScroller::grabGesture(itemSelection, QScroller::TouchGesture);
 	itemSelection->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 #endif
+	_captureNumbers();
 #ifdef QT_VERSION5X
 	QObject::connect(searchButton, &QPushButton::clicked, this, &SelectItemFromListWidget::searchPrimed);
 	QObject::connect(ordfilterButton, &QPushButton::toggled, this, &SelectItemFromListWidget::ordFilterSwitched);
@@ -139,7 +143,11 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 void SelectItemFromListWidget::show()
 {
 	inframedWidget::show();
-	setFocus();
+}
+
+void SelectItemFromListWidget::setFocus()
+{
+	userinputField->setFocus();
 }
 
 
@@ -192,15 +200,16 @@ void SelectItemFromListWidget::parse_response()
 		else
 		{
 			entityModel->insertData(response.objects);
+			itemSelection->setCurrentIndex(entityModel->index(0));
 		}
 	}
 	hideProcessingOverlay();
 }
 
-bool SelectItemFromListWidget::isExpectingControl(int val)
+void SelectItemFromListWidget::_numberReaction(int val)
 {
-	if (awaiter->isAwaiting())
-		return false;
+	if (awaiter->isAwaiting() || userinputField->hasFocus())
+		return;
 	if (val >= -1 && val <= entityModel->rowCount() - 1)
 	{
 		if (val == -1)
@@ -210,17 +219,31 @@ bool SelectItemFromListWidget::isExpectingControl(int val)
 			else
 			{
 				emit backRequired();
-				return false;
+				return;
 			}
 		}
 		QModelIndex index = entityModel->index(val);
 		if (index.isValid())
 		{
 			entityModel->mapClickToEntity(index);
-			return true;
 		}
 	}
-	return false;
+}
+
+void SelectItemFromListWidget::_arrowReaction(int arrow)
+{
+	if (!itemSelection->hasFocus())
+	{
+		itemSelection->setCurrentIndex(entityModel->moveByArrow(arrow, itemSelection->currentIndex()));
+	}
+}
+
+void SelectItemFromListWidget::_returnReaction()
+{
+	if (!userinputField->hasFocus())
+	{
+		entityModel->mapClickToEntity(itemSelection->currentIndex());
+	}
 }
 
 void SelectItemFromListWidget::parse_pick_response()
@@ -303,3 +326,4 @@ void SelectItemFromListWidget::_sendDataRequest()
 {
 	searchPrimed();
 }
+

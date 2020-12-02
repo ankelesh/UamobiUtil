@@ -11,7 +11,7 @@
 #include "widgets/ElementWidgets/ExtendedDialogs.h"
 
 ModeSelectionWidget::ModeSelectionWidget( QWidget* parent)
-	: inframedWidget(true, parent), innerModel(new PseudotableEntityModel(2,this)), mainLayout(new QVBoxLayout(this)),
+	: inframedWidget(parent), innerModel(new PseudotableEntityModel(2,this)), mainLayout(new QVBoxLayout(this)),
 	buttonLayout(new QHBoxLayout(this)),
 	modesTip(new QLabel(this)), modeSelection(new QTableView(this)),
 	placeTip(new QLabel(this)),
@@ -56,6 +56,7 @@ ModeSelectionWidget::ModeSelectionWidget( QWidget* parent)
     modeSelection->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
 #endif
 	modeSelection->setShowGrid(false);
+	_captureNumbers();
 #ifdef QT_VERSION5X
 	QObject::connect(logoutButton, &QPushButton::clicked, this, &ModeSelectionWidget::logoutPressed);
 	QObject::connect(modeSelection, &QListView::clicked, innerModel, &DataEntityListModel::mapClickToEntity);
@@ -70,10 +71,10 @@ ModeSelectionWidget::ModeSelectionWidget( QWidget* parent)
 }
 
 
-bool ModeSelectionWidget::isExpectingControl(int val)
+void ModeSelectionWidget::_numberReaction(int val)
 {
 	if (awaiter.isAwaiting())
-		return false;
+		return;
 	if (val >= -1 && val <= innerModel->rowCount() - 1)
 	{
 		if (val == -1)
@@ -84,11 +85,21 @@ bool ModeSelectionWidget::isExpectingControl(int val)
 		if (index.isValid())
 		{
 			innerModel->mapClickToEntity(index);
-			return true;
 		}
-		return true;
 	}
-	return false;
+}
+
+void ModeSelectionWidget::_arrowReaction(int arrow)
+{
+	if (!modeSelection->hasFocus())
+	{
+		modeSelection->setCurrentIndex(innerModel->moveByArrow(arrow, modeSelection->currentIndex()));
+	}
+}
+
+void ModeSelectionWidget::_returnReaction()
+{
+		innerModel->mapClickToEntity(modeSelection->currentIndex());
 }
 
 void ModeSelectionWidget::show()
@@ -153,6 +164,7 @@ void ModeSelectionWidget::parse_modes()
 	else
 	{
         innerModel->insertData(result.objects);
+		modeSelection->setCurrentIndex(innerModel->index(0, 0));
 		if (!result.additionalObjects.isEmpty())
 		{
 			RecEntity temp(new PlaceEntity());

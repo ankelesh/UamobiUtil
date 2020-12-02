@@ -65,6 +65,9 @@ protected:
 	void setIndexation(XmlObjects& settings);
 	virtual void _sendDataRequest() override;
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
+	virtual void _returnReaction() override;
+	virtual void _arrowReaction(int) override;
+	virtual void setFocus() override;
 	void getAttachedControls();
 public:
 	DocResultsWidget(QWidget* parent);

@@ -13,7 +13,7 @@ void MainPageWidget::show_login_widget(User u)
 }
 
 MainPageWidget::MainPageWidget(QWidget* parent)
-	: inframedWidget(true, parent), abstractNode(), innerModel(new DataEntityListModel(this)),
+	: inframedWidget(parent), abstractNode(), innerModel(new DataEntityListModel(this)),
 	mainLayout(new QVBoxLayout(this)),
 	innerWidget(new inframedWidget(this)), innerLayout(new QVBoxLayout(innerWidget)),
 	topPanelLayout(new QHBoxLayout(innerWidget)), bottomPanelLayout(new QHBoxLayout(innerWidget)),
@@ -86,7 +86,6 @@ MainPageWidget::MainPageWidget(QWidget* parent)
 	refreshButton->setFont(GENERAL_FONT);
 	userid->setFont(GENERAL_FONT);
 
-	innerWidget->installEventFilter(keyfilter);
 	loginsView->setModel(innerModel);
 	loginsView->setItemDelegate(new ZebraItemDelegate(this));
 #ifdef QT_VERSION5X
@@ -122,14 +121,14 @@ MainPageWidget::MainPageWidget(QWidget* parent)
 #endif
 }
 
-bool MainPageWidget::isExpectingControl(int val)
+void MainPageWidget::_numberReaction(int val)
 {
 	if (val < 9 && val >= -1)
 	{
 		if (val == -1)
 		{
 			qApp->quit();
-			return true;
+			return;
 		}
 		else
 		{
@@ -137,11 +136,9 @@ bool MainPageWidget::isExpectingControl(int val)
 			if (index.isValid())
 			{
 				innerModel->mapClickToEntity(index);
-				return true;
 			}
 		}
 	}
-	return false;
 }
 
 void MainPageWidget::settinsPressed()
@@ -167,6 +164,7 @@ void MainPageWidget::hideCurrent()
 {
 	if (!_hideCurrent(innerWidget))
 	{
+		innerWidget->stopListeningKeyboard();
 		emit backRequired();
 	}
 }

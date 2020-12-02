@@ -57,7 +57,7 @@ protected:
 	QString modename;
 	RequestAwaiter* awaiter;
 
-
+	virtual void _backReaction() override;
     virtual void useControls(const QVector<QSharedPointer<InputControlEntity> > &);
 	virtual void wipe();
 	virtual void setDocument(RecEntity e);

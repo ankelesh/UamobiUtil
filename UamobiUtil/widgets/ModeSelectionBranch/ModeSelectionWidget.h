@@ -55,8 +55,10 @@ protected:
 	RequestAwaiter awaiter;
 public:
 	ModeSelectionWidget(QWidget* parent = Q_NULLPTR);
-	virtual bool isExpectingControl(int) override;
-	virtual void show() override;
+	virtual void _numberReaction(int) override;
+	virtual void _arrowReaction(int) override;
+	virtual void _returnReaction() override;
+	virtual void show();
 protected slots:
 	void logoutPressed();		//	this slot sends log_out and only then calls backRequired
 	void modeSelected(RecEntity);	//	these slots react to changes

@@ -227,6 +227,7 @@ bool filters::GeneralPurposeFilter::captInf(QKeyEvent* keyptr)
 	return true;
 }
 
+
 filters::GeneralPurposeFilter::GeneralPurposeFilter(captureTypes type, QObject* parent)
 	: QObject(parent)
 {
