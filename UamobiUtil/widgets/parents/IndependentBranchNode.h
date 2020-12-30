@@ -12,6 +12,7 @@ namespace independent_nodes
 		FilterSelect,
 		DocResults,
 		EditableDocResults,
+		SubbranchingDocResults,
 		ReceiptParameters,
 		NormalScaning,
 		PrintingScaning,
@@ -50,6 +51,7 @@ protected:
 	virtual void _handleRecord(RecEntity) = 0;
 	virtual void _sendDataRequest() = 0;
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) = 0;
+	virtual void _rewriteNames(QStringList & names);
 public:
 	IndependentBranchNode(int Id, QWidget* parent = Q_NULLPTR) 
         : inframedWidget(parent), id(Id), backtracksTo(0) {}
@@ -58,6 +60,7 @@ public:
 	void processRecord(RecEntity);
 	void loadData();
 	void setOverloads(const QVector<QueryTemplates::OverloadableQuery>& oqs);
+	void changeNames(QStringList& names);
     void throwException(BranchException*);
 signals:
 	void done(RecEntity);

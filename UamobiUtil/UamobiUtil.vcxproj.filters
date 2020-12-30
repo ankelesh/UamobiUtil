@@ -411,6 +411,9 @@
     <ClCompile Include="SoundWrappers\WinCEUnpackWrapper.cpp">
       <Filter>Source Files\SoundWrappers</Filter>
     </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\Selectors\SubbranchingDocResults.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -586,6 +589,9 @@
     </QtMoc>
     <QtMoc Include="SoundWrappers\WinCEUnpackWrapper.h">
       <Filter>Header Files\SoundWrappers</Filter>
+    </QtMoc>
+    <QtMoc Include="widgets\MultibranchWidgets\Selectors\SubbranchingDocResults.h">
+      <Filter>Header Files\MultibranchWidgets\Selectors</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

@@ -11,6 +11,7 @@ QHash<QString, independent_nodes::nodelist> _initBinding()
 	h["FilterSelect"] = FilterSelect;
 	h["DocResults"] = DocResults;
 	h["EditableDocResults"] = EditableDocResults;
+	h["SubbranchingDocResults"] = SubbranchingDocResults;
 	h["ReceiptParameters"] = ReceiptParameters;
 	h["NormalScaning"] = NormalScaning;
 	h["IdDependentSelect"] = IdDependentSelect;

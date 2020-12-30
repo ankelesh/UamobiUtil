@@ -7,6 +7,10 @@ using namespace QueryTemplates;
 
 
 
+void IndependentBranchNode::_rewriteNames(QStringList& names)
+{
+}
+
 void IndependentBranchNode::processRecord(RecEntity e)
 {
 	_handleRecord(e);
@@ -20,6 +24,11 @@ void IndependentBranchNode::loadData()
 void IndependentBranchNode::setOverloads(const QVector<QueryTemplates::OverloadableQuery>& oqs)
 {
     _makeOverloads(oqs);
+}
+
+void IndependentBranchNode::changeNames(QStringList& names)
+{
+    _rewriteNames(names);
 }
 
 void IndependentBranchNode::throwException(BranchException * ex)

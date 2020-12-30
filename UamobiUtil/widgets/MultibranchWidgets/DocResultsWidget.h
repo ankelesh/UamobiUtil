@@ -69,6 +69,8 @@ protected:
 	virtual void _arrowReaction(int) override;
 	virtual void setFocus() override;
 	void getAttachedControls();
+	using abstractNode::_hideAny;
+	using abstractNode::_hideCurrent;
 public:
 	DocResultsWidget(QWidget* parent);
 	// sends request for full item list
