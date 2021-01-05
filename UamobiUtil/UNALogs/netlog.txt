@@ -1,86 +1,10 @@
 Application start begins: version 0.14 lin-alpha
->>	411412015538729 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
->>	411412015545891 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
-<<	411412015590846 received response going to 0 containing text:|
+>>	412122556260905 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
+>>	412122556267811 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
+<<	412122556322750 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket</servicename></users>
 	and error text |
->>	411412020738180 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.14
-<<	411412020846561 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2780</session>
-</login>
-	and error text |
->>	411412020850796 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2780&lang=Russian
-<<	411412020908502 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>Инв - ция</captionMode><mode>inventory</mode><submode></submode></mode> <mode><modeName>ordersandsldcorrection</modeName><captionMode>Кор - ка заказа</captionMode><mode>receipt</mode><submode>ordersandsldcorrection</submode></mode> <mode><modeName>partialinventory</modeName><captionMode>Корректировка остатков</captionMode><mode>inventory</mode><submode>partialinventory</submode></mode> <mode><modeName>printing</modeName><captionMode>Печать этикеток</captionMode><mode>printing</mode><submode></submode></mode> <mode><modeName>receipt</modeName><captionMode>Прием товаров</captionMode><mode>receipt</mode><submode></submode></mode> <mode><modeName>receiptfromwarehouses</modeName><captionMode>Приемка от склада</captionMode><mode>receipt</mode><submode>receiptfromwarehouses</submode></mode> <mode><modeName>univscanact</modeName><captionMode>Универсальный акт сканирования</captionMode><mode>inventory</mode><submode>univscanact</submode></mode>  <place>   <code>205</code>   <name>L-05 str. Onisifor Ghibu 7/2</name>  </place> </modes>
-	and error text |
->>	411412021316270 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=2780&mode=receipt&submode=
-<<	411412021359954 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status>  <desc> <![CDATA[ 
-[SwitchByScanCode]
-%Order%
-<rec_get_order_by_barcode&session=%1&barcode=%2>
-{
-[Subbranch]
-{
-[SelectItemFromList]
-%Supplier%
-[IdDependentSelect]
-%Order%
-}
-}
-[ReceiptParameters]
-[NormalScaning]
-<>
-*-6* ]]> </desc></mode>
-	and error text |
->>	411412021746064 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=rec_list_suppliers&session=2780&text=&hasorders=true
-<<	411412021753417 received response going to 5 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <suppliers>  <status>200</status>  <supplier>   <code>162104</code>   <name>Serviabil SRL</name>   <orders>1</orders>  </supplier> </suppliers>
-	and error text |
->>	411412021988849 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=rec_list_orders&session=2780&supplier=162104
-<<	411412021994993 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <orders>  <status>200</status>  <order>   <code>18858333</code>   <title>№ заявки: 18858333</title>
-  <text>01.11.20 - 27.11.20, 37  </text>  </order> 
-<supplier>Serviabil SRL</supplier>
-</orders>
-	and error text |
->>	411412022118843 sent request: http://92.115.237.226:60080/um/unitest.php?delay=7&cmd=rec_get_order_info&session=2780&order=18858333&supplier=162104
-<<	411412022122985 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <order>  <status>200</status> <richdata> <![CDATA[  <div><b> Serviabil SRL</b></div>  <div><b>Док. №:</b> 18858333</div> <hr><div>INLAC Iaurt de baut caise pel.500g - <b>2</b></div><hr> <div>LACTIS Chefir 2.5% 0.5l pol.  - <b>4</b></div><hr> <div>INLAC Unt d/smintina dulce 82.5% 200g - <b>3</b></div><hr> <div>LACTIS Unt DE RISCANI 82.5% 200g  - <b>5</b></div><hr> <div>FRUTINO Iaurt piersic/fructul pasiunii 3.5% 125g - <b>6</b></div><hr> <div>FRUTINO Iaurt visina 3.5% 125g - <b>6</b></div><hr> <div>INLAC Iaurt de baut natural pel.500g - <b>7</b></div><hr> <div>LACTIS Smintina 20% pol. 0.5l  - <b>8</b></div><hr> <div>INLAC Brinzica stafide 100g  - <b>8</b></div><hr> <div>LACTIS Brinza topita MARGARITAR 150g - <b>9</b></div><hr> ]]> </richdata> </order>
-	and error text |
->>	411412022444523 sent request: http://92.115.237.226:60080/um/unitest.php?delay=8&cmd=rec_new_doc&session=2780&date=04.12.2020&parent=18858333&comment=
-<<	411412022458291 received response going to 31 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <newdoc>  <status>200</status>  <doc>   <code>3752908</code>   <parentnr>18858334</parentnr>   <supplier>Serviabil SRL</supplier>   <date>04.12.2020</date>   <comment></comment>   <closed>false</closed>   <canceled>false</canceled>   <locked>false</locked>   <scanmode>simple</scanmode>  </doc> </newdoc>
-	and error text |
->>	411412023520166 sent request: http://92.115.237.226:60080/um/unitest.php?delay=9&cmd=doc_search_items&session=2780&text=f&page=0
-<<	411412023590619 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <searchresult>  <status>200</status>  <page>   <from>1</from>   <to>25</to>  </page>  <result>   <code>5029053540658</code>   <title> Absorbante KOTEX ultra dry&amp;soft 10</title>  </result>  <result>   <code>5413149644366</code>   <title> ARIEL Detergent Tool fresh Auto 8kg</title>  </result>  <result>   <code>4840510001397</code>   <title> Asortata file somon/hering in ulei 300g</title>  </result>  <result>   <code>5029053005713</code>   <title> Basmalute Kleenex Ultra Soft 12x13 5+1</title>  </result>  <result>   <code>5029053005714</code>   <title> Basmalute Kleenex Ultra Soft 12x13 5+1</title>  </result>  <result>   <code>2186443000009</code>   <title> BORS MOLDOVENESC CAFENEA</title>  </result>  <result>   <code>2000001819531</code>   <title> BORS ROSU 300g CAFENEA</title>  </result>  <result>   <code>2136036000009</code>   <title> BORS ROSU 300g CAFENEA</title>  </result>  <result>   <code>5011321429086</code>   <title> CAMAY Classique Giftbox 500ml</title>  </result>  <result>   <code>1234567891111</code>   <title> CARTOFI Noi albi, fasonati 1.5kg Eco</title>  </result>  <result>   <code>5900512110523</code>   <title> Cascaval MLEK Gauda afumat feliat 150g</title>  </result>  <result>   <code>5060207690683</code>   <title> Ceai GRACE Breakfast Time 25p</title>  </result>  <result>   <code>2000000785745</code>   <title> Cornisor SOLIS 2*70g FR</title>  </result>  <result>   <code>4840008001953</code>   <title> Cornisor SOLIS 2*70g FR</title>  </result>  <result>   <code>2000000720012</code>   <title> Cornulet cu susan 140g FO</title>  </result>  <result>   <code>4840008024761</code>   <title> Covrigei uscati MINI-BAMBINI glazur.0.25kg FR</title>  </result>  <result>   <code>4002971616101</code>   <title> Crema d/brinza EHRMANN caps.f/lactoza 135g</title>  </result>  <result>   <code>4002971616408</code>   <title> Crema d/brinza EHRMANN fruct.pasiunii f/lactoza 135g</title>  </result>  <result>   <code>4002971616200</code>   <title> Crema d/brinza EHRMANN visina f/lactoza 135g</title>  </result>  <result>   <code>4840128010620</code>   <title> Crema FLOVIO 35+ de noapte 50ml.</title>  </result>  <result>   <code>4840128010637</code>   <title> Crema FLOVIO 45+ de noapte 50ml.</title>  </result>  <result>   <code>5943048003051</code>   <title> Crema hidratanta anti-imperfectiuni ELMI 40ml</title>  </result>  <result>   <code>4840128010385</code>   <title> Crema-masca FLOVIO 100ml</title>  </result>  <result>   <code>8714100716748</code>   <title> Crem-gel g/u dus SRC tonifiere 250ml</title>  </result>  <result>   <code>4841849000105</code>   <title> DOLCE FRUTTO Suc de mere 3l</title>  </result> </searchresult>
-	and error text |
->>	411412023808828 sent request: http://92.115.237.226:60080/um/unitest.php?delay=10&cmd=doc_get_item_info&session=2780&barcode=1234567891111&printer=
-<<	411412023814535 received response going to 15 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn></nn> <richdata>  <![CDATA[   <center><b>Просканируйте код накладной для привязки товара.</center></b>  ]]> </richdata> </item>
-	and error text |
->>	411412024787212 sent request: http://92.115.237.226:60080/um/unitest.php?delay=11&cmd=doc_get_item_info&session=2780&barcode=fh1234567891111&printer=
-<<	411412024800318 received response going to 15 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn>FH1234567891111</nn> <richdata>  <![CDATA[ <div style="background: #b0f0ff"><center>Накладная</center></div> <div style="text-align: left">Была выбрана накладная с номером "fh1234567891111".<br>Нажмите <b>Scan</b> для сканирования.</div>  ]]> </richdata> </item>
-	and error text |
->>	411412025699481 sent request: http://92.115.237.226:60080/um/unitest.php?delay=12&cmd=doc_get_item_info&session=2780&barcode=1234567891111&printer=
-<<	411412025743396 received response going to 15 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn>FH1234567891111</nn> <richdata>  <![CDATA[   <div>    <span><b>7/37</b></span>   </div>   <div>    <b>Наим:</b>    <span><b>184089,  CARTOFI Noi albi, fasonati 1.5kg Eco</b></span>   </div>   <div>    <b>Ц. без НДС:</b>    <span><b>0</b></span>   </div>   <div>    <b>Кол-во:</b>    <span><b style="color: white; background: #800"> Нет в спец.! </b>.</span>   </div>  ]]> </richdata> </item>
-	and error text |
->>	411412027422302 sent request: http://92.115.237.226:60080/um/unitest.php?delay=13&cmd=doc_get_item_info&session=2780&barcode=4840128010385&printer=
-<<	411412027475469 received response going to 15 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn>FH1234567891111</nn> <richdata>  <![CDATA[   <div>    <span><b>7/37</b></span>   </div>   <div>    <b>Наим:</b>    <span><b>131010,  Crema-masca FLOVIO 100ml</b></span>   </div>   <div>    <b>Ц. без НДС:</b>    <span><b>25</b></span>   </div>   <div>    <b>Кол-во:</b>    <span><b style="color: white; background: #800"> Нет в спец.! </b>.</span>   </div>  ]]> </richdata> </item>
-	and error text |
->>	411412028742428 sent request: http://92.115.237.226:60080/um/unitest.php?delay=14&cmd=doc_search_items&session=2780&text=ft&page=0
-<<	411412028781318 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <searchresult>  <status>200</status>  <page>   <from>1</from>   <to>25</to>  </page>  <result>   <code>5029053540658</code>   <title> Absorbante KOTEX ultra dry&amp;soft 10</title>  </result>  <result>   <code>5029053005713</code>   <title> Basmalute Kleenex Ultra Soft 12x13 5+1</title>  </result>  <result>   <code>5029053005714</code>   <title> Basmalute Kleenex Ultra Soft 12x13 5+1</title>  </result>  <result>   <code>5011321429086</code>   <title> CAMAY Classique Giftbox 500ml</title>  </result>  <result>   <code>2185145000009</code>   <title> PIFTIE DE PUI</title>  </result>  <result>   <code>5948830045660</code>   <title> Trusa Ultralift + Deo Cadou FM 2012</title>  </result>  <result>   <code>5900516311155</code>   <title>Absorbante BELLA DEO panty soft 20buc</title>  </result>  <result>   <code>5900516311940</code>   <title>Absorbante BELLA DEO panty soft 20buc</title>  </result>  <result>   <code>5900516300487</code>   <title>Absorbante BELLA NOVA maxi soft</title>  </result>  <result>   <code>5900516311162</code>   <title>Absorbante BELLA Panty Soft deo 60buc</title>  </result>  <result>   <code>5900516312015</code>   <title>Absorbante BELLA Panty Soft deo 60buc</title>  </result>  <result>   <code>5900516310431</code>   <title>Absorbante BELLA panty soft 20buc</title>  </result>  <result>   <code>5900516311926</code>   <title>Absorbante BELLA panty soft 20buc</title>  </result>  <result>   <code>5900516310882</code>   <title>Absorbante BELLA panty soft 60buc</title>  </result>  <result>   <code>5900516312008</code>   <title>Absorbante BELLA panty soft 60buc</title>  </result>  <result>   <code>5900516302443</code>   <title>Absorbante EVITA ultra soft 9buc</title>  </result>  <result>   <code>5411416025870</code>   <title>Absorbante HH Anatomice Aloe Premium Soft N50 </title>  </result>  <result>   <code>5411416023333</code>   <title>Absorbante HH cu aripi Ultra Soft Night N7</title>  </result>  <result>   <code>5411416023265</code>   <title>Absorbante HH cu aripi Ultra Soft Normal Duo N20</title>  </result>  <result>   <code>5411416014010</code>   <title>Absorbante HH cu aripi Ultra Soft Normal N10 </title>  </result>  <result>   <code>5411416014034</code>   <title>Absorbante HH cu aripi Ultra Soft Super N8 </title>  </result>  <result>   <code>3800213309764</code>   <title>Absorbante Igienice  FLIRT SOFT &amp; DRY 6buc WKR15V</title>  </result>  <result>   <code>4840618005150</code>   <title>Absorbante KOTEX dry&amp;soft light 10+rexona</title>  </result>  <result>   <code>5029053541532</code>   <title>Absorbante KOTEX extra soft normal duo 20</title>  </result>  <result>   <code>5029053542676</code>   <title>Absorbante KOTEX extra soft normal duo 20</title>  </result> </searchresult>
-	and error text |
->>	411412029089463 sent request: http://92.115.237.226:60080/um/unitest.php?delay=15&cmd=doc_get_item_info&session=2780&barcode=5900516311940&printer=
-<<	411412029142087 received response going to 15 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn>FH1234567891111</nn> <richdata>  <![CDATA[   <div>    <span><b>7/37</b></span>   </div>   <div>    <b>Наим:</b>    <span><b>50077, Absorbante BELLA DEO panty soft 20buc</b></span>   </div>   <div>    <b>Ц. без НДС:</b>    <span><b>11.63</b></span>   </div>   <div>    <b>Кол-во:</b>    <span><b style="color: white; background: #800"> Нет в спец.! </b>.</span>   </div>   <div style="text-decoration: underline">    <b>Мин. дата произ-ва:</b>    <span>01.12.2018</span>   </div>  ]]> </richdata> </item>
-	and error text |
->>	411412030085854 sent request: http://92.115.237.226:60080/um/unitest.php?delay=16&cmd=doc_get_item_info&session=2780&barcode=5029053541532&printer=
-<<	411412030145971 received response going to 15 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn>FH1234567891111</nn> <richdata>  <![CDATA[   <div>    <span><b>7/37</b></span>   </div>   <div>    <b>Наим:</b>    <span><b>48468, Absorbante KOTEX extra soft normal duo 20</b></span>   </div>   <div>    <b>Ц. без НДС:</b>    <span><b>30.13</b></span>   </div>   <div>    <b>Кол-во:</b>    <span><b style="color: white; background: #800"> Нет в спец.! </b>.</span>   </div>  ]]> </richdata> </item>
+>>	412122706584964 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=list_users
+<<	412122706598369 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket</servicename></users>
 	and error text |

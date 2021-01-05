@@ -5,7 +5,7 @@
 
 
 
-class SubbranchingDocResultsW : DocResultsWidget
+class SubbranchingDocResultsW : public DocResultsWidget
 {
 	Q_OBJECT
 protected:

@@ -65,29 +65,26 @@ MainPageWidget::MainPageWidget(QWidget* parent)
 	hostLabel->setText(AppSettings->HttpUrl.section("/", 4, 4));
 	hostLabel->setFont(GENERAL_FONT);
 
-	userHelpLabel->setText(tr("main_page_select_profile_tip"));
 	userHelpLabel->setFont(GENERAL_FONT);
-	userIdInfo->setText(tr("main_page_enter_profile_id_tip"));
 	userIdInfo->setFont(GENERAL_FONT);
 	userHelpLabel->setAlignment(Qt::AlignCenter);
 	userIdInfo->setAlignment(Qt::AlignCenter);
 
-	exitButton->setText(tr("main_page_exit_button"));
 	exitButton->setIcon(QIcon(":/res/exit.png"));
 	exitButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
 	exitButton->setFont(GENERAL_FONT);
-	settingsButton->setText(tr("main_page_settings_button"));
 	settingsButton->setIcon(QIcon(":/res/settings.png"));
 	settingsButton->setStyleSheet(SETTINGS_BUTTONS_STYLESHEET);
 	settingsButton->setFont(GENERAL_FONT);
 	refreshButton->setIcon(QIcon(":/res/refresh.png"));
-	refreshButton->setText(tr("refresh"));
 	refreshButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 	refreshButton->setFont(GENERAL_FONT);
 	userid->setFont(GENERAL_FONT);
+	languageChanged();
 
 	loginsView->setModel(innerModel);
 	loginsView->setItemDelegate(new ZebraItemDelegate(this));
+
 #ifdef QT_VERSION5X
 	QObject::connect(settingsButton, &QPushButton::clicked, this, &MainPageWidget::settinsPressed);
 	QObject::connect(exitButton, &QPushButton::clicked, qApp, &QApplication::quit);
@@ -174,6 +171,8 @@ void MainPageWidget::languageChanged()
 	userHelpLabel->setText(tr("main_page_select_profile_tip"));
 	userIdInfo->setText(tr("main_page_enter_profile_id_tip"));
 	exitButton->setText(tr("main_page_exit_button"));
+	settingsButton->setText(tr("main_page_settings_button"));
+	refreshButton->setText(tr("refresh"));
 	settingsButton->setText(tr("main_page_settings_button"));
 	manualLogin->langCh();
 }

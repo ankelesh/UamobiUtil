@@ -81,7 +81,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 
 
 	const QFont & scf = *FontAdapter::general();
-
+	
 
 	QStringList temp;
 	temp << tr("settings_scmode_one") << tr("settings_scmode_autos") << tr("settings_scmode_simple");
@@ -90,7 +90,6 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	scanModeSelector->setFont(scf);
 	scanModeSelector->setMinimumHeight(calculateAdaptiveButtonHeight());
 
-	topExplLabel->setText(tr("settings_system_title"));
 	topExplLabel->setAlignment(Qt::AlignCenter);
 	topExplLabel->setFont(scf);
 	
@@ -109,11 +108,9 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	else
 		langField->setCurrentIndex(2);
 
-	saveButton->setText(tr("settings_save_button"));
 	saveButton->setIcon(QIcon(":/res/with.png"));
 	saveButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 
-	backButton->setText(tr("settings_back_button"));
 	backButton->setIcon(QIcon(":/res/back.png"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
@@ -237,10 +234,31 @@ void MainSettingsWidget::langChanged()
 	AppSettings->setTranslator();
 	QStringList temp;
 	temp << tr("settings_scmode_one") << tr("settings_scmode_autos") << tr("settings_scmode_simple");
+	scanModeSelector->clear();
 	scanModeSelector->addItems(temp);
 	topExplLabel->setText(tr("settings_system_title"));
 	saveButton->setText(tr("settings_save_button"));
 	backButton->setText(tr("settings_back_button"));
+	innerWidget->setTabText(0, tr("system"));
+	innerWidget->setTabText(1, tr("workflow"));
+	innerWidget->setTabText(2, tr("printer"));
+	innerWidget->setTabText(3, tr("Scan"));
+
+	static_cast<QLabel*>(sysinnLayout->labelForField(addressField))->setText(tr("HTTP address"));
+	static_cast<QLabel*>(sysinnLayout->labelForField(langField))->setText(tr("language"));	
+	static_cast<QLabel*>(sysinnLayout->labelForField(createSTableButton))->setText(tr("create style table"));
+	static_cast<QLabel*>(scaninnlayout->labelForField(prefix))->setText(tr("prefix ") + QChar(AppSettings->scanPrefix));
+	static_cast<QLabel*>(scaninnlayout->labelForField(suffix))->setText(tr("suffix ") + QChar(AppSettings->scanSuffix));
+	static_cast<QLabel*>(wrkflinnLayout->labelForField(scanModeSelector))->setText(tr("scanMode"));
+	static_cast<QLabel*>(wrkflinnLayout->labelForField(fontMin))->setText(tr("font min"));
+	static_cast<QLabel*>(wrkflinnLayout->labelForField(fontMax))->setText(tr("font max"));
+	static_cast<QLabel*>(wrkflinnLayout->labelForField(fontDec))->setText(tr("font dec"));
+	static_cast<QLabel*>(wrkflinnLayout->labelForField(notificationsVolume))->setText(tr("Notifications volume"));
+	static_cast<QLabel*>(printinnLayout->labelForField(buildState))->setText(tr("Printer support"));
+	static_cast<QLabel*>(printinnLayout->labelForField(portDesignation))->setText(tr("Port name"));
+	static_cast<QLabel*>(printinnLayout->labelForField(portNumber))->setText(tr("Port"));
+	static_cast<QLabel*>(printinnLayout->labelForField(portType))->setText(tr("Printer"));
+	static_cast<QLabel*>(printinnLayout->labelForField(btDeviceName))->setText(tr("Printer name"));
 }
 
 void MainSettingsWidget::AddressSelected(const QString& activated)

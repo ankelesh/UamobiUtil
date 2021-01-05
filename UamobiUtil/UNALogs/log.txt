@@ -1,105 +1,12 @@
 Application start begins: version 0.14 lin-alpha
-][	Created object LoginWidget on address 19276600
-][	Created object MainPageWidget on address 19284816
->>	411412015538729 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
->>	411412015545891 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
-<<	411412015590846 received response going to 0 containing text:|
+][	Created object LoginWidget on address 21107368
+][	Created object MainPageWidget on address 21204000
+>>	412122556260905 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
+>>	412122556267811 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
+<<	412122556322750 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket<
 	and error text |
->>	411412020738180 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.14
-<<	411412020846561 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2780</session>
-</login>
-	and error text |
->>	411412020850796 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2780&lang=Russian
-<<	411412020908502 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>
-	and error text |
->>	411412021316270 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=2780&mode=receipt&submode=
-<<	411412021359954 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status>  <desc> <![CDATA[ 
-[SwitchByScanCode]
-%Order%
-<rec_
-	and error text |
-[!!!]	Mode named Прием товаров signed as receipt  received, interpreting: 
-	
-	[SwitchByScanCode]
-	%Order%
-	<rec_get_order_by_barcode&session=%1&barcode=%2>
-	{
-	[Subbranch]
-	{
-	[SelectItemFromList]
-	%Supplier%
-	[IdDependentSelect]
-	%Order%
-	}
-	}
-	[ReceiptParameters]
-	[NormalScaning]
-	<>
-	*-6* 
-][	Created object Adjustable branch with 3 children on address 106736032
-]N[	Node of type 22 fabricated using description:  children: 1 oqs: 1
-]N[	Node of type 15 fabricated using description:  children: 2 oqs: 0
-][	Created object Adjustable branch with 2 children on address 106735312
-]N[	Node of type 10 fabricated using description:  children: 0 oqs: 0
-][	Created object SelectItemFromList on address 106366048
->>	411412021746064 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=rec_list_suppliers&session=2780&text=&hasorders=true
-<<	411412021753417 received response going to 5 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <suppliers>  <status>200</status>  <supplier>   <code>162104</code>   <name>Serv
-	and error text |
-]N[	Node of type 9 fabricated using description:  children: 0 oqs: 0
-][	Created object IdDependentSelect on address 107380272
->>	411412021988849 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=rec_list_orders&session=2780&supplier=162104
-<<	411412021994993 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <orders>  <status>200</status>  <order>   <code>18858333</code>   <title>№ заявк
-	and error text |
->>	411412022118843 sent request: http://92.115.237.226:60080/um/unitest.php?delay=7&cmd=rec_get_order_info&session=2780&order=18858333&supplier=162104
-<<	411412022122985 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <order>  <status>200</status> <richdata> <![CDATA[  <div><b> Serviabil SRL</b></
-	and error text |
-]N[	Node of type 5 fabricated using description:  children: 0 oqs: 0
-][	Created object ReceiptParametersWidget on address 107351784
-]N[	Node of type 6 fabricated using description:  children: 0 oqs: 1
-][	Created object NormalScaning on address 107355264
-][	Created object ControlListWidget on address 105429360
-][	Created object DocResults on address 106475664
-][	Created object PagedSearchWidget on address 104473928
->>	411412022444523 sent request: http://92.115.237.226:60080/um/unitest.php?delay=8&cmd=rec_new_doc&session=2780&date=04.12.2020&parent=18858333&comment=
-<<	411412022458291 received response going to 31 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <newdoc>  <status>200</status>  <doc>   <code>3752908</code>   <parentnr>1885833
-	and error text |
->>	411412023520166 sent request: http://92.115.237.226:60080/um/unitest.php?delay=9&cmd=doc_search_items&session=2780&text=f&page=0
-<<	411412023590619 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <searchresult>  <status>200</status>  <page>   <from>1</from>   <to>25</to>  </p
-	and error text |
->>	411412023808828 sent request: http://92.115.237.226:60080/um/unitest.php?delay=10&cmd=doc_get_item_info&session=2780&barcode=1234567891111&printer=
-<<	411412023814535 received response going to 15 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn></nn> <richdata>  <![CDATA[   <center><b>Проска
-	and error text |
->>	411412024787212 sent request: http://92.115.237.226:60080/um/unitest.php?delay=11&cmd=doc_get_item_info&session=2780&barcode=fh1234567891111&printer=
-<<	411412024800318 received response going to 15 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn>FH1234567891111</nn> <richdata>  <![CDATA[ <div
-	and error text |
->>	411412025699481 sent request: http://92.115.237.226:60080/um/unitest.php?delay=12&cmd=doc_get_item_info&session=2780&barcode=1234567891111&printer=
-<<	411412025743396 received response going to 15 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn>FH1234567891111</nn> <richdata>  <![CDATA[   <d
-	and error text |
->>	411412027422302 sent request: http://92.115.237.226:60080/um/unitest.php?delay=13&cmd=doc_get_item_info&session=2780&barcode=4840128010385&printer=
-<<	411412027475469 received response going to 15 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn>FH1234567891111</nn> <richdata>  <![CDATA[   <d
-	and error text |
->>	411412028742428 sent request: http://92.115.237.226:60080/um/unitest.php?delay=14&cmd=doc_search_items&session=2780&text=ft&page=0
-<<	411412028781318 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <searchresult>  <status>200</status>  <page>   <from>1</from>   <to>25</to>  </p
-	and error text |
->>	411412029089463 sent request: http://92.115.237.226:60080/um/unitest.php?delay=15&cmd=doc_get_item_info&session=2780&barcode=5900516311940&printer=
-<<	411412029142087 received response going to 15 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn>FH1234567891111</nn> <richdata>  <![CDATA[   <d
-	and error text |
->>	411412030085854 sent request: http://92.115.237.226:60080/um/unitest.php?delay=16&cmd=doc_get_item_info&session=2780&barcode=5029053541532&printer=
-<<	411412030145971 received response going to 15 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <nn>FH1234567891111</nn> <richdata>  <![CDATA[   <d
+>>	412122706584964 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=list_users
+<<	412122706598369 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket<
 	and error text |
