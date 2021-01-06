@@ -471,7 +471,7 @@
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="65"/>
         <source>scanMode</source>
-        <translation></translation>
+        <translation>Режим сканирования</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="66"/>
@@ -522,19 +522,19 @@
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="87"/>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="239"/>
         <source>settings_scmode_one</source>
-        <translation></translation>
+        <translation>Режим один</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="87"/>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="239"/>
         <source>settings_scmode_autos</source>
-        <translation></translation>
+        <translation type="unfinished">Режим </translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="87"/>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="239"/>
         <source>settings_scmode_simple</source>
-        <translation></translation>
+        <translation>Режим Простой</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="93"/>

@@ -454,7 +454,7 @@
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="56"/>
         <source>create style table</source>
-        <translation></translation>
+        <translation>Creare tabel cu stiluri</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="61"/>
@@ -471,7 +471,7 @@
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="65"/>
         <source>scanMode</source>
-        <translation></translation>
+        <translation>Mod de scanare</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="66"/>
@@ -522,19 +522,19 @@
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="87"/>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="239"/>
         <source>settings_scmode_one</source>
-        <translation></translation>
+        <translation>Regim unu</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="87"/>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="239"/>
         <source>settings_scmode_autos</source>
-        <translation></translation>
+        <translation type="unfinished">Regim</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="87"/>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="239"/>
         <source>settings_scmode_simple</source>
-        <translation></translation>
+        <translation>Regim simplu</translation>
     </message>
     <message>
         <location filename="../widgets/SettingsBranches/MainSettingsWidget.cpp" line="93"/>
