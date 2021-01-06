@@ -9,7 +9,7 @@ inline void initialize_default_file(QSettings& setting)
 		return;
 	// settings default for all linella users
 	setting.setValue("app_lang", "Russian");
-	setting.setValue("http_host", "http://192.168.0.45/um/unitest.php");
+	setting.setValue("http_host", "http://192.168.0.45/um/uniback_2020.php");
 	setting.setValue("timeout", 240000);
 	setting.setValue("scan_prefix", 36);
 	setting.setValue("scan_suffix", 10);
@@ -18,7 +18,7 @@ inline void initialize_default_file(QSettings& setting)
 	setting.setValue("font_scale_percent", 0.03);
 	setting.setValue("printer_designation", "COM6:");
 	setting.setValue("printer_port", 19200);
-	setting.setValue("printer_type", "zebra");
+	setting.setValue("printer_type", "zebra20_70x33");
 
 }
 #else

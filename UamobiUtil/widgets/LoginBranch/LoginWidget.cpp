@@ -107,6 +107,7 @@ LoginWidget::LoginWidget( QWidget* parent)
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 #ifdef LINELLA
 	passwordField->setInputMethodHints(Qt::ImhPreferNumbers);
+	loginField->setInputMethodHints(Qt::ImhPreferNumbers);
 #endif
 #ifdef QT_VERSION5X
 	QObject::connect(okButton, &QPushButton::clicked, this, &LoginWidget::login_confirmed);
