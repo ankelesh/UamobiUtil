@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET = UamobiUtil
 QT += core xml network gui widgets
-CONFIG += debug
+CONFIG += release
 DEFINES += DEBUG LINELLA
 greaterThan(QT_MAJOR_VERSION, 4): DEFINES += QT_VERSION5X
 lessThan(QT_MAJOR_VERSION, 5) : DEFINES += "Q_NULLPTR=0"

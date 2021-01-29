@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<manifest package="una.unamd.unaretail" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.13" android:versionCode="1" android:installLocation="auto">
-    <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="22"/>
+<manifest package="una.unamd.unaretail" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="1.14" android:versionCode="1" android:installLocation="auto">
+    <uses-sdk android:minSdkVersion="24" android:targetSdkVersion="25"/>
 
     <!-- The following comment will be replaced upon deployment with default permissions based on the dependencies of the application.
          Remove the comment if you do not require these default permissions. -->
@@ -71,7 +71,7 @@
                 * minimal - useful for Quick Controls 2 apps, it is much faster than "full"
                 * none - useful for apps that don't use any of the above Qt modules
                 -->
-            <meta-data android:name="android.app.extract_android_style" android:value="default"/>
+            <meta-data android:name="android.app.extract_android_style" android:value="full"/>
             <!-- extract android style -->
         </activity>
         <!-- For adding service(s) please check: https://wiki.qt.io/AndroidServices -->
