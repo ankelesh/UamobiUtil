@@ -87,6 +87,8 @@ inline QSize imitatePhoneSize(double HPercent)
 	);
 }
 
+
+
 class FontAdapter
 	// creates scaled fonts
 {

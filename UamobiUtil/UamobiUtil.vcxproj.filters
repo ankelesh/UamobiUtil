@@ -411,6 +411,18 @@
     <ClCompile Include="SoundWrappers\SoundEffectPlayer.cpp">
       <Filter>Source Files\SoundWrappers</Filter>
     </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\AndroidFileDialog.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\ExtendedDialogs.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\ExtendedLabels.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\MegaIconButton.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -580,6 +592,18 @@
     </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\Selectors\SubbranchingDocResults.h">
       <Filter>Header Files\MultibranchWidgets\Selectors</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\AndroidFileDialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\ExtendedDialogs.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\ExtendedLabels.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\MegaIconButton.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

@@ -1,25 +1,25 @@
 Application start begins: version 0.14 lin-alpha
->>	413078647044137 sent request: 
+>>	413116660765225 sent request: 
 una.md:3323/um/sammy0520181.php?delay=0&cmd=ping
->>	413078647051043 sent request: 
+>>	413116660773411 sent request: 
 una.md:3323/um/sammy0520181.php?delay=1&cmd=list_users
-<<	413078647289790 received response going to 0 containing text:|
+<<	413116661391806 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status>  <user>   <login>adm</login>   <name>Adm Adm</name>   <userId>101</userId>   <br/>  </user>  <user>   <login>TSD1</login>   <name>522_Oper1</name>   <userId>522</userId>   <br/>  </user>  <user>   <login>admin_saraa</login>   <name>700 - admin_saraa</name>   <userId>700</userId>   <br/>  </user>  <user>   <login>vnemtan</login>   <name>701 - VNemtan</name>   <userId>701</userId>   <br/>  </user>  <user>   <login>DepAdm</login>   <name>DEPADM</name>   <userId>900</userId>   <br/>  </user>  <user>   <login>VGrosu</login>   <name>Grosu Viorica</name>   <userId>901</userId>   <br/>  </user>  <user>   <login>RCeban</login>   <name>Ceban Roman</name>   <userId>902</userId>   <br/>  </user>  <user>   <login>DMunteanu</login>   <name>Munteanu Dorin</name>   <userId>903</userId>   <br/>  </user>  <user>   <login>DMaimesco</login>   <name>Maimesco Dan</name>   <userId>904</userId>   <br/>  </user>  <user>   <login>rmagdil</login>   <name>Magdil Ruslan</name>   <userId>905</userId>   <br/>  </user>  <user>   <login>gceban</login>   <name>Ceban Gheorghe</name>   <userId>908</userId>   <br/>  </user>  <user>   <login>rcheleanu</login>   <name>Cheleanu Ruslan</name>   <userId>910</userId>   <br/>  </user>  <user>   <login>ogidei</login>   <name>Gidei Olga</name>   <userId>912</userId>   <br/>  </user>  <user>   <login>smihailova</login>   <name>Mihailova Svetlana</name>   <userId>913</userId>   <br/>  </user>  <user>   <login>ISpataru</login>   <name>Spataru Ion</name>   <userId>914</userId>   <br/>  </user>  <user>   <login>ccernavca</login>   <name>Cernavca Cristina</name>   <userId>915</userId>   <br/>  </user>  <user>   <login>VSidorenco</login>   <name>Veaceslav Sidorenco</name>   <userId>916</userId>   <br/>  </user>  <user>   <login>DSidorenco</login>   <name>Sidorenco Dumitru</name>   <userId>917</userId>   <br/>  </user>  <user>   <login>prodfc1</login>   <name>919 - prodfc1</name>   <userId>919</userId>   <br/>  </user>  <user>   <login>prodfc</login>   <name>prodfc</name>   <userId>920</userId>   <br/>  </user>  <user>   <login>ProdAG</login>   <name>prodfc</name>   <userId>922</userId>   <br/>  </user>  <user>   <login>ProdAS</login>   <name>prodfc</name>   <userId>923</userId>   <br/>  </user>  <user>   <login>oper1</login>   <name>operator1</name>   <userId>971</userId>   <br/>  </user>  <user>   <login>oper2</login>   <name>operator2</name>   <userId>972</userId>   <br/>  </user>  <user>   <login>oper3</login>   <name>operator3</name>   <userId>973</userId>   <br/>  </user>  <servicename>Romina</servicename> </users>
 	and error text |
->>	413078650947716 sent request: 
+>>	413116664833668 sent request: 
 una.md:3323/um/sammy0520181.php?delay=2&cmd=log_in&username=DepAdm&password=1&version=0.14
-<<	413078651250401 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>4524</session>
+<<	413116665349089 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>4527</session>
  </login>
 	and error text |
->>	413078651253868 sent request: 
-una.md:3323/um/sammy0520181.php?delay=3&cmd=list_modes&session=4524&lang=English
-<<	413078651304662 received response going to 0 containing text:|
+>>	413116665353068 sent request: 
+una.md:3323/um/sammy0520181.php?delay=3&cmd=list_modes&session=4527&lang=English
+<<	413116665446102 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  	<mode> 		<modeName>receipt</modeName> 		<captionMode>Acceptarea Materiei Prime</captionMode> 		<mode>receipt</mode> 		<submode></submode> 	</mode> 	<mode> 		<modeName>finishedproductreceipt</modeName> 		<captionMode>Acceptarea Produs Finit</captionMode> 		<mode>receipt</mode> 		<submode>finishedproductreceipt</submode> 	</mode> 	<mode> 		<modeName>adjustment</modeName> 		<captionMode>Corectarea acceptarii MP/PF</captionMode> 		<mode>inventory</mode> 		<submode>adjustment</submode> 	</mode> 	<mode> 		<modeName>movingunload</modeName> 		<captionMode>Depozitarea Materiei Prime (din Bufer in celula)</captionMode> 		<mode>inventory</mode> 		<submode>movingunload</submode> 	</mode> 	<mode> 		<modeName>emitting</modeName> 		<captionMode>Eliberarea Marfa</captionMode> 		<mode>receipt</mode> 		<submode>emitting</submode> 	</mode> 	<mode> 		<modeName>locationinfo</modeName> 		<captionMode>Informatia despre MP/PF dupa codul de bare</captionMode> 		<mode>printing</mode> 		<submode>locationinfo</submode> 	</mode> 	<mode> 		<modeName>tmcinfobylocation</modeName> 		<captionMode>Informatia despre MP/PF pe celula</captionMode> 		<mode>printing</mode> 		<submode>tmcinfobylocation</submode> 	</mode> 	<mode> 		<modeName>initialdownload</modeName> 		<captionMode>Inventarul de locatie</captionMode> 		<mode>inventory</mode> 		<submode>initialdownload</submode> 	</mode> 	<mode> 		<modeName>inventory</modeName> 		<captionMode>Inventarul in productie</captionMode> 		<mode>inventory</mode> 		<submode></submode> 	</mode> 	<mode> 		<modeName>releasebuyer</modeName> 		<captionMode>Lista Valorizzata (EXPORT)</captionMode> 		<mode>receipt</mode> 		<submode>releasebuyer</submode> 	</mode> 	<mode> 		<modeName>newlocationinfo</modeName> 		<captionMode>New Location Info</captionMode> 		<mode>printing</mode> 		<submode>newlocationinfo</submode> 	</mode> 	<mode> 		<modeName>newreceipt</modeName> 		<captionMode>New Receipt</captionMode> 		<mode>receipt</mode> 		<submode>newreceipt</submode> 	</mode> 	<mode> 		<modeName>msreceipt1</modeName> 		<captionMode>New Receptia multi etap</captionMode> 		<mode>receipt</mode> 		<submode>msreceipt1</submode> 	</mode> 	<mode> 		<modeName>materialshipment</modeName> 		<captionMode>Returul MP</captionMode> 		<mode>receipt</mode> 		<submode>materialshipment</submode> 	</mode> 	<mode> 		<modeName>finishedproductreturn</modeName> 		<captionMode>Returul productiei din Export</captionMode> 		<mode>receipt</mode> 		<submode>finishedproductreturn</submode> 	</mode> 	<mode> 		<modeName>movingload</modeName> 		<captionMode>Scoaterea MP (din celula in Buffer)</captionMode> 		<mode>inventory</mode> 		<submode>movingload</submode> 	</mode> 	<mode> 		<modeName>emitting2021</modeName> 		<captionMode>2021 Eliberarea Marfa</captionMode> 		<mode>receipt</mode> 		<submode>emitting2021</submode> 	</mode> 	<mode> 		<modeName>movingload2021</modeName> 		<captionMode>2021 Scoaterea MP (din celula in Buffer)</captionMode> 		<mode>inventory</mode> 		<submode>movingload2021</submode> 	</mode> </modes>
 	and error text |
->>	413078651583150 sent request: 
-una.md:3323/um/sammy0520181.php?delay=4&cmd=select_mode&session=4524&mode=receipt&submode=emitting
-<<	413078651632466 received response going to 0 containing text:|
+>>	413116665815982 sent request: 
+una.md:3323/um/sammy0520181.php?delay=4&cmd=select_mode&session=4527&mode=receipt&submode=emitting
+<<	413116665863762 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status> <settings>
   <s>
     <name>skiplistplaces</name>
@@ -70,24 +70,24 @@ una.md:3323/um/sammy0520181.php?delay=4&cmd=select_mode&session=4524&mode=receip
  ]]>
 </desc> </mode>
 	and error text |
->>	413078651635856 sent request: 
-una.md:3323/um/sammy0520181.php?delay=5&cmd=list_places&session=4524
-<<	413078651667529 received response going to 0 containing text:|
+>>	413116665867664 sent request: 
+una.md:3323/um/sammy0520181.php?delay=5&cmd=list_places&session=4527
+<<	413116665969993 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <places>  <status>200</status>  <place>   <code>916</code>   <name>DEPOZIT Produs Finit</name>  </place>  <place>   <code>4063</code>   <name>Productie (WIP)</name>  </place>  <place>   <code>4973</code>   <name>DEPOZIT Punti Presa</name>  </place>  <place>   <code>45244</code>   <name>DEPOZIT Camera SEGREGARE</name>  </place>  </places>
 	and error text |
->>	413078651954161 sent request: 
-una.md:3323/um/sammy0520181.php?delay=6&cmd=select_place&session=4524&place=4973
-<<	413078651966705 received response going to 0 containing text:|
+>>	413116666174449 sent request: 
+una.md:3323/um/sammy0520181.php?delay=6&cmd=select_place&session=4527&place=4973
+<<	413116666189553 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <place>  <status>200</status>  </place>
 	and error text |
->>	413078651979707 sent request: 
-una.md:3323/um/sammy0520181.php?delay=7&cmd=rec_list_suppliers&session=4524&text=&hasorders=true
-<<	413078652122857 received response going to 5 containing text:|
+>>	413116666202811 sent request: 
+una.md:3323/um/sammy0520181.php?delay=7&cmd=rec_list_suppliers&session=4527&text=&hasorders=true
+<<	413116666401257 received response going to 5 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <suppliers>  <status>200</status>  <supplier>   <code>4063</code>   <name>Productie (WIP)</name>   <orders>3</orders>  </supplier>  </suppliers>
 	and error text |
->>	413078652266987 sent request: 
-una.md:3323/um/sammy0520181.php?delay=8&cmd=rec_list_orders&session=4524&supplier=4063
-<<	413078652327603 received response going to 0 containing text:|
+>>	413116666583019 sent request: 
+una.md:3323/um/sammy0520181.php?delay=8&cmd=rec_list_orders&session=4527&supplier=4063
+<<	413116666691251 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <orders>  <status>200</status>  <order>   <code>97106</code>   <title>Nr. cererii: 97106, </title>
   <text>Data livr.: 15.02.2021  </text>  </order>  <order>   <code>80103</code>   <title>Nr. cererii: 80103, </title>
   <text>Data livr.: 09.08.2018  </text>  </order>  <order>   <code>80067</code>   <title>Nr. cererii: 80067, Copy of 72055</title>
@@ -95,27 +95,41 @@ una.md:3323/um/sammy0520181.php?delay=8&cmd=rec_list_orders&session=4524&supplie
 <supplier>Productie (WIP)</supplier>
  </orders>
 	and error text |
->>	413078652529574 sent request: 
-una.md:3323/um/sammy0520181.php?delay=9&cmd=rec_get_order_info&session=4524&order=97106&supplier=4063
-<<	413078652540891 received response going to 0 containing text:|
+>>	413116667015846 sent request: 
+una.md:3323/um/sammy0520181.php?delay=9&cmd=rec_get_order_info&session=4527&order=97106&supplier=4063
+<<	413116667025883 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <order>  <status>200</status> <richdata> <![CDATA[  <div><b>Furnizor:</b> Productie (WIP)</div>  <div><b>Doc. nr.:</b> 97106</div> <hr><div>BLISTER ALFA ROMEO 952 - 1000</div> <div>ACW0170170LAV - 100</div> ]]> </richdata>  </order>
 	and error text |
->>	413078652824124 sent request: 
-una.md:3323/um/sammy0520181.php?delay=10&cmd=rec_new_doc&session=4524&date=17.02.2021&parent=97106&comment=
-<<	413078652878983 received response going to 31 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <newdoc>  <status>200</status>  <doc>   <code>133042</code>   <parentnr>97107</parentnr>   <supplier>Productie (WIP)</supplier>   <date>17.02.2021</date>   <comment></comment>   <closed>false</closed>   <canceled>false</canceled>   <locked>false</locked>   <scanmode>simple</scanmode>  </doc>  </newdoc>
+>>	413116667361340 sent request: 
+una.md:3323/um/sammy0520181.php?delay=10&cmd=rec_new_doc&session=4527&date=19.02.2021&parent=97106&comment=
+<<	413116667445639 received response going to 31 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <newdoc>  <status>200</status>  <doc>   <code>133100</code>   <parentnr>97107</parentnr>   <supplier>Productie (WIP)</supplier>   <date>19.02.2021</date>   <comment></comment>   <closed>false</closed>   <canceled>false</canceled>   <locked>false</locked>   <scanmode>simple</scanmode>  </doc>  </newdoc>
 	and error text |
->>	413078654418956 sent request: 
-una.md:3323/um/sammy0520181.php?delay=11&cmd=doc_get_mult_version&session=4524&barcode=48394719433832
-<<	413078654425150 received response going to 0 containing text:|
+>>	413116670766604 sent request: 
+una.md:3323/um/sammy0520181.php?delay=11&cmd=doc_get_mult_version&session=4527&barcode=2000000050027
+<<	413116670779454 received response going to 0 containing text:|
 	<?xml version="1.0"?>
 <what>
 	<message>Unknown command.</message>
 </what>
 	and error text |
-> ! <	413078654425753 error receiving response: No status code
->>	413078654426148 sent request: 
-una.md:3323/um/sammy0520181.php?delay=12&cmd=doc_get_item_info&session=4524&barcode=48394719433832&printer=
-<<	413078654535006 received response going to 15 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <paletselected>  <status>200</status> <richdata> <![CDATA[ <center><b>Error!</b></center><div style="text-align: center; "><big>Nu este selectat barcodul receptiei.</big></div> ]]> </richdata> </paletselected>
+> ! <	413116670779801 error receiving response: No status code
+>>	413116670780196 sent request: 
+una.md:3323/um/sammy0520181.php?delay=12&cmd=doc_get_item_info&session=4527&barcode=2000000050027&printer=
+<<	413116670853982 received response going to 15 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <paletselected>  <status>200</status> <richdata> <![CDATA[ <center><b>Loc de pastrare</b></center><div style="text-align: center; "><big>Era selectat locul: A0-01-01.</big></div> ]]> </richdata> </paletselected>
+	and error text |
+>>	413116672273677 sent request: 
+una.md:3323/um/sammy0520181.php?delay=13&cmd=doc_get_mult_version&session=4527&barcode=2100005661270
+<<	413116672286236 received response going to 0 containing text:|
+	<?xml version="1.0"?>
+<what>
+	<message>Unknown command.</message>
+</what>
+	and error text |
+> ! <	413116672286726 error receiving response: No status code
+>>	413116672287415 sent request: 
+una.md:3323/um/sammy0520181.php?delay=14&cmd=doc_get_item_info&session=4527&barcode=2100005661270&printer=
+<<	413116672586567 received response going to 15 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <item>  <status>200</status> <richdata><![CDATA[<div style="background: #d0f0c0"><center>Box</center></div>   <div style="text-decoration: underline">    <b>Barcod:</b>    <span>2100005661270</span>  </div>  <div>    <b>Marfuri atasate:</b>    <span><b>BLISTER ALFA ROMEO 952</b></span>  </div>  <div>    <b>Data producerii:</b>    <span>21.05.2018</span>  </div>  <div>    <b>Lot:</b>    <span>18141</span>  </div>  <div>    <b>Cantiitae de materii prime, solduri:</b>    <span>2700</span>   </div>  <div>    <b>Cantiitae in box, solduri:</b>    <span>1</span>   </div>  <div>    <b>Cantiitae de materii prime, accumulat:</b>    <span>0</span>   </div>  <div>    <b>Cantiitae in box, accumulat:</b>    <span>0</span>   </div> ]]></richdata> <controls>  <control>     <name>exp_dates</name>     <noautoexpand>true</noautoexpand>  </control> </controls> </item>
 	and error text |
