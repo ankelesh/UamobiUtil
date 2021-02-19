@@ -142,6 +142,30 @@
     <Filter Include="Source Files\PrinterWrappers">
       <UniqueIdentifier>{63e39976-bc38-4b54-9e84-a8c40398aadf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="submodules">
+      <UniqueIdentifier>{f6bc9b1b-85dc-446f-93cc-0a0c32b7eb96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons">
+      <UniqueIdentifier>{c7bc4e74-5a0c-4334-af7f-3bd12315d856}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers">
+      <UniqueIdentifier>{2f119ca2-1235-4c19-b23b-60016e28191a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\widgets">
+      <UniqueIdentifier>{38813580-6e45-4f12-86dc-57d7c8834dad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\widgets\UtilityElements">
+      <UniqueIdentifier>{3fd47b43-10a1-4d0e-9a40-b60d9adbaa62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources">
+      <UniqueIdentifier>{63ff034b-504d-466b-a240-1e12e21ce4e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\widgets">
+      <UniqueIdentifier>{41a8fc99-6e00-4ba3-a3a6-f66e0d07e8fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\widgets\UtilityElements">
+      <UniqueIdentifier>{1032c9c6-b4ff-4409-a5ba-3cb40968e123}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -411,17 +435,17 @@
     <ClCompile Include="SoundWrappers\SoundEffectPlayer.cpp">
       <Filter>Source Files\SoundWrappers</Filter>
     </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\MegaIconButton.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\UtilityElements</Filter>
+    </ClCompile>
     <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\AndroidFileDialog.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>submodules\UNAQtCommons\Sources\widgets\UtilityElements</Filter>
     </ClCompile>
     <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\ExtendedDialogs.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>submodules\UNAQtCommons\Sources\widgets\UtilityElements</Filter>
     </ClCompile>
     <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\ExtendedLabels.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\MegaIconButton.cpp">
-      <Filter>Header Files</Filter>
+      <Filter>submodules\UNAQtCommons\Sources\widgets\UtilityElements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -594,16 +618,16 @@
       <Filter>Header Files\MultibranchWidgets\Selectors</Filter>
     </QtMoc>
     <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\AndroidFileDialog.h">
-      <Filter>Header Files</Filter>
+      <Filter>submodules\UNAQtCommons\Headers\widgets\UtilityElements</Filter>
     </QtMoc>
     <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\ExtendedDialogs.h">
-      <Filter>Header Files</Filter>
+      <Filter>submodules\UNAQtCommons\Headers\widgets\UtilityElements</Filter>
     </QtMoc>
     <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\ExtendedLabels.h">
-      <Filter>Header Files</Filter>
+      <Filter>submodules\UNAQtCommons\Headers\widgets\UtilityElements</Filter>
     </QtMoc>
     <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\MegaIconButton.h">
-      <Filter>Header Files</Filter>
+      <Filter>submodules\UNAQtCommons\Headers\widgets\UtilityElements</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
