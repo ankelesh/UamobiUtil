@@ -2,8 +2,8 @@
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "debugtrace.h"
 #include "widgets/utils/ElementsStyles.h"
-#include "widgets/ElementWidgets/ExtendedLabels.h"
-#include "widgets/ElementWidgets/ExtendedDialogs.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedLabels.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.h"
 #include "PrinterWrappers/AbsPrinterWrapper.h"
 #include "PrinterWrappers/PrinterWrapperFactory.h"
 void PrintingScaningWidget::_print(QString text)
@@ -187,10 +187,10 @@ void PrintingScaningWidget::wrapperError(QString errtext)
     if (!isVisible())
         QTimer::singleShot(100, this, SLOT(reshowError()));
     else
-        ErrorMessageDialog::showErrorInfo(this, tr("Printer error"), errtext);
+        ErrorMessageDialog::showErrorInfo( tr("Printer error"), errtext);
 }
 
 void PrintingScaningWidget::reshowError()
 {
-    ErrorMessageDialog::showErrorInfo(this, tr("Printer error"), printerWrapper->errors());
+    ErrorMessageDialog::showErrorInfo(tr("Printer error"), printerWrapper->errors());
 }

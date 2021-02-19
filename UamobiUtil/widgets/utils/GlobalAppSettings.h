@@ -33,6 +33,7 @@ public:
 	QString lastPrinterBTMAC;
 	QString lastPrinterBTUUID;
 	QString bluetoothDeviceNameMask;
+	QStringList defaultDeviceNameMasks;
 
     double notificationsVolume;
     explicit GlobalAppSettings();

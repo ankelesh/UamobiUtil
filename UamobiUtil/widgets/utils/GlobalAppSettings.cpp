@@ -48,6 +48,7 @@ void GlobalAppSettings::dump()
 	setting.setValue("lastMAC", lastPrinterBTMAC);
 	setting.setValue("lastUUID", lastPrinterBTUUID);
 	setting.setValue("deviceNameMask", bluetoothDeviceNameMask);
+	setting.setValue("defaultDeviceNameMasks", defaultDeviceNameMasks);
 	setting.endGroup();
 }
 
@@ -82,6 +83,7 @@ GlobalAppSettings::GlobalAppSettings()
 	lastPrinterBTMAC = settings.value("lastMAC", QString()).toString();
 	lastPrinterBTUUID = settings.value("lastUUID", QString()).toString();
 	bluetoothDeviceNameMask = settings.value("deviceNameMask", QString("zebra")).toString();
+	defaultDeviceNameMasks = settings.value("defaultDeviceNameMasks", QStringList()).toStringList();
 	settings.endGroup();
 	setTranslator();
 

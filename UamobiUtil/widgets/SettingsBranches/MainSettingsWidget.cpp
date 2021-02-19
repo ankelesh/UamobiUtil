@@ -31,7 +31,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	portDesignation(new QComboBox(printTab)),
 	portNumber(new QSpinBox(printTab)),
 	portType(new QComboBox(printTab)),
-	btDeviceName(new QLineEdit(printTab)),
+	btDeviceName(new QComboBox(printTab)),
 	footerLayout(new QHBoxLayout(this)),
 	saveButton(new MegaIconButton(this)), backButton(new MegaIconButton(this))
 {
@@ -162,9 +162,11 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	portType->addItem(AppSettings->printerType);
 	portType->addItems(AppSettings->alternativePrinters);
 	portType->setEditable(true);
-	btDeviceName->setText(AppSettings->bluetoothDeviceNameMask);
-	
-
+	btDeviceName->setEditable(true);
+	btDeviceName->addItem(AppSettings->bluetoothDeviceNameMask);
+	btDeviceName->addItems(AppSettings->defaultDeviceNameMasks);
+	btDeviceName->setCurrentIndex(0);
+	btDeviceName->setInputMethodHints(Qt::InputMethodHint::ImhNoPredictiveText);
 
 
 #ifdef QT_VERSION5X
@@ -214,7 +216,12 @@ void MainSettingsWidget::saveClicked()
 	AppSettings->printerType = portType->currentText();
 	AppSettings->printerPort = portNumber->value();
 	AppSettings->printerPortDesignation = portDesignation->currentText();
-	AppSettings->bluetoothDeviceNameMask = btDeviceName->text();
+	AppSettings->bluetoothDeviceNameMask = btDeviceName->currentText();
+	if (!AppSettings->defaultDeviceNameMasks.contains(AppSettings->bluetoothDeviceNameMask))
+	{
+		AppSettings->defaultDeviceNameMasks.push_back(AppSettings->bluetoothDeviceNameMask);
+		btDeviceName->addItem(AppSettings->bluetoothDeviceNameMask);
+	}
     AppSettings->notificationsVolume = notificationsVolume->value();
 	BarcodeObs->resetCapture(AppSettings->scanPrefix, AppSettings->scanSuffix);
 	AppSettings->dump();

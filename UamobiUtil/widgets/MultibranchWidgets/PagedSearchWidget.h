@@ -15,7 +15,7 @@
 #endif
 #include "networking/RequestAwaiter.h"
 #include "widgets/parents/IndependentBranchNode.h"
-#include "widgets/ElementWidgets/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 
 /*
 	This widget is created to wrap lists with paging navigation.

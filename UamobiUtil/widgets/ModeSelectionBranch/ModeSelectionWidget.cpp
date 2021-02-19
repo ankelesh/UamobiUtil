@@ -8,7 +8,7 @@
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
 #include <qmessagebox.h>
-#include "widgets/ElementWidgets/ExtendedDialogs.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.h"
 
 ModeSelectionWidget::ModeSelectionWidget( QWidget* parent)
 	: inframedWidget(parent), innerModel(new PseudotableEntityModel(2,this)), mainLayout(new QVBoxLayout(this)),
@@ -189,7 +189,7 @@ void ModeSelectionWidget::mode_select_response()
 	RichtextResponseParser parser(awaiter.restext, awaiter.errtext);
 	if (!parser.isSuccessfull())
 	{
-		ErrorMessageDialog::showErrorInfo(this, tr("Error"), parser.getErrors());
+		ErrorMessageDialog::showErrorInfo(tr("Error"), parser.getErrors());
 		selected->drop();
 #ifdef DEBUG
 		detrace_NRESPERR(parser.getErrors());
@@ -207,7 +207,7 @@ void ModeSelectionWidget::mode_select_response()
 
 void ModeSelectionWidget::was_timeout()
 {
-	ErrorMessageDialog::showErrorInfo(this, tr("Error"),tr("mode_selection_timeout!") + QString::number(AppSettings->timeoutInt));
+	ErrorMessageDialog::showErrorInfo(tr("Error"),tr("mode_selection_timeout!") + QString::number(AppSettings->timeoutInt));
     QObject::disconnect(&awaiter, SIGNAL(requestReceived), Q_NULLPTR, Q_NULLPTR);
 	hideProcessingOverlay();
 }

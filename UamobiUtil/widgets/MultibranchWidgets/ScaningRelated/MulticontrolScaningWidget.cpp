@@ -273,7 +273,7 @@ void MulticontrolScaningWidget::item_scaned_response()
 	ResponseParser  parser(new LinearListWithSublistParser(awaiter->restext, awaiter->errtext));
 	NetRequestResponse<InputControlEntity> response =
 		RequestParser::parseResponse<InputControlEntity>(parser);
-	if (!assertAndShowError(this, parser, tr("Error!")), response.additionalObjects.isEmpty())
+	if (!assertAndShowError(this, parser, tr("Error!")))
 	{
 		mainTextView->setText(response.additionalObjects.first()->value("richdata"));
 		itemSuppliedValues.clear();

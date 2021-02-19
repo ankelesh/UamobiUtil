@@ -18,6 +18,7 @@ abs_control* fabricateControl(InputControl control, QBoxLayout* layout, QWidget*
 		qc->setValue(control->defaultValue);
 		return qc;
 	}
+	default:
 	case InputControlEntity::Int:
 	{
 		QuantityControl* qc = new QuantityControl(true, control->getTitle(), parent);
@@ -54,7 +55,6 @@ abs_control* fabricateControl(InputControl control, QBoxLayout* layout, QWidget*
 		return sc;
 	}
 	case InputControlEntity::None:
-	default:
 		return Q_NULLPTR;
 	}
 }

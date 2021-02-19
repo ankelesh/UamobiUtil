@@ -10,7 +10,7 @@
 #include "debugtrace.h"
 #endif
 #include "ScaningCore/BarcodeObserver.h"
-#include "widgets/ElementWidgets/ExtendedDialogs.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.h"
 
 #include "widgets/BranchingTools/BranchException.h"
 
@@ -254,7 +254,7 @@ void AbstractScaningWidget::setModeName(QString& name)
 
 void AbstractScaningWidget::was_timeout()
 {
-    ErrorMessageDialog::showErrorInfo(this, tr("Timeout"), tr("Critical timeout, can not continue"));
+    ErrorMessageDialog::showErrorInfo(tr("Timeout"), tr("Critical timeout, can not continue"));
     hideProcessingOverlay();
     if (awaiter->deliverHere(receiptNewDocument))
         throwException(new BranchException(BranchException::ToModeSelection));

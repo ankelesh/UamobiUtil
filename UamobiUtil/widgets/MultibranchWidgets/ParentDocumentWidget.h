@@ -9,7 +9,7 @@
 #include <QtGui/qboxlayout.h>
 #include <QtGui/qlabel.h>
 #endif
-#include "widgets/ElementWidgets/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 #include "networking/things.h"
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/MultibranchWidgets/FilterSelectWidget.h"

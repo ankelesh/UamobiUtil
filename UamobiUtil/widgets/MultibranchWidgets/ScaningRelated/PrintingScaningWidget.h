@@ -6,7 +6,7 @@
 #include <QBoxLayout>
 #include <QLineEdit>
 #include <QTextEdit>
-#include "widgets/ElementWidgets/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 #include "widgets/ControlsMiniwidgets/ControlManager.h"
 
 

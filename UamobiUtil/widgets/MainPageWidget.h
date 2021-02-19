@@ -19,7 +19,7 @@
 #include "widgets/LoginBranch/LoginWidget.h"
 #include "widgets/SettingsBranches/MainSettingsWidget.h"
 #include "widgets/parents/abstractNodeInterface.h"
-#include "widgets/ElementWidgets/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 #include "networking/RequestAwaiter.h"
 /*
 	This widget is shown on application launch. It's main functional is to allow user profile selection if

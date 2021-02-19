@@ -46,9 +46,6 @@
     <Filter Include="Source Files\util">
       <UniqueIdentifier>{3e215254-81ad-4a74-97a7-4c856df9ad11}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ModeSelectionBranch">
-      <UniqueIdentifier>{72d62486-61c3-4d7a-a800-86b700487f81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Network\Parsing">
       <UniqueIdentifier>{9388a503-7233-4771-b3e5-79b443c2d190}</UniqueIdentifier>
     </Filter>
@@ -112,9 +109,6 @@
     <Filter Include="Source Files\parents">
       <UniqueIdentifier>{66e87836-e183-4cec-bd76-3ccd90930cc4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\ControlsWidgets">
-      <UniqueIdentifier>{a3b60990-a679-483c-85af-d9282ce09968}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\MultibranchWidgets\Selectors">
       <UniqueIdentifier>{610d2c6c-01a8-4505-ab26-2a7969c5adfc}</UniqueIdentifier>
     </Filter>
@@ -135,6 +129,18 @@
     </Filter>
     <Filter Include="Source Files\SoundWrappers">
       <UniqueIdentifier>{b814a23e-696f-4d7a-a483-6f6a177e2b45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ElementWidgets\ControlsWidgets">
+      <UniqueIdentifier>{a3b60990-a679-483c-85af-d9282ce09968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MultibranchWidgets\Observers">
+      <UniqueIdentifier>{619df4f9-4597-465c-86e5-b16917341a7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MultibranchWidgets\Selectors">
+      <UniqueIdentifier>{20134b27-8123-48aa-b7d9-96c56a87acd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PrinterWrappers">
+      <UniqueIdentifier>{63e39976-bc38-4b54-9e84-a8c40398aadf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -164,9 +170,6 @@
     </ClCompile>
     <ClCompile Include="networking\RequestAwaiter.cpp">
       <Filter>Source Files\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ModeSelectionBranch\ModeSelectionWidget.cpp">
-      <Filter>Source Files\ModeSelectionBranch</Filter>
     </ClCompile>
     <ClCompile Include="networking\Parsers\DynamicLinearParsers.cpp">
       <Filter>Source Files\Network\Parsing</Filter>
@@ -198,17 +201,11 @@
     <ClCompile Include="widgets\ElementWidgets\BigButtonsSpinbox.cpp">
       <Filter>Source Files\ElementWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\ElementWidgets\MegaIconButton.cpp">
-      <Filter>Source Files\ElementWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\ControlsMiniwidgets\abs_control.cpp">
       <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
     </ClCompile>
     <ClCompile Include="widgets\ControlsMiniwidgets\QuantityControl.cpp">
       <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\DocResultsWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
     </ClCompile>
     <ClCompile Include="widgets\parents\inframedWidget.cpp">
       <Filter>Source Files\parents</Filter>
@@ -219,26 +216,17 @@
     <ClCompile Include="legacy\qtCompatibility\scrollgrabber.cpp">
       <Filter>Source Files\legacy</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\FilterSelectWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\ElementWidgets\ProcessingOverlay.cpp">
       <Filter>Source Files\ElementWidgets</Filter>
     </ClCompile>
     <ClCompile Include="widgets\ControlsMiniwidgets\ControlManager.cpp">
       <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\BarcodeFilterSelectionSubbranch.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\ControlsMiniwidgets\ControlTranslator.cpp">
       <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
     </ClCompile>
     <ClCompile Include="ScaningCore\BarcodeObserver.cpp">
       <Filter>Source Files\ScaningRelated</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\PagedSearchWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
     </ClCompile>
     <ClCompile Include="widgets\BranchingTools\AbsBranch.cpp">
       <Filter>Source Files\BranchingTools</Filter>
@@ -273,9 +261,6 @@
     <ClCompile Include="datacore\FullItemEntity.cpp">
       <Filter>Source Files\Datacore</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\IdDependentSelectWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\parents\IndependentBranchNode.cpp">
       <Filter>Source Files\parents</Filter>
     </ClCompile>
@@ -291,9 +276,6 @@
     <ClCompile Include="datacore\NamedIdEntity.cpp">
       <Filter>Source Files\Datacore</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\ParentDocumentWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\MultibranchWidgets\PlaceSelectionWidget.cpp">
       <Filter>Source Files\MultibranchWidgets</Filter>
     </ClCompile>
@@ -303,17 +285,11 @@
     <ClCompile Include="widgets\MultibranchWidgets\ReceiptParametersWidget.cpp">
       <Filter>Source Files\MultibranchWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="datacore\UniformXmlObject.cpp">
-      <Filter>Source Files\Datacore</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\ExtendedDelegates\ZebraListItemDelegate.cpp">
       <Filter>Source Files\Delegates</Filter>
     </ClCompile>
     <ClCompile Include="widgets\parents\AbstractScaningWidget.cpp">
       <Filter>Source Files\parents</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\SelectItemFromListWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
     </ClCompile>
     <ClCompile Include="legacy\3drparty\tty\tty.cpp">
       <Filter>Source Files\legacy</Filter>
@@ -336,9 +312,6 @@
     <ClCompile Include="widgets\MultibranchWidgets\ScaningRelated\ObservedScaningWidget.cpp">
       <Filter>Source Files\MultibranchWidgets\ScaningRelated</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\Observers\ListPickObserver.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\ControlsMiniwidgets\LabelControl.cpp">
       <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
     </ClCompile>
@@ -348,50 +321,8 @@
     <ClCompile Include="widgets\ControlsMiniwidgets\DateTimeControl.cpp">
       <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\Observers\SkippedNode.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\ControlsMiniwidgets\StringControl.cpp">
       <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\Branches\SenderNode.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\Branches\SwitchSubbranch.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\Selectors\EditableDocResultsWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="datacore\PseudotableEntityModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ExtendedDelegates\CountingDelegate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\FlowControls\SwitchByScannedCodeNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ElementWidgets\ExtendedDialogs.cpp">
-      <Filter>Header Files\ElementWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ElementWidgets\ExtendedLabels.cpp">
-      <Filter>Header Files\ElementWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="PrinterWrappers\AbsPrinterWrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PrinterWrappers\FTRCOMPrinterWrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PrinterWrappers\AndroidBluetoothPrinterWrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PrinterWrappers\NullPrinterWrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PrinterWrappers\PrinterWrapperFactory.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="widgets\BranchingTools\BranchException.cpp">
       <Filter>Source Files\BranchingTools</Filter>
@@ -402,17 +333,83 @@
     <ClCompile Include="SoundWrappers\ModernQtSoundWrapper.cpp">
       <Filter>Source Files\SoundWrappers</Filter>
     </ClCompile>
-    <ClCompile Include="SoundWrappers\SoundEffectPlayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SoundWrappers\PhononSoundWrapper.cpp">
       <Filter>Source Files\SoundWrappers</Filter>
     </ClCompile>
     <ClCompile Include="SoundWrappers\WinCEUnpackWrapper.cpp">
       <Filter>Source Files\SoundWrappers</Filter>
     </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\BarcodeFilterSelectionSubbranch.cpp">
+      <Filter>Source Files\Branches</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ModeSelectionBranch\ModeSelectionWidget.cpp">
+      <Filter>Source Files\Branches</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\Branches\SenderNode.cpp">
+      <Filter>Source Files\Branches</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\Branches\SwitchSubbranch.cpp">
+      <Filter>Source Files\Branches</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\Observers\SkippedNode.cpp">
+      <Filter>Source Files\BranchingTools</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ExtendedDelegates\CountingDelegate.cpp">
+      <Filter>Source Files\Delegates</Filter>
+    </ClCompile>
+    <ClCompile Include="datacore\UniformXmlObject.cpp">
+      <Filter>Source Files\Network\Parsing</Filter>
+    </ClCompile>
+    <ClCompile Include="datacore\PseudotableEntityModel.cpp">
+      <Filter>Source Files\Datacore</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\Observers\ListPickObserver.cpp">
+      <Filter>Source Files\MultibranchWidgets\Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\DocResultsWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\Selectors</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\Selectors\EditableDocResultsWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\Selectors</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\FilterSelectWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\Selectors</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\IdDependentSelectWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\Selectors</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\PagedSearchWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\Selectors</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\ParentDocumentWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\Selectors</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\SelectItemFromListWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\Selectors</Filter>
+    </ClCompile>
     <ClCompile Include="widgets\MultibranchWidgets\Selectors\SubbranchingDocResults.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\MultibranchWidgets\Selectors</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\FlowControls\SwitchByScannedCodeNode.cpp">
+      <Filter>Source Files\MultibranchWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="PrinterWrappers\AbsPrinterWrapper.cpp">
+      <Filter>Source Files\PrinterWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="PrinterWrappers\AndroidBluetoothPrinterWrapper.cpp">
+      <Filter>Source Files\PrinterWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="PrinterWrappers\FTRCOMPrinterWrapper.cpp">
+      <Filter>Source Files\PrinterWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="PrinterWrappers\NullPrinterWrapper.cpp">
+      <Filter>Source Files\PrinterWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="PrinterWrappers\PrinterWrapperFactory.cpp">
+      <Filter>Source Files\PrinterWrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundWrappers\SoundEffectPlayer.cpp">
+      <Filter>Source Files\SoundWrappers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -443,9 +440,6 @@
     <QtMoc Include="widgets\ElementWidgets\BigButtonsSpinbox.h">
       <Filter>Header Files\ElementWidgets</Filter>
     </QtMoc>
-    <QtMoc Include="widgets\ElementWidgets\MegaIconButton.h">
-      <Filter>Header Files\ElementWidgets</Filter>
-    </QtMoc>
     <QtMoc Include="legacy\qtCompatibility\scrollgrabber.h">
       <Filter>Header Files\legacy</Filter>
     </QtMoc>
@@ -453,7 +447,7 @@
       <Filter>Header Files\ElementWidgets</Filter>
     </QtMoc>
     <QtMoc Include="widgets\ControlsMiniwidgets\ControlTranslator.h">
-      <Filter>Header Files\ControlsWidgets</Filter>
+      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </QtMoc>
     <QtMoc Include="ScaningCore\BarcodeObserver.h">
       <Filter>Header Files\ScaningRelated</Filter>
@@ -471,7 +465,7 @@
       <Filter>Header Files\BranchingTools</Filter>
     </QtMoc>
     <QtMoc Include="widgets\ControlsMiniwidgets\abs_control.h">
-      <Filter>Header Files\ControlsWidgets</Filter>
+      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\BarcodeFilterSelectionSubbranch.h">
       <Filter>Header Files\Branches</Filter>
@@ -495,16 +489,16 @@
       <Filter>Header Files\BranchingTools</Filter>
     </QtMoc>
     <QtMoc Include="widgets\ControlsMiniwidgets\DateTimeControl.h">
-      <Filter>Header Files\ControlsWidgets</Filter>
+      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </QtMoc>
     <QtMoc Include="widgets\ControlsMiniwidgets\LabelControl.h">
-      <Filter>Header Files\ControlsWidgets</Filter>
+      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </QtMoc>
     <QtMoc Include="widgets\ControlsMiniwidgets\BarcodeControl.h">
-      <Filter>Header Files\ControlsWidgets</Filter>
+      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </QtMoc>
     <QtMoc Include="widgets\ControlsMiniwidgets\StringControl.h">
-      <Filter>Header Files\ControlsWidgets</Filter>
+      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\DocResultsWidget.h">
       <Filter>Header Files\MultibranchWidgets\Selectors</Filter>
@@ -556,12 +550,6 @@
     </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\FlowControls\SwitchByScannedCodeNode.h">
       <Filter>Header Files\MultibranchWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\ElementWidgets\ExtendedDialogs.h">
-      <Filter>Header Files\ElementWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\ElementWidgets\ExtendedLabels.h">
-      <Filter>Header Files\ElementWidgets</Filter>
     </QtMoc>
     <QtMoc Include="PrinterWrappers\AbsPrinterWrapper.h">
       <Filter>Header Files\PrinterWrappers</Filter>
@@ -631,10 +619,10 @@
       <Filter>Header Files\Network\Parsing</Filter>
     </ClInclude>
     <ClInclude Include="widgets\ControlsMiniwidgets\QuantityControl.h">
-      <Filter>Header Files\ControlsWidgets</Filter>
+      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </ClInclude>
     <ClInclude Include="widgets\ControlsMiniwidgets\ControlManager.h">
-      <Filter>Header Files\ControlsWidgets</Filter>
+      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </ClInclude>
     <ClInclude Include="networking\QueryTemplates.h">
       <Filter>Header Files\Network</Filter>

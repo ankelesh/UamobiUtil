@@ -38,6 +38,7 @@ class UamobiUtil : public QWidget, abstractDynamicNode
 private:		
 	ProcessingOverlay* overlay;
 	void resizeEvent(QResizeEvent* rev) override;
+	void _getPermissions();
 public:
 
     UamobiUtil( QWidget* parent = Q_NULLPTR);	//	Constructor is similar to most other constructors

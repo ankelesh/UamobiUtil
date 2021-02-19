@@ -10,7 +10,7 @@
 #if defined(Q_OS_ANDROID) and defined(QT_VERSION5X)
 #include <qscroller.h>
 #endif
-#include "widgets/ElementWidgets/ExtendedDialogs.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.h"
 void DocResultsWidget::_handleRecord(RecEntity)
 {
 }
@@ -361,7 +361,7 @@ void DocResultsWidget::save_response()
 		if (isError(doc))
 		{
 			QPair<QString, QString> edata = makeError(doc);
-			ErrorMessageDialog::showErrorInfo(this, tr("Error!"), edata.first, false, edata.second);
+			ErrorMessageDialog::showErrorInfo(tr("Error!"), edata.first, false, edata.second);
 		}
 	}
 	hideProcessingOverlay();

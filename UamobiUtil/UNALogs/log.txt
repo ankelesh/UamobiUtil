@@ -1,12 +1,108 @@
 Application start begins: version 0.14 lin-alpha
-][	Created object LoginWidget on address 21107368
-][	Created object MainPageWidget on address 21204000
->>	412122556260905 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
->>	412122556267811 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
-<<	412122556322750 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket<
+][	Created object LoginWidget on address 17924680
+][	Created object MainPageWidget on address 17316520
+>>	413078647044137 sent request: 
+una.md:3323/um/sammy0520181.php?delay=0&cmd=ping
+>>	413078647051043 sent request: 
+una.md:3323/um/sammy0520181.php?delay=1&cmd=list_users
+<<	413078647289790 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status>  <user>   <login>adm</login>   <name>Adm Adm</name
 	and error text |
->>	412122706584964 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=list_users
-<<	412122706598369 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket<
+>>	413078650947716 sent request: 
+una.md:3323/um/sammy0520181.php?delay=2&cmd=log_in&username=DepAdm&password=1&version=0.14
+<<	413078651250401 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>4524</session>
+ </login>
+	and error text |
+>>	413078651253868 sent request: 
+una.md:3323/um/sammy0520181.php?delay=3&cmd=list_modes&session=4524&lang=English
+<<	413078651304662 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  	<mode> 		<modeName>receipt</modeName> 		<caption
+	and error text |
+>>	413078651583150 sent request: 
+una.md:3323/um/sammy0520181.php?delay=4&cmd=select_mode&session=4524&mode=receipt&submode=emitting
+<<	413078651632466 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status> <settings>
+  <s>
+    <name>skiplistplaces</name>
+  
+	and error text |
+[!!!]	Mode named Eliberarea Marfa signed as receipt emitting received, interpreting: 
+	[PlaceSelect]
+	[SelectItemFromList]
+	%Supplier%
+	[IdDependentSelect]
+	%Order%
+	[ReceiptParameters]
+	[ObservedScaning]
+	{
+	[ListPickObserver]
+	%Barcode%
+	<>
+	<doc_get_mult_version&session=%1&barcode=%2>
+	}
+	<>
+	*-6*
+	 
+][	Created object Adjustable branch with 5 children on address 106877920
+]N[	Node of type 12 fabricated using description:  children: 0 oqs: 0
+][	Created object PlaceSelection on address 103304520
+>>	413078651635856 sent request: 
+una.md:3323/um/sammy0520181.php?delay=5&cmd=list_places&session=4524
+<<	413078651667529 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <places>  <status>200</status>  <place>   <code>916</code>   <name>DEPOZIT Produ
+	and error text |
+>>	413078651954161 sent request: 
+una.md:3323/um/sammy0520181.php?delay=6&cmd=select_place&session=4524&place=4973
+<<	413078651966705 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <place>  <status>200</status>  </place>
+	and error text |
+]N[	Node of type 11 fabricated using description:  children: 0 oqs: 0
+][	Created object SelectItemFromList on address 105399656
+>>	413078651979707 sent request: 
+una.md:3323/um/sammy0520181.php?delay=7&cmd=rec_list_suppliers&session=4524&text=&hasorders=true
+<<	413078652122857 received response going to 5 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <suppliers>  <status>200</status>  <supplier>   <code>4063</code>   <name>Produc
+	and error text |
+]N[	Node of type 10 fabricated using description:  children: 0 oqs: 0
+][	Created object IdDependentSelect on address 106660840
+>>	413078652266987 sent request: 
+una.md:3323/um/sammy0520181.php?delay=8&cmd=rec_list_orders&session=4524&supplier=4063
+<<	413078652327603 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <orders>  <status>200</status>  <order>   <code>97106</code>   <title>Nr. cereri
+	and error text |
+>>	413078652529574 sent request: 
+una.md:3323/um/sammy0520181.php?delay=9&cmd=rec_get_order_info&session=4524&order=97106&supplier=4063
+<<	413078652540891 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <order>  <status>200</status> <richdata> <![CDATA[  <div><b>Furnizor:</b> Produc
+	and error text |
+]N[	Node of type 6 fabricated using description:  children: 0 oqs: 0
+][	Created object ReceiptParametersWidget on address 105761480
+]N[	Node of type 20 fabricated using description:  children: 1 oqs: 0
+]N[	Node of type 21 fabricated using description:  children: 0 oqs: 2
+][	Created object IdDependentSelect on address 106660536
+][	Created object ListPickObserver on address 106660536
+][	Created object ControlListWidget on address 106885136
+][	Created object ControlListWidget on address 106887216
+][	Created object DocResults on address 106245936
+][	Created object PagedSearchWidget on address 103320184
+][	Created object ObservedScaning on address 104510080
+>>	413078652824124 sent request: 
+una.md:3323/um/sammy0520181.php?delay=10&cmd=rec_new_doc&session=4524&date=17.02.2021&parent=97106&comment=
+<<	413078652878983 received response going to 31 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <newdoc>  <status>200</status>  <doc>   <code>133042</code>   <parentnr>97107</p
+	and error text |
+>>	413078654418956 sent request: 
+una.md:3323/um/sammy0520181.php?delay=11&cmd=doc_get_mult_version&session=4524&barcode=48394719433832
+<<	413078654425150 received response going to 0 containing text:|
+	<?xml version="1.0"?>
+<what>
+	<message>Unknown command.</message>
+</what>
+	and error text |
+> ! <	413078654425753 error receiving response: No status code
+>>	413078654426148 sent request: 
+una.md:3323/um/sammy0520181.php?delay=12&cmd=doc_get_item_info&session=4524&barcode=48394719433832&printer=
+<<	413078654535006 received response going to 15 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <paletselected>  <status>200</status> <richdata> <![CDATA[ <center><b>Error!</b>
 	and error text |

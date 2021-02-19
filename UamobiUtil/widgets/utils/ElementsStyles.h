@@ -108,6 +108,7 @@ public:
 	// creates scaled font by using adapter. Extra percents are relational to calculated minheight
 	static QFont makeFont(double extrapercents);
 	static QFont makeCustomFont(double onlyPercents);
+	QFont makeIndependentFont(int min, int max, int perc);
 	static QString breakStringToFitScreen(QString src,const QFontMetrics& metrics, double percent = 1.0, int* breaks = Q_NULLPTR );
 };
 

@@ -14,7 +14,7 @@
 #include <QtGui/QTextEdit>
 
 #endif
-#include "widgets/ElementWidgets/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 #include "networking/things.h"
 #include "widgets/parents/IndependentBranchNode.h"
 /*
