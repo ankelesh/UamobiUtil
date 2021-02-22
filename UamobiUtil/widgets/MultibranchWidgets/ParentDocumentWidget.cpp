@@ -4,7 +4,7 @@
 #include "networking/Parsers/RequestParser.h"
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #if defined(Q_OS_ANDROID) && defined QT_VERSION5X
 #include <QScroller>

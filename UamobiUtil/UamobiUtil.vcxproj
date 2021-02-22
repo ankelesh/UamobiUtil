@@ -124,7 +124,6 @@
     <ClCompile Include="datacore\NamedIdEntity.cpp" />
     <ClCompile Include="datacore\PseudotableEntityModel.cpp" />
     <ClCompile Include="datacore\UniformXmlObject.cpp" />
-    <ClCompile Include="debugtrace.cpp" />
     <ClCompile Include="legacy\3drparty\tty\tty.cpp" />
     <ClCompile Include="legacy\legacy.cpp" />
     <ClCompile Include="legacy\qtCompatibility\scrollgrabber.cpp" />
@@ -143,16 +142,21 @@
     <ClCompile Include="PrinterWrappers\FTRCOMPrinterWrapper.cpp" />
     <ClCompile Include="PrinterWrappers\NullPrinterWrapper.cpp" />
     <ClCompile Include="PrinterWrappers\PrinterWrapperFactory.cpp" />
-    <ClCompile Include="ScaningCore\BarcodeObserver.cpp" />
-    <ClCompile Include="SoundWrappers\AbsSoundWrapper.cpp" />
-    <ClCompile Include="SoundWrappers\ModernQtSoundWrapper.cpp" />
-    <ClCompile Include="SoundWrappers\PhononSoundWrapper.cpp" />
-    <ClCompile Include="SoundWrappers\SoundEffectPlayer.cpp" />
-    <ClCompile Include="SoundWrappers\WinCEUnpackWrapper.cpp" />
+    <ClCompile Include="submodules\UNAQtCommons\barcodeHandling\BarcodeObserver.cpp" />
+    <ClCompile Include="submodules\UNAQtCommons\debug\debugtrace.cpp" />
+    <ClCompile Include="submodules\UNAQtCommons\widgets\parents\abstractNodeInterface.cpp" />
+    <ClCompile Include="submodules\UNAQtCommons\widgets\parents\inframedWidget.cpp" />
     <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\AndroidFileDialog.cpp" />
     <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\ExtendedDialogs.cpp" />
     <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\ExtendedLabels.cpp" />
     <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\MegaIconButton.cpp" />
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Platform\Android\androidservicewrapper.cpp" />
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Platform\Android\QBroadcastCatcher.cpp" />
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Sound\AbsSoundWrapper.cpp" />
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Sound\ModernQtSoundWrapper.cpp" />
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Sound\PhononSoundWrapper.cpp" />
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Sound\SoundEffectPlayer.cpp" />
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Sound\WinCEUnpackWrapper.cpp" />
     <ClCompile Include="UamobiUtil.cpp" />
     <ClCompile Include="widgets\Branches\SenderNode.cpp" />
     <ClCompile Include="widgets\Branches\SwitchSubbranch.cpp" />
@@ -207,10 +211,8 @@
     <ClCompile Include="widgets\MultibranchWidgets\SelectItemFromListWidget.cpp" />
     <ClCompile Include="widgets\MultibranchWidgets\Selectors\EditableDocResultsWidget.cpp" />
     <ClCompile Include="widgets\MultibranchWidgets\Selectors\SubbranchingDocResults.cpp" />
-    <ClCompile Include="widgets\parents\abstractNodeInterface.cpp" />
     <ClCompile Include="widgets\parents\AbstractScaningWidget.cpp" />
     <ClCompile Include="widgets\parents\IndependentBranchNode.cpp" />
-    <ClCompile Include="widgets\parents\inframedWidget.cpp" />
     <ClCompile Include="widgets\SettingsBranches\MainSettingsWidget.cpp" />
     <ClCompile Include="widgets\utils\ElementsStyles.cpp" />
     <ClCompile Include="widgets\utils\EventsAndFilters.cpp" />
@@ -237,7 +239,6 @@
     <ClInclude Include="datacore\AbsEntityPrototype.h" />
     <QtMoc Include="datacore\PseudotableEntityModel.h" />
     <ClInclude Include="datacore\UniformXmlObject.h" />
-    <ClInclude Include="debugtrace.h" />
     <ClInclude Include="legacy\3drparty\tty\tty.h" />
     <ClInclude Include="legacy\legacy.h" />
     <QtMoc Include="legacy\qtCompatibility\scrollgrabber.h" />
@@ -253,7 +254,6 @@
     <ClInclude Include="networking\QueryTemplates.h" />
     <QtMoc Include="widgets\ElementWidgets\BigButtonsSpinbox.h" />
     <QtMoc Include="widgets\ControlsMiniwidgets\abs_control.h" />
-    <QtMoc Include="ScaningCore\BarcodeObserver.h" />
     <QtMoc Include="widgets\BranchingTools\AbsBranch.h" />
     <QtMoc Include="widgets\BranchingTools\AdjustableBranch.h" />
     <QtMoc Include="PrinterWrappers\AbsPrinterWrapper.h" />
@@ -261,11 +261,6 @@
     <QtMoc Include="PrinterWrappers\AndroidBluetoothPrinterWrapper.h" />
     <QtMoc Include="PrinterWrappers\NullPrinterWrapper.h" />
     <ClInclude Include="PrinterWrappers\PrinterWrapperFactory.h" />
-    <QtMoc Include="SoundWrappers\AbsSoundWrapper.h" />
-    <QtMoc Include="SoundWrappers\PhononSoundWrapper.h" />
-    <QtMoc Include="SoundWrappers\ModernQtSoundWrapper.h" />
-    <QtMoc Include="SoundWrappers\SoundEffectPlayer.h" />
-    <QtMoc Include="SoundWrappers\WinCEUnpackWrapper.h" />
     <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\AndroidFileDialog.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
       <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</Define>
@@ -285,6 +280,62 @@
       <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions);QT_MULTIMEDIA_LIB</Define>
     </QtMoc>
     <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\MegaIconButton.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions);QT_MULTIMEDIA_LIB</Define>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\barcodeHandling\BarcodeObserver.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions);QT_MULTIMEDIA_LIB</Define>
+    </QtMoc>
+    <ClInclude Include="submodules\UNAQtCommons\debug\debugtrace.h" />
+    <ClInclude Include="submodules\UNAQtCommons\widgets\parents\abstractNodeInterface.h" />
+    <QtMoc Include="submodules\UNAQtCommons\widgets\parents\inframedWidget.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions);QT_MULTIMEDIA_LIB</Define>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Sound\AbsSoundWrapper.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions);QT_MULTIMEDIA_LIB</Define>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Sound\ModernQtSoundWrapper.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions);QT_MULTIMEDIA_LIB</Define>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Sound\PhononSoundWrapper.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions);QT_MULTIMEDIA_LIB</Define>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Sound\SoundEffectPlayer.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions);QT_MULTIMEDIA_LIB</Define>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Sound\WinCEUnpackWrapper.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions);QT_MULTIMEDIA_LIB</Define>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Platform\Android\androidservicewrapper.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions);QT_MULTIMEDIA_LIB</Define>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Platform\Android\QBroadcastCatcher.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
       <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</Define>
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
@@ -329,10 +380,6 @@
     <QtMoc Include="widgets\MultibranchWidgets\Selectors\EditableDocResultsWidget.h" />
     <QtMoc Include="widgets\MultibranchWidgets\FlowControls\SwitchByScannedCodeNode.h" />
     <QtMoc Include="widgets\MultibranchWidgets\Selectors\SubbranchingDocResults.h" />
-    <ClInclude Include="widgets\parents\abstractNodeInterface.h">
-      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
-      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml</IncludePath>
-    </ClInclude>
     <QtMoc Include="widgets\parents\AbstractScaningWidget.h" />
     <QtMoc Include="widgets\parents\IndependentBranchNode.h" />
     <ClInclude Include="widgets\utils\client_defaults.h" />
@@ -340,7 +387,6 @@
     <QtMoc Include="widgets\MainPageWidget.h" />
     <ClInclude Include="widgets\utils\ElementsStyles.h" />
     <QtMoc Include="widgets\utils\EventsAndFilters.h" />
-    <QtMoc Include="widgets\parents\inframedWidget.h" />
     <QtMoc Include="networking\things.h" />
   </ItemGroup>
   <ItemGroup>

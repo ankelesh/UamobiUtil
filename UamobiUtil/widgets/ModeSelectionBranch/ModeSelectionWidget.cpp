@@ -1,6 +1,6 @@
 #include "ModeSelectionWidget.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #include "legacy/legacy.h"
 // Qt 5 only imports

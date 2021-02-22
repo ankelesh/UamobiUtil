@@ -16,7 +16,7 @@
 #include "widgets/parents/IndependentBranchNode.h"
 #include "widgets/utils/GlobalAppSettings.h"
 #include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
-#include "widgets/parents/abstractNodeInterface.h"
+#include "submodules/UNAQtCommons/widgets/parents/abstractNodeInterface.h"
 #include "widgets/MultibranchWidgets/ScaningRelated/ControlListWidget.h"
 #include "networking/things.h"
 /*

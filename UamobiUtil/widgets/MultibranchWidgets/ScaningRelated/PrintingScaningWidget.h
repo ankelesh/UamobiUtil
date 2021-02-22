@@ -1,5 +1,5 @@
 #pragma once
-#include "widgets/parents/abstractNodeInterface.h"
+#include "submodules/UNAQtCommons/widgets/parents/abstractNodeInterface.h"
 #include "widgets/parents/IndependentBranchNode.h"
 #include "NormalScaningWidget.h"
 #include "widgets/MultibranchWidgets/PagedSearchWidget.h"

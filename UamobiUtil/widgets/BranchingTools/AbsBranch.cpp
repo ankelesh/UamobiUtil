@@ -1,5 +1,5 @@
 #include "AbsBranch.h"
-#include "ScaningCore/BarcodeObserver.h"
+#include "submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.h"
 
 AbsBranch::AbsBranch(QWidget* parent)
 	: IndependentBranchNode(independent_nodes::Subbranch, parent),

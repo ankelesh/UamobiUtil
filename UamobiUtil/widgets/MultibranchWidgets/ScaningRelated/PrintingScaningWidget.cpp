@@ -1,6 +1,6 @@
 #include "PrintingScaningWidget.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #include "widgets/utils/ElementsStyles.h"
 #include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedLabels.h"
 #include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.h"

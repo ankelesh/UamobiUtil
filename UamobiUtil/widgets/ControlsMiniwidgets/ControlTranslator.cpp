@@ -1,6 +1,6 @@
 #include "ControlTranslator.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif // DEBUG
 
 ControlTranslator::ControlTranslator()

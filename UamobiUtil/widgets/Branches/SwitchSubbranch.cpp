@@ -3,7 +3,7 @@
 #include "widgets/BranchingTools/BranchFactory.h"
 
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 void SwitchSubbranch::_handleRecord(RecEntity e)

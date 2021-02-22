@@ -2,7 +2,7 @@
 #include "widgets/utils/ElementsStyles.h"
 #include <QTextStream>
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 void ControlListWidget::focusInEvent(QFocusEvent* fev)

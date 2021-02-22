@@ -1,5 +1,5 @@
 #pragma once
-#include "widgets/parents/inframedWidget.h"
+#include "submodules/UNAQtCommons/widgets/parents/inframedWidget.h"
 // Qt 5 only imports
 #ifdef QT_VERSION5X
 #include <QtWidgets/QLabel>

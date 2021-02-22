@@ -1,7 +1,7 @@
 #pragma once
 #include "widgets/parents/AbstractScaningWidget.h"
 #include "widgets/MultibranchWidgets/ScaningRelated/ControlListWidget.h"
-#include "widgets/parents/abstractNodeInterface.h"
+#include "submodules/UNAQtCommons/widgets/parents/abstractNodeInterface.h"
 
 
 class MulticontrolScaningWidget : public AbstractScaningWidget, protected abstractNode

@@ -7,7 +7,7 @@
 #include <QBluetoothSocket>
 #endif
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #include "widgets/utils/GlobalAppSettings.h"
 bool AndroidBluetoothPrinterWrapper::_isValid() const

@@ -1,7 +1,7 @@
 #pragma once
 #include "networking/RequestAwaiter.h"
 #include "widgets/parents/IndependentBranchNode.h"
-#include "widgets/parents/abstractNodeInterface.h"
+#include "submodules/UNAQtCommons/widgets/parents/abstractNodeInterface.h"
 #ifdef QT_VERSION5X
 #include <QtWidgets/qboxlayout.h>
 #include <QtWidgets/qlabel.h>

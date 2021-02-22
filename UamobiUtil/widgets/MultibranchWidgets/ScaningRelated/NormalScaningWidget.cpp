@@ -2,10 +2,10 @@
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 // Qt 5 only imports
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #include "widgets/utils/ElementsStyles.h"
-#include "ScaningCore/BarcodeObserver.h"
+#include "submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.h"
 #include "widgets/BranchingTools/BranchException.h"
 void NormalScaningWidget::_handleRecord(RecEntity e)
 {

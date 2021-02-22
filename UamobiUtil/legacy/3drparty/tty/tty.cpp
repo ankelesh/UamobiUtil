@@ -1,6 +1,6 @@
 #include <Qt>
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #ifdef FTR_COM
 #include "tty.h"

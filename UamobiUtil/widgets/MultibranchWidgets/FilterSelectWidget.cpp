@@ -5,7 +5,7 @@
 // Qt 5 only imports
 #include "widgets/ExtendedDelegates/CheckableDelegate.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 void FilterSelectWidget::_handleRecord(RecEntity)

@@ -16,9 +16,9 @@
 #include <qheaderview.h>
 #include "datacore/PseudotableEntityModel.h"
 // widgets imports
-#include "widgets/parents/inframedWidget.h"
+#include "submodules/UNAQtCommons/widgets/parents/inframedWidget.h"
 #include "widgets/MultibranchWidgets/PlaceSelectionWidget.h"
-#include "widgets/parents/abstractNodeInterface.h"
+#include "submodules/UNAQtCommons/widgets/parents/abstractNodeInterface.h"
 #include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 // networking imports
 #include "networking/RequestAwaiter.h"

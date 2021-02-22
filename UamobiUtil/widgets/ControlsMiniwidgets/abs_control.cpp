@@ -3,7 +3,7 @@
 #include "ControlTranslator.h"
 //#define DEBUG
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 

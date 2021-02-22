@@ -1,7 +1,7 @@
 #include "ElementsStyles.h"
 #include "widgets/utils/GlobalAppSettings.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #ifndef QStringLiteral
 #define QStringLiteral(A) QString::fromUtf8("" A "" , sizeof(A)-1)

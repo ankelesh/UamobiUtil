@@ -13,7 +13,7 @@
 // Qt headers
 #include <QtCore/QPointer>
 // widgets headers
-#include "widgets/parents/inframedWidget.h"
+#include "submodules/UNAQtCommons/widgets/parents/inframedWidget.h"
 #include "widgets/MainPageWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/utils/GlobalAppSettings.h"

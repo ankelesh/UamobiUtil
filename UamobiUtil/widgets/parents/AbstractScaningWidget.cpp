@@ -7,9 +7,9 @@
 #include <QtGui/QMessageBox>
 #endif
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
-#include "ScaningCore/BarcodeObserver.h"
+#include "submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.h"
 #include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.h"
 
 #include "widgets/BranchingTools/BranchException.h"

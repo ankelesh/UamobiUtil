@@ -3,7 +3,7 @@
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "widgets/MultibranchWidgets/Observers/SkippedNode.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 

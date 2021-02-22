@@ -1,6 +1,6 @@
 #include "MainSettingsWidget.h"
 #include "widgets/utils/ElementsStyles.h"
-#include "ScaningCore/BarcodeObserver.h"
+#include "submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.h"
 #include "widgets/utils/GlobalAppSettings.h"
 #include <QLineEdit>
 

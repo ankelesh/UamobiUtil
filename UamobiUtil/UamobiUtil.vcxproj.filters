@@ -61,9 +61,6 @@
     <Filter Include="Header Files\ElementWidgets">
       <UniqueIdentifier>{d8b99fa7-72ef-4ff3-a958-a18ed8258393}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\ScaningRelated">
-      <UniqueIdentifier>{d57287c2-f07a-4353-b4c8-0790bc340398}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\MultibranchWidgets">
       <UniqueIdentifier>{d0b40a64-936f-4df2-b9aa-a2915c284cc3}</UniqueIdentifier>
     </Filter>
@@ -124,12 +121,6 @@
     <Filter Include="Header Files\PrinterWrappers">
       <UniqueIdentifier>{937ed6c8-f1f8-431a-9d90-b412f99d652d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\SoundWrappers">
-      <UniqueIdentifier>{882ec382-c7d0-4bc8-aef7-65e44dc9d16f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\SoundWrappers">
-      <UniqueIdentifier>{b814a23e-696f-4d7a-a483-6f6a177e2b45}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\ElementWidgets\ControlsWidgets">
       <UniqueIdentifier>{a3b60990-a679-483c-85af-d9282ce09968}</UniqueIdentifier>
     </Filter>
@@ -166,6 +157,48 @@
     <Filter Include="submodules\UNAQtCommons\Sources\widgets\UtilityElements">
       <UniqueIdentifier>{1032c9c6-b4ff-4409-a5ba-3cb40968e123}</UniqueIdentifier>
     </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\debug">
+      <UniqueIdentifier>{1eb39c58-2c1d-49c4-80a6-1920e529f8f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\debug">
+      <UniqueIdentifier>{b14dcbe5-f781-45af-b6f0-3bbdc12322cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\widgets\parents">
+      <UniqueIdentifier>{15d50c73-761b-4e56-9682-a98f21230990}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\widgets\parents">
+      <UniqueIdentifier>{5f73b2aa-1888-4a5a-a8de-5b999fa3814a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\barcodeHandling">
+      <UniqueIdentifier>{7ceca0bb-f4a9-4395-bfca-92ee17d8299a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\barcodeHandling">
+      <UniqueIdentifier>{6e927f64-f455-4705-9a11-f85127c82193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\wrappers">
+      <UniqueIdentifier>{0103b72a-310f-4b3e-817f-67a1fcd73ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\wrappers\platform">
+      <UniqueIdentifier>{e1953277-f53c-4b49-a1f4-67698c034b85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\wrappers\sound">
+      <UniqueIdentifier>{baa70ab2-c244-4594-ae4d-eccbbe31dda2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\wrappers\platform\android">
+      <UniqueIdentifier>{3b7fd50c-bba6-4c2d-b469-68523e85f7f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\wrappers">
+      <UniqueIdentifier>{8ed1ec2e-9beb-4058-a63e-e1a638a11a16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\wrappers\platform">
+      <UniqueIdentifier>{c62bb7e2-88f3-436d-ab0e-c8072d192a00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\wrappers\platform\android">
+      <UniqueIdentifier>{4fa988fa-6239-4a03-8ac6-2b324c02af2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\wrappers\sound">
+      <UniqueIdentifier>{d5be95e3-7287-4cd1-9768-2b1a879cf66e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -176,9 +209,6 @@
     </ClCompile>
     <ClCompile Include="networking\dataupdateengine-http.cpp">
       <Filter>Source Files\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="debugtrace.cpp">
-      <Filter>Source Files\util</Filter>
     </ClCompile>
     <ClCompile Include="widgets\utils\ElementsStyles.cpp">
       <Filter>Source Files\util</Filter>
@@ -213,9 +243,6 @@
     <ClCompile Include="legacy\legacy.cpp">
       <Filter>Source Files\legacy</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\parents\abstractNodeInterface.cpp">
-      <Filter>Source Files\parents</Filter>
-    </ClCompile>
     <ClCompile Include="networking\things.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
@@ -231,9 +258,6 @@
     <ClCompile Include="widgets\ControlsMiniwidgets\QuantityControl.cpp">
       <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\parents\inframedWidget.cpp">
-      <Filter>Source Files\parents</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\utils\EventsAndFilters.cpp">
       <Filter>Source Files\util</Filter>
     </ClCompile>
@@ -248,9 +272,6 @@
     </ClCompile>
     <ClCompile Include="widgets\ControlsMiniwidgets\ControlTranslator.cpp">
       <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="ScaningCore\BarcodeObserver.cpp">
-      <Filter>Source Files\ScaningRelated</Filter>
     </ClCompile>
     <ClCompile Include="widgets\BranchingTools\AbsBranch.cpp">
       <Filter>Source Files\BranchingTools</Filter>
@@ -351,18 +372,6 @@
     <ClCompile Include="widgets\BranchingTools\BranchException.cpp">
       <Filter>Source Files\BranchingTools</Filter>
     </ClCompile>
-    <ClCompile Include="SoundWrappers\AbsSoundWrapper.cpp">
-      <Filter>Source Files\SoundWrappers</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundWrappers\ModernQtSoundWrapper.cpp">
-      <Filter>Source Files\SoundWrappers</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundWrappers\PhononSoundWrapper.cpp">
-      <Filter>Source Files\SoundWrappers</Filter>
-    </ClCompile>
-    <ClCompile Include="SoundWrappers\WinCEUnpackWrapper.cpp">
-      <Filter>Source Files\SoundWrappers</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\MultibranchWidgets\BarcodeFilterSelectionSubbranch.cpp">
       <Filter>Source Files\Branches</Filter>
     </ClCompile>
@@ -432,9 +441,6 @@
     <ClCompile Include="PrinterWrappers\PrinterWrapperFactory.cpp">
       <Filter>Source Files\PrinterWrappers</Filter>
     </ClCompile>
-    <ClCompile Include="SoundWrappers\SoundEffectPlayer.cpp">
-      <Filter>Source Files\SoundWrappers</Filter>
-    </ClCompile>
     <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\MegaIconButton.cpp">
       <Filter>submodules\UNAQtCommons\Sources\widgets\UtilityElements</Filter>
     </ClCompile>
@@ -446,6 +452,39 @@
     </ClCompile>
     <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\ExtendedLabels.cpp">
       <Filter>submodules\UNAQtCommons\Sources\widgets\UtilityElements</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\debug\debugtrace.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\parents\inframedWidget.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\parents</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\parents\abstractNodeInterface.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\parents</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\barcodeHandling\BarcodeObserver.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\barcodeHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Platform\Android\androidservicewrapper.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\platform\android</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Platform\Android\QBroadcastCatcher.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\platform\android</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Sound\AbsSoundWrapper.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Sound\ModernQtSoundWrapper.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Sound\PhononSoundWrapper.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Sound\SoundEffectPlayer.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Sound\WinCEUnpackWrapper.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -470,9 +509,6 @@
     <QtMoc Include="widgets\utils\EventsAndFilters.h">
       <Filter>Header Files\util</Filter>
     </QtMoc>
-    <QtMoc Include="widgets\parents\inframedWidget.h">
-      <Filter>Header Files\parents</Filter>
-    </QtMoc>
     <QtMoc Include="widgets\ElementWidgets\BigButtonsSpinbox.h">
       <Filter>Header Files\ElementWidgets</Filter>
     </QtMoc>
@@ -484,9 +520,6 @@
     </QtMoc>
     <QtMoc Include="widgets\ControlsMiniwidgets\ControlTranslator.h">
       <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="ScaningCore\BarcodeObserver.h">
-      <Filter>Header Files\ScaningRelated</Filter>
     </QtMoc>
     <QtMoc Include="networking\things.h">
       <Filter>Header Files\Network</Filter>
@@ -599,21 +632,6 @@
     <QtMoc Include="PrinterWrappers\NullPrinterWrapper.h">
       <Filter>Header Files\PrinterWrappers</Filter>
     </QtMoc>
-    <QtMoc Include="SoundWrappers\PhononSoundWrapper.h">
-      <Filter>Header Files\SoundWrappers</Filter>
-    </QtMoc>
-    <QtMoc Include="SoundWrappers\AbsSoundWrapper.h">
-      <Filter>Header Files\SoundWrappers</Filter>
-    </QtMoc>
-    <QtMoc Include="SoundWrappers\ModernQtSoundWrapper.h">
-      <Filter>Header Files\SoundWrappers</Filter>
-    </QtMoc>
-    <QtMoc Include="SoundWrappers\SoundEffectPlayer.h">
-      <Filter>Header Files\SoundWrappers</Filter>
-    </QtMoc>
-    <QtMoc Include="SoundWrappers\WinCEUnpackWrapper.h">
-      <Filter>Header Files\SoundWrappers</Filter>
-    </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\Selectors\SubbranchingDocResults.h">
       <Filter>Header Files\MultibranchWidgets\Selectors</Filter>
     </QtMoc>
@@ -629,6 +647,33 @@
     <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\MegaIconButton.h">
       <Filter>submodules\UNAQtCommons\Headers\widgets\UtilityElements</Filter>
     </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\parents\inframedWidget.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\parents</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\barcodeHandling\BarcodeObserver.h">
+      <Filter>submodules\UNAQtCommons\Headers\barcodeHandling</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Sound\AbsSoundWrapper.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\sound</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Sound\ModernQtSoundWrapper.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\sound</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Sound\PhononSoundWrapper.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\sound</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Sound\SoundEffectPlayer.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\sound</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Sound\WinCEUnpackWrapper.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\sound</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Platform\Android\androidservicewrapper.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\platform\android</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Platform\Android\QBroadcastCatcher.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\platform\android</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="UamobiUtil.qrc">
@@ -640,9 +685,6 @@
       <Filter>Header Files\util</Filter>
     </ClInclude>
     <ClInclude Include="widgets\utils\ElementsStyles.h">
-      <Filter>Header Files\util</Filter>
-    </ClInclude>
-    <ClInclude Include="debugtrace.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
     <ClInclude Include="networking\Parsers\abs_parsed_request.h">
@@ -659,9 +701,6 @@
     </ClInclude>
     <ClInclude Include="legacy\legacy.h">
       <Filter>Header Files\legacy</Filter>
-    </ClInclude>
-    <ClInclude Include="widgets\parents\abstractNodeInterface.h">
-      <Filter>Header Files\parents</Filter>
     </ClInclude>
     <ClInclude Include="networking\Parsers\DynamicLinearParsers.h">
       <Filter>Header Files\Network\Parsing</Filter>
@@ -734,6 +773,12 @@
     </ClInclude>
     <ClInclude Include="widgets\BranchingTools\BranchException.h">
       <Filter>Header Files\BranchingTools</Filter>
+    </ClInclude>
+    <ClInclude Include="submodules\UNAQtCommons\debug\debugtrace.h">
+      <Filter>submodules\UNAQtCommons\Headers\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="submodules\UNAQtCommons\widgets\parents\abstractNodeInterface.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\parents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

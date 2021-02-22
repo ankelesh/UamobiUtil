@@ -1,7 +1,7 @@
 #include "StaticBranch.h"
 #include "BranchFactory.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 void StaticBranch::_allocateNode(BranchDescription desc)

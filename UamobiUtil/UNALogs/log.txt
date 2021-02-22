@@ -1,10 +1,10 @@
 Application start begins: version 0.14 lin-alpha
-][	Created object LoginWidget on address 20675792
-][	Created object MainPageWidget on address 20067632
->>	413119855914793 sent request: 
+][	Created object LoginWidget on address 13779472
+][	Created object MainPageWidget on address 13793976
+>>	413185836789033 sent request: 
 una.md:3323/um/sammy0520181.php?delay=0&cmd=ping
->>	413119855924515 sent request: 
+>>	413185836805667 sent request: 
 una.md:3323/um/sammy0520181.php?delay=1&cmd=list_users
-<<	413119856700350 received response going to 0 containing text:|
+<<	413185836871102 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status>  <user>   <login>adm</login>   <name>Adm Adm</name
 	and error text |

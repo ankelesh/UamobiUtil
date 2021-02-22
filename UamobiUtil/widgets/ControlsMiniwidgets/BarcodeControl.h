@@ -1,7 +1,7 @@
 #pragma once
 #include "abs_control.h"
 #include <QLineEdit>
-#include "ScaningCore/BarcodeObserver.h"
+#include "submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.h"
 
 
 

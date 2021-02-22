@@ -5,7 +5,7 @@
 #include "widgets/ExtendedDelegates/CountingDelegate.h"
 #include <QMessageBox>
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #if defined(Q_OS_ANDROID) and defined(QT_VERSION5X)
 #include <qscroller.h>

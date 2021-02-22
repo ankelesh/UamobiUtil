@@ -1,7 +1,7 @@
 #include "FTRCOMPrinterWrapper.h"
 #include "legacy/3drparty/tty/tty.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #include <QTimer>
 bool FTRCOMPrinterWrapper::_isValid() const

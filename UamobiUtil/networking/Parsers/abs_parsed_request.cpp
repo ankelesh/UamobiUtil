@@ -3,7 +3,7 @@
 #include <QtCore/QDataStream>
 #include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #ifndef QStringLiteral
 #define QStringLiteral(A) QString::fromLatin1(A, sizeof(A)-1)

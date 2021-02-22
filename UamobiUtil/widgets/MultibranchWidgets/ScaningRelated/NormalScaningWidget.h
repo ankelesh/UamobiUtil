@@ -1,6 +1,6 @@
 #pragma once
 #include "widgets/parents/AbstractScaningWidget.h"
-#include "widgets/parents/abstractNodeInterface.h"
+#include "submodules/UNAQtCommons/widgets/parents/abstractNodeInterface.h"
 #include "widgets/MultibranchWidgets/DocResultsWidget.h"
 #include "widgets/MultibranchWidgets/PagedSearchWidget.h"
 

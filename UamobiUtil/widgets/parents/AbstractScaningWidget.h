@@ -16,7 +16,7 @@
 #include <QtGui/QLabel>
 #endif
 #include "widgets/parents/IndependentBranchNode.h"
-#include "widgets/parents/inframedWidget.h"
+#include "submodules/UNAQtCommons/widgets/parents/inframedWidget.h"
 #include "networking/Parsers/RequestParser.h"
 #include "networking/RequestAwaiter.h"
 #include "widgets/utils/EventsAndFilters.h"

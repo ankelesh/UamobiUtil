@@ -1,7 +1,7 @@
 #include "ReceiptParametersWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #include <QStringBuilder>
 #if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)

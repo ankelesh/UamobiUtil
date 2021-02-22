@@ -1,6 +1,6 @@
 #pragma once
 #include "widgets/parents/IndependentBranchNode.h"
-#include "widgets/parents/abstractNodeInterface.h"
+#include "submodules/UNAQtCommons/widgets/parents/abstractNodeInterface.h"
 #include <QSharedPointer>
 #include <QObject>
 #include "networking/dataupdateengine-http.h"

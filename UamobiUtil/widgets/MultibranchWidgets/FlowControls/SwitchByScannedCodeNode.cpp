@@ -8,9 +8,9 @@
 #include "widgets/utils/ElementsStyles.h"
 #include "networking/Parsers/RequestParser.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
-#include "ScaningCore/BarcodeObserver.h"
+#include "submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.h"
 
 void SwitchByScannedCodeWidget::_handleRecord(RecEntity e)
 {

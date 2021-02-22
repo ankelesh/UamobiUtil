@@ -3,7 +3,7 @@
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "widgets/utils/ElementsStyles.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
 void MainPageWidget::show_login_widget(User u)

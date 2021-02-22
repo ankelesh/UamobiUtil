@@ -3,7 +3,7 @@
 // Qt 5 only imports
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #include "networking/Parsers/RequestParser.h"
 #include "widgets/utils/GlobalAppSettings.h"

@@ -5,7 +5,7 @@
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 #if defined(Q_OS_ANDROID) && defined(QT_VERSION5X)

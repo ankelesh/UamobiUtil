@@ -1,7 +1,7 @@
 #include "BarcodeFilterSelectionSubbranch.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/utils/ElementsStyles.h"
@@ -32,7 +32,7 @@ void BarcodeFilterSelectionSubbranch::_handleRecord(RecEntity e)
 
 BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(QWidget* parent,IndependentBranchNode* supp,
 	IndependentBranchNode* still, IndependentBranchNode* group)
-	: IndependentBranchNode(true, parent), mainLayout(new QVBoxLayout(this)), innerWidget(new inframedWidget(this)),
+	: IndependentBranchNode(independent_nodes::BarcodeFilterSelect, parent), mainLayout(new QVBoxLayout(this)), innerWidget(new inframedWidget(this)),
 	innerLayout(new QVBoxLayout(innerWidget)), currentFilterInfo(new QLabel(innerWidget)),
 	stillageButton(new MegaIconButton(innerWidget)), suppliersButton(new MegaIconButton(innerWidget)),
 	groupButton(new MegaIconButton(innerWidget)), nofilterButton(new MegaIconButton(innerWidget)),

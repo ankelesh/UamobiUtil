@@ -12,7 +12,7 @@
 #endif
 
 // widgets imports
-#include "widgets/parents/inframedWidget.h"
+#include "submodules/UNAQtCommons/widgets/parents/inframedWidget.h"
 #include "widgets/utils/GlobalAppSettings.h"
 #include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 // networking imports

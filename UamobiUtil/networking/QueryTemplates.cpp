@@ -1,6 +1,6 @@
 #include "QueryTemplates.h"
 #include <QtCore/QSettings>
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #ifndef QStringLiteral
 #define QStringLiteral(A) QString::fromUtf8("" A "" , sizeof(A)-1)
 #endif

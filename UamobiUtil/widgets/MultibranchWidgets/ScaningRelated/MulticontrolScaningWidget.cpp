@@ -1,11 +1,11 @@
 #include "MulticontrolScaningWidget.h"
 #include "widgets/utils/ElementsStyles.h"
-#include "ScaningCore/BarcodeObserver.h"
+#include "submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "widgets/MultibranchWidgets/DocResultsWidget.h"
 #include "widgets/MultibranchWidgets/PagedSearchWidget.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 void MulticontrolScaningWidget::_handleRecord(RecEntity e)

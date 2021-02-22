@@ -6,7 +6,7 @@
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
 
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 void IdDependentSelectWidget::_handleRecord(RecEntity e)

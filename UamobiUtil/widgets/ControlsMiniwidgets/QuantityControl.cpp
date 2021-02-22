@@ -2,7 +2,7 @@
 #include "widgets/utils/ElementsStyles.h"
 //#define DEBUG
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
 #include <QApplication>

@@ -1,6 +1,6 @@
 #include "SkippedNode.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 void SkippedNode::_handleRecord(RecEntity e)
 {

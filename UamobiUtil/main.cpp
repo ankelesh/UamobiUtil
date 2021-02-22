@@ -8,11 +8,11 @@
 #include <QtCore/QTimer>
 #endif
 #include "networking/Parsers/DynamicLinearParsers.h"
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #include <QProxyStyle>
 #include "widgets/utils/ElementsStyles.h"
-#include "SoundWrappers/SoundEffectPlayer.h"
-#include "ScaningCore/BarcodeObserver.h"
+#include "submodules/UNAQtCommons/wrappers/Sound/SoundEffectPlayer.h"
+#include "submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.h"
 /*
 		This is uamobiUtil app, which is suited to replace old one. Main idea is the same.
 		This realisation is Qt5-based, with guarding macros to allow legacy-compatibility with qt4.

@@ -1,11 +1,11 @@
 #include "UamobiUtil.h"
 #include <QtGui/qevent.h>
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #include "widgets/BranchingTools/EmbeddedBranches.h"
 #include "widgets/BranchingTools/BranchException.h"
-#include "SoundWrappers/SoundEffectPlayer.h"
+#include "submodules/UNAQtCommons/wrappers/Sound/SoundEffectPlayer.h"
 #if defined (Q_OS_ANDROID)
 #include <QtAndroid>
 const QVector<QString> permissions({ "android.permission.ACCESS_COARSE_LOCATION",

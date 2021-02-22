@@ -1,7 +1,7 @@
 #include "InventoryParamsWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 
