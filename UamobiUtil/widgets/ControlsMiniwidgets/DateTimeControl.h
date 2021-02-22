@@ -1,6 +1,6 @@
 #pragma once
 #include "abs_control.h"
-#include "widgets/ElementWidgets/BigButtonsSpinbox.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/BigButtonsSpinbox.h"
 
 
 

@@ -11,7 +11,7 @@
 #endif
 #include <QString>
 #include <QTime>
-#include "widgets/ElementWidgets/BigButtonsSpinbox.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/BigButtonsSpinbox.h"
 #include "qsharedpointer.h"
 #include "datacore/InputControlEntity.h"
 

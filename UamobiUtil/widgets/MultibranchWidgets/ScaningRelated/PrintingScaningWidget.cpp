@@ -4,8 +4,8 @@
 #include "widgets/utils/ElementsStyles.h"
 #include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedLabels.h"
 #include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.h"
-#include "PrinterWrappers/AbsPrinterWrapper.h"
-#include "PrinterWrappers/PrinterWrapperFactory.h"
+#include "submodules/UNAQtCommons/wrappers/DirectConnectionPrinters/AbsPrinterWrapper.h"
+#include "submodules/UNAQtCommons/wrappers/DirectConnectionPrinters/PrinterWrapperFactory.h"
 void PrintingScaningWidget::_print(QString text)
 {
 	if (printerWrapper->isValid() && printerWrapper->isReady())
