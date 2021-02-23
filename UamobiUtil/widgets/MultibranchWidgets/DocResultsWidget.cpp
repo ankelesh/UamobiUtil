@@ -306,7 +306,7 @@ void DocResultsWidget::getAttachedControls()
 		FullItem castedItem = upcastRecord<FullItemEntity>(currentItem);
 		int type;
 		if (castedItem.isNull())
-			type = InputControlEntity::Int;
+			type = abs_control::Int;
 		else
 			type = castedItem->controlType;
 		attachedControls->emplaceControl(

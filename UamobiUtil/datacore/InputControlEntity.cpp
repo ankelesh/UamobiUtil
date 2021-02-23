@@ -1,24 +1,24 @@
 #include "InputControlEntity.h"
 
-InputControlEntity::ControlTypes _initCType(QString str)
+abs_control::ControlTypes _initCType(QString str)
 {
 	switch (str.count())
 	{
 	case 3:
-		return InputControlEntity::Int;
+		return abs_control::Int;
 	case 4:
-		return InputControlEntity::Date;
+		return abs_control::Date;
 	case 5:
 		if (str.startsWith('f', Qt::CaseInsensitive))
-			return InputControlEntity::Float;
+			return abs_control::Float;
 		else
-			return InputControlEntity::Label;
+			return abs_control::Label;
 	case 6:
-		return InputControlEntity::String;
+		return abs_control::String;
 	case 7:
-		return InputControlEntity::Barcode;
+		return abs_control::Barcode;
 	default:
-		return InputControlEntity::None;
+		return abs_control::None;
 	}
 };
 
@@ -34,13 +34,13 @@ InputControlEntity::InputControlEntity(QString nm, int Ctype, QString dv)
 {
 }
 
-InputControlEntity::ControlTypes InputControlEntity::intToType(const int cval)
+abs_control::ControlTypes InputControlEntity::intToType(const int cval)
 {
-	if (cval >= None && cval <= Barcode)
-		return static_cast<ControlTypes>(cval);
-	return None;
+	if (cval >= abs_control::None && cval <= abs_control::Barcode)
+		return static_cast<abs_control::ControlTypes>(cval);
+	return abs_control::None;
 }
-InputControlEntity::ControlTypes InputControlEntity::guessType(const QString& s)
+abs_control::ControlTypes InputControlEntity::guessType(const QString& s)
 {
 	return _initCType(s);
 }

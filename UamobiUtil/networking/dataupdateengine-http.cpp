@@ -219,9 +219,6 @@ void HttpUpdateEngine::sendQuery(const QString& urlpath, RequestAwaiter* awaiter
 		awaiter->setReplyToAwait(reply);
 }
 
-const QString DATE_ENCODING_FORMAT(
-	QStringLiteral("dd.MM.yyyy")
-);
-const QString DATETIME_ENCODING_FORMAT(
+const QString PARSER_DATETIME_ENCODING_FORMAT(
 	QStringLiteral("dd.MM.yyyy_HH:mm")
 	);

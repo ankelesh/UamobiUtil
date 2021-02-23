@@ -1,29 +1,20 @@
 #pragma once
 #include "AbsEntityPrototype.h"
-
+#include "submodules/UNAQtCommons/widgets/ControlsWidgets/abs_control.h"
 
 
 
 class InputControlEntity : public AbsRecEntity
 {
 public:
-	enum ControlTypes
-	{
-		None,
-		Int,
-		Date,
-		Label,
-		Float,
-		String,
-		Barcode
-	};
+
 	QString name;
-	ControlTypes type;
+	abs_control::ControlTypes type;
 	QString defaultValue;
 	InputControlEntity(QString nm = QString(), QString Ctype = QString(), QString dv = QString());
 	InputControlEntity(QString nm, int Ctype, QString dv);
-	static ControlTypes intToType(const int cval);
-	static ControlTypes guessType(const QString&);
+	static abs_control::ControlTypes intToType(const int cval);
+	static abs_control::ControlTypes guessType(const QString&);
 	static QString foldType(const int);
 protected:
 	// Inherited via AbsRecEntity

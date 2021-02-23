@@ -13,8 +13,8 @@ void ControlListWidget::focusInEvent(QFocusEvent* fev)
         {
             switch((*contr)->myType())
             {
-            case InputControlEntity::Label:
-            case InputControlEntity::None:
+            case abs_control::Label:
+            case abs_control::None:
                 break;
             default:
                 (*contr)->setFocus();
@@ -148,7 +148,7 @@ QString ControlListWidget::joinedControls()
 	QVector<abs_control*>::iterator begin = controls.begin();
 	while (begin != controls.end())
 	{
-		if ((*begin)->myType() == InputControlEntity::Label)
+		if ((*begin)->myType() == abs_control::Label)
 		{
 			++begin;
 			continue;
@@ -168,7 +168,7 @@ QString ControlListWidget::mappedControls()
 	QVector<abs_control*>::iterator begin = controls.begin();
 	while (begin != controls.end())
 	{
-		if ((*begin)->myType() == InputControlEntity::Label)
+		if ((*begin)->myType() == abs_control::Label)
 		{
 			++begin;
 			continue;
