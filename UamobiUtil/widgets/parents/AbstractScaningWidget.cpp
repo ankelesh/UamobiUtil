@@ -192,7 +192,7 @@ AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)
 #endif
 
 	userInfo->setWordWrap(true);
-    userInfo->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
+    userInfo->setMaximumHeight(calculateAdaptiveHeight(0.08));
 
 	mainTextView->setText(tr("scaning_widget_filler_text"));
 	mainTextView->setFont(FontAdapter::makeFont(0.5));
@@ -218,11 +218,11 @@ AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)
 	quitButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
     quitButton->setMaximumWidth(calculateAdaptiveWidth(0.25));
     quitButton->setMinimumWidth(calculateAdaptiveWidth(0.25));
-    quitButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
-    quitButton->setMinimumHeight(calculateAdaptiveButtonHeight(0.08));
+    quitButton->setMaximumHeight(calculateAdaptiveHeight(0.08));
+    quitButton->setMinimumHeight(calculateAdaptiveHeight(0.08));
 
 	barcodeField->setFocus();
-	barcodeField->setMinimumHeight(calculateAdaptiveButtonHeight(0.08));
+	barcodeField->setMinimumHeight(calculateAdaptiveHeight(0.08));
 	barcodeField->setFont(AppFonts->makeFont(1.5));
 #ifdef QT_VERSION5X
 	QObject::connect(backButton, &QPushButton::clicked, this, &AbstractScaningWidget::backNeeded);

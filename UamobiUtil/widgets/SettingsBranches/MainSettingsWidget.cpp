@@ -38,7 +38,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	this->setLayout(mainLayout);
 #ifdef Q_OS_WINCE
 	this->setFixedSize(calculateAdaptiveSize(1));
-	this->setFixedHeight(calculateAdaptiveButtonHeight(0.9));
+	this->setFixedHeight(calculateAdaptiveHeight(0.9));
 #endif
 	mainLayout->setSpacing(0);		//	spacing removed to avoid space loss
 	mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -88,7 +88,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	scanModeSelector->addItems(temp);
 
 	scanModeSelector->setFont(scf);
-	scanModeSelector->setMinimumHeight(calculateAdaptiveButtonHeight());
+	scanModeSelector->setMinimumHeight(calculateAdaptiveHeight());
 
 	topExplLabel->setAlignment(Qt::AlignCenter);
 	topExplLabel->setFont(scf);

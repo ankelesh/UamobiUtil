@@ -88,7 +88,7 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 	searchInput->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	searchInput->setMinimumWidth(calculateAdaptiveWidth(0.6));
 	searchInput->setMaximumWidth(calculateAdaptiveWidth(0.8));
-	searchInput->setMaximumHeight(calculateAdaptiveButtonHeight());
+	searchInput->setMaximumHeight(calculateAdaptiveHeight());
 
 	itemList->setFont(GENERAL_FONT);
 

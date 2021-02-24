@@ -211,6 +211,12 @@
     <Filter Include="submodules\UNAQtCommons\Sources\widgets\controls">
       <UniqueIdentifier>{be6147fc-5d41-4316-80f4-57f2f690d7e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\widgets\Scaling">
+      <UniqueIdentifier>{80814db8-3f19-4102-8d39-0968570b2cc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\widgets\Scaling">
+      <UniqueIdentifier>{cca1c939-c647-44f0-8bcf-869f56327a3d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -500,6 +506,9 @@
     </ClCompile>
     <ClCompile Include="submodules\UNAQtCommons\widgets\ControlsWidgets\StringControl.cpp">
       <Filter>submodules\UNAQtCommons\Sources\widgets\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\Scaling\ScalingUtilities.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\Scaling</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -797,6 +806,9 @@
     </ClInclude>
     <ClInclude Include="submodules\UNAQtCommons\widgets\ControlsWidgets\QuantityControl.h">
       <Filter>submodules\UNAQtCommons\Headers\widgets\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="submodules\UNAQtCommons\widgets\Scaling\ScalingUtilities.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\Scaling</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

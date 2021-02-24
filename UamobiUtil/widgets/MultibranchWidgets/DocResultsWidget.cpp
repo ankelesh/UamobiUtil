@@ -97,7 +97,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	previousButton->setStyleSheet(NAVIGATE_BUTTONS_STYLESHEET);
 	previousButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
 #if defined(Q_OS_WINCE) || defined(Q_OS_ANDROID)
-	previousButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
+	previousButton->setMaximumHeight(calculateAdaptiveHeight(0.08));
 #endif
 
 	nextButton->setSizePolicy(mi);
@@ -106,7 +106,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	nextButton->setStyleSheet(NAVIGATE_BUTTONS_STYLESHEET);
 	nextButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
 #if defined(Q_OS_WINCE) || defined(Q_OS_ANDROID)
-	nextButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
+	nextButton->setMaximumHeight(calculateAdaptiveHeight(0.08));
 #endif
 
 
@@ -114,7 +114,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	indexationInfo->setFont(GENERAL_FONT);
 	indexationInfo->setAlignment(Qt::AlignCenter);
 #if defined(Q_OS_WINCE) || defined(Q_OS_ANDROID)
-	indexationInfo->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
+	indexationInfo->setMaximumHeight(calculateAdaptiveHeight(0.08));
 #endif
     itemInfoStorage->setWordWrap(true);
     itemInfoStorage->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -124,7 +124,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	deleteAllButton->setText(tr("delete all"));
 	deleteAllButton->setIcon(QIcon(":/res/data.png"));
 	deleteAllButton->setStyleSheet(DELETE_BUTTONS_STYLESHEET);
-	deleteAllButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
+	deleteAllButton->setMaximumHeight(calculateAdaptiveHeight(0.08));
 	deleteAllButton->hide();
 	
 	deleteSelectedButton->setFont(GENERAL_FONT);
@@ -132,7 +132,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	deleteSelectedButton->setIcon(QIcon(":/res/deleteData.png"));
 	deleteSelectedButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
 	deleteSelectedButton->hide();
-	deleteSelectedButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
+	deleteSelectedButton->setMaximumHeight(calculateAdaptiveHeight(0.08));
 
 	backButton->setText(tr("doc_results_back"));
 	backButton->setIcon(QIcon(":/res/back.png"));

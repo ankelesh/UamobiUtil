@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
     w.setWindowFlags((w.windowFlags() | Qt::FramelessWindowHint | Qt::CustomizeWindowHint)
         & ~(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowMinMaxButtonsHint
        | Qt::WindowCloseButtonHint | Qt::Dialog | Qt::WindowContextHelpButtonHint));
-    w.setFixedHeight(calculateAdaptiveButtonHeight(1));
+    w.setFixedHeight(calculateAdaptiveHeight(1));
 	w.setFixedWidth(calculateAdaptiveWidth(1));
     QTimer::singleShot(1, &w, SLOT(showMaximized()));
 #else

@@ -160,8 +160,8 @@ PrintingScaningWidget::PrintingScaningWidget(QWidget* parent, IndependentBranchN
 	connectionState->setState(SemaphorLabel::opfail);
 	connectionState->setText(tr("printer"));
 	quitButton->hide();
-	userInfo->setMaximumHeight(calculateAdaptiveButtonHeight());
-    quitButton->setMaximumHeight(calculateAdaptiveButtonHeight());
+	userInfo->setMaximumHeight(calculateAdaptiveHeight());
+    quitButton->setMaximumHeight(calculateAdaptiveHeight());
 #ifdef QT_VERSION5X
 	QObject::connect(printerWrapper, &AbsPrinterWrapper::error, this, &PrintingScaningWidget::wrapperError);
 	QObject::connect(printerWrapper, &AbsPrinterWrapper::connected, this, &PrintingScaningWidget::wrapperOk);

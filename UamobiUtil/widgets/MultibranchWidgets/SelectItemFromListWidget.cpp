@@ -81,7 +81,7 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 	userinputField->setMaximumWidth(calculateAdaptiveWidth(0.6));
 	userinputField->setMinimumWidth(calculateAdaptiveWidth(0.4));
 	userinputField->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding));
-	userinputField->setMaximumHeight(calculateAdaptiveButtonHeight());
+	userinputField->setMaximumHeight(calculateAdaptiveHeight());
 
     backButton->setText(tr("back"));
 	backButton->setIcon(QIcon(":/res/back.png"));
