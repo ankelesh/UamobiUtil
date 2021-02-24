@@ -217,6 +217,12 @@
     <Filter Include="submodules\UNAQtCommons\Sources\widgets\Scaling">
       <UniqueIdentifier>{cca1c939-c647-44f0-8bcf-869f56327a3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\settings">
+      <UniqueIdentifier>{2e59627a-d1d4-4e6f-ab3b-69984dd2c691}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\settings">
+      <UniqueIdentifier>{538dab57-75bc-4846-a366-f7bfd7b5bad7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -341,9 +347,6 @@
     </ClCompile>
     <ClCompile Include="widgets\parents\AbstractScaningWidget.cpp">
       <Filter>Source Files\parents</Filter>
-    </ClCompile>
-    <ClCompile Include="legacy\3drparty\tty\tty.cpp">
-      <Filter>Source Files\legacy</Filter>
     </ClCompile>
     <ClCompile Include="widgets\BranchingTools\StaticBranch.cpp">
       <Filter>Source Files\BranchingTools</Filter>
@@ -509,6 +512,12 @@
     </ClCompile>
     <ClCompile Include="submodules\UNAQtCommons\widgets\Scaling\ScalingUtilities.cpp">
       <Filter>submodules\UNAQtCommons\Sources\widgets\Scaling</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\settings\CommonAppSettings.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\settings</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\tty\tty.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\DirectConnectionPrinters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -777,9 +786,6 @@
     <ClInclude Include="widgets\BranchingTools\EmbeddedBranches.h">
       <Filter>Header Files\Branches</Filter>
     </ClInclude>
-    <ClInclude Include="legacy\3drparty\tty\tty.h">
-      <Filter>Header Files\legacy</Filter>
-    </ClInclude>
     <ClInclude Include="widgets\Branches\SwitchSubbranch.h">
       <Filter>Header Files\Branches</Filter>
     </ClInclude>
@@ -809,6 +815,12 @@
     </ClInclude>
     <ClInclude Include="submodules\UNAQtCommons\widgets\Scaling\ScalingUtilities.h">
       <Filter>submodules\UNAQtCommons\Headers\widgets\Scaling</Filter>
+    </ClInclude>
+    <ClInclude Include="submodules\UNAQtCommons\settings\CommonAppSettings.h">
+      <Filter>submodules\UNAQtCommons\Headers\settings</Filter>
+    </ClInclude>
+    <ClInclude Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\tty\tty.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\DirectConnectionPrinters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

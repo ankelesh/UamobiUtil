@@ -124,7 +124,6 @@
     <ClCompile Include="datacore\NamedIdEntity.cpp" />
     <ClCompile Include="datacore\PseudotableEntityModel.cpp" />
     <ClCompile Include="datacore\UniformXmlObject.cpp" />
-    <ClCompile Include="legacy\3drparty\tty\tty.cpp" />
     <ClCompile Include="legacy\legacy.cpp" />
     <ClCompile Include="legacy\qtCompatibility\scrollgrabber.cpp" />
     <ClCompile Include="main.cpp" />
@@ -140,6 +139,7 @@
     <ClCompile Include="submodules\UNAQtCommons\barcodeHandling\BarcodeObserver.cpp" />
     <ClCompile Include="submodules\UNAQtCommons\consts\DatetimeConstants.cpp" />
     <ClCompile Include="submodules\UNAQtCommons\debug\debugtrace.cpp" />
+    <ClCompile Include="submodules\UNAQtCommons\settings\CommonAppSettings.cpp" />
     <ClCompile Include="submodules\UNAQtCommons\widgets\ControlsWidgets\abs_control.cpp" />
     <ClCompile Include="submodules\UNAQtCommons\widgets\ControlsWidgets\BarcodeControl.cpp" />
     <ClCompile Include="submodules\UNAQtCommons\widgets\ControlsWidgets\ControlTranslator.cpp" />
@@ -160,6 +160,7 @@
     <ClCompile Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\FTRCOMPrinterWrapper.cpp" />
     <ClCompile Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\NullPrinterWrapper.cpp" />
     <ClCompile Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\PrinterWrapperFactory.cpp" />
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\tty\tty.cpp" />
     <ClCompile Include="submodules\UNAQtCommons\wrappers\Platform\Android\androidservicewrapper.cpp" />
     <ClCompile Include="submodules\UNAQtCommons\wrappers\Platform\Android\QBroadcastCatcher.cpp" />
     <ClCompile Include="submodules\UNAQtCommons\wrappers\Sound\AbsSoundWrapper.cpp" />
@@ -234,7 +235,6 @@
     <ClInclude Include="datacore\AbsEntityPrototype.h" />
     <QtMoc Include="datacore\PseudotableEntityModel.h" />
     <ClInclude Include="datacore\UniformXmlObject.h" />
-    <ClInclude Include="legacy\3drparty\tty\tty.h" />
     <ClInclude Include="legacy\legacy.h" />
     <QtMoc Include="legacy\qtCompatibility\scrollgrabber.h" />
     <QtMoc Include="widgets\LoginBranch\LoginWidget.h" />
@@ -311,6 +311,7 @@
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
       <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions);QT_MULTIMEDIA_LIB</Define>
     </QtMoc>
+    <ClInclude Include="submodules\UNAQtCommons\settings\CommonAppSettings.h" />
     <ClInclude Include="submodules\UNAQtCommons\widgets\ControlsWidgets\QuantityControl.h" />
     <QtMoc Include="submodules\UNAQtCommons\widgets\ControlsWidgets\StringControl.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\Lib\boost_1_72_0;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
@@ -399,6 +400,7 @@
     </QtMoc>
     <ClInclude Include="submodules\UNAQtCommons\widgets\Scaling\ScalingUtilities.h" />
     <ClInclude Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\PrinterWrapperFactory.h" />
+    <ClInclude Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\tty\tty.h" />
     <ClInclude Include="widgets\Branches\SenderNode.h" />
     <ClInclude Include="widgets\Branches\SwitchSubbranch.h" />
     <ClInclude Include="widgets\BranchingTools\BranchDescriptionParser.h" />

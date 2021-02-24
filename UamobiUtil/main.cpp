@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 	QApplication a(argc, argv);
 	debugtrace::init(detr_supply::all, detr_supply::file, QVector<OutputMode>(), 120, false);
     detrace_APPSTART(VERSION, SUFFIX);
-	AppSettings->setTranslator();
+    GlobalAppSettings::init();
 #ifdef Q_OS_WINCE
     UamobiUtil w;
 	w.move(0, 0);

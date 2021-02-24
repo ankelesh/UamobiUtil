@@ -1,10 +1,14 @@
-Application start begins: version 0.14 lin-alpha
-][	Created object LoginWidget on address 9310024
-][	Created object MainPageWidget on address 8675592
->>	413227869234729 sent request: 
-una.md:3323/um/sammy0520181.php?delay=0&cmd=ping
->>	413227869242659 sent request: 
-una.md:3323/um/sammy0520181.php?delay=1&cmd=list_users
-<<	413227870002622 received response going to 0 containing text:|
+Application start begins: version 0.17 lin-alpha
+-->	Method called: load common part of AppSettings in object 22954344
+if errors: 0
+if errors: 0
+][	Created object LoginWidget on address 22956696
+][	Created object MainPageWidget on address 22969424
+>>	413231113413417 sent request: http://una.md:3323/um/sammy0520181.php?delay=0&cmd=ping
+>>	413231113425699 sent request: http://una.md:3323/um/sammy0520181.php?delay=1&cmd=list_users
+<<	413231113508798 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status>  <user>   <login>adm</login>   <name>Adm Adm</name
 	and error text |
+-->	Method called: dump common settings in object 22954344
+if errors: 0
+if errors: 0

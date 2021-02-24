@@ -53,7 +53,7 @@ UamobiUtil::UamobiUtil( QWidget* parent)
 
 UamobiUtil::~UamobiUtil()
 {
-    AppSettings->dump();
+    AppSettings->save();
 }
 
 void UamobiUtil::gotoModeSelection()

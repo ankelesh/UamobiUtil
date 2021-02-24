@@ -163,7 +163,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	portType->addItems(AppSettings->alternativePrinters);
 	portType->setEditable(true);
 	btDeviceName->setEditable(true);
-	btDeviceName->addItem(AppSettings->bluetoothDeviceNameMask);
+	btDeviceName->addItem(AppSettings->labelPrinterName);
 	btDeviceName->addItems(AppSettings->defaultDeviceNameMasks);
 	btDeviceName->setCurrentIndex(0);
 	btDeviceName->setInputMethodHints(Qt::InputMethodHint::ImhNoPredictiveText);
@@ -216,15 +216,15 @@ void MainSettingsWidget::saveClicked()
 	AppSettings->printerType = portType->currentText();
 	AppSettings->printerPort = portNumber->value();
 	AppSettings->printerPortDesignation = portDesignation->currentText();
-	AppSettings->bluetoothDeviceNameMask = btDeviceName->currentText();
-	if (!AppSettings->defaultDeviceNameMasks.contains(AppSettings->bluetoothDeviceNameMask))
+	AppSettings->labelPrinterName = btDeviceName->currentText();
+	if (!AppSettings->defaultDeviceNameMasks.contains(AppSettings->labelPrinterName))
 	{
-		AppSettings->defaultDeviceNameMasks.push_back(AppSettings->bluetoothDeviceNameMask);
-		btDeviceName->addItem(AppSettings->bluetoothDeviceNameMask);
+		AppSettings->defaultDeviceNameMasks.push_back(AppSettings->labelPrinterName);
+		btDeviceName->addItem(AppSettings->labelPrinterName);
 	}
     AppSettings->notificationsVolume = notificationsVolume->value();
 	BarcodeObs->resetCapture(AppSettings->scanPrefix, AppSettings->scanSuffix);
-	AppSettings->dump();
+	AppSettings->save();
 	emit saveConfirmed();
 	emit backRequired();
 }
