@@ -5,7 +5,7 @@
 #include "legacy/legacy.h"
 #include <QtXml/QDomDocument>
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 namespace RequestParser

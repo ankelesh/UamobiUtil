@@ -4,7 +4,7 @@
 #include "widgets/utils/ElementsStyles.h"
 #include <QtGui/qevent.h>
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 const double PI = 3.141592653589793238463;

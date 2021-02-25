@@ -4,7 +4,7 @@
 #include <QInputMethod>
 #endif
 #ifdef DEBUG
-#include <debugtrace.h>
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 bool filters::NoKeyEvents::eventFilter(QObject* object, QEvent* ev)

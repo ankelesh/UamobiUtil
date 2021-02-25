@@ -1,11 +1,20 @@
 #include "UamobiUtil.h"
 #include <QtGui/qevent.h>
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #include "widgets/BranchingTools/EmbeddedBranches.h"
 #include "widgets/BranchingTools/BranchException.h"
-#include "SoundWrappers/SoundEffectPlayer.h"
+#include "submodules/UNAQtCommons/wrappers/Sound/SoundEffectPlayer.h"
+#if defined (Q_OS_ANDROID)
+#include <QtAndroid>
+const QVector<QString> permissions({ "android.permission.ACCESS_COARSE_LOCATION",
+									"android.permission.BLUETOOTH",
+									"android.permission.BLUETOOTH_ADMIN",
+									"android.permission.INTERNET",
+									"android.permission.WRITE_EXTERNAL_STORAGE",
+									"android.permission.READ_EXTERNAL_STORAGE" });
+#endif
 
 UamobiUtil::UamobiUtil( QWidget* parent)
 	: QWidget(parent), abstractDynamicNode(
@@ -14,6 +23,7 @@ UamobiUtil::UamobiUtil( QWidget* parent)
 	overlay(new ProcessingOverlay(AppSettings->timeoutInt, this))
 {
 	bindProcessingOverlay(overlay);
+	_getPermissions();
 	overlay->hide();
 	this->setLayout(mainLayout);
 	setFont(*(AppFonts->general()));
@@ -43,7 +53,7 @@ UamobiUtil::UamobiUtil( QWidget* parent)
 
 UamobiUtil::~UamobiUtil()
 {
-    AppSettings->dump();
+    AppSettings->save();
 }
 
 void UamobiUtil::gotoModeSelection()
@@ -65,6 +75,19 @@ void UamobiUtil::resizeEvent(QResizeEvent* rev)
 {
 	overlay->resize(rev->size());
 	QWidget::resizeEvent(rev);
+}
+
+void UamobiUtil::_getPermissions()
+{
+#if defined (Q_OS_ANDROID)
+		//Request requiered permissions at runtime
+		for (const QString& permission : permissions) {
+			auto result = QtAndroid::checkPermission(permission);
+			if (result == QtAndroid::PermissionResult::Denied) {
+				QtAndroid::requestPermissionsSync(QStringList({ permission }));
+			}
+		}
+#endif
 }
 
 void UamobiUtil::interpretMode(QHash<QString, QString> /*sets*/, Mode mode)

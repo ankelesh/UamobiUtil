@@ -1,6 +1,6 @@
 #include "IndependentBranchNode.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 using namespace QueryTemplates;

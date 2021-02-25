@@ -343,3 +343,6 @@ healthchecksdb
 # Application files
 *.txt
 *.db
+
+#Logs
+/UNALogs/

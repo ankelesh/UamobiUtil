@@ -2,15 +2,15 @@
 #include "widgets/BranchingTools/BranchFactory.h"
 #include <QLabel>
 #include <QLineEdit>
-#include "widgets/ElementWidgets/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 #include "networking/RequestAwaiter.h"
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/utils/ElementsStyles.h"
 #include "networking/Parsers/RequestParser.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
-#include "ScaningCore/BarcodeObserver.h"
+#include "submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.h"
 
 void SwitchByScannedCodeWidget::_handleRecord(RecEntity e)
 {
@@ -75,8 +75,8 @@ SwitchByScannedCodeWidget::SwitchByScannedCodeWidget(BranchDescription branch, Q
 	backButton->setText(tr("back"));
 	skipButton->setText(tr("skip"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
-	backButton->setIcon(QIcon(":/res/back.png"));
-	skipButton->setIcon(QIcon(":/res/editable.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
+	skipButton->setIcon(QIcon(":/resources/editable"));
 	info->setWordWrap(true);
 	if (branch->entity.isNull())
 	{

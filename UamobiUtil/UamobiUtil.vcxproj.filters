@@ -14,10 +14,6 @@
       <Extensions>qrc;*</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
-    <Filter Include="Form Files">
-      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
-      <Extensions>ui</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
       <Extensions>qrc;*</Extensions>
@@ -46,9 +42,6 @@
     <Filter Include="Source Files\util">
       <UniqueIdentifier>{3e215254-81ad-4a74-97a7-4c856df9ad11}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ModeSelectionBranch">
-      <UniqueIdentifier>{72d62486-61c3-4d7a-a800-86b700487f81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Network\Parsing">
       <UniqueIdentifier>{9388a503-7233-4771-b3e5-79b443c2d190}</UniqueIdentifier>
     </Filter>
@@ -63,9 +56,6 @@
     </Filter>
     <Filter Include="Header Files\ElementWidgets">
       <UniqueIdentifier>{d8b99fa7-72ef-4ff3-a958-a18ed8258393}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ScaningRelated">
-      <UniqueIdentifier>{d57287c2-f07a-4353-b4c8-0790bc340398}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\MultibranchWidgets">
       <UniqueIdentifier>{d0b40a64-936f-4df2-b9aa-a2915c284cc3}</UniqueIdentifier>
@@ -112,9 +102,6 @@
     <Filter Include="Source Files\parents">
       <UniqueIdentifier>{66e87836-e183-4cec-bd76-3ccd90930cc4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\ControlsWidgets">
-      <UniqueIdentifier>{a3b60990-a679-483c-85af-d9282ce09968}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\MultibranchWidgets\Selectors">
       <UniqueIdentifier>{610d2c6c-01a8-4505-ab26-2a7969c5adfc}</UniqueIdentifier>
     </Filter>
@@ -127,14 +114,110 @@
     <Filter Include="Header Files\MultibranchWidgets\Observers">
       <UniqueIdentifier>{3b1ce35a-6932-40d2-8c9d-63d1d57fbb0f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\PrinterWrappers">
-      <UniqueIdentifier>{937ed6c8-f1f8-431a-9d90-b412f99d652d}</UniqueIdentifier>
+    <Filter Include="Header Files\ElementWidgets\ControlsWidgets">
+      <UniqueIdentifier>{a3b60990-a679-483c-85af-d9282ce09968}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\SoundWrappers">
-      <UniqueIdentifier>{882ec382-c7d0-4bc8-aef7-65e44dc9d16f}</UniqueIdentifier>
+    <Filter Include="Source Files\MultibranchWidgets\Observers">
+      <UniqueIdentifier>{619df4f9-4597-465c-86e5-b16917341a7e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\SoundWrappers">
-      <UniqueIdentifier>{b814a23e-696f-4d7a-a483-6f6a177e2b45}</UniqueIdentifier>
+    <Filter Include="Source Files\MultibranchWidgets\Selectors">
+      <UniqueIdentifier>{20134b27-8123-48aa-b7d9-96c56a87acd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules">
+      <UniqueIdentifier>{f6bc9b1b-85dc-446f-93cc-0a0c32b7eb96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons">
+      <UniqueIdentifier>{c7bc4e74-5a0c-4334-af7f-3bd12315d856}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers">
+      <UniqueIdentifier>{2f119ca2-1235-4c19-b23b-60016e28191a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\widgets">
+      <UniqueIdentifier>{38813580-6e45-4f12-86dc-57d7c8834dad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\widgets\UtilityElements">
+      <UniqueIdentifier>{3fd47b43-10a1-4d0e-9a40-b60d9adbaa62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources">
+      <UniqueIdentifier>{63ff034b-504d-466b-a240-1e12e21ce4e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\widgets">
+      <UniqueIdentifier>{41a8fc99-6e00-4ba3-a3a6-f66e0d07e8fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\widgets\UtilityElements">
+      <UniqueIdentifier>{1032c9c6-b4ff-4409-a5ba-3cb40968e123}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\debug">
+      <UniqueIdentifier>{1eb39c58-2c1d-49c4-80a6-1920e529f8f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\debug">
+      <UniqueIdentifier>{b14dcbe5-f781-45af-b6f0-3bbdc12322cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\widgets\parents">
+      <UniqueIdentifier>{15d50c73-761b-4e56-9682-a98f21230990}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\widgets\parents">
+      <UniqueIdentifier>{5f73b2aa-1888-4a5a-a8de-5b999fa3814a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\barcodeHandling">
+      <UniqueIdentifier>{7ceca0bb-f4a9-4395-bfca-92ee17d8299a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\barcodeHandling">
+      <UniqueIdentifier>{6e927f64-f455-4705-9a11-f85127c82193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\wrappers">
+      <UniqueIdentifier>{0103b72a-310f-4b3e-817f-67a1fcd73ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\wrappers\platform">
+      <UniqueIdentifier>{e1953277-f53c-4b49-a1f4-67698c034b85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\wrappers\sound">
+      <UniqueIdentifier>{baa70ab2-c244-4594-ae4d-eccbbe31dda2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\wrappers\platform\android">
+      <UniqueIdentifier>{3b7fd50c-bba6-4c2d-b469-68523e85f7f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\wrappers">
+      <UniqueIdentifier>{8ed1ec2e-9beb-4058-a63e-e1a638a11a16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\wrappers\platform">
+      <UniqueIdentifier>{c62bb7e2-88f3-436d-ab0e-c8072d192a00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\wrappers\platform\android">
+      <UniqueIdentifier>{4fa988fa-6239-4a03-8ac6-2b324c02af2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\wrappers\sound">
+      <UniqueIdentifier>{d5be95e3-7287-4cd1-9768-2b1a879cf66e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\wrappers\DirectConnectionPrinters">
+      <UniqueIdentifier>{a2f8c993-9050-4d34-bbf0-fe9668c43d27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\wrappers\DirectConnectionPrinters">
+      <UniqueIdentifier>{0049e4ce-d7ff-4e3a-ba3d-065afaad6a35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\consts">
+      <UniqueIdentifier>{68548bbd-f1e8-48e4-b9ef-be7d0798e076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\widgets\controls">
+      <UniqueIdentifier>{2a24be21-e413-4c36-8cf6-10f5518dbd70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\consts">
+      <UniqueIdentifier>{368b1891-bbd7-46aa-81de-747c1d75384e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\widgets\controls">
+      <UniqueIdentifier>{be6147fc-5d41-4316-80f4-57f2f690d7e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\widgets\Scaling">
+      <UniqueIdentifier>{80814db8-3f19-4102-8d39-0968570b2cc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\widgets\Scaling">
+      <UniqueIdentifier>{cca1c939-c647-44f0-8bcf-869f56327a3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Headers\settings">
+      <UniqueIdentifier>{2e59627a-d1d4-4e6f-ab3b-69984dd2c691}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="submodules\UNAQtCommons\Sources\settings">
+      <UniqueIdentifier>{538dab57-75bc-4846-a366-f7bfd7b5bad7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -146,9 +229,6 @@
     </ClCompile>
     <ClCompile Include="networking\dataupdateengine-http.cpp">
       <Filter>Source Files\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="debugtrace.cpp">
-      <Filter>Source Files\util</Filter>
     </ClCompile>
     <ClCompile Include="widgets\utils\ElementsStyles.cpp">
       <Filter>Source Files\util</Filter>
@@ -164,9 +244,6 @@
     </ClCompile>
     <ClCompile Include="networking\RequestAwaiter.cpp">
       <Filter>Source Files\Network</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ModeSelectionBranch\ModeSelectionWidget.cpp">
-      <Filter>Source Files\ModeSelectionBranch</Filter>
     </ClCompile>
     <ClCompile Include="networking\Parsers\DynamicLinearParsers.cpp">
       <Filter>Source Files\Network\Parsing</Filter>
@@ -186,32 +263,11 @@
     <ClCompile Include="legacy\legacy.cpp">
       <Filter>Source Files\legacy</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\parents\abstractNodeInterface.cpp">
-      <Filter>Source Files\parents</Filter>
-    </ClCompile>
     <ClCompile Include="networking\things.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
     <ClCompile Include="widgets\utils\GlobalAppSettings.cpp">
       <Filter>Source Files\util</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ElementWidgets\BigButtonsSpinbox.cpp">
-      <Filter>Source Files\ElementWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ElementWidgets\MegaIconButton.cpp">
-      <Filter>Source Files\ElementWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ControlsMiniwidgets\abs_control.cpp">
-      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ControlsMiniwidgets\QuantityControl.cpp">
-      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\DocResultsWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\parents\inframedWidget.cpp">
-      <Filter>Source Files\parents</Filter>
     </ClCompile>
     <ClCompile Include="widgets\utils\EventsAndFilters.cpp">
       <Filter>Source Files\util</Filter>
@@ -219,26 +275,11 @@
     <ClCompile Include="legacy\qtCompatibility\scrollgrabber.cpp">
       <Filter>Source Files\legacy</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\FilterSelectWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\ElementWidgets\ProcessingOverlay.cpp">
       <Filter>Source Files\ElementWidgets</Filter>
     </ClCompile>
     <ClCompile Include="widgets\ControlsMiniwidgets\ControlManager.cpp">
       <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\BarcodeFilterSelectionSubbranch.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ControlsMiniwidgets\ControlTranslator.cpp">
-      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="ScaningCore\BarcodeObserver.cpp">
-      <Filter>Source Files\ScaningRelated</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\PagedSearchWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
     </ClCompile>
     <ClCompile Include="widgets\BranchingTools\AbsBranch.cpp">
       <Filter>Source Files\BranchingTools</Filter>
@@ -273,9 +314,6 @@
     <ClCompile Include="datacore\FullItemEntity.cpp">
       <Filter>Source Files\Datacore</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\IdDependentSelectWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\parents\IndependentBranchNode.cpp">
       <Filter>Source Files\parents</Filter>
     </ClCompile>
@@ -291,9 +329,6 @@
     <ClCompile Include="datacore\NamedIdEntity.cpp">
       <Filter>Source Files\Datacore</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\ParentDocumentWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\MultibranchWidgets\PlaceSelectionWidget.cpp">
       <Filter>Source Files\MultibranchWidgets</Filter>
     </ClCompile>
@@ -303,20 +338,11 @@
     <ClCompile Include="widgets\MultibranchWidgets\ReceiptParametersWidget.cpp">
       <Filter>Source Files\MultibranchWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="datacore\UniformXmlObject.cpp">
-      <Filter>Source Files\Datacore</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\ExtendedDelegates\ZebraListItemDelegate.cpp">
       <Filter>Source Files\Delegates</Filter>
     </ClCompile>
     <ClCompile Include="widgets\parents\AbstractScaningWidget.cpp">
       <Filter>Source Files\parents</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\SelectItemFromListWidget.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="legacy\3drparty\tty\tty.cpp">
-      <Filter>Source Files\legacy</Filter>
     </ClCompile>
     <ClCompile Include="widgets\BranchingTools\StaticBranch.cpp">
       <Filter>Source Files\BranchingTools</Filter>
@@ -336,83 +362,158 @@
     <ClCompile Include="widgets\MultibranchWidgets\ScaningRelated\ObservedScaningWidget.cpp">
       <Filter>Source Files\MultibranchWidgets\ScaningRelated</Filter>
     </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\Observers\ListPickObserver.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ControlsMiniwidgets\LabelControl.cpp">
-      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ControlsMiniwidgets\BarcodeControl.cpp">
-      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ControlsMiniwidgets\DateTimeControl.cpp">
-      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\Observers\SkippedNode.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ControlsMiniwidgets\StringControl.cpp">
-      <Filter>Source Files\ElementWidgets\ControlsWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\Branches\SenderNode.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\Branches\SwitchSubbranch.cpp">
-      <Filter>Source Files\MultibranchWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\Selectors\EditableDocResultsWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="datacore\PseudotableEntityModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ExtendedDelegates\CountingDelegate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\MultibranchWidgets\FlowControls\SwitchByScannedCodeNode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ElementWidgets\ExtendedDialogs.cpp">
-      <Filter>Header Files\ElementWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="widgets\ElementWidgets\ExtendedLabels.cpp">
-      <Filter>Header Files\ElementWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="PrinterWrappers\AbsPrinterWrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PrinterWrappers\FTRCOMPrinterWrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PrinterWrappers\AndroidBluetoothPrinterWrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PrinterWrappers\NullPrinterWrapper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PrinterWrappers\PrinterWrapperFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="widgets\BranchingTools\BranchException.cpp">
       <Filter>Source Files\BranchingTools</Filter>
     </ClCompile>
-    <ClCompile Include="SoundWrappers\AbsSoundWrapper.cpp">
-      <Filter>Source Files\SoundWrappers</Filter>
+    <ClCompile Include="widgets\MultibranchWidgets\BarcodeFilterSelectionSubbranch.cpp">
+      <Filter>Source Files\Branches</Filter>
     </ClCompile>
-    <ClCompile Include="SoundWrappers\ModernQtSoundWrapper.cpp">
-      <Filter>Source Files\SoundWrappers</Filter>
+    <ClCompile Include="widgets\ModeSelectionBranch\ModeSelectionWidget.cpp">
+      <Filter>Source Files\Branches</Filter>
     </ClCompile>
-    <ClCompile Include="SoundWrappers\SoundEffectPlayer.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="widgets\Branches\SenderNode.cpp">
+      <Filter>Source Files\Branches</Filter>
     </ClCompile>
-    <ClCompile Include="SoundWrappers\PhononSoundWrapper.cpp">
-      <Filter>Source Files\SoundWrappers</Filter>
+    <ClCompile Include="widgets\Branches\SwitchSubbranch.cpp">
+      <Filter>Source Files\Branches</Filter>
     </ClCompile>
-    <ClCompile Include="SoundWrappers\WinCEUnpackWrapper.cpp">
-      <Filter>Source Files\SoundWrappers</Filter>
+    <ClCompile Include="widgets\MultibranchWidgets\Observers\SkippedNode.cpp">
+      <Filter>Source Files\BranchingTools</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\ExtendedDelegates\CountingDelegate.cpp">
+      <Filter>Source Files\Delegates</Filter>
+    </ClCompile>
+    <ClCompile Include="datacore\UniformXmlObject.cpp">
+      <Filter>Source Files\Network\Parsing</Filter>
+    </ClCompile>
+    <ClCompile Include="datacore\PseudotableEntityModel.cpp">
+      <Filter>Source Files\Datacore</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\Observers\ListPickObserver.cpp">
+      <Filter>Source Files\MultibranchWidgets\Observers</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\DocResultsWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\Selectors</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\Selectors\EditableDocResultsWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\Selectors</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\FilterSelectWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\Selectors</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\IdDependentSelectWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\Selectors</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\PagedSearchWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\Selectors</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\ParentDocumentWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\Selectors</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\SelectItemFromListWidget.cpp">
+      <Filter>Source Files\MultibranchWidgets\Selectors</Filter>
     </ClCompile>
     <ClCompile Include="widgets\MultibranchWidgets\Selectors\SubbranchingDocResults.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\MultibranchWidgets\Selectors</Filter>
+    </ClCompile>
+    <ClCompile Include="widgets\MultibranchWidgets\FlowControls\SwitchByScannedCodeNode.cpp">
+      <Filter>Source Files\MultibranchWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\MegaIconButton.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\UtilityElements</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\AndroidFileDialog.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\UtilityElements</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\ExtendedDialogs.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\UtilityElements</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\ExtendedLabels.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\UtilityElements</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\debug\debugtrace.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\parents\inframedWidget.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\parents</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\parents\abstractNodeInterface.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\parents</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\barcodeHandling\BarcodeObserver.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\barcodeHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Platform\Android\androidservicewrapper.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\platform\android</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Platform\Android\QBroadcastCatcher.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\platform\android</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Sound\AbsSoundWrapper.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Sound\ModernQtSoundWrapper.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Sound\PhononSoundWrapper.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Sound\SoundEffectPlayer.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\Sound\WinCEUnpackWrapper.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\sound</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\AbsPrinterWrapper.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\DirectConnectionPrinters</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\AndroidBluetoothPrinterWrapper.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\DirectConnectionPrinters</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\FTRCOMPrinterWrapper.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\DirectConnectionPrinters</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\NullPrinterWrapper.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\DirectConnectionPrinters</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\PrinterWrapperFactory.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\DirectConnectionPrinters</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\BigButtonsSpinbox.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\UtilityElements</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\consts\DatetimeConstants.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\consts</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\ControlsWidgets\abs_control.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\ControlsWidgets\BarcodeControl.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\ControlsWidgets\ControlTranslator.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\ControlsWidgets\DateTimeControl.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\ControlsWidgets\LabelControl.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\ControlsWidgets\QuantityControl.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\ControlsWidgets\StringControl.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\Scaling\ScalingUtilities.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\Scaling</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\settings\CommonAppSettings.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\settings</Filter>
+    </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\tty\tty.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\wrappers\DirectConnectionPrinters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -437,26 +538,11 @@
     <QtMoc Include="widgets\utils\EventsAndFilters.h">
       <Filter>Header Files\util</Filter>
     </QtMoc>
-    <QtMoc Include="widgets\parents\inframedWidget.h">
-      <Filter>Header Files\parents</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\ElementWidgets\BigButtonsSpinbox.h">
-      <Filter>Header Files\ElementWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\ElementWidgets\MegaIconButton.h">
-      <Filter>Header Files\ElementWidgets</Filter>
-    </QtMoc>
     <QtMoc Include="legacy\qtCompatibility\scrollgrabber.h">
       <Filter>Header Files\legacy</Filter>
     </QtMoc>
     <QtMoc Include="widgets\ElementWidgets\ProcessingOverlay.h">
       <Filter>Header Files\ElementWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\ControlsMiniwidgets\ControlTranslator.h">
-      <Filter>Header Files\ControlsWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="ScaningCore\BarcodeObserver.h">
-      <Filter>Header Files\ScaningRelated</Filter>
     </QtMoc>
     <QtMoc Include="networking\things.h">
       <Filter>Header Files\Network</Filter>
@@ -469,9 +555,6 @@
     </QtMoc>
     <QtMoc Include="widgets\BranchingTools\AdjustableBranch.h">
       <Filter>Header Files\BranchingTools</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\ControlsMiniwidgets\abs_control.h">
-      <Filter>Header Files\ControlsWidgets</Filter>
     </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\BarcodeFilterSelectionSubbranch.h">
       <Filter>Header Files\Branches</Filter>
@@ -493,18 +576,6 @@
     </QtMoc>
     <QtMoc Include="widgets\BranchingTools\StaticBranch.h">
       <Filter>Header Files\BranchingTools</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\ControlsMiniwidgets\DateTimeControl.h">
-      <Filter>Header Files\ControlsWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\ControlsMiniwidgets\LabelControl.h">
-      <Filter>Header Files\ControlsWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\ControlsMiniwidgets\BarcodeControl.h">
-      <Filter>Header Files\ControlsWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\ControlsMiniwidgets\StringControl.h">
-      <Filter>Header Files\ControlsWidgets</Filter>
     </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\DocResultsWidget.h">
       <Filter>Header Files\MultibranchWidgets\Selectors</Filter>
@@ -557,41 +628,80 @@
     <QtMoc Include="widgets\MultibranchWidgets\FlowControls\SwitchByScannedCodeNode.h">
       <Filter>Header Files\MultibranchWidgets</Filter>
     </QtMoc>
-    <QtMoc Include="widgets\ElementWidgets\ExtendedDialogs.h">
-      <Filter>Header Files\ElementWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="widgets\ElementWidgets\ExtendedLabels.h">
-      <Filter>Header Files\ElementWidgets</Filter>
-    </QtMoc>
-    <QtMoc Include="PrinterWrappers\AbsPrinterWrapper.h">
-      <Filter>Header Files\PrinterWrappers</Filter>
-    </QtMoc>
-    <QtMoc Include="PrinterWrappers\FTRCOMPrinterWrapper.h">
-      <Filter>Header Files\PrinterWrappers</Filter>
-    </QtMoc>
-    <QtMoc Include="PrinterWrappers\AndroidBluetoothPrinterWrapper.h">
-      <Filter>Header Files\PrinterWrappers</Filter>
-    </QtMoc>
-    <QtMoc Include="PrinterWrappers\NullPrinterWrapper.h">
-      <Filter>Header Files\PrinterWrappers</Filter>
-    </QtMoc>
-    <QtMoc Include="SoundWrappers\PhononSoundWrapper.h">
-      <Filter>Header Files\SoundWrappers</Filter>
-    </QtMoc>
-    <QtMoc Include="SoundWrappers\AbsSoundWrapper.h">
-      <Filter>Header Files\SoundWrappers</Filter>
-    </QtMoc>
-    <QtMoc Include="SoundWrappers\ModernQtSoundWrapper.h">
-      <Filter>Header Files\SoundWrappers</Filter>
-    </QtMoc>
-    <QtMoc Include="SoundWrappers\SoundEffectPlayer.h">
-      <Filter>Header Files\SoundWrappers</Filter>
-    </QtMoc>
-    <QtMoc Include="SoundWrappers\WinCEUnpackWrapper.h">
-      <Filter>Header Files\SoundWrappers</Filter>
-    </QtMoc>
     <QtMoc Include="widgets\MultibranchWidgets\Selectors\SubbranchingDocResults.h">
       <Filter>Header Files\MultibranchWidgets\Selectors</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\AndroidFileDialog.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\UtilityElements</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\ExtendedDialogs.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\UtilityElements</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\ExtendedLabels.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\UtilityElements</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\MegaIconButton.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\UtilityElements</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\parents\inframedWidget.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\parents</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\barcodeHandling\BarcodeObserver.h">
+      <Filter>submodules\UNAQtCommons\Headers\barcodeHandling</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Sound\AbsSoundWrapper.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\sound</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Sound\ModernQtSoundWrapper.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\sound</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Sound\PhononSoundWrapper.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\sound</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Sound\SoundEffectPlayer.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\sound</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Sound\WinCEUnpackWrapper.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\sound</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Platform\Android\androidservicewrapper.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\platform\android</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\Platform\Android\QBroadcastCatcher.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\platform\android</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\AbsPrinterWrapper.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\DirectConnectionPrinters</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\AndroidBluetoothPrinterWrapper.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\DirectConnectionPrinters</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\FTRCOMPrinterWrapper.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\DirectConnectionPrinters</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\NullPrinterWrapper.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\DirectConnectionPrinters</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\BigButtonsSpinbox.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\UtilityElements</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\ControlsWidgets\abs_control.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\controls</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\ControlsWidgets\BarcodeControl.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\controls</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\ControlsWidgets\ControlTranslator.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\controls</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\ControlsWidgets\DateTimeControl.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\controls</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\ControlsWidgets\LabelControl.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\controls</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\ControlsWidgets\StringControl.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\controls</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -604,9 +714,6 @@
       <Filter>Header Files\util</Filter>
     </ClInclude>
     <ClInclude Include="widgets\utils\ElementsStyles.h">
-      <Filter>Header Files\util</Filter>
-    </ClInclude>
-    <ClInclude Include="debugtrace.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
     <ClInclude Include="networking\Parsers\abs_parsed_request.h">
@@ -624,17 +731,11 @@
     <ClInclude Include="legacy\legacy.h">
       <Filter>Header Files\legacy</Filter>
     </ClInclude>
-    <ClInclude Include="widgets\parents\abstractNodeInterface.h">
-      <Filter>Header Files\parents</Filter>
-    </ClInclude>
     <ClInclude Include="networking\Parsers\DynamicLinearParsers.h">
       <Filter>Header Files\Network\Parsing</Filter>
     </ClInclude>
-    <ClInclude Include="widgets\ControlsMiniwidgets\QuantityControl.h">
-      <Filter>Header Files\ControlsWidgets</Filter>
-    </ClInclude>
     <ClInclude Include="widgets\ControlsMiniwidgets\ControlManager.h">
-      <Filter>Header Files\ControlsWidgets</Filter>
+      <Filter>Header Files\ElementWidgets\ControlsWidgets</Filter>
     </ClInclude>
     <ClInclude Include="networking\QueryTemplates.h">
       <Filter>Header Files\Network</Filter>
@@ -681,9 +782,6 @@
     <ClInclude Include="widgets\BranchingTools\EmbeddedBranches.h">
       <Filter>Header Files\Branches</Filter>
     </ClInclude>
-    <ClInclude Include="legacy\3drparty\tty\tty.h">
-      <Filter>Header Files\legacy</Filter>
-    </ClInclude>
     <ClInclude Include="widgets\Branches\SwitchSubbranch.h">
       <Filter>Header Files\Branches</Filter>
     </ClInclude>
@@ -693,11 +791,32 @@
     <ClInclude Include="widgets\utils\client_defaults.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
-    <ClInclude Include="PrinterWrappers\PrinterWrapperFactory.h">
-      <Filter>Header Files\PrinterWrappers</Filter>
-    </ClInclude>
     <ClInclude Include="widgets\BranchingTools\BranchException.h">
       <Filter>Header Files\BranchingTools</Filter>
+    </ClInclude>
+    <ClInclude Include="submodules\UNAQtCommons\debug\debugtrace.h">
+      <Filter>submodules\UNAQtCommons\Headers\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="submodules\UNAQtCommons\widgets\parents\abstractNodeInterface.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\parents</Filter>
+    </ClInclude>
+    <ClInclude Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\PrinterWrapperFactory.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\DirectConnectionPrinters</Filter>
+    </ClInclude>
+    <ClInclude Include="submodules\UNAQtCommons\consts\DatetimeConstants.h">
+      <Filter>submodules\UNAQtCommons\Headers\consts</Filter>
+    </ClInclude>
+    <ClInclude Include="submodules\UNAQtCommons\widgets\ControlsWidgets\QuantityControl.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="submodules\UNAQtCommons\widgets\Scaling\ScalingUtilities.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\Scaling</Filter>
+    </ClInclude>
+    <ClInclude Include="submodules\UNAQtCommons\settings\CommonAppSettings.h">
+      <Filter>submodules\UNAQtCommons\Headers\settings</Filter>
+    </ClInclude>
+    <ClInclude Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\tty\tty.h">
+      <Filter>submodules\UNAQtCommons\Headers\wrappers\DirectConnectionPrinters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

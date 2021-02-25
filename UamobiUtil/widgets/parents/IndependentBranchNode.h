@@ -1,5 +1,5 @@
 #pragma once
-#include "inframedWidget.h"
+#include "submodules/UNAQtCommons/widgets/parents/inframedWidget.h"
 #include "networking/things.h"
 
 

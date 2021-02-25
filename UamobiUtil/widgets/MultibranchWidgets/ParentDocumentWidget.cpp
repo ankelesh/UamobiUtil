@@ -4,7 +4,7 @@
 #include "networking/Parsers/RequestParser.h"
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #if defined(Q_OS_ANDROID) && defined QT_VERSION5X
 #include <QScroller>
@@ -59,9 +59,9 @@ ParentDocumentWidget::ParentDocumentWidget(RecEntity proto, QWidget* parent
 	filterButton->setStyleSheet(CHANGE_BUTTONS_STYLESHEET);
 	backButton->setText(tr("back"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	selectButton->setText(tr("ok"));
-	selectButton->setIcon(QIcon(":/res/submit.png"));
+	selectButton->setIcon(QIcon(":/resources/submit"));
 	selectButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 	docSelection->setModel(entityModel);
 	docSelection->setItemDelegate(new ZebraItemDelegate(this));

@@ -5,12 +5,12 @@
 #include "widgets/ExtendedDelegates/CountingDelegate.h"
 #include <QMessageBox>
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #if defined(Q_OS_ANDROID) and defined(QT_VERSION5X)
 #include <qscroller.h>
 #endif
-#include "widgets/ElementWidgets/ExtendedDialogs.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.h"
 void DocResultsWidget::_handleRecord(RecEntity)
 {
 }
@@ -97,7 +97,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	previousButton->setStyleSheet(NAVIGATE_BUTTONS_STYLESHEET);
 	previousButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
 #if defined(Q_OS_WINCE) || defined(Q_OS_ANDROID)
-	previousButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
+	previousButton->setMaximumHeight(calculateAdaptiveHeight(0.08));
 #endif
 
 	nextButton->setSizePolicy(mi);
@@ -106,7 +106,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	nextButton->setStyleSheet(NAVIGATE_BUTTONS_STYLESHEET);
 	nextButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
 #if defined(Q_OS_WINCE) || defined(Q_OS_ANDROID)
-	nextButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
+	nextButton->setMaximumHeight(calculateAdaptiveHeight(0.08));
 #endif
 
 
@@ -114,7 +114,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	indexationInfo->setFont(GENERAL_FONT);
 	indexationInfo->setAlignment(Qt::AlignCenter);
 #if defined(Q_OS_WINCE) || defined(Q_OS_ANDROID)
-	indexationInfo->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
+	indexationInfo->setMaximumHeight(calculateAdaptiveHeight(0.08));
 #endif
     itemInfoStorage->setWordWrap(true);
     itemInfoStorage->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -122,24 +122,24 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 
 	deleteAllButton->setFont(GENERAL_FONT);
 	deleteAllButton->setText(tr("delete all"));
-	deleteAllButton->setIcon(QIcon(":/res/data.png"));
+	deleteAllButton->setIcon(QIcon(":/resources/nodata"));
 	deleteAllButton->setStyleSheet(DELETE_BUTTONS_STYLESHEET);
-	deleteAllButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
+	deleteAllButton->setMaximumHeight(calculateAdaptiveHeight(0.08));
 	deleteAllButton->hide();
 	
 	deleteSelectedButton->setFont(GENERAL_FONT);
 	deleteSelectedButton->setText(tr("delete selected"));
-	deleteSelectedButton->setIcon(QIcon(":/res/deleteData.png"));
+	deleteSelectedButton->setIcon(QIcon(":/resources/deleteData"));
 	deleteSelectedButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
 	deleteSelectedButton->hide();
-	deleteSelectedButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
+	deleteSelectedButton->setMaximumHeight(calculateAdaptiveHeight(0.08));
 
 	backButton->setText(tr("doc_results_back"));
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
 	saveButton->setText(tr("doc_results_text"));
-	saveButton->setIcon(QIcon(":/res/netUpload.png"));
+	saveButton->setIcon(QIcon(":/resources/netUpload"));
 	saveButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 
 
@@ -306,7 +306,7 @@ void DocResultsWidget::getAttachedControls()
 		FullItem castedItem = upcastRecord<FullItemEntity>(currentItem);
 		int type;
 		if (castedItem.isNull())
-			type = InputControlEntity::Int;
+			type = abs_control::Int;
 		else
 			type = castedItem->controlType;
 		attachedControls->emplaceControl(
@@ -361,7 +361,7 @@ void DocResultsWidget::save_response()
 		if (isError(doc))
 		{
 			QPair<QString, QString> edata = makeError(doc);
-			ErrorMessageDialog::showErrorInfo(this, tr("Error!"), edata.first, false, edata.second);
+			ErrorMessageDialog::showErrorInfo(tr("Error!"), edata.first, false, edata.second);
 		}
 	}
 	hideProcessingOverlay();

@@ -1,7 +1,7 @@
 #include "ZebraListItemDelegate.h"
 #include "widgets/utils/ElementsStyles.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 ZebraItemDelegate::ZebraItemDelegate(QObject* parent)
 	: QItemDelegate(parent), fm(*AppFonts->general())

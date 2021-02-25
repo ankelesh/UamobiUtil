@@ -12,8 +12,9 @@
 #include <QtGui/QLabel>
 #endif
 #include "widgets/parents/IndependentBranchNode.h"
-#include "widgets/parents/abstractNodeInterface.h"
-#include "widgets/ElementWidgets/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/parents/abstractNodeInterface.h"
+
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 #include "networking/things.h"
 
 /*

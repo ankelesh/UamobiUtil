@@ -11,7 +11,7 @@
 #include <QtGui/QListView>
 #endif
 #include "widgets/parents/IndependentBranchNode.h"
-#include "widgets/ElementWidgets/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 #include "networking/RequestAwaiter.h"
 
 /*

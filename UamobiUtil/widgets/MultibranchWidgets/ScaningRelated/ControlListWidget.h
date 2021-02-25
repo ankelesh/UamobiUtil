@@ -1,10 +1,10 @@
 #pragma once
 #include "widgets/ControlsMiniwidgets/ControlManager.h"
-#include "widgets/parents/inframedWidget.h"
-#include "widgets/ElementWidgets/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/parents/inframedWidget.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 #include <QBoxLayout>
 #include <QLabel>
-#include "widgets/ControlsMiniwidgets/abs_control.h"
+#include "submodules/UNAQtCommons/widgets/ControlsWidgets/abs_control.h"
 
 /*
 	This widget is used for future pages with multiple controls.

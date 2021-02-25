@@ -1,7 +1,7 @@
 #pragma once
 #include "networking/RequestAwaiter.h"
 #include "widgets/parents/IndependentBranchNode.h"
-#include "widgets/parents/abstractNodeInterface.h"
+#include "submodules/UNAQtCommons/widgets/parents/abstractNodeInterface.h"
 #ifdef QT_VERSION5X
 #include <QtWidgets/qboxlayout.h>
 #include <QtWidgets/qlabel.h>
@@ -9,7 +9,7 @@
 #include <QtGui/qboxlayout.h>
 #include <QtGui/qlabel.h>
 #endif
-#include "widgets/ElementWidgets/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 #include "networking/things.h"
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/MultibranchWidgets/FilterSelectWidget.h"

@@ -1,11 +1,11 @@
 #include "PrintingScaningWidget.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #include "widgets/utils/ElementsStyles.h"
-#include "widgets/ElementWidgets/ExtendedLabels.h"
-#include "widgets/ElementWidgets/ExtendedDialogs.h"
-#include "PrinterWrappers/AbsPrinterWrapper.h"
-#include "PrinterWrappers/PrinterWrapperFactory.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedLabels.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.h"
+#include "submodules/UNAQtCommons/wrappers/DirectConnectionPrinters/AbsPrinterWrapper.h"
+#include "submodules/UNAQtCommons/wrappers/DirectConnectionPrinters/PrinterWrapperFactory.h"
 void PrintingScaningWidget::_print(QString text)
 {
 	if (printerWrapper->isValid() && printerWrapper->isReady())
@@ -160,8 +160,8 @@ PrintingScaningWidget::PrintingScaningWidget(QWidget* parent, IndependentBranchN
 	connectionState->setState(SemaphorLabel::opfail);
 	connectionState->setText(tr("printer"));
 	quitButton->hide();
-	userInfo->setMaximumHeight(calculateAdaptiveButtonHeight());
-    quitButton->setMaximumHeight(calculateAdaptiveButtonHeight());
+	userInfo->setMaximumHeight(calculateAdaptiveHeight());
+    quitButton->setMaximumHeight(calculateAdaptiveHeight());
 #ifdef QT_VERSION5X
 	QObject::connect(printerWrapper, &AbsPrinterWrapper::error, this, &PrintingScaningWidget::wrapperError);
 	QObject::connect(printerWrapper, &AbsPrinterWrapper::connected, this, &PrintingScaningWidget::wrapperOk);
@@ -187,10 +187,10 @@ void PrintingScaningWidget::wrapperError(QString errtext)
     if (!isVisible())
         QTimer::singleShot(100, this, SLOT(reshowError()));
     else
-        ErrorMessageDialog::showErrorInfo(this, tr("Printer error"), errtext);
+        ErrorMessageDialog::showErrorInfo( tr("Printer error"), errtext);
 }
 
 void PrintingScaningWidget::reshowError()
 {
-    ErrorMessageDialog::showErrorInfo(this, tr("Printer error"), printerWrapper->errors());
+    ErrorMessageDialog::showErrorInfo(tr("Printer error"), printerWrapper->errors());
 }

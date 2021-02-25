@@ -22,7 +22,7 @@
 #include "widgets/MultibranchWidgets/Observers/SkippedNode.h"
 #include "widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 AbsBranch* BranchFactory::createNWBranch(QString description, QWidget* parent, independent_nodes::nodelist branchType)
 {

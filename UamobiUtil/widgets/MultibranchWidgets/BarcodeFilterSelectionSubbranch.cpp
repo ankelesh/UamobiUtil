@@ -1,7 +1,7 @@
 #include "BarcodeFilterSelectionSubbranch.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #include "widgets/utils/GlobalAppSettings.h"
 #include "widgets/utils/ElementsStyles.h"
@@ -32,7 +32,7 @@ void BarcodeFilterSelectionSubbranch::_handleRecord(RecEntity e)
 
 BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(QWidget* parent,IndependentBranchNode* supp,
 	IndependentBranchNode* still, IndependentBranchNode* group)
-	: IndependentBranchNode(true, parent), mainLayout(new QVBoxLayout(this)), innerWidget(new inframedWidget(this)),
+	: IndependentBranchNode(independent_nodes::BarcodeFilterSelect, parent), mainLayout(new QVBoxLayout(this)), innerWidget(new inframedWidget(this)),
 	innerLayout(new QVBoxLayout(innerWidget)), currentFilterInfo(new QLabel(innerWidget)),
 	stillageButton(new MegaIconButton(innerWidget)), suppliersButton(new MegaIconButton(innerWidget)),
 	groupButton(new MegaIconButton(innerWidget)), nofilterButton(new MegaIconButton(innerWidget)),
@@ -96,16 +96,16 @@ BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(QWidget* parent
 	groupButton->setText(tr("groups"));
 	groupButton->setSizePolicy(qsp);
 
-	nofilterButton->setIcon(QIcon(":/res/data.png"));
+	nofilterButton->setIcon(QIcon(":/resources/nodata"));
 	nofilterButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 	nofilterButton->setText(tr("nofilter"));
 	nofilterButton->setSizePolicy(qsp);
 
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 	backButton->setText(tr("back"));
 	backButton->setSizePolicy(qsp);
-	passButton->setIcon(QIcon(":/res/forward.png"));
+	passButton->setIcon(QIcon(":/resources/forward"));
 	passButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 	passButton->setText(tr("OK"));
 	passButton->setSizePolicy(qsp);

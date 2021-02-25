@@ -1,5 +1,5 @@
 #pragma once
-#include "widgets/parents/inframedWidget.h"
+#include "submodules/UNAQtCommons/widgets/parents/inframedWidget.h"
 // Qt 5 only imports
 #ifdef QT_VERSION5X
 #include <QtWidgets/QLabel>
@@ -14,7 +14,7 @@
 #include <QtGui/QTextEdit>
 
 #endif
-#include "widgets/ElementWidgets/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 #include "networking/things.h"
 #include "widgets/parents/IndependentBranchNode.h"
 /*

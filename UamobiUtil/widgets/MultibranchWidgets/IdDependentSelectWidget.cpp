@@ -6,7 +6,7 @@
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
 
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 void IdDependentSelectWidget::_handleRecord(RecEntity e)
@@ -47,8 +47,8 @@ IdDependentSelectWidget::IdDependentSelectWidget(RecEntity proto, QWidget* paren
     userInfo->setWordWrap(true);
     pickButton->setText(tr("pick_button"));
     backButton->setText(tr("back"));
-	pickButton->setIcon(QIcon(":/res/single.png"));
-	backButton->setIcon(QIcon(":/res/back.png"));
+	pickButton->setIcon(QIcon(":/resources/single"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	pickButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 

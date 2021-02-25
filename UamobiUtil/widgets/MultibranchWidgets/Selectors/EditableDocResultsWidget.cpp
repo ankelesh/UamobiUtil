@@ -27,7 +27,7 @@ EditableDocResultsWidget::EditableDocResultsWidget(QWidget* parent)
 	: DocResultsWidget(parent), editItem(new MegaIconButton(innerWidget))
 {
 	toolPanel->addWidget(editItem);
-	editItem->setIcon(QIcon(":/res/pencil.png"));
+	editItem->setIcon(QIcon(":/resources/pencil"));
 	editItem->setStyleSheet(CHANGE_BUTTONS_STYLESHEET);
 	editItem->setText(tr("edit"));
 	editItem->setMinimumWidth(calculateAdaptiveWidth(0.25));

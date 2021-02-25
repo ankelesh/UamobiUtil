@@ -2,7 +2,7 @@
 #include "BranchFactory.h"
 #include "widgets/BranchingTools/BranchException.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 void AdjustableBranch::toNext(RecEntity given)

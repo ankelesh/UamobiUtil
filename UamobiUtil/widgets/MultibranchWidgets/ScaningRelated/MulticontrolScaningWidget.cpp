@@ -1,11 +1,11 @@
 #include "MulticontrolScaningWidget.h"
 #include "widgets/utils/ElementsStyles.h"
-#include "ScaningCore/BarcodeObserver.h"
+#include "submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "widgets/MultibranchWidgets/DocResultsWidget.h"
 #include "widgets/MultibranchWidgets/PagedSearchWidget.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 void MulticontrolScaningWidget::_handleRecord(RecEntity e)
@@ -140,7 +140,7 @@ MulticontrolScaningWidget::MulticontrolScaningWidget(QWidget* parent,
 	innerLayout->insertWidget(innerLayout->count() - 1, toControls);
 	toControls->setStyleSheet(CHANGE_BUTTONS_STYLESHEET);
 	toControls->setText(tr("Enter data"));
-	toControls->setIcon(QIcon(":/res/pencil.png"));
+	toControls->setIcon(QIcon(":/resources/pencil"));
 	controlList->hide();
 	toControls->setDisabled(true);
 
@@ -273,7 +273,7 @@ void MulticontrolScaningWidget::item_scaned_response()
 	ResponseParser  parser(new LinearListWithSublistParser(awaiter->restext, awaiter->errtext));
 	NetRequestResponse<InputControlEntity> response =
 		RequestParser::parseResponse<InputControlEntity>(parser);
-	if (!assertAndShowError(this, parser, tr("Error!")), response.additionalObjects.isEmpty())
+	if (!assertAndShowError(this, parser, tr("Error!")))
 	{
 		mainTextView->setText(response.additionalObjects.first()->value("richdata"));
 		itemSuppliedValues.clear();

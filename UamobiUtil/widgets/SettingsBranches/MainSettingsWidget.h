@@ -21,8 +21,8 @@
 #include <QFormLayout>
 #include <QSpinBox>
 // widgets imports
-#include "widgets/parents/inframedWidget.h"
-#include "widgets/ElementWidgets/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/parents/inframedWidget.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 
 /*
 	This widgets is used to alter GlobalAppSettings object. Generally it allows to change
@@ -73,7 +73,7 @@ private:
 	QComboBox* portDesignation;
 	QSpinBox* portNumber;
 	QComboBox* portType;
-	QLineEdit* btDeviceName;
+	QComboBox* btDeviceName;
 	// buttons in widget footer
 	QHBoxLayout* footerLayout;
 	MegaIconButton* saveButton;

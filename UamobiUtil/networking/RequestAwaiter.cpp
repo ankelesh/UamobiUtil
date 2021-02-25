@@ -1,7 +1,7 @@
 #include "RequestAwaiter.h"
 #include <QTextDecoder>
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 RequestAwaiter::RequestAwaiter(int interval, QObject* parent)

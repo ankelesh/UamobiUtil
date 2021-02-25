@@ -7,10 +7,10 @@
 #include <QtGui/QMessageBox>
 #endif
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
-#include "ScaningCore/BarcodeObserver.h"
-#include "widgets/ElementWidgets/ExtendedDialogs.h"
+#include "submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.h"
 
 #include "widgets/BranchingTools/BranchException.h"
 
@@ -192,7 +192,7 @@ AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)
 #endif
 
 	userInfo->setWordWrap(true);
-    userInfo->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
+    userInfo->setMaximumHeight(calculateAdaptiveHeight(0.08));
 
 	mainTextView->setText(tr("scaning_widget_filler_text"));
 	mainTextView->setFont(FontAdapter::makeFont(0.5));
@@ -202,27 +202,27 @@ AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)
 	mainTextView->setStyleSheet("QLabel{background-color: white; border: 1px solid black}");
 	mainTextView->setAlignment(Qt::AlignTop);
 	backButton->setText(tr("scaning_widget_back"));
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
 	submitButton->setText(tr("scaining_widget_submit"));
-	submitButton->setIcon(QIcon(":/res/submit.png"));
+	submitButton->setIcon(QIcon(":/resources/submit"));
 	submitButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 
 	searchButton->setText(tr("scaning_widget_search"));
-	searchButton->setIcon(QIcon(":/res/search.png"));
+	searchButton->setIcon(QIcon(":/resources/search"));
 	searchButton->setStyleSheet(CHANGE_BUTTONS_STYLESHEET);
 
 	quitButton->setText(tr("quit"));
-	quitButton->setIcon(QIcon(":/res/data.png"));
+	quitButton->setIcon(QIcon(":/resources/nodata"));
 	quitButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
     quitButton->setMaximumWidth(calculateAdaptiveWidth(0.25));
     quitButton->setMinimumWidth(calculateAdaptiveWidth(0.25));
-    quitButton->setMaximumHeight(calculateAdaptiveButtonHeight(0.08));
-    quitButton->setMinimumHeight(calculateAdaptiveButtonHeight(0.08));
+    quitButton->setMaximumHeight(calculateAdaptiveHeight(0.08));
+    quitButton->setMinimumHeight(calculateAdaptiveHeight(0.08));
 
 	barcodeField->setFocus();
-	barcodeField->setMinimumHeight(calculateAdaptiveButtonHeight(0.08));
+	barcodeField->setMinimumHeight(calculateAdaptiveHeight(0.08));
 	barcodeField->setFont(AppFonts->makeFont(1.5));
 #ifdef QT_VERSION5X
 	QObject::connect(backButton, &QPushButton::clicked, this, &AbstractScaningWidget::backNeeded);
@@ -254,7 +254,7 @@ void AbstractScaningWidget::setModeName(QString& name)
 
 void AbstractScaningWidget::was_timeout()
 {
-    ErrorMessageDialog::showErrorInfo(this, tr("Timeout"), tr("Critical timeout, can not continue"));
+    ErrorMessageDialog::showErrorInfo(tr("Timeout"), tr("Critical timeout, can not continue"));
     hideProcessingOverlay();
     if (awaiter->deliverHere(receiptNewDocument))
         throwException(new BranchException(BranchException::ToModeSelection));

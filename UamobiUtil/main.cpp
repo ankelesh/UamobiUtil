@@ -8,11 +8,11 @@
 #include <QtCore/QTimer>
 #endif
 #include "networking/Parsers/DynamicLinearParsers.h"
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #include <QProxyStyle>
 #include "widgets/utils/ElementsStyles.h"
-#include "SoundWrappers/SoundEffectPlayer.h"
-#include "ScaningCore/BarcodeObserver.h"
+#include "submodules/UNAQtCommons/wrappers/Sound/SoundEffectPlayer.h"
+#include "submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.h"
 /*
 		This is uamobiUtil app, which is suited to replace old one. Main idea is the same.
 		This realisation is Qt5-based, with guarding macros to allow legacy-compatibility with qt4.
@@ -48,7 +48,7 @@ int main(int argc, char* argv[])
 	QApplication a(argc, argv);
 	debugtrace::init(detr_supply::all, detr_supply::file, QVector<OutputMode>(), 120, false);
     detrace_APPSTART(VERSION, SUFFIX);
-	AppSettings->setTranslator();
+    GlobalAppSettings::init();
 #ifdef Q_OS_WINCE
     UamobiUtil w;
 	w.move(0, 0);
@@ -59,7 +59,7 @@ int main(int argc, char* argv[])
     w.setWindowFlags((w.windowFlags() | Qt::FramelessWindowHint | Qt::CustomizeWindowHint)
         & ~(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowMinMaxButtonsHint
        | Qt::WindowCloseButtonHint | Qt::Dialog | Qt::WindowContextHelpButtonHint));
-    w.setFixedHeight(calculateAdaptiveButtonHeight(1));
+    w.setFixedHeight(calculateAdaptiveHeight(1));
 	w.setFixedWidth(calculateAdaptiveWidth(1));
     QTimer::singleShot(1, &w, SLOT(showMaximized()));
 #else

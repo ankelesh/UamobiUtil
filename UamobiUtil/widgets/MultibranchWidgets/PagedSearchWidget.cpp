@@ -5,7 +5,7 @@
 #include "networking/Parsers/RequestParser.h"
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
 #include <QScroller>
@@ -64,7 +64,7 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 
 	searchButton->setText(tr("item_search_search"));
 	searchButton->setStyleSheet(CHANGE_BUTTONS_STYLESHEET);
-	searchButton->setIcon(QIcon(":/res/search.png"));
+	searchButton->setIcon(QIcon(":/resources/search"));
 	searchButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
 	searchButton->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum));
 
@@ -73,7 +73,7 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 	indexationInfo->setAlignment(Qt::AlignCenter);
 
 	backButton->setText(tr("item_search_back"));
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
 	nextButton->setIcon(QIcon(":/res/nextpage.png"));
@@ -88,7 +88,7 @@ PagedSearchWidget::PagedSearchWidget(RecEntity proto, QWidget* parent)
 	searchInput->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	searchInput->setMinimumWidth(calculateAdaptiveWidth(0.6));
 	searchInput->setMaximumWidth(calculateAdaptiveWidth(0.8));
-	searchInput->setMaximumHeight(calculateAdaptiveButtonHeight());
+	searchInput->setMaximumHeight(calculateAdaptiveHeight());
 
 	itemList->setFont(GENERAL_FONT);
 

@@ -16,14 +16,14 @@
 #include <QtGui/QLabel>
 #endif
 #include "widgets/parents/IndependentBranchNode.h"
-#include "widgets/parents/inframedWidget.h"
+#include "submodules/UNAQtCommons/widgets/parents/inframedWidget.h"
 #include "networking/Parsers/RequestParser.h"
 #include "networking/RequestAwaiter.h"
 #include "widgets/utils/EventsAndFilters.h"
 #include "widgets/ControlsMiniwidgets/ControlManager.h"
-#include "widgets/ElementWidgets/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 #include "networking/things.h"
-#include "widgets/ControlsMiniwidgets/abs_control.h"
+#include "submodules/UNAQtCommons/widgets/ControlsWidgets/abs_control.h"
 
 class AbstractScaningWidget : public IndependentBranchNode
 {

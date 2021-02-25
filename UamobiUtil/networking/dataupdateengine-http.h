@@ -3,7 +3,7 @@
 #include <QNetworkReply>
 #include "networking/RequestAwaiter.h"
 #include "QueryTemplates.h"
-
+#include "submodules/UNAQtCommons/consts/DatetimeConstants.h"
 
 /*
 	This file contains singletone class httpupdateengine, which provides common wrapper 
@@ -75,5 +75,4 @@ public:
 };
 
 // these formats are used to encode dates to avoid server incompatibility
-extern const QString DATE_ENCODING_FORMAT;
-extern const QString DATETIME_ENCODING_FORMAT;
+extern const QString PARSER_DATETIME_ENCODING_FORMAT;

@@ -1,12 +1,12 @@
 #pragma once
-#include "widgets/parents/abstractNodeInterface.h"
+#include "submodules/UNAQtCommons/widgets/parents/abstractNodeInterface.h"
 #include "widgets/parents/IndependentBranchNode.h"
 #include "NormalScaningWidget.h"
 #include "widgets/MultibranchWidgets/PagedSearchWidget.h"
 #include <QBoxLayout>
 #include <QLineEdit>
 #include <QTextEdit>
-#include "widgets/ElementWidgets/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 #include "widgets/ControlsMiniwidgets/ControlManager.h"
 
 

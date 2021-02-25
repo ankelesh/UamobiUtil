@@ -1,10 +1,11 @@
 #include "LoginWidget.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
-#include "widgets/ElementWidgets/ExtendedDialogs.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.h"
+
 void LoginWidget::login_confirmed()
 {
 	if (awaiter.isAwaiting()) return;
@@ -36,7 +37,7 @@ void LoginWidget::checkResponse()
 	}
 	else
 	{
-		ErrorMessageDialog::showErrorInfo(this, tr("Error!"), result);
+		ErrorMessageDialog::showErrorInfo(tr("Error!"), result);
 #ifdef DEBUG
 		detrace_NRESPERR(result);
 #endif
@@ -101,8 +102,8 @@ LoginWidget::LoginWidget( QWidget* parent)
 	passwordField->setEchoMode(QLineEdit::Password);
 	loginField->setFont(GENERAL_FONT);
 	passwordField->setFont(GENERAL_FONT);
-	okButton->setIcon(QIcon(":/res/submit.png"));
-	backButton->setIcon(QIcon(":/res/back.png"));
+	okButton->setIcon(QIcon(":/resources/submit"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	okButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 #ifdef LINELLA

@@ -2,7 +2,7 @@
 #include "networking/dataupdateengine-http.h"
 
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 

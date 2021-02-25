@@ -22,8 +22,8 @@
 // widgets imports
 #include "widgets/parents/IndependentBranchNode.h"
 #include "widgets/utils/GlobalAppSettings.h"
-#include "widgets/parents/abstractNodeInterface.h"
-#include "widgets/ElementWidgets/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/parents/abstractNodeInterface.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 //networking imports
 #include "networking/RequestAwaiter.h"
 #include "networking/Parsers/RequestParser.h"

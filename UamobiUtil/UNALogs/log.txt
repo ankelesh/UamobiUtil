@@ -1,12 +1,14 @@
-Application start begins: version 0.14 lin-alpha
-][	Created object LoginWidget on address 21107368
-][	Created object MainPageWidget on address 21204000
->>	412122556260905 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
->>	412122556267811 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
-<<	412122556322750 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket<
+Application start begins: version 0.17 lin-alpha
+-->	Method called: load common part of AppSettings in object 17757672
+if errors: 0
+if errors: 0
+][	Created object LoginWidget on address 18304608
+][	Created object MainPageWidget on address 17648376
+>>	413248875451945 sent request: http://una.md:3323/um/sammy0520181.php?delay=0&cmd=ping
+>>	413248875463203 sent request: http://una.md:3323/um/sammy0520181.php?delay=1&cmd=list_users
+<<	413248876127678 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status>  <user>   <login>adm</login>   <name>Adm Adm</name
 	and error text |
->>	412122706584964 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=list_users
-<<	412122706598369 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket<
-	and error text |
+-->	Method called: dump common settings in object 17757672
+if errors: 0
+if errors: 0

@@ -3,7 +3,7 @@
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "widgets/utils/ElementsStyles.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
 void MainPageWidget::show_login_widget(User u)
@@ -70,13 +70,13 @@ MainPageWidget::MainPageWidget(QWidget* parent)
 	userHelpLabel->setAlignment(Qt::AlignCenter);
 	userIdInfo->setAlignment(Qt::AlignCenter);
 
-	exitButton->setIcon(QIcon(":/res/exit.png"));
+	exitButton->setIcon(QIcon(":/resources/exit"));
 	exitButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
 	exitButton->setFont(GENERAL_FONT);
-	settingsButton->setIcon(QIcon(":/res/settings.png"));
+	settingsButton->setIcon(QIcon(":/resources/settings"));
 	settingsButton->setStyleSheet(SETTINGS_BUTTONS_STYLESHEET);
 	settingsButton->setFont(GENERAL_FONT);
-	refreshButton->setIcon(QIcon(":/res/refresh.png"));
+	refreshButton->setIcon(QIcon(":/resources/refresh"));
 	refreshButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 	refreshButton->setFont(GENERAL_FONT);
 	userid->setFont(GENERAL_FONT);

@@ -1,6 +1,6 @@
 #include "ListPickObserver.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 void ListPickObserver::parse_get_response()

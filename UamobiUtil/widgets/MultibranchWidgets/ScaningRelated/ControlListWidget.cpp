@@ -2,7 +2,7 @@
 #include "widgets/utils/ElementsStyles.h"
 #include <QTextStream>
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 void ControlListWidget::focusInEvent(QFocusEvent* fev)
@@ -13,8 +13,8 @@ void ControlListWidget::focusInEvent(QFocusEvent* fev)
         {
             switch((*contr)->myType())
             {
-            case InputControlEntity::Label:
-            case InputControlEntity::None:
+            case abs_control::Label:
+            case abs_control::None:
                 break;
             default:
                 (*contr)->setFocus();
@@ -40,11 +40,11 @@ ControlListWidget::ControlListWidget(QWidget* parent)
 	footerLayout->addWidget(backButton);
 	footerLayout->addWidget(okButton);
 	
-	okButton->setIcon(QIcon(":/res/submit.png"));
+	okButton->setIcon(QIcon(":/resources/submit"));
 	okButton->setText(tr("submit"));
 	okButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	backButton->setText(tr("back"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
@@ -148,7 +148,7 @@ QString ControlListWidget::joinedControls()
 	QVector<abs_control*>::iterator begin = controls.begin();
 	while (begin != controls.end())
 	{
-		if ((*begin)->myType() == InputControlEntity::Label)
+		if ((*begin)->myType() == abs_control::Label)
 		{
 			++begin;
 			continue;
@@ -168,7 +168,7 @@ QString ControlListWidget::mappedControls()
 	QVector<abs_control*>::iterator begin = controls.begin();
 	while (begin != controls.end())
 	{
-		if ((*begin)->myType() == InputControlEntity::Label)
+		if ((*begin)->myType() == abs_control::Label)
 		{
 			++begin;
 			continue;

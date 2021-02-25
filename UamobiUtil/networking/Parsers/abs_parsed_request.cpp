@@ -1,9 +1,9 @@
 #include "abs_parsed_request.h"
 #include <QtCore/QString>
 #include <QtCore/QDataStream>
-#include "widgets/ElementWidgets/ExtendedDialogs.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #ifndef QStringLiteral
 #define QStringLiteral(A) QString::fromLatin1(A, sizeof(A)-1)
@@ -73,11 +73,11 @@ bool assertAndShowError(QWidget* parent, ResponseParser p, QString header, bool 
 #endif
 		if (extraMsg.isEmpty())
 		{
-			ErrorMessageDialog::showErrorInfo(parent, header, p->getErrors(), false, p->getStack());
+			ErrorMessageDialog::showErrorInfo(header, p->getErrors(), false, p->getStack());
 		}
 		else
 		{
-			ErrorMessageDialog::showErrorInfo(parent, header, extraMsg, false, (extraStack.isEmpty())?  p->getStack(): extraStack);
+			ErrorMessageDialog::showErrorInfo(header, extraMsg, false, (extraStack.isEmpty())?  p->getStack(): extraStack);
 		}
 		return true;
 	}

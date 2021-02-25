@@ -16,7 +16,7 @@
 #endif
 // widgets imports
 #include "widgets/parents/IndependentBranchNode.h"
-#include "widgets/ElementWidgets/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
 // networking imports
 #include "networking/RequestAwaiter.h"
 #include "networking/things.h"

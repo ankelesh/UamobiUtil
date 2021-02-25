@@ -1,7 +1,7 @@
 #include "SimpleResponseParsers.h"
 //#define DEBUG
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 SimpliestResponceParser::SimpliestResponceParser(QString& res, QString& err)

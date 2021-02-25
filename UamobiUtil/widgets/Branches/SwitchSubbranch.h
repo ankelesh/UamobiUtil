@@ -2,8 +2,8 @@
 #include "widgets/BranchingTools/AbsBranch.h"
 #include <QBoxLayout>
 #include <QListWidget>
-#include "widgets/ElementWidgets/MegaIconButton.h"
-#include "widgets/parents/abstractNodeInterface.h"
+#include "submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h"
+#include "submodules/UNAQtCommons/widgets/parents/abstractNodeInterface.h"
 
 /*
 This subbranch is required for flow control of application. It shows some buttons to user, so he can choose

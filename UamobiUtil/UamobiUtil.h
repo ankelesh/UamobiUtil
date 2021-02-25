@@ -13,7 +13,7 @@
 // Qt headers
 #include <QtCore/QPointer>
 // widgets headers
-#include "widgets/parents/inframedWidget.h"
+#include "submodules/UNAQtCommons/widgets/parents/inframedWidget.h"
 #include "widgets/MainPageWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #include "widgets/utils/GlobalAppSettings.h"
@@ -38,6 +38,7 @@ class UamobiUtil : public QWidget, abstractDynamicNode
 private:		
 	ProcessingOverlay* overlay;
 	void resizeEvent(QResizeEvent* rev) override;
+	void _getPermissions();
 public:
 
     UamobiUtil( QWidget* parent = Q_NULLPTR);	//	Constructor is similar to most other constructors

@@ -1,7 +1,7 @@
 #include "InventoryParamsWidget.h"
 #include "widgets/utils/ElementsStyles.h"
 #ifdef DEBUG
-#include "debugtrace.h"
+#include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 
 
@@ -69,7 +69,7 @@ InventoryParamsWidget::InventoryParamsWidget(QWidget* parent)
 	dateField->setFont(GENERAL_FONT);
 	selectDocumentButton->setText(tr("inventory_select_doc"));
 	selectDocumentButton->setStyleSheet(NAVIGATE_BUTTONS_STYLESHEET);
-	selectDocumentButton->setIcon(QIcon(":/res/invz.png"));
+	selectDocumentButton->setIcon(QIcon(":/resources/invz"));
 
 	commentInfo->setText(tr("inventory_comment_info"));
 	commentInfo->setFont(GENERAL_FONT);
@@ -77,10 +77,10 @@ InventoryParamsWidget::InventoryParamsWidget(QWidget* parent)
 	statusInfo->setText(tr("inventory_status_info"));
 	statusInfo->setFont(GENERAL_FONT);
 	backButton->setText(tr("back"));
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 	okButton->setText(tr("OK"));
-	okButton->setIcon(QIcon(":/res/submit.png"));
+	okButton->setIcon(QIcon(":/resources/submit"));
 	okButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 	okButton->setDisabled(true);
 	setTabOrder(okButton, commentField);

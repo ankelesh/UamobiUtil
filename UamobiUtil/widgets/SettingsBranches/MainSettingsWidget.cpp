@@ -1,6 +1,6 @@
 #include "MainSettingsWidget.h"
 #include "widgets/utils/ElementsStyles.h"
-#include "ScaningCore/BarcodeObserver.h"
+#include "submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.h"
 #include "widgets/utils/GlobalAppSettings.h"
 #include <QLineEdit>
 
@@ -31,14 +31,14 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	portDesignation(new QComboBox(printTab)),
 	portNumber(new QSpinBox(printTab)),
 	portType(new QComboBox(printTab)),
-	btDeviceName(new QLineEdit(printTab)),
+	btDeviceName(new QComboBox(printTab)),
 	footerLayout(new QHBoxLayout(this)),
 	saveButton(new MegaIconButton(this)), backButton(new MegaIconButton(this))
 {
 	this->setLayout(mainLayout);
 #ifdef Q_OS_WINCE
 	this->setFixedSize(calculateAdaptiveSize(1));
-	this->setFixedHeight(calculateAdaptiveButtonHeight(0.9));
+	this->setFixedHeight(calculateAdaptiveHeight(0.9));
 #endif
 	mainLayout->setSpacing(0);		//	spacing removed to avoid space loss
 	mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -88,7 +88,7 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	scanModeSelector->addItems(temp);
 
 	scanModeSelector->setFont(scf);
-	scanModeSelector->setMinimumHeight(calculateAdaptiveButtonHeight());
+	scanModeSelector->setMinimumHeight(calculateAdaptiveHeight());
 
 	topExplLabel->setAlignment(Qt::AlignCenter);
 	topExplLabel->setFont(scf);
@@ -108,10 +108,10 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	else
 		langField->setCurrentIndex(2);
 
-	saveButton->setIcon(QIcon(":/res/with.png"));
+	saveButton->setIcon(QIcon(":/resources/with"));
 	saveButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
 	addressField->setEditable(true);
@@ -142,15 +142,15 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	fontDec->setMaximum(100);
     notificationsVolume->setMaximum(1.0);
     notificationsVolume->setValue(AppSettings->notificationsVolume);
-	createSTableButton->setIcon(QIcon(":/res/add.png"));
+	createSTableButton->setIcon(QIcon(":/resources/add"));
 
 #ifdef FTR_COM
-	buildState->setPixmap(QIcon(":/res/with.png").pixmap(calculateAdaptiveSize(0.15, 0.2)));
+	buildState->setPixmap(QIcon(":/resources/with").pixmap(calculateAdaptiveSize(0.15, 0.2)));
 #else
 #ifdef Q_OS_ANDROID
-	buildState->setPixmap(QIcon(":/res/with.png").pixmap(calculateAdaptiveSize(0.15, 0.2)));
+	buildState->setPixmap(QIcon(":/resources/with").pixmap(calculateAdaptiveSize(0.15, 0.2)));
 #else
-	buildState->setPixmap(QIcon(":/res/without.png").pixmap(calculateAdaptiveSize(0.15, 0.2)));
+	buildState->setPixmap(QIcon(":/resources/without").pixmap(calculateAdaptiveSize(0.15, 0.2)));
 #endif
 #endif
 	temp.clear();
@@ -162,9 +162,11 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	portType->addItem(AppSettings->printerType);
 	portType->addItems(AppSettings->alternativePrinters);
 	portType->setEditable(true);
-	btDeviceName->setText(AppSettings->bluetoothDeviceNameMask);
-	
-
+	btDeviceName->setEditable(true);
+	btDeviceName->addItem(AppSettings->labelPrinterName);
+	btDeviceName->addItems(AppSettings->defaultDeviceNameMasks);
+	btDeviceName->setCurrentIndex(0);
+	btDeviceName->setInputMethodHints(Qt::InputMethodHint::ImhNoPredictiveText);
 
 
 #ifdef QT_VERSION5X
@@ -214,10 +216,15 @@ void MainSettingsWidget::saveClicked()
 	AppSettings->printerType = portType->currentText();
 	AppSettings->printerPort = portNumber->value();
 	AppSettings->printerPortDesignation = portDesignation->currentText();
-	AppSettings->bluetoothDeviceNameMask = btDeviceName->text();
+	AppSettings->labelPrinterName = btDeviceName->currentText();
+	if (!AppSettings->defaultDeviceNameMasks.contains(AppSettings->labelPrinterName))
+	{
+		AppSettings->defaultDeviceNameMasks.push_back(AppSettings->labelPrinterName);
+		btDeviceName->addItem(AppSettings->labelPrinterName);
+	}
     AppSettings->notificationsVolume = notificationsVolume->value();
 	BarcodeObs->resetCapture(AppSettings->scanPrefix, AppSettings->scanSuffix);
-	AppSettings->dump();
+	AppSettings->save();
 	emit saveConfirmed();
 	emit backRequired();
 }
