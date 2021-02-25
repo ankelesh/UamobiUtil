@@ -122,24 +122,24 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 
 	deleteAllButton->setFont(GENERAL_FONT);
 	deleteAllButton->setText(tr("delete all"));
-	deleteAllButton->setIcon(QIcon(":/res/data.png"));
+	deleteAllButton->setIcon(QIcon(":/resources/nodata"));
 	deleteAllButton->setStyleSheet(DELETE_BUTTONS_STYLESHEET);
 	deleteAllButton->setMaximumHeight(calculateAdaptiveHeight(0.08));
 	deleteAllButton->hide();
 	
 	deleteSelectedButton->setFont(GENERAL_FONT);
 	deleteSelectedButton->setText(tr("delete selected"));
-	deleteSelectedButton->setIcon(QIcon(":/res/deleteData.png"));
+	deleteSelectedButton->setIcon(QIcon(":/resources/deleteData"));
 	deleteSelectedButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
 	deleteSelectedButton->hide();
 	deleteSelectedButton->setMaximumHeight(calculateAdaptiveHeight(0.08));
 
 	backButton->setText(tr("doc_results_back"));
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
 	saveButton->setText(tr("doc_results_text"));
-	saveButton->setIcon(QIcon(":/res/netUpload.png"));
+	saveButton->setIcon(QIcon(":/resources/netUpload"));
 	saveButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 
 

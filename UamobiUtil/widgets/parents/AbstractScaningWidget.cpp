@@ -202,19 +202,19 @@ AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)
 	mainTextView->setStyleSheet("QLabel{background-color: white; border: 1px solid black}");
 	mainTextView->setAlignment(Qt::AlignTop);
 	backButton->setText(tr("scaning_widget_back"));
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
 	submitButton->setText(tr("scaining_widget_submit"));
-	submitButton->setIcon(QIcon(":/res/submit.png"));
+	submitButton->setIcon(QIcon(":/resources/submit"));
 	submitButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 
 	searchButton->setText(tr("scaning_widget_search"));
-	searchButton->setIcon(QIcon(":/res/search.png"));
+	searchButton->setIcon(QIcon(":/resources/search"));
 	searchButton->setStyleSheet(CHANGE_BUTTONS_STYLESHEET);
 
 	quitButton->setText(tr("quit"));
-	quitButton->setIcon(QIcon(":/res/data.png"));
+	quitButton->setIcon(QIcon(":/resources/nodata"));
 	quitButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
     quitButton->setMaximumWidth(calculateAdaptiveWidth(0.25));
     quitButton->setMinimumWidth(calculateAdaptiveWidth(0.25));

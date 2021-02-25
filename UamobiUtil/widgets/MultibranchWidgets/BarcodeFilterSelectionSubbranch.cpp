@@ -96,16 +96,16 @@ BarcodeFilterSelectionSubbranch::BarcodeFilterSelectionSubbranch(QWidget* parent
 	groupButton->setText(tr("groups"));
 	groupButton->setSizePolicy(qsp);
 
-	nofilterButton->setIcon(QIcon(":/res/data.png"));
+	nofilterButton->setIcon(QIcon(":/resources/nodata"));
 	nofilterButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 	nofilterButton->setText(tr("nofilter"));
 	nofilterButton->setSizePolicy(qsp);
 
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 	backButton->setText(tr("back"));
 	backButton->setSizePolicy(qsp);
-	passButton->setIcon(QIcon(":/res/forward.png"));
+	passButton->setIcon(QIcon(":/resources/forward"));
 	passButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 	passButton->setText(tr("OK"));
 	passButton->setSizePolicy(qsp);

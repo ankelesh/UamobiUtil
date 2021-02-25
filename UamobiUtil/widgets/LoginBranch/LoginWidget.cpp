@@ -102,8 +102,8 @@ LoginWidget::LoginWidget( QWidget* parent)
 	passwordField->setEchoMode(QLineEdit::Password);
 	loginField->setFont(GENERAL_FONT);
 	passwordField->setFont(GENERAL_FONT);
-	okButton->setIcon(QIcon(":/res/submit.png"));
-	backButton->setIcon(QIcon(":/res/back.png"));
+	okButton->setIcon(QIcon(":/resources/submit"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	okButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 #ifdef LINELLA

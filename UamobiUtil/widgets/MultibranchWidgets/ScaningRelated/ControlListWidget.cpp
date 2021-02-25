@@ -40,11 +40,11 @@ ControlListWidget::ControlListWidget(QWidget* parent)
 	footerLayout->addWidget(backButton);
 	footerLayout->addWidget(okButton);
 	
-	okButton->setIcon(QIcon(":/res/submit.png"));
+	okButton->setIcon(QIcon(":/resources/submit"));
 	okButton->setText(tr("submit"));
 	okButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	backButton->setText(tr("back"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 

@@ -42,7 +42,7 @@ SwitchSubbranch::SwitchSubbranch(BranchDescription newRoot, QWidget* parent)
 	namePicking->setSelectionMode(QListView::NoSelection);
 	namePicking->setResizeMode(QListView::Adjust);
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	backButton->setText(tr("back"));
 	int min = ((root->namesOverload.count() <= root->count()) ? root->namesOverload.count() : root->count());
 	for (int i = 0; i < min; ++i)

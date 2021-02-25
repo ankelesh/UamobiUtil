@@ -38,7 +38,7 @@ SubbranchingDocResultsW::SubbranchingDocResultsW(IndependentBranchNode* extra_br
 	}
 	subbranchOpenButton->setStyleSheet(CHANGE_BUTTONS_STYLESHEET);
 	footerLayout->insertWidget(1, subbranchOpenButton);
-	subbranchOpenButton->setIcon(QIcon(":/res/stats.png"));
+	subbranchOpenButton->setIcon(QIcon(":/resources/stats"));
 	subbranchOpenButton->setText(tr("Extra"));
 }
 

@@ -33,7 +33,7 @@ ModeSelectionWidget::ModeSelectionWidget( QWidget* parent)
 	modesTip->setAlignment(Qt::AlignCenter);
 	modesTip->setFont(GENERAL_FONT);
 
-	logoutButton->setIcon(QIcon(":/res/back.png"));
+	logoutButton->setIcon(QIcon(":/resources/back"));
 	logoutButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 	logoutButton->setText(tr("mode_selection_logout_tip"));
 

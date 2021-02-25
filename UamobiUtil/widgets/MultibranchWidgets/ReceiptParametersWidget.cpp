@@ -85,8 +85,8 @@ ReceiptParametersWidget::ReceiptParametersWidget(QWidget* parent)
 	mainTextView->setFont(AppFonts->makeCustomFont(0.03));
 	mainTextView->setReadOnly(true);
 
-	continueButton->setIcon(QIcon(":/res/forward.png"));
-	backButton->setIcon(QIcon(":/res/back.png"));
+	continueButton->setIcon(QIcon(":/resources/forward"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	continueButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 	// hidings dependent

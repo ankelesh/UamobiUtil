@@ -55,7 +55,7 @@ PlaceSelectionWidget::PlaceSelectionWidget(RecEntity toExtract, QWidget* parent)
     userTip->setAlignment(Qt::AlignCenter);
     userTip->setWordWrap(true);
 	backButton->setText(tr("place_selection_back"));
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
 	if (entityToExtract == Q_NULLPTR)

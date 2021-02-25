@@ -47,14 +47,14 @@ FilterSelectWidget::FilterSelectWidget(QWidget* parent)
 	title->setAlignment(Qt::AlignCenter);
 	title->setText(tr("filter_widget_title"));
 	allonButton->setText(tr("all_on_button"));
-	allonButton->setIcon(QIcon(":/res/single.png"));
+	allonButton->setIcon(QIcon(":/resources/single"));
 	allonButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 	alloffButton->setStyleSheet(DELETE_BUTTONS_STYLESHEET);
-	alloffButton->setIcon(QIcon(":/res/data.png"));
+	alloffButton->setIcon(QIcon(":/resources/nodata"));
 	alloffButton->setText(tr("all_off_button"));
 	backButton->setText(tr("back"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	okButton->setText(tr("filter!"));
 	okButton->setIcon(QIcon(":/res/filter.png"));
 	okButton->setStyleSheet(CHANGE_BUTTONS_STYLESHEET);

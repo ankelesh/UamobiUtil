@@ -75,8 +75,8 @@ SwitchByScannedCodeWidget::SwitchByScannedCodeWidget(BranchDescription branch, Q
 	backButton->setText(tr("back"));
 	skipButton->setText(tr("skip"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
-	backButton->setIcon(QIcon(":/res/back.png"));
-	skipButton->setIcon(QIcon(":/res/editable.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
+	skipButton->setIcon(QIcon(":/resources/editable"));
 	info->setWordWrap(true);
 	if (branch->entity.isNull())
 	{

@@ -29,7 +29,7 @@ CheckableDelegate::CheckableDelegate(
 	QColor checked, QColor unchecked, QObject* parent)
 	: QStyledItemDelegate(parent), 
 	checkedColor(checked), uncheckedColor(unchecked),
-	checkedImage(":/res/with.png"), uncheckedImage(":/res/without.png")
+	checkedImage(":/resources/with"), uncheckedImage(":/resources/without")
 {
 }
 

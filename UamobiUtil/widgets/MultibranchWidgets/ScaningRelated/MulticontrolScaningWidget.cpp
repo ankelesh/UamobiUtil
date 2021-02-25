@@ -140,7 +140,7 @@ MulticontrolScaningWidget::MulticontrolScaningWidget(QWidget* parent,
 	innerLayout->insertWidget(innerLayout->count() - 1, toControls);
 	toControls->setStyleSheet(CHANGE_BUTTONS_STYLESHEET);
 	toControls->setText(tr("Enter data"));
-	toControls->setIcon(QIcon(":/res/pencil.png"));
+	toControls->setIcon(QIcon(":/resources/pencil"));
 	controlList->hide();
 	toControls->setDisabled(true);
 

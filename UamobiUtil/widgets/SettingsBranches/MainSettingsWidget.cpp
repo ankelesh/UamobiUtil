@@ -108,10 +108,10 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	else
 		langField->setCurrentIndex(2);
 
-	saveButton->setIcon(QIcon(":/res/with.png"));
+	saveButton->setIcon(QIcon(":/resources/with"));
 	saveButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
 	addressField->setEditable(true);
@@ -142,15 +142,15 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
 	fontDec->setMaximum(100);
     notificationsVolume->setMaximum(1.0);
     notificationsVolume->setValue(AppSettings->notificationsVolume);
-	createSTableButton->setIcon(QIcon(":/res/add.png"));
+	createSTableButton->setIcon(QIcon(":/resources/add"));
 
 #ifdef FTR_COM
-	buildState->setPixmap(QIcon(":/res/with.png").pixmap(calculateAdaptiveSize(0.15, 0.2)));
+	buildState->setPixmap(QIcon(":/resources/with").pixmap(calculateAdaptiveSize(0.15, 0.2)));
 #else
 #ifdef Q_OS_ANDROID
-	buildState->setPixmap(QIcon(":/res/with.png").pixmap(calculateAdaptiveSize(0.15, 0.2)));
+	buildState->setPixmap(QIcon(":/resources/with").pixmap(calculateAdaptiveSize(0.15, 0.2)));
 #else
-	buildState->setPixmap(QIcon(":/res/without.png").pixmap(calculateAdaptiveSize(0.15, 0.2)));
+	buildState->setPixmap(QIcon(":/resources/without").pixmap(calculateAdaptiveSize(0.15, 0.2)));
 #endif
 #endif
 	temp.clear();

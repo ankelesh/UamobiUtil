@@ -44,7 +44,7 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 	userHelp(new QLabel(innerWidget)), userinputField(new QLineEdit(innerWidget)),
 	searchButton(new MegaIconButton(innerWidget)), ordfilterButton(new MegaIconButton(innerWidget)),
 	itemSelection(new QListView(this)),
-	backButton(new MegaIconButton(innerWidget)), withOrd(":/res/with.png"), withoutOrd(":/res/without.png"),
+	backButton(new MegaIconButton(innerWidget)), withOrd(":/resources/with"), withoutOrd(":/resources/without"),
 	awaiter(new RequestAwaiter(AppSettings->timeoutInt, this))
 {
 #ifdef DEBUG
@@ -69,7 +69,7 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 	userHelp->setFont(GENERAL_FONT);
 	userHelp->setAlignment(Qt::AlignCenter);
 
-	searchButton->setIcon(QIcon(":/res/search.png"));
+	searchButton->setIcon(QIcon(":/resources/search"));
     searchButton->setText(tr("Search"));
 	searchButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
 	searchButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
@@ -84,7 +84,7 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 	userinputField->setMaximumHeight(calculateAdaptiveHeight());
 
     backButton->setText(tr("back"));
-	backButton->setIcon(QIcon(":/res/back.png"));
+	backButton->setIcon(QIcon(":/resources/back"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 
 	ordfilterButton->setText(tr("W\\O"));

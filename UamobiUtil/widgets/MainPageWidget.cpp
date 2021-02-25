@@ -70,13 +70,13 @@ MainPageWidget::MainPageWidget(QWidget* parent)
 	userHelpLabel->setAlignment(Qt::AlignCenter);
 	userIdInfo->setAlignment(Qt::AlignCenter);
 
-	exitButton->setIcon(QIcon(":/res/exit.png"));
+	exitButton->setIcon(QIcon(":/resources/exit"));
 	exitButton->setStyleSheet(CANCEL_BUTTONS_STYLESHEET);
 	exitButton->setFont(GENERAL_FONT);
-	settingsButton->setIcon(QIcon(":/res/settings.png"));
+	settingsButton->setIcon(QIcon(":/resources/settings"));
 	settingsButton->setStyleSheet(SETTINGS_BUTTONS_STYLESHEET);
 	settingsButton->setFont(GENERAL_FONT);
-	refreshButton->setIcon(QIcon(":/res/refresh.png"));
+	refreshButton->setIcon(QIcon(":/resources/refresh"));
 	refreshButton->setStyleSheet(COMMIT_BUTTONS_STYLESHEET);
 	refreshButton->setFont(GENERAL_FONT);
 	userid->setFont(GENERAL_FONT);

@@ -1,97 +1,15 @@
 <RCC>
     <qresource prefix="/">
-        <file>res/add.png</file>
-        <file>res/alreadySent.png</file>
-        <file>res/back.png</file>
-        <file>res/barchart.png</file>
-        <file>res/barcode.png</file>
-        <file>res/best.png</file>
-        <file>res/camera.png</file>
-        <file>res/cameradoc.png</file>
-        <file>res/cash.png</file>
-        <file>res/check.png</file>
-        <file>res/contract.png</file>
-        <file>res/cursor.png</file>
-        <file>res/data.png</file>
-        <file>res/data2.png</file>
-        <file>res/deleteData.png</file>
-        <file>res/downarrow.png</file>
-        <file>res/download.png</file>
-        <file>res/editable.png</file>
-        <file>res/education_file-512.png</file>
-        <file>res/eng.png</file>
-        <file>res/exit.png</file>
-        <file>res/find.png</file>
-        <file>res/find2.png</file>
-        <file>res/find3 (2).png</file>
-        <file>res/find3.png</file>
-        <file>res/forward.png</file>
-        <file>res/icn-cloud-blocked-512.png</file>
-        <file>res/images.png</file>
-        <file>res/info.png</file>
-        <file>res/inventory.png</file>
-        <file>res/invz.png</file>
-        <file>res/key.png</file>
-        <file>res/logs.png</file>
-        <file>res/minus.png</file>
-        <file>res/netDownload.png</file>
-        <file>res/netUpload.png</file>
-        <file>res/new.png</file>
-        <file>res/pen.png</file>
-        <file>res/pen2.png</file>
-        <file>res/pencil.png</file>
-        <file>res/pencil2.png</file>
-        <file>res/plus.png</file>
-        <file>res/presentation.png</file>
-        <file>res/profile.png</file>
-        <file>res/quality.png</file>
-        <file>res/rec.png</file>
-        <file>res/rec2.png</file>
-        <file>res/refresh.png</file>
-        <file>res/ribon.png</file>
-        <file>res/ro.png</file>
-        <file>res/ru.png</file>
-        <file>res/scanner.png</file>
-        <file>res/sent.png</file>
-        <file>res/seo2-25-512.png</file>
-        <file>res/seo3-18-512.png</file>
-        <file>res/seo3-21-512.png</file>
-        <file>res/seo3-89-512.png</file>
-        <file>res/seo-11-512.png</file>
-        <file>res/seo-80-512.png</file>
-        <file>res/settings.png</file>
-        <file>res/settings2.png</file>
-        <file>res/single.png</file>
-        <file>res/stats.png</file>
-        <file>res/stats2.png</file>
-        <file>res/submit.png</file>
-        <file>res/substract.png</file>
-        <file>res/text_files-512.png</file>
-        <file>res/time.png</file>
-        <file>res/toinput.png</file>
         <file>res/UAMobi.ico</file>
         <file>res/una.jpg</file>
         <file>res/una.png</file>
         <file>res/unamobi.png</file>
-        <file>res/unsent.png</file>
-        <file>res/uparrow.png</file>
-        <file>res/upload.png</file>
-        <file>res/url.png</file>
-        <file>res/url2.png</file>
-        <file>res/viaFile.png</file>
-        <file>res/viaNet.png</file>
-        <file>res/viaTcp.png</file>
-        <file>res/video.png</file>
-        <file>res/wifi.png</file>
         <file>res/search.png</file>
-        <file>res/with.png</file>
-        <file>res/without.png</file>
         <file>res/nextpage.png</file>
         <file>res/prevpage.png</file>
         <file>res/filter.png</file>
         <file>res/groups.png</file>
         <file>res/stillages.png</file>
-        <file>res/suppliers.png</file>
         <file>res/uamobiU.ico</file>
         <file>res/uamobiU.png</file>
         <file>res/UamobiUtillowres.ico</file>
@@ -100,5 +18,89 @@
         <file>translations/uamobiutil_ru.qm</file>
         <file>res/sound/fail.wav</file>
         <file>res/sound/scan.wav</file>
+    </qresource>
+	<qresource prefix="/resources">
+        <file alias="add">submodules/UNAQtCommons/resources/add.png</file>
+        <file alias="alreadySent">submodules/UNAQtCommons/resources/alreadySent.png</file>
+        <file alias="arrowstocheck">submodules/UNAQtCommons/resources/arrowstocheck.png</file>
+        <file alias="back">submodules/UNAQtCommons/resources/back.png</file>
+        <file alias="barchart">submodules/UNAQtCommons/resources/barchart.png</file>
+        <file alias="barcode">submodules/UNAQtCommons/resources/barcode.png</file>
+        <file alias="best">submodules/UNAQtCommons/resources/best.png</file>
+        <file alias="camera">submodules/UNAQtCommons/resources/camera.png</file>
+        <file alias="cameradoc">submodules/UNAQtCommons/resources/cameradoc.png</file>
+        <file alias="cash">submodules/UNAQtCommons/resources/cash.png</file>
+        <file alias="cblock">submodules/UNAQtCommons/resources/cblock.png</file>
+        <file alias="check">submodules/UNAQtCommons/resources/check.png</file>
+        <file alias="cloud">submodules/UNAQtCommons/resources/cloud.png</file>
+        <file alias="contract">submodules/UNAQtCommons/resources/contract.png</file>
+        <file alias="cursor">submodules/UNAQtCommons/resources/cursor.png</file>
+        <file alias="deleteData">submodules/UNAQtCommons/resources/deleteData.png</file>
+        <file alias="downarrow">submodules/UNAQtCommons/resources/downarrow.png</file>
+        <file alias="download">submodules/UNAQtCommons/resources/download.png</file>
+        <file alias="editable">submodules/UNAQtCommons/resources/editable.png</file>
+        <file alias="education">submodules/UNAQtCommons/resources/education_file-512.png</file>
+        <file alias="eng">submodules/UNAQtCommons/resources/eng.png</file>
+        <file alias="exit">submodules/UNAQtCommons/resources/exit.png</file>
+        <file alias="find">submodules/UNAQtCommons/resources/find.png</file>
+        <file alias="find2">submodules/UNAQtCommons/resources/find2.png</file>
+        <file alias="find3">submodules/UNAQtCommons/resources/find3.png</file>
+        <file alias="find4">submodules/UNAQtCommons/resources/find4.png</file>
+        <file alias="forward">submodules/UNAQtCommons/resources/forward.png</file>
+        <file alias="images">submodules/UNAQtCommons/resources/images.png</file>
+        <file alias="info">submodules/UNAQtCommons/resources/info.png</file>
+        <file alias="inventory">submodules/UNAQtCommons/resources/inventory.png</file>
+        <file alias="invz">submodules/UNAQtCommons/resources/invz.png</file>
+        <file alias="key">submodules/UNAQtCommons/resources/key.png</file>
+        <file alias="logs">submodules/UNAQtCommons/resources/logs.png</file>
+        <file alias="minus">submodules/UNAQtCommons/resources/minus.png</file>
+        <file alias="netdownload">submodules/UNAQtCommons/resources/netDownload.png</file>
+        <file alias="netUpload">submodules/UNAQtCommons/resources/netUpload.png</file>
+        <file alias="new">submodules/UNAQtCommons/resources/new.png</file>
+        <file alias="nodata">submodules/UNAQtCommons/resources/nodata.png</file>
+        <file alias="nodata2">submodules/UNAQtCommons/resources/nodata2.png</file>
+        <file alias="pen">submodules/UNAQtCommons/resources/pen.png</file>
+        <file alias="pen2">submodules/UNAQtCommons/resources/pen2.png</file>
+        <file alias="pencil">submodules/UNAQtCommons/resources/pencil.png</file>
+        <file alias="pencil2">submodules/UNAQtCommons/resources/pencil2.png</file>
+        <file alias="phoneglobe">submodules/UNAQtCommons/resources/phoneglobe.png</file>
+        <file alias="plus">submodules/UNAQtCommons/resources/plus.png</file>
+        <file alias="presentation">submodules/UNAQtCommons/resources/presentation.png</file>
+        <file alias="profile">submodules/UNAQtCommons/resources/profile.png</file>
+        <file alias="quality">submodules/UNAQtCommons/resources/quality.png</file>
+        <file alias="rec">submodules/UNAQtCommons/resources/rec.png</file>
+        <file alias="rec2">submodules/UNAQtCommons/resources/rec2.png</file>
+        <file alias="refresh">submodules/UNAQtCommons/resources/refresh.png</file>
+        <file alias="ribon">submodules/UNAQtCommons/resources/ribon.png</file>
+        <file alias="ro">submodules/UNAQtCommons/resources/ro.png</file>
+        <file alias="ru">submodules/UNAQtCommons/resources/ru.png</file>
+        <file alias="scanner">submodules/UNAQtCommons/resources/scanner.png</file>
+        <file alias="sent">submodules/UNAQtCommons/resources/sent.png</file>
+        <file alias="settings">submodules/UNAQtCommons/resources/settings.png</file>
+        <file alias="settings2">submodules/UNAQtCommons/resources/settings2.png</file>
+        <file alias="single">submodules/UNAQtCommons/resources/single.png</file>
+        <file alias="split">submodules/UNAQtCommons/resources/split.png</file>
+        <file alias="stats">submodules/UNAQtCommons/resources/stats.png</file>
+        <file alias="stats2">submodules/UNAQtCommons/resources/stats2.png</file>
+        <file alias="submit">submodules/UNAQtCommons/resources/submit.png</file>
+        <file alias="substract">submodules/UNAQtCommons/resources/substract.png</file>
+        <file alias="suppliers">submodules/UNAQtCommons/resources/suppliers.png</file>
+        <file alias="text_files">submodules/UNAQtCommons/resources/text_files-512.png</file>
+        <file alias="time">submodules/UNAQtCommons/resources/time.png</file>
+        <file alias="toinput">submodules/UNAQtCommons/resources/toinput.png</file>
+        <file alias="twopages">submodules/UNAQtCommons/resources/twopages.png</file>
+        <file alias="twosimplepages">submodules/UNAQtCommons/resources/twosimplepages.png</file>
+        <file alias="unsent">submodules/UNAQtCommons/resources/unsent.png</file>
+        <file alias="uparrow">submodules/UNAQtCommons/resources/uparrow.png</file>
+        <file alias="upload">submodules/UNAQtCommons/resources/upload.png</file>
+        <file alias="url">submodules/UNAQtCommons/resources/url.png</file>
+        <file alias="url2">submodules/UNAQtCommons/resources/url2.png</file>
+        <file alias="viaFile">submodules/UNAQtCommons/resources/viaFile.png</file>
+        <file alias="viaNet">submodules/UNAQtCommons/resources/viaNet.png</file>
+        <file alias="viaTcp">submodules/UNAQtCommons/resources/viaTcp.png</file>
+        <file alias="video">submodules/UNAQtCommons/resources/video.png</file>
+        <file alias="wifi">submodules/UNAQtCommons/resources/wifi.png</file>
+        <file alias="with">submodules/UNAQtCommons/resources/with.png</file>
+        <file alias="without">submodules/UNAQtCommons/resources/without.png</file>
     </qresource>
 </RCC>
