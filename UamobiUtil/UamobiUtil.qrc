@@ -1,9 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>res/UAMobi.ico</file>
-        <file>res/una.jpg</file>
-        <file>res/una.png</file>
-        <file>res/unamobi.png</file>
         <file>res/search.png</file>
         <file>res/nextpage.png</file>
         <file>res/prevpage.png</file>
@@ -19,7 +15,7 @@
         <file>res/sound/fail.wav</file>
         <file>res/sound/scan.wav</file>
     </qresource>
-	<qresource prefix="/resources">
+    <qresource prefix="/resources">
         <file alias="add">submodules/UNAQtCommons/resources/add.png</file>
         <file alias="alreadySent">submodules/UNAQtCommons/resources/alreadySent.png</file>
         <file alias="arrowstocheck">submodules/UNAQtCommons/resources/arrowstocheck.png</file>
@@ -102,5 +98,7 @@
         <file alias="wifi">submodules/UNAQtCommons/resources/wifi.png</file>
         <file alias="with">submodules/UNAQtCommons/resources/with.png</file>
         <file alias="without">submodules/UNAQtCommons/resources/without.png</file>
+        <file alias="beep2">submodules/UNAQtCommons/resources/beep-02.wav</file>
+        <file alias="beep8">submodules/UNAQtCommons/resources/beep-08b.wav</file>
     </qresource>
 </RCC>
