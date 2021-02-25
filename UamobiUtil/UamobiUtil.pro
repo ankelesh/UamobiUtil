@@ -4,16 +4,16 @@
 
 TEMPLATE = app
 TARGET = UamobiUtil
-QT += core xml network gui widgets
+QT += core xml network gui widgets multimedia
 CONFIG += release
 DEFINES += DEBUG LINELLA
 greaterThan(QT_MAJOR_VERSION, 4): DEFINES += QT_VERSION5X
 lessThan(QT_MAJOR_VERSION, 5) : DEFINES += "Q_NULLPTR=0"
 lessThan(QT_MAJOR_VERSION, 5) : QT += phonon
-android: QT += bluetooth multimedia
+android: QT += bluetooth multimedia androidextras
 win32: DEFINES += "Q_FALLTHROUGH=__noop"
 win32: RC_FILE += uamobiutil.rc
-win32: LIBS += "C:\Program Files\Microsoft SDKs\Windows\v7.0\Lib\WinMM.lib"
+#win32: LIBS += "C:\Program Files\Microsoft SDKs\Windows\v7.0\Lib\WinMM.lib"
 
 wince* {
         INCLUDEPATH += C:/Qt/4.8.3-CE6-static/include
@@ -42,17 +42,12 @@ HEADERS += ./UamobiUtil.h \
     ./widgets/LoginBranch/LoginWidget.h \
     ./widgets/SettingsBranches/MainSettingsWidget.h \
     ./widgets/MainPageWidget.h \
-    ./debugtrace.h \
     ./widgets/utils/GlobalAppSettings.h \
     ./widgets/utils/ElementsStyles.h \
     ./widgets/utils/EventsAndFilters.h \
-    ./legacy/3drparty/tty/tty.h \
     ./legacy/legacy.h \
     ./legacy/qtCompatibility/scrollgrabber.h \
-    ./widgets/ElementWidgets/BigButtonsSpinbox.h \
-    ./widgets/ElementWidgets/MegaIconButton.h \
     ./widgets/ElementWidgets/ProcessingOverlay.h \
-    ./ScaningCore/BarcodeObserver.h \
     ./widgets/MultibranchWidgets/InventoryParamsWidget.h \
     ./widgets/MultibranchWidgets/PlaceSelectionWidget.h \
     ./widgets/MultibranchWidgets/ReceiptParametersWidget.h \
@@ -89,42 +84,49 @@ HEADERS += ./UamobiUtil.h \
     ./datacore/ModeEntity.h \
     ./datacore/NamedIdEntity.h \
     ./datacore/AbsEntityPrototype.h \
-    ./widgets/parents/abstractNodeInterface.h \
     ./widgets/parents/AbstractScaningWidget.h \
     ./widgets/parents/IndependentBranchNode.h \
-    ./widgets/parents/inframedWidget.h \
     ./widgets/ControlsMiniwidgets/ControlManager.h \
-    ./widgets/ControlsMiniwidgets/QuantityControl.h \
-    ./widgets/ControlsMiniwidgets/abs_control.h \
-    ./widgets/ControlsMiniwidgets/BarcodeControl.h \
-    ./widgets/ControlsMiniwidgets/ControlTranslator.h \
-    ./widgets/ControlsMiniwidgets/DateTimeControl.h \
-    ./widgets/ControlsMiniwidgets/LabelControl.h \
-    ./widgets/ControlsMiniwidgets/StringControl.h \
-    PrinterWrappers/AbsPrinterWrapper.h \
-    PrinterWrappers/AndroidBluetoothPrinterWrapper.h \
-    PrinterWrappers/FTRCOMPrinterWrapper.h \
-    PrinterWrappers/NullPrinterWrapper.h \
-    PrinterWrappers/PrinterWrapperFactory.h \
+    submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.h \
+    submodules/UNAQtCommons/consts/DatetimeConstants.h \
+    submodules/UNAQtCommons/debug/debugtrace.h \
+    submodules/UNAQtCommons/settings/CommonAppSettings.h \
+    submodules/UNAQtCommons/widgets/ControlsWidgets/BarcodeControl.h \
+    submodules/UNAQtCommons/widgets/ControlsWidgets/ControlTranslator.h \
+    submodules/UNAQtCommons/widgets/ControlsWidgets/DateTimeControl.h \
+    submodules/UNAQtCommons/widgets/ControlsWidgets/LabelControl.h \
+    submodules/UNAQtCommons/widgets/ControlsWidgets/QuantityControl.h \
+    submodules/UNAQtCommons/widgets/ControlsWidgets/StringControl.h \
+    submodules/UNAQtCommons/widgets/ControlsWidgets/abs_control.h \
+    submodules/UNAQtCommons/widgets/Scaling/ScalingUtilities.h \
+    submodules/UNAQtCommons/widgets/UtilityElements/AndroidFileDialog.h \
+    submodules/UNAQtCommons/widgets/UtilityElements/BigButtonsSpinbox.h \
+    submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.h \
+    submodules/UNAQtCommons/widgets/UtilityElements/ExtendedLabels.h \
+    submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.h \
+    submodules/UNAQtCommons/widgets/parents/abstractNodeInterface.h \
+    submodules/UNAQtCommons/widgets/parents/inframedWidget.h \
+    submodules/UNAQtCommons/wrappers/DirectConnectionPrinters/AbsPrinterWrapper.h \
+    submodules/UNAQtCommons/wrappers/DirectConnectionPrinters/AndroidBluetoothPrinterWrapper.h \
+    submodules/UNAQtCommons/wrappers/DirectConnectionPrinters/FTRCOMPrinterWrapper.h \
+    submodules/UNAQtCommons/wrappers/DirectConnectionPrinters/NullPrinterWrapper.h \
+    submodules/UNAQtCommons/wrappers/DirectConnectionPrinters/PrinterWrapperFactory.h \
+    submodules/UNAQtCommons/wrappers/DirectConnectionPrinters/tty/tty.h \
+    submodules/UNAQtCommons/wrappers/Platform/Android/QBroadcastCatcher.h \
+    submodules/UNAQtCommons/wrappers/Platform/Android/androidservicewrapper.h \
+    submodules/UNAQtCommons/wrappers/Sound/AbsSoundWrapper.h \
+    submodules/UNAQtCommons/wrappers/Sound/ModernQtSoundWrapper.h \
+    submodules/UNAQtCommons/wrappers/Sound/PhononSoundWrapper.h \
+    submodules/UNAQtCommons/wrappers/Sound/SoundEffectPlayer.h \
+    submodules/UNAQtCommons/wrappers/Sound/WinCEUnpackWrapper.h \
     widgets/BranchingTools/BranchException.h \
-    widgets/ElementWidgets/ExtendedDialogs.h \
-    widgets/ElementWidgets/ExtendedLabels.h \
     widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.h \
     widgets/ExtendedDelegates/CountingDelegate.h \
     datacore/PseudotableEntityModel.h \
     widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.h \
-    widgets/utils/client_defaults.h \
-    SoundWrappers/AbsSoundWrapper.h \
-    SoundWrappers/PhononSoundWrapper.h \
-    SoundWrappers/ModernQtSoundWrapper.h \
-    SoundWrappers/SoundEffectPlayer.h \
-    SoundWrappers/WinCEUnpackWrapper.h
+    widgets/utils/client_defaults.h
 SOURCES += ./main.cpp \
     ./UamobiUtil.cpp \
-    ./widgets/ControlsMiniwidgets/BarcodeControl.cpp \
-    ./widgets/ControlsMiniwidgets/DateTimeControl.cpp \
-    ./widgets/ControlsMiniwidgets/LabelControl.cpp \
-    ./widgets/ControlsMiniwidgets/StringControl.cpp \
     ./widgets/MultibranchWidgets/Observers/ListPickObserver.cpp \
     ./widgets/MultibranchWidgets/Observers/SkippedNode.cpp \
     ./widgets/MultibranchWidgets/ScaningRelated/ObservedScaningWidget.cpp \
@@ -140,22 +142,14 @@ SOURCES += ./main.cpp \
     ./widgets/LoginBranch/LoginWidget.cpp \
     ./widgets/MainPageWidget.cpp \
     ./widgets/SettingsBranches/MainSettingsWidget.cpp \
-    ./debugtrace.cpp \
     ./widgets/utils/ElementsStyles.cpp \
     ./widgets/utils/EventsAndFilters.cpp \
     ./widgets/utils/GlobalAppSettings.cpp \
     ./widgets/ModeSelectionBranch/ModeSelectionWidget.cpp \
-    ./legacy/3drparty/tty/tty.cpp \
     ./legacy/legacy.cpp \
     ./legacy/qtCompatibility/scrollgrabber.cpp \
-    ./widgets/ElementWidgets/BigButtonsSpinbox.cpp \
-    ./widgets/ElementWidgets/MegaIconButton.cpp \
     ./widgets/ElementWidgets/ProcessingOverlay.cpp \
-    ./widgets/ControlsMiniwidgets/abs_control.cpp \
     ./widgets/ControlsMiniwidgets/ControlManager.cpp \
-    ./widgets/ControlsMiniwidgets/ControlTranslator.cpp \
-    ./widgets/ControlsMiniwidgets/QuantityControl.cpp \
-    ./ScaningCore/BarcodeObserver.cpp \
     ./widgets/MultibranchWidgets/BarcodeFilterSelectionSubbranch.cpp \
     ./widgets/MultibranchWidgets/DocResultsWidget.cpp \
     ./widgets/MultibranchWidgets/FilterSelectWidget.cpp \
@@ -189,30 +183,48 @@ SOURCES += ./main.cpp \
     ./datacore/ModeEntity.cpp \
     ./datacore/NamedIdEntity.cpp \
     ./datacore/UniformXmlObject.cpp \
-    ./widgets/parents/abstractNodeInterface.cpp \
     ./widgets/parents/AbstractScaningWidget.cpp \
     ./widgets/parents/IndependentBranchNode.cpp \
-    ./widgets/parents/inframedWidget.cpp \
-    PrinterWrappers/AbsPrinterWrapper.cpp \
-    PrinterWrappers/AndroidBluetoothPrinterWrapper.cpp \
-    PrinterWrappers/FTRCOMPrinterWrapper.cpp \
-    PrinterWrappers/NullPrinterWrapper.cpp \
-    PrinterWrappers/PrinterWrapperFactory.cpp \
+    submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.cpp \
+    submodules/UNAQtCommons/consts/DatetimeConstants.cpp \
+    submodules/UNAQtCommons/debug/debugtrace.cpp \
+    submodules/UNAQtCommons/settings/CommonAppSettings.cpp \
+    submodules/UNAQtCommons/widgets/ControlsWidgets/BarcodeControl.cpp \
+    submodules/UNAQtCommons/widgets/ControlsWidgets/ControlTranslator.cpp \
+    submodules/UNAQtCommons/widgets/ControlsWidgets/DateTimeControl.cpp \
+    submodules/UNAQtCommons/widgets/ControlsWidgets/LabelControl.cpp \
+    submodules/UNAQtCommons/widgets/ControlsWidgets/QuantityControl.cpp \
+    submodules/UNAQtCommons/widgets/ControlsWidgets/StringControl.cpp \
+    submodules/UNAQtCommons/widgets/ControlsWidgets/abs_control.cpp \
+    submodules/UNAQtCommons/widgets/Scaling/ScalingUtilities.cpp \
+    submodules/UNAQtCommons/widgets/UtilityElements/AndroidFileDialog.cpp \
+    submodules/UNAQtCommons/widgets/UtilityElements/BigButtonsSpinbox.cpp \
+    submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.cpp \
+    submodules/UNAQtCommons/widgets/UtilityElements/ExtendedLabels.cpp \
+    submodules/UNAQtCommons/widgets/UtilityElements/MegaIconButton.cpp \
+    submodules/UNAQtCommons/widgets/parents/abstractNodeInterface.cpp \
+    submodules/UNAQtCommons/widgets/parents/inframedWidget.cpp \
+    submodules/UNAQtCommons/wrappers/DirectConnectionPrinters/AbsPrinterWrapper.cpp \
+    submodules/UNAQtCommons/wrappers/DirectConnectionPrinters/AndroidBluetoothPrinterWrapper.cpp \
+    submodules/UNAQtCommons/wrappers/DirectConnectionPrinters/FTRCOMPrinterWrapper.cpp \
+    submodules/UNAQtCommons/wrappers/DirectConnectionPrinters/NullPrinterWrapper.cpp \
+    submodules/UNAQtCommons/wrappers/DirectConnectionPrinters/PrinterWrapperFactory.cpp \
+    submodules/UNAQtCommons/wrappers/DirectConnectionPrinters/tty/tty.cpp \
+    submodules/UNAQtCommons/wrappers/Platform/Android/QBroadcastCatcher.cpp \
+    submodules/UNAQtCommons/wrappers/Platform/Android/androidservicewrapper.cpp \
+    submodules/UNAQtCommons/wrappers/Sound/AbsSoundWrapper.cpp \
+    submodules/UNAQtCommons/wrappers/Sound/ModernQtSoundWrapper.cpp \
+    submodules/UNAQtCommons/wrappers/Sound/PhononSoundWrapper.cpp \
+    submodules/UNAQtCommons/wrappers/Sound/SoundEffectPlayer.cpp \
+    submodules/UNAQtCommons/wrappers/Sound/WinCEUnpackWrapper.cpp \
     widgets/BranchingTools/BranchException.cpp \
-    widgets/ElementWidgets/ExtendedDialogs.cpp \
-    widgets/ElementWidgets/ExtendedLabels.cpp \
     widgets/MultibranchWidgets/Selectors/EditableDocResultsWidget.cpp \
     widgets/ExtendedDelegates/CountingDelegate.cpp \
     datacore/PseudotableEntityModel.cpp \
-    widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp \
-    SoundWrappers/AbsSoundWrapper.cpp \
-    SoundWrappers/ModernQtSoundWrapper.cpp \
-    SoundWrappers/PhononSoundWrapper.cpp \
-    SoundWrappers/SoundEffectPlayer.cpp \
-    SoundWrappers/WinCEUnpackWrapper.cpp
+    widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp
 RESOURCES += UamobiUtil.qrc
 TRANSLATIONS += translations/uamobiutil_ru.ts translations/uamobiutil_ro.ts translations/uamobiutil_en.ts
-
+INCLUDEPATH += submodules/UNAQtCommons/
 DISTFILES += \
     android/AndroidManifest.xml \
     android/build.gradle \
