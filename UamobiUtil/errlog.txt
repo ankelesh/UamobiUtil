@@ -1,4 +1,0 @@
- > ! < 405173738615111 error receiving response: Data not existsORA-20000: Invalid number: 26.02.2020
-ORA-06512: на  "UN4PUBLIC.MSG", line 4
-ORA-06512: на  "SAMMY052018.PG_MW_CORE", line 364
-ORA-06502: PL/SQL: : ошибка преобразования символа в число ошибка числа или значения
