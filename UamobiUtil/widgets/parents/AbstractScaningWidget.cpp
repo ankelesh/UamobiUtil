@@ -167,15 +167,13 @@ AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)
 	topPanelLayout->addWidget(userInfo);
 #ifdef Q_OS_ANDROID
     innerLayout->addLayout(barcodeLayout);
-    innerLayout->addWidget(mainTextView);
-    innerLayout->addLayout(controlPanel);
     barcodeLayout->addWidget(barcodeField);
 	barcodeLayout->addWidget(switchKeyboardTypeButton);
 #else
     innerLayout->addWidget(barcodeField);
-    innerLayout->addWidget(mainTextView);
-    innerLayout->addLayout(controlPanel);
 #endif
+	innerLayout->addWidget(mainTextView);
+	innerLayout->addLayout(controlPanel);
 
 	topPanelLayout->addWidget(quitButton);
 	innerLayout->addLayout(buttonPanel);
@@ -236,8 +234,8 @@ AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)
 	barcodeField->setFont(AppFonts->makeFont(1.5));
 #ifdef Q_OS_ANDROID
 	QVector<Qt::InputMethodHints> hints;
+	hints.push_back(Qt::ImhDigitsOnly);
 	hints.push_back(Qt::ImhNone);
-    hints.push_back(Qt::ImhDigitsOnly);
     switchDecorator->initiate(hints, true);
    switchKeyboardTypeButton->setIcon(QIcon(":/resources/key"));
    switchKeyboardTypeButton->setMaximumHeight(barcodeField->maximumHeight());
