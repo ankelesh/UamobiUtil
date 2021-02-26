@@ -11,8 +11,11 @@
 #endif
 #include "submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.h"
 #include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.h"
-
 #include "widgets/BranchingTools/BranchException.h"
+#ifdef Q_OS_ANDROID
+#include "submodules/UNAQtCommons/widgets/UtilityElements/SwitchableIMDecorator.h"
+#endif
+
 
 void AbstractScaningWidget::_backReaction()
 {
@@ -141,6 +144,11 @@ AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)
 	innerLayout(new QVBoxLayout(innerWidget)), topPanelLayout(new QHBoxLayout(innerWidget)),
 	userInfo(new QLabel(innerWidget)),
 	barcodeField(new QLineEdit(innerWidget)),
+#ifdef Q_OS_ANDROID
+	barcodeLayout(new QHBoxLayout(this)),
+	switchKeyboardTypeButton(new MegaIconButton(this)),
+	switchDecorator(new SwitchableIMDecorator(barcodeField)),
+#endif
 	mainTextView(new QTextEdit(innerWidget)),
     controlPanel(new QVBoxLayout(innerWidget)),
 	buttonPanel(new QHBoxLayout(innerWidget)),
@@ -157,14 +165,16 @@ AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)
 	innerLayout->addLayout(topPanelLayout);
 	
 	topPanelLayout->addWidget(userInfo);
-	innerLayout->addWidget(barcodeField);
-
 #ifdef Q_OS_ANDROID
     innerLayout->addLayout(controlPanel);
 	innerLayout->addWidget(mainTextView);
+	innerLayout->addLayout(barcodeLayout);
+	barcodeLayout->addWidget(barcodeField);
+	barcodeLayout->addWidget(switchKeyboardTypeButton);
 #else
     innerLayout->addWidget(mainTextView);
     innerLayout->addLayout(controlPanel);
+	innerLayout->addWidget(barcodeField);
 #endif
 
 	topPanelLayout->addWidget(quitButton);
@@ -224,6 +234,14 @@ AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)
 	barcodeField->setFocus();
 	barcodeField->setMinimumHeight(calculateAdaptiveHeight(0.08));
 	barcodeField->setFont(AppFonts->makeFont(1.5));
+#ifdef Q_OS_ANDROID
+	QVector<Qt::InputMethodHints> hints;
+	hints.push_back(Qt::ImhNone);
+	hints.push_back(Qt::Imh);
+
+#endif
+
+
 #ifdef QT_VERSION5X
 	QObject::connect(backButton, &QPushButton::clicked, this, &AbstractScaningWidget::backNeeded);
 	QObject::connect(submitButton, &QPushButton::clicked, this, &AbstractScaningWidget::submitPressed);

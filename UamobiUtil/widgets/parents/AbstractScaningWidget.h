@@ -25,6 +25,10 @@
 #include "networking/things.h"
 #include "submodules/UNAQtCommons/widgets/ControlsWidgets/abs_control.h"
 
+
+#ifdef Q_OS_ANDROID
+class SwitchableIMDecorator;
+#endif
 class AbstractScaningWidget : public IndependentBranchNode
 {
 	Q_OBJECT
@@ -38,6 +42,11 @@ protected:
 	QHBoxLayout* topPanelLayout;
 	QLabel* userInfo;
 	QLineEdit* barcodeField;
+#ifdef Q_OS_ANDROID
+	QHBoxLayout* barcodeLayout;
+	MegaIconButton* switchKeyboardTypeButton;
+	SwitchableIMDecorator* switchDecorator;
+#endif
 	QTextEdit* mainTextView;
     QVBoxLayout* controlPanel;
 	QHBoxLayout* buttonPanel;

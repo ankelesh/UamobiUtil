@@ -515,6 +515,9 @@
     <ClCompile Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\tty\tty.cpp">
       <Filter>submodules\UNAQtCommons\Sources\wrappers\DirectConnectionPrinters</Filter>
     </ClCompile>
+    <ClCompile Include="submodules\UNAQtCommons\widgets\UtilityElements\SwitchableIMDecorator.cpp">
+      <Filter>submodules\UNAQtCommons\Sources\widgets\UtilityElements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -702,6 +705,9 @@
     </QtMoc>
     <QtMoc Include="submodules\UNAQtCommons\widgets\ControlsWidgets\StringControl.h">
       <Filter>submodules\UNAQtCommons\Headers\widgets\controls</Filter>
+    </QtMoc>
+    <QtMoc Include="submodules\UNAQtCommons\widgets\UtilityElements\SwitchableIMDecorator.h">
+      <Filter>submodules\UNAQtCommons\Headers\widgets\UtilityElements</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
