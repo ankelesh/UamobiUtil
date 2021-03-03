@@ -98,3 +98,13 @@ double InputControlEntity::extractEnumerable() const
 {
 	return type;
 }
+
+void InputControlEntity::overwriteTitle(QString new_title)
+{
+	name = new_title;
+}
+
+void InputControlEntity::overwriteId(QString new_id)
+{
+	type = guessType(new_id);
+}

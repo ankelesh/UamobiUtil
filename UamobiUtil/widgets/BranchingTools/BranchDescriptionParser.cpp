@@ -31,6 +31,7 @@ QHash<QString, independent_nodes::nodelist> _initBinding()
 	h["Skip"] = SkipNode;
 	h["Default"] = DefaultNode;
 	h["SwitchByScanCode"] = SwitchByScanBc;
+	h["IdDependMultiselect"] = IdDependentMultiselect;
 	return h;
 }
 

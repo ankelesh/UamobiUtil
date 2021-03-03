@@ -7,6 +7,7 @@
 #include "widgets/utils/ElementsStyles.h"
 #include "submodules/UNAQtCommons/barcodeHandling/BarcodeObserver.h"
 #include "widgets/BranchingTools/BranchException.h"
+#include "datacore/EntityListEntity.h"
 void NormalScaningWidget::_handleRecord(RecEntity e)
 {
 	if (e.isNull())
@@ -23,6 +24,18 @@ void NormalScaningWidget::_handleRecord(RecEntity e)
 	else if (e->myType() == UniformXmlObject::Document)
 	{
 		setDocument(upcastRecord<FullDocumentEntity>(e));
+	}
+	else if (e->myType() == UniformXmlObject::EntityList)
+	{
+		ERecordList list = upcastRecord<EntityListEntity>(e);
+		if (!list.isNull())
+		{
+			if (!list->list.isEmpty())
+			{
+				setDocument(list->list.takeFirst());
+				extraParentDocuments = list;
+			}
+		}
 	}
 	else
 	{
@@ -125,6 +138,26 @@ void NormalScaningWidget::barcodeCaught(QString bc)
 	barcodeConfirmed();
 }
 
+void NormalScaningWidget::docs_registration_complete()
+{
+	if (!awaiter->deliverHere(addIdToParentDocs)) return;
+	hideProcessingOverlay();
+	extraParentDocuments.clear();
+
+}
+
+void NormalScaningWidget::registerExtraParents(QString docid)
+{
+	if (awaiter->isAwaiting() || extraParentDocuments.isNull())
+		return;
+	if (!extraParentDocuments->list.isEmpty()) 
+	{
+		showProcessingOverlay();
+		AppNetwork->execQueryByTemplate(localCache[addIdToParentDocs], docid, extraParentDocuments->joinIds(), awaiter);
+		awaiter->deliverResultTo(addIdToParentDocs);
+	}
+}
+
 
 void NormalScaningWidget::searchRequired()
 {
@@ -223,6 +256,7 @@ void NormalScaningWidget::document_confirmed_response()
             document = response.objects.first();
 			userInfo->setText(modename + " (" + document->docId + ")\n" + document->supplier);
 			mainTextView->setHtml(document->comment);
+			registerExtraParents(document->docId);
 		}
     }
     else
@@ -256,6 +290,15 @@ void NormalScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloada
 	switch (overloads.count())
 	{
 	default:
+	case 4:
+	{
+		QStringList t;
+		t << "current_doc" << "parent_docs";
+		localCache.insert(addIdToParentDocs, overloads.at(3).assertedAndMappedCopy(
+			addIdToParentDocs, t, t
+		));
+	}
+	Q_FALLTHROUGH();
 	case 3:
     {
         QStringList t;
@@ -289,9 +332,9 @@ void NormalScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloada
 	case 0:
 		break;
 	}
-	switch (3 - overloads.count())
+	switch (4 - overloads.count())
 	{
-	case 3:	
+	case 4:
     {
         QStringList t;
         t << "barcode" << "printer";
@@ -300,7 +343,7 @@ void NormalScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloada
             t,t));
     }
         Q_FALLTHROUGH();
-	case 2:
+	case 3:
     {
         QStringList t;
         t << "barcode"<<"control1" << "control2" << "show_code" << "params" ;
@@ -310,7 +353,7 @@ void NormalScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloada
             t, t2));
     }
         Q_FALLTHROUGH();
-	case 1:
+	case 2:
     {
         QStringList t;
         t<< "date" << "parent" << "comment" ;
@@ -319,6 +362,15 @@ void NormalScaningWidget::_makeOverloads(const QVector<QueryTemplates::Overloada
             t,
             t));
     }
+	case 1:
+	{
+		QStringList t;
+		t << "current_doc" << "parent_docs";
+		localCache.insert(addIdToParentDocs, OverloadableQuery(
+			addIdToParentDocs,
+			t, t
+		));
+	}
         Q_FALLTHROUGH();
 	default:
 		return;

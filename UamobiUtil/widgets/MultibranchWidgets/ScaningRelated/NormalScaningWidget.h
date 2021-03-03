@@ -3,6 +3,7 @@
 #include "submodules/UNAQtCommons/widgets/parents/abstractNodeInterface.h"
 #include "widgets/MultibranchWidgets/DocResultsWidget.h"
 #include "widgets/MultibranchWidgets/PagedSearchWidget.h"
+#include "datacore/EntityListEntity.h"
 
 /*
 	This widget provides "normal" scaning window which corresponds to most modes:
@@ -25,8 +26,7 @@ protected:
 	IndependentBranchNode* searchScreen;
 
 	QueryCache localCache;
-
-
+	ERecordList extraParentDocuments;
 	// upcasts record and calls corresponding setter
 	void _handleRecord(RecEntity) override;
 	virtual void _sendDataRequest() override;
@@ -41,6 +41,7 @@ protected:
 	virtual void setDocument(RecEntity) override;
 	// creates controls and connects them
     virtual void useControls(const IControlList &) override;
+	virtual void registerExtraParents(QString docId);
 
 protected slots:
 	// sends query to add item using data from controls
@@ -65,4 +66,5 @@ protected slots:
 	virtual void itemObtained(RecEntity);
 	// inserts code into barcode field, then calls barcodeConfirmed
 	virtual void barcodeCaught(QString);
+	virtual void docs_registration_complete();
 };

@@ -15,7 +15,6 @@ public:
 	InputControlEntity(QString nm, int Ctype, QString dv);
 	static abs_control::ControlTypes intToType(const int cval);
 	static abs_control::ControlTypes guessType(const QString&);
-	static QString foldType(const int);
 protected:
 	// Inherited via AbsRecEntity
 	virtual bool fromUniXml(const UniformXmlObject& o) override;
@@ -26,6 +25,10 @@ protected:
 	virtual bool sortingCompare(const AbsRecEntity* another) const override;
 	virtual bool sortingCompare(const QSharedPointer<AbsRecEntity> another) const override;
 	virtual double extractEnumerable() const override;
+
+	// Inherited via AbsRecEntity
+	virtual void overwriteTitle(QString new_title) override;
+	virtual void overwriteId(QString new_id) override;
 };
 typedef QSharedPointer<InputControlEntity> InputControl;
 typedef QVector<InputControl> IControlList;

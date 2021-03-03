@@ -32,6 +32,26 @@ bool NamedIdEntity::sortingCompare(const QSharedPointer<AbsRecEntity> another) c
 		return getId() > another->getId();
 }
 
+bool NamedIdEntity::fromUniXml(const UniformXmlObject& o)
+{
+	return false;
+}
+
+AbsRecEntity* NamedIdEntity::fabricate() const
+{
+	return nullptr;
+}
+
+void NamedIdEntity::overwriteTitle(QString new_title)
+{
+	name = new_title;
+}
+
+void NamedIdEntity::overwriteId(QString new_id)
+{
+	id = new_id;
+}
+
 PlaceEntity::PlaceEntity(QString Id, QString nm)
     : NamedIdEntity(UniformXmlObject::Place, Id, nm)
 {
@@ -224,6 +244,15 @@ bool UserEntity::useAssociatedNetworkGetMethod(const QStringList& arguments, Req
 		AppNetwork->execQueryOutsideSession(QueryTemplates::userList, "&place=" + arguments.first(), awaiter);
 	}
 	return true;
+}
+
+void UserEntity::overwriteTitle(QString new_title)
+{
+	name = new_title;
+}
+
+void UserEntity::overwriteId(QString new_id)
+{
 }
 
 DocTypeEntity::DocTypeEntity(QString Id, QString Name, bool selected)

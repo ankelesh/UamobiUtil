@@ -96,3 +96,12 @@ bool ModeEntity::useAssociatedNetworkGetMethod(const QStringList& /*arguments*/,
 	AppNetwork->execQueryByTemplate(QueryTemplates::modeList, AppSettings->language, awaiter);
 	return true;
 }
+
+void ModeEntity::overwriteTitle(QString new_title)
+{
+	name = new_title;
+}
+
+void ModeEntity::overwriteId(QString new_id)
+{
+}

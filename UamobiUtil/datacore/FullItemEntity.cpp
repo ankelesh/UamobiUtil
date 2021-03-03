@@ -129,6 +129,16 @@ bool FullItemEntity::useAssociatedNetworkGetMethod(const QStringList& arguments,
 	return true;
 }
 
+void FullItemEntity::overwriteTitle(QString new_title)
+{
+	title = new_title;
+}
+
+void FullItemEntity::overwriteId(QString new_id)
+{
+	code = new_id;
+}
+
 ShortItemEntity::ShortItemEntity(QString Code, QString Name)
 	: AbsRecEntity(UniformXmlObject::SimpleItem), code(Code), name(Name)
 {
@@ -187,4 +197,14 @@ bool ShortItemEntity::useAssociatedNetworkGetMethod(const QStringList& arguments
 		return false;
 	AppNetwork->execQueryByTemplate(QueryTemplates::documentSearchItems, arguments.at(0), arguments.at(1), awaiter);
 	return true;
+}
+
+void ShortItemEntity::overwriteTitle(QString new_title)
+{
+	name = new_title;
+}
+
+void ShortItemEntity::overwriteId(QString new_id)
+{
+	code = new_id;
 }

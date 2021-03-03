@@ -166,6 +166,15 @@ QModelIndex DataEntityListModel::moveByArrow(int arrow, const QModelIndex& curre
 		return current;
 }
 
+RecEntity DataEntityListModel::getItemDirectly(QModelIndex& index) const
+{
+	if (!index.isValid())
+		return RecEntity();
+	if (index.row() >= rowCount())
+		return RecEntity();
+	return innerList.at(index.row());
+}
+
 #ifdef QT_VERSION5X
 
 void DataEntityListModel::mapClickToEntity(const QModelIndex& index)

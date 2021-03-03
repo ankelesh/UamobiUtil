@@ -31,7 +31,8 @@ namespace independent_nodes
 		ListPickObs,
 		SkipNode,
 		SwitchByScanBc,
-		DefaultNode
+		DefaultNode,
+		IdDependentMultiselect
 	};
 }
 

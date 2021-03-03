@@ -35,9 +35,19 @@ QString AbsRecEntity::getTitle() const
 	return makeTitle();
 }
 
+void AbsRecEntity::setTitle(QString new_title)
+{
+    overwriteTitle(new_title);
+}
+
 QString AbsRecEntity::getId() const
 {
 	return extractId();
+}
+
+void AbsRecEntity::setId(QString new_id)
+{
+    overwriteId(new_id);
 }
 
 int AbsRecEntity::myType() const

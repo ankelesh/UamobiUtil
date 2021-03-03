@@ -35,7 +35,8 @@ public:
 		Richtext,
 		Control,
 		Barcode,
-		Invoice
+		Invoice,
+		EntityList
 	};
 
 private:

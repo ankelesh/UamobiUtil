@@ -36,6 +36,16 @@ bool EntitledEntity::sortingCompare(const QSharedPointer<AbsRecEntity> another) 
 	return getId() > another->getId();
 }
 
+void EntitledEntity::overwriteId(QString new_id)
+{
+	code = new_id;
+}
+
+void EntitledEntity::overwriteTitle(QString new_title)
+{
+	title = new_title;
+}
+
 SupplierEntity::SupplierEntity(QString c, QString t, QString tx)
 	: EntitledEntity(UniformXmlObject::Supplier, c, t, tx)
 {
@@ -57,7 +67,7 @@ bool SupplierEntity::fromUniXml(const UniformXmlObject& o)
 
 AbsRecEntity* SupplierEntity::fabricate() const
 {
-	return new SupplierEntity(*this);
+	return new SupplierEntity(code, title, text);
 }
 
 bool SupplierEntity::useAssociatedNetworkSendMethod(const QStringList& /*arguments*/, RequestAwaiter* /*awaiter*/) const

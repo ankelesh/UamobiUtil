@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClCompile Include="datacore\AbsEntityPrototype.cpp" />
     <ClCompile Include="datacore\EntitledEntity.cpp" />
+    <ClCompile Include="datacore\EntityListEntity.cpp" />
     <ClCompile Include="datacore\FullDocumentEntity.cpp" />
     <ClCompile Include="datacore\FullItemEntity.cpp" />
     <ClCompile Include="datacore\InputControlEntity.cpp" />
@@ -207,6 +208,7 @@
     <ClCompile Include="widgets\MultibranchWidgets\ScaningRelated\PrintingScaningWidget.cpp" />
     <ClCompile Include="widgets\MultibranchWidgets\SelectItemFromListWidget.cpp" />
     <ClCompile Include="widgets\MultibranchWidgets\Selectors\EditableDocResultsWidget.cpp" />
+    <ClCompile Include="widgets\MultibranchWidgets\Selectors\IdDependMultiselectWidget.cpp" />
     <ClCompile Include="widgets\MultibranchWidgets\Selectors\SubbranchingDocResults.cpp" />
     <ClCompile Include="widgets\parents\AbstractScaningWidget.cpp" />
     <ClCompile Include="widgets\parents\IndependentBranchNode.cpp" />
@@ -223,6 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="datacore\EntitledEntity.h" />
+    <ClInclude Include="datacore\EntityListEntity.h" />
     <ClInclude Include="datacore\FullDocumentEntity.h" />
     <ClInclude Include="datacore\FullItemEntity.h" />
     <ClInclude Include="datacore\InputControlEntity.h" />
@@ -443,6 +446,12 @@
     <QtMoc Include="widgets\MultibranchWidgets\Selectors\SubbranchingDocResults.h" />
     <QtMoc Include="widgets\parents\AbstractScaningWidget.h" />
     <QtMoc Include="widgets\parents\IndependentBranchNode.h" />
+    <QtMoc Include="widgets\MultibranchWidgets\Selectors\IdDependMultiselectWidget.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Ankelesh\source\repos\UamobiUtil\UamobiUtil\submodules\UNAQtCommons;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Ankelesh\source\repos\UamobiUtil\UamobiUtil\submodules\UNAQtCommons;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;%(PreprocessorDefinitions);QT_MULTIMEDIA_LIB</Define>
+    </QtMoc>
     <ClInclude Include="widgets\utils\client_defaults.h" />
     <ClInclude Include="widgets\utils\GlobalAppSettings.h" />
     <QtMoc Include="widgets\MainPageWidget.h" />

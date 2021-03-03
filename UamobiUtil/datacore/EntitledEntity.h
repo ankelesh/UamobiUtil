@@ -22,6 +22,8 @@ protected:
 	virtual bool deepCompare(const AbsRecEntity* another) const override;
 	virtual bool sortingCompare(const AbsRecEntity* another) const override;
 	virtual bool sortingCompare(const QSharedPointer<AbsRecEntity> another) const override;
+	virtual void overwriteId(QString new_id) override;
+	virtual void overwriteTitle(QString new_title) override;
 };
 
 

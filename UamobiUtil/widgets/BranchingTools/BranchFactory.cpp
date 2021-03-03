@@ -15,6 +15,7 @@
 #include "widgets/MultibranchWidgets/ScaningRelated/MulticontrolScaningWidget.h"
 #include "widgets/MultibranchWidgets/ScaningRelated/ObservedScaningWidget.h"
 #include "widgets/MultibranchWidgets/Observers/ListPickObserver.h"
+#include "widgets/MultibranchWidgets/Selectors/IdDependMultiselectWidget.h"
 #include "AdjustableBranch.h"
 #include "StaticBranch.h"
 #include "widgets/Branches/SwitchSubbranch.h"
@@ -155,6 +156,9 @@ namespace BranchNodeFactory {
 			break;
 		case SwitchByScanBc:
 			element = new SwitchByScannedCodeWidget(e, parent);
+			break;
+		case IdDependentMultiselect:
+			element = new IdDependMultiselectWidget(e->entity, parent);
 			break;
 		case DefaultNode:
 		default:

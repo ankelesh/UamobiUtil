@@ -39,6 +39,8 @@ protected:
     virtual bool useAssociatedNetworkSendMethod(const QStringList& arguments, RequestAwaiter* awaiter) const;
 	// sends request that is associated with acquiring list of corresponding objects.
     virtual bool useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const;
+	virtual void overwriteTitle(QString new_title) = 0;
+	virtual void overwriteId(QString new_id) = 0;
 public:
 	explicit AbsRecEntity(const int class_id = 0);
 
@@ -47,7 +49,9 @@ public:
 	bool fromXmlObject(const XmlObject o);
 	
 	QString getTitle() const;
+	void setTitle(QString new_title);
 	QString getId() const;
+	void setId(QString new_id);
 	int myType() const;
     bool sendAssociatedGetRequest(const QStringList& arguments, RequestAwaiter* awaiter) const;
     bool sendAssociatedPostRequest(const QStringList& arguments, RequestAwaiter* awaiter) const;
@@ -299,7 +303,16 @@ public:
 		}
 		return true;
 	}
-	
+	XmlObjects filterAdditionals(QString filter)
+	{
+		XmlObjects objs;
+		for (XmlObjects::iterator object = additionalObjects.begin(); object != additionalObjects.end(); ++object)
+		{
+			if ((*object)->directFieldsAccess().contains(filter))
+				objs.push_back(*object);
+		}
+		return objs;
+	}
 	XmlObjects takeObjects();
 };
 

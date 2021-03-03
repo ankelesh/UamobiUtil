@@ -31,6 +31,10 @@ protected:
 	virtual bool sortingCompare(const QSharedPointer<AbsRecEntity> another) const override;
 	virtual double extractEnumerable() const override;
     virtual bool useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
+
+	// Inherited via AbsRecEntity
+	virtual void overwriteTitle(QString new_title) override;
+	virtual void overwriteId(QString new_id) override;
 };
 typedef QSharedPointer<FullItemEntity> FullItem;
 typedef QVector<QSharedPointer< FullItemEntity>  > FullItemList;
@@ -52,6 +56,10 @@ protected:
 	virtual bool sortingCompare(const AbsRecEntity* another) const override;
 	virtual bool sortingCompare(const QSharedPointer<AbsRecEntity> another) const override;
     virtual bool useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
+
+	// Inherited via AbsRecEntity
+	virtual void overwriteTitle(QString new_title) override;
+	virtual void overwriteId(QString new_id) override;
 };
 typedef QSharedPointer<ShortItemEntity> ShortItem;
 typedef QVector<ShortItem> ShortItemList;

@@ -29,6 +29,10 @@ protected:
 	virtual AbsRecEntity* fabricate() const override;
 	virtual bool sortingCompare(const AbsRecEntity* another) const override;
 	virtual bool sortingCompare(const QSharedPointer<AbsRecEntity> another) const override;
+
+	// Inherited via AbsRecEntity
+	virtual void overwriteTitle(QString new_title) override;
+	virtual void overwriteId(QString new_id) override;
 };
 
 typedef QSharedPointer<FullDocumentEntity> FullDocument;

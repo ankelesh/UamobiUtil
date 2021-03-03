@@ -23,6 +23,10 @@ protected:
 	virtual bool sortingCompare(const QSharedPointer<AbsRecEntity> another) const override;
     virtual bool useAssociatedNetworkSendMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
     virtual bool useAssociatedNetworkGetMethod(const QStringList& arguments, RequestAwaiter* awaiter) const override;
+
+	// Inherited via AbsRecEntity
+	virtual void overwriteTitle(QString new_title) override;
+	virtual void overwriteId(QString new_id) override;
 };
 typedef QSharedPointer<ModeEntity> Mode;
 typedef QVector<Mode> ModeList;

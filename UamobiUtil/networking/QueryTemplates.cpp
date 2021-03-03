@@ -56,6 +56,7 @@ namespace QueryTemplates
 		c[docGetItemLabel] = queryTemplates.value(QStringLiteral("docGetItemLabel"), QStringLiteral("doc_get_item_label&session=%1&barcode=%2&qty=%3&printer=%4")).toString();
 		c[setVersionForBarcode] = queryTemplates.value(QStringLiteral("setVersionForBarcode"), QStringLiteral("set_version_for_barcode&session=%1&barcode=%2&version=%3")).toString();
 		c[receiptOrderByBC] = queryTemplates.value(QStringLiteral("receiptOrderByBC"), QStringLiteral("rec_get_order_by_barcode&session=%1&barcode=%2")).toString();
+		c[addIdToParentDocs] = queryTemplates.value(QStringLiteral("addIdToParentDocs"), QStringLiteral("rec_add_order_doc&session=%1&nrdoc=%2parents=%3")).toString();
 		if (!ok)
 		{
 			int i = 0;
@@ -101,6 +102,7 @@ namespace QueryTemplates
 			queryTemplates.setValue(QStringLiteral("receiptAddItemExpanded"), c[static_cast<QueryId>(i++)]);
 			queryTemplates.setValue(QStringLiteral("docGetItemLabel"), c[static_cast<QueryId>(i++)]);
 			queryTemplates.setValue(QStringLiteral("receiptOrderByBC"), c[static_cast<QueryId>(i++)]);
+			queryTemplates.setValue(QStringLiteral("addIdToParentDocs"), c[static_cast<QueryId>(i++)]);
 		}
 		return c;
 	}
@@ -197,6 +199,8 @@ int getQueryArguments(const QueryId id)
 		return 2;
 	case receiptOrderByBC:
 		return 1;
+	case addIdToParentDocs:
+		return 2;
 	default:
 		return 0;
 	}

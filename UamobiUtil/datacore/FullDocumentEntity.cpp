@@ -63,3 +63,13 @@ bool FullDocumentEntity::sortingCompare(const QSharedPointer<AbsRecEntity> anoth
 {
 	return getId() > another->getId();
 }
+
+void FullDocumentEntity::overwriteTitle(QString new_title)
+{
+	docId = new_title;
+}
+
+void FullDocumentEntity::overwriteId(QString new_id)
+{
+	docId = new_id;
+}

@@ -46,7 +46,7 @@ protected:
 	QueryCache localCache;
 
 
-	void _handleRecord(RecEntity) override;
+	virtual void _handleRecord(RecEntity) override;
 	virtual void _sendDataRequest() override;
 	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
 public:
@@ -59,12 +59,12 @@ public:
 	void loadData(RecEntity dependency);
 protected slots:
 	// sends associated post request of prototype using it's id
-	void pickClicked();
+	virtual void pickClicked();
 	// same as pick clicked, but reacts on model click instead of current
 	virtual void itemSelected(RecEntity);
 	// parses response as list, extracting polyentities of type prototype
 	virtual void parse_get_response();
 	// parses select response as it was richtext. !! HARD BIND TO OrderEntity !!
-	void parse_select_response();
+	virtual void parse_select_response();
 	void was_timeout();
 };

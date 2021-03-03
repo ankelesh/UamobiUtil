@@ -57,7 +57,8 @@ namespace QueryTemplates
 		receiptAddItemExpanded,		// 3 arguments required 
 		docGetItemLabel,
 		setVersionForBarcode,
-		receiptOrderByBC
+		receiptOrderByBC,
+		addIdToParentDocs
 	};
 
 	// this function is used for initializing cache in old compilers

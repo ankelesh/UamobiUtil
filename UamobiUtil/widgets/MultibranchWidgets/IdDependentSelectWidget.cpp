@@ -159,7 +159,7 @@ void IdDependentSelectWidget::parse_select_response()
 	RichtextResponseParser parser(awaiter->restext, awaiter->errtext);
 	if (parser.isSuccessfull())
 	{
-		upcastRecord<OrderEntity>(awaitsConfirmation)->text = parser.read().first()->value("richdata");
+		awaitsConfirmation->setTitle(parser.read().first()->value("richdata"));
 		emit done(awaitsConfirmation);
 	}
 	else
