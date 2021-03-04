@@ -32,7 +32,7 @@ void NormalScaningWidget::_handleRecord(RecEntity e)
 		{
 			if (!list->list.isEmpty())
 			{
-				setDocument(list->list.takeFirst());
+                setDocument(list->takeFirst());
 				extraParentDocuments = list;
 			}
 		}

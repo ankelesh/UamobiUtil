@@ -23,5 +23,6 @@ public:
 	explicit EntityListEntity();
 	explicit EntityListEntity(Records rlist);
 	QString joinIds(QChar separator = ',') const;
+    RecEntity takeFirst();
 };
 typedef QSharedPointer<EntityListEntity> ERecordList;

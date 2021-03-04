@@ -19,7 +19,6 @@
 
 void AbstractScaningWidget::_backReaction()
 {
-	auto t = sender();
 	backNeeded();
 }
 

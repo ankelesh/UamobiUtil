@@ -39,7 +39,7 @@ bool NamedIdEntity::fromUniXml(const UniformXmlObject& o)
 
 AbsRecEntity* NamedIdEntity::fabricate() const
 {
-	return nullptr;
+    return Q_NULLPTR;
 }
 
 void NamedIdEntity::overwriteTitle(QString new_title)

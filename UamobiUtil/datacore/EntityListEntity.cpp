@@ -1,4 +1,5 @@
 #include "EntityListEntity.h"
+#include <QTextStream>
 bool EntityListEntity::fromUniXml(const UniformXmlObject& o)
 {
     return true;
@@ -67,11 +68,19 @@ QString EntityListEntity::joinIds(QChar separator) const
 {
     QString result;
     QTextStream rstream(&result);
-    for (Records::const_iterator item = list.cbegin(); item != list.end(); ++item)
+    for (Records::const_iterator item = list.constBegin(); item != list.constEnd(); ++item)
     {
         rstream << (*item)->getId() << separator;
     }
     rstream.flush();
     result.chop(1);
     return result;
+}
+
+
+RecEntity EntityListEntity::takeFirst()
+{
+    RecEntity temp = list.first();
+    list.remove(0);
+    return temp;
 }
