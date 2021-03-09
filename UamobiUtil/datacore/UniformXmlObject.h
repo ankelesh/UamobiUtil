@@ -44,6 +44,8 @@ private:
 	int object_id;
 	// stores actual fields of an object
 	QHash<QString, QString> values;
+
+	void _extractXMLNode(const QDomNode& dnode);
 public:
 	explicit UniformXmlObject(const int oid = -1);
 	explicit UniformXmlObject(const int size, const int oid);

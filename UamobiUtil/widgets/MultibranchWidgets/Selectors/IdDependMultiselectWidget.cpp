@@ -9,7 +9,7 @@
 #include "submodules/UNAQtCommons/debug/debugtrace.h"
 #endif
 #include "datacore/UniformXmlObject.h"
-
+#include "widgets/ExtendedDelegates/CheckableDelegate.h"
 
 void IdDependMultiselectWidget::pickClicked()
 {
@@ -75,7 +75,7 @@ void IdDependMultiselectWidget::parse_get_response()
 				switch (s_status->toLatin1())
 				{
 				case '1':
-					selectionView->selectionModel()->select(entityModel->index(index, 0), QItemSelectionModel::SelectionFlag::Current);
+					selectionView->selectionModel()->select(entityModel->index(index, 0), QItemSelectionModel::SelectionFlag::Select);
 					Q_FALLTHROUGH();
 				case '0':
 					++index;
@@ -115,6 +115,8 @@ IdDependMultiselectWidget::IdDependMultiselectWidget(RecEntity proto, QWidget* p
 	: IdDependentSelectWidget(proto, parent)
 {
 	selectionView->setSelectionMode(QListView::MultiSelection);
+	selectionView->itemDelegate()->deleteLater();
+	selectionView->setItemDelegate(new CheckableDelegate(QColor(210, 224, 146), QColor(245, 164, 188), this));
 #ifdef QT_VERSION5X
 	QObject::disconnect(entityModel, &DataEntityListModel::dataEntityClicked, this, &IdDependMultiselectWidget::itemSelected);
 #else

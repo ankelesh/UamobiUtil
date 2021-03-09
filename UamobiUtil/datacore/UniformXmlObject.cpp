@@ -33,6 +33,18 @@ static QHash<QString, UniformXmlObject::ThingsIds> objectIdLinking(_initiateObje
 
 
 
+void UniformXmlObject::_extractXMLNode(const QDomNode& dnode)
+{
+	QDomNodeList insideObject = dnode.childNodes();
+	for (int j = 0; j < insideObject.count(); ++j)
+	{
+		if (insideObject.at(j).hasChildNodes())
+			values[insideObject.at(j).nodeName()] = insideObject.at(j).toElement().text();
+		else
+			values[dnode.nodeName()] = dnode.toElement().text();
+	}
+}
+
 UniformXmlObject::UniformXmlObject(const int oid)
 	: object_id(oid), values()
 {
@@ -58,19 +70,15 @@ UniformXmlObject::UniformXmlObject(const QHash<QString, QString>& hash,const int
 UniformXmlObject::UniformXmlObject(const QDomNode& dnode)
 	: object_id(0), values()
 {
+	_extractXMLNode(dnode);
 	QString nname = dnode.nodeName();
-	QDomNodeList insideObject = dnode.childNodes();
-	for (int j = 0; j < insideObject.count(); ++j)
-		values[insideObject.at(j).nodeName()] = insideObject.at(j).toElement().text();
 	object_id = guessObjectId(nname, values.count());
 }
 
 UniformXmlObject::UniformXmlObject(const UniformXmlObject::ThingsIds oid, const QDomNode& dnode)
 	: object_id(oid), values()
 {
-	QDomNodeList insideObject = dnode.childNodes();
-	for (int j = 0; j < insideObject.count(); ++j)
-		values[insideObject.at(j).nodeName()] = insideObject.at(j).toElement().text();
+	_extractXMLNode(dnode);
 }
 
 const QHash<QString, QString>& UniformXmlObject::directFieldsAccess()

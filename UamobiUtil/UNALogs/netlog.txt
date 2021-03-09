@@ -1,20 +1,20 @@
 Application start begins: version 0.17 lin-alpha
->>	413385311169577 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
->>	413385311180835 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
-<<	413385311275198 received response going to 0 containing text:|
+>>	413512567031593 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
+>>	413512567043875 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
+<<	413512567111102 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket</servicename></users>
 	and error text |
->>	413385312362116 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.17
-<<	413385312426977 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2925</session>
+>>	413512568013188 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.17
+<<	413512568073185 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2967</session>
 </login>
 	and error text |
->>	413385312429932 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2925&lang=English
-<<	413385312487894 received response going to 0 containing text:|
+>>	413512568076140 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2967&lang=English
+<<	413512568137174 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>Inventory</captionMode><mode>inventory</mode><submode></submode></mode> <mode><modeName>ordersandsldcorrection</modeName><captionMode>Orders and sold corrrection</captionMode><mode>receipt</mode><submode>ordersandsldcorrection</submode></mode> <mode><modeName>printing</modeName><captionMode>Printing</captionMode><mode>printing</mode><submode></submode></mode> <mode><modeName>receipt</modeName><captionMode>Receipt</captionMode><mode>receipt</mode><submode></submode></mode> <mode><modeName>receiptfromwarehouses</modeName><captionMode>Receipt from warehouses</captionMode><mode>receipt</mode><submode>receiptfromwarehouses</submode></mode> <mode><modeName>partialinventory</modeName><captionMode>Stock correction</captionMode><mode>inventory</mode><submode>partialinventory</submode></mode> <mode><modeName>univscanact</modeName><captionMode>Universal scanning act</captionMode><mode>inventory</mode><submode>univscanact</submode></mode>  <place>   <code>205</code>   <name>L-05 str. Onisifor Ghibu 7/2</name>  </place> </modes>
 	and error text |
->>	413385319756718 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=2925&mode=receipt&submode=
-<<	413385319827026 received response going to 0 containing text:|
+>>	413512568371118 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=2967&mode=receipt&submode=
+<<	413512568417106 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status>  <desc> <![CDATA[ 
 [SwitchByScanCode]
 %Order%
@@ -35,23 +35,15 @@ Application start begins: version 0.17 lin-alpha
 <>
 -6 ]]> </desc></mode>
 	and error text |
->>	413385320312976 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=rec_list_suppliers&session=2925&text=&hasorders=true
-<<	413385320319817 received response going to 5 containing text:|
+>>	413512568791184 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=rec_list_suppliers&session=2967&text=&hasorders=true
+<<	413512568800585 received response going to 5 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <suppliers>  <status>200</status>  <supplier>   <code>162104</code>   <name>Serviabil SRL</name>   <orders>2</orders>  </supplier> </suppliers>
 	and error text |
->>	413385320528113 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=rec_list_orders_sel&session=2925&supplier=162104
-<<	413385320535793 received response going to 0 containing text:|
+>>	413512569150961 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=rec_list_orders_sel&session=2967&supplier=162104
+<<	413512569159409 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <orders>  <status>200</status>  <order>   <code>18858573</code>   <title>Nr. cererii: 18858573</title>
   <text>28.12.20 - 29.12.20, 6  </text>  </order>  <order>   <code>18858571</code>   <title>Nr. cererii: 18858571</title>
   <text>28.12.20 - 29.12.20, 37  </text>  </order> 
 <supplier>Serviabil SRL</supplier>
-<selection>0,0</selection> </orders>
-	and error text |
->>	413385321046203 sent request: http://92.115.237.226:60080/um/unitest.php?delay=7&cmd=rec_get_order_info_multi&session=2925&order=18858573&supplier=162104
-<<	413385321051881 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <order>  <status>200</status> <richdata> <![CDATA[  <div><b> Serviabil SRL</b></div>  <div><b>Doc. nr.:</b> 18858573</div> <hr><div>INLAC Unt Crestianscoe 72.5% 200g - <b>10</b></div><hr> <div>INLAC Unt d/smintina dulce 82.5% 200g - <b>15</b></div><hr> <div>LACTIS Lapte 3.5% pol. 1l  - <b>2</b></div><hr> <div>LACTIS Unt DE RISCANI 82.5% 200g  - <b>13</b></div><hr> <div>INLAC Brinzica vanilie 100g  - <b>1</b></div><hr> <div>LACTIS Cascaval PRUT 40%, kg  - <b>.312</b></div><hr> ]]> </richdata> </order>
-	and error text |
->>	413385325554667 sent request: http://92.115.237.226:60080/um/unitest.php?delay=8&cmd=rec_list_suppliers&session=2925&text=&hasorders=true
-<<	413385325595571 received response going to 5 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <suppliers>  <status>200</status>  <supplier>   <code>162104</code>   <name>Serviabil SRL</name>   <orders>2</orders>  </supplier> </suppliers>
+<selection>1,1</selection> </orders>
 	and error text |
