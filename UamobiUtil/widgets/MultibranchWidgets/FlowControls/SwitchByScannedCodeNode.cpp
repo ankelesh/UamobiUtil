@@ -50,7 +50,9 @@ SwitchByScannedCodeWidget::SwitchByScannedCodeWidget(BranchDescription branch, Q
 	barcodeInput(new QLineEdit(untouchable)), buttonLayout(new QHBoxLayout(untouchable)),
 	backButton(new MegaIconButton(untouchable)), skipButton(new MegaIconButton(untouchable)),
 	okButton(new MegaIconButton(untouchable)),
-	normalFlowBranch(Q_NULLPTR), barcodeChecker(QueryTemplates::receiptOrderByBC), prototype(), descr(branch),awaiter(new RequestAwaiter(AppSettings->timeoutInt, this))
+	normalFlowBranch(Q_NULLPTR), barcodeChecker(QueryTemplates::receiptOrderByBC), prototype(),
+	descr(branch),awaiter(new RequestAwaiter(AppSettings->timeoutInt, this)),
+	toGiveToBranch(), pendingResult()
 {
 	mainLayout->addWidget(untouchable);
 	untouchable->setLayout(innerLayout);
@@ -178,8 +180,8 @@ void SwitchByScannedCodeWidget::_parseResponse(QString res, QString err)
 		}
 		else
 		{
-			toGiveToBranch = resp.objects.first();
-			info->setText(toGiveToBranch->getId() + "\n" + toGiveToBranch->getTitle());
+			pendingResult = resp.objects.first();
+			info->setText(pendingResult->getId() + "\n" + pendingResult->getTitle());
 		}
 	}
 }
@@ -198,18 +200,18 @@ void SwitchByScannedCodeWidget::_checkBarcode()
 	}
 
 	AppNetwork->execQueryByTemplate(barcodeChecker, barcodeInput->text(), awaiter);
-	toGiveToBranch.clear();
+	pendingResult.clear();
 }
 
 void SwitchByScannedCodeWidget::_confirmPressed()
 {
-	if (toGiveToBranch.isNull())
+	if (pendingResult.isNull())
 	{
 		if (!barcodeInput->text().isEmpty())
 			_checkBarcode();
 	}
 	else
 	{
-		emit done(toGiveToBranch);
+		emit done(pendingResult);
 	}
 }

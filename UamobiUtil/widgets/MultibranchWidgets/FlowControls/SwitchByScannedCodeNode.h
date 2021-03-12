@@ -29,6 +29,7 @@ protected:
 	BranchDescription descr;
 	RequestAwaiter* awaiter;
 	RecEntity toGiveToBranch;
+	RecEntity pendingResult;
 	// Inherited via IndependentBranchNode
 	virtual void _handleRecord(RecEntity) override;
 
