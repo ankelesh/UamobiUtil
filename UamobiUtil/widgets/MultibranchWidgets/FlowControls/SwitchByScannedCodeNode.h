@@ -20,6 +20,7 @@ protected:
 	QHBoxLayout* buttonLayout;
 	MegaIconButton* backButton;
 	MegaIconButton* skipButton;
+	MegaIconButton* okButton;
 
 	IndependentBranchNode* normalFlowBranch;
 
@@ -48,5 +49,6 @@ protected slots:
 	void _parseResponse(QString, QString);
 	void _barcodeReceived(QString);
 	void _checkBarcode();
+	void _confirmPressed();
 };
 

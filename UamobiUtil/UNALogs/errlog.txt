@@ -1,7 +1,3 @@
 Application start begins: version 0.17 lin-alpha
-> ! <	413534233178988 error receiving response: ORA-20000: User is blocked or not allowed to use.
-> ! <	413534249281859 error receiving response: ORA-20000: Produs 206604, LACTIS Cascaval PRUT 40%, kg 
-Cant. fact (4.000) este mai mare 
- decit cant. din cerere (2.652).
-Numar comanda: 18858571,18858573.
-Doc. receptie: 18858574.
+> ! <	413561020571883 error making request Switch by scanned code failed : ORA-20000: Cererea scanata nu a fost gasita!
+ORA-01403: данные не найдены

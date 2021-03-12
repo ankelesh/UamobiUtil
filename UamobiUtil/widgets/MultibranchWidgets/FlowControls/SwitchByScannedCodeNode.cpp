@@ -49,16 +49,18 @@ SwitchByScannedCodeWidget::SwitchByScannedCodeWidget(BranchDescription branch, Q
 	innerLayout(new QVBoxLayout(untouchable)), info(new QLabel(untouchable)), 
 	barcodeInput(new QLineEdit(untouchable)), buttonLayout(new QHBoxLayout(untouchable)),
 	backButton(new MegaIconButton(untouchable)), skipButton(new MegaIconButton(untouchable)),
+	okButton(new MegaIconButton(untouchable)),
 	normalFlowBranch(Q_NULLPTR), barcodeChecker(QueryTemplates::receiptOrderByBC), prototype(), descr(branch),awaiter(new RequestAwaiter(AppSettings->timeoutInt, this))
 {
 	mainLayout->addWidget(untouchable);
 	untouchable->setLayout(innerLayout);
-	innerLayout->addWidget(info);
 	innerLayout->addWidget(barcodeInput);
+	innerLayout->addWidget(info);
 	innerLayout->addStretch(1);
 	innerLayout->addLayout(buttonLayout);
 	buttonLayout->addWidget(backButton);
 	buttonLayout->addWidget(skipButton);
+	buttonLayout->addWidget(okButton);
 	mainLayout->setSpacing(0);
 	mainLayout->setContentsMargins(0, 0, 0, 0);
 	buttonLayout->setSpacing(0);
@@ -72,11 +74,15 @@ SwitchByScannedCodeWidget::SwitchByScannedCodeWidget(BranchDescription branch, Q
 		info->setText(tr("Please scan code"));
 	else
 		info->setText(branch->namesOverload.first());
+	info->setAlignment(Qt::AlignCenter);
 	backButton->setText(tr("back"));
 	skipButton->setText(tr("skip"));
 	backButton->setStyleSheet(BACK_BUTTONS_STYLESHEET);
 	backButton->setIcon(QIcon(":/resources/back"));
 	skipButton->setIcon(QIcon(":/resources/editable"));
+	okButton->setIcon(QIcon(":/resources/submit"));
+	okButton->setStyleSheet(OK_BUTTONS_STYLESHEET);
+	okButton->setText(tr("ok"));
 	info->setWordWrap(true);
 	if (branch->entity.isNull())
 	{
@@ -97,6 +103,7 @@ SwitchByScannedCodeWidget::SwitchByScannedCodeWidget(BranchDescription branch, Q
 	QObject::connect(awaiter, &RequestAwaiter::requestTimeout, this, &SwitchByScannedCodeWidget::_timeout);
 	QObject::connect(BarcodeObs, &BarcodeObserver::barcodeCaught, this, &SwitchByScannedCodeWidget::_barcodeReceived);
 	QObject::connect(barcodeInput, &QLineEdit::returnPressed, this, &SwitchByScannedCodeWidget::_checkBarcode);
+	QObject::connect(okButton, &MegaIconButton::clicked, this, &SwitchByScannedCodeWidget::_confirmPressed);
 #else
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
 	QObject::connect(skipButton, SIGNAL(clicked()), this, SLOT(_branchSkipped()));
@@ -104,6 +111,7 @@ SwitchByScannedCodeWidget::SwitchByScannedCodeWidget(BranchDescription branch, Q
 	QObject::connect(awaiter, SIGNAL(requestTimeout()), this, SLOT(_timeout()));
 	QObject::connect(BarcodeObs, SIGNAL(barcodeCaught(QString)), this, SLOT(_barcodeReceived(QString)));
 	QObject::connect(barcodeInput, SIGNAL(returnPressed()), this, SLOT(_checkBarcode()));
+	QObject::connect(okButton, SIGNAL(clicked()), this, SLOT(_confirmPressed()));
 #endif
 	BarcodeObs->activate();
 }
@@ -170,7 +178,8 @@ void SwitchByScannedCodeWidget::_parseResponse(QString res, QString err)
 		}
 		else
 		{
-			emit done(resp.objects.first());
+			toGiveToBranch = resp.objects.first();
+			info->setText(toGiveToBranch->getId() + "\n" + toGiveToBranch->getTitle());
 		}
 	}
 }
@@ -189,4 +198,18 @@ void SwitchByScannedCodeWidget::_checkBarcode()
 	}
 
 	AppNetwork->execQueryByTemplate(barcodeChecker, barcodeInput->text(), awaiter);
+	toGiveToBranch.clear();
+}
+
+void SwitchByScannedCodeWidget::_confirmPressed()
+{
+	if (toGiveToBranch.isNull())
+	{
+		if (!barcodeInput->text().isEmpty())
+			_checkBarcode();
+	}
+	else
+	{
+		emit done(toGiveToBranch);
+	}
 }
