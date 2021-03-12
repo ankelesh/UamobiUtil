@@ -1,70 +1,14 @@
 Application start begins: version 0.17 lin-alpha
--->	Method called: load common part of AppSettings in object 10158552
+-->	Method called: load common part of AppSettings in object 12146288
 if errors: 0
 if errors: 0
-][	Created object LoginWidget on address 10753256
-][	Created object MainPageWidget on address 10049344
->>	413561015031849 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
->>	413561015041315 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
-<<	413561015116734 received response going to 0 containing text:|
+][	Created object LoginWidget on address 12145136
+][	Created object MainPageWidget on address 12137344
+>>	413580138737705 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
+>>	413580138747683 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
+<<	413580138815166 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket<
 	and error text |
->>	413561017144452 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ev&password=951&version=0.17
-<<	413561017203681 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>2978</session>
-</login>
-	and error text |
->>	413561017204588 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=2978&lang=English
-<<	413561017247958 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>
-	and error text |
->>	413561017546926 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=2978&mode=receipt&submode=
-<<	413561017583954 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status>  <desc> <![CDATA[ [PlaceSelect]
-[SwitchByScanCode]
-
-	and error text |
-[!!!]	Mode named Receipt signed as receipt  received, interpreting: 
-	[PlaceSelect]
-	[SwitchByScanCode]
-	%Order%
-	<rec_get_order_by_barcode&session=%1&barcode=%2>
-	{
-	[Subbranch]
-	{
-	[SelectItemFromList]
-	%Supplier%
-	[IdDependMultiselect]
-	%Order%
-	<rec_get_order_info_multi&session=%1&order=%2&supplier=%3 : itemId , depId>
-	<rec_list_orders_sel&session=%1&supplier=%2 : id>
-	}
-	}
-	[NormalScaning]
-	<>
-	-6 
-][	Created object Adjustable branch with 3 children on address 96015448
-]N[	Node of type 12 fabricated using description:  children: 0 oqs: 0
-][	Created object PlaceSelection on address 91513256
->>	413561017585040 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=list_places&session=2978
-<<	413561017609801 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <places>  <status>200</status>  <place>   <code>249504</code>   <name>Cantina MR
-	and error text |
->>	413561018017009 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=select_place&session=2978&place=205
-<<	413561018020849 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <place>  <status>200</status> </place>
-	and error text |
-]N[	Node of type 23 fabricated using description:  children: 1 oqs: 1
->>	413561020539067 sent request: http://92.115.237.226:60080/um/unitest.php?delay=7&cmd=rec_get_order_by_barcode&session=2978&barcode=18858855
-<<	413561020571625 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <orders>  <status>404</status>  <message>ORA-20000: Cererea scanata nu a fost ga
-	and error text |
-> ! <	413561020571883 error making request Switch by scanned code failed : ORA-20000: Cererea scanata nu a fost gasita!
-ORA-01403: данные не найдены
->>	413561023955123 sent request: http://92.115.237.226:60080/um/unitest.php?delay=8&cmd=rec_get_order_by_barcode&session=2978&barcode=18858571
-<<	413561023964326 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <orders>  <status>200</status>  <order>   <code>18858571</code>   <title>Nr. cer
-	and error text |
--->	Method called: dump common settings in object 10158552
+-->	Method called: dump common settings in object 12146288
 if errors: 0
 if errors: 0

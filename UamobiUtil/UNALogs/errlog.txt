@@ -1,3 +1,1 @@
 Application start begins: version 0.17 lin-alpha
-> ! <	413561020571883 error making request Switch by scanned code failed : ORA-20000: Cererea scanata nu a fost gasita!
-ORA-01403: данные не найдены
