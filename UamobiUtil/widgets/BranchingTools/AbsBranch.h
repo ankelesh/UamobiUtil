@@ -6,7 +6,6 @@
 #include "networking/dataupdateengine-http.h"
 #include "BranchElementDescription.h"
 
-
 /*
 	This class is basic for most global branches (global branch means it can be any lenght,
 	while local branches are cyclic or very short). It can manage all abstract logic
@@ -14,7 +13,6 @@
 	Check AdjustableBranch and StaticBranch to see full implementation. Also it implements 
 	slot interfaces.
 */
-
 
 class AbsBranch : public IndependentBranchNode
 {
@@ -27,6 +25,7 @@ protected:
 	QVector<RecEntity> dependencyTrack;
 	// index of current node, used to control flow
 	int currentNode;
+
 
 	// must implement opening next node (current + 1)
 	virtual void toNext(RecEntity) = 0;
@@ -57,6 +56,7 @@ public:
 	void emplaceNode(const BranchDescription e);
 	// methods for forced setup of backtracking and overloads
 	void setBacktracking(int to, int toWhich);
+	// adds overload to one of the subnodes
 	void setOverload(int toWhich, int index, QueryTemplates::OverloadableQuery oq);
 	// restarts branch
 	void raiseThisBranch(RecEntity e);
