@@ -206,6 +206,7 @@ void MainSettingsWidget::saveClicked()
 	AppNetwork->setUrl(AppSettings->HttpUrl);
 	AppSettings->scanSuffix = suffix->value();
 	AppSettings->scanPrefix = prefix->value();
+    BarcodeObs->resetCapture(AppSettings->scanPrefix, AppSettings->scanSuffix);
 	AppSettings->fontMinHeight = fontMin->value();
 	AppSettings->fontMaxHeight = fontMax->value();
 	AppSettings->fontPercent = ((fontDec->value() > 0) ? fontDec->value() : 1) / 100;

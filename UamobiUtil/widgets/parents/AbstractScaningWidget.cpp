@@ -259,6 +259,7 @@ AbstractScaningWidget::AbstractScaningWidget(int Id, QWidget* parent)
 	QObject::connect(awaiter, SIGNAL(requestTimeout()), this, SLOT(was_timeout()));
     QObject::connect(quitButton, SIGNAL(clicked()), this, SLOT(quitNoSave()));
 #endif
+    BarcodeObs->activate();
 }
 
 void AbstractScaningWidget::clear()

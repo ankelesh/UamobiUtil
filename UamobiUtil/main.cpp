@@ -66,11 +66,11 @@ int main(int argc, char* argv[])
 	UamobiUtil w;
 	w.show();
     AppSounds;
-    BarcodeObserver::init();
 #endif
 #ifdef Q_OS_ANDROID
     a.setDoubleClickInterval(900);
     w.setFixedSize(calculateAdaptiveSize(1.0));
 #endif
+    BarcodeObserver::init();
 	return a.exec();
 }
