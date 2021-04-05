@@ -36,7 +36,8 @@ public:
 		Control,
 		Barcode,
 		Invoice,
-		EntityList
+		EntityList,
+		Separator
 	};
 
 private:

@@ -58,7 +58,10 @@ namespace QueryTemplates
 		docGetItemLabel,
 		setVersionForBarcode,
 		receiptOrderByBC,
-		addIdToParentDocs
+		addIdToParentDocs,
+		deleteInvoiceById,
+		editInvoiceById,
+		editItemById
 	};
 
 	// this function is used for initializing cache in old compilers

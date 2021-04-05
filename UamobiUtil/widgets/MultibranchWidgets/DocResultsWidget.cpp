@@ -3,6 +3,7 @@
 #include "widgets/ElementWidgets/ProcessingOverlay.h"
 #include "widgets/ExtendedDelegates/ZebraListItemDelegate.h"
 #include "widgets/ExtendedDelegates/CountingDelegate.h"
+#include "datacore/UtilityEntities.h"
 #include <QMessageBox>
 #ifdef DEBUG
 #include "submodules/UNAQtCommons/debug/debugtrace.h"
@@ -11,6 +12,49 @@
 #include <qscroller.h>
 #endif
 #include "submodules/UNAQtCommons/widgets/UtilityElements/ExtendedDialogs.h"
+
+void DocResultsWidget::_prepareDefaultControls(RecEntity& item)
+{
+
+	attachedControls->clearControls();
+	switch (item->myType())
+	{
+	case UniformXmlObject::Invoice:
+	{
+		Invoice inv = item.staticCast<InvoiceEntity>();
+		attachedControls->emplaceControl(
+			InputControl(
+				new InputControlEntity(
+					item->getTitle(), "Label",
+					tr("changing invoice ") +
+					item->getTitle() + tr(" from ") + item->getId()))
+		);
+		attachedControls->emplaceControl(
+			InputControl(
+				new InputControlEntity(
+					"new_value", abs_control::String, "")));
+		break;
+	}
+	case UniformXmlObject::Item:
+	{
+		FullItem f_item = item.staticCast<FullItemEntity>();
+		attachedControls->emplaceControl(
+			InputControl(
+				new InputControlEntity(
+					item->getTitle(), "Label", item->getTitle())));
+		attachedControls->emplaceControl(
+			InputControl(
+				new InputControlEntity(
+					"qty", f_item->controlType, "0")));
+	}
+	break;
+	case UniformXmlObject::Separator:
+		return;
+	}
+	attachedControls->sealControls();
+	_hideAny(attachedControls);
+}
+
 void DocResultsWidget::_handleRecord(RecEntity)
 {
 }
@@ -96,18 +140,14 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	previousButton->setDisabled(true);
 	previousButton->setStyleSheet(NAVIGATE_BUTTONS_STYLESHEET);
 	previousButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
-#if defined(Q_OS_WINCE) || defined(Q_OS_ANDROID)
 	previousButton->setMaximumHeight(calculateAdaptiveHeight(0.08));
-#endif
 
 	nextButton->setSizePolicy(mi);
 	nextButton->setIcon(QIcon(":/res/nextpage.png"));
 	nextButton->setDisabled(true);
 	nextButton->setStyleSheet(NAVIGATE_BUTTONS_STYLESHEET);
 	nextButton->setMinimumWidth(calculateAdaptiveWidth(0.2));
-#if defined(Q_OS_WINCE) || defined(Q_OS_ANDROID)
 	nextButton->setMaximumHeight(calculateAdaptiveHeight(0.08));
-#endif
 
 
 	indexationInfo->setSizePolicy(ma);
@@ -151,7 +191,7 @@ DocResultsWidget::DocResultsWidget( QWidget* parent)
 	itemInfoStorage->setFont(AppFonts->makeCustomFont(0.03));
 	itemInfoStorage->setModel(items);
 	itemInfoStorage->setItemDelegate(new CountingItemDelegate(this));
-#if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
+#ifdef Q_OS_ANDROID
 	QScroller::grabGesture(itemInfoStorage, QScroller::TouchGesture);
 	itemInfoStorage->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 #endif
@@ -225,9 +265,18 @@ void DocResultsWidget::refresh()
 				fitem = upcastRecord(*pos, prototype);
 				if (!fitem.isNull())
 				{
-					fitem->name = FontAdapter::breakStringToFitScreen(
-						fitem->name.replace("\n", " "),fm,  0.75, &height);
-					total << *pos;
+					if (fitem->getId().count() == 1)
+					{
+						total << RecEntity(new SeparatorEntity());
+						height = 1;
+					}
+					else
+					{
+						fitem->name = FontAdapter::breakStringToFitScreen(
+							fitem->name.replace("\n", " "), fm, 0.95, &height);
+						total << *pos;
+						height = ((height > 2) ? height : 2);
+					}
 					heights << height;
 				}
 				++pos;
@@ -302,23 +351,7 @@ void DocResultsWidget::getAttachedControls()
 	).value<RecEntity>();
 	if (!localCache.contains(documentResultGetBox))
 	{
-		attachedControls->clearControls();
-		FullItem castedItem = upcastRecord<FullItemEntity>(currentItem);
-		int type;
-		if (castedItem.isNull())
-			type = abs_control::Int;
-		else
-			type = castedItem->controlType;
-		attachedControls->emplaceControl(
-			InputControl(
-				new InputControlEntity(
-					currentItem->getTitle(), "Label", currentItem->getTitle())));
-		attachedControls->emplaceControl(
-			InputControl(
-				new InputControlEntity(
-					"qty", type, "0")));
-        attachedControls->sealControls();
-		_hideAny(attachedControls);
+		_prepareDefaultControls(currentItem);	
 	}
 	else
 	{
@@ -448,6 +481,10 @@ void DocResultsWidget::_makeOverloads(const QVector<QueryTemplates::Overloadable
 	switch (overloads.count())
 	{
 	default:
+	case 6:
+		localCache.insert(deleteInvoiceById, overloads.at(5).assertedAndMappedCopy(
+			deleteInvoiceById));
+		Q_FALLTHROUGH();
 	case 5:
 		localCache.insert(documentDeleteAll, overloads.at(4).assertedAndMappedCopy(
 		documentDeleteAll));

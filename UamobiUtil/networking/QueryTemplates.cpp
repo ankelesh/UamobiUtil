@@ -57,6 +57,9 @@ namespace QueryTemplates
 		c[setVersionForBarcode] = queryTemplates.value(QStringLiteral("setVersionForBarcode"), QStringLiteral("set_version_for_barcode&session=%1&barcode=%2&version=%3")).toString();
 		c[receiptOrderByBC] = queryTemplates.value(QStringLiteral("receiptOrderByBC"), QStringLiteral("rec_get_order_by_barcode&session=%1&barcode=%2")).toString();
 		c[addIdToParentDocs] = queryTemplates.value(QStringLiteral("addIdToParentDocs"), QStringLiteral("rec_add_order_doc&session=%1&nrdoc=%2&parents=%3")).toString();
+		c[deleteInvoiceById] = queryTemplates.value(QStringLiteral("deleteInvoiceById"), QStringLiteral("doc_delete_invoice&session=%1&nn=%2")).toString();
+		c[editInvoiceById] = queryTemplates.value(QStringLiteral("editInvoiceById"), QStringLiteral("rec_edit_invoice&session=%1&old_value=%2%3")).toString();
+		c[editItemById] = queryTemplates.value(QStringLiteral("editItemById"), QStringLiteral("doc_result_delete_by_bc&session=%1&barcode=%2%3")).toString();
 		if (!ok)
 		{
 			int i = 0;
@@ -101,8 +104,12 @@ namespace QueryTemplates
 			queryTemplates.setValue(QStringLiteral("applyBarcodeFilter"), c[static_cast<QueryId>(i++)]);
 			queryTemplates.setValue(QStringLiteral("receiptAddItemExpanded"), c[static_cast<QueryId>(i++)]);
 			queryTemplates.setValue(QStringLiteral("docGetItemLabel"), c[static_cast<QueryId>(i++)]);
+			queryTemplates.setValue(QStringLiteral("setVersionForBarcode"), c[static_cast<QueryId>(i++)]);
 			queryTemplates.setValue(QStringLiteral("receiptOrderByBC"), c[static_cast<QueryId>(i++)]);
 			queryTemplates.setValue(QStringLiteral("addIdToParentDocs"), c[static_cast<QueryId>(i++)]);
+			queryTemplates.setValue(QStringLiteral("deleteInvoiceById"), c[static_cast<QueryId>(i++)]);
+			queryTemplates.setValue(QStringLiteral("editInvoiceById"), c[static_cast<QueryId>(i++)]);
+			queryTemplates.setValue(QStringLiteral("editItemById"), c[static_cast<QueryId>(i++)]);
 		}
 		return c;
 	}
@@ -200,6 +207,12 @@ int getQueryArguments(const QueryId id)
 	case receiptOrderByBC:
 		return 1;
 	case addIdToParentDocs:
+		return 2;
+	case deleteInvoiceById:
+		return 1;
+	case editInvoiceById:
+		return 2;
+	case editItemById:
 		return 2;
 	default:
 		return 0;

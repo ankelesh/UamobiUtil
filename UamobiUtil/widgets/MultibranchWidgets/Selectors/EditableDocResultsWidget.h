@@ -7,6 +7,8 @@ class EditableDocResultsWidget : public DocResultsWidget
 private:
 	MegaIconButton* editItem;
 	virtual void handleDelete() override;
+	virtual void _makeOverloads(const QVector<QueryTemplates::OverloadableQuery>& overloads) override;
+	virtual void attachedControlsDone() override; 
 public:
 	EditableDocResultsWidget(QWidget* parent);
 private slots:

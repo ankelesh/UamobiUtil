@@ -125,6 +125,8 @@
     <ClCompile Include="datacore\NamedIdEntity.cpp" />
     <ClCompile Include="datacore\PseudotableEntityModel.cpp" />
     <ClCompile Include="datacore\UniformXmlObject.cpp" />
+    <ClCompile Include="datacore\UtilitiyEntities.cpp" />
+    <ClCompile Include="datacore\UtilityEntities.cpp" />
     <ClCompile Include="legacy\legacy.cpp" />
     <ClCompile Include="legacy\qtCompatibility\scrollgrabber.cpp" />
     <ClCompile Include="main.cpp" />
@@ -239,6 +241,7 @@
     <ClInclude Include="datacore\AbsEntityPrototype.h" />
     <QtMoc Include="datacore\PseudotableEntityModel.h" />
     <ClInclude Include="datacore\UniformXmlObject.h" />
+    <ClInclude Include="datacore\UtilityEntities.h" />
     <ClInclude Include="legacy\legacy.h" />
     <QtMoc Include="legacy\qtCompatibility\scrollgrabber.h" />
     <QtMoc Include="widgets\LoginBranch\LoginWidget.h" />

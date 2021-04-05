@@ -60,6 +60,7 @@ protected:
 
 	ControlListWidget* attachedControls;
 
+	void _prepareDefaultControls(RecEntity & item);
 	void _handleRecord(RecEntity) override;
 	// fills indexation label and enables navigation buttons
 	void setIndexation(XmlObjects& settings);

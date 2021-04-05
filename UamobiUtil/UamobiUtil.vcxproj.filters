@@ -524,6 +524,12 @@
     <ClCompile Include="widgets\MultibranchWidgets\Selectors\IdDependMultiselectWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="datacore\UtilitiyEntities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="datacore\UtilityEntities.cpp">
+      <Filter>Source Files\Datacore</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="UamobiUtil.h">
@@ -834,6 +840,9 @@
       <Filter>submodules\UNAQtCommons\Headers\wrappers\DirectConnectionPrinters</Filter>
     </ClInclude>
     <ClInclude Include="datacore\EntityListEntity.h">
+      <Filter>Header Files\Datacore</Filter>
+    </ClInclude>
+    <ClInclude Include="datacore\UtilityEntities.h">
       <Filter>Header Files\Datacore</Filter>
     </ClInclude>
   </ItemGroup>

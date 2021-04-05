@@ -16,8 +16,11 @@
 
 class ZebraItemDelegate : public QItemDelegate
 {
-private:
+protected:
 	QFontMetrics fm;
+	void _drawRect(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	void _drawSelection(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+	void _drawSeparator(QPainter* painter, const QStyleOptionViewItem& option) const;
 public:
 	ZebraItemDelegate(QObject* parent);
 	void paint(QPainter* painter, const QStyleOptionViewItem& option,
