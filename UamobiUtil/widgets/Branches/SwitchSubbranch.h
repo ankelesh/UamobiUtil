@@ -13,6 +13,7 @@ what to do. Entity given to this node is transmitted to subbranch.
 
 class SwitchSubbranch : public IndependentBranchNode, abstractDynamicNode
 {
+	Q_OBJECT
 private:
 	// description of this branch and subbranch. 
 	BranchDescription root;

@@ -1,20 +1,20 @@
 Application start begins: version 0.18 lin-alpha
->>	414114285510953 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
->>	414114285520419 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
-<<	414114285597118 received response going to 0 containing text:|
+>>	414286458297129 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
+>>	414286458305571 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
+<<	414286458365374 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket</servicename></users>
 	and error text |
->>	414114286177412 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.18
-<<	414114286236129 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>3075</session>
+>>	414286459959172 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.18
+<<	414286460041953 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>3090</session>
 </login>
 	and error text |
->>	414114286239084 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=3075&lang=English
-<<	414114286286550 received response going to 0 containing text:|
+>>	414286460043628 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=3090&lang=English
+<<	414286460089814 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>Inventory</captionMode><mode>inventory</mode><submode></submode></mode> <mode><modeName>ordersandsldcorrection</modeName><captionMode>Orders and sold corrrection</captionMode><mode>receipt</mode><submode>ordersandsldcorrection</submode></mode> <mode><modeName>printing</modeName><captionMode>Printing</captionMode><mode>printing</mode><submode></submode></mode> <mode><modeName>receipt</modeName><captionMode>Receipt</captionMode><mode>receipt</mode><submode></submode></mode> <mode><modeName>receiptfromwarehouses</modeName><captionMode>Receipt from warehouses</captionMode><mode>receipt</mode><submode>receiptfromwarehouses</submode></mode> <mode><modeName>partialinventory</modeName><captionMode>Stock correction</captionMode><mode>inventory</mode><submode>partialinventory</submode></mode> <mode><modeName>univscanact</modeName><captionMode>Universal scanning act</captionMode><mode>inventory</mode><submode>univscanact</submode></mode></modes>
 	and error text |
->>	414114286611374 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=3075&mode=receipt&submode=
-<<	414114286644818 received response going to 0 containing text:|
+>>	414286460418734 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=3090&mode=receipt&submode=
+<<	414286460454738 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status>  <desc> <![CDATA[ [PlaceSelect]
 [SwitchByScanCode]
 %Supplier%
@@ -37,114 +37,37 @@ Application start begins: version 0.18 lin-alpha
 <>
 *-6* ]]> </desc></mode>
 	and error text |
->>	414114286648464 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=list_places&session=3075
-<<	414114286670409 received response going to 0 containing text:|
+>>	414286460456080 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=list_places&session=3090
+<<	414286460473673 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <places>  <status>200</status>  <place>   <code>216</code>   <name>L-16 str. Alba Iulia 196/4</name>  </place>  <place>   <code>249</code>   <name>L-49 bd. Grigore Vieru, 18</name>  </place> </places>
 	and error text |
->>	414114286876657 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=select_place&session=3075&place=216
-<<	414114286890993 received response going to 0 containing text:|
+>>	414286461145585 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=select_place&session=3090&place=216
+<<	414286461149937 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <place>  <status>200</status> </place>
 	and error text |
->>	414114287236283 sent request: http://92.115.237.226:60080/um/unitest.php?delay=7&cmd=rec_list_suppliers&session=3075&text=&hasorders=true
-<<	414114287252713 received response going to 5 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <suppliers>  <status>200</status>  <supplier>   <code>20041</code>   <name>Instacon SRL</name>   <orders>2</orders>  </supplier> </suppliers>
+>>	414286461402043 sent request: http://92.115.237.226:60080/um/unitest.php?delay=7&cmd=rec_list_suppliers&session=3090&text=&hasorders=true
+<<	414286461433833 received response going to 5 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <suppliers>  <status>200</status>  <supplier>   <code>20041</code>   <name>Instacon SRL</name>   <orders>4</orders>  </supplier> </suppliers>
 	and error text |
->>	414114287435243 sent request: http://92.115.237.226:60080/um/unitest.php?delay=8&cmd=rec_list_orders_sel&session=3075&supplier=20041
-<<	414114287444915 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <orders>  <status>200</status>  <order>   <code>18859237</code>   <title>Nr. cererii: 18859237</title>
+>>	414286461588203 sent request: http://92.115.237.226:60080/um/unitest.php?delay=8&cmd=rec_list_orders_sel&session=3090&supplier=20041
+<<	414286461594291 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <orders>  <status>200</status>  <order>   <code>18859293</code>   <title>Nr. cererii: 18859293</title>
+  <text>13.04.21 - 13.04.21, 3  </text>  </order>  <order>   <code>18859241</code>   <title>Nr. cererii: 18859241</title>
+  <text>06.04.21 - 06.04.21, 4  </text>  </order>  <order>   <code>18859237</code>   <title>Nr. cererii: 18859237</title>
   <text>02.04.21 - 05.04.21, 5  </text>  </order>  <order>   <code>18859233</code>   <title>Nr. cererii: 18859233</title>
   <text>01.04.21 - 05.04.21, 5  </text>  </order> 
 <supplier>Instacon SRL</supplier>
-<selection>1,1</selection> </orders>
+<selection>1,1,1,1</selection> </orders>
 	and error text |
->>	414114287741606 sent request: http://92.115.237.226:60080/um/unitest.php?delay=9&cmd=rec_get_order_info_multi&session=3075&order=18859237&supplier=20041
-<<	414114287748059 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <order>  <status>200</status> <richdata> <![CDATA[  <div><b> Instacon SRL</b></div>  <div><b>Doc. nr.:</b> 18859237</div> <hr><div>BERIOZKA Cascava roata VELIKOKNEAJESKII 46%, kg Belorusia - <b>7</b></div><hr> <div>BERIOZKA Cascaval roata SELISKII 40%, kg Belorusia - <b>7</b></div><hr> <div>ГЛУБОКОЕ Lapte condensat integral c/m 8.5% 380g - <b>30</b></div><hr> <div>ГЛУБОКОЕ Lapte condensat integral 8.5% tuba 160g - <b>30</b></div><hr> <div>ГЛУБОКОЕ Lapte condensat integral d/p 8.5% 300g - <b>30</b></div><hr> ]]> </richdata> </order>
+>>	414286477596070 sent request: http://92.115.237.226:60080/um/unitest.php?delay=9&cmd=rec_get_order_info_multi&session=3090&order=18859293&supplier=20041
+<<	414286477646043 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <order>  <status>200</status> <richdata> <![CDATA[  <div><b> Instacon SRL</b></div>  <div><b>Doc. nr.:</b> 18859293</div> <hr><div>BERIOZKA Cascaval roata SELISKII 40%, kg Belorusia - <b>10</b></div><hr> <div>BERIOZKA Cascava roata VELIKOKNEAJESKII 46%, kg Belorusia - <b>15</b></div><hr> <div>ГЛУБОКОЕ Lapte condensat integral c/m 8.5% 380g - <b>60</b></div><hr> ]]> </richdata> </order>
 	and error text |
->>	414114287797820 sent request: http://92.115.237.226:60080/um/unitest.php?delay=10&cmd=rec_new_doc&session=3075&date=05.04.2021&parent=18859237&comment=
-<<	414114287817863 received response going to 31 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <newdoc>  <status>200</status>  <doc>   <code>3753027</code>   <parentnr>18859238</parentnr>   <supplier>Instacon SRL</supplier>   <date>05.04.2021</date>   <comment></comment>   <closed>false</closed>   <canceled>false</canceled>   <locked>false</locked>   <scanmode>simple</scanmode>  </doc> </newdoc>
+>>	414286477663036 sent request: http://92.115.237.226:60080/um/unitest.php?delay=10&cmd=rec_new_doc&session=3090&date=13.04.2021&parent=18859293&comment=
+<<	414286477826439 received response going to 31 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <newdoc>  <status>200</status>  <doc>   <code>3753031</code>   <parentnr>18859296</parentnr>   <supplier>Instacon SRL</supplier>   <date>13.04.2021</date>   <comment></comment>   <closed>false</closed>   <canceled>false</canceled>   <locked>false</locked>   <scanmode>simple</scanmode>  </doc> </newdoc>
 	and error text |
->>	414114287818252 sent request: http://92.115.237.226:60080/um/unitest.php?delay=11&cmd=rec_add_order_doc&session=3075&nrdoc=3753027&parents=18859233
-<<	414114287829566 received response going to 43 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <add_rel>  <status>404</status>  <message>ORA-00001: нарушено ограничение уникальности (TEST.TMDB_DOCS_REL_UK)</message>
- <stack>ORA-06512: на  "TEST.PG_MOBILE_WEB_2019", line 4000
-</stack> </add_rel>
+>>	414286477826572 sent request: http://92.115.237.226:60080/um/unitest.php?delay=11&cmd=rec_add_order_doc&session=3090&nrdoc=3753031&parents=18859241,18859233
+<<	414286477840190 received response going to 43 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <add_rel>  <status>200</status> </add_rel>
 	and error text |
->>	414114288059801 sent request: http://92.115.237.226:60080/um/unitest.php?delay=12&cmd=doc_list_items&session=3075&page=0
-<<	414114288266532 received response going to 16 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <searchresult>  <status>200</status>  <invoice>
-  <code>RR323232</code>
-  <title>Factura RR323232
-Total (fara TVA): 18.82 л.  </title>
- </invoice>
- <invoice>
-  <code>CC323211</code>
-  <title>Factura CC323211
-Total (fara TVA): 27.36 л.  </title>
- </invoice>
- <invoice>
-  <code>-</code>
-  <title>     - - - - - - - - - - - - - - - -</title>
- </invoice>
- <page>   <from>1</from>   <to>5</to>   <last>true</last>  </page>  <result>
-  <barcode>4810108003577</barcode>
-  <qty>2.000</qty>
-  <type>int</type>
-  <title>ГЛУБОКОЕ Lapte condensat integral 8.5% tuba 160g
-4810108003577
-
-In cerere: 30
-Suma fara TVA: 18.82 l.  </title>
-<highlight>high</highlight>
- </result>
- <result>
-  <barcode>4810108003522</barcode>
-  <qty>2.000</qty>
-  <type>int</type>
-  <title>ГЛУБОКОЕ Lapte condensat integral c/m 8.5% 380g
-4810108003522
-
-In cerere: 30
-Suma fara TVA: 27.36 l.  </title>
-<highlight>high</highlight>
- </result>
- <result>
-  <barcode>2109413000009</barcode>
-  <qty>0.000</qty>
-  <type>float</type>
-  <title>BERIOZKA Cascava roata VELIKOKNEAJESKII 46%, kg Belorusia
-09413
-
-In cerere: 7.000  </title>
-<highlight>high</highlight>
- </result>
- <result>
-  <barcode>2109414000009</barcode>
-  <qty>0.000</qty>
-  <type>float</type>
-  <title>BERIOZKA Cascaval roata SELISKII 40%, kg Belorusia
-09414
-
-In cerere: 7.000  </title>
-<highlight>high</highlight>
- </result>
- <result>
-  <barcode>4810108003584</barcode>
-  <qty>0.000</qty>
-  <type>int</type>
-  <title>ГЛУБОКОЕ Lapte condensat integral d/p 8.5% 300g
-4810108003584
-
-In cerere: 30  </title>
-<highlight>high</highlight>
- </result>
-<delete>
-<allowdelete>true</allowdelete>
-</delete></searchresult>
-	and error text |
->>	414114289732190 sent request: http://92.115.237.226:60080/um/unitest.php?delay=13&cmd=rec_edit_item&session=3075&barcode=4810108003577&qty=1
-<<	414114289808397 received response going to 0 containing text:|
-	<?xml version="1.0"?> <what> 	<message>Unknown command.</message> </what>
-	and error text |
-> ! <	414114289808668 error receiving response: No status code

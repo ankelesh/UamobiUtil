@@ -10,6 +10,10 @@
 #endif
 #include "datacore/UniformXmlObject.h"
 #include "widgets/ExtendedDelegates/CheckableDelegate.h"
+#include <QMessageBox>
+#include <QStringBuilder>
+
+const int CONFIRMATION_DIALOG_LIST_LIMIT = 4;
 
 void IdDependMultiselectWidget::pickClicked()
 {
@@ -26,20 +30,23 @@ void IdDependMultiselectWidget::pickClicked()
 		if (!currentItem.isNull())
 			toAwait->list.push_back(currentItem);
 	}
-	showProcessingOverlay();
-	awaitsConfirmation = toAwait;
+	if (_askSelectedListConfirmation(toAwait))
+	{
+		awaitsConfirmation = toAwait;
+		showProcessingOverlay();
 #ifdef QT_VERSION5X
-	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &IdDependMultiselectWidget::parse_select_response);
+		QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &IdDependMultiselectWidget::parse_select_response);
 #else
-	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(parse_select_response()));
+		QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(parse_select_response()));
 #endif
-	if (localCache.contains(receiptGetOrderInfo))
-		AppNetwork->execQueryByTemplate(localCache[receiptGetOrderInfo],
-			toAwait->getId(), dependency->getId(), awaiter);
-	else
-		AppNetwork->execQueryByTemplate(QueryTemplates::receiptGetOrderInfo,
-			toAwait->getId(),
-			dependency->getId(), awaiter);
+		if (localCache.contains(receiptGetOrderInfo))
+			AppNetwork->execQueryByTemplate(localCache[receiptGetOrderInfo],
+				toAwait->getId(), dependency->getId(), awaiter);
+		else
+			AppNetwork->execQueryByTemplate(QueryTemplates::receiptGetOrderInfo,
+				toAwait->getId(),
+				dependency->getId(), awaiter);
+	}
 }
 
 void IdDependMultiselectWidget::itemSelected(RecEntity)
@@ -122,4 +129,22 @@ IdDependMultiselectWidget::IdDependMultiselectWidget(RecEntity proto, QWidget* p
 #else
 	QObject::disconnect(entityModel, SIGNAL(dataEntityClicked(RecEntity)), this, SLOT(itemSelected(RecEntity)));
 #endif
+}
+
+bool IdDependMultiselectWidget::_askSelectedListConfirmation(ERecordList& list)
+{
+	QString text = tr("Do you want to select ") % QString::number(list->count()) % tr(" items?\n");
+	int lim_counter = 0;
+	for (Records::iterator item = list->list.begin(); item != list->list.end(); ++item)
+	{
+		if (lim_counter == CONFIRMATION_DIALOG_LIST_LIMIT)
+		{
+			text += "...";
+			break;
+		}
+		text += (*item)->getId() % '\n';
+		++lim_counter;
+	}
+	int res = QMessageBox::question(this, tr("Confirm multiselection"), text, QMessageBox::Ok | QMessageBox::Abort);
+	return res == QMessageBox::Ok;
 }

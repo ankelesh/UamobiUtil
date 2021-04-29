@@ -1,12 +1,13 @@
 #pragma once
 #include "widgets/MultibranchWidgets/IdDependentSelectWidget.h"
-
+#include "datacore/EntityListEntity.h"
 
 
 class IdDependMultiselectWidget : public IdDependentSelectWidget
 {
 	Q_OBJECT
-protected:;
+protected:
+	bool _askSelectedListConfirmation(ERecordList & list);
 	virtual void pickClicked() override;
 	virtual void itemSelected(RecEntity) override;
 	virtual void parse_get_response() override;

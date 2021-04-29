@@ -22,6 +22,7 @@ public:
 	Records list;
 	explicit EntityListEntity();
 	explicit EntityListEntity(Records rlist);
+	int count() const { return list.count(); };
 	QString joinIds(QChar separator = ',') const;
     RecEntity takeFirst();
 };

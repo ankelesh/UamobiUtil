@@ -724,6 +724,9 @@
     <QtMoc Include="widgets\MultibranchWidgets\Selectors\IdDependMultiselectWidget.h">
       <Filter>Header Files\MultibranchWidgets\Selectors</Filter>
     </QtMoc>
+    <QtMoc Include="widgets\Branches\SwitchSubbranch.h">
+      <Filter>Header Files\Branches</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="UamobiUtil.qrc">
@@ -801,9 +804,6 @@
       <Filter>Header Files\Datacore</Filter>
     </ClInclude>
     <ClInclude Include="widgets\BranchingTools\EmbeddedBranches.h">
-      <Filter>Header Files\Branches</Filter>
-    </ClInclude>
-    <ClInclude Include="widgets\Branches\SwitchSubbranch.h">
       <Filter>Header Files\Branches</Filter>
     </ClInclude>
     <ClInclude Include="widgets\Branches\SenderNode.h">

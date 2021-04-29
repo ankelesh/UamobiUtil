@@ -415,7 +415,12 @@
     <ClInclude Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\PrinterWrapperFactory.h" />
     <ClInclude Include="submodules\UNAQtCommons\wrappers\DirectConnectionPrinters\tty\tty.h" />
     <ClInclude Include="widgets\Branches\SenderNode.h" />
-    <ClInclude Include="widgets\Branches\SwitchSubbranch.h" />
+    <QtMoc Include="widgets\Branches\SwitchSubbranch.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\Ankelesh\source\repos\UamobiUtil\UamobiUtil\submodules\UNAQtCommons;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;DEBUG;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Ankelesh\source\repos\UamobiUtil\UamobiUtil\submodules\UNAQtCommons;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtSql;$(QTDIR)\include\QtWidgets;$(QTDIR)\include\QtXml;$(QTDIR)\include\QtMultimedia</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">DEBUG;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_VERSION5X;QT_CORE_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_SQL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_MULTIMEDIA_LIB;%(PreprocessorDefinitions)</Define>
+    </QtMoc>
     <ClInclude Include="widgets\BranchingTools\BranchDescriptionParser.h" />
     <ClInclude Include="widgets\BranchingTools\BranchElementDescription.h" />
     <ClInclude Include="widgets\BranchingTools\BranchException.h" />

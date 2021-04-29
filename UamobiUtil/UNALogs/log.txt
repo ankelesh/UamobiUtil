@@ -1,25 +1,25 @@
 Application start begins: version 0.18 lin-alpha
--->	Method called: load common part of AppSettings in object 15059216
+-->	Method called: load common part of AppSettings in object 22182024
 if errors: 0
 if errors: 0
-][	Created object LoginWidget on address 15059552
-][	Created object MainPageWidget on address 15030656
->>	414114285510953 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
->>	414114285520419 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
-<<	414114285597118 received response going to 0 containing text:|
+][	Created object LoginWidget on address 22180104
+][	Created object MainPageWidget on address 21982336
+>>	414286458297129 sent request: http://92.115.237.226:60080/um/unitest.php?delay=0&cmd=ping
+>>	414286458305571 sent request: http://92.115.237.226:60080/um/unitest.php?delay=1&cmd=list_users
+<<	414286458365374 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <users>  <status>200</status> <manually>true</manually>  <servicename>Unimarket<
 	and error text |
->>	414114286177412 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.18
-<<	414114286236129 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>3075</session>
+>>	414286459959172 sent request: http://92.115.237.226:60080/um/unitest.php?delay=2&cmd=log_in&username=ai&password=1&version=0.18
+<<	414286460041953 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <login>  <status>200</status> <session>3090</session>
 </login>
 	and error text |
->>	414114286239084 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=3075&lang=English
-<<	414114286286550 received response going to 0 containing text:|
+>>	414286460043628 sent request: http://92.115.237.226:60080/um/unitest.php?delay=3&cmd=list_modes&session=3090&lang=English
+<<	414286460089814 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <modes>  <status>200</status>  <mode><modeName>inventory</modeName><captionMode>
 	and error text |
->>	414114286611374 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=3075&mode=receipt&submode=
-<<	414114286644818 received response going to 0 containing text:|
+>>	414286460418734 sent request: http://92.115.237.226:60080/um/unitest.php?delay=4&cmd=select_mode&session=3090&mode=receipt&submode=
+<<	414286460454738 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <mode>  <status>200</status>  <desc> <![CDATA[ [PlaceSelect]
 [SwitchByScanCode]
 
@@ -46,72 +46,50 @@ if errors: 0
 	}
 	<>
 	*-6* 
-][	Created object Adjustable branch with 4 children on address 102401160
+][	Created object Adjustable branch with 4 children on address 106349928
 ]N[	Node of type 12 fabricated using description:  children: 0 oqs: 0
-][	Created object PlaceSelection on address 99529864
->>	414114286648464 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=list_places&session=3075
-<<	414114286670409 received response going to 0 containing text:|
+][	Created object PlaceSelection on address 101982752
+>>	414286460456080 sent request: http://92.115.237.226:60080/um/unitest.php?delay=5&cmd=list_places&session=3090
+<<	414286460473673 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <places>  <status>200</status>  <place>   <code>216</code>   <name>L-16 str. Alb
 	and error text |
->>	414114286876657 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=select_place&session=3075&place=216
-<<	414114286890993 received response going to 0 containing text:|
+>>	414286461145585 sent request: http://92.115.237.226:60080/um/unitest.php?delay=6&cmd=select_place&session=3090&place=216
+<<	414286461149937 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <place>  <status>200</status> </place>
 	and error text |
 ]N[	Node of type 23 fabricated using description:  children: 1 oqs: 1
 ]N[	Node of type 16 fabricated using description:  children: 1 oqs: 0
-][	Created object Adjustable branch with 1 children on address 102402240
+][	Created object Adjustable branch with 1 children on address 106350896
 ]N[	Node of type 11 fabricated using description:  children: 0 oqs: 0
-][	Created object SelectItemFromList on address 101509736
->>	414114287236283 sent request: http://92.115.237.226:60080/um/unitest.php?delay=7&cmd=rec_list_suppliers&session=3075&text=&hasorders=true
-<<	414114287252713 received response going to 5 containing text:|
+][	Created object SelectItemFromList on address 105489480
+>>	414286461402043 sent request: http://92.115.237.226:60080/um/unitest.php?delay=7&cmd=rec_list_suppliers&session=3090&text=&hasorders=true
+<<	414286461433833 received response going to 5 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <suppliers>  <status>200</status>  <supplier>   <code>20041</code>   <name>Insta
 	and error text |
 ]N[	Node of type 25 fabricated using description:  children: 0 oqs: 2
-][	Created object IdDependentSelect on address 102600984
->>	414114287435243 sent request: http://92.115.237.226:60080/um/unitest.php?delay=8&cmd=rec_list_orders_sel&session=3075&supplier=20041
-<<	414114287444915 received response going to 0 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <orders>  <status>200</status>  <order>   <code>18859237</code>   <title>Nr. cer
+][	Created object IdDependentSelect on address 105799968
+>>	414286461588203 sent request: http://92.115.237.226:60080/um/unitest.php?delay=8&cmd=rec_list_orders_sel&session=3090&supplier=20041
+<<	414286461594291 received response going to 0 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <orders>  <status>200</status>  <order>   <code>18859293</code>   <title>Nr. cer
 	and error text |
->>	414114287741606 sent request: http://92.115.237.226:60080/um/unitest.php?delay=9&cmd=rec_get_order_info_multi&session=3075&order=18859237&supplier=200
-<<	414114287748059 received response going to 0 containing text:|
+>>	414286477596070 sent request: http://92.115.237.226:60080/um/unitest.php?delay=9&cmd=rec_get_order_info_multi&session=3090&order=18859293&supplier=200
+<<	414286477646043 received response going to 0 containing text:|
 	<?xml version="1.0" encoding="CP1251"?> <order>  <status>200</status> <richdata> <![CDATA[  <div><b> Instacon SRL</b></d
 	and error text |
 ]N[	Node of type 7 fabricated using description:  children: 1 oqs: 0
 ]N[	Node of type 4 fabricated using description:  children: 0 oqs: 0
-][	Created object ControlListWidget on address 102562184
-][	Created object DocResults on address 101594784
-][	Created object NormalScaning on address 101127792
-][	Created object PagedSearchWidget on address 99544648
->>	414114287797820 sent request: http://92.115.237.226:60080/um/unitest.php?delay=10&cmd=rec_new_doc&session=3075&date=05.04.2021&parent=18859237&comment
-<<	414114287817863 received response going to 31 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <newdoc>  <status>200</status>  <doc>   <code>3753027</code>   <parentnr>1885923
+][	Created object ControlListWidget on address 105278744
+][	Created object DocResults on address 103543792
+][	Created object NormalScaning on address 103817488
+][	Created object PagedSearchWidget on address 106617880
+>>	414286477663036 sent request: http://92.115.237.226:60080/um/unitest.php?delay=10&cmd=rec_new_doc&session=3090&date=13.04.2021&parent=18859293&comment
+<<	414286477826439 received response going to 31 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <newdoc>  <status>200</status>  <doc>   <code>3753031</code>   <parentnr>1885929
 	and error text |
->>	414114287818252 sent request: http://92.115.237.226:60080/um/unitest.php?delay=11&cmd=rec_add_order_doc&session=3075&nrdoc=3753027&parents=18859233
-<<	414114287829566 received response going to 43 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <add_rel>  <status>404</status>  <message>ORA-00001: нарушено ограничение уникал
+>>	414286477826572 sent request: http://92.115.237.226:60080/um/unitest.php?delay=11&cmd=rec_add_order_doc&session=3090&nrdoc=3753031&parents=18859241,18
+<<	414286477840190 received response going to 43 containing text:|
+	<?xml version="1.0" encoding="CP1251"?> <add_rel>  <status>200</status> </add_rel>
 	and error text |
->>	414114288059801 sent request: http://92.115.237.226:60080/um/unitest.php?delay=12&cmd=doc_list_items&session=3075&page=0
-<<	414114288266532 received response going to 16 containing text:|
-	<?xml version="1.0" encoding="CP1251"?> <searchresult>  <status>200</status>  <invoice>
-  <code>RR323232</code>
-  <title
-	and error text |
--->	Method called: translate control ГЛУБОКОЕ Lapte c
-ondensat integral 8.5
-% tuba 160g 481010
-8003577  In cerere: 3
-0 Suma fara TVA: 1
-8.82 l.  
-109 | in object 8215080
-][	Created object control-like of type 3 on address 134883112
--->	Method called: translate control qty3 | in object 8215080
-returningQuntity
-][	Created object control-like of type 1 on address 134884624
->>	414114289732190 sent request: http://92.115.237.226:60080/um/unitest.php?delay=13&cmd=rec_edit_item&session=3075&barcode=4810108003577&qty=1
-<<	414114289808397 received response going to 0 containing text:|
-	<?xml version="1.0"?> <what> 	<message>Unknown command.</message> </what>
-	and error text |
-> ! <	414114289808668 error receiving response: No status code
--->	Method called: dump common settings in object 15059216
+-->	Method called: dump common settings in object 22182024
 if errors: 0
 if errors: 0
