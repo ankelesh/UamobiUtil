@@ -127,7 +127,8 @@ HEADERS += ./UamobiUtil.h \
     widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.h \
     widgets/utils/client_defaults.h \
     datacore/EntityListEntity.h \
-    widgets/MultibranchWidgets/Selectors/IdDependMultiselectWidget.h
+    widgets/MultibranchWidgets/Selectors/IdDependMultiselectWidget.h \
+    datacore/UtilityEntities.h
 SOURCES += ./main.cpp \
     ./UamobiUtil.cpp \
     ./widgets/MultibranchWidgets/Observers/ListPickObserver.cpp \
@@ -227,7 +228,8 @@ SOURCES += ./main.cpp \
     datacore/PseudotableEntityModel.cpp \
     widgets/MultibranchWidgets/FlowControls/SwitchByScannedCodeNode.cpp \
     datacore/EntityListEntity.cpp \
-    widgets/MultibranchWidgets/Selectors/IdDependMultiselectWidget.cpp
+    widgets/MultibranchWidgets/Selectors/IdDependMultiselectWidget.cpp \
+    datacore/UtilityEntities.cpp
 RESOURCES += UamobiUtil.qrc
 TRANSLATIONS += translations/uamobiutil_ru.ts translations/uamobiutil_ro.ts translations/uamobiutil_en.ts
 INCLUDEPATH += submodules/UNAQtCommons/
