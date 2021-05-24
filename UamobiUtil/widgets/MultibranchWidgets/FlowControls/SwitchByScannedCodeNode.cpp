@@ -97,7 +97,9 @@ SwitchByScannedCodeWidget::SwitchByScannedCodeWidget(BranchDescription branch, Q
 	setTabOrder(barcodeInput, skipButton);
 	backButton->setFocusPolicy(Qt::NoFocus);
 	skipButton->setDefault(true);
-	
+#ifdef Q_OS_ANDROID
+    barcodeInput->setInputMethodHints(Qt::InputMethodHint::ImhDigitsOnly);
+#endif
 #ifdef QT_VERSION5X
 	QObject::connect(backButton, &MegaIconButton::clicked, this, &SwitchByScannedCodeWidget::backRequired);
 	QObject::connect(skipButton, &MegaIconButton::clicked, this, &SwitchByScannedCodeWidget::_branchSkipped);

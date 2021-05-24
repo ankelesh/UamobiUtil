@@ -166,7 +166,7 @@ QModelIndex DataEntityListModel::moveByArrow(int arrow, const QModelIndex& curre
 		return current;
 }
 
-RecEntity DataEntityListModel::getItemDirectly(QModelIndex& index) const
+RecEntity DataEntityListModel::getItemDirectly(const QModelIndex& index) const
 {
 	if (!index.isValid())
 		return RecEntity();

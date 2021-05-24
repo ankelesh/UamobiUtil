@@ -87,6 +87,7 @@ ParentDocumentWidget::ParentDocumentWidget(RecEntity proto, QWidget* parent
 	QObject::connect(entityModel, &DataEntityListModel::dataEntityClicked, this, &IndependentBranchNode::done);
 	QObject::connect(filterSelect, &IndependentBranchNode::backRequired, this, &ParentDocumentWidget::hideCurrent);
 	QObject::connect(filterSelect, &IndependentBranchNode::done, this, &ParentDocumentWidget::filterReady);
+	QObject::connect(selectButton, &MegaIconButton::clicked, this, &ParentDocumentWidget::onItemConfirmed);
 #else
 	QObject::connect(filterButton, SIGNAL(clicked()), this, SLOT(filterDocuments()));
 	QObject::connect(backButton, SIGNAL(clicked()), this, SIGNAL(backRequired()));
@@ -96,6 +97,7 @@ ParentDocumentWidget::ParentDocumentWidget(RecEntity proto, QWidget* parent
     QObject::connect(docSelection, SIGNAL(clicked(QModelIndex)), entityModel, SLOT(mapClickToEntity(QModelIndex)));
 	QObject::connect(filterSelect, SIGNAL(backRequired()), this, SLOT(hideCurrent()));
     QObject::connect(filterSelect, SIGNAL(done(RecEntity)), this, SLOT(filterReady()));
+	QObject::connect(selectButton, SIGNAL(clicked()), this, SLOT(onItemConfirmed()));
 #endif
 }
 
@@ -157,6 +159,14 @@ void ParentDocumentWidget::filterReady()
 {
 	_hideCurrent(innerWidget);
 	loadDocuments();
+}
+
+void ParentDocumentWidget::onItemConfirmed()
+{
+	if (docSelection->currentIndex().isValid())
+	{
+		emit done(entityModel->getItemDirectly(docSelection->currentIndex()));
+	}
 }
 
 void ParentDocumentWidget::_handleRecord(RecEntity)
