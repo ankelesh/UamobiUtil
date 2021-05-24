@@ -83,6 +83,8 @@ namespace legacy {
 		t["tmcinfobylocation"] = modecut("printing", "tmcinfobylocation");
 		temp['t'] = t;
 		t.clear();
+		t["univscanact"] = modecut("inventory", "univscanact");
+		temp['u'] = t;
 		return temp;
 	}
 
