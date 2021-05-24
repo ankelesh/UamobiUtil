@@ -63,5 +63,5 @@ protected slots:
 	void was_timeout();
 	void hideCurrent();
 	void filterReady();
-
+	void onItemConfirmed();
 };

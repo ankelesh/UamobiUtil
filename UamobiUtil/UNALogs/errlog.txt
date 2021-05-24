@@ -1,1 +1,2 @@
 Application start begins: version 0.18 lin-alpha
+> ! <	415193374260588 error receiving response: ORA-20000: User is blocked or not allowed to use.
