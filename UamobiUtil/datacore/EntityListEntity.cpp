@@ -18,7 +18,7 @@ QString EntityListEntity::extractId() const
     if (list.isEmpty())
         return QString("This is empty polylist of entities");
     else
-        return list.first()->getId();
+        return joinIds();
 }
 
 bool EntityListEntity::deepCompare(const AbsRecEntity* another) const
