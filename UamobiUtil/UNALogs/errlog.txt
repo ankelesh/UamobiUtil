@@ -1,2 +1,3 @@
 Application start begins: version 0.18 lin-alpha
-> ! <	415193374260588 error receiving response: ORA-20000: User is blocked or not allowed to use.
+> ! <	415347340513736 error receiving response: ORA-20000: ƒублирование по номеру документа 18859860
+ORA-01422: “очна€ выборка возвращает количество строк больше запрошенного

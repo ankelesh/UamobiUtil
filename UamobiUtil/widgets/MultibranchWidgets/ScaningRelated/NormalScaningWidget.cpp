@@ -25,18 +25,6 @@ void NormalScaningWidget::_handleRecord(RecEntity e)
 	{
 		setDocument(upcastRecord<FullDocumentEntity>(e));
 	}
-	else if (e->myType() == UniformXmlObject::EntityList)
-	{
-		ERecordList list = upcastRecord<EntityListEntity>(e);
-		if (!list.isNull())
-		{
-			if (!list->list.isEmpty())
-			{
-                setDocument(list->takeFirst());
-				extraParentDocuments = list;
-			}
-		}
-	}
 	else
 	{
 		setDocument(e);
