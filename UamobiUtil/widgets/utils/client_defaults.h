@@ -24,6 +24,9 @@ inline void initialize_default_file(QSettings& setting)
 	setting.setValue("printer_designation", "COM6:");
 	setting.setValue("printer_port", 19200);
 	setting.setValue("printer_type", "zebra20_70x33");
+	QStringList t;
+	t << "tsc20_70x33";
+	setting.setValue("printer_alternatives", t);
 	setting.endGroup();
 
 }
