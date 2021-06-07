@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
     AppSounds;
 #endif
 #ifdef Q_OS_ANDROID
-    a.setDoubleClickInterval(900);
+    a.setDoubleClickInterval(600);
     w.setFixedSize(calculateAdaptiveSize(1.0));
 #endif
     BarcodeObserver::init();

@@ -13,6 +13,10 @@ what to do. Entity given to this node is transmitted to subbranch.
 
 class SwitchSubbranch : public IndependentBranchNode, abstractDynamicNode
 {
+// don't know why android armv7a build hates this definition (armv8a likes it). If compilation error there, put Q_OBJECT
+// in ifndef
+#ifndef Q_OS_ANDROID
+#endif
     Q_OBJECT
 private:
 	// description of this branch and subbranch. 

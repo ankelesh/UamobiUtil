@@ -54,7 +54,7 @@ void ZebraItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opt
 	_drawRect(painter, option, index);
 	_drawSelection(painter, option, index);
 	painter->setFont(option.font);
-	painter->drawText(option.rect, Qt::AlignCenter | Qt::TextWordWrap, index.data(Qt::DisplayRole).toString());
+    painter->drawText(option.rect, Qt::AlignHCenter | Qt::AlignTop | Qt::TextWordWrap, index.data(Qt::DisplayRole).toString());
 	painter->restore();
 }
 
@@ -62,7 +62,10 @@ QSize ZebraItemDelegate::sizeHint(const QStyleOptionViewItem& option, const QMod
 {
 	if (index.isValid())
 	{
-		return  QSize(option.rect.width(), index.data(Qt::SizeHintRole).toSize().height() * option.fontMetrics.height());
+        QRect boundRect(0,0, option.rect.width(), calculateAdaptiveHeight(1));
+        QRect res =  option.fontMetrics.boundingRect(boundRect, Qt::TextWordWrap | Qt::AlignHCenter | Qt::AlignTop, index.data(Qt::DisplayRole).toString());
+        res.setHeight(res.height() + option.fontMetrics.height());
+        return  res.size();
 	}
 	return QItemDelegate::sizeHint(option, index);
 }

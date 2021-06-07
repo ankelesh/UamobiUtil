@@ -99,8 +99,7 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 	else
 	{
 		ordfilterButton->setChecked(true);
-	}
-	itemSelection->setModel(entityModel);
+    }
 	itemSelection->setItemDelegate(new ZebraItemDelegate(this));
     userinputField->disconnect();
 	itemSelection->setFocusPolicy(Qt::TabFocus);
@@ -109,7 +108,7 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 	searchButton->setFocusPolicy(Qt::NoFocus);
 	setTabOrder(userinputField, itemSelection);
 #if defined(QT_VERSION5X) && defined(Q_OS_ANDROID)
-    QScroller::grabGesture(itemSelection, QScroller::TouchGesture);
+    QScroller::grabGesture(itemSelection, QScroller::LeftMouseButtonGesture);
 	itemSelection->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 #endif
 	_captureNumbers();
@@ -121,11 +120,14 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 	QObject::connect(awaiter, &RequestAwaiter::requestTimeout, this, &SelectItemFromListWidget::was_timeout);
 	QObject::connect(entityModel, &DataEntityListModel::dataEntityClicked, this, &SelectItemFromListWidget::itemPicked);
 #ifdef Q_OS_ANDROID
-	QObject::connect(itemSelection, &QListView::doubleClicked, entityModel, &DataEntityListModel::mapClickToEntity);
+    bool ok = QObject::connect(itemSelection, &QListView::doubleClicked, entityModel, &DataEntityListModel::mapClickToEntity);
+#ifdef DEBUG
+    detrace_CONNECTSTAT("doubleClicked, mapClickToEntity", ok);
+#endif
 #else
 	QObject::connect(itemSelection, &QListView::clicked, entityModel, &DataEntityListModel::mapClickToEntity);
 #endif
-	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &SelectItemFromListWidget::parse_pick_response);
+    QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &SelectItemFromListWidget::parse_pick_response);
 	QObject::connect(awaiter, &RequestAwaiter::requestReceived, this, &SelectItemFromListWidget::parse_response);
 #else
 	QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(searchPrimed()));
@@ -138,6 +140,7 @@ SelectItemFromListWidget::SelectItemFromListWidget(
 	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(parse_response()));
 	QObject::connect(awaiter, SIGNAL(requestReceived()), this, SLOT(parse_pick_response()));
 #endif
+    itemSelection->setModel(entityModel);
 }
 
 void SelectItemFromListWidget::show()
@@ -156,6 +159,7 @@ void SelectItemFromListWidget::searchPrimed()
 {
 	if (awaiter->isAwaiting())
 		return;
+
 	showProcessingOverlay();
 	if (!loadQuery.isDefault())
 	{
@@ -164,12 +168,18 @@ void SelectItemFromListWidget::searchPrimed()
 			((ordfilterButton->isChecked()) ? "true" : "false"),
 				awaiter);
 		awaiter->deliverResultTo(Get);
+#ifdef DEBUG
+     detrace_METHEXPL("sent by loadquery");
+#endif
 		return;
 	}
 	QStringList buffer;
 	buffer << userinputField->text() << ((ordfilterButton->isChecked()) ? "true" : "false");
 	prototype->sendAssociatedGetRequest(buffer, awaiter);
 	awaiter->deliverResultTo(Get);
+#ifdef DEBUG
+     detrace_METHEXPL("sent by associated");
+#endif
 }
 
 void SelectItemFromListWidget::ordFilterSwitched(bool)
@@ -200,10 +210,14 @@ void SelectItemFromListWidget::parse_response()
 		else
 		{
 			entityModel->insertData(response.objects);
-			itemSelection->setCurrentIndex(entityModel->index(0));
+            itemSelection->setCurrentIndex(entityModel->index(0));
+            entityModel->stopActivities();
+#ifdef DEBUG
+            detrace_METHEXPL("response succesfully parsed with " << response.objects.count() << " objects");
+#endif
 		}
 	}
-	hideProcessingOverlay();
+    hideProcessingOverlay();
 }
 
 void SelectItemFromListWidget::_numberReaction(int val)
@@ -266,6 +280,9 @@ void SelectItemFromListWidget::was_timeout()
 
 void SelectItemFromListWidget::itemPicked(RecEntity e)
 {
+#ifdef DEBUG
+    detrace_METHCALL("item picked");
+#endif
 	if (awaiter->isAwaiting())
 		return;
 	awaitedEntity = e;
@@ -318,6 +335,9 @@ void SelectItemFromListWidget::_makeOverloads(const QVector<QueryTemplates::Over
     }
         Q_FALLTHROUGH();
 	case 0:
+#ifdef DEBUG
+     detrace_METHEXPL("Zero overloads");
+#endif
 		return;
 	}
 }

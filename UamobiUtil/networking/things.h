@@ -56,6 +56,7 @@ public:
 	void reset();
 	virtual QModelIndex moveByArrow(int arrow, const QModelIndex& current) const;
     RecEntity getItemDirectly(const QModelIndex&) const;
+    void stopActivities();
 public slots:
 	//If index was valid - emits signal with pointer to clicked entity.
 #ifdef QT_VERSION5X

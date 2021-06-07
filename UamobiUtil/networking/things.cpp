@@ -172,7 +172,12 @@ RecEntity DataEntityListModel::getItemDirectly(const QModelIndex& index) const
 		return RecEntity();
 	if (index.row() >= rowCount())
 		return RecEntity();
-	return innerList.at(index.row());
+    return innerList.at(index.row());
+}
+
+void DataEntityListModel::stopActivities()
+{
+  endResetModel();
 }
 
 #ifdef QT_VERSION5X

@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET = UamobiUtil
 QT += core xml network gui widgets multimedia
-CONFIG += debug
+CONFIG += release
 DEFINES += DEBUG LINELLA
 greaterThan(QT_MAJOR_VERSION, 4): DEFINES += QT_VERSION5X
 lessThan(QT_MAJOR_VERSION, 5) : DEFINES += "Q_NULLPTR=0"
@@ -244,6 +244,11 @@ DISTFILES += \
     android/src/una/unamd/QBroadcastCatcher.java
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
+    ANDROID_PACKAGE_SOURCE_DIR = \
+        $$PWD/android
+}
+
+contains(ANDROID_TARGET_ARCH,arm64-v8a) {
     ANDROID_PACKAGE_SOURCE_DIR = \
         $$PWD/android
 }
