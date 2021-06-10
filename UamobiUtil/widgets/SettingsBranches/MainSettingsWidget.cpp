@@ -69,11 +69,17 @@ MainSettingsWidget::MainSettingsWidget(QWidget* parent)
     wrkflinnLayout->addRow(tr("Notifications volume"), notificationsVolume);
 	wrkflinnLayout->setRowWrapPolicy(QFormLayout::WrapAllRows);
 	printTab->setLayout(printinnLayout);
-	printinnLayout->addRow(tr("Printer support"), buildState);
-	printinnLayout->addRow(tr("Port name"), portDesignation);
-	printinnLayout->addRow(tr("Port"), portNumber);
+    printinnLayout->addRow(tr("Printer support"), buildState);
 	printinnLayout->addRow(tr("Printer"), portType);
-	printinnLayout->addRow(tr("Printer name"), btDeviceName);
+    printinnLayout->addRow(tr("Port name"), portDesignation);
+    printinnLayout->addRow(tr("Port"), portNumber);
+    printinnLayout->addRow(tr("Printer name"), btDeviceName);
+#ifndef Q_OS_WINCE
+    portDesignation->hide();
+    portNumber->hide();
+#else
+    btDeviceName->hide();
+#endif
 	
 	printinnLayout->setRowWrapPolicy(QFormLayout::WrapAllRows);
 	mainLayout->setSpacing(0);
