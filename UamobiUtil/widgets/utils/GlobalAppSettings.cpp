@@ -8,7 +8,7 @@
 #endif
 
 
-const float VERSION = 0.19f;
+const float VERSION = 0.20f;
 #ifdef LINELLA
 const char* SUFFIX = "lin-alpha";
 #else
